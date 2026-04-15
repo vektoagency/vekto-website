@@ -36,8 +36,14 @@ yarn-error.log*
 # vercel
 .vercel
 
-# secrets & build scripts with tokens
-menscare-blog/
+# menscare-blog: only keep .md files, ignore scripts with tokens
+menscare-blog/*.js
+menscare-blog/*.mjs
+menscare-blog/*.json
+menscare-blog/*.toml
+menscare-blog/*.txt
+menscare-blog/covers*/
+menscare-blog/html*/
 
 # windows
 desktop.ini
