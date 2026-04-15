@@ -45,6 +45,9 @@ menscare-blog/*.txt
 menscare-blog/covers*/
 menscare-blog/html*/
 
+# claude settings (may contain tokens)
+.claude/settings.local.json
+
 # windows
 desktop.ini
 
