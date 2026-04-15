@@ -1,26 +1,267 @@
 @import "tailwindcss";
 
+/* AnimateIn — visible by default (SSR), hidden only after JS kicks in */
+.animate-in-base {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.animate-in-hidden.animate-in-from-bottom { opacity: 0; transform: translateY(24px); }
+.animate-in-hidden.animate-in-from-left   { opacity: 0; transform: translateX(-24px); }
+.animate-in-hidden.animate-in-from-right  { opacity: 0; transform: translateX(24px); }
+.animate-in-visible { opacity: 1 !important; transform: translate(0,0) !important; }
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #080808;
+  --foreground: #ece8e1;
+  --accent: #c8ff00;
+  --accent-dark: #a8d900;
+  --muted: #9a958e;
+  --border: #1e1e1c;
+  --card: #111110;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c8ff00;
+}
+
+/* Smooth scroll for all elements */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Blog prose styles */
+.prose {
+  color: var(--foreground);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.prose h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.prose h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.4rem;
+}
+
+.prose strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--card);
+  color: #fff;
+  font-weight: 600;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: var(--accent-dark);
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+.scroll-up {
+  animation: scrollUp 40s linear infinite;
+}
+
+.scroll-down {
+  animation: scrollDown 40s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.scroll-left {
+  animation: scrollLeft 50s linear infinite;
+}
+
+.scroll-right {
+  animation: scrollRight 90s linear infinite;
+}
+
+/* Hero gradient mesh */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-mesh::before,
+.hero-mesh::after,
+.hero-mesh-extra::before,
+.hero-mesh-extra::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.hero-mesh::before {
+  width: 50vw; height: 50vw;
+  max-width: 700px; max-height: 700px;
+  top: -15%; right: -8%;
+  background: radial-gradient(circle, rgba(200,255,0,0.18), rgba(160,220,0,0.05) 60%, transparent 80%);
+  animation: meshDrift1 20s ease-in-out infinite, meshFadeIn 1.5s ease-out forwards;
+}
+
+.hero-mesh::after {
+  width: 40vw; height: 40vw;
+  max-width: 550px; max-height: 550px;
+  bottom: -10%; left: -5%;
+  background: radial-gradient(circle, rgba(200,255,0,0.1), rgba(100,180,0,0.03) 60%, transparent 80%);
+  animation: meshDrift2 25s ease-in-out infinite, meshFadeIn 1.5s 0.3s ease-out forwards;
+}
+
+.hero-mesh-extra {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-mesh-extra::before {
+  width: 30vw; height: 30vw;
+  max-width: 400px; max-height: 400px;
+  top: 35%; left: 15%;
+  background: radial-gradient(circle, rgba(200,255,0,0.07), transparent 70%);
+  animation: meshDrift3 18s ease-in-out infinite, meshFadeIn 1.5s 0.6s ease-out forwards;
+}
+
+.hero-mesh-extra::after {
+  width: 25vw; height: 25vw;
+  max-width: 350px; max-height: 350px;
+  top: 10%; left: 55%;
+  background: radial-gradient(circle, rgba(180,240,0,0.06), transparent 70%);
+  animation: meshDrift4 22s ease-in-out infinite, meshFadeIn 1.5s 0.9s ease-out forwards;
+}
+
+@keyframes meshFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes meshDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-40px, 30px) scale(1.05); }
+  50% { transform: translate(20px, 60px) scale(0.95); }
+  75% { transform: translate(-30px, -20px) scale(1.08); }
+}
+
+@keyframes meshDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, -20px) scale(1.04); }
+  50% { transform: translate(-20px, -40px) scale(0.96); }
+  75% { transform: translate(30px, 30px) scale(1.06); }
+}
+
+@keyframes meshDrift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.1); }
+  66% { transform: translate(-30px, 20px) scale(0.92); }
+}
+
+@keyframes meshDrift4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 40px) scale(1.12); }
+}
+
+

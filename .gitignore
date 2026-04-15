@@ -36,6 +36,14 @@ yarn-error.log*
 # vercel
 .vercel
 
+# secrets & build scripts with tokens
+menscare-blog/
+
+# windows
+desktop.ini
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
