@@ -7,10 +7,8 @@ type Item = { video: string; poster: string; h: number };
 const V = "/videos/hero/compressed";
 const P = "/images/posters/hero";
 
-const CACHE_V = "v3";
-
 const mk = (n: string, h: number): Item => ({
-  video: `${V}/video-${n}.mp4?${CACHE_V}`,
+  video: `${V}/video-${n}.mp4?v3`,
   poster: `${P}/video-${n}-hq.webp`,
   h,
 });
@@ -38,7 +36,6 @@ function VideoSlot({ item, paused }: { item: Item; paused: boolean }) {
     <video
       ref={ref}
       src={item.video}
-      poster={item.poster}
       autoPlay
       loop
       muted
