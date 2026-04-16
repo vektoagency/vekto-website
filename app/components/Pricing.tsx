@@ -1,5 +1,4 @@
 import AnimateIn from "./AnimateIn";
-import ContactCTA from "./ContactCTA";
 
 const factors = [
   {
@@ -81,9 +80,12 @@ export default function Pricing() {
         {/* CTA */}
         <AnimateIn className="text-center">
           <p className="text-[#a0a0a0] mb-6">Book a meeting and we'll create a <span className="text-white font-medium">free demo video for your business</span> — so you see exactly what we can do before spending a cent.</p>
-          <ContactCTA className="inline-block bg-[#c8ff00] text-black font-semibold px-10 py-4 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer">
+          <a
+            href="#contact"
+            className="inline-block bg-[#c8ff00] text-black font-semibold px-10 py-4 rounded-full hover:bg-[#d4ff33] transition-colors"
+          >
             Book a free demo →
-          </ContactCTA>
+          </a>
         </AnimateIn>
 
       </div>

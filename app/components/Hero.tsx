@@ -1,5 +1,4 @@
 import { HeroVideosMobile, HeroVideosDesktop } from "./HeroVideos";
-import ContactCTA from "./ContactCTA";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -54,9 +53,9 @@ export default function Hero() {
         </Stagger>
         <Stagger delay={450}>
           <div className="flex flex-col gap-3 w-full max-w-xs">
-            <ContactCTA className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center cursor-pointer">
+            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Get a Free Demo
-            </ContactCTA>
+            </a>
             <a href="#work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
               See Our Work
             </a>
@@ -93,9 +92,9 @@ export default function Hero() {
         </Stagger>
         <Stagger delay={450}>
           <div className="flex gap-4">
-            <ContactCTA className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer">
+            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
               Get a Free Demo
-            </ContactCTA>
+            </a>
             <a href="#work" className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
               See Our Work
             </a>

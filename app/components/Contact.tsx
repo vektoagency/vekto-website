@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { getCalApi } from "@calcom/embed-react";
 import AnimateIn from "./AnimateIn";
 import { openContactModal } from "./ContactModal";
 
@@ -21,6 +23,21 @@ function MessageIcon() {
 }
 
 export default function Contact() {
+  useEffect(() => {
+    (async () => {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", {
+        theme: "dark",
+        cssVarsPerTheme: {
+          light: { "cal-brand": "#c8ff00" },
+          dark: { "cal-brand": "#c8ff00" },
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
+  }, []);
+
   return (
     <section id="contact" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f)" }}>
       <div aria-hidden className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full pointer-events-none opacity-[0.10]"
@@ -43,8 +60,10 @@ export default function Contact() {
         <AnimateIn>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
-              onClick={() => openContactModal("call")}
-              className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5"
+              data-cal-namespace="30min"
+              data-cal-link="vekto/30min"
+              data-cal-config='{"layout":"month_view","theme":"dark"}'
+              className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
               style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
             >
               <CalendarIcon />
@@ -53,7 +72,7 @@ export default function Contact() {
             </button>
             <button
               onClick={() => openContactModal("message")}
-              className="inline-flex items-center justify-center gap-2.5 border border-[#222] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors"
+              className="inline-flex items-center justify-center gap-2.5 border border-[#222] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors cursor-pointer"
             >
               <MessageIcon />
               Send Message
