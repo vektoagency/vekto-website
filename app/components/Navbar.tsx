@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { getCalApi } from "@calcom/embed-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -11,6 +12,21 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", {
+        theme: "dark",
+        cssVarsPerTheme: {
+          light: { "cal-brand": "#c8ff00" },
+          dark: { "cal-brand": "#c8ff00" },
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
   }, []);
 
   const links = [
@@ -47,12 +63,14 @@ export default function Navbar() {
         </nav>
 
         {/* CTA */}
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors"
+        <button
+          data-cal-namespace="30min"
+          data-cal-link="vekto/30min"
+          data-cal-config='{"layout":"month_view","theme":"dark"}'
+          className="hidden md:inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer"
         >
           Let&apos;s Talk
-        </a>
+        </button>
 
         {/* Mobile burger */}
         <button
@@ -83,13 +101,15 @@ export default function Navbar() {
               {l.label}
             </a>
           ))}
-          <a
-            href="#contact"
+          <button
+            data-cal-namespace="30min"
+            data-cal-link="vekto/30min"
+            data-cal-config='{"layout":"month_view","theme":"dark"}'
             onClick={() => setMenuOpen(false)}
-            className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors"
+            className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors cursor-pointer"
           >
             Let&apos;s Talk
-          </a>
+          </button>
         </div>
       )}
     </header>
