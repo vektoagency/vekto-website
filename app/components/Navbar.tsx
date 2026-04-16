@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { openContactModal } from "./ContactModal";
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,12 +48,12 @@ export default function Navbar() {
         </nav>
 
         {/* CTA */}
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors"
+        <button
+          onClick={() => openContactModal("call")}
+          className="hidden md:inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer"
         >
           Let&apos;s Talk
-        </a>
+        </button>
 
         {/* Mobile burger */}
         <button
@@ -82,13 +84,12 @@ export default function Navbar() {
               {l.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors"
+          <button
+            onClick={() => { setMenuOpen(false); openContactModal("call"); }}
+            className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors cursor-pointer"
           >
             Let&apos;s Talk
-          </a>
+          </button>
         </div>
       )}
     </header>

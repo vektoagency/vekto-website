@@ -8,6 +8,7 @@ import WhyVekto from "./components/WhyVekto";
 import Work from "./components/Work";
 import Pricing from "./components/Pricing";
 import Contact from "./components/Contact";
+import ContactModal from "./components/ContactModal";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <ContactModal />
     </>
   );
 }
