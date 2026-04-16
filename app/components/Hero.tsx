@@ -25,7 +25,9 @@ export default function Hero() {
         style={{ background: "linear-gradient(to top, #080808, transparent)" }} />
 
       {/* Mobile dark overlay */}
-      <div className="lg:hidden absolute inset-0 bg-[#080808]/70 z-[1]" />
+      <div className="lg:hidden absolute inset-0 bg-[#060606]/82 z-[1]" />
+      <div className="lg:hidden absolute inset-0 z-[1] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, transparent 70%)" }} />
 
       {/* ── MOBILE text ── */}
       <div className="lg:hidden relative z-10 flex flex-col items-center justify-center text-center px-6 w-full min-h-screen pt-20 pb-12">
@@ -38,7 +40,8 @@ export default function Hero() {
           </div>
         </Stagger>
         <Stagger delay={150}>
-          <h1 className="text-4xl font-bold leading-[1.1] tracking-tight mb-5">
+          <h1 className="text-4xl font-bold leading-[1.1] tracking-tight mb-5 text-white"
+            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
             <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
             <br />
             for the Future
@@ -47,7 +50,8 @@ export default function Hero() {
           </h1>
         </Stagger>
         <Stagger delay={300}>
-          <p className="text-base text-[#c0c0c0] leading-relaxed mb-8 max-w-xs">
+          <p className="text-base text-[#d8d8d8] leading-relaxed mb-8 max-w-xs"
+            style={{ textShadow: "0 1px 12px rgba(0,0,0,0.7)" }}>
             From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.
           </p>
         </Stagger>
