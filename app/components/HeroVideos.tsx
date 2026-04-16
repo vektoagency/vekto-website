@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 
 type Item = { video: string; poster: string; h: number };
 
@@ -19,8 +19,14 @@ const col3: Item[] = [mk("3s",320), mk("6s",320), mk("9s",320), mk("12s",320)];
 const mobileRow1: Item[] = [mk("2s",200), mk("5s",200), mk("8s",200), mk("11s",200), mk("4s",200), mk("1s",200)];
 const mobileRow2: Item[] = [mk("3s",200), mk("6s",200), mk("9s",200), mk("12s",200), mk("7s",200), mk("10s",200)];
 
-function VideoSlot({ item, paused }: { item: Item; paused: boolean }) {
+function VideoSlot({ item, paused, delay = 0 }: { item: Item; paused: boolean; delay?: number }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowVideo(true), delay);
+    return () => clearTimeout(t);
+  }, [delay]);
 
   useEffect(() => {
     const el = ref.current;
@@ -30,12 +36,20 @@ function VideoSlot({ item, paused }: { item: Item; paused: boolean }) {
     } else {
       el.play().catch(() => {});
     }
-  }, [paused]);
+  }, [paused, showVideo]);
+
+  if (!showVideo) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={item.poster} alt="" className="w-full h-full object-cover" />
+    );
+  }
 
   return (
     <video
       ref={ref}
       src={item.video}
+      poster={item.poster}
       autoPlay
       loop
       muted
@@ -55,7 +69,7 @@ function PosterSlot({ item }: { item: Item }) {
 
 function useIsVisible() {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -71,31 +85,40 @@ function useIsVisible() {
   return { ref, visible };
 }
 
-function ScrollCol({ items, cls }: { items: Item[]; cls: string }) {
+function ScrollCol({ items, cls, colIndex }: { items: Item[]; cls: string; colIndex: number }) {
   const doubled = [...items, ...items];
   const { ref, visible } = useIsVisible();
 
   return (
     <div ref={ref} className="flex-1 overflow-hidden relative">
       <div className={cls} style={!visible ? { animationPlayState: "paused" } : undefined}>
-        {doubled.map((item, i) => (
-          <div key={i} className="relative w-full mb-3 rounded-2xl overflow-hidden" style={{ height: item.h }}>
-            {i < items.length ? <VideoSlot item={item} paused={!visible} /> : <PosterSlot item={item} />}
-          </div>
-        ))}
+        {doubled.map((item, i) => {
+          const staggerDelay = colIndex * 400 + i * 300;
+          return (
+            <div key={i} className="relative w-full mb-3 rounded-2xl overflow-hidden" style={{ height: item.h }}>
+              {i < items.length ? (
+                <VideoSlot item={item} paused={!visible} delay={visible ? staggerDelay : 0} />
+              ) : (
+                <PosterSlot item={item} />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 export function HeroVideosMobile() {
+  const { ref, visible } = useIsVisible();
+
   return (
-    <div className="lg:hidden absolute inset-0 flex flex-col justify-around gap-0 overflow-hidden">
+    <div ref={ref} className="lg:hidden absolute inset-0 flex flex-col justify-around gap-0 overflow-hidden">
       <div className="overflow-hidden relative">
         <div className="scroll-left flex gap-3" style={{ width: "max-content", animationDuration: "35s" }}>
           {[...mobileRow1, ...mobileRow1].map((item, i) => (
             <div key={i} className="relative rounded-2xl overflow-hidden flex-shrink-0" style={{ width: 160, height: 220 }}>
-              <VideoSlot item={item} paused={false} />
+              <VideoSlot item={item} paused={!visible} delay={visible ? i * 200 : 0} />
             </div>
           ))}
         </div>
@@ -104,7 +127,7 @@ export function HeroVideosMobile() {
         <div className="scroll-right flex gap-3" style={{ width: "max-content", animationDuration: "35s" }}>
           {[...mobileRow2, ...mobileRow2].map((item, i) => (
             <div key={i} className="relative rounded-2xl overflow-hidden flex-shrink-0" style={{ width: 160, height: 220 }}>
-              <VideoSlot item={item} paused={false} />
+              <VideoSlot item={item} paused={!visible} delay={visible ? i * 200 + 100 : 0} />
             </div>
           ))}
         </div>
@@ -122,9 +145,9 @@ export function HeroVideosDesktop() {
         style={{ background: "linear-gradient(to top, #080808, transparent)" }} />
       <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
         style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
-      <ScrollCol items={col1} cls="scroll-down" />
-      <ScrollCol items={col2} cls="scroll-up" />
-      <ScrollCol items={col3} cls="scroll-down" />
+      <ScrollCol items={col1} cls="scroll-down" colIndex={0} />
+      <ScrollCol items={col2} cls="scroll-up" colIndex={1} />
+      <ScrollCol items={col3} cls="scroll-down" colIndex={2} />
     </div>
   );
 }
