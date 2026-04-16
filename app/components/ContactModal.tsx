@@ -98,12 +98,11 @@ export default function ContactModal() {
     else setError("Something went wrong. Please try again.");
   };
 
-  const options: { id: Mode; title: string; meta: string; icon: React.ReactNode }[] = [
-    { id: "call", title: "Book a Call", meta: "30 min · free", icon: <CalendarIcon /> },
-    { id: "message", title: "Send Message", meta: "reply in 24h", icon: <MessageIcon /> },
-  ];
-
   if (!open) return null;
+
+  const heading = mode === "call"
+    ? { eyebrow: "Book a Call", title: "Let's hop on a quick call", icon: <CalendarIcon />, meta: "30 min · free" }
+    : { eyebrow: "Send Message", title: "Tell us about your project", icon: <MessageIcon />, meta: "reply in 24h" };
 
   return (
     <div
@@ -128,10 +127,21 @@ export default function ContactModal() {
 
         <div className="relative bg-[#0b0b0b] rounded-[21px] p-3 max-h-[90vh] overflow-hidden flex flex-col">
           {/* Header */}
-          <div className="flex items-start justify-between px-3 pt-3 pb-2">
-            <div>
-              <p className="text-[10px] text-[#c8ff00] uppercase tracking-[0.2em] mb-1">Get in Touch</p>
-              <h3 className="text-xl font-bold text-white">Let&apos;s build something iconic</h3>
+          <div className="flex items-start justify-between px-3 pt-3 pb-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, #c8ff00 0%, #9ed600 100%)",
+                  color: "#000",
+                  boxShadow: "0 8px 24px -8px rgba(200,255,0,0.55), inset 0 1px 0 rgba(255,255,255,0.35)",
+                }}
+              >
+                {heading.icon}
+              </div>
+              <div>
+                <p className="text-[10px] text-[#c8ff00] uppercase tracking-[0.2em] mb-0.5">{heading.eyebrow} · {heading.meta}</p>
+                <h3 className="text-lg font-bold text-white leading-tight">{heading.title}</h3>
+              </div>
             </div>
             <button
               onClick={close}
@@ -142,38 +152,8 @@ export default function ContactModal() {
             </button>
           </div>
 
-          {/* Segmented picker */}
-          <div className="relative grid grid-cols-2 bg-[#060606] border border-[#161616] rounded-2xl p-1.5 mx-0 mt-1">
-            <div
-              className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] rounded-xl transition-transform duration-400 ease-out"
-              style={{
-                transform: mode === "call" ? "translateX(0)" : "translateX(calc(100% + 12px))",
-                background: "linear-gradient(135deg, #c8ff00 0%, #9ed600 100%)",
-                boxShadow: "0 8px 28px -8px rgba(200,255,0,0.55), inset 0 1px 0 rgba(255,255,255,0.35)",
-              }}
-            />
-            {options.map((o) => {
-              const active = mode === o.id;
-              return (
-                <button
-                  key={o.id}
-                  onClick={() => setMode(o.id)}
-                  className={`relative z-10 flex items-center justify-center gap-2.5 py-3.5 rounded-xl transition-colors duration-300 ${
-                    active ? "text-black" : "text-[#8a8680] hover:text-white"
-                  }`}
-                >
-                  <span className={active ? "text-black" : "text-[#c8ff00]"}>{o.icon}</span>
-                  <span className="text-left leading-tight">
-                    <span className="block text-sm font-semibold">{o.title}</span>
-                    <span className={`block text-[10px] uppercase tracking-widest ${active ? "text-black/60" : "text-[#555]"}`}>{o.meta}</span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
           {/* Panel */}
-          <div className="flex-1 overflow-y-auto mt-3">
+          <div className="flex-1 overflow-y-auto">
             <div
               key={mode}
               className="p-4 animate-[fadeSlide_0.35s_ease-out]"
