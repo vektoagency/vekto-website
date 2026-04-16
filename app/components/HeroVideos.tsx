@@ -7,8 +7,10 @@ type Item = { video: string; poster: string; h: number };
 const V = "/videos/hero/compressed";
 const P = "/images/posters/hero";
 
+const CACHE_V = "v2";
+
 const mk = (n: string, h: number): Item => ({
-  video: `${V}/video-${n}.mp4`,
+  video: `${V}/video-${n}.mp4?${CACHE_V}`,
   poster: `${P}/video-${n}-hq.webp`,
   h,
 });
