@@ -46,13 +46,13 @@ export default function Footer() {
             <h4 className="text-xs text-[#4a4540] uppercase tracking-widest mb-4">Get in Touch</h4>
             <ul className="space-y-2.5 text-sm text-[#9a958e] mb-5">
               <li>
-                <a href="mailto:hello@vektoagency.com" className="hover:text-white transition-colors">
-                  hello@vektoagency.com
+                <a href="#contact" className="hover:text-white transition-colors">
+                  Start a project
                 </a>
               </li>
               <li>
                 <a href="#contact" className="hover:text-white transition-colors">
-                  Start a project
+                  Send a message
                 </a>
               </li>
             </ul>
