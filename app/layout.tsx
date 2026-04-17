@@ -10,7 +10,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "VEKTO — AI-Driven Vision for the Future of Brands",
+  title: "VEKTO — AI-Driven Vision for the Future of Companies",
   description:
     "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
 };

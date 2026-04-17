@@ -18,7 +18,7 @@ export default function Footer() {
           <div>
             <Image src="/images/logo.png" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />
             <p className="text-sm text-[#9a958e] leading-relaxed max-w-sm mb-5">
-              AI-Driven Vision for the Future of Brands. Cinematic storytelling
+              AI-Driven Vision for the Future of Companies. Cinematic storytelling
               and AI-powered short-form systems built to scale.
             </p>
             <div className="flex items-center gap-2 text-xs text-[#666]">

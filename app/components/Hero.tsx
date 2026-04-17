@@ -46,7 +46,7 @@ export default function Hero() {
             <br />
             for the Future
             <br />
-            of Brands
+            of Companies
           </h1>
         </Stagger>
         <Stagger delay={300}>
@@ -86,7 +86,7 @@ export default function Hero() {
             <br />
             for the Future
             <br />
-            of Brands
+            of Companies
           </h1>
         </Stagger>
         <Stagger delay={300}>
