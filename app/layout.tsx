@@ -10,9 +10,25 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vektoagency.com"),
   title: "VEKTO — AI-Driven Vision for the Future of Companies",
   description:
     "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+  openGraph: {
+    title: "VEKTO — AI-Driven Vision for the Future of Companies",
+    description:
+      "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+    url: "https://vektoagency.com",
+    siteName: "VEKTO",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VEKTO — AI-Driven Vision for the Future of Companies",
+    description:
+      "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+  },
 };
 
 export default function RootLayout({
