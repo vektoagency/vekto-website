@@ -24,7 +24,7 @@ type ScreenInfo = {
 // visually on the right, and pull the camera back slightly so the
 // keyboard + mouse aren't cramped against the viewport edge.
 const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.9, 1.35, 6.2);
-const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, 0.0, 0.3);
+const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, -0.3, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
@@ -139,7 +139,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       </Canvas>
 
       {!zoomedIn && (
-        <div className="pointer-events-none absolute top-20 left-[71%] -translate-x-1/2 z-10 text-center">
+        <div className="pointer-events-none absolute top-20 left-[75%] -translate-x-1/2 z-10 text-center">
           <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-90"}`}>
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
