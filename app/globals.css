@@ -513,6 +513,10 @@ html {
   0%   { opacity: 0; }
   100% { opacity: 1; }
 }
+@keyframes poBackdropFade {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
 @keyframes poCloseFade {
   0%   { opacity: 1; }
   100% { opacity: 0; }

@@ -19,12 +19,14 @@ export default function Hero() {
 
       <HeroVideosMobile />
 
-      {/* Desktop: 3D Mac canvas spans the full hero (transparent background
-          so text column stays readable on the left). Canvas is the full
-          viewport from the start → zoom animation doesn't need any DOM
-          expansion, phosphor grows in place to fill the screen. */}
-      <div className="hidden lg:block absolute inset-0 z-[1]">
+      {/* Desktop: 3D Mac on the right, text on the left. On click, the
+          wrapper waits for the camera to fully zoom (canvas saturated
+          with uniform phosphor), then expands to fullscreen so the
+          CRT shader becomes the portfolio page background. */}
+      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[52%]">
         <HeroPravec />
+        <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
       </div>
 
       {/* Mobile gradients top/bottom */}
