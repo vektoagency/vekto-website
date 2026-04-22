@@ -40,6 +40,14 @@ export default function HeroPravec() {
   // Safety: clear body overflow if anything crashes mid-transition
   useEffect(() => () => { document.body.style.overflow = ""; }, []);
 
+  // Global trigger — e.g. "See Our Work" button — fires the same CRT transition
+  useEffect(() => {
+    const onTrigger = () => handleScreenClick();
+    window.addEventListener("vekto:open-portfolio", onTrigger);
+    return () => window.removeEventListener("vekto:open-portfolio", onTrigger);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoomedIn]);
+
   return (
     <div className="absolute inset-0">
       <MacintoshScene zoomedIn={zoomedIn} onScreenClick={handleScreenClick} />

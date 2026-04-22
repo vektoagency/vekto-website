@@ -164,10 +164,10 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       </Canvas>
 
       {!zoomedIn && (
-        <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
-          <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-70"}`}>
+        <div className="pointer-events-none absolute top-6 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
+          <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-75"}`}>
             <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-            {hovered ? "CLICK SCREEN TO ENTER" : "VEKTO/MAC — 1984"}
+            {hovered ? "▸ BOOT PORTFOLIO" : "VEKTO/OS — SELECTED WORK"}
           </span>
         </div>
       )}

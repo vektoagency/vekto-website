@@ -1,5 +1,6 @@
 import { HeroVideosMobile } from "./HeroVideos";
 import HeroPravec from "./HeroPravec";
+import PortfolioTriggerButton from "./PortfolioTriggerButton";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -107,9 +108,9 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
               Get a Free Demo
             </a>
-            <a href="/work" className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
+            <PortfolioTriggerButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors cursor-pointer">
               See Our Work
-            </a>
+            </PortfolioTriggerButton>
           </div>
         </Stagger>
         <Stagger delay={550}>
