@@ -7,17 +7,17 @@ import { RoundedBox, Text } from "@react-three/drei";
 import CRTScreen from "./CRTScreen";
 
 /* Aged Pravec-beige palette matching the reference photos */
-const CASE = "#e7ddc1";        // main cream plastic
-const CASE_WARM = "#e2d7b7";   // slight top highlight
-const CASE_SHADOW = "#c9be9c"; // shadow side
-const SEAM = "#b3a682";        // panel seams
-const SCREEN_TINT = "#34312a"; // dark phosphor tube behind glass (recessed)
-const KEY_BODY = "#d3c8a8";    // key skirts
-const KEY_TOP = "#ece3c8";     // cream key tops
-const KEY_LABEL = "#2a241d";
-const LABEL_DARK = "#3a2f1e";
-const LABEL_RED = "#8a1f16";
-const KNOB = "#b5aa8c";
+const CASE = "#ddd0b0";        // main cream plastic (warmer, aged)
+const CASE_WARM = "#e4d8b8";   // slight top highlight
+const CASE_SHADOW = "#b8ac8a"; // shadow side (deeper for contrast)
+const CASE_WELL = "#9d9173";   // recessed keyboard well
+const SEAM = "#8a7f63";        // panel seams
+const SCREEN_TINT = "#2a2820"; // dark phosphor tube behind glass (recessed)
+const KEY_BODY = "#c8bc9a";    // key skirts
+const KEY_TOP = "#e7dcbe";     // cream key tops
+const LABEL_DARK = "#2a2114";
+const LABEL_RED = "#9a2218";
+const KNOB = "#ada285";
 
 type Props = {
   onScreenClick?: (evt?: { clientX?: number; clientY?: number }) => void;
@@ -49,28 +49,46 @@ function Keycap({
 }
 
 function Keyboard() {
-  const kW = 0.1;
-  const kD = 0.1;
-  const gap = 0.016;
-  // 5 rows matching the photo (numbers, QWERTY, ASDF, ZXCV, space/modifiers)
-  const rowCounts = [14, 14, 13, 12, 9];
+  const kW = 0.095;
+  const kD = 0.095;
+  const gap = 0.018;
+  // 5 rows: function/number row, QWERTY, ASDF, ZXCV (with shifts), space row
+  const rowCounts = [15, 14, 13, 12, 10];
   const startY = 0.03;
-  const startZ = 0.26;
+  const startZ = 0.28;
 
   const items: ReactElement[] = [];
   rowCounts.forEach((count, r) => {
     const width = count * kW + (count - 1) * gap;
-    const offset = r * kW * 0.12; // slight right-shift stagger
+    const offset = r * kW * 0.08; // slight right-shift stagger
     for (let c = 0; c < count; c++) {
       const x = -width / 2 + offset + c * (kW + gap) + kW / 2;
       const z = startZ - r * (kD + gap);
-      // Bottom row center = space bar (wider)
-      if (r === 4 && c === 4) {
+      // Space bar row: wide spacebar in middle, 2 modifiers each side
+      if (r === 4) {
+        if (c === 0 || c === 1) {
+          // Left modifier keys (wider)
+          items.push(<Keycap key={`${r}-${c}`} position={[x - kW * 0.1, startY, z]} size={[kW * 1.25, 0.045, kD]} />);
+        } else if (c === 4) {
+          items.push(<Keycap key={`${r}-${c}-space`} position={[x, startY, z]} size={[kW * 4.2, 0.045, kD]} />);
+        } else if (c === 8 || c === 9) {
+          items.push(<Keycap key={`${r}-${c}`} position={[x + kW * 0.1, startY, z]} size={[kW * 1.25, 0.045, kD]} />);
+        }
+      } else if (r === 0 && c === 0) {
+        // Escape / RESET key — slightly red-tinted
         items.push(
-          <Keycap key={`${r}-${c}-space`} position={[x, startY, z]} size={[kW * 4, 0.045, kD]} />
+          <group key={`${r}-${c}-esc`} position={[x, startY, z]}>
+            <RoundedBox args={[kW, 0.0225, kD]} radius={0.008} smoothness={2} position={[0, -0.01125, 0]}>
+              <meshStandardMaterial color={KEY_BODY} roughness={0.7} />
+            </RoundedBox>
+            <RoundedBox args={[kW * 0.9, 0.0225, kD * 0.9]} radius={0.012} smoothness={3} position={[0, 0.0045, 0]}>
+              <meshStandardMaterial color="#c78a72" roughness={0.55} />
+            </RoundedBox>
+          </group>
         );
-      } else if (r === 4 && c > 4) {
-        continue;
+      } else if (r === 3 && c === 11) {
+        // Return/Enter — wider, set apart
+        items.push(<Keycap key={`${r}-${c}-ret`} position={[x + kW * 0.2, startY, z]} size={[kW * 1.35, 0.045, kD]} />);
       } else {
         items.push(<Keycap key={`${r}-${c}`} position={[x, startY, z]} />);
       }
@@ -86,77 +104,108 @@ function Keyboard() {
  */
 function Base() {
   const W = 3.6;   // base width
-  const Dback = 0.34; // thickness at back
-  const Dfront = 0.11; // thickness at front
-  const DP = 1.9;  // depth (front-to-back)
-
-  // Build the wedge via an extruded shape in X-Z with Y as height variation.
-  // We'll approximate with two stacked RoundedBoxes + a sloped top plane.
-  // Simpler: a RoundedBox for the base (uniform height = avg), then a sloped top cap.
+  const Dback = 0.38; // thickness at back
+  const Dfront = 0.14; // thickness at front
+  const DP = 2.0;  // depth (front-to-back)
 
   return (
     <group position={[0, -0.92, 0.3]}>
+      {/* Main wedge body — back slab (thicker) */}
+      <RoundedBox args={[W, Dback, DP * 0.55]} radius={0.055} smoothness={3} position={[0, 0, -DP / 2 + (DP * 0.55) / 2]}>
+        <meshStandardMaterial color={CASE} roughness={0.78} metalness={0.02} />
+      </RoundedBox>
+
       {/* Front (thinner) section */}
-      <RoundedBox args={[W, Dfront, DP * 0.45]} radius={0.04} smoothness={3} position={[0, -Dback / 2 + Dfront / 2, DP / 2 - (DP * 0.45) / 2]}>
-        <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
+      <RoundedBox args={[W, Dfront, DP * 0.5]} radius={0.045} smoothness={3} position={[0, -Dback / 2 + Dfront / 2, DP / 2 - (DP * 0.5) / 2]}>
+        <meshStandardMaterial color={CASE} roughness={0.78} metalness={0.02} />
       </RoundedBox>
 
-      {/* Back (thicker) section */}
-      <RoundedBox args={[W, Dback, DP * 0.6]} radius={0.05} smoothness={3} position={[0, 0, -DP / 2 + (DP * 0.6) / 2]}>
-        <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
-      </RoundedBox>
-
-      {/* Sloped transition (top face wedge from back → front) */}
+      {/* Sloped transition wedge connecting back → front */}
       {(() => {
-        const sX = W - 0.02;
-        const sZ = DP * 0.5;
-        // Top sloped slab using a Box rotated slightly
-        const slopeAngle = Math.atan2((Dback - Dfront) / 2, sZ);
+        const sX = W;
+        const sZ = DP * 0.35;
+        const slopeAngle = Math.atan2((Dback - Dfront), sZ);
         return (
-          <mesh position={[0, (Dfront / 2 + Dback / 2 - Dback / 2) / 2 + 0.02, 0.03]} rotation={[slopeAngle, 0, 0]}>
-            <boxGeometry args={[sX, 0.03, sZ]} />
-            <meshStandardMaterial color={CASE_WARM} roughness={0.68} />
+          <mesh position={[0, -0.02, 0.04]} rotation={[slopeAngle, 0, 0]}>
+            <boxGeometry args={[sX - 0.005, 0.035, sZ]} />
+            <meshStandardMaterial color={CASE_WARM} roughness={0.72} />
           </mesh>
         );
       })()}
 
-      {/* Keyboard keys directly on base (wedged onto the top center area) */}
-      <group position={[0, Dback / 2 + 0.01, 0.05]}>
+      {/* Recessed keyboard well — darker inset so keys sit INSIDE the case */}
+      <mesh position={[-0.25, Dback / 2 - 0.018, 0.05]}>
+        <boxGeometry args={[W * 0.77, 0.04, DP * 0.62]} />
+        <meshStandardMaterial color={CASE_WELL} roughness={0.82} />
+      </mesh>
+
+      {/* Keys on top of well */}
+      <group position={[-0.25, Dback / 2 + 0.002, 0.05]}>
         <Keyboard />
       </group>
 
-      {/* Small "8A" red label on top-right of base */}
-      <RoundedBox args={[0.22, 0.005, 0.13]} radius={0.01} smoothness={2} position={[W / 2 - 0.22, Dback / 2 + 0.005, -DP / 2 + 0.24]}>
-        <meshStandardMaterial color="#f0e8cf" roughness={0.5} />
-      </RoundedBox>
+      {/* Right-side disk drive slot + bezel */}
+      <group position={[W / 2 - 0.38, Dback / 2 - 0.015, 0.1]}>
+        {/* Drive bezel plate (darker cream) */}
+        <mesh position={[0, 0.015, 0]}>
+          <boxGeometry args={[0.55, 0.035, 0.7]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.75} />
+        </mesh>
+        {/* Slot opening */}
+        <mesh position={[0, 0.034, 0.05]}>
+          <boxGeometry args={[0.45, 0.005, 0.03]} />
+          <meshStandardMaterial color="#15110a" roughness={0.7} />
+        </mesh>
+        {/* Drive activity LED */}
+        <mesh position={[0.17, 0.034, -0.18]}>
+          <sphereGeometry args={[0.012, 10, 10]} />
+          <meshStandardMaterial color="#ff3a1a" emissive="#ff3a1a" emissiveIntensity={0.6} toneMapped={false} />
+        </mesh>
+        {/* Drive handle/lever */}
+        <mesh position={[-0.17, 0.034, 0.05]}>
+          <boxGeometry args={[0.06, 0.008, 0.04]} />
+          <meshStandardMaterial color={KNOB} roughness={0.5} metalness={0.2} />
+        </mesh>
+      </group>
+
+      {/* Back-top badge area — sloped strip behind keyboard with branding */}
+      <mesh position={[0, Dback / 2 + 0.002, -DP / 2 + 0.18]}>
+        <boxGeometry args={[W - 0.08, 0.008, 0.22]} />
+        <meshStandardMaterial color={CASE_WARM} roughness={0.65} />
+      </mesh>
+
+      {/* Red "ПРАВЕЦ 8А" logo block — left side of back strip */}
       <Text
-        position={[W / 2 - 0.22, Dback / 2 + 0.009, -DP / 2 + 0.24]}
+        position={[-W / 2 + 0.42, Dback / 2 + 0.009, -DP / 2 + 0.18]}
         rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.07}
+        fontSize={0.08}
         color={LABEL_RED}
-        anchorX="center"
+        anchorX="left"
         anchorY="middle"
+        letterSpacing={0.1}
+        outlineWidth={0.002}
+        outlineColor={LABEL_RED}
       >
-        8A
+        ПРАВЕЦ 8А
       </Text>
 
-      {/* Top-left small brand plate — "Правец" */}
+      {/* Small tech label under logo */}
       <Text
-        position={[-W / 2 + 0.35, Dback / 2 + 0.005, -DP / 2 + 0.24]}
+        position={[-W / 2 + 0.42, Dback / 2 + 0.009, -DP / 2 + 0.28]}
         rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.04}
+        fontSize={0.028}
         color={LABEL_DARK}
         anchorX="left"
         anchorY="middle"
-        letterSpacing={0.25}
+        letterSpacing={0.2}
       >
-        PRAVEC
+        PERSONAL COMPUTER
       </Text>
 
       {/* Side panel seams */}
       {[-1, 1].map((s) => (
         <mesh key={s} position={[s * (W / 2 - 0.003), -0.05, -0.1]}>
-          <boxGeometry args={[0.003, Dback * 0.65, DP * 0.88]} />
+          <boxGeometry args={[0.003, Dback * 0.7, DP * 0.9]} />
           <meshStandardMaterial color={SEAM} roughness={0.75} />
         </mesh>
       ))}
@@ -167,10 +216,10 @@ function Base() {
         <meshStandardMaterial color={SEAM} roughness={0.7} />
       </mesh>
 
-      {/* Tiny rubber feet */}
+      {/* Rubber feet */}
       {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([sx, sz], i) => (
-        <mesh key={i} position={[sx * (W / 2 - 0.2), -Dback / 2 - 0.012, sz * (DP / 2 - 0.18)]}>
-          <cylinderGeometry args={[0.035, 0.035, 0.02, 16]} />
+        <mesh key={i} position={[sx * (W / 2 - 0.2), -Dback / 2 - 0.012, sz * (DP / 2 - 0.22)]}>
+          <cylinderGeometry args={[0.038, 0.038, 0.022, 16]} />
           <meshStandardMaterial color="#1a1713" roughness={0.85} />
         </mesh>
       ))}
@@ -191,7 +240,19 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
   const D_hump = 0.75;   // additional back-taper hump
 
   return (
-    <group position={[-0.05, -0.05, -0.35]}>
+    <group position={[-0.05, 0.08, -0.4]}>
+      {/* Pedestal — small beige plinth on which the monitor sits */}
+      <group position={[0, -H / 2 - 0.09, 0]}>
+        {/* Wide base plate */}
+        <RoundedBox args={[W * 0.75, 0.05, D_front * 0.6]} radius={0.02} smoothness={3}>
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.78} />
+        </RoundedBox>
+        {/* Narrower riser */}
+        <RoundedBox args={[W * 0.5, 0.13, D_front * 0.4]} radius={0.025} smoothness={3} position={[0, 0.09, 0]}>
+          <meshStandardMaterial color={CASE} roughness={0.72} />
+        </RoundedBox>
+      </group>
+
       {/* Main front cube (the boxy part with the screen) */}
       <RoundedBox args={[W, H, D_front]} radius={0.06} smoothness={4}>
         <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
@@ -323,12 +384,16 @@ export default function PravecModel({ onScreenClick, hovered, onHoverChange }: P
 
   useFrame((state) => {
     if (!group.current) return;
-    const t = state.clock.getElapsedTime();
-    group.current.position.y = Math.sin(t * 0.4) * 0.025;
     const mx = state.pointer.x;
     const my = state.pointer.y;
-    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, mx * 0.22, 0.04);
-    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -my * 0.1, 0.04);
+    // Grounded stance — no float. Just gentle mouse parallax rotation.
+    // Smooth, eased lerp (0.035) for a calm, considered feel.
+    const targetRy = mx * 0.18;
+    const targetRx = -my * 0.07;
+    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRy, 0.035);
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetRx, 0.035);
+    // Tiny positional parallax (much smaller than rotation — reads as "weight")
+    group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, mx * 0.04, 0.04);
   });
 
   return (
