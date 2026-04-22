@@ -13,8 +13,8 @@ type Props = {
   onScreenClick?: () => void;
 };
 
-const IDLE_CAM = new THREE.Vector3(0.35, 0.2, 3.15);
-const IDLE_TARGET = new THREE.Vector3(0, 0.15, 0);
+const IDLE_CAM = new THREE.Vector3(0.9, 1.1, 4.6);
+const IDLE_TARGET = new THREE.Vector3(0, -0.25, 0.4);
 const ZOOM_CAM = new THREE.Vector3(0, 0.32, 0.74);
 const ZOOM_TARGET = new THREE.Vector3(0, 0.32, 0);
 

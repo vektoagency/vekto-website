@@ -198,8 +198,8 @@ export default function MacintoshModel({ hovered, onHoverChange, onScreenClick }
         <meshStandardMaterial color={BEIGE_DARK} roughness={0.82} metalness={0.02} />
       </mesh>
 
-      {/* ---------- KEYBOARD (subtle, in front) ---------- */}
-      <group position={[0, -H / 2 - 0.05, D / 2 + 0.55]}>
+      {/* ---------- KEYBOARD (in front, offset left) ---------- */}
+      <group position={[-0.28, -H / 2 - 0.05, D / 2 + 0.55]} rotation={[0, 0.05, 0]}>
         <RoundedBox args={[1.1, 0.08, 0.38]} radius={0.015} smoothness={2} castShadow receiveShadow>
           <meshStandardMaterial color={BEIGE} roughness={0.8} />
         </RoundedBox>
@@ -215,6 +215,23 @@ export default function MacintoshModel({ hovered, onHoverChange, onScreenClick }
             </mesh>
           ))
         )}
+      </group>
+
+      {/* ---------- MOUSE (to the right of keyboard) ---------- */}
+      <group position={[0.7, -H / 2 - 0.05, D / 2 + 0.6]} rotation={[0, -0.25, 0]}>
+        <RoundedBox args={[0.22, 0.07, 0.3]} radius={0.03} smoothness={3} castShadow receiveShadow>
+          <meshStandardMaterial color={BEIGE} roughness={0.8} />
+        </RoundedBox>
+        {/* single button split line */}
+        <mesh position={[0, 0.036, -0.08]}>
+          <boxGeometry args={[0.18, 0.002, 0.005]} />
+          <meshStandardMaterial color={BEIGE_DARK} />
+        </mesh>
+        {/* cable — short curved tube */}
+        <mesh position={[-0.08, 0.02, 0.16]} rotation={[0, 0, 0.3]}>
+          <cylinderGeometry args={[0.008, 0.008, 0.22, 8]} />
+          <meshStandardMaterial color={BEIGE_MID} roughness={0.9} />
+        </mesh>
       </group>
 
       {/* ---------- BACK subtle darken (for depth) ---------- */}

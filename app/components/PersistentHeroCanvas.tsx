@@ -31,7 +31,8 @@ export default function PersistentHeroCanvas() {
     const onScroll = () => {
       const h = window.innerHeight;
       const y = window.scrollY;
-      const fade = 1 - Math.max(0, Math.min(1, (y - h * 0.35) / (h * 0.5)));
+      // Start fading almost immediately, fully gone by ~50% viewport scroll
+      const fade = 1 - Math.max(0, Math.min(1, (y - h * 0.05) / (h * 0.45)));
       setScrollFade(fade);
     };
     onScroll();
@@ -53,15 +54,16 @@ export default function PersistentHeroCanvas() {
     <div
       aria-hidden={!isWork}
       onClick={goWork}
-      className={`hidden lg:block fixed z-[1] transition-[top,right,bottom,left,opacity] duration-[900ms] ${isHome ? "cursor-pointer" : ""}`}
+      className={`hidden lg:block fixed z-[1] ${isHome ? "cursor-pointer" : ""}`}
       style={{
         top: 0,
         right: 0,
         bottom: 0,
         left: isWork ? 0 : "52%",
         opacity: isHome ? scrollFade : 1,
-        transitionTimingFunction: "cubic-bezier(0.72, 0, 0.28, 1)",
+        transition: "top 900ms cubic-bezier(0.72,0,0.28,1), right 900ms cubic-bezier(0.72,0,0.28,1), bottom 900ms cubic-bezier(0.72,0,0.28,1), left 900ms cubic-bezier(0.72,0,0.28,1)",
         pointerEvents: isHome && scrollFade < 0.2 ? "none" : "auto",
+        visibility: isHome && scrollFade <= 0.01 ? "hidden" : "visible",
       }}
     >
       <MacintoshScene zoomedIn={isWork} onScreenClick={goWork} />
