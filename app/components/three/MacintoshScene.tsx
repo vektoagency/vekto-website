@@ -20,8 +20,11 @@ type ScreenInfo = {
   height: number;
 };
 
-const DEFAULT_IDLE_CAM = new THREE.Vector3(1.1, 1.3, 5.4);
-const DEFAULT_IDLE_TARGET = new THREE.Vector3(0, 0.0, 0.3);
+// Target shifted left so the Mac renders visually in the right third of the
+// (now fullscreen) canvas — preserving the original hero layout while the
+// canvas itself covers the full viewport.
+const DEFAULT_IDLE_CAM = new THREE.Vector3(1.6, 1.3, 5.2);
+const DEFAULT_IDLE_TARGET = new THREE.Vector3(-1.4, 0.0, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
@@ -78,10 +81,9 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
         shadows
         dpr={[1, 1.75]}
         camera={{ position: DEFAULT_IDLE_CAM.toArray(), fov: 32 }}
-        gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        style={{ background: "transparent" }}
       >
-        <color attach="background" args={["#0a0805"]} />
-        <fog attach="fog" args={["#0a0805", 4.5, 9]} />
 
         <Suspense fallback={null}>
           <directionalLight
@@ -137,7 +139,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       </Canvas>
 
       {!zoomedIn && (
-        <div className="pointer-events-none absolute top-28 left-1/2 -translate-x-1/2 z-10 text-center">
+        <div className="pointer-events-none absolute top-28 left-[74%] -translate-x-1/2 z-10 text-center">
           <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-90"}`}>
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
