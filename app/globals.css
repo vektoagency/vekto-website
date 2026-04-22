@@ -519,10 +519,10 @@ html {
 }
 
 .po-open {
-  animation: poOpenFade 0.55s cubic-bezier(0.25, 0.8, 0.3, 1) both;
+  animation: poOpenFade 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 .po-closing {
-  animation: poCloseFade 0.35s cubic-bezier(0.6, 0, 0.9, 0.3) both;
+  animation: poCloseFade 0.45s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
   pointer-events: none;
 }
 
