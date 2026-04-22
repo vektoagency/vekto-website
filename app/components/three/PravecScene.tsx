@@ -119,9 +119,9 @@ export default function PravecScene() {
 
           <EffectComposer multisampling={0}>
             <Bloom
-              intensity={transitioning ? 1.8 : 1.1}
-              luminanceThreshold={0.5}
-              luminanceSmoothing={0.25}
+              intensity={transitioning ? 1.2 : 0.35}
+              luminanceThreshold={0.82}
+              luminanceSmoothing={0.2}
               mipmapBlur
             />
             <ChromaticAberration

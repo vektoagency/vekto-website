@@ -247,17 +247,19 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
           onPointerOver={(e) => { e.stopPropagation(); onHoverChange?.(true); document.body.style.cursor = "pointer"; }}
           onPointerOut={(e) => { e.stopPropagation(); onHoverChange?.(false); document.body.style.cursor = "auto"; }}
         >
-          {/* Curved glass using sphere segment: acts as forward-bulging screen */}
-          <mesh>
-            <sphereGeometry args={[2.2, 24, 24, 0, Math.PI * 2, Math.PI / 2 - 0.14, 0.28]} />
+          {/* Flat tinted-glass plate in front of the phosphor */}
+          <mesh position={[0, 0, 0.01]}>
+            <planeGeometry args={[W * 0.62, H * 0.56]} />
             <meshPhysicalMaterial
-              color="#0f1a0a"
-              roughness={0.15}
-              transmission={0}
+              color="#0a120a"
+              roughness={0.2}
+              transmission={0.15}
+              transparent
+              opacity={0.55}
               clearcoat={0.9}
-              clearcoatRoughness={0.1}
-              metalness={0.1}
-              envMapIntensity={1.5}
+              clearcoatRoughness={0.08}
+              metalness={0.05}
+              envMapIntensity={1.1}
             />
           </mesh>
           {/* Phosphor shader plane inside */}
