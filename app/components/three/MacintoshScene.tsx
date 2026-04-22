@@ -141,7 +141,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       {!zoomedIn && (
         <div className="pointer-events-none absolute inset-y-0 left-[74%] -translate-x-1/2 z-10 flex flex-col justify-center pt-24 pb-16 text-center">
           {/* Caption — occupies the same slot as the left column's "AI-Powered Creative Agency" badge */}
-          <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 mb-8 mt-12 ${hovered ? "opacity-100" : "opacity-90"}`}>
+          <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 mb-8 mt-[46px] ${hovered ? "opacity-100" : "opacity-90"}`}>
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               OUR PORTFOLIO LIVES INSIDE
