@@ -133,9 +133,10 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick, on
     root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
   });
 
-  // Slight inset so the shader fits *inside* the bezel rather than poking out
-  const padW = screen ? screen.width * 0.92 : 0;
-  const padH = screen ? screen.height * 0.92 : 0;
+  // Aggressive inset — the GLB's screen mesh extends beyond the visible bezel,
+  // so we fit the phosphor plane well inside the actual visible screen area.
+  const padW = screen ? screen.width * 0.74 : 0;
+  const padH = screen ? screen.height * 0.64 : 0;
 
   return (
     <group ref={root}>
