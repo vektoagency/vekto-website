@@ -1,81 +1,66 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-type Project = {
+type Clip = {
+  id: string;
   client: string;
-  title: string;
-  tagline: string;
-  categories: string[];
-  year: string;
-  metric?: { value: string; label: string };
-  reel: string[];
-  href?: string | null;
-  featured?: boolean;
-  logo: string;
-  circularLogo?: boolean;
+  logo?: string;
+  src: string;               // webp / mp4 / webm — component auto-detects
+  category: string;          // e.g. "Short-Form", "AI Visuals", "Cinematic"
+  metric?: string;           // small badge, e.g. "4.6x ROAS"
+  href?: string | null;      // case study link
+  featured?: boolean;        // gets 2×2 tile span on desktop
 };
 
 const V = "/images/hero-anim";
-const projects: Project[] = [
-  {
-    client: "MEN'S CARE",
-    logo: "/images/logo-menscare.png",
-    circularLogo: true,
-    reel: [`${V}/video-1s.webp`, `${V}/video-5s.webp`, `${V}/video-9s.webp`, `${V}/video-3s.webp`],
-    title: "Brand Elevation & Content Strategy",
-    tagline: "Scaled a premium grooming brand to 2,500+ new orders at 4.6x ROAS.",
-    categories: ["Short-Form", "AI Visuals", "Strategy"],
-    year: "2024",
-    metric: { value: "4.6x", label: "ROAS" },
-    href: "/work/menscare",
-    featured: true,
-  },
-  {
-    client: "ISOSPORT",
-    logo: "/images/logo-isosport.png",
-    reel: [`${V}/video-2s.webp`, `${V}/video-6s.webp`, `${V}/video-10s.webp`],
-    title: "Promotional Video Campaign",
-    tagline: "Cinematic promos fused with AI visuals across channels.",
-    categories: ["Cinematic", "AI Visuals", "Social"],
-    year: "2024",
-    metric: { value: "6", label: "Films" },
-    href: null,
-  },
-  {
-    client: "VEKTO LAB",
-    logo: "/images/logo.png",
-    reel: [`${V}/video-4s.webp`, `${V}/video-8s.webp`, `${V}/video-12s.webp`],
-    title: "Next Case Study Coming Soon",
-    tagline: "A new brand collaboration currently in production.",
-    categories: ["In Production"],
-    year: "2026",
-    href: null,
-  },
+
+// NOTE: until real 9:16 clips are uploaded, we reuse hero animations as
+// placeholders. Replace `src` values with paths to real vertical clips
+// (e.g. /videos/clips/menscare-01.mp4). The component renders <video>
+// for .mp4/.webm/.mov and <img> for webp/gif/png/jpg automatically.
+const clips: Clip[] = [
+  { id: "mc-01", client: "MEN'S CARE", logo: "/images/logo-menscare.png", src: `${V}/video-1s.webp`, category: "Short-Form", metric: "4.6x ROAS", href: "/work/menscare", featured: true },
+  { id: "mc-02", client: "MEN'S CARE", logo: "/images/logo-menscare.png", src: `${V}/video-5s.webp`, category: "Short-Form", href: "/work/menscare" },
+  { id: "mc-03", client: "MEN'S CARE", logo: "/images/logo-menscare.png", src: `${V}/video-9s.webp`, category: "AI Visuals", href: "/work/menscare" },
+  { id: "mc-04", client: "MEN'S CARE", logo: "/images/logo-menscare.png", src: `${V}/video-3s.webp`, category: "Short-Form", href: "/work/menscare" },
+  { id: "iso-01", client: "ISOSPORT", logo: "/images/logo-isosport.png", src: `${V}/video-2s.webp`, category: "Cinematic" },
+  { id: "iso-02", client: "ISOSPORT", logo: "/images/logo-isosport.png", src: `${V}/video-6s.webp`, category: "AI Visuals" },
+  { id: "iso-03", client: "ISOSPORT", logo: "/images/logo-isosport.png", src: `${V}/video-10s.webp`, category: "Cinematic" },
+  { id: "lab-01", client: "VEKTO LAB", logo: "/images/logo.png", src: `${V}/video-4s.webp`, category: "Experimental" },
+  { id: "lab-02", client: "VEKTO LAB", logo: "/images/logo.png", src: `${V}/video-8s.webp`, category: "Experimental" },
+  { id: "lab-03", client: "VEKTO LAB", logo: "/images/logo.png", src: `${V}/video-12s.webp`, category: "AI Visuals" },
 ];
 
 const BOOT_LOG = [
-  "> VEKTO/PORTFOLIO.DB",
-  "> SYS_INIT ........ OK",
-  "> LOADING ASSETS ... OK",
-  "> DECRYPT REELS ... OK",
+  "> VEKTO/REEL.DB",
+  "> INDEX ........... OK",
+  "> DECRYPT ......... OK",
   "> READY.",
 ];
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+type Props = { open: boolean; onClose: () => void };
 
 export default function PortfolioOverlay({ open, onClose }: Props) {
   const [mounted, setMounted] = useState(false);
   const [bootLine, setBootLine] = useState(0);
-  const [current, setCurrent] = useState<number[]>(projects.map(() => 0));
-  const reelIntervals = useRef<ReturnType<typeof setInterval>[]>([]);
+  const [filter, setFilter] = useState<string>("ALL");
+  const [expanded, setExpanded] = useState<Clip | null>(null);
 
-  // Sync URL with open state (deep link, back-button closes)
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    clips.forEach((c) => set.add(c.category));
+    return ["ALL", ...Array.from(set)];
+  }, []);
+
+  const visible = useMemo(
+    () => (filter === "ALL" ? clips : clips.filter((c) => c.category === filter)),
+    [filter]
+  );
+
+  // Sync URL (deep link, back-button closes)
   useEffect(() => {
     if (!open) return;
     if (typeof window === "undefined") return;
@@ -85,7 +70,6 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
     window.addEventListener("popstate", onPop);
     return () => {
       window.removeEventListener("popstate", onPop);
-      // If overlay closed by other means, restore URL
       if (window.location.pathname === "/work") {
         window.history.replaceState({}, "", prevPath);
       }
@@ -113,40 +97,24 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       for (let i = 0; i <= BOOT_LOG.length; i++) {
         if (cancel) return;
         setBootLine(i);
-        await new Promise((r) => setTimeout(r, 130 + Math.random() * 120));
+        await new Promise((r) => setTimeout(r, 120 + Math.random() * 100));
       }
     };
     run();
     return () => { cancel = true; };
   }, [open]);
 
-  // Reel rotation per card
-  useEffect(() => {
-    if (!open) return;
-    reelIntervals.current.forEach(clearInterval);
-    reelIntervals.current = projects.map((p, idx) =>
-      setInterval(() => {
-        setCurrent((c) => {
-          const next = [...c];
-          next[idx] = (next[idx] + 1) % p.reel.length;
-          return next;
-        });
-      }, 3400 + idx * 200)
-    );
-    return () => {
-      reelIntervals.current.forEach(clearInterval);
-    };
-  }, [open]);
-
-  // Keyboard: ESC closes
+  // ESC closes (overlay + expanded preview)
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key !== "Escape") return;
+      if (expanded) setExpanded(null);
+      else onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, onClose, expanded]);
 
   if (!mounted) return null;
 
@@ -156,19 +124,16 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       role="dialog"
       className={`fixed inset-0 z-[80] ${open ? "po-open" : "po-closing"}`}
     >
-      {/* Live CRT shader (rendered by Canvas below) is the background.
-          Only legibility + CRT-frame effects layer on top of it. */}
       <div aria-hidden className="absolute inset-0 po-dim" />
       <div aria-hidden className="absolute inset-0 po-scanlines" />
       <div aria-hidden className="absolute inset-0 po-vignette" />
 
-      {/* CONTENT */}
       <div className="relative z-10 h-full w-full overflow-y-auto po-content">
-        {/* Top terminal bar */}
+        {/* Terminal bar */}
         <div className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/25 bg-black/55 backdrop-blur-sm font-mono text-[10px] uppercase tracking-[0.3em]">
           <div className="flex items-center gap-3 text-[#c8ff00]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-            VEKTO/PORTFOLIO.DB — 2024—26
+            VEKTO/REEL.DB — {visible.length} CLIPS
           </div>
           <button
             onClick={onClose}
@@ -179,9 +144,9 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </button>
         </div>
 
-        {/* Boot log */}
-        <section className="px-6 md:px-10 pt-6 md:pt-10 max-w-[1400px] mx-auto">
-          <pre className="font-mono text-[11px] md:text-[12px] text-[#c8ff00] leading-relaxed">
+        {/* Boot log — shorter */}
+        <section className="px-6 md:px-10 pt-6 max-w-[1500px] mx-auto">
+          <pre className="font-mono text-[11px] text-[#c8ff00] leading-relaxed">
             {BOOT_LOG.slice(0, bootLine).map((l, i) => (
               <div key={i} className="po-type">{l}</div>
             ))}
@@ -191,42 +156,51 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </pre>
         </section>
 
-        {/* Hero heading */}
-        <section className="px-6 md:px-10 pt-8 md:pt-10 pb-10 max-w-[1400px] mx-auto">
-          <h1 className="font-black leading-[0.9] tracking-[-0.04em] text-[#eaffb8] text-5xl md:text-7xl lg:text-[7rem] po-glow">
-            Selected
-            <br />
-            <span className="italic text-[#c8ff00]">work, on loop.</span>
+        {/* Tight header — tiny tagline, no giant h1 */}
+        <section className="px-6 md:px-10 pt-6 pb-4 max-w-[1500px] mx-auto">
+          <h1 className="font-black leading-[0.95] tracking-[-0.03em] text-[#eaffb8] text-3xl md:text-4xl lg:text-5xl po-glow">
+            Reel wall <span className="italic text-[#c8ff00]">/ on loop.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-[#bfd88a] text-base md:text-lg leading-relaxed font-mono">
-            A cinematic index of the brands we scale — short-form systems,
-            AI visuals, and data-driven creative strategy.
-          </p>
         </section>
 
-        {/* Project cards as Mac OS windows */}
-        <section className="px-6 md:px-10 pb-16 max-w-[1400px] mx-auto space-y-6 md:space-y-8">
-          {projects.map((p, i) => (
-            <ProjectWindow
-              key={p.client}
-              p={p}
-              idx={i}
-              currentReel={current[i]}
-              delay={i * 160}
-            />
-          ))}
+        {/* Category filter */}
+        <section className="px-6 md:px-10 pb-4 max-w-[1500px] mx-auto">
+          <div className="flex flex-wrap gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em]">
+            {categories.map((cat) => {
+              const active = filter === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  className={`px-3 py-1.5 rounded-sm border transition-colors ${
+                    active
+                      ? "bg-[#c8ff00] text-black border-[#c8ff00]"
+                      : "border-[#c8ff00]/30 text-[#c8ff00]/70 hover:text-[#c8ff00] hover:border-[#c8ff00]/60"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Reel grid — 9:16 tiles */}
+        <section className="px-6 md:px-10 pb-12 max-w-[1500px] mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+            {visible.map((c, i) => (
+              <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
+            ))}
+          </div>
         </section>
 
         {/* CTA */}
-        <section className="relative px-6 md:px-10 pt-10 pb-20 max-w-[1100px] mx-auto text-center">
+        <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] mb-4">] NEXT UP</p>
-          <h2 className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow">
+          <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow">
             Want to be our<br />
             <span className="text-[#c8ff00]">next case study?</span>
           </h2>
-          <p className="text-[#b6d47a] text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed font-mono">
-            We take on a handful of brand partnerships per quarter.
-          </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               data-cal-namespace="30min"
@@ -246,120 +220,163 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </div>
         </section>
       </div>
+
+      {/* Fullscreen clip preview */}
+      {expanded && <ClipLightbox clip={expanded} onClose={() => setExpanded(null)} />}
     </div>
   );
 }
 
-/* ---------- Mac-OS-style project window ---------- */
-function ProjectWindow({
-  p,
-  idx,
-  currentReel,
-  delay,
-}: {
-  p: Project;
-  idx: number;
-  currentReel: number;
-  delay: number;
-}) {
-  const Content = (
-    <article
-      className="po-window group relative overflow-hidden"
-      style={{ animation: `poWindowIn 0.75s cubic-bezier(0.25,0.8,0.3,1) ${delay}ms backwards` }}
-    >
-      {/* Window title bar */}
-      <header className="po-titlebar">
-        <div className="po-titlebar-close" />
-        <div className="po-titlebar-label">
-          {String(idx + 1).padStart(2, "0")} — {p.client}.PRJ
-        </div>
-        <div className="po-titlebar-controls">
-          <span className="font-mono text-[10px] tracking-[0.2em] text-black/70">{p.year}</span>
-        </div>
-      </header>
+/* ---------- Tile ---------- */
+function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: () => void }) {
+  const isVideo = /\.(mp4|webm|mov)$/i.test(clip.src);
+  const spanClasses = clip.featured
+    ? "md:col-span-2 md:row-span-2"
+    : "";
 
-      {/* Window body */}
-      <div className={`relative grid ${p.featured ? "md:grid-cols-[1.2fr_1fr]" : "md:grid-cols-[1fr_1fr]"} gap-0`}>
-        {/* Left — reel */}
-        <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[360px] overflow-hidden bg-black">
-          {p.reel.map((src, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={src}
-              src={src}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms]"
-              style={{ opacity: i === currentReel ? 1 : 0 }}
-              loading="eager"
-            />
-          ))}
-          {/* Phosphor tint + scanlines over media */}
-          <div className="absolute inset-0 mix-blend-screen opacity-25 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at center, rgba(200,255,0,0.18), transparent 65%)" }} />
-          <div className="absolute inset-0 po-scanlines opacity-70 pointer-events-none" />
-          {/* Reel indicator */}
-          <div className="absolute bottom-3 left-3 flex gap-1">
-            {p.reel.map((_, i) => (
-              <span key={i} className="h-1 rounded-full transition-all duration-500"
-                style={{
-                  width: i === currentReel ? 20 : 6,
-                  background: i === currentReel ? "#c8ff00" : "rgba(200,255,0,0.3)",
-                }}
-              />
-            ))}
+  const Media = (
+    <>
+      {isVideo ? (
+        <video
+          src={clip.src}
+          className="absolute inset-0 w-full h-full object-cover"
+          muted
+          loop
+          autoPlay
+          playsInline
+          preload="metadata"
+        />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={clip.src}
+          alt={clip.client}
+          className="absolute inset-0 w-full h-full object-cover"
+          loading={idx < 8 ? "eager" : "lazy"}
+        />
+      )}
+
+      {/* Phosphor + scanlines + bottom fade */}
+      <div className="absolute inset-0 mix-blend-screen opacity-25 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at center, rgba(200,255,0,0.20), transparent 65%)" }} />
+      <div className="absolute inset-0 po-scanlines opacity-60 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.78), transparent)" }} />
+
+      {/* Top overlays — logo + metric */}
+      <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between gap-2 pointer-events-none">
+        {clip.logo ? (
+          <div className="relative w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm border border-white/15 p-1">
+            <Image src={clip.logo} alt={clip.client} fill className="object-contain p-0.5" />
           </div>
+        ) : (
+          <span />
+        )}
+        {clip.metric && (
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] bg-[#c8ff00] text-black px-1.5 py-0.5 rounded-sm font-bold">
+            {clip.metric}
+          </span>
+        )}
+      </div>
+
+      {/* Bottom overlay — client + category */}
+      <div className="absolute bottom-2 left-2.5 right-2.5 pointer-events-none">
+        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white font-bold leading-tight">
+          {clip.client}
         </div>
-
-        {/* Right — metadata */}
-        <div className="p-6 md:p-8 bg-[#efe9c9] text-[#1a1a0e] flex flex-col">
-          <div className="flex items-start justify-between gap-4 mb-4">
-            <div
-              style={{
-                position: "relative",
-                width: p.circularLogo ? 40 : 100,
-                height: p.circularLogo ? 40 : 24,
-              }}
-            >
-              <Image src={p.logo} alt={p.client} fill className="object-contain object-left" />
-            </div>
-            {p.metric && (
-              <div className="text-right">
-                <div className="text-3xl md:text-4xl font-black leading-none text-[#1a1a0e]">{p.metric.value}</div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#1a1a0e]/60">{p.metric.label}</div>
-              </div>
-            )}
-          </div>
-
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#1a1a0e]/70 mb-2">] {p.client}</p>
-          <h3 className={`font-black leading-[1.05] tracking-tight mb-3 ${p.featured ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl"}`}>
-            {p.title}
-          </h3>
-          <p className="text-[#1a1a0e]/75 text-sm md:text-base leading-relaxed mb-5">{p.tagline}</p>
-
-          <div className="mt-auto pt-4 border-t border-[#1a1a0e]/15 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap gap-1.5">
-              {p.categories.map((c) => (
-                <span key={c} className="font-mono text-[9px] uppercase tracking-[0.15em] bg-[#1a1a0e]/5 border border-[#1a1a0e]/15 px-2 py-0.5 rounded-sm">
-                  {c}
-                </span>
-              ))}
-            </div>
-            {p.href ? (
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#1a1a0e] font-bold inline-flex items-center gap-1.5 group-hover:translate-x-1 transition-transform">
-                Open <span aria-hidden>→</span>
-              </span>
-            ) : (
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1a1a0e]/50">
-                {p.categories[0] === "In Production" ? "Stay tuned" : "Private"}
-              </span>
-            )}
-          </div>
+        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80">
+          {clip.category}
         </div>
       </div>
-    </article>
+
+      {/* Hover play indicator */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        <div className="w-10 h-10 rounded-full border border-[#c8ff00] bg-black/40 backdrop-blur-sm flex items-center justify-center">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="#c8ff00"><path d="M2 1l9 5-9 5V1z" /></svg>
+        </div>
+      </div>
+    </>
   );
 
-  return p.href ? (
-    <Link href={p.href} className="block">{Content}</Link>
-  ) : Content;
+  const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${spanClasses}`;
+
+  return (
+    <button
+      onClick={onExpand}
+      className={tileClass}
+      style={{ animation: `poWindowIn 0.55s cubic-bezier(0.25,0.8,0.3,1) ${Math.min(idx, 12) * 55}ms backwards` }}
+    >
+      {Media}
+      {clip.href && (
+        <Link
+          href={clip.href}
+          onClick={(e) => e.stopPropagation()}
+          className="absolute bottom-2 right-2 z-10 font-mono text-[9px] uppercase tracking-[0.2em] text-[#c8ff00] hover:text-white bg-black/50 border border-[#c8ff00]/40 px-1.5 py-0.5 rounded-sm"
+        >
+          case →
+        </Link>
+      )}
+    </button>
+  );
+}
+
+/* ---------- Fullscreen preview ---------- */
+function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
+  const isVideo = /\.(mp4|webm|mov)$/i.test(clip.src);
+
+  return (
+    <div
+      className="fixed inset-0 z-[90] flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-[420px] aspect-[9/16] rounded-sm overflow-hidden border border-[#c8ff00]/40 bg-black"
+        onClick={(e) => e.stopPropagation()}
+        style={{ boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)" }}
+      >
+        {isVideo ? (
+          <video
+            src={clip.src}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            loop
+            playsInline
+            controls
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={clip.src} alt={clip.client} className="absolute inset-0 w-full h-full object-cover" />
+        )}
+        <div className="absolute inset-0 po-scanlines opacity-40 pointer-events-none" />
+        <div className="absolute top-2 right-2 flex gap-2">
+          {clip.href && (
+            <Link
+              href={clip.href}
+              className="font-mono text-[10px] uppercase tracking-[0.25em] bg-[#c8ff00] text-black px-3 py-1.5 rounded-sm font-bold"
+            >
+              case →
+            </Link>
+          )}
+          <button
+            onClick={onClose}
+            className="font-mono text-[10px] uppercase tracking-[0.25em] border border-[#c8ff00]/50 text-[#c8ff00] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#c8ff00]/10"
+            aria-label="Close preview"
+          >
+            × close
+          </button>
+        </div>
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 pointer-events-none">
+          <div>
+            <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-white font-bold">{clip.client}</div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80">{clip.category}</div>
+          </div>
+          {clip.metric && (
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] bg-[#c8ff00] text-black px-2 py-1 rounded-sm font-bold">
+              {clip.metric}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
