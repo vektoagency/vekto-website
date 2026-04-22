@@ -111,8 +111,12 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
     if (root.current) {
       const t = state.clock.getElapsedTime();
       root.current.position.y = Math.sin(t * 0.7) * 0.015 - 0.8;
-      const tx = pointer.x * 0.1;
-      const ty = -pointer.y * 0.05;
+      // Mac sits on the right of the viewport and reads best with a
+      // 3/4-view angle — body turned so the screen faces slightly back
+      // toward the text column on the left.
+      const BASE_ROT_Y = 0.38;
+      const tx = BASE_ROT_Y + pointer.x * 0.08;
+      const ty = -pointer.y * 0.04;
       root.current.rotation.y += (tx - root.current.rotation.y) * 0.05;
       root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
     }
