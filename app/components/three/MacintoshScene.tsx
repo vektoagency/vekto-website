@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from "@react-three/postprocessing";
@@ -31,22 +31,51 @@ type Props = {
   onScreenClick?: () => void;
 };
 
-const IDLE_CAM = new THREE.Vector3(1.1, 1.3, 5.4);
-const IDLE_TARGET = new THREE.Vector3(0, 0.0, 0.3);
-// CRT plane sits at ~z=0.65 from world origin, so camera must be
-// pulled back past it. 1.45 leaves the screen just filling the viewport
-// with a hint of beige bezel at the edges.
-const ZOOM_CAM = new THREE.Vector3(0, 0.32, 1.45);
-const ZOOM_TARGET = new THREE.Vector3(0, 0.32, 0.65);
+type ScreenInfo = {
+  center: THREE.Vector3;
+  normal: THREE.Vector3;
+  width: number;
+  height: number;
+};
 
-function CameraRig({ zoomedIn }: { zoomedIn: boolean }) {
+const DEFAULT_IDLE_CAM = new THREE.Vector3(1.1, 1.3, 5.4);
+const DEFAULT_IDLE_TARGET = new THREE.Vector3(0, 0.0, 0.3);
+// Fallback zoom target if screen mesh hasn't been located yet.
+const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
+const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
+
+function CameraRig({
+  zoomedIn,
+  screen,
+}: {
+  zoomedIn: boolean;
+  screen: ScreenInfo | null;
+}) {
   const { camera } = useThree();
-  const target = useRef(new THREE.Vector3().copy(IDLE_TARGET));
+  const target = useRef(new THREE.Vector3().copy(DEFAULT_IDLE_TARGET));
+
+  // Build zoom cam/target from the real screen mesh if available
+  const { zoomCam, zoomTarget } = useMemo(() => {
+    if (!screen) {
+      return { zoomCam: FALLBACK_ZOOM_CAM.clone(), zoomTarget: FALLBACK_ZOOM_TARGET.clone() };
+    }
+    // Stand off from the screen along its normal by enough distance to frame it
+    // at the current fov. Distance = max(width, height) / (2 * tan(fov/2))
+    // fov vertical = 32deg, tan(16) ≈ 0.287
+    const maxSide = Math.max(screen.width, screen.height);
+    const standoff = maxSide / (2 * Math.tan((32 * Math.PI) / 360)) * 1.02;
+    const camPos = screen.center.clone().add(screen.normal.clone().multiplyScalar(standoff));
+    // Account for the model group's y-offset applied in MacintoshGLB's useFrame (root.y=-0.8)
+    camPos.y += -0.8;
+    const tgtPos = screen.center.clone();
+    tgtPos.y += -0.8;
+    return { zoomCam: camPos, zoomTarget: tgtPos };
+  }, [screen]);
 
   useFrame(() => {
     const lerp = zoomedIn ? 0.06 : 0.05;
-    const targetCam = zoomedIn ? ZOOM_CAM : IDLE_CAM;
-    const targetLook = zoomedIn ? ZOOM_TARGET : IDLE_TARGET;
+    const targetCam = zoomedIn ? zoomCam : DEFAULT_IDLE_CAM;
+    const targetLook = zoomedIn ? zoomTarget : DEFAULT_IDLE_TARGET;
     camera.position.lerp(targetCam, lerp);
     target.current.lerp(targetLook, lerp);
     camera.lookAt(target.current);
@@ -57,6 +86,7 @@ function CameraRig({ zoomedIn }: { zoomedIn: boolean }) {
 
 export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
   const [hovered, setHovered] = useState(false);
+  const [screen, setScreen] = useState<ScreenInfo | null>(null);
   const hasGlb = useGlbAvailable();
 
   return (
@@ -64,14 +94,13 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       <Canvas
         shadows
         dpr={[1, 1.75]}
-        camera={{ position: IDLE_CAM.toArray(), fov: 32 }}
+        camera={{ position: DEFAULT_IDLE_CAM.toArray(), fov: 32 }}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       >
         <color attach="background" args={["#0a0805"]} />
         <fog attach="fog" args={["#0a0805", 4.5, 9]} />
 
         <Suspense fallback={null}>
-          {/* Warm key */}
           <directionalLight
             position={[3.5, 4.5, 3.5]}
             intensity={1.3}
@@ -80,11 +109,8 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
             shadow-mapSize-width={1024}
             shadow-mapSize-height={1024}
           />
-          {/* Cool fill */}
           <directionalLight position={[-4, 2.5, 1.5]} intensity={0.45} color="#8fb3ff" />
-          {/* Lime rim */}
           <pointLight position={[-2.2, 1.4, -2.5]} intensity={3.2} distance={7} color="#c8ff00" />
-          {/* Ambient */}
           <ambientLight intensity={0.32} color="#2b2518" />
 
           <Environment preset="warehouse" />
@@ -94,6 +120,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
               hovered={hovered}
               onHoverChange={setHovered}
               onScreenClick={() => onScreenClick?.()}
+              onScreenLocated={setScreen}
             />
           ) : hasGlb === false ? (
             <MacintoshModel
@@ -113,7 +140,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
           />
         </Suspense>
 
-        <CameraRig zoomedIn={zoomedIn} />
+        <CameraRig zoomedIn={zoomedIn} screen={screen} />
 
         <EffectComposer multisampling={0}>
           <Bloom
@@ -133,7 +160,6 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
         </EffectComposer>
       </Canvas>
 
-      {/* Hint — only visible when Mac is idle (home), never when zoomed into /work */}
       {!zoomedIn && (
         <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
           <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-70"}`}>
