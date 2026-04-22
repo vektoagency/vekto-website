@@ -171,16 +171,9 @@ function Plane({ hovered }: { hovered: boolean }) {
 export default function VectorScope() {
   const [hovered, setHovered] = useState(false);
 
-  const onClick = (e: React.MouseEvent) => {
-    const x = (e.clientX / window.innerWidth) * 100;
-    const y = (e.clientY / window.innerHeight) * 100;
-    window.dispatchEvent(new CustomEvent("vekto:enter-pravec", { detail: { x, y } }));
-  };
-
   return (
     <div
-      className="absolute inset-0 cursor-pointer select-none"
-      onClick={onClick}
+      className="absolute inset-0 select-none"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

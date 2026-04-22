@@ -16,7 +16,7 @@ export default function WorkPage() {
     <>
       <Navbar />
       <CalInit />
-      <main className="bg-[#0a0805]">
+      <main className="relative z-[5]">
         <WorkComingSoon />
       </main>
       <Footer />

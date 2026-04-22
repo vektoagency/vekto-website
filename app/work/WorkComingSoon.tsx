@@ -11,13 +11,18 @@ export default function WorkComingSoon() {
   }, []);
 
   return (
-    <section className="relative min-h-[calc(100vh-80px)] overflow-hidden bg-[#0a0805] text-[#ece8e1]">
-      {/* CRT ambience */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 work-scanlines opacity-60" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 work-vignette" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 work-bootsweep" />
+    <section className="relative min-h-[calc(100vh-80px)] overflow-hidden text-[#ece8e1]">
+      {/* Soft inner shadow to anchor the content over the canvas */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(10,8,5,0.3) 0%, rgba(10,8,5,0.75) 60%, rgba(10,8,5,0.92) 100%)",
+        }}
+      />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-3xl flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-3xl flex-col items-center justify-center px-6 text-center animate-hero-fade-in" style={{ animationDelay: "650ms" }}>
         <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#c8ff00]">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#c8ff00] align-middle mr-2 animate-pulse" />
           SYSTEM BOOTING — VEKTO/WORK
