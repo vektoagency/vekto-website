@@ -1,5 +1,5 @@
 import { HeroVideosMobile } from "./HeroVideos";
-import SeeOurWorkButton from "./SeeOurWorkButton";
+import HeroPravec from "./HeroPravec";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -14,15 +14,17 @@ function Stagger({ children, delay, className = "" }: { children: React.ReactNod
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
       <HeroVideosMobile />
 
-      {/* Desktop: left fade bleeding from the text column into the canvas area */}
-      <div
-        className="hidden lg:block absolute top-0 bottom-0 z-[2] pointer-events-none"
-        style={{ left: "45%", width: "220px", background: "linear-gradient(to right, #080808, transparent)" }}
-      />
+      {/* Desktop: 3D Pravec 8A on the right */}
+      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[52%]">
+        <HeroPravec />
+        {/* Left fade into text column */}
+        <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
+      </div>
 
       {/* Mobile gradients top/bottom */}
       <div className="lg:hidden absolute inset-x-0 top-0 h-32 z-[2] pointer-events-none"
@@ -66,9 +68,9 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Get a Free Demo
             </a>
-            <SeeOurWorkButton className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
+            <a href="/work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
               See Our Work
-            </SeeOurWorkButton>
+            </a>
           </div>
         </Stagger>
         <Stagger delay={550}>
@@ -105,9 +107,9 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
               Get a Free Demo
             </a>
-            <SeeOurWorkButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
+            <a href="/work" className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
               See Our Work
-            </SeeOurWorkButton>
+            </a>
           </div>
         </Stagger>
         <Stagger delay={550}>

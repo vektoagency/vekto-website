@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import PersistentHeroCanvas from "./components/PersistentHeroCanvas";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +40,6 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
       <head />
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
-        <PersistentHeroCanvas />
         {children}
       </body>
     </html>
