@@ -142,7 +142,7 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
       onPointerOut={(e) => { e.stopPropagation(); onHoverChange(false); document.body.style.cursor = "auto"; }}
       onClick={(e) => { e.stopPropagation(); onScreenClick(); }}
     >
-      <planeGeometry args={[screenInfo.width * 0.9, screenInfo.height * 0.9]} />
+      <planeGeometry args={[screenInfo.width * 1.08, screenInfo.height * 1.08]} />
       <meshBasicMaterial color="#c8ff00" transparent opacity={hovered ? 0.04 : 0} />
     </mesh>
   ) : null;
