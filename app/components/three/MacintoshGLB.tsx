@@ -147,7 +147,13 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
       onClick={(e) => { e.stopPropagation(); onScreenClick(); }}
     >
       <planeGeometry args={[screenInfo.width * 1.12, screenInfo.height * 1.12]} />
-      <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      <meshBasicMaterial
+        color="#c8ff00"
+        transparent
+        opacity={hovered ? 0.08 : 0}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
     </mesh>
   ) : null;
 
