@@ -75,7 +75,7 @@ function CameraRig({
   }, [screen]);
 
   useFrame(() => {
-    const lerp = zoomedIn ? 0.06 : 0.05;
+    const lerp = zoomedIn ? 0.14 : 0.05;
     const targetCam = zoomedIn ? zoomCam : DEFAULT_IDLE_CAM;
     const targetLook = zoomedIn ? zoomTarget : DEFAULT_IDLE_TARGET;
     camera.position.lerp(targetCam, lerp);
@@ -120,6 +120,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
           {hasGlb === true ? (
             <MacintoshGLB
               hovered={hovered}
+              zoomedIn={zoomedIn}
               onHoverChange={setHovered}
               onScreenClick={() => onScreenClick?.()}
               onScreenLocated={setScreen}

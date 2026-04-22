@@ -507,32 +507,33 @@ html {
    Reveal expands from click origin (--tb-x / --tb-y already set globally).
    ========================================================================= */
 
-@keyframes poOpenClip {
-  from { clip-path: circle(6% at var(--tb-x, 75%) var(--tb-y, 50%));
-         -webkit-clip-path: circle(6% at var(--tb-x, 75%) var(--tb-y, 50%)); }
-  to   { clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%));
-         -webkit-clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%)); }
+/* Crossfade in from a bright phosphor wash — the viewport is already full of
+   CRT phosphor from the zoomed Mac screen, so the DOM overlay simply fades
+   in over it with matching colors. No clip-path, no visible seam. */
+@keyframes poOpenFade {
+  0%   { opacity: 0; filter: brightness(2.4) blur(5px); }
+  35%  { opacity: 0.75; filter: brightness(1.5) blur(2px); }
+  100% { opacity: 1; filter: none; }
 }
-@keyframes poCloseClip {
-  from { clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%));
-         -webkit-clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%)); }
-  to   { clip-path: circle(0% at var(--tb-x, 75%) var(--tb-y, 50%));
-         -webkit-clip-path: circle(0% at var(--tb-x, 75%) var(--tb-y, 50%)); }
+@keyframes poCloseFade {
+  0%   { opacity: 1; filter: none; }
+  100% { opacity: 0; filter: brightness(2) blur(4px); }
 }
 
 .po-open {
-  animation: poOpenClip 0.95s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation: poOpenFade 0.85s cubic-bezier(0.25, 0.8, 0.3, 1) both;
 }
 .po-closing {
-  animation: poCloseClip 0.6s cubic-bezier(0.7, 0, 0.9, 0.3) both;
+  animation: poCloseFade 0.5s cubic-bezier(0.6, 0, 0.9, 0.3) both;
   pointer-events: none;
 }
 
-/* Deep phosphor bed (under everything) */
+/* Deep phosphor bed — matches the CRT shader's dark+lime output so the
+   transition from shader to DOM has no color shift. */
 .po-phosphor {
   background:
-    radial-gradient(ellipse at 50% 35%, rgba(80, 110, 20, 0.55) 0%, rgba(20, 32, 4, 0.65) 40%, rgba(6, 10, 2, 1) 85%),
-    #050804;
+    radial-gradient(ellipse at 50% 45%, rgba(200, 255, 0, 0.12) 0%, rgba(20, 26, 4, 0.75) 45%, #050804 90%),
+    #040603;
   animation: poPhosphorBreathe 6s ease-in-out infinite;
 }
 @keyframes poPhosphorBreathe {
