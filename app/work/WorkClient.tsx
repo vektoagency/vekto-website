@@ -203,36 +203,21 @@ export default function WorkClient() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white overflow-x-hidden">
+    <div className="relative text-white">
       {/* ---------- Hero ---------- */}
-      <section className="relative pt-32 pb-16 px-6 overflow-hidden">
-        {/* Ambient lime glow */}
-        <div aria-hidden className="absolute -top-32 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] rounded-full opacity-[0.10] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse, #c8ff00 0%, transparent 65%)" }} />
-
-        {/* Marquee backdrop */}
-        <div aria-hidden className="absolute inset-x-0 top-28 overflow-hidden opacity-[0.04] pointer-events-none select-none">
-          <div className="scroll-left flex gap-12 whitespace-nowrap" style={{ animationDuration: "60s", width: "max-content" }}>
-            {[...Array(6)].map((_, i) => (
-              <span key={i} className="text-[180px] md:text-[260px] font-black tracking-tighter leading-none text-white">
-                SELECTED&nbsp;WORK&nbsp;·
-              </span>
-            ))}
-          </div>
-        </div>
-
+      <section className="relative pt-10 pb-10 px-6 overflow-hidden">
         <div className="relative max-w-7xl mx-auto">
           <div className="animate-hero-fade-in" style={{ animationDelay: "0ms" }}>
-            <div className="inline-flex items-center gap-2.5 border border-[#c8ff00]/30 rounded-full px-4 py-1.5 mb-8">
+            <div className="inline-flex items-center gap-2.5 border border-[#c8ff00]/30 rounded-full px-3.5 py-1 mb-6 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-              <span className="text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] font-semibold">
-                Selected Projects · 2024—26
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[#c8ff00] font-semibold">
+                ] PORTFOLIO.DB · 2024—26
               </span>
             </div>
           </div>
 
           <h1
-            className="animate-hero-fade-in text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-[-0.04em] mb-8"
+            className="animate-hero-fade-in text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-[-0.03em] mb-6"
             style={{ animationDelay: "120ms" }}
           >
             <span className="block text-white">The Work</span>
@@ -258,7 +243,7 @@ export default function WorkClient() {
       </section>
 
       {/* ---------- Filter bar ---------- */}
-      <section className="sticky top-16 z-30 py-4 px-6 bg-[#080808]/85 backdrop-blur-md border-y border-[#141414]">
+      <section className="py-4 px-6 border-y border-[#1a1a1a] bg-black/40">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
           <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
             {CATEGORIES.map((c) => {

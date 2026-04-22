@@ -292,3 +292,37 @@ html {
 /* Hide scrollbar (used on filter bar) */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ---- Pravec 8 / CRT effects ---- */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.crt-screen {
+  background:
+    radial-gradient(ellipse at center, rgba(200,255,0,0.025) 0%, transparent 60%),
+    #050505;
+  box-shadow:
+    inset 0 0 120px rgba(0,0,0,0.9),
+    inset 0 0 30px rgba(200,255,0,0.06);
+}
+
+/* Horizontal scanlines */
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0) 4px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+/* Corner vignette + phosphor tint */
+.crt-vignette {
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);
+}
