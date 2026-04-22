@@ -57,41 +57,15 @@ export default function Hero() {
           }}
         />
 
-        {/* Vertical "spine" label on the far right — rotated engineering tag */}
-        <div
-          className="absolute top-1/2 right-5 font-mono text-[10px] uppercase tracking-[0.4em] text-[#c8ff00]/35 whitespace-nowrap"
-          style={{ transform: "rotate(-90deg) translateX(50%)", transformOrigin: "right center" }}
-        >
-          VEKTO · SIGNAL BROADCAST — MMXXVI
-        </div>
-
-        {/* Thin vertical lime tick on the far right edge, fading at the ends */}
-        <div
-          className="absolute top-[18%] bottom-[18%] right-2 w-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, transparent 0%, rgba(200,255,0,0.35) 20%, rgba(200,255,0,0.35) 80%, transparent 100%)",
-          }}
-        />
-
-        {/* Tiny coordinate marker above the screen area */}
-        <div className="absolute top-8 left-[72%] font-mono text-[9px] uppercase tracking-[0.3em] text-[#c8ff00]/30">
-          <span className="text-[#c8ff00]/55">◉</span> N 42°41′ · E 23°19′
+        {/* Bottom-right technical caption */}
+        <div className="absolute bottom-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40">
+          MACINTOSH 128K · 1984 — VEKTO/OS
         </div>
 
         {/* Floor glow directly under the Mac for grounding */}
         <div
           className="absolute bottom-0 right-[8%] w-[52%] h-[14%]"
           style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.08), transparent 70%)" }}
-        />
-
-        {/* Floor "horizon" line — thin gradient that visually anchors the Mac */}
-        <div
-          className="absolute bottom-[12%] right-0 w-[46%] h-px"
-          style={{
-            background:
-              "linear-gradient(to left, transparent 0%, rgba(200,255,0,0.22) 30%, rgba(200,255,0,0.22) 70%, transparent 100%)",
-          }}
         />
       </div>
 
