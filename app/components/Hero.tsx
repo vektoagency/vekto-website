@@ -1,5 +1,6 @@
 import { HeroVideosMobile } from "./HeroVideos";
 import HeroPravec from "./HeroPravec";
+import HeroLeftCurtain from "./HeroLeftCurtain";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
@@ -19,14 +20,13 @@ export default function Hero() {
 
       <HeroVideosMobile />
 
-      {/* Desktop: 3D Mac on the right, text on the left. On click, the
-          wrapper waits for the camera to fully zoom (canvas saturated
-          with uniform phosphor), then expands to fullscreen so the
-          CRT shader becomes the portfolio page background. */}
-      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[52%]">
+      {/* Desktop: canvas is fullscreen and transparent; Mac is panned
+          visually onto the right via the idle camera. The left curtain
+          below covers the rest in solid #080808 so the layout reads the
+          same as before. On click, camera zooms while the curtain fades
+          out — one directionless motion, no rect expansion. */}
+      <div className="hidden lg:block absolute inset-0">
         <HeroPravec />
-        <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
       </div>
 
       {/* Mobile gradients top/bottom */}
@@ -81,8 +81,10 @@ export default function Hero() {
         </Stagger>
       </div>
 
-      {/* ── DESKTOP: text left ── */}
-      <div className="hidden lg:flex relative z-10 flex-col justify-center px-16 xl:px-24 pt-24 pb-16 w-[55%] flex-shrink-0">
+      {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
+      <HeroLeftCurtain className="hidden lg:flex absolute inset-y-0 left-0 w-[55%] z-10 bg-[#080808] flex-col justify-center px-16 xl:px-24 pt-24 pb-16">
+        <div aria-hidden className="absolute inset-y-0 right-0 w-40 pointer-events-none"
+          style={{ background: "linear-gradient(to left, transparent, #080808)" }} />
         <Stagger delay={0} className="w-fit">
           <div className="inline-flex items-center gap-2 border border-[#c8ff00]/30 rounded-full px-4 py-1.5 mb-8">
             <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
@@ -118,7 +120,7 @@ export default function Hero() {
         <Stagger delay={550}>
           <p className="text-sm text-[#555] mt-4">Free demo tailored to your business — no strings attached.</p>
         </Stagger>
-      </div>
+      </HeroLeftCurtain>
 
     </section>
   );

@@ -20,8 +20,11 @@ type ScreenInfo = {
   height: number;
 };
 
-const DEFAULT_IDLE_CAM = new THREE.Vector3(1.1, 1.3, 5.4);
-const DEFAULT_IDLE_TARGET = new THREE.Vector3(0, 0.0, 0.3);
+// Canvas is now fullscreen. Pan the whole view left so the Mac renders
+// visually on the right (~74% of viewport) — mirrors where the Mac sat
+// in the previous w-[52%] right-col layout.
+const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.2, 1.3, 5.4);
+const DEFAULT_IDLE_TARGET = new THREE.Vector3(-1.3, 0.0, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
@@ -136,7 +139,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       </Canvas>
 
       {!zoomedIn && (
-        <div className="pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 z-10 text-center">
+        <div className="pointer-events-none absolute top-20 left-[74%] -translate-x-1/2 z-10 text-center">
           <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-90"}`}>
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />

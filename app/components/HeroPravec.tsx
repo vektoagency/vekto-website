@@ -20,9 +20,8 @@ export default function HeroPravec() {
   const [overlayOpen, setOverlayOpen] = useState(false);
 
   const startZoom = () => {
+    window.dispatchEvent(new Event("vekto:zoom-started"));
     setZoomedIn(true);
-    // Camera drives into the screen, phosphor grows to fill the viewport.
-    // Overlay content fades in once the camera has saturated the canvas.
     setTimeout(() => setOverlayOpen(true), 620);
   };
 
@@ -38,7 +37,10 @@ export default function HeroPravec() {
 
   const handleOverlayClose = () => {
     setOverlayOpen(false);
-    setTimeout(() => setZoomedIn(false), 420);
+    setTimeout(() => {
+      setZoomedIn(false);
+      window.dispatchEvent(new Event("vekto:zoom-ended"));
+    }, 420);
   };
 
   useEffect(() => () => { document.body.style.overflow = ""; }, []);
@@ -52,17 +54,6 @@ export default function HeroPravec() {
 
   return (
     <>
-      {/* Opaque backdrop pinned behind the canvas during zoom — hides hero
-          text from bleeding through transparent canvas regions or the
-          translucent overlay layers above. */}
-      {zoomedIn && (
-        <div
-          aria-hidden
-          className="fixed inset-0 z-[54] pointer-events-none bg-[#050804]"
-          style={{ animation: "poBackdropFade 220ms ease-out both" }}
-        />
-      )}
-
       <div className={zoomedIn ? "fixed inset-0 z-[55]" : "absolute inset-0"}>
         <MacintoshScene zoomedIn={zoomedIn} onScreenClick={handleScreenClick} />
       </div>
