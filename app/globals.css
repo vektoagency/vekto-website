@@ -526,10 +526,12 @@ html {
   pointer-events: none;
 }
 
-/* Subtle dark wash so white/green text stays legible over bright phosphor */
+/* Dark wash so headings + terminal text stay readable while the live
+   CRT shader keeps showing through underneath. Strong at the edges,
+   softer toward center so the phosphor glow is still visible. */
 .po-dim {
   background:
-    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.75) 70%, rgba(0, 0, 0, 0.82) 100%);
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.82) 70%, rgba(0, 0, 0, 0.88) 100%);
   pointer-events: none;
 }
 

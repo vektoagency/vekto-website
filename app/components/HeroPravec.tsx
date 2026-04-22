@@ -19,14 +19,25 @@ export default function HeroPravec() {
   const [zoomedIn, setZoomedIn] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
 
+  const startZoom = () => {
+    setZoomedIn(true);
+    // Camera drives into the screen, phosphor grows to fill the fullscreen
+    // canvas in place. Overlay content fades in on top while the live CRT
+    // shader keeps rendering underneath as the page background.
+    setTimeout(() => setOverlayOpen(true), 600);
+  };
+
   const handleScreenClick = () => {
     if (zoomedIn) return;
-    setZoomedIn(true);
-    // Camera drives into the screen (~500ms at lerp 0.14). The
-    // PortfolioOverlay then crossfades in — its phosphor background and
-    // scanlines fade in everywhere uniformly via pure opacity. No DOM
-    // expansion, no side bias.
-    setTimeout(() => setOverlayOpen(true), 500);
+    // If the user has scrolled, smoothly return to top first so the
+    // canvas (about to be promoted to fixed) lines up with the hero's
+    // current idle position — no layout snap.
+    if (typeof window !== "undefined" && window.scrollY > 8) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(startZoom, 340);
+    } else {
+      startZoom();
+    }
   };
 
   const handleOverlayClose = () => {
@@ -45,7 +56,7 @@ export default function HeroPravec() {
 
   return (
     <>
-      <div className="absolute inset-0">
+      <div className={zoomedIn ? "fixed inset-0 z-[55]" : "absolute inset-0"}>
         <MacintoshScene zoomedIn={zoomedIn} onScreenClick={handleScreenClick} />
       </div>
       <PortfolioOverlay open={overlayOpen} onClose={handleOverlayClose} />
