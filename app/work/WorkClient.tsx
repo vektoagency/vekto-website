@@ -289,7 +289,7 @@ export default function WorkClient() {
   }, []);
 
   return (
-    <div className="relative text-white work-crt">
+    <div className="relative text-white work-crt crt-emerge">
       {/* Soft dark wash so the persistent CRT canvas glows through but text stays legible */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[2]"
         style={{ background: "radial-gradient(ellipse at 50% 30%, rgba(10,8,5,0.25) 0%, rgba(10,8,5,0.82) 65%, rgba(10,8,5,0.96) 100%)" }} />
@@ -297,6 +297,8 @@ export default function WorkClient() {
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[50] work-scanlines opacity-[0.22]" />
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[50] work-vignette" />
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[51] work-bootsweep" />
+      {/* Lingering phosphor curtain — fades over 2.4s so transition feels continuous */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[52] phosphor-curtain" />
 
       {/* ----------- HERO ----------- */}
       <section className="relative pt-8 md:pt-14 pb-6 px-5 md:px-8">

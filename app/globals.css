@@ -475,3 +475,29 @@ html {
   background:
     radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);
 }
+
+/* Phosphor "curtain" that lingers on /work after CRT reveal, slowly fading.
+   Makes the page feel like content emerging from inside the monitor rather
+   than a brand-new page loading. */
+@keyframes phosphorFade {
+  0%   { opacity: 0.55; filter: blur(0.6px); }
+  35%  { opacity: 0.3; }
+  100% { opacity: 0; filter: blur(0); }
+}
+.phosphor-curtain {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(200,255,0,0.35) 0%, rgba(74,92,13,0.22) 45%, rgba(10,8,5,0) 80%),
+    linear-gradient(to bottom, rgba(200,255,0,0.12), rgba(0,0,0,0));
+  mix-blend-mode: screen;
+  animation: phosphorFade 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Soft hero content emergence — content fades up from within the phosphor */
+@keyframes crtEmerge {
+  0%   { opacity: 0; filter: brightness(1.8) blur(3px); transform: translateY(8px); }
+  30%  { opacity: 0.4; }
+  100% { opacity: 1; filter: brightness(1) blur(0); transform: translateY(0); }
+}
+.crt-emerge {
+  animation: crtEmerge 1.6s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
+}
