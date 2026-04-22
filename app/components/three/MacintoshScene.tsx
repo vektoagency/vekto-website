@@ -133,8 +133,11 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
             radialModulation={false}
             modulationOffset={0}
           />
-          <Noise opacity={zoomedIn ? 0.2 : 0.07} blendFunction={BlendFunction.SCREEN} />
-          <Vignette eskil={false} offset={0.18} darkness={0.88} />
+          {/* Canvas is fullscreen — keep grain + vignette off during idle
+              so the plain dark bg reads as solid, not noisy. They ramp
+              up during zoom where the CRT takeover wants that mood. */}
+          <Noise opacity={zoomedIn ? 0.2 : 0} blendFunction={BlendFunction.SCREEN} />
+          <Vignette eskil={false} offset={0.6} darkness={zoomedIn ? 0.88 : 0.3} />
         </EffectComposer>
       </Canvas>
 
