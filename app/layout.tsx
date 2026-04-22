@@ -39,7 +39,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
-      <head />
+      <head>
+        {/* Preload the Mac GLB + portfolio reel assets so the CRT portfolio
+            animation fires instantly on first click. */}
+        <link rel="preload" as="fetch" href="/models/mac-128k.glb" type="model/gltf-binary" crossOrigin="anonymous" />
+        <link rel="preload" as="image" href="/images/hero-anim/video-1s.webp" />
+        <link rel="preload" as="image" href="/images/hero-anim/video-2s.webp" />
+        <link rel="preload" as="image" href="/images/hero-anim/video-4s.webp" />
+        <link rel="preload" as="image" href="/images/hero-anim/video-5s.webp" />
+      </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
         {children}
         <TransitionBridge />

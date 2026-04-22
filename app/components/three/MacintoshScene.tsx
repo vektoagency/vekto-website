@@ -1,30 +1,12 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
-import MacintoshModel from "./MacintoshModel";
 import MacintoshGLB from "./MacintoshGLB";
-
-const GLB_URL = "/models/mac-128k.glb";
-
-/** Probe the GLB file once at mount; if present, use the real Mac, else fall back to procedural. */
-function useGlbAvailable(): boolean | null {
-  const [has, setHas] = useState<boolean | null>(null);
-  useEffect(() => {
-    let cancel = false;
-    fetch(GLB_URL, { method: "HEAD" })
-      .then((r) => !cancel && setHas(r.ok))
-      .catch(() => !cancel && setHas(false));
-    return () => {
-      cancel = true;
-    };
-  }, []);
-  return has;
-}
 
 type Props = {
   zoomedIn: boolean;
@@ -89,7 +71,6 @@ function CameraRig({
 export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
   const [hovered, setHovered] = useState(false);
   const [screen, setScreen] = useState<ScreenInfo | null>(null);
-  const hasGlb = useGlbAvailable();
 
   return (
     <div className="absolute inset-0">
@@ -117,21 +98,13 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
 
           <Environment preset="warehouse" />
 
-          {hasGlb === true ? (
-            <MacintoshGLB
-              hovered={hovered}
-              zoomedIn={zoomedIn}
-              onHoverChange={setHovered}
-              onScreenClick={() => onScreenClick?.()}
-              onScreenLocated={setScreen}
-            />
-          ) : hasGlb === false ? (
-            <MacintoshModel
-              hovered={hovered}
-              onHoverChange={setHovered}
-              onScreenClick={() => onScreenClick?.()}
-            />
-          ) : null}
+          <MacintoshGLB
+            hovered={hovered}
+            zoomedIn={zoomedIn}
+            onHoverChange={setHovered}
+            onScreenClick={() => onScreenClick?.()}
+            onScreenLocated={setScreen}
+          />
 
           <ContactShadows
             position={[0, -0.88, 0.2]}
@@ -164,11 +137,16 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       </Canvas>
 
       {!zoomedIn && (
-        <div className="pointer-events-none absolute top-28 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
-          <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-75"}`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-            {hovered ? "▸ CLICK SCREEN TO ENTER" : "VEKTO / PORTFOLIO"}
-          </span>
+        <div className="pointer-events-none absolute top-28 left-1/2 -translate-x-1/2 z-10 text-center">
+          <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-90"}`}>
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+              OUR PORTFOLIO LIVES INSIDE
+            </span>
+            <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/85">
+              {hovered ? "▸ click to enter" : "click the screen ↓"}
+            </span>
+          </div>
         </div>
       )}
     </div>
