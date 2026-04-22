@@ -24,7 +24,7 @@ type ScreenInfo = {
 // visually on the right, and pull the camera back slightly so the
 // keyboard + mouse aren't cramped against the viewport edge.
 const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.9, 1.35, 6.2);
-const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, -0.3, 0.3);
+const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, -0.1, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
