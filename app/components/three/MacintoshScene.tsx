@@ -21,10 +21,10 @@ type ScreenInfo = {
 };
 
 // Canvas is now fullscreen. Pan the whole view left so the Mac renders
-// visually on the right (~74% of viewport) — mirrors where the Mac sat
-// in the previous w-[52%] right-col layout.
-const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.2, 1.3, 5.4);
-const DEFAULT_IDLE_TARGET = new THREE.Vector3(-1.3, 0.0, 0.3);
+// visually on the right, and pull the camera back slightly so the
+// keyboard + mouse aren't cramped against the viewport edge.
+const DEFAULT_IDLE_CAM = new THREE.Vector3(0.2, 1.35, 6.2);
+const DEFAULT_IDLE_TARGET = new THREE.Vector3(-0.9, 0.0, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
