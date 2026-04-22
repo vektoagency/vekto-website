@@ -31,8 +31,8 @@ type Props = {
   onScreenClick?: () => void;
 };
 
-const IDLE_CAM = new THREE.Vector3(0.9, 1.1, 4.6);
-const IDLE_TARGET = new THREE.Vector3(0, -0.25, 0.4);
+const IDLE_CAM = new THREE.Vector3(1.1, 1.3, 5.4);
+const IDLE_TARGET = new THREE.Vector3(0, 0.0, 0.3);
 // CRT plane sits at ~z=0.65 from world origin, so camera must be
 // pulled back past it. 1.45 leaves the screen just filling the viewport
 // with a hint of beige bezel at the edges.
@@ -123,7 +123,7 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
             mipmapBlur
           />
           <ChromaticAberration
-            offset={zoomedIn ? [0.01, 0.01] : [0.0012, 0.0012]}
+            offset={zoomedIn ? [0.005, 0.005] : [0.0004, 0.0004]}
             blendFunction={BlendFunction.NORMAL}
             radialModulation={false}
             modulationOffset={0}

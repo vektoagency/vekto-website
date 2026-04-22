@@ -94,7 +94,13 @@ const fragmentShader = /* glsl */ `
     // Slight ambient phosphor warm
     color += uPhosphor * 0.03 * vign;
 
-    gl_FragColor = vec4(color, 1.0);
+    // Edge fade so the shader plane blends into whatever is behind it
+    // (real CRT tube / model's black screen) instead of showing a hard rect.
+    vec2 ev = abs(vUv - 0.5) * 2.0;
+    float edge = max(ev.x, ev.y);
+    float alphaMask = 1.0 - smoothstep(0.72, 1.0, edge);
+
+    gl_FragColor = vec4(color, alphaMask);
   }
 `;
 
@@ -125,6 +131,8 @@ export default function CRTScreen({ width, height, position = [0, 0, 0] }: Props
         fragmentShader={fragmentShader}
         uniforms={uniforms}
         toneMapped={false}
+        transparent
+        depthWrite={false}
       />
     </mesh>
   );

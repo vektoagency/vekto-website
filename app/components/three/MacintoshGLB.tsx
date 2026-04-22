@@ -59,9 +59,12 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick }: 
     <group ref={root}>
       <primitive object={prepared} scale={scale} position={offset} />
 
-      {/* CRT screen overlay — tweak position/size once the real model is in. */}
+      {/* CRT screen overlay — positioned to sit inside the model's bezel.
+          Values are tuned for the Sketchfab macintosh_128k GLB (normalized
+          to 1.6u tall). Size is intentionally slightly smaller than the
+          bezel so the shader blends into the black screen behind it. */}
       <group
-        position={[0, 0.32, 0.55]}
+        position={[0, 1.05, 0.48]}
         onPointerOver={(e) => {
           e.stopPropagation();
           onHoverChange(true);
@@ -77,23 +80,13 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick }: 
           onScreenClick();
         }}
       >
-        <CRTScreen width={0.72} height={0.54} />
-        <mesh position={[0, 0, 0.003]}>
-          <planeGeometry args={[0.72, 0.54]} />
-          <meshPhysicalMaterial
-            color="#0a0805"
-            transparent
-            opacity={0.12}
-            transmission={0.25}
-            roughness={0.08}
-            metalness={0}
-            thickness={0.05}
-          />
-        </mesh>
-        <mesh position={[0, 0, 0.006]} visible={hovered}>
-          <planeGeometry args={[0.74, 0.56]} />
-          <meshBasicMaterial color="#c8ff00" transparent opacity={0.08} />
-        </mesh>
+        <CRTScreen width={0.48} height={0.36} />
+        {hovered && (
+          <mesh position={[0, 0, 0.003]}>
+            <planeGeometry args={[0.5, 0.38]} />
+            <meshBasicMaterial color="#c8ff00" transparent opacity={0.06} />
+          </mesh>
+        )}
       </group>
     </group>
   );
