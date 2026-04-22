@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
   className?: string;
+  style?: CSSProperties;
 };
 
-export default function HeroLeftCurtain({ children, className = "" }: Props) {
+export default function HeroLeftCurtain({ children, className = "", style }: Props) {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function HeroLeftCurtain({ children, className = "" }: Props) {
     <div
       className={className}
       style={{
+        ...style,
         opacity: fading ? 0 : 1,
         transition: "opacity 620ms cubic-bezier(0.22,0.61,0.36,1)",
         pointerEvents: fading ? "none" : "auto",

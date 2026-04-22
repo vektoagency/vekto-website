@@ -82,9 +82,10 @@ export default function Hero() {
       </div>
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
-      <HeroLeftCurtain className="hidden lg:flex absolute inset-y-0 left-0 w-[55%] z-10 bg-[#080808] flex-col justify-center px-16 xl:px-24 pt-24 pb-16">
-        <div aria-hidden className="absolute inset-y-0 right-0 w-40 pointer-events-none"
-          style={{ background: "linear-gradient(to left, transparent, #080808)" }} />
+      <HeroLeftCurtain
+        className="hidden lg:flex absolute inset-y-0 left-0 w-[62%] z-10 flex-col justify-center px-16 xl:px-24 pt-24 pb-16"
+        style={{ background: "linear-gradient(to right, #080808 0%, #080808 72%, transparent 100%)" }}
+      >
         <Stagger delay={0} className="w-fit">
           <div className="inline-flex items-center gap-2 border border-[#c8ff00]/30 rounded-full px-4 py-1.5 mb-8">
             <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
