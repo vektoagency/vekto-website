@@ -60,8 +60,6 @@ export default function Hero() {
         {/* Corner brackets framing the Mac scene */}
         <div className="absolute top-6 right-6 w-14 h-14 border-t border-r border-[#c8ff00]/25" />
         <div className="absolute bottom-6 right-6 w-14 h-14 border-b border-r border-[#c8ff00]/25" />
-        <div className="absolute top-6 left-[58%] w-14 h-14 border-t border-l border-[#c8ff00]/25" />
-        <div className="absolute bottom-6 left-[58%] w-14 h-14 border-b border-l border-[#c8ff00]/25" />
 
         {/* Top-right status label */}
         <div className="absolute top-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/55 flex items-center gap-2">
@@ -69,8 +67,8 @@ export default function Hero() {
           CH_01 · LIVE
         </div>
 
-        {/* Technical caption — centered under the Mac screen */}
-        <div className="absolute bottom-10 left-[74%] -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40 whitespace-nowrap">
+        {/* Bottom-right technical caption */}
+        <div className="absolute bottom-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40">
           MACINTOSH 128K · 1984 — VEKTO/OS
         </div>
 
