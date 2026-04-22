@@ -133,8 +133,8 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
             radialModulation={false}
             modulationOffset={0}
           />
-          <Noise opacity={zoomedIn ? 0.2 : 0.05} blendFunction={BlendFunction.SCREEN} />
-          <Vignette eskil={false} offset={0.55} darkness={zoomedIn ? 0.88 : 0.4} />
+          <Noise opacity={zoomedIn ? 0.2 : 0} blendFunction={BlendFunction.SCREEN} />
+          <Vignette eskil={false} offset={0.5} darkness={zoomedIn ? 0.88 : 0.55} />
         </EffectComposer>
       </Canvas>
 

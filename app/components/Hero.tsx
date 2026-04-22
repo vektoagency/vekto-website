@@ -20,11 +20,29 @@ export default function Hero() {
 
       <HeroVideosMobile />
 
+      {/* Desktop atmosphere — a quiet, designed background that sits
+          behind the transparent canvas. Subtle lime glow under the CRT
+          (light spill), a soft warm floor gradient for depth, and a
+          dark top + right-edge fall-off so the Mac reads like it's
+          sitting inside a dimly lit room, not on flat black. */}
+      <div
+        aria-hidden
+        className="hidden lg:block absolute inset-0 pointer-events-none"
+        style={{
+          background: `
+            radial-gradient(ellipse 38% 48% at 76% 46%, rgba(200,255,0,0.055) 0%, rgba(200,255,0,0.018) 35%, transparent 72%),
+            radial-gradient(ellipse 55% 28% at 78% 96%, rgba(180,160,90,0.10) 0%, transparent 70%),
+            linear-gradient(to right, #0a0b08 0%, #0a0b08 55%, #0c0d09 78%, #070805 100%),
+            linear-gradient(to bottom, #060705 0%, #0b0c08 45%, #080905 100%)
+          `,
+        }}
+      />
+
       {/* Desktop: canvas is fullscreen and transparent; Mac is panned
           visually onto the right via the idle camera. The left curtain
-          below covers the rest in solid #080808 so the layout reads the
-          same as before. On click, camera zooms while the curtain fades
-          out — one directionless motion, no rect expansion. */}
+          below covers the rest so the layout reads the same as before.
+          On click, camera zooms while the curtain fades out — one
+          directionless motion, no rect expansion. */}
       <div className="hidden lg:block absolute inset-0">
         <HeroPravec />
       </div>
