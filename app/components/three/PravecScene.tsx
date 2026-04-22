@@ -2,12 +2,13 @@
 
 import { Suspense, useState, useRef, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, ContactShadows } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette, ChromaticAberration } from "@react-three/postprocessing";
+import { Environment, ContactShadows, Sparkles } from "@react-three/drei";
+import { EffectComposer, Bloom, Vignette, ChromaticAberration, Noise } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import { useRouter } from "next/navigation";
 import PravecModel from "./PravecModel";
+import ShaderBackdrop from "./ShaderBackdrop";
 
 function CameraRig({ transitioning }: { transitioning: boolean }) {
   const { camera } = useThree();
@@ -116,6 +117,18 @@ export default function PravecScene() {
 
             <Environment preset="warehouse" />
 
+            <ShaderBackdrop intensity={transitioning ? 2.2 : 1.0} />
+
+            <Sparkles
+              count={60}
+              scale={[6, 4, 4]}
+              position={[0, 0, 0]}
+              size={2}
+              speed={0.25}
+              opacity={0.6}
+              color="#c8ff00"
+            />
+
             <PravecModel
               onScreenClick={handleEnter}
               hovered={hovered}
@@ -136,17 +149,18 @@ export default function PravecScene() {
 
           <EffectComposer multisampling={0}>
             <Bloom
-              intensity={0.9}
-              luminanceThreshold={0.55}
+              intensity={transitioning ? 1.8 : 1.1}
+              luminanceThreshold={0.5}
               luminanceSmoothing={0.25}
               mipmapBlur
             />
             <ChromaticAberration
-              offset={transitioning ? [0.006, 0.006] : [0.0008, 0.0008]}
+              offset={transitioning ? [0.015, 0.015] : [0.001, 0.001]}
               blendFunction={BlendFunction.NORMAL}
               radialModulation={false}
               modulationOffset={0}
             />
+            <Noise opacity={transitioning ? 0.35 : 0.06} blendFunction={BlendFunction.SCREEN} />
             <Vignette eskil={false} offset={0.15} darkness={0.9} />
           </EffectComposer>
         </Canvas>

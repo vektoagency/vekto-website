@@ -1,22 +1,29 @@
 "use client";
 
-import { useRef, type ReactElement } from "react";
+import { useRef, type ReactElement, type ComponentProps } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { RoundedBox, Text } from "@react-three/drei";
+import { RoundedBox, Text as DreiText } from "@react-three/drei";
 import CRTScreen from "./CRTScreen";
 
-// Accurate aged Bulgarian-beige plastic palette
-const CASE_TOP = "#d9cfb4";
-const CASE_FRONT = "#cec3a4";
-const CASE_SIDE = "#b8ad8e";
-const BEZEL = "#1a1714";
-const BEZEL_INNER = "#080604";
-const KEY_BODY = "#5e554a";
-const KEY_TOP = "#ebe3cf";
+/* Cyrillic-capable font (Roboto Bold ships with Cyrillic glyphs) */
+const CYR_FONT = "/fonts/roboto-regular.ttf";
+function Text(props: ComponentProps<typeof DreiText>) {
+  return <DreiText font={CYR_FONT} {...props} />;
+}
+
+/* Aged Pravec-beige palette matching the reference photos */
+const CASE = "#e7ddc1";        // main cream plastic
+const CASE_WARM = "#e2d7b7";   // slight top highlight
+const CASE_SHADOW = "#c9be9c"; // shadow side
+const SEAM = "#b3a682";        // panel seams
+const SCREEN_TINT = "#34312a"; // dark phosphor tube behind glass (recessed)
+const KEY_BODY = "#d3c8a8";    // key skirts
+const KEY_TOP = "#ece3c8";     // cream key tops
 const KEY_LABEL = "#2a241d";
-const LABEL_DARK = "#34281a";
-const LABEL_RED = "#8c2118";
+const LABEL_DARK = "#3a2f1e";
+const LABEL_RED = "#8a1f16";
+const KNOB = "#b5aa8c";
 
 type Props = {
   onScreenClick?: () => void;
@@ -24,346 +31,294 @@ type Props = {
   onHoverChange?: (h: boolean) => void;
 };
 
-/* ---------- Keyboard ---------- */
-function Keycap({ position, size = [0.11, 0.055, 0.11] as [number, number, number], label }: {
+/* ------------------------- Keyboard ------------------------- */
+function Keycap({
+  position,
+  size = [0.1, 0.045, 0.1],
+}: {
   position: [number, number, number];
   size?: [number, number, number];
-  label?: string;
 }) {
   const [w, h, d] = size;
   return (
     <group position={position}>
-      {/* Base / skirt — darker plastic */}
-      <RoundedBox args={[w, h * 0.55, d]} radius={0.008} smoothness={2} position={[0, -h * 0.22, 0]}>
-        <meshStandardMaterial color={KEY_BODY} roughness={0.65} />
+      {/* Darker skirt */}
+      <RoundedBox args={[w, h * 0.5, d]} radius={0.008} smoothness={2} position={[0, -h * 0.25, 0]}>
+        <meshStandardMaterial color={KEY_BODY} roughness={0.7} />
       </RoundedBox>
-      {/* Top cap — cream with slight sculpt */}
-      <RoundedBox args={[w * 0.88, h * 0.55, d * 0.88]} radius={0.015} smoothness={3} position={[0, h * 0.12, 0]}>
+      {/* Flat cream top */}
+      <RoundedBox args={[w * 0.9, h * 0.5, d * 0.9]} radius={0.012} smoothness={3} position={[0, h * 0.1, 0]}>
         <meshStandardMaterial color={KEY_TOP} roughness={0.55} />
       </RoundedBox>
-      {label && (
-        <Text
-          position={[0, h * 0.41, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          fontSize={0.028}
-          color={KEY_LABEL}
-          anchorX="center"
-          anchorY="middle"
-        >
-          {label}
-        </Text>
-      )}
     </group>
   );
 }
 
 function Keyboard() {
-  const keyW = 0.11;
-  const keyD = 0.11;
-  const keyGap = 0.017;
-  // Row offsets (shift characteristic of staggered keyboard)
-  const rowConfig = [
-    { count: 13, offset: 0, labels: ["ESC", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="] },
-    { count: 13, offset: keyW * 0.45, labels: ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "RET"] },
-    { count: 12, offset: keyW * 0.75, labels: ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "SHF"] },
-    { count: 11, offset: keyW * 1.0, labels: ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "CTL"] },
-  ];
-
-  const y = 0.035;
-  const z0 = 0.22;
+  const kW = 0.1;
+  const kD = 0.1;
+  const gap = 0.016;
+  // 5 rows matching the photo (numbers, QWERTY, ASDF, ZXCV, space/modifiers)
+  const rowCounts = [14, 14, 13, 12, 9];
+  const startY = 0.03;
+  const startZ = 0.26;
 
   const items: ReactElement[] = [];
-  rowConfig.forEach((row, rIdx) => {
-    const total = row.count * keyW + (row.count - 1) * keyGap;
-    for (let c = 0; c < row.count; c++) {
-      const x = -total / 2 + row.offset + c * (keyW + keyGap) + keyW / 2;
-      const z = z0 - rIdx * (keyD + keyGap);
-      items.push(
-        <Keycap
-          key={`${rIdx}-${c}`}
-          position={[x, y, z]}
-          label={row.labels[c]}
-        />
-      );
+  rowCounts.forEach((count, r) => {
+    const width = count * kW + (count - 1) * gap;
+    const offset = r * kW * 0.12; // slight right-shift stagger
+    for (let c = 0; c < count; c++) {
+      const x = -width / 2 + offset + c * (kW + gap) + kW / 2;
+      const z = startZ - r * (kD + gap);
+      // Bottom row center = space bar (wider)
+      if (r === 4 && c === 4) {
+        items.push(
+          <Keycap key={`${r}-${c}-space`} position={[x, startY, z]} size={[kW * 4, 0.045, kD]} />
+        );
+      } else if (r === 4 && c > 4) {
+        continue;
+      } else {
+        items.push(<Keycap key={`${r}-${c}`} position={[x, startY, z]} />);
+      }
     }
   });
-
-  // Space bar — extra wide
-  items.push(
-    <Keycap
-      key="space"
-      position={[0, y, z0 - 4 * (keyD + keyGap)]}
-      size={[1.1, 0.055, 0.1]}
-    />
-  );
-
   return <group>{items}</group>;
 }
 
-/* ---------- Base unit (computer + keyboard) ---------- */
+/* ------------------------- Base (computer + keyboard) ------------------------- */
+/**
+ * Wedge-shaped base: thicker at back, slopes down toward the front edge.
+ * Keyboard sits directly on the top face (no dark inset).
+ */
 function Base() {
-  const baseW = 3.2;
-  const baseH = 0.35;
-  const baseD = 1.9;
+  const W = 3.6;   // base width
+  const Dback = 0.34; // thickness at back
+  const Dfront = 0.11; // thickness at front
+  const DP = 1.9;  // depth (front-to-back)
+
+  // Build the wedge via an extruded shape in X-Z with Y as height variation.
+  // We'll approximate with two stacked RoundedBoxes + a sloped top plane.
+  // Simpler: a RoundedBox for the base (uniform height = avg), then a sloped top cap.
 
   return (
-    <group position={[0, -1.0, 0.3]}>
-      {/* Main chassis (top face is the keyboard area, slightly sloped) */}
-      <RoundedBox args={[baseW, baseH, baseD]} radius={0.05} smoothness={4} position={[0, 0, 0]}>
-        <meshStandardMaterial color={CASE_TOP} roughness={0.7} metalness={0.02} />
+    <group position={[0, -0.92, 0.3]}>
+      {/* Front (thinner) section */}
+      <RoundedBox args={[W, Dfront, DP * 0.45]} radius={0.04} smoothness={3} position={[0, -Dback / 2 + Dfront / 2, DP / 2 - (DP * 0.45) / 2]}>
+        <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
       </RoundedBox>
 
-      {/* Front lip (darker strip) */}
-      <mesh position={[0, baseH * 0.1, baseD / 2 - 0.005]}>
-        <boxGeometry args={[baseW - 0.08, 0.05, 0.003]} />
-        <meshStandardMaterial color={CASE_FRONT} roughness={0.6} />
-      </mesh>
-
-      {/* Inset keyboard well (darker) */}
-      <RoundedBox
-        args={[baseW - 0.45, 0.018, baseD - 0.6]}
-        radius={0.02}
-        smoothness={3}
-        position={[0.08, baseH / 2 - 0.005, -0.05]}
-      >
-        <meshStandardMaterial color="#20190f" roughness={0.55} />
+      {/* Back (thicker) section */}
+      <RoundedBox args={[W, Dback, DP * 0.6]} radius={0.05} smoothness={3} position={[0, 0, -DP / 2 + (DP * 0.6) / 2]}>
+        <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
       </RoundedBox>
 
-      {/* Keys */}
-      <group position={[0.08, baseH / 2, -0.05]}>
+      {/* Sloped transition (top face wedge from back → front) */}
+      {(() => {
+        const sX = W - 0.02;
+        const sZ = DP * 0.5;
+        // Top sloped slab using a Box rotated slightly
+        const slopeAngle = Math.atan2((Dback - Dfront) / 2, sZ);
+        return (
+          <mesh position={[0, (Dfront / 2 + Dback / 2 - Dback / 2) / 2 + 0.02, 0.03]} rotation={[slopeAngle, 0, 0]}>
+            <boxGeometry args={[sX, 0.03, sZ]} />
+            <meshStandardMaterial color={CASE_WARM} roughness={0.68} />
+          </mesh>
+        );
+      })()}
+
+      {/* Keyboard keys directly on base (wedged onto the top center area) */}
+      <group position={[0, Dback / 2 + 0.01, 0.05]}>
         <Keyboard />
       </group>
 
-      {/* Right-side floppy drives (two stacked) */}
-      <group position={[baseW / 2 - 0.18, 0, -0.2]}>
-        {/* Drive bezel block */}
-        <RoundedBox args={[0.3, baseH, 1.0]} radius={0.02} smoothness={3}>
-          <meshStandardMaterial color={CASE_FRONT} roughness={0.65} />
-        </RoundedBox>
-        {/* Slot 1 */}
-        <mesh position={[0, 0.06, 0.505]}>
-          <boxGeometry args={[0.26, 0.04, 0.01]} />
-          <meshStandardMaterial color={BEZEL_INNER} roughness={0.3} />
-        </mesh>
-        {/* Slot 2 */}
-        <mesh position={[0, -0.06, 0.505]}>
-          <boxGeometry args={[0.26, 0.04, 0.01]} />
-          <meshStandardMaterial color={BEZEL_INNER} roughness={0.3} />
-        </mesh>
-        {/* LEDs */}
-        <mesh position={[0.08, 0.115, 0.505]}>
-          <sphereGeometry args={[0.008, 12, 12]} />
-          <meshStandardMaterial color="#ff2a0a" emissive="#ff2a0a" emissiveIntensity={1.2} toneMapped={false} />
-        </mesh>
-        <mesh position={[0.08, -0.005, 0.505]}>
-          <sphereGeometry args={[0.008, 12, 12]} />
-          <meshStandardMaterial color="#ff2a0a" emissive="#ff2a0a" emissiveIntensity={0.4} toneMapped={false} />
-        </mesh>
-      </group>
-
-      {/* Power indicator — front left */}
-      <group position={[-baseW / 2 + 0.25, baseH / 2 - 0.01, baseD / 2 - 0.2]}>
-        <mesh>
-          <sphereGeometry args={[0.025, 16, 16]} />
-          <meshStandardMaterial color="#39e661" emissive="#39e661" emissiveIntensity={2.4} toneMapped={false} />
-        </mesh>
-        <Text
-          position={[0.07, 0, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          fontSize={0.035}
-          color={LABEL_DARK}
-          anchorX="left"
-          anchorY="middle"
-          letterSpacing={0.15}
-        >
-          POWER
-        </Text>
-      </group>
-
-      {/* PRAVEC brand plate on top-front-left of base */}
+      {/* Small "8A" red label on top-right of base */}
+      <RoundedBox args={[0.22, 0.005, 0.13]} radius={0.01} smoothness={2} position={[W / 2 - 0.22, Dback / 2 + 0.005, -DP / 2 + 0.24]}>
+        <meshStandardMaterial color="#f0e8cf" roughness={0.5} />
+      </RoundedBox>
       <Text
-        position={[-baseW / 2 + 0.6, baseH / 2 + 0.002, baseD / 2 - 0.18]}
+        position={[W / 2 - 0.22, Dback / 2 + 0.009, -DP / 2 + 0.24]}
         rotation={[-Math.PI / 2, 0, 0]}
         fontSize={0.07}
         color={LABEL_RED}
-        anchorX="left"
+        anchorX="center"
         anchorY="middle"
-        letterSpacing={0.25}
-        maxWidth={2}
       >
-        PRAVEC 8A
+        8А
       </Text>
+
+      {/* Top-left small brand plate — "Правец" */}
       <Text
-        position={[-baseW / 2 + 0.6, baseH / 2 + 0.002, baseD / 2 - 0.09]}
+        position={[-W / 2 + 0.35, Dback / 2 + 0.005, -DP / 2 + 0.24]}
         rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.03}
+        fontSize={0.04}
         color={LABEL_DARK}
         anchorX="left"
         anchorY="middle"
-        letterSpacing={0.2}
+        letterSpacing={0.25}
       >
-        MICROCOMPUTER
+        ПРАВЕЦ
       </Text>
 
-      {/* Subtle panel seams along the sides */}
+      {/* Side panel seams */}
       {[-1, 1].map((s) => (
-        <mesh key={s} position={[s * (baseW / 2 - 0.02), 0, 0]}>
-          <boxGeometry args={[0.003, baseH * 0.7, baseD - 0.2]} />
-          <meshStandardMaterial color={CASE_SIDE} roughness={0.7} />
+        <mesh key={s} position={[s * (W / 2 - 0.003), -0.05, -0.1]}>
+          <boxGeometry args={[0.003, Dback * 0.65, DP * 0.88]} />
+          <meshStandardMaterial color={SEAM} roughness={0.75} />
         </mesh>
       ))}
 
-      {/* Tiny feet */}
+      {/* Front lip seam */}
+      <mesh position={[0, -Dback / 2 + Dfront + 0.003, DP / 2 - 0.004]}>
+        <boxGeometry args={[W - 0.08, 0.002, 0.003]} />
+        <meshStandardMaterial color={SEAM} roughness={0.7} />
+      </mesh>
+
+      {/* Tiny rubber feet */}
       {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([sx, sz], i) => (
-        <mesh key={i} position={[sx * (baseW / 2 - 0.18), -baseH / 2 - 0.015, sz * (baseD / 2 - 0.18)]}>
-          <cylinderGeometry args={[0.05, 0.05, 0.03, 16]} />
-          <meshStandardMaterial color="#141110" roughness={0.8} />
+        <mesh key={i} position={[sx * (W / 2 - 0.2), -Dback / 2 - 0.012, sz * (DP / 2 - 0.18)]}>
+          <cylinderGeometry args={[0.035, 0.035, 0.02, 16]} />
+          <meshStandardMaterial color="#1a1713" roughness={0.85} />
         </mesh>
       ))}
     </group>
   );
 }
 
-/* ---------- Monitor ---------- */
+/* ------------------------- Monitor ------------------------- */
+/**
+ * Characteristic proportions: slightly taller than wide, BOXY with a
+ * distinctive raised "hump" on the back-top where the CRT neck tapers in.
+ * Front bezel is SAME cream plastic (not black).
+ */
 function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
-  const w = 1.9;
-  const h = 1.7;
-  const d = 1.6;
+  const W = 1.55;        // width
+  const H = 1.45;        // height (front face)
+  const D_front = 0.9;   // depth of main boxy front section
+  const D_hump = 0.75;   // additional back-taper hump
 
   return (
-    <group position={[0, 0.3, -0.25]}>
-      {/* Main front case */}
-      <RoundedBox args={[w, h, d * 0.6]} radius={0.08} smoothness={4} position={[0, 0, 0.15]}>
-        <meshStandardMaterial color={CASE_TOP} roughness={0.72} metalness={0.02} />
+    <group position={[-0.15, 0.2, -0.3]}>
+      {/* Main front cube (the boxy part with the screen) */}
+      <RoundedBox args={[W, H, D_front]} radius={0.06} smoothness={4}>
+        <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
       </RoundedBox>
 
-      {/* Back CRT tube housing (tapers smaller going back) */}
-      <RoundedBox args={[w * 0.7, h * 0.72, d * 0.55]} radius={0.06} smoothness={3} position={[0, -0.02, -0.15]}>
-        <meshStandardMaterial color={CASE_SIDE} roughness={0.75} />
-      </RoundedBox>
-      <RoundedBox args={[w * 0.4, h * 0.4, 0.25]} radius={0.04} smoothness={3} position={[0, -0.03, -0.52]}>
-        <meshStandardMaterial color={CASE_SIDE} roughness={0.78} />
+      {/* Raised back "hump" — taller in the middle where CRT neck starts,
+          sits only on TOP-BACK half, shorter than main box */}
+      <RoundedBox
+        args={[W * 0.72, H * 0.78, D_hump]}
+        radius={0.06}
+        smoothness={4}
+        position={[0, H * 0.04, -(D_front / 2 + D_hump / 2 - 0.02)]}
+      >
+        <meshStandardMaterial color={CASE_SHADOW} roughness={0.75} />
       </RoundedBox>
 
-      {/* Top ventilation slots (deep grille) */}
-      {Array.from({ length: 14 }).map((_, i) => (
-        <mesh key={i} position={[0, h / 2 + 0.002, -0.32 + i * 0.06]}>
-          <boxGeometry args={[w * 0.55, 0.004, 0.022]} />
-          <meshStandardMaterial color={BEZEL} roughness={0.5} />
+      {/* Narrow CRT neck further back */}
+      <RoundedBox
+        args={[W * 0.36, H * 0.42, 0.35]}
+        radius={0.04}
+        smoothness={3}
+        position={[0, H * 0.02, -(D_front / 2 + D_hump + 0.13)]}
+      >
+        <meshStandardMaterial color={CASE_SHADOW} roughness={0.78} />
+      </RoundedBox>
+
+      {/* Top vent grille — DEEP slats cut into top of hump */}
+      {Array.from({ length: 18 }).map((_, i) => (
+        <mesh key={i} position={[0, H * 0.04 + H * 0.39 + 0.002, -D_front / 2 - 0.05 - i * 0.035]}>
+          <boxGeometry args={[W * 0.55, 0.003, 0.012]} />
+          <meshStandardMaterial color="#15120e" roughness={0.6} />
         </mesh>
       ))}
 
-      {/* Cyrillic brand on top */}
-      <Text
-        position={[0, h / 2 + 0.003, 0.38]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.078}
-        color={LABEL_RED}
-        anchorX="center"
-        anchorY="middle"
-        letterSpacing={0.35}
-      >
-        PRAVEC · 8A
-      </Text>
-
-      {/* Front screen bezel — large recessed black panel */}
-      <group position={[0, 0.1, d * 0.3 + 0.04]}>
-        <RoundedBox args={[w * 0.86, h * 0.78, 0.06]} radius={0.04} smoothness={3}>
-          <meshStandardMaterial color={BEZEL} roughness={0.35} metalness={0.1} />
-        </RoundedBox>
-
-        {/* Inner deeper recess */}
-        <mesh position={[0, 0, 0.032]}>
-          <boxGeometry args={[w * 0.76, h * 0.66, 0.002]} />
-          <meshStandardMaterial color={BEZEL_INNER} roughness={0.2} />
+      {/* -- FRONT FACE elements -- */}
+      {/* The recessed screen inset — same cream color, just slightly darker from shadow */}
+      <group position={[-0.12, 0.08, D_front / 2 + 0.001]}>
+        {/* Inset frame (darker cream, slight recess) */}
+        <mesh position={[0, 0, 0.001]}>
+          <planeGeometry args={[W * 0.72, H * 0.7]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.7} />
+        </mesh>
+        {/* Deeper inset (screen recess) */}
+        <mesh position={[0, 0, 0.002]}>
+          <planeGeometry args={[W * 0.64, H * 0.58]} />
+          <meshStandardMaterial color={SCREEN_TINT} roughness={0.4} />
         </mesh>
 
-        {/* CRT glass plane — holds the shader */}
+        {/* Curved CRT glass with phosphor shader — slightly bulged forward */}
         <group
-          position={[0, 0, 0.035]}
+          position={[0, 0, 0.025]}
           onClick={(e) => { e.stopPropagation(); onScreenClick?.(); }}
           onPointerOver={(e) => { e.stopPropagation(); onHoverChange?.(true); document.body.style.cursor = "pointer"; }}
           onPointerOut={(e) => { e.stopPropagation(); onHoverChange?.(false); document.body.style.cursor = "auto"; }}
         >
-          <CRTScreen width={w * 0.74} height={h * 0.64} />
+          {/* Curved glass using sphere segment: acts as forward-bulging screen */}
+          <mesh>
+            <sphereGeometry args={[2.2, 24, 24, 0, Math.PI * 2, Math.PI / 2 - 0.14, 0.28]} />
+            <meshPhysicalMaterial
+              color="#0f1a0a"
+              roughness={0.15}
+              transmission={0}
+              clearcoat={0.9}
+              clearcoatRoughness={0.1}
+              metalness={0.1}
+              envMapIntensity={1.5}
+            />
+          </mesh>
+          {/* Phosphor shader plane inside */}
+          <CRTScreen width={W * 0.6} height={H * 0.54} position={[0, 0, -0.005]} />
         </group>
-
-        {/* Glass reflection highlight (subtle) */}
-        <mesh position={[-w * 0.25, h * 0.22, 0.037]} rotation={[0, 0, -0.3]}>
-          <planeGeometry args={[w * 0.18, h * 0.08]} />
-          <meshBasicMaterial color="#ffffff" transparent opacity={0.025} />
-        </mesh>
 
         {hovered && (
           <pointLight position={[0, 0, 0.3]} color="#c8ff00" intensity={4} distance={3.5} />
         )}
       </group>
 
-      {/* Bottom bezel — brand plate + knobs */}
-      <group position={[0, -h / 2 + 0.1, d * 0.3 + 0.055]}>
-        {/* Left: brand text */}
-        <Text
-          position={[-w / 2 + 0.18, 0.015, 0]}
-          fontSize={0.055}
-          color={LABEL_RED}
-          anchorX="left"
-          anchorY="middle"
-          letterSpacing={0.3}
-        >
-          PRAVEC
-        </Text>
-        <Text
-          position={[-w / 2 + 0.18, -0.04, 0]}
-          fontSize={0.025}
-          color={LABEL_DARK}
-          anchorX="left"
-          anchorY="middle"
-          letterSpacing={0.15}
-        >
-          MODEL 8A
-        </Text>
-
-        {/* Right: knobs */}
-        {[-0.1, 0.12].map((ox, i) => (
-          <group key={i} position={[w / 2 - 0.22 + ox, 0, 0]}>
-            <mesh rotation={[Math.PI / 2, 0, 0]}>
-              <cylinderGeometry args={[0.055, 0.055, 0.035, 32]} />
-              <meshStandardMaterial color="#2a231c" roughness={0.5} metalness={0.2} />
-            </mesh>
-            {/* Pointer notch */}
-            <mesh position={[0.018, 0, 0.02]}>
-              <boxGeometry args={[0.003, 0.02, 0.01]} />
-              <meshStandardMaterial color="#e8dfca" roughness={0.4} />
-            </mesh>
-          </group>
-        ))}
+      {/* -- Right-side control strip (knobs + LED) -- */}
+      <group position={[W / 2 - 0.12, 0.12, D_front / 2 + 0.002]}>
+        {/* Brightness knob (larger) */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.18, 0]}>
+          <cylinderGeometry args={[0.045, 0.045, 0.02, 32]} />
+          <meshStandardMaterial color={KNOB} roughness={0.5} metalness={0.15} />
+        </mesh>
+        {/* Contrast knob (smaller) */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}>
+          <cylinderGeometry args={[0.035, 0.035, 0.02, 32]} />
+          <meshStandardMaterial color={KNOB} roughness={0.5} metalness={0.15} />
+        </mesh>
+        {/* Power LED */}
+        <mesh position={[0, -0.08, 0]}>
+          <sphereGeometry args={[0.013, 12, 12]} />
+          <meshStandardMaterial color="#39e661" emissive="#39e661" emissiveIntensity={2} toneMapped={false} />
+        </mesh>
+        {/* Small power button */}
+        <mesh position={[0, -0.18, 0]}>
+          <boxGeometry args={[0.05, 0.025, 0.012]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.7} />
+        </mesh>
       </group>
+
+      {/* Bottom-right tiny model label */}
+      <Text
+        position={[W / 2 - 0.2, -H / 2 + 0.08, D_front / 2 + 0.003]}
+        fontSize={0.028}
+        color={LABEL_DARK}
+        anchorX="center"
+        anchorY="middle"
+        letterSpacing={0.15}
+      >
+        ПРАВЕЦ 8А
+      </Text>
 
       {/* Side panel seams */}
       {[-1, 1].map((s) => (
-        <mesh key={s} position={[s * (w / 2 - 0.005), -0.1, 0.1]}>
-          <boxGeometry args={[0.004, h * 0.75, d * 0.55]} />
-          <meshStandardMaterial color={CASE_SIDE} roughness={0.75} />
+        <mesh key={s} position={[s * (W / 2 - 0.003), 0, 0]}>
+          <boxGeometry args={[0.003, H * 0.75, D_front * 0.92]} />
+          <meshStandardMaterial color={SEAM} roughness={0.75} />
         </mesh>
       ))}
     </group>
-  );
-}
-
-/* ---------- Cable from base to monitor ---------- */
-function Cable() {
-  // Simple bezier tube going from base back-right to monitor back-left
-  const curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.8, -0.6, -0.3),
-    new THREE.Vector3(0.6, -0.4, -0.6),
-    new THREE.Vector3(0.2, -0.1, -0.7),
-    new THREE.Vector3(-0.2, 0.05, -0.65),
-  ]);
-  return (
-    <mesh>
-      <tubeGeometry args={[curve, 32, 0.028, 12, false]} />
-      <meshStandardMaterial color="#141110" roughness={0.65} metalness={0.05} />
-    </mesh>
   );
 }
 
@@ -384,7 +339,6 @@ export default function PravecModel({ onScreenClick, hovered, onHoverChange }: P
     <group ref={group}>
       <Base />
       <Monitor onScreenClick={onScreenClick} hovered={hovered} onHoverChange={onHoverChange} />
-      <Cable />
     </group>
   );
 }
