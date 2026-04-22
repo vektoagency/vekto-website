@@ -44,7 +44,7 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
     const box = new THREE.Box3().setFromObject(cloned);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
-    const s = 1.5 / Math.max(size.y, 0.0001);
+    const s = 1.4 / Math.max(size.y, 0.0001);
     const off = new THREE.Vector3(-center.x, -center.y + size.y / 2, -center.z).multiplyScalar(s);
 
     cloned.updateMatrixWorld(true);
