@@ -191,7 +191,7 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
   const D_hump = 0.75;   // additional back-taper hump
 
   return (
-    <group position={[-0.15, 0.2, -0.3]}>
+    <group position={[-0.05, -0.05, -0.35]}>
       {/* Main front cube (the boxy part with the screen) */}
       <RoundedBox args={[W, H, D_front]} radius={0.06} smoothness={4}>
         <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
@@ -330,7 +330,7 @@ export default function PravecModel({ onScreenClick, hovered, onHoverChange }: P
   });
 
   return (
-    <group ref={group}>
+    <group ref={group} scale={0.82} position={[0, 0.15, 0]}>
       <Base />
       <Monitor onScreenClick={onScreenClick} hovered={hovered} onHoverChange={onHoverChange} />
     </group>

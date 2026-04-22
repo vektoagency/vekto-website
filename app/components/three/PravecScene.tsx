@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useRef, useEffect, useMemo } from "react";
+import { Suspense, useState, useRef, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, ContactShadows, Sparkles } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette, ChromaticAberration, Noise } from "@react-three/postprocessing";
@@ -9,11 +9,13 @@ import * as THREE from "three";
 import PravecModel from "./PravecModel";
 import ShaderBackdrop from "./ShaderBackdrop";
 
+const IDLE_CAM = new THREE.Vector3(0, 0.1, 7.2);
+const ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
+
 function CameraRig({ transitioning }: { transitioning: boolean }) {
   const { camera } = useThree();
   const t0 = useRef<number | null>(null);
-  const start = useRef(new THREE.Vector3(0, 0.2, 4.2));
-  const end = useMemo(() => new THREE.Vector3(0, 0.45, 0.9), []);
+  const start = useRef(IDLE_CAM.clone());
 
   useFrame((state) => {
     if (transitioning) {
@@ -23,15 +25,14 @@ function CameraRig({ transitioning }: { transitioning: boolean }) {
       }
       const dur = 0.95;
       const k = Math.min((state.clock.getElapsedTime() - t0.current) / dur, 1);
-      // easeInOutCubic then accel near end
       const eased = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
       const accel = eased + Math.pow(k, 4) * 0.4;
-      camera.position.lerpVectors(start.current, end, Math.min(accel, 1));
-      camera.lookAt(0, 0.4, 0);
+      camera.position.lerpVectors(start.current, ZOOM_CAM, Math.min(accel, 1));
+      camera.lookAt(0, 0.3, 0);
     } else {
       t0.current = null;
-      camera.position.lerp(new THREE.Vector3(0, 0.2, 4.2), 0.04);
-      camera.lookAt(0, 0.35, 0);
+      camera.position.lerp(IDLE_CAM, 0.05);
+      camera.lookAt(0, 0.1, 0);
     }
   });
 
@@ -61,7 +62,7 @@ export default function PravecScene() {
         <Canvas
           shadows
           dpr={[1, 1.75]}
-          camera={{ position: [0, 0.2, 4.2], fov: 35 }}
+          camera={{ position: [0, 0.1, 7.2], fov: 30 }}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         >
           <color attach="background" args={["#0a0805"]} />
