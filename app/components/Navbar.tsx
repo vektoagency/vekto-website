@@ -2,10 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+
+type NavLink =
+  | { label: string; href: string; action?: undefined }
+  | { label: string; action: "portfolio"; href?: undefined };
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -13,13 +20,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = [
+  const links: NavLink[] = [
     { label: "Services", href: "#services" },
     { label: "Why VEKTO", href: "#why" },
-    { label: "Our Work", href: "/work" },
+    { label: "Portfolio", action: "portfolio" },
     { label: "Pricing", href: "#pricing" },
     { label: "Contact", href: "#contact" },
   ];
+
+  const handlePortfolio = () => {
+    setMenuOpen(false);
+    if (pathname === "/") {
+      window.dispatchEvent(new Event("vekto:open-portfolio"));
+    } else {
+      router.push("/work");
+    }
+  };
 
   return (
     <header
@@ -35,15 +51,25 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-[#9a958e] hover:text-white transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) =>
+            l.action === "portfolio" ? (
+              <button
+                key="portfolio"
+                onClick={handlePortfolio}
+                className="text-sm text-[#9a958e] hover:text-white transition-colors cursor-pointer"
+              >
+                {l.label}
+              </button>
+            ) : (
+              <a
+                key={l.href}
+                href={l.href}
+                className="text-sm text-[#9a958e] hover:text-white transition-colors"
+              >
+                {l.label}
+              </a>
+            )
+          )}
         </nav>
 
         {/* CTA */}
@@ -73,16 +99,26 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-[#111110] border-t border-[#1e1e1c] px-6 py-4 flex flex-col gap-4">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMenuOpen(false)}
-              className="text-[#9a958e] hover:text-white transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) =>
+            l.action === "portfolio" ? (
+              <button
+                key="portfolio"
+                onClick={handlePortfolio}
+                className="text-left text-[#9a958e] hover:text-white transition-colors cursor-pointer"
+              >
+                {l.label}
+              </button>
+            ) : (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-[#9a958e] hover:text-white transition-colors"
+              >
+                {l.label}
+              </a>
+            )
+          )}
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
