@@ -140,14 +140,14 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
 
   const hitPlane = screenInfo ? (
     <mesh
-      position={screenInfo.center.clone().add(screenInfo.normal.clone().multiplyScalar(0.015))}
+      position={screenInfo.center.clone().add(screenInfo.normal.clone().multiplyScalar(0.08))}
       quaternion={hitQuat}
       onPointerOver={(e) => { e.stopPropagation(); onHoverChange(true); document.body.style.cursor = "pointer"; }}
       onPointerOut={(e) => { e.stopPropagation(); onHoverChange(false); document.body.style.cursor = "auto"; }}
       onClick={(e) => { e.stopPropagation(); onScreenClick(); }}
     >
-      <planeGeometry args={[screenInfo.width * 1.08, screenInfo.height * 1.08]} />
-      <meshBasicMaterial color="#c8ff00" transparent opacity={hovered ? 0.04 : 0} />
+      <planeGeometry args={[screenInfo.width * 1.12, screenInfo.height * 1.12]} />
+      <meshBasicMaterial transparent opacity={0} depthWrite={false} />
     </mesh>
   ) : null;
 
