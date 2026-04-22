@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const VectorScope = dynamic(() => import("./three/VectorScope"), {
+const MacintoshScene = dynamic(() => import("./three/MacintoshScene"), {
   ssr: false,
   loading: () => null,
 });
@@ -12,8 +12,8 @@ const VectorScope = dynamic(() => import("./three/VectorScope"), {
 /**
  * A single WebGL canvas that persists across route transitions. On the
  * home page it sits inside the right-hand hero panel; on `/work` it
- * expands to fill the viewport. No overlay, no remount — the canvas
- * visually grows/shrinks while pages swap content behind it.
+ * expands to fill the viewport and the camera zooms into the CRT.
+ * No overlay, no remount — the canvas morphs while pages swap behind.
  */
 export default function PersistentHeroCanvas() {
   const pathname = usePathname();
@@ -23,7 +23,6 @@ export default function PersistentHeroCanvas() {
   const isWork = pathname === "/work";
   const isHome = pathname === "/";
 
-  // Fade the canvas out on home when the user scrolls past the hero
   useEffect(() => {
     if (!isHome) {
       setScrollFade(1);
@@ -40,21 +39,20 @@ export default function PersistentHeroCanvas() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
-  // Prefetch /work while the user is on home so navigation is instant
   useEffect(() => {
     if (isHome) router.prefetch("/work");
   }, [isHome, router]);
 
   if (!isHome && !isWork) return null;
 
-  const onClick = () => {
+  const goWork = () => {
     if (isHome) router.push("/work");
   };
 
   return (
     <div
       aria-hidden={!isWork}
-      onClick={onClick}
+      onClick={goWork}
       className={`hidden lg:block fixed z-[1] transition-[top,right,bottom,left,opacity] duration-[900ms] ${isHome ? "cursor-pointer" : ""}`}
       style={{
         top: 0,
@@ -66,7 +64,7 @@ export default function PersistentHeroCanvas() {
         pointerEvents: isHome && scrollFade < 0.2 ? "none" : "auto",
       }}
     >
-      <VectorScope />
+      <MacintoshScene zoomedIn={isWork} onScreenClick={goWork} />
     </div>
   );
 }
