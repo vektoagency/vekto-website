@@ -10,7 +10,7 @@ import CRTScreen from "./CRTScreen";
 const CASE = "#ddd0b0";        // main cream plastic (warmer, aged)
 const CASE_WARM = "#e4d8b8";   // slight top highlight
 const CASE_SHADOW = "#b8ac8a"; // shadow side (deeper for contrast)
-const CASE_WELL = "#9d9173";   // recessed keyboard well
+const CASE_WELL = "#c8bc9a";   // slightly darker plate under keys
 const SEAM = "#8a7f63";        // panel seams
 const SCREEN_TINT = "#2a2820"; // dark phosphor tube behind glass (recessed)
 const KEY_BODY = "#c8bc9a";    // key skirts
@@ -144,27 +144,24 @@ function Base() {
         <Keyboard />
       </group>
 
-      {/* Right-side disk drive slot + bezel */}
-      <group position={[W / 2 - 0.38, Dback / 2 - 0.015, 0.1]}>
-        {/* Drive bezel plate (darker cream) */}
-        <mesh position={[0, 0.015, 0]}>
-          <boxGeometry args={[0.55, 0.035, 0.7]} />
-          <meshStandardMaterial color={CASE_SHADOW} roughness={0.75} />
+      {/* Right-side badge plate (small, flush — like the reference photos) */}
+      <group position={[W / 2 - 0.35, Dback / 2 + 0.002, 0.05]}>
+        {/* Flat badge plate — subtle darker rectangle */}
+        <mesh position={[0, 0.002, 0]}>
+          <boxGeometry args={[0.42, 0.003, 0.55]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.72} />
         </mesh>
-        {/* Slot opening */}
-        <mesh position={[0, 0.034, 0.05]}>
-          <boxGeometry args={[0.45, 0.005, 0.03]} />
-          <meshStandardMaterial color="#15110a" roughness={0.7} />
-        </mesh>
-        {/* Drive activity LED */}
-        <mesh position={[0.17, 0.034, -0.18]}>
-          <sphereGeometry args={[0.012, 10, 10]} />
-          <meshStandardMaterial color="#ff3a1a" emissive="#ff3a1a" emissiveIntensity={0.6} toneMapped={false} />
-        </mesh>
-        {/* Drive handle/lever */}
-        <mesh position={[-0.17, 0.034, 0.05]}>
-          <boxGeometry args={[0.06, 0.008, 0.04]} />
-          <meshStandardMaterial color={KNOB} roughness={0.5} metalness={0.2} />
+        {/* Vent slats on right badge area */}
+        {Array.from({ length: 5 }).map((_, i) => (
+          <mesh key={i} position={[0, 0.004, -0.18 + i * 0.08]}>
+            <boxGeometry args={[0.32, 0.002, 0.022]} />
+            <meshStandardMaterial color="#2a241a" roughness={0.6} />
+          </mesh>
+        ))}
+        {/* Power LED */}
+        <mesh position={[0.16, 0.005, 0.22]}>
+          <sphereGeometry args={[0.01, 10, 10]} />
+          <meshStandardMaterial color="#39e661" emissive="#39e661" emissiveIntensity={1.8} toneMapped={false} />
         </mesh>
       </group>
 
@@ -235,96 +232,89 @@ function Base() {
  */
 function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
   const W = 1.55;        // width
-  const H = 1.45;        // height (front face)
-  const D_front = 0.9;   // depth of main boxy front section
-  const D_hump = 0.75;   // additional back-taper hump
+  const H = 1.35;        // height (front face) — slightly shorter for real proportions
+  const D_front = 0.82;  // depth of main boxy front section
+  const D_hump = 0.55;   // additional back taper
 
+  // Monitor sits directly on the thick back portion of the base (no pedestal).
+  // Base thick back = 0.38, centered at y=-0.92 → top-back surface y = -0.73
+  // Monitor bottom should be at y = -0.73 + tiny lip = -0.70
+  // → group center y = -0.70 + H/2 = -0.70 + 0.675 = -0.025
+  // Back slab center z: -0.7 ... 0.4, center -0.15
   return (
-    <group position={[-0.05, 0.08, -0.4]}>
-      {/* Pedestal — small beige plinth on which the monitor sits */}
-      <group position={[0, -H / 2 - 0.09, 0]}>
-        {/* Wide base plate */}
-        <RoundedBox args={[W * 0.75, 0.05, D_front * 0.6]} radius={0.02} smoothness={3}>
-          <meshStandardMaterial color={CASE_SHADOW} roughness={0.78} />
-        </RoundedBox>
-        {/* Narrower riser */}
-        <RoundedBox args={[W * 0.5, 0.13, D_front * 0.4]} radius={0.025} smoothness={3} position={[0, 0.09, 0]}>
-          <meshStandardMaterial color={CASE} roughness={0.72} />
-        </RoundedBox>
-      </group>
+    <group position={[0, -0.03, -0.2]} rotation={[-0.02, 0, 0]}>
 
-      {/* Main front cube (the boxy part with the screen) */}
-      <RoundedBox args={[W, H, D_front]} radius={0.06} smoothness={4}>
-        <meshStandardMaterial color={CASE} roughness={0.72} metalness={0.02} />
+      {/* Main box body — clean, boxy, tapering slightly at back */}
+      <RoundedBox args={[W, H, D_front]} radius={0.05} smoothness={4}>
+        <meshStandardMaterial color={CASE} roughness={0.68} metalness={0.02} />
       </RoundedBox>
 
-      {/* Raised back "hump" — taller in the middle where CRT neck starts,
-          sits only on TOP-BACK half, shorter than main box */}
+      {/* Back taper — the case slopes inward and down toward the CRT neck */}
       <RoundedBox
-        args={[W * 0.72, H * 0.78, D_hump]}
-        radius={0.06}
+        args={[W * 0.88, H * 0.9, D_hump]}
+        radius={0.05}
         smoothness={4}
-        position={[0, H * 0.04, -(D_front / 2 + D_hump / 2 - 0.02)]}
+        position={[0, -H * 0.01, -(D_front / 2 + D_hump / 2 - 0.03)]}
       >
-        <meshStandardMaterial color={CASE_SHADOW} roughness={0.75} />
+        <meshStandardMaterial color={CASE_SHADOW} roughness={0.74} />
       </RoundedBox>
 
-      {/* Narrow CRT neck further back */}
-      <RoundedBox
-        args={[W * 0.36, H * 0.42, 0.35]}
-        radius={0.04}
-        smoothness={3}
-        position={[0, H * 0.02, -(D_front / 2 + D_hump + 0.13)]}
-      >
-        <meshStandardMaterial color={CASE_SHADOW} roughness={0.78} />
-      </RoundedBox>
-
-      {/* Top vent grille — DEEP slats cut into top of hump */}
-      {Array.from({ length: 18 }).map((_, i) => (
-        <mesh key={i} position={[0, H * 0.04 + H * 0.39 + 0.002, -D_front / 2 - 0.05 - i * 0.035]}>
-          <boxGeometry args={[W * 0.55, 0.003, 0.012]} />
-          <meshStandardMaterial color="#15120e" roughness={0.6} />
+      {/* Top vent slats — set into the top panel near the back */}
+      {Array.from({ length: 14 }).map((_, i) => (
+        <mesh key={i} position={[0, H / 2 + 0.002, -D_front / 2 + 0.08 + i * 0.045]}>
+          <boxGeometry args={[W * 0.55, 0.003, 0.018]} />
+          <meshStandardMaterial color="#231f17" roughness={0.6} />
         </mesh>
       ))}
 
-      {/* -- FRONT FACE elements -- */}
-      {/* The recessed screen inset — same cream color, just slightly darker from shadow */}
-      <group position={[-0.12, 0.08, D_front / 2 + 0.001]}>
-        {/* Inset frame (darker cream, slight recess) */}
-        <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[W * 0.72, H * 0.7]} />
-          <meshStandardMaterial color={CASE_SHADOW} roughness={0.7} />
+      {/* Small logo boss — tiny raised rectangle on top-right front, like a brand plate */}
+      <RoundedBox
+        args={[0.09, 0.012, 0.055]}
+        radius={0.003}
+        smoothness={2}
+        position={[W / 2 - 0.12, H / 2 - 0.12, D_front / 2 + 0.001]}
+      >
+        <meshStandardMaterial color={CASE_WARM} roughness={0.55} />
+      </RoundedBox>
+
+      {/* -- FRONT FACE: screen area -- */}
+      {/* The bezel around the screen is slightly recessed darker cream */}
+      <group position={[-0.08, 0.04, D_front / 2 + 0.001]}>
+        {/* Outer bezel inset (subtle) */}
+        <mesh position={[0, 0, 0.0005]}>
+          <planeGeometry args={[W * 0.78, H * 0.78]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.68} />
         </mesh>
-        {/* Deeper inset (screen recess) */}
-        <mesh position={[0, 0, 0.002]}>
-          <planeGeometry args={[W * 0.64, H * 0.58]} />
-          <meshStandardMaterial color={SCREEN_TINT} roughness={0.4} />
+        {/* Deep screen well (dark tube visible around glass) */}
+        <mesh position={[0, 0, 0.0015]}>
+          <planeGeometry args={[W * 0.68, H * 0.66]} />
+          <meshStandardMaterial color={SCREEN_TINT} roughness={0.38} />
         </mesh>
 
-        {/* Curved CRT glass with phosphor shader — slightly bulged forward */}
+        {/* CRT glass with green phosphor shader */}
         <group
-          position={[0, 0, 0.025]}
+          position={[0, 0, 0.02]}
           onClick={(e) => { e.stopPropagation(); onScreenClick?.({ clientX: e.clientX, clientY: e.clientY }); }}
           onPointerOver={(e) => { e.stopPropagation(); onHoverChange?.(true); document.body.style.cursor = "pointer"; }}
           onPointerOut={(e) => { e.stopPropagation(); onHoverChange?.(false); document.body.style.cursor = "auto"; }}
         >
-          {/* Flat tinted-glass plate in front of the phosphor */}
-          <mesh position={[0, 0, 0.01]}>
-            <planeGeometry args={[W * 0.62, H * 0.56]} />
+          {/* Tinted glass plate */}
+          <mesh position={[0, 0, 0.012]}>
+            <planeGeometry args={[W * 0.66, H * 0.64]} />
             <meshPhysicalMaterial
-              color="#0a120a"
-              roughness={0.2}
-              transmission={0.15}
+              color="#0c1a0c"
+              roughness={0.18}
+              transmission={0.12}
               transparent
               opacity={0.55}
-              clearcoat={0.9}
-              clearcoatRoughness={0.08}
-              metalness={0.05}
-              envMapIntensity={1.1}
+              clearcoat={0.95}
+              clearcoatRoughness={0.06}
+              metalness={0.04}
+              envMapIntensity={1.2}
             />
           </mesh>
-          {/* Phosphor shader plane inside */}
-          <CRTScreen width={W * 0.6} height={H * 0.54} position={[0, 0, -0.005]} />
+          {/* Phosphor green shader */}
+          <CRTScreen width={W * 0.64} height={H * 0.62} position={[0, 0, -0.004]} />
         </group>
 
         {hovered && (
@@ -332,38 +322,52 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
         )}
       </group>
 
-      {/* -- Right-side control strip (knobs + LED) -- */}
-      <group position={[W / 2 - 0.12, 0.12, D_front / 2 + 0.002]}>
-        {/* Brightness knob (larger) */}
-        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.18, 0]}>
-          <cylinderGeometry args={[0.045, 0.045, 0.02, 32]} />
-          <meshStandardMaterial color={KNOB} roughness={0.5} metalness={0.15} />
+      {/* -- Right-side controls on FRONT BEZEL (matching reference photos) -- */}
+      <group position={[W / 2 - 0.14, 0.18, D_front / 2 + 0.002]}>
+        {/* Brightness knob (top, larger) — inset ring then knob */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
+          <ringGeometry args={[0.058, 0.078, 32]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.7} side={THREE.DoubleSide} />
         </mesh>
-        {/* Contrast knob (smaller) */}
-        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}>
-          <cylinderGeometry args={[0.035, 0.035, 0.02, 32]} />
-          <meshStandardMaterial color={KNOB} roughness={0.5} metalness={0.15} />
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.02, 0.008]}>
+          <cylinderGeometry args={[0.055, 0.058, 0.025, 32]} />
+          <meshStandardMaterial color={KNOB} roughness={0.45} metalness={0.18} />
         </mesh>
-        {/* Power LED */}
-        <mesh position={[0, -0.08, 0]}>
-          <sphereGeometry args={[0.013, 12, 12]} />
-          <meshStandardMaterial color="#39e661" emissive="#39e661" emissiveIntensity={2} toneMapped={false} />
+        {/* Knob indicator notch */}
+        <mesh position={[0, 0.075, 0.018]}>
+          <boxGeometry args={[0.006, 0.022, 0.003]} />
+          <meshStandardMaterial color={LABEL_DARK} roughness={0.7} />
         </mesh>
-        {/* Small power button */}
-        <mesh position={[0, -0.18, 0]}>
-          <boxGeometry args={[0.05, 0.025, 0.012]} />
-          <meshStandardMaterial color={CASE_SHADOW} roughness={0.7} />
+
+        {/* Contrast knob (below, smaller) */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -0.14, 0]}>
+          <ringGeometry args={[0.045, 0.062, 32]} />
+          <meshStandardMaterial color={CASE_SHADOW} roughness={0.7} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -0.14, 0.008]}>
+          <cylinderGeometry args={[0.042, 0.045, 0.025, 32]} />
+          <meshStandardMaterial color={KNOB} roughness={0.45} metalness={0.18} />
+        </mesh>
+        <mesh position={[0.022, -0.11, 0.018]}>
+          <boxGeometry args={[0.005, 0.018, 0.003]} />
+          <meshStandardMaterial color={LABEL_DARK} roughness={0.7} />
+        </mesh>
+
+        {/* Tiny red power LED */}
+        <mesh position={[0, -0.25, 0.008]}>
+          <sphereGeometry args={[0.011, 14, 14]} />
+          <meshStandardMaterial color="#ff2a1a" emissive="#ff2a1a" emissiveIntensity={2.2} toneMapped={false} />
         </mesh>
       </group>
 
-      {/* Bottom-right tiny model label */}
+      {/* Bottom-center tiny model label on front face */}
       <Text
-        position={[W / 2 - 0.2, -H / 2 + 0.08, D_front / 2 + 0.003]}
-        fontSize={0.028}
+        position={[0, -H / 2 + 0.07, D_front / 2 + 0.003]}
+        fontSize={0.025}
         color={LABEL_DARK}
         anchorX="center"
         anchorY="middle"
-        letterSpacing={0.15}
+        letterSpacing={0.2}
       >
         PRAVEC 8A
       </Text>
@@ -371,7 +375,7 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
       {/* Side panel seams */}
       {[-1, 1].map((s) => (
         <mesh key={s} position={[s * (W / 2 - 0.003), 0, 0]}>
-          <boxGeometry args={[0.003, H * 0.75, D_front * 0.92]} />
+          <boxGeometry args={[0.003, H * 0.82, D_front * 0.92]} />
           <meshStandardMaterial color={SEAM} roughness={0.75} />
         </mesh>
       ))}
