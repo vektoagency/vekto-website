@@ -1,16 +1,10 @@
 "use client";
 
-import { useRef, type ReactElement, type ComponentProps } from "react";
+import { useRef, type ReactElement } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { RoundedBox, Text as DreiText } from "@react-three/drei";
+import { RoundedBox, Text } from "@react-three/drei";
 import CRTScreen from "./CRTScreen";
-
-/* Cyrillic-capable font (Roboto Bold ships with Cyrillic glyphs) */
-const CYR_FONT = "/fonts/roboto-regular.ttf";
-function Text(props: ComponentProps<typeof DreiText>) {
-  return <DreiText font={CYR_FONT} {...props} />;
-}
 
 /* Aged Pravec-beige palette matching the reference photos */
 const CASE = "#e7ddc1";        // main cream plastic
@@ -143,7 +137,7 @@ function Base() {
         anchorX="center"
         anchorY="middle"
       >
-        8А
+        8A
       </Text>
 
       {/* Top-left small brand plate — "Правец" */}
@@ -156,7 +150,7 @@ function Base() {
         anchorY="middle"
         letterSpacing={0.25}
       >
-        ПРАВЕЦ
+        PRAVEC
       </Text>
 
       {/* Side panel seams */}
@@ -308,7 +302,7 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
         anchorY="middle"
         letterSpacing={0.15}
       >
-        ПРАВЕЦ 8А
+        PRAVEC 8A
       </Text>
 
       {/* Side panel seams */}

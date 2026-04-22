@@ -6,7 +6,6 @@ import { Environment, ContactShadows, Sparkles } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette, ChromaticAberration, Noise } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
-import { useRouter } from "next/navigation";
 import PravecModel from "./PravecModel";
 import ShaderBackdrop from "./ShaderBackdrop";
 
@@ -39,52 +38,22 @@ function CameraRig({ transitioning }: { transitioning: boolean }) {
   return null;
 }
 
-function TransitionOverlay({ active }: { active: boolean }) {
-  // Origin roughly where the Pravec screen lives on desktop (right ~75% x, center y)
-  return (
-    <div
-      className="pointer-events-none fixed inset-0 z-[60]"
-      style={{
-        background: "radial-gradient(circle at 75% 50%, #d4ff33 0%, #c8ff00 18%, #0a0805 55%, #0a0805 100%)",
-        opacity: active ? 1 : 0,
-        clipPath: active
-          ? "circle(160% at 75% 50%)"
-          : "circle(0% at 75% 50%)",
-        transition: "opacity 0.45s ease-out, clip-path 0.85s cubic-bezier(0.65, 0, 0.35, 1)",
-      }}
-    />
-  );
-}
-
 export default function PravecScene() {
   const [hovered, setHovered] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
-  const [flash, setFlash] = useState(false);
-  const router = useRouter();
 
   const handleEnter = () => {
     if (transitioning) return;
     setTransitioning(true);
-    // Prefetch the route during the zoom
-    router.prefetch("/work");
-    // Start flash mid-zoom so it overlaps
-    setTimeout(() => setFlash(true), 380);
-    // Set the bridge flag so /work shows a matching fade-in on arrival
-    setTimeout(() => {
-      try { sessionStorage.setItem("vekto-entering-pravec", "1"); } catch {}
-      router.push("/work");
-    }, 950);
+    // Delegate routing + cover overlay to the global TransitionBridge
+    window.dispatchEvent(new CustomEvent("vekto:enter-pravec"));
   };
 
   useEffect(() => {
-    const onExternal = () => handleEnter();
-    window.addEventListener("vekto:enter-pravec", onExternal);
     return () => {
-      window.removeEventListener("vekto:enter-pravec", onExternal);
       document.body.style.cursor = "auto";
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transitioning]);
+  }, []);
 
   return (
     <>
@@ -174,7 +143,6 @@ export default function PravecScene() {
         </span>
       </div>
 
-      <TransitionOverlay active={flash} />
     </>
   );
 }

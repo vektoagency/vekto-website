@@ -293,6 +293,29 @@ html {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 
+/* ---- Global Pravec transition bridge ---- */
+@keyframes tb-cover {
+  from { clip-path: circle(0% at 75% 50%); -webkit-clip-path: circle(0% at 75% 50%); }
+  to   { clip-path: circle(180% at 75% 50%); -webkit-clip-path: circle(180% at 75% 50%); }
+}
+@keyframes tb-reveal {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+.tb-covering {
+  animation: tb-cover 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.tb-holding {
+  clip-path: circle(180% at 75% 50%);
+  -webkit-clip-path: circle(180% at 75% 50%);
+  opacity: 1;
+}
+.tb-revealing {
+  clip-path: circle(180% at 75% 50%);
+  -webkit-clip-path: circle(180% at 75% 50%);
+  animation: tb-reveal 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 /* ---- /work page CRT overlay (continuation of Pravec aesthetic) ---- */
 .work-scanlines {
   background: repeating-linear-gradient(
