@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useRef, useEffect } from "react";
+import { Suspense, useState, useRef, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette, ChromaticAberration } from "@react-three/postprocessing";
@@ -11,32 +11,45 @@ import PravecModel from "./PravecModel";
 
 function CameraRig({ transitioning }: { transitioning: boolean }) {
   const { camera } = useThree();
-  const target = useRef(new THREE.Vector3(0, 0.2, 4.2));
+  const t0 = useRef<number | null>(null);
+  const start = useRef(new THREE.Vector3(0, 0.2, 4.2));
+  const end = useMemo(() => new THREE.Vector3(0, 0.45, 0.9), []);
 
-  useFrame(() => {
+  useFrame((state) => {
     if (transitioning) {
-      // Zoom into the screen
-      target.current.set(0, 0.4, 1.2);
+      if (t0.current === null) {
+        t0.current = state.clock.getElapsedTime();
+        start.current.copy(camera.position);
+      }
+      const dur = 0.95;
+      const k = Math.min((state.clock.getElapsedTime() - t0.current) / dur, 1);
+      // easeInOutCubic then accel near end
+      const eased = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      const accel = eased + Math.pow(k, 4) * 0.4;
+      camera.position.lerpVectors(start.current, end, Math.min(accel, 1));
+      camera.lookAt(0, 0.4, 0);
     } else {
-      target.current.set(0, 0.2, 4.2);
+      t0.current = null;
+      camera.position.lerp(new THREE.Vector3(0, 0.2, 4.2), 0.04);
+      camera.lookAt(0, 0.35, 0);
     }
-    camera.position.lerp(target.current, transitioning ? 0.06 : 0.04);
-    camera.lookAt(0, 0.35, 0);
   });
 
   return null;
 }
 
 function TransitionOverlay({ active }: { active: boolean }) {
-  // Expanding white-lime flash that covers the screen
+  // Origin roughly where the Pravec screen lives on desktop (right ~75% x, center y)
   return (
     <div
       className="pointer-events-none fixed inset-0 z-[60]"
       style={{
-        background: "radial-gradient(circle at 50% 50%, #c8ff00 0%, #080808 60%)",
+        background: "radial-gradient(circle at 75% 50%, #d4ff33 0%, #c8ff00 18%, #0a0805 55%, #0a0805 100%)",
         opacity: active ? 1 : 0,
-        transform: active ? "scale(1)" : "scale(0)",
-        transition: "opacity 0.6s ease-out, transform 0.9s cubic-bezier(0.65, 0, 0.35, 1)",
+        clipPath: active
+          ? "circle(160% at 75% 50%)"
+          : "circle(0% at 75% 50%)",
+        transition: "opacity 0.45s ease-out, clip-path 0.85s cubic-bezier(0.65, 0, 0.35, 1)",
       }}
     />
   );
@@ -51,14 +64,26 @@ export default function PravecScene() {
   const handleEnter = () => {
     if (transitioning) return;
     setTransitioning(true);
-    // After zoom, trigger flash and navigate
-    setTimeout(() => setFlash(true), 550);
-    setTimeout(() => router.push("/work"), 1100);
+    // Prefetch the route during the zoom
+    router.prefetch("/work");
+    // Start flash mid-zoom so it overlaps
+    setTimeout(() => setFlash(true), 380);
+    // Set the bridge flag so /work shows a matching fade-in on arrival
+    setTimeout(() => {
+      try { sessionStorage.setItem("vekto-entering-pravec", "1"); } catch {}
+      router.push("/work");
+    }, 950);
   };
 
   useEffect(() => {
-    return () => { document.body.style.cursor = "auto"; };
-  }, []);
+    const onExternal = () => handleEnter();
+    window.addEventListener("vekto:enter-pravec", onExternal);
+    return () => {
+      window.removeEventListener("vekto:enter-pravec", onExternal);
+      document.body.style.cursor = "auto";
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transitioning]);
 
   return (
     <>

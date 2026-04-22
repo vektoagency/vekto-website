@@ -1,5 +1,6 @@
 import { HeroVideosMobile } from "./HeroVideos";
 import HeroPravec from "./HeroPravec";
+import SeeOurWorkButton from "./SeeOurWorkButton";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -68,9 +69,9 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Get a Free Demo
             </a>
-            <a href="/work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
+            <SeeOurWorkButton className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
               See Our Work
-            </a>
+            </SeeOurWorkButton>
           </div>
         </Stagger>
         <Stagger delay={550}>
@@ -107,9 +108,9 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
               Get a Free Demo
             </a>
-            <a href="/work" className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
+            <SeeOurWorkButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
               See Our Work
-            </a>
+            </SeeOurWorkButton>
           </div>
         </Stagger>
         <Stagger delay={550}>
