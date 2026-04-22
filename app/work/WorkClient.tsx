@@ -203,7 +203,13 @@ export default function WorkClient() {
   }, []);
 
   return (
-    <div className="relative text-white">
+    <div className="relative text-white work-crt">
+      {/* Global CRT scan overlay — subtle continuation of Pravec aesthetic */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[50] work-scanlines opacity-[0.25]" />
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[50] work-vignette" />
+      {/* One-time boot sweep */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[51] work-bootsweep" />
+
       {/* ---------- Hero ---------- */}
       <section className="relative pt-10 pb-10 px-6 overflow-hidden">
         <div className="relative max-w-7xl mx-auto">

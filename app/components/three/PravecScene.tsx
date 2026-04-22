@@ -1,0 +1,141 @@
+"use client";
+
+import { Suspense, useState, useRef, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Environment, ContactShadows } from "@react-three/drei";
+import { EffectComposer, Bloom, Vignette, ChromaticAberration } from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
+import * as THREE from "three";
+import { useRouter } from "next/navigation";
+import PravecModel from "./PravecModel";
+
+function CameraRig({ transitioning }: { transitioning: boolean }) {
+  const { camera } = useThree();
+  const target = useRef(new THREE.Vector3(0, 0.2, 4.2));
+
+  useFrame(() => {
+    if (transitioning) {
+      // Zoom into the screen
+      target.current.set(0, 0.4, 1.2);
+    } else {
+      target.current.set(0, 0.2, 4.2);
+    }
+    camera.position.lerp(target.current, transitioning ? 0.06 : 0.04);
+    camera.lookAt(0, 0.35, 0);
+  });
+
+  return null;
+}
+
+function TransitionOverlay({ active }: { active: boolean }) {
+  // Expanding white-lime flash that covers the screen
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-[60]"
+      style={{
+        background: "radial-gradient(circle at 50% 50%, #c8ff00 0%, #080808 60%)",
+        opacity: active ? 1 : 0,
+        transform: active ? "scale(1)" : "scale(0)",
+        transition: "opacity 0.6s ease-out, transform 0.9s cubic-bezier(0.65, 0, 0.35, 1)",
+      }}
+    />
+  );
+}
+
+export default function PravecScene() {
+  const [hovered, setHovered] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const [flash, setFlash] = useState(false);
+  const router = useRouter();
+
+  const handleEnter = () => {
+    if (transitioning) return;
+    setTransitioning(true);
+    // After zoom, trigger flash and navigate
+    setTimeout(() => setFlash(true), 550);
+    setTimeout(() => router.push("/work"), 1100);
+  };
+
+  useEffect(() => {
+    return () => { document.body.style.cursor = "auto"; };
+  }, []);
+
+  return (
+    <>
+      <div className="absolute inset-0">
+        <Canvas
+          shadows
+          dpr={[1, 1.75]}
+          camera={{ position: [0, 0.2, 4.2], fov: 35 }}
+          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        >
+          <color attach="background" args={["#0a0805"]} />
+          <fog attach="fog" args={["#0a0805", 6, 12]} />
+
+          <Suspense fallback={null}>
+            {/* Key light warm */}
+            <directionalLight
+              position={[4, 6, 5]}
+              intensity={1.4}
+              color="#fff6e0"
+              castShadow
+              shadow-mapSize-width={1024}
+              shadow-mapSize-height={1024}
+            />
+            {/* Fill light cool */}
+            <directionalLight position={[-5, 3, 2]} intensity={0.4} color="#8fb3ff" />
+            {/* Rim light lime */}
+            <pointLight position={[-3, 2, -3]} intensity={3.5} distance={8} color="#c8ff00" />
+            {/* Ambient */}
+            <ambientLight intensity={0.35} color="#2a2418" />
+
+            <Environment preset="warehouse" />
+
+            <PravecModel
+              onScreenClick={handleEnter}
+              hovered={hovered}
+              onHoverChange={setHovered}
+            />
+
+            <ContactShadows
+              position={[0, -1.28, 0.25]}
+              opacity={0.55}
+              scale={8}
+              blur={2.4}
+              far={3}
+              color="#000000"
+            />
+          </Suspense>
+
+          <CameraRig transitioning={transitioning} />
+
+          <EffectComposer multisampling={0}>
+            <Bloom
+              intensity={0.9}
+              luminanceThreshold={0.55}
+              luminanceSmoothing={0.25}
+              mipmapBlur
+            />
+            <ChromaticAberration
+              offset={transitioning ? [0.006, 0.006] : [0.0008, 0.0008]}
+              blendFunction={BlendFunction.NORMAL}
+              radialModulation={false}
+              modulationOffset={0}
+            />
+            <Vignette eskil={false} offset={0.15} darkness={0.9} />
+          </EffectComposer>
+        </Canvas>
+      </div>
+
+      {/* Helper hint */}
+      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
+        <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-70"}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+          {hovered ? "CLICK SCREEN TO ENTER" : "INTERACT WITH THE MACHINE"}
+        </span>
+      </div>
+
+      <TransitionOverlay active={flash} />
+    </>
+  );
+}

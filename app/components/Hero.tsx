@@ -1,4 +1,5 @@
-import { HeroVideosMobile, HeroVideosDesktop } from "./HeroVideos";
+import { HeroVideosMobile } from "./HeroVideos";
+import HeroPravec from "./HeroPravec";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -16,7 +17,14 @@ export default function Hero() {
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
       <HeroVideosMobile />
-      <HeroVideosDesktop />
+
+      {/* Desktop: 3D Pravec 8A on the right */}
+      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[52%]">
+        <HeroPravec />
+        {/* Left fade into text column */}
+        <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
+      </div>
 
       {/* Mobile gradients top/bottom */}
       <div className="lg:hidden absolute inset-x-0 top-0 h-32 z-[2] pointer-events-none"

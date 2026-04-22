@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import ContactModal from "../components/ContactModal";
 import WorkClient from "./WorkClient";
 import CalInit from "./CalInit";
-import PravecFrame from "./PravecFrame";
 
 export const metadata: Metadata = {
   title: "Work — VEKTO",
@@ -18,9 +17,7 @@ export default function WorkPage() {
       <Navbar />
       <CalInit />
       <main className="bg-[#0a0805]">
-        <PravecFrame>
-          <WorkClient />
-        </PravecFrame>
+        <WorkClient />
       </main>
       <Footer />
       <ContactModal />

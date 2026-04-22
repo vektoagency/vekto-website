@@ -293,6 +293,43 @@ html {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 
+/* ---- /work page CRT overlay (continuation of Pravec aesthetic) ---- */
+.work-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(200,255,0,0.035) 3px,
+    rgba(0,0,0,0) 4px
+  );
+  mix-blend-mode: screen;
+}
+
+.work-vignette {
+  background:
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.55) 100%);
+}
+
+@keyframes bootSweep {
+  0%   { opacity: 0; transform: translateY(-100%); }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+.work-bootsweep {
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    transparent 42%,
+    rgba(200,255,0,0.5) 50%,
+    transparent 58%,
+    transparent 100%);
+  animation: bootSweep 1.4s ease-out 0.1s 1 forwards;
+  opacity: 0;
+  mix-blend-mode: screen;
+  filter: blur(1px);
+}
+
 /* ---- Pravec 8 / CRT effects ---- */
 @keyframes blink {
   0%, 49% { opacity: 1; }
