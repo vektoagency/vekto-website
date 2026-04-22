@@ -7,8 +7,8 @@ import PortfolioOverlay from "./PortfolioOverlay";
 const MacintoshScene = dynamic(() => import("./three/MacintoshScene"), {
   ssr: false,
   loading: () => (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#5a5048] animate-pulse">
+    <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute top-1/2 left-[74%] -translate-x-1/2 -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#5a5048] animate-pulse">
         Booting…
       </div>
     </div>
