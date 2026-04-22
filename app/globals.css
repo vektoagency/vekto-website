@@ -507,24 +507,29 @@ html {
    Reveal expands from click origin (--tb-x / --tb-y already set globally).
    ========================================================================= */
 
-/* Crossfade in from a bright phosphor wash — the viewport is already full of
-   CRT phosphor from the zoomed Mac screen, so the DOM overlay simply fades
-   in over it with matching colors. No clip-path, no visible seam. */
+/* The Canvas below is already rendering the full-viewport CRT shader —
+   the DOM overlay just crossfades content in. No clip-path, no circle. */
 @keyframes poOpenFade {
-  0%   { opacity: 0; filter: brightness(2.4) blur(5px); }
-  35%  { opacity: 0.75; filter: brightness(1.5) blur(2px); }
-  100% { opacity: 1; filter: none; }
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes poCloseFade {
-  0%   { opacity: 1; filter: none; }
-  100% { opacity: 0; filter: brightness(2) blur(4px); }
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .po-open {
-  animation: poOpenFade 0.85s cubic-bezier(0.25, 0.8, 0.3, 1) both;
+  animation: poOpenFade 0.55s cubic-bezier(0.25, 0.8, 0.3, 1) both;
 }
 .po-closing {
-  animation: poCloseFade 0.5s cubic-bezier(0.6, 0, 0.9, 0.3) both;
+  animation: poCloseFade 0.35s cubic-bezier(0.6, 0, 0.9, 0.3) both;
+  pointer-events: none;
+}
+
+/* Subtle dark wash so white/green text stays legible over bright phosphor */
+.po-dim {
+  background:
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.75) 70%, rgba(0, 0, 0, 0.82) 100%);
   pointer-events: none;
 }
 

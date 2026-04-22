@@ -156,16 +156,14 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       role="dialog"
       className={`fixed inset-0 z-[80] ${open ? "po-open" : "po-closing"}`}
     >
-      {/* LAYER 1 — phosphor background (CSS only, cheap) */}
-      <div aria-hidden className="absolute inset-0 po-phosphor" />
-      {/* LAYER 2 — character grid (fake CRT text) */}
-      <div aria-hidden className="absolute inset-0 po-chargrid" />
-      {/* LAYER 3 — scanlines */}
+      {/* The live CRT shader is the background (rendered by the Canvas
+          below). Only the CRT *frame* effects layer on top of it. */}
+      {/* Subtle darkening wash for legibility over the bright phosphor */}
+      <div aria-hidden className="absolute inset-0 po-dim" />
+      {/* Scanlines */}
       <div aria-hidden className="absolute inset-0 po-scanlines" />
-      {/* LAYER 4 — vignette + glass curvature suggestion */}
+      {/* Vignette + glass curvature suggestion */}
       <div aria-hidden className="absolute inset-0 po-vignette" />
-      {/* LAYER 5 — expanding phosphor disc from click origin */}
-      <div aria-hidden className="absolute inset-0 po-reveal" />
 
       {/* CONTENT */}
       <div className="relative z-10 h-full w-full overflow-y-auto po-content">
