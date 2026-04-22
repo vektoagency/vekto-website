@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactModal from "../components/ContactModal";
-import WorkClient from "./WorkClient";
 import CalInit from "./CalInit";
+import WorkComingSoon from "./WorkComingSoon";
 
 export const metadata: Metadata = {
   title: "Work — VEKTO",
   description:
-    "Selected projects — brands we helped scale through cinematic storytelling, AI visuals and data-driven creative strategy.",
+    "Our work showcase is coming soon — cinematic storytelling, AI visuals and data-driven creative strategy in one reel.",
 };
 
 export default function WorkPage() {
@@ -17,7 +17,7 @@ export default function WorkPage() {
       <Navbar />
       <CalInit />
       <main className="bg-[#0a0805]">
-        <WorkClient />
+        <WorkComingSoon />
       </main>
       <Footer />
       <ContactModal />
