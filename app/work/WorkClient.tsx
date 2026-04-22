@@ -290,7 +290,10 @@ export default function WorkClient() {
 
   return (
     <div className="relative text-white work-crt">
-      {/* Global CRT overlays */}
+      {/* Soft dark wash so the persistent CRT canvas glows through but text stays legible */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[2]"
+        style={{ background: "radial-gradient(ellipse at 50% 30%, rgba(10,8,5,0.25) 0%, rgba(10,8,5,0.82) 65%, rgba(10,8,5,0.96) 100%)" }} />
+      {/* Global CRT overlays — sit on top of the canvas AND the content wash */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[50] work-scanlines opacity-[0.22]" />
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[50] work-vignette" />
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[51] work-bootsweep" />

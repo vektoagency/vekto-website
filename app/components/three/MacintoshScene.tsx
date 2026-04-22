@@ -15,8 +15,11 @@ type Props = {
 
 const IDLE_CAM = new THREE.Vector3(0.9, 1.1, 4.6);
 const IDLE_TARGET = new THREE.Vector3(0, -0.25, 0.4);
-const ZOOM_CAM = new THREE.Vector3(0, 0.32, 0.74);
-const ZOOM_TARGET = new THREE.Vector3(0, 0.32, 0);
+// CRT plane sits at ~z=0.65 from world origin, so camera must be
+// pulled back past it. 1.45 leaves the screen just filling the viewport
+// with a hint of beige bezel at the edges.
+const ZOOM_CAM = new THREE.Vector3(0, 0.32, 1.45);
+const ZOOM_TARGET = new THREE.Vector3(0, 0.32, 0.65);
 
 function CameraRig({ zoomedIn }: { zoomedIn: boolean }) {
   const { camera } = useThree();
@@ -103,13 +106,15 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
         </EffectComposer>
       </Canvas>
 
-      {/* Hint */}
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
-        <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-70"}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-          {hovered ? "CLICK SCREEN TO ENTER" : "VEKTO/MAC — 1984"}
-        </span>
-      </div>
+      {/* Hint — only visible when Mac is idle (home), never when zoomed into /work */}
+      {!zoomedIn && (
+        <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#8a7f6a]">
+          <span className={`inline-flex items-center gap-2 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-70"}`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+            {hovered ? "CLICK SCREEN TO ENTER" : "VEKTO/MAC — 1984"}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
