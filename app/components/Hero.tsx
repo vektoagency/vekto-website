@@ -118,15 +118,12 @@ export default function Hero() {
         <Stagger delay={450}>
           <div className="flex flex-col gap-3 w-full max-w-xs">
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
-              Get a Free Demo
+              Let&apos;s Talk
             </a>
             <a href="/work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
               See Our Work
             </a>
           </div>
-        </Stagger>
-        <Stagger delay={550}>
-          <p className="text-xs text-[#555] mt-4">Free demo tailored to your business — no strings attached.</p>
         </Stagger>
       </div>
 
@@ -160,15 +157,12 @@ export default function Hero() {
         <Stagger delay={450}>
           <div className="flex gap-4">
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
-              Get a Free Demo
+              Let&apos;s Talk
             </a>
             <PortfolioTriggerButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors cursor-pointer">
               See Our Work
             </PortfolioTriggerButton>
           </div>
-        </Stagger>
-        <Stagger delay={550}>
-          <p className="text-sm text-[#555] mt-4">Free demo tailored to your business — no strings attached.</p>
         </Stagger>
       </HeroLeftCurtain>
 

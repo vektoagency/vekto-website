@@ -84,7 +84,6 @@ export default function Contact() {
         <AnimateIn>
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-12 text-sm text-[#888]">
             {[
-              "Free demo video",
               "Proposal within 24h",
               "No commitments",
             ].map((item) => (
