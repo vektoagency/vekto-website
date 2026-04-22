@@ -20,23 +20,64 @@ export default function Hero() {
 
       <HeroVideosMobile />
 
-      {/* Desktop atmosphere — a quiet, designed background that sits
-          behind the transparent canvas. Subtle lime glow under the CRT
-          (light spill), a soft warm floor gradient for depth, and a
-          dark top + right-edge fall-off so the Mac reads like it's
-          sitting inside a dimly lit room, not on flat black. */}
-      <div
-        aria-hidden
-        className="hidden lg:block absolute inset-0 pointer-events-none"
-        style={{
+      {/* Desktop atmosphere + HUD ornaments. Sits behind the transparent
+          canvas so CRT shader covers these naturally during zoom. */}
+      <div aria-hidden className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Tonal base — warm floor, cool top, CRT halo behind the screen */}
+        <div className="absolute inset-0" style={{
           background: `
-            radial-gradient(ellipse 38% 48% at 76% 46%, rgba(200,255,0,0.055) 0%, rgba(200,255,0,0.018) 35%, transparent 72%),
-            radial-gradient(ellipse 55% 28% at 78% 96%, rgba(180,160,90,0.10) 0%, transparent 70%),
-            linear-gradient(to right, #0a0b08 0%, #0a0b08 55%, #0c0d09 78%, #070805 100%),
-            linear-gradient(to bottom, #060705 0%, #0b0c08 45%, #080905 100%)
+            radial-gradient(ellipse 42% 55% at 74% 45%, rgba(200,255,0,0.10) 0%, rgba(200,255,0,0.03) 40%, transparent 76%),
+            radial-gradient(ellipse 62% 28% at 76% 98%, rgba(190,170,95,0.14) 0%, transparent 72%),
+            linear-gradient(to right, #090a07 0%, #090a07 55%, #0b0c08 76%, #050603 100%),
+            linear-gradient(to bottom, #060705 0%, #0b0c08 45%, #070805 100%)
           `,
-        }}
-      />
+        }} />
+
+        {/* Blueprint grid — dim lime, masked soft around the screen so it
+            reads like a technical schematic fading out at the edges. */}
+        <div
+          className="absolute inset-y-0 right-0 w-[55%]"
+          style={{
+            opacity: 0.06,
+            backgroundImage:
+              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
+            backgroundSize: "72px 72px",
+            WebkitMaskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 35%, transparent 85%)",
+            maskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 35%, transparent 85%)",
+          }}
+        />
+
+        {/* Very subtle horizontal scanlines over the right half */}
+        <div
+          className="absolute inset-y-0 right-0 w-[50%]"
+          style={{
+            opacity: 0.05,
+            backgroundImage:
+              "repeating-linear-gradient(to bottom, rgba(200,255,0,0.6) 0px, rgba(200,255,0,0.6) 1px, transparent 1px, transparent 4px)",
+          }}
+        />
+
+        {/* Corner brackets framing the Mac scene */}
+        <div className="absolute top-6 right-6 w-14 h-14 border-t border-r border-[#c8ff00]/25" />
+        <div className="absolute bottom-6 right-6 w-14 h-14 border-b border-r border-[#c8ff00]/25" />
+
+        {/* Top-right status label */}
+        <div className="absolute top-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/55 flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+          CH_01 · LIVE
+        </div>
+
+        {/* Bottom-right technical caption */}
+        <div className="absolute bottom-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40">
+          MACINTOSH 128K · 1984 — VEKTO/OS
+        </div>
+
+        {/* Floor glow directly under the Mac for grounding */}
+        <div
+          className="absolute bottom-0 right-[8%] w-[52%] h-[14%]"
+          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.08), transparent 70%)" }}
+        />
+      </div>
 
       {/* Desktop: canvas is fullscreen and transparent; Mac is panned
           visually onto the right via the idle camera. The left curtain
