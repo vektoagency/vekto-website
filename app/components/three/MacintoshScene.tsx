@@ -139,8 +139,9 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
       </Canvas>
 
       {!zoomedIn && (
-        <div className="pointer-events-none absolute top-30 left-[74%] -translate-x-1/2 z-10 text-center">
-          <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-90"}`}>
+        <div className="pointer-events-none absolute inset-y-0 left-[74%] -translate-x-1/2 z-10 flex flex-col justify-center pt-24 pb-16 text-center">
+          {/* Caption — occupies the same slot as the left column's "AI-Powered Creative Agency" badge */}
+          <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 mb-8 ${hovered ? "opacity-100" : "opacity-90"}`}>
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               OUR PORTFOLIO LIVES INSIDE
@@ -148,6 +149,19 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
             <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/85">
               {hovered ? "▸ click to enter" : "click the screen ↓"}
             </span>
+          </div>
+          {/* Invisible spacer mirroring left column's h1 + p + buttons + tagline
+              so that justify-center places the caption at the same vertical
+              position as the left badge, regardless of viewport height. */}
+          <div aria-hidden className="invisible">
+            <div className="text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+              Placeholder<br />for layout<br />alignment
+            </div>
+            <p className="max-w-md text-lg leading-relaxed mb-10">
+              Placeholder paragraph kept for layout parity with the left column.
+            </p>
+            <div className="px-8 py-4 mb-4 font-semibold">Button Row</div>
+            <p className="text-sm">Tagline placeholder.</p>
           </div>
         </div>
       )}
