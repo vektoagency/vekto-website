@@ -1,12 +1,30 @@
 "use client";
 
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import MacintoshModel from "./MacintoshModel";
+import MacintoshGLB from "./MacintoshGLB";
+
+const GLB_URL = "/models/mac-128k.glb";
+
+/** Probe the GLB file once at mount; if present, use the real Mac, else fall back to procedural. */
+function useGlbAvailable(): boolean | null {
+  const [has, setHas] = useState<boolean | null>(null);
+  useEffect(() => {
+    let cancel = false;
+    fetch(GLB_URL, { method: "HEAD" })
+      .then((r) => !cancel && setHas(r.ok))
+      .catch(() => !cancel && setHas(false));
+    return () => {
+      cancel = true;
+    };
+  }, []);
+  return has;
+}
 
 type Props = {
   zoomedIn: boolean;
@@ -39,6 +57,7 @@ function CameraRig({ zoomedIn }: { zoomedIn: boolean }) {
 
 export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
   const [hovered, setHovered] = useState(false);
+  const hasGlb = useGlbAvailable();
 
   return (
     <div className="absolute inset-0">
@@ -70,11 +89,19 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
 
           <Environment preset="warehouse" />
 
-          <MacintoshModel
-            hovered={hovered}
-            onHoverChange={setHovered}
-            onScreenClick={() => onScreenClick?.()}
-          />
+          {hasGlb === true ? (
+            <MacintoshGLB
+              hovered={hovered}
+              onHoverChange={setHovered}
+              onScreenClick={() => onScreenClick?.()}
+            />
+          ) : hasGlb === false ? (
+            <MacintoshModel
+              hovered={hovered}
+              onHoverChange={setHovered}
+              onScreenClick={() => onScreenClick?.()}
+            />
+          ) : null}
 
           <ContactShadows
             position={[0, -0.88, 0.2]}
