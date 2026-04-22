@@ -4,13 +4,10 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 /**
- * Global full-screen overlay that survives navigation. Listens for
- * `vekto:enter-pravec` and:
- *   1. "covering" — radial lime cover expands from the Pravec screen position
- *   2. "holding"  — stays fully covered while router.push renders /work
- *   3. "revealing" — fades out, revealing the new page
- *
- * Also covers direct-link /work loads briefly for consistency.
+ * Global CRT-style page transition. When someone triggers
+ * `vekto:enter-pravec` (with optional { x, y } percent origin),
+ * a full-screen phosphor overlay expands from the click point,
+ * holds while /work mounts underneath, then collapses CRT-style.
  */
 type Phase = "idle" | "covering" | "holding" | "revealing";
 
@@ -22,47 +19,51 @@ export default function TransitionBridge() {
 
   const addTimer = (t: ReturnType<typeof setTimeout>) => { timers.current.push(t); };
 
-  const trigger = useCallback(() => {
+  const setOrigin = (x?: number, y?: number) => {
+    const root = document.documentElement;
+    if (x != null && y != null) {
+      root.style.setProperty("--tb-x", `${x}%`);
+      root.style.setProperty("--tb-y", `${y}%`);
+    } else {
+      const isMobile = window.innerWidth < 1024;
+      root.style.setProperty("--tb-x", isMobile ? "50%" : "75%");
+      root.style.setProperty("--tb-y", "50%");
+    }
+  };
+
+  const trigger = useCallback((detail?: { x?: number; y?: number }) => {
     setPhase((current) => {
       if (current !== "idle") return current;
+      setOrigin(detail?.x, detail?.y);
       router.prefetch("/work");
-      // Schedule the cover → hold → navigate sequence
       addTimer(setTimeout(() => {
         setPhase("holding");
         router.push("/work");
-      }, 780));
+      }, 820));
       return "covering";
     });
   }, [router]);
 
-  // When /work finishes mounting during hold, begin reveal
+  // When /work mounts during hold, begin reveal
   useEffect(() => {
     if (phase === "holding" && pathname === "/work") {
       const rafId = requestAnimationFrame(() => {
-        addTimer(setTimeout(() => setPhase("revealing"), 90));
+        addTimer(setTimeout(() => setPhase("revealing"), 120));
       });
-      addTimer(setTimeout(() => setPhase("idle"), 1500));
+      addTimer(setTimeout(() => setPhase("idle"), 1400));
       return () => cancelAnimationFrame(rafId);
     }
   }, [phase, pathname]);
 
-  // External trigger
+  // External trigger (from button or Pravec screen click)
   useEffect(() => {
-    const onTrigger = () => trigger();
+    const onTrigger = (e: Event) => {
+      const ce = e as CustomEvent<{ x?: number; y?: number } | undefined>;
+      trigger(ce.detail);
+    };
     window.addEventListener("vekto:enter-pravec", onTrigger);
     return () => window.removeEventListener("vekto:enter-pravec", onTrigger);
   }, [trigger]);
-
-  // Direct-load bridge (legacy sessionStorage flag)
-  useEffect(() => {
-    if (pathname !== "/work" || phase !== "idle") return;
-    let flag: string | null = null;
-    try { flag = sessionStorage.getItem("vekto-entering-pravec"); } catch {}
-    if (flag !== "1") return;
-    try { sessionStorage.removeItem("vekto-entering-pravec"); } catch {}
-    setPhase("revealing");
-    addTimer(setTimeout(() => setPhase("idle"), 1200));
-  }, [pathname, phase]);
 
   useEffect(() => () => {
     timers.current.forEach(clearTimeout);
@@ -80,10 +81,23 @@ export default function TransitionBridge() {
     <div
       aria-hidden
       className={`pointer-events-none fixed inset-0 z-[70] ${cls}`}
-      style={{
-        background:
-          "radial-gradient(circle at 75% 50%, #e8ff5a 0%, #c8ff00 12%, #34420a 38%, #0a0805 65%, #0a0805 100%)",
-      }}
-    />
+    >
+      {/* Phosphor wash — radial lime from click origin */}
+      <div
+        className="absolute inset-0 tb-phosphor"
+        style={{
+          background:
+            "radial-gradient(circle at var(--tb-x, 75%) var(--tb-y, 50%), #e8ff5a 0%, #c8ff00 10%, #4a5c0d 34%, #0a0805 62%, #0a0805 100%)",
+        }}
+      />
+      {/* Scanlines — feels like inside a CRT */}
+      <div className="absolute inset-0 tb-scanlines" />
+      {/* Noise grain */}
+      <div className="absolute inset-0 tb-grain" />
+      {/* White flash at peak of covering */}
+      {phase === "covering" && <div className="absolute inset-0 bg-white tb-flash" />}
+      {/* Horizontal bootsweep on reveal (CRT turn-on) */}
+      {phase === "revealing" && <div className="absolute inset-0 tb-sweep" />}
+    </div>
   );
 }

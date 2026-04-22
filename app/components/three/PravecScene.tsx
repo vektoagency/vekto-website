@@ -43,11 +43,18 @@ export default function PravecScene() {
   const [hovered, setHovered] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
 
-  const handleEnter = () => {
+  const handleEnter = (evt?: { clientX?: number; clientY?: number }) => {
     if (transitioning) return;
     setTransitioning(true);
-    // Delegate routing + cover overlay to the global TransitionBridge
-    window.dispatchEvent(new CustomEvent("vekto:enter-pravec"));
+    // Use the click point if available, else default (handled by bridge)
+    const detail =
+      evt && evt.clientX != null && evt.clientY != null
+        ? {
+            x: (evt.clientX / window.innerWidth) * 100,
+            y: (evt.clientY / window.innerHeight) * 100,
+          }
+        : undefined;
+    window.dispatchEvent(new CustomEvent("vekto:enter-pravec", { detail }));
   };
 
   useEffect(() => {

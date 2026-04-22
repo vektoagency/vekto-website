@@ -20,7 +20,7 @@ const LABEL_RED = "#8a1f16";
 const KNOB = "#b5aa8c";
 
 type Props = {
-  onScreenClick?: () => void;
+  onScreenClick?: (evt?: { clientX?: number; clientY?: number }) => void;
   hovered?: boolean;
   onHoverChange?: (h: boolean) => void;
 };
@@ -243,7 +243,7 @@ function Monitor({ onScreenClick, hovered, onHoverChange }: Props) {
         {/* Curved CRT glass with phosphor shader — slightly bulged forward */}
         <group
           position={[0, 0, 0.025]}
-          onClick={(e) => { e.stopPropagation(); onScreenClick?.(); }}
+          onClick={(e) => { e.stopPropagation(); onScreenClick?.({ clientX: e.clientX, clientY: e.clientY }); }}
           onPointerOver={(e) => { e.stopPropagation(); onHoverChange?.(true); document.body.style.cursor = "pointer"; }}
           onPointerOut={(e) => { e.stopPropagation(); onHoverChange?.(false); document.body.style.cursor = "auto"; }}
         >
