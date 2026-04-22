@@ -133,10 +133,12 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick, on
     root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
   });
 
-  // Aggressive inset — the GLB's screen mesh extends beyond the visible bezel,
-  // so we fit the phosphor plane well inside the actual visible screen area.
-  const padW = screen ? screen.width * 0.74 : 0;
-  const padH = screen ? screen.height * 0.64 : 0;
+  // Mac 128K visible screen aspect = ~1.49:1. Force this aspect to avoid
+  // stretching/squashing based on the GLB's bounding box. Width first, height
+  // derived from the aspect ratio. Offset downward to land in the visible bezel.
+  const padW = screen ? screen.width * 0.84 : 0;
+  const padH = screen ? padW / 1.45 : 0;
+  const yOffset = screen ? -screen.height * 0.08 : 0;
 
   return (
     <group ref={root}>
@@ -161,13 +163,15 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick, on
             onScreenClick();
           }}
         >
-          <CRTScreen width={padW} height={padH} />
-          {hovered && (
-            <mesh position={[0, 0, 0.002]}>
-              <planeGeometry args={[padW * 1.02, padH * 1.02]} />
-              <meshBasicMaterial color="#c8ff00" transparent opacity={0.05} />
-            </mesh>
-          )}
+          <group position={[0, yOffset, 0]}>
+            <CRTScreen width={padW} height={padH} />
+            {hovered && (
+              <mesh position={[0, 0, 0.002]}>
+                <planeGeometry args={[padW * 1.02, padH * 1.02]} />
+                <meshBasicMaterial color="#c8ff00" transparent opacity={0.05} />
+              </mesh>
+            )}
+          </group>
         </group>
       )}
     </group>

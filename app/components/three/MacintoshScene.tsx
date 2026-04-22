@@ -103,15 +103,15 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
         <Suspense fallback={null}>
           <directionalLight
             position={[3.5, 4.5, 3.5]}
-            intensity={1.3}
+            intensity={0.75}
             color="#fff2d8"
             castShadow
             shadow-mapSize-width={1024}
             shadow-mapSize-height={1024}
           />
-          <directionalLight position={[-4, 2.5, 1.5]} intensity={0.45} color="#8fb3ff" />
-          <pointLight position={[-2.2, 1.4, -2.5]} intensity={3.2} distance={7} color="#c8ff00" />
-          <ambientLight intensity={0.32} color="#2b2518" />
+          <directionalLight position={[-4, 2.5, 1.5]} intensity={0.22} color="#8fb3ff" />
+          <pointLight position={[-2.2, 1.4, -2.5]} intensity={1.4} distance={6} color="#c8ff00" />
+          <ambientLight intensity={0.45} color="#2b2518" />
 
           <Environment preset="warehouse" />
 
@@ -144,19 +144,18 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
 
         <EffectComposer multisampling={0}>
           <Bloom
-            intensity={zoomedIn ? 0.9 : 0.4}
-            luminanceThreshold={0.78}
-            luminanceSmoothing={0.22}
+            intensity={zoomedIn ? 0.7 : 0.18}
+            luminanceThreshold={0.92}
+            luminanceSmoothing={0.3}
             mipmapBlur
           />
           <ChromaticAberration
-            offset={zoomedIn ? [0.005, 0.005] : [0.0004, 0.0004]}
+            offset={zoomedIn ? [0.004, 0.004] : [0.0, 0.0]}
             blendFunction={BlendFunction.NORMAL}
             radialModulation={false}
             modulationOffset={0}
           />
-          <Noise opacity={zoomedIn ? 0.2 : 0.07} blendFunction={BlendFunction.SCREEN} />
-          <Vignette eskil={false} offset={0.18} darkness={0.88} />
+          <Vignette eskil={false} offset={0.22} darkness={0.82} />
         </EffectComposer>
       </Canvas>
 
