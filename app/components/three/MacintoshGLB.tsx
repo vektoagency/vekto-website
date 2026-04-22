@@ -133,13 +133,12 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick, on
     root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
   });
 
-  // The GLB's Computer_Screen_0 mesh bounding box is larger than the visible
-  // glass area (it covers the full CRT tube). Shrink to roughly match the
-  // visible bezel and push down significantly since the box center sits above
-  // the visible screen center.
-  const padW = screen ? screen.width * 0.7 : 0;
-  const padH = screen ? screen.height * 0.52 : 0;
-  const yOffset = screen ? -screen.height * 0.2 : 0;
+  // Mac 128K visible screen aspect = ~1.49:1. Force this aspect to avoid
+  // stretching/squashing based on the GLB's bounding box. Width first, height
+  // derived from the aspect ratio. Offset downward to land in the visible bezel.
+  const padW = screen ? screen.width * 0.84 : 0;
+  const padH = screen ? padW / 1.45 : 0;
+  const yOffset = screen ? -screen.height * 0.08 : 0;
 
   return (
     <group ref={root}>
