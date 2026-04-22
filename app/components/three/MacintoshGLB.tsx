@@ -4,18 +4,10 @@ import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import CRTScreen from "./CRTScreen";
+import { createCRTShaderMaterial } from "./crtShaderMaterial";
 
 const MODEL_URL = "/models/mac-128k.glb";
 const SCREEN_MESH_NAME = "Computer_Screen_0";
-
-type ScreenData = {
-  position: THREE.Vector3;
-  quaternion: THREE.Quaternion;
-  width: number;
-  height: number;
-  normal: THREE.Vector3;
-};
 
 type Props = {
   hovered: boolean;
@@ -25,17 +17,19 @@ type Props = {
 };
 
 /**
- * Real Mac 128K loaded from /public/models/mac-128k.glb. The model is
- * auto-centered + normalized to ~1.6 units tall. The CRT phosphor
- * shader is positioned by reading the actual `Computer_Screen_0` mesh's
- * bounding box from the GLB, so it always lands precisely on the bezel.
+ * Real Mac 128K loaded from /public/models/mac-128k.glb. We directly REPLACE
+ * the material on the `Computer_Screen_0` mesh with our CRT phosphor shader,
+ * so the phosphor lands exactly on the screen geometry — no guesses.
  */
 export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick, onScreenLocated }: Props) {
   const root = useRef<THREE.Group>(null);
   const { scene } = useGLTF(MODEL_URL);
   const { pointer } = useThree();
 
-  const { prepared, scale, offset, screen } = useMemo(() => {
+  // One shared shader material, reused and animated in useFrame.
+  const crtMaterial = useMemo(() => createCRTShaderMaterial(), []);
+
+  const { prepared, scale, offset, screenInfo } = useMemo(() => {
     const cloned = scene.clone(true);
     cloned.traverse((obj) => {
       const m = obj as THREE.Mesh;
@@ -45,131 +39,113 @@ export default function MacintoshGLB({ hovered, onHoverChange, onScreenClick, on
       }
     });
 
-    // Normalize the whole model: base on y=0, vertically scaled to 1.6u, x/z centered
+    // Normalize: base on y=0, height ~1.6u, x/z centered
     const box = new THREE.Box3().setFromObject(cloned);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     const s = 1.6 / Math.max(size.y, 0.0001);
     const off = new THREE.Vector3(-center.x, -center.y + size.y / 2, -center.z).multiplyScalar(s);
 
-    // Find the screen mesh and compute its real-world transform inside our group
     cloned.updateMatrixWorld(true);
-    let screenData: ScreenData | null = null;
+
+    // Find the screen mesh, replace its material with the CRT shader, and
+    // report its world position/normal so the camera can aim at it for zoom.
+    type ScreenInfo = { center: THREE.Vector3; normal: THREE.Vector3; width: number; height: number };
+    const infoBox: { value: ScreenInfo | null } = { value: null };
 
     cloned.traverse((obj) => {
       if (obj.name !== SCREEN_MESH_NAME) return;
       const mesh = obj as THREE.Mesh;
+
+      // Replace material in place — the CRT shader now renders on the exact
+      // screen geometry baked into the GLB.
+      mesh.material = crtMaterial;
+      // Make sure screen doesn't cast shadows (emissive surface)
+      mesh.castShadow = false;
+
+      // Compute world transform for camera aiming
       mesh.geometry.computeBoundingBox();
       const bb = mesh.geometry.boundingBox;
       if (!bb) return;
       const localCenter = bb.getCenter(new THREE.Vector3());
       const localSize = bb.getSize(new THREE.Vector3());
 
-      // The thin axis = surface normal direction
       const dims: [number, number, number] = [localSize.x, localSize.y, localSize.z];
       const normalAxis = dims.indexOf(Math.min(...dims));
-      // Width/height = the other two dims
       const widthLocal = normalAxis === 0 ? localSize.z : localSize.x;
       const heightLocal = normalAxis === 1 ? localSize.z : localSize.y;
 
-      // Local normal vector (then transformed to world)
       const localNormal = new THREE.Vector3(0, 0, 0);
       localNormal.setComponent(normalAxis, 1);
 
-      // World transform of the mesh (within the cloned scene)
       const meshWorldPos = localCenter.clone().applyMatrix4(mesh.matrixWorld);
       const q = new THREE.Quaternion();
       const _p = new THREE.Vector3();
-      const _s = new THREE.Vector3();
-      mesh.matrixWorld.decompose(_p, q, _s);
+      const _ms = new THREE.Vector3();
+      mesh.matrixWorld.decompose(_p, q, _ms);
       const worldNormal = localNormal.clone().applyQuaternion(q).normalize();
 
-      // Apply our group's normalize transform (scale * worldPos + offset)
       const finalPos = meshWorldPos.clone().multiplyScalar(s).add(off);
-      // Push the overlay slightly outward along the normal so it doesn't z-fight
-      finalPos.add(worldNormal.clone().multiplyScalar(0.005));
+      const finalWidth = widthLocal * _ms.x * s;
+      const finalHeight = heightLocal * _ms.y * s;
 
-      // Final size = local size * mesh world scale * group scale
-      const meshScale = _s;
-      const finalWidth = widthLocal * meshScale.x * s;
-      const finalHeight = heightLocal * meshScale.y * s;
-
-      const data: ScreenData = {
-        position: finalPos,
-        quaternion: q,
+      infoBox.value = {
+        center: finalPos,
+        normal: worldNormal,
         width: finalWidth,
         height: finalHeight,
-        normal: worldNormal,
       };
-      screenData = data;
     });
 
-    return {
-      prepared: cloned,
-      scale: s,
-      offset: off,
-      screen: screenData as ScreenData | null,
-    };
-  }, [scene]);
+    return { prepared: cloned, scale: s, offset: off, screenInfo: infoBox.value };
+  }, [scene, crtMaterial]);
 
-  // Notify parent of the screen location so the camera can aim at it for zoom
+  // Notify parent of screen location for camera zoom
   useEffect(() => {
-    if (!screen || !onScreenLocated) return;
-    onScreenLocated({
-      center: screen.position.clone(),
-      normal: screen.normal.clone(),
-      width: screen.width,
-      height: screen.height,
-    });
-  }, [screen, onScreenLocated]);
+    if (!screenInfo || !onScreenLocated) return;
+    onScreenLocated(screenInfo);
+  }, [screenInfo, onScreenLocated]);
 
-  useFrame((state) => {
-    if (!root.current) return;
-    const t = state.clock.getElapsedTime();
-    root.current.position.y = Math.sin(t * 0.7) * 0.015 - 0.8;
-    const tx = pointer.x * 0.1;
-    const ty = -pointer.y * 0.05;
-    root.current.rotation.y += (tx - root.current.rotation.y) * 0.05;
-    root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
+  useFrame((state, delta) => {
+    if (root.current) {
+      const t = state.clock.getElapsedTime();
+      root.current.position.y = Math.sin(t * 0.7) * 0.015 - 0.8;
+      const tx = pointer.x * 0.1;
+      const ty = -pointer.y * 0.05;
+      root.current.rotation.y += (tx - root.current.rotation.y) * 0.05;
+      root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
+    }
+    crtMaterial.uniforms.uTime.value += delta;
+    crtMaterial.uniforms.uIntensity.value = hovered ? 1.5 : 1.2;
   });
 
-  // Aggressive inset — the GLB's screen mesh extends beyond the visible bezel,
-  // so we fit the phosphor plane well inside the actual visible screen area.
-  const padW = screen ? screen.width * 0.74 : 0;
-  const padH = screen ? screen.height * 0.64 : 0;
+  // Invisible click/hover plane oriented to face along the screen's normal,
+  // sitting slightly in front of it. Hit area exactly matches the screen.
+  const hitQuat = useMemo(() => {
+    if (!screenInfo) return new THREE.Quaternion();
+    return new THREE.Quaternion().setFromUnitVectors(
+      new THREE.Vector3(0, 0, 1),
+      screenInfo.normal.clone().normalize()
+    );
+  }, [screenInfo]);
+
+  const hitPlane = screenInfo ? (
+    <mesh
+      position={screenInfo.center.clone().add(screenInfo.normal.clone().multiplyScalar(0.015))}
+      quaternion={hitQuat}
+      onPointerOver={(e) => { e.stopPropagation(); onHoverChange(true); document.body.style.cursor = "pointer"; }}
+      onPointerOut={(e) => { e.stopPropagation(); onHoverChange(false); document.body.style.cursor = "auto"; }}
+      onClick={(e) => { e.stopPropagation(); onScreenClick(); }}
+    >
+      <planeGeometry args={[screenInfo.width * 0.9, screenInfo.height * 0.9]} />
+      <meshBasicMaterial color="#c8ff00" transparent opacity={hovered ? 0.04 : 0} />
+    </mesh>
+  ) : null;
 
   return (
     <group ref={root}>
       <primitive object={prepared} scale={scale} position={offset} />
-
-      {screen && (
-        <group
-          position={screen.position}
-          quaternion={screen.quaternion}
-          onPointerOver={(e) => {
-            e.stopPropagation();
-            onHoverChange(true);
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={(e) => {
-            e.stopPropagation();
-            onHoverChange(false);
-            document.body.style.cursor = "auto";
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onScreenClick();
-          }}
-        >
-          <CRTScreen width={padW} height={padH} />
-          {hovered && (
-            <mesh position={[0, 0, 0.002]}>
-              <planeGeometry args={[padW * 1.02, padH * 1.02]} />
-              <meshBasicMaterial color="#c8ff00" transparent opacity={0.05} />
-            </mesh>
-          )}
-        </group>
-      )}
+      {hitPlane}
     </group>
   );
 }

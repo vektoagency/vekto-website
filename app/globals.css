@@ -501,3 +501,198 @@ html {
 .crt-emerge {
   animation: crtEmerge 1.6s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
 }
+
+/* =========================================================================
+   PortfolioOverlay — same-page CRT portfolio "page".
+   Reveal expands from click origin (--tb-x / --tb-y already set globally).
+   ========================================================================= */
+
+@keyframes poOpenClip {
+  from { clip-path: circle(6% at var(--tb-x, 75%) var(--tb-y, 50%));
+         -webkit-clip-path: circle(6% at var(--tb-x, 75%) var(--tb-y, 50%)); }
+  to   { clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%));
+         -webkit-clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%)); }
+}
+@keyframes poCloseClip {
+  from { clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%));
+         -webkit-clip-path: circle(170% at var(--tb-x, 75%) var(--tb-y, 50%)); }
+  to   { clip-path: circle(0% at var(--tb-x, 75%) var(--tb-y, 50%));
+         -webkit-clip-path: circle(0% at var(--tb-x, 75%) var(--tb-y, 50%)); }
+}
+
+.po-open {
+  animation: poOpenClip 0.95s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.po-closing {
+  animation: poCloseClip 0.6s cubic-bezier(0.7, 0, 0.9, 0.3) both;
+  pointer-events: none;
+}
+
+/* Deep phosphor bed (under everything) */
+.po-phosphor {
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(80, 110, 20, 0.55) 0%, rgba(20, 32, 4, 0.65) 40%, rgba(6, 10, 2, 1) 85%),
+    #050804;
+  animation: poPhosphorBreathe 6s ease-in-out infinite;
+}
+@keyframes poPhosphorBreathe {
+  0%, 100% { filter: brightness(1) saturate(1); }
+  50%      { filter: brightness(1.06) saturate(1.08); }
+}
+
+/* Faux character grid — repeating monospace dot matrix mimicking CRT text */
+.po-chargrid {
+  background-image:
+    radial-gradient(circle, rgba(200, 255, 0, 0.22) 0.8px, transparent 1.2px),
+    repeating-linear-gradient(to right, rgba(200, 255, 0, 0.045) 0 1px, transparent 1px 11px),
+    repeating-linear-gradient(to bottom, rgba(200, 255, 0, 0.035) 0 1px, transparent 1px 14px);
+  background-size: 11px 14px, 100% 100%, 100% 100%;
+  mask-image: radial-gradient(ellipse at 50% 45%, black 20%, rgba(0,0,0,0.55) 70%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 45%, black 20%, rgba(0,0,0,0.55) 70%, transparent 95%);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: poGridDrift 8s linear infinite;
+}
+@keyframes poGridDrift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to   { background-position: 0 -56px, 0 0, 0 0; }
+}
+
+/* Tight scanlines over everything — true CRT interior */
+.po-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.38) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Vignette + slight glass curvature suggestion */
+.po-vignette {
+  background:
+    radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.78) 100%),
+    radial-gradient(ellipse at 50% 0%, rgba(200, 255, 0, 0.08), transparent 55%);
+  pointer-events: none;
+}
+
+/* Extra radial flash at origin during open */
+.po-reveal {
+  background: radial-gradient(
+    circle at var(--tb-x, 75%) var(--tb-y, 50%),
+    rgba(232, 255, 90, 0.35) 0%,
+    rgba(200, 255, 0, 0.14) 18%,
+    transparent 45%
+  );
+  mix-blend-mode: screen;
+  animation: poRevealFade 1.1s ease-out both;
+  pointer-events: none;
+}
+@keyframes poRevealFade {
+  0%   { opacity: 1; }
+  60%  { opacity: 0.6; }
+  100% { opacity: 0.12; }
+}
+
+/* Content layer — emerges like phosphor lighting up */
+.po-content {
+  animation: poContentIn 0.85s 0.2s cubic-bezier(0.25, 0.8, 0.3, 1) backwards;
+}
+@keyframes poContentIn {
+  0%   { opacity: 0; filter: brightness(1.9) blur(4px); transform: translateY(6px); }
+  45%  { opacity: 0.5; filter: brightness(1.3) blur(1.5px); }
+  100% { opacity: 1; filter: none; transform: none; }
+}
+
+/* Typewriter line reveal (per line) */
+.po-type {
+  animation: poType 0.28s cubic-bezier(0.25, 0.8, 0.3, 1) both;
+}
+@keyframes poType {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.po-caret {
+  display: inline-block;
+  margin-left: 2px;
+  animation: poBlink 0.9s step-end infinite;
+  color: #c8ff00;
+}
+@keyframes poBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Phosphor glow for headings */
+.po-glow {
+  text-shadow:
+    0 0 18px rgba(200, 255, 0, 0.45),
+    0 0 44px rgba(200, 255, 0, 0.22),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Retro Mac-style window frame */
+.po-window {
+  background: #0f1406;
+  border: 1px solid rgba(200, 255, 0, 0.22);
+  border-radius: 3px;
+  box-shadow:
+    0 24px 60px -18px rgba(0, 0, 0, 0.85),
+    0 0 42px rgba(200, 255, 0, 0.08),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.po-titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background:
+    repeating-linear-gradient(to bottom,
+      #eadfb1 0 1px,
+      #c6b77a 1px 2px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
+
+.po-titlebar-close {
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid #1a1a0e;
+  background: #efe9c9;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.po-titlebar-label {
+  flex: 1;
+  text-align: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #1a1a0e;
+  background: #efe9c9;
+  padding: 2px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.po-titlebar-controls {
+  background: #efe9c9;
+  padding: 2px 8px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+@keyframes poWindowIn {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.985); filter: brightness(1.5) blur(3px); }
+  60%  { opacity: 0.7; filter: brightness(1.15) blur(1px); }
+  100% { opacity: 1; transform: none; filter: none; }
+}

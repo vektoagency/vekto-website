@@ -63,7 +63,9 @@ function CameraRig({
     // at the current fov. Distance = max(width, height) / (2 * tan(fov/2))
     // fov vertical = 32deg, tan(16) ≈ 0.287
     const maxSide = Math.max(screen.width, screen.height);
-    const standoff = maxSide / (2 * Math.tan((32 * Math.PI) / 360)) * 1.02;
+    // Standoff factor <1 crops inside the screen — phosphor should fill the
+    // viewport by the time the overlay expands on top.
+    const standoff = maxSide / (2 * Math.tan((32 * Math.PI) / 360)) * 0.72;
     const camPos = screen.center.clone().add(screen.normal.clone().multiplyScalar(standoff));
     // Account for the model group's y-offset applied in MacintoshGLB's useFrame (root.y=-0.8)
     camPos.y += -0.8;
