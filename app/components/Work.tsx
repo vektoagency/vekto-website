@@ -42,8 +42,8 @@ export default function Work() {
               speak for themselves
             </h2>
           </div>
-          <a href="#contact" className="text-sm text-[#a0a0a0] hover:text-white transition-colors underline underline-offset-4">
-            Work with us →
+          <a href="/work" className="text-sm text-[#a0a0a0] hover:text-white transition-colors underline underline-offset-4">
+            View all projects →
           </a>
         </AnimateIn>
 

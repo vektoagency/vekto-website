@@ -288,3 +288,7 @@ html {
 
 .modal-fade-in { animation: modalFadeIn 0.18s ease-out; }
 .modal-pop-in { animation: modalPopIn 0.22s ease-out; }
+
+/* Hide scrollbar (used on filter bar) */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }

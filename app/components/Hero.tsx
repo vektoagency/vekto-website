@@ -60,7 +60,7 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Get a Free Demo
             </a>
-            <a href="#work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
+            <a href="/work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
               See Our Work
             </a>
           </div>
@@ -99,7 +99,7 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
               Get a Free Demo
             </a>
-            <a href="#work" className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
+            <a href="/work" className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors">
               See Our Work
             </a>
           </div>

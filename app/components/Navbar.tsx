@@ -16,7 +16,7 @@ export default function Navbar() {
   const links = [
     { label: "Services", href: "#services" },
     { label: "Why VEKTO", href: "#why" },
-    { label: "Our Work", href: "#work" },
+    { label: "Our Work", href: "/work" },
     { label: "Pricing", href: "#pricing" },
     { label: "Contact", href: "#contact" },
   ];
