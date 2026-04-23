@@ -13,9 +13,21 @@ export default function HeroPravec() {
   const [overlayOpen, setOverlayOpen] = useState(false);
   // Gate WebGL mount until after hydrate — Canvas needs window/document.
   const [mounted, setMounted] = useState(false);
-  const [sceneReady, setSceneReady] = useState(false);
+  const [minElapsed, setMinElapsed] = useState(false);
+  const [canvasReady, setCanvasReady] = useState(false);
   const [loaderGone, setLoaderGone] = useState(false);
   useEffect(() => setMounted(true), []);
+
+  // Fixed minimum boot duration — consistent boot sequence every visit.
+  useEffect(() => {
+    if (!mounted) return;
+    const t = setTimeout(() => setMinElapsed(true), 2200);
+    return () => clearTimeout(t);
+  }, [mounted]);
+
+  // Loader hides only after BOTH the minimum time has elapsed AND the Mac
+  // has actually rendered — protects slow devices from seeing an empty spot.
+  const sceneReady = minElapsed && canvasReady;
 
   // Unmount the loader after its fade-out completes.
   useEffect(() => {
@@ -73,7 +85,7 @@ export default function HeroPravec() {
             <MacintoshScene
               zoomedIn={zoomedIn}
               onScreenClick={handleScreenClick}
-              onReady={() => setSceneReady(true)}
+              onReady={() => setCanvasReady(true)}
             />
           </div>
         )}
