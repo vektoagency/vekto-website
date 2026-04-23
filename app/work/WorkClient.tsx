@@ -344,14 +344,14 @@ export default function WorkClient() {
       {/* ----------- FILTER ----------- */}
       <section className="py-2 sm:py-4 px-3 sm:px-5 md:px-8 border-b border-[#1a1a1a] bg-black/40">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-6">
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-1 sm:overflow-x-auto no-scrollbar">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-0.5 sm:gap-1 sm:overflow-x-auto no-scrollbar">
             {CATEGORIES.map((c) => {
               const isActive = filter === c;
               return (
                 <button
                   key={c}
                   onClick={() => setFilter(c)}
-                  className={`relative whitespace-nowrap font-mono text-[8px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.25em] font-semibold px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-colors duration-300 ${
+                  className={`relative whitespace-nowrap font-mono text-[7px] sm:text-[10px] uppercase tracking-[0.05em] sm:tracking-[0.25em] font-semibold px-1.5 sm:px-4 py-0.5 sm:py-2 rounded-full transition-colors duration-300 ${
                     isActive ? "text-black" : "text-white/85 hover:text-white"
                   }`}
                 >
