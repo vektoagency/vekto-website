@@ -310,7 +310,7 @@ export default function WorkClient() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               ] PORTFOLIO.DB · 2024—26 · READY
             </span>
-            <Link href="/" className="text-[#888] hover:text-white transition-colors inline-flex items-center gap-2">
+            <Link href="/" className="text-white/80 hover:text-white transition-colors inline-flex items-center gap-2">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg>
               HOME
             </Link>
@@ -352,7 +352,7 @@ export default function WorkClient() {
                   key={c}
                   onClick={() => setFilter(c)}
                   className={`relative whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.25em] font-semibold px-4 py-2 rounded-full transition-colors duration-300 ${
-                    isActive ? "text-black" : "text-[#888] hover:text-white"
+                    isActive ? "text-black" : "text-white/85 hover:text-white"
                   }`}
                 >
                   {isActive && (
