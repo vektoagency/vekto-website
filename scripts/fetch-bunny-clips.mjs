@@ -55,6 +55,7 @@ const BRAND_LOGOS = {
   "VEKTO": "/images/logo.png",
   "BANSKO ESTATES": "/images/logo.png",
   "ISTINSKIMED.BG": "/images/logo.png",
+  "KRISTA G": "/images/logo.png",
   "BIANCO LATTE": "/images/logo.png",
   "PARFEN": "/images/logo.png",
   "GIFTO.BG": "/images/logo.png",

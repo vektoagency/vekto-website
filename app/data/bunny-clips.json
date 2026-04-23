@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-23T13:50:17.106Z",
+  "generatedAt": "2026-04-23T13:51:05.443Z",
   "libraryId": "637364",
   "cdnHostname": "vz-5279644d-ac4.b-cdn.net",
   "clips": [
@@ -41,10 +41,10 @@
     },
     {
       "id": "07be6d30-0764-4cd1-bac5-23f2cfecd853",
-      "brand": "MEN'S CARE",
-      "logo": "/images/logo-menscare.png",
+      "brand": "KRISTA G",
+      "logo": "/images/logo.png",
       "category": "UGC",
-      "description": "UGC — Krista G.",
+      "description": "MEN'S CARE collab — UGC hook.",
       "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/thumbnail.jpg",
       "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/play_1080p.mp4",
       "hlsPlaylist": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/playlist.m3u8",
@@ -54,7 +54,7 @@
       "height": 3840,
       "portrait": true,
       "metric": null,
-      "href": "/work/menscare",
+      "href": null,
       "featured": false
     },
     {
@@ -131,10 +131,10 @@
     },
     {
       "id": "5dafff47-541e-4186-b202-9e7ec94f5e4a",
-      "brand": "MEN'S CARE",
-      "logo": "/images/logo-menscare.png",
+      "brand": "KRISTA G",
+      "logo": "/images/logo.png",
       "category": "UGC",
-      "description": "UGC — Krista G.",
+      "description": "MEN'S CARE collab — UGC spot.",
       "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/5dafff47-541e-4186-b202-9e7ec94f5e4a/thumbnail.jpg",
       "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/5dafff47-541e-4186-b202-9e7ec94f5e4a/play_1080p.mp4",
       "hlsPlaylist": "https://vz-5279644d-ac4.b-cdn.net/5dafff47-541e-4186-b202-9e7ec94f5e4a/playlist.m3u8",
@@ -144,7 +144,7 @@
       "height": 3840,
       "portrait": true,
       "metric": null,
-      "href": "/work/menscare",
+      "href": null,
       "featured": false
     },
     {
