@@ -761,10 +761,3 @@ html {
   100% { opacity: 1; transform: scaleY(1); filter: brightness(1) saturate(1) contrast(1); }
 }
 
-/* Bright green phosphor scanline that sweeps top-to-bottom inside the tile
-   once it's at full size — the "channel locking in" sweep. */
-@keyframes poTileSweep {
-  0%   { transform: translateY(-120%); opacity: 0.95; }
-  70%  { opacity: 0.6; }
-  100% { transform: translateY(220%); opacity: 0; }
-}
