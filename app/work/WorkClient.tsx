@@ -344,7 +344,7 @@ export default function WorkClient() {
       {/* ----------- FILTER ----------- */}
       <section className="py-4 px-5 md:px-8 border-b border-[#1a1a1a] bg-black/40">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-6">
-          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-1 sm:overflow-x-auto no-scrollbar">
             {CATEGORIES.map((c) => {
               const isActive = filter === c;
               return (
