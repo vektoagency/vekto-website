@@ -226,6 +226,24 @@ export default function Hero() {
         <HeroPravec mobile />
       </div>
 
+      {/* Mobile tap indicator — pulsing lime ring + 'TAP' chip at the CRT
+          screen's approximate on-viewport position (Mac at ~62% x, CRT
+          face ~44% y). Wrapped in HeroLeftCurtain so it fades out with
+          the rest of the mobile content on zoom. */}
+      <HeroLeftCurtain
+        className="lg:hidden absolute z-[3] pointer-events-none hero-tap-indicator"
+        style={{ left: "62%", top: "44%", transform: "translate(-50%, -50%)" }}
+      >
+        <div className="relative flex items-center justify-center">
+          <span className="absolute w-14 h-14 rounded-full border-[1.5px] border-[#c8ff00] hero-tap-ring" />
+          <span className="absolute w-14 h-14 rounded-full border-[1.5px] border-[#c8ff00] hero-tap-ring hero-tap-ring-delayed" />
+          <span className="relative font-mono text-[9px] uppercase tracking-[0.28em] text-[#c8ff00]/90 bg-black/55 border border-[#c8ff00]/45 px-2 py-0.5 rounded-sm"
+            style={{ textShadow: "0 0 8px rgba(200,255,0,0.55)" }}>
+            TAP
+          </span>
+        </div>
+      </HeroLeftCurtain>
+
       {/* Top gradient — makes badge + H1 readable over the Mac */}
       <div className="lg:hidden absolute inset-x-0 top-0 h-[42%] z-[2] pointer-events-none"
         style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.7) 55%, transparent 100%)" }} />

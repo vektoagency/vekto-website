@@ -11,6 +11,7 @@ type NavLink =
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -18,6 +19,20 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Hide the Navbar while the portfolio overlay is open — its po-dim
+  // background is semi-transparent, so the Navbar would otherwise bleed
+  // through and collide visually with the overlay's sticky header.
+  useEffect(() => {
+    const onZoomStart = () => setHidden(true);
+    const onZoomEnd = () => setHidden(false);
+    window.addEventListener("vekto:zoom-started", onZoomStart);
+    window.addEventListener("vekto:zoom-ended", onZoomEnd);
+    return () => {
+      window.removeEventListener("vekto:zoom-started", onZoomStart);
+      window.removeEventListener("vekto:zoom-ended", onZoomEnd);
+    };
   }, []);
 
   const links: NavLink[] = [
@@ -41,7 +56,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-[#080808]/95 backdrop-blur border-b border-[#1e1e1c]" : "bg-transparent"
-      }`}
+      } ${hidden ? "opacity-0 pointer-events-none -translate-y-2" : "opacity-100"}`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
