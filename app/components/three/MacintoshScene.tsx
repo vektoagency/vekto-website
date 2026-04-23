@@ -38,9 +38,12 @@ type ScreenInfo = {
 // keyboard + mouse aren't cramped against the viewport edge.
 const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.9, 1.35, 6.2);
 const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, 0.0, 0.3);
-// Mobile framing — Mac centered in its bounded container.
-const MOBILE_IDLE_CAM = new THREE.Vector3(0, 0.4, 5.0);
-const MOBILE_IDLE_TARGET = new THREE.Vector3(0, -0.2, 0.3);
+// Mobile framing — Canvas is fullscreen portrait. Camera positions the
+// Mac in the middle third of the viewport so text can overlay safely at
+// the top and bottom via dark gradients. fov is widened below because
+// portrait aspect squeezes horizontal room.
+const MOBILE_IDLE_CAM = new THREE.Vector3(0, 0.15, 6.2);
+const MOBILE_IDLE_TARGET = new THREE.Vector3(0, -0.4, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
@@ -123,7 +126,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
         shadows={!mobile}
         dpr={mobile ? 1 : [1, 1.5]}
         frameloop={frameloop}
-        camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 36 : 32 }}
+        camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 52 : 32 }}
         gl={{ antialias: true, alpha: true, powerPreference: mobile ? "default" : "high-performance" }}
         style={{ background: "transparent" }}
       >

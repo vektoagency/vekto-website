@@ -84,7 +84,7 @@ export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}
               opacity: sceneReady ? 1 : 0,
               transitionDuration: "700ms",
               transform: sceneReady ? "scale(1)" : "scale(0.985)",
-              transformOrigin: "74% 50%",
+              transformOrigin: mobile ? "50% 50%" : "74% 50%",
             }}
           >
             <MacintoshScene
