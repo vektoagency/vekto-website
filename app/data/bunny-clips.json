@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-23T13:32:30.623Z",
+  "generatedAt": "2026-04-23T13:38:44.687Z",
   "libraryId": "637364",
   "cdnHostname": "vz-5279644d-ac4.b-cdn.net",
   "clips": [
@@ -43,7 +43,7 @@
       "id": "07be6d30-0764-4cd1-bac5-23f2cfecd853",
       "brand": "MEN'S CARE",
       "logo": "/images/logo-menscare.png",
-      "category": "Organic",
+      "category": "UGC",
       "description": "UGC — Krista G.",
       "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/thumbnail.jpg",
       "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/play_1080p.mp4",
@@ -133,7 +133,7 @@
       "id": "5dafff47-541e-4186-b202-9e7ec94f5e4a",
       "brand": "MEN'S CARE",
       "logo": "/images/logo-menscare.png",
-      "category": "Organic",
+      "category": "UGC",
       "description": "UGC — Krista G.",
       "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/5dafff47-541e-4186-b202-9e7ec94f5e4a/thumbnail.jpg",
       "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/5dafff47-541e-4186-b202-9e7ec94f5e4a/play_1080p.mp4",
@@ -187,7 +187,7 @@
       "id": "fac1abe2-96c5-4b91-a552-c45f7dad51f1",
       "brand": "MEN'S CARE",
       "logo": "/images/logo-menscare.png",
-      "category": "AI Visuals",
+      "category": "Experimental",
       "description": "AI hook — exploding cones.",
       "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/fac1abe2-96c5-4b91-a552-c45f7dad51f1/thumbnail.jpg",
       "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/fac1abe2-96c5-4b91-a552-c45f7dad51f1/play_1080p.mp4",

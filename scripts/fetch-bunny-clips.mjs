@@ -44,7 +44,7 @@ async function loadEnv() {
   }
 }
 
-const KNOWN_CATEGORIES = ["Short-Form", "Organic", "AI Visuals", "Cinematic", "Experimental"];
+const KNOWN_CATEGORIES = ["Short-Form", "Organic", "UGC", "Cinematic", "Experimental"];
 
 // A logo lookup map — extend as new brands appear.
 const BRAND_LOGOS = {
