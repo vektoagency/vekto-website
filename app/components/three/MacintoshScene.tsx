@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, ContactShadows } from "@react-three/drei";
-import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Vignette, ChromaticAberration } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import MacintoshGLB from "./MacintoshGLB";
@@ -166,13 +166,12 @@ export default function MacintoshScene({ zoomedIn, paused = false, onScreenClick
             mipmapBlur
           />
           <ChromaticAberration
-            offset={zoomedIn ? [0.005, 0.005] : [0.0004, 0.0004]}
+            offset={zoomedIn ? [0.0008, 0.0008] : [0.0004, 0.0004]}
             blendFunction={BlendFunction.NORMAL}
             radialModulation={false}
             modulationOffset={0}
           />
-          <Noise opacity={zoomedIn ? 0.2 : 0} blendFunction={BlendFunction.SCREEN} />
-          <Vignette eskil={false} offset={0.5} darkness={zoomedIn ? 0.88 : 0.55} />
+          <Vignette eskil={false} offset={0.5} darkness={zoomedIn ? 0.78 : 0.55} />
         </EffectComposer>
       </Canvas>
 

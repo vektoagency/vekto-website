@@ -176,17 +176,6 @@ async function main() {
     });
   }
 
-  // Mark the MEN'S CARE hero spot as featured (big tile), if present.
-  // Prefer the one with an ROAS metric in its description; else first MEN'S CARE clip.
-  const normalize = (s) => (s || "").toLowerCase().replace(/[^a-z]/g, "");
-  const heroIdx = clips.findIndex(
-    (c) => normalize(c.brand) === "menscare" && /roas/i.test(c.description || "")
-  );
-  const firstMc = heroIdx >= 0 ? heroIdx : clips.findIndex((c) => normalize(c.brand) === "menscare");
-  if (firstMc >= 0) {
-    clips[firstMc].featured = true;
-    clips[firstMc].metric = clips[firstMc].metric || "4.6x ROAS";
-  }
 
   if (unknownCategories.size > 0) {
     console.warn(

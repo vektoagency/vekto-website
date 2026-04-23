@@ -196,14 +196,6 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
       <div className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
         style={{ background: "linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.3) 60%, transparent)" }} />
 
-      {clip.metric && (
-        <div className="absolute top-2.5 right-2.5 pointer-events-none">
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] bg-[#c8ff00] text-black px-1.5 py-0.5 rounded-sm font-bold">
-            {clip.metric}
-          </span>
-        </div>
-      )}
-
       <div className="absolute bottom-2 left-2.5 right-2.5 pointer-events-none">
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white font-bold leading-tight">
           {clip.brand}

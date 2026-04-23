@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-23T12:07:56.645Z",
+  "generatedAt": "2026-04-23T12:22:45.233Z",
   "libraryId": "637364",
   "cdnHostname": "vz-5279644d-ac4.b-cdn.net",
   "clips": [
@@ -14,9 +14,9 @@
       "hlsPlaylist": "https://vz-5279644d-ac4.b-cdn.net/46817022-ef22-4bdb-92ba-f964c29a3100/playlist.m3u8",
       "embedUrl": "https://iframe.mediadelivery.net/embed/637364/46817022-ef22-4bdb-92ba-f964c29a3100?autoplay=true&muted=false&loop=false&preload=true",
       "duration": 60,
-      "metric": "4.6x ROAS",
+      "metric": null,
       "href": "/work/menscare",
-      "featured": true
+      "featured": false
     },
     {
       "id": "bc858219-3397-4952-b4ac-d40a7cff6898",
