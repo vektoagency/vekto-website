@@ -61,20 +61,16 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
     [filter]
   );
 
-  // Sync URL (deep link, back-button closes)
+  // Back-button closes the overlay without changing the URL. The overlay is
+  // a UI state, not a routable page — a real /work route still exists for
+  // case study links (e.g. /work/menscare), and we don't want refresh to
+  // land on a duplicate "portfolio" page.
   useEffect(() => {
     if (!open) return;
     if (typeof window === "undefined") return;
-    const prevPath = window.location.pathname + window.location.search;
-    window.history.pushState({ vektoOverlay: true }, "", "/work");
     const onPop = () => onClose();
     window.addEventListener("popstate", onPop);
-    return () => {
-      window.removeEventListener("popstate", onPop);
-      if (window.location.pathname === "/work") {
-        window.history.replaceState({}, "", prevPath);
-      }
-    };
+    return () => window.removeEventListener("popstate", onPop);
   }, [open, onClose]);
 
   // Mount/unmount with animation

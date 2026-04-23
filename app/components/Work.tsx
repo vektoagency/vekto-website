@@ -42,9 +42,12 @@ export default function Work() {
               speak for themselves
             </h2>
           </div>
-          <a href="/work" className="text-sm text-[#a0a0a0] hover:text-white transition-colors underline underline-offset-4">
+          <button
+            onClick={() => window.dispatchEvent(new Event("vekto:open-portfolio"))}
+            className="text-sm text-[#a0a0a0] hover:text-white transition-colors underline underline-offset-4 cursor-pointer"
+          >
             View all projects →
-          </a>
+          </button>
         </AnimateIn>
 
         <div className="grid md:grid-cols-2 gap-6">

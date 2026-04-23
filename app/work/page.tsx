@@ -1,26 +1,9 @@
-import type { Metadata } from "next";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ContactModal from "../components/ContactModal";
-import CalInit from "./CalInit";
-import WorkClient from "./WorkClient";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Work — VEKTO",
-  description:
-    "Selected projects — brands we helped scale through cinematic storytelling, AI visuals and data-driven creative strategy.",
-};
-
+// The portfolio now lives inside the Mac-128K hero overlay (reel wall opens
+// on screen click). Keep /work as a permanent redirect so external links
+// don't land on a stale duplicate. Individual case studies like
+// /work/menscare still resolve to their own pages.
 export default function WorkPage() {
-  return (
-    <>
-      <Navbar />
-      <CalInit />
-      <main className="relative z-[5]">
-        <WorkClient />
-      </main>
-      <Footer />
-      <ContactModal />
-    </>
-  );
+  redirect("/");
 }

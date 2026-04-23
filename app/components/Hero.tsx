@@ -120,9 +120,12 @@ export default function Hero() {
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Let&apos;s Talk
             </a>
-            <a href="/work" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center">
+            <button
+              onClick={() => window.dispatchEvent(new Event("vekto:open-portfolio"))}
+              className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center cursor-pointer"
+            >
               See Our Work
-            </a>
+            </button>
           </div>
         </Stagger>
       </div>
