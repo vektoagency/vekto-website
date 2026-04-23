@@ -12,10 +12,14 @@ const LINES = [
  * Pure-CSS loader card — all animation comes from CSS keyframes, so it is
  * alive from the very first paint (no wait for React hydration/effects).
  */
-export default function HeroBootLoader() {
+export default function HeroBootLoader({ mobile = false }: { mobile?: boolean } = {}) {
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute top-1/2 left-[74%] -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[360px]">
+      <div
+        className={`absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] md:w-[360px] ${
+          mobile ? "left-1/2" : "left-[74%]"
+        }`}
+      >
         <div
           className="relative rounded-sm border border-[#c8ff00]/30 bg-black/40 backdrop-blur-sm px-5 py-4 overflow-hidden"
           style={{ boxShadow: "0 10px 40px -10px rgba(200,255,0,0.35)" }}
