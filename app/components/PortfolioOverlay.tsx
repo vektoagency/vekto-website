@@ -211,12 +211,9 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white font-bold leading-tight">
           {clip.brand}
         </div>
-        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80 mb-1">
+        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80">
           {clip.category}
         </div>
-        <p className="text-[11px] leading-snug text-white/85 max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-300 line-clamp-3">
-          {clip.description}
-        </p>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
@@ -272,7 +269,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
         )}
 
         <div className="absolute top-0 left-0 right-0 z-10 flex items-start justify-between gap-2 p-2.5 bg-gradient-to-b from-black/85 via-black/40 to-transparent pointer-events-none">
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 py-1.5">
             <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white font-bold leading-tight truncate">
               {clip.brand}
             </div>
