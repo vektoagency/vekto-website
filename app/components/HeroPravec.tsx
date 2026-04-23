@@ -14,7 +14,15 @@ export default function HeroPravec() {
   // Gate WebGL mount until after hydrate — Canvas needs window/document.
   const [mounted, setMounted] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
+  const [loaderGone, setLoaderGone] = useState(false);
   useEffect(() => setMounted(true), []);
+
+  // Unmount the loader after its fade-out completes.
+  useEffect(() => {
+    if (!sceneReady) return;
+    const t = setTimeout(() => setLoaderGone(true), 600);
+    return () => clearTimeout(t);
+  }, [sceneReady]);
 
   const startZoom = () => {
     window.dispatchEvent(new Event("vekto:zoom-started"));
@@ -53,16 +61,29 @@ export default function HeroPravec() {
     <>
       <div className={zoomedIn ? "fixed inset-0 z-[55]" : "absolute inset-0"}>
         {mounted && (
-          <MacintoshScene
-            zoomedIn={zoomedIn}
-            onScreenClick={handleScreenClick}
-            onReady={() => setSceneReady(true)}
-          />
-        )}
-        {!sceneReady && (
           <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-            style={{ opacity: sceneReady ? 0 : 1 }}
+            className="absolute inset-0 transition-opacity ease-out"
+            style={{
+              opacity: sceneReady ? 1 : 0,
+              transitionDuration: "700ms",
+              transform: sceneReady ? "scale(1)" : "scale(0.985)",
+              transformOrigin: "74% 50%",
+            }}
+          >
+            <MacintoshScene
+              zoomedIn={zoomedIn}
+              onScreenClick={handleScreenClick}
+              onReady={() => setSceneReady(true)}
+            />
+          </div>
+        )}
+        {!loaderGone && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity ease-out"
+            style={{
+              opacity: sceneReady ? 0 : 1,
+              transitionDuration: "500ms",
+            }}
           >
             <HeroBootLoader />
           </div>
