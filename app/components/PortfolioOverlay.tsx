@@ -34,18 +34,10 @@ const clips: Clip[] = [
   { id: "lab-03", client: "VEKTO LAB", logo: "/images/logo.png", src: `${V}/video-12s.webp`, category: "AI Visuals" },
 ];
 
-const BOOT_LOG = [
-  "> VEKTO/REEL.DB",
-  "> INDEX ........... OK",
-  "> DECRYPT ......... OK",
-  "> READY.",
-];
-
 type Props = { open: boolean; onClose: () => void };
 
 export default function PortfolioOverlay({ open, onClose }: Props) {
   const [mounted, setMounted] = useState(false);
-  const [bootLine, setBootLine] = useState(0);
   const [filter, setFilter] = useState<string>("ALL");
   const [expanded, setExpanded] = useState<Clip | null>(null);
 
@@ -77,28 +69,12 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
   useEffect(() => {
     if (open) {
       setMounted(true);
-      setBootLine(0);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
       const t = setTimeout(() => setMounted(false), 700);
       return () => clearTimeout(t);
     }
-  }, [open]);
-
-  // Boot log type-out
-  useEffect(() => {
-    if (!open) return;
-    let cancel = false;
-    const run = async () => {
-      for (let i = 0; i <= BOOT_LOG.length; i++) {
-        if (cancel) return;
-        setBootLine(i);
-        await new Promise((r) => setTimeout(r, 120 + Math.random() * 100));
-      }
-    };
-    run();
-    return () => { cancel = true; };
   }, [open]);
 
   // ESC closes (overlay + expanded preview)
@@ -141,52 +117,34 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </button>
         </div>
 
-        {/* Boot log — shorter */}
-        <section className="px-6 md:px-10 pt-6 max-w-[1500px] mx-auto">
-          <pre className="font-mono text-[11px] text-[#c8ff00] leading-relaxed">
-            {BOOT_LOG.slice(0, bootLine).map((l, i) => (
-              <div key={i} className="po-type">{l}</div>
-            ))}
-            {bootLine < BOOT_LOG.length && (
-              <div className="po-type">{BOOT_LOG[bootLine]}<span className="po-caret">▊</span></div>
-            )}
-          </pre>
-        </section>
-
-        {/* Compact header row — heading left, terminal-style filter right.
-            One row on desktop, stacks on mobile. No separate padding sections. */}
-        <section className="px-6 md:px-10 pt-5 pb-3 max-w-[1500px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
-            <h1 className="font-black leading-[0.95] tracking-[-0.03em] text-[#eaffb8] text-2xl md:text-3xl lg:text-4xl po-glow">
-              Reel wall <span className="italic text-[#c8ff00]">/ on loop.</span>
-            </h1>
-
-            {/* Terminal-style pipe-separated filter — no chip chrome */}
-            <nav
-              aria-label="Filter clips by category"
-              className="flex flex-wrap items-center font-mono text-[10px] uppercase tracking-[0.22em] text-[#c8ff00]/55"
-            >
-              <span className="opacity-60 mr-2">&gt; FILTER</span>
-              {categories.map((cat, i) => {
-                const active = filter === cat;
-                return (
-                  <span key={cat} className="flex items-center">
-                    {i > 0 && <span aria-hidden className="mx-1.5 opacity-40">|</span>}
-                    <button
-                      onClick={() => setFilter(cat)}
-                      className={`py-0.5 transition-colors ${
-                        active
-                          ? "text-[#c8ff00] font-bold"
-                          : "text-[#c8ff00]/55 hover:text-[#c8ff00]"
-                      }`}
-                    >
-                      {active ? `[${cat}]` : cat}
-                    </button>
-                  </span>
-                );
-              })}
-            </nav>
-          </div>
+        {/* Single compact filter row — terminal-style pipe-separated tabs.
+            No boot log, no giant h1: sticky bar above already says
+            "VEKTO/REEL.DB — N CLIPS" so nothing is lost. */}
+        <section className="px-6 md:px-10 pt-4 pb-3 max-w-[1500px] mx-auto">
+          <nav
+            aria-label="Filter clips by category"
+            className="flex flex-wrap items-center font-mono text-[10px] uppercase tracking-[0.22em] text-[#c8ff00]/55"
+          >
+            <span className="opacity-60 mr-2">&gt; FILTER</span>
+            {categories.map((cat, i) => {
+              const active = filter === cat;
+              return (
+                <span key={cat} className="flex items-center">
+                  {i > 0 && <span aria-hidden className="mx-1.5 opacity-40">|</span>}
+                  <button
+                    onClick={() => setFilter(cat)}
+                    className={`py-0.5 transition-colors ${
+                      active
+                        ? "text-[#c8ff00] font-bold"
+                        : "text-[#c8ff00]/55 hover:text-[#c8ff00]"
+                    }`}
+                  >
+                    {active ? `[${cat}]` : cat}
+                  </button>
+                </span>
+              );
+            })}
+          </nav>
         </section>
 
         {/* Reel grid — 9:16 tiles */}
