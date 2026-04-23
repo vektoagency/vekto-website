@@ -49,11 +49,12 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
   const [filter, setFilter] = useState<string>("ALL");
   const [expanded, setExpanded] = useState<Clip | null>(null);
 
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    clips.forEach((c) => set.add(c.category));
-    return ["ALL", ...Array.from(set)];
-  }, []);
+  // Explicit category list so filters show up even before clips for that
+  // category exist on Bunny. Add/remove here as the reel library grows.
+  const categories = useMemo(
+    () => ["ALL", "Short-Form", "Organic", "AI Visuals", "Cinematic", "Experimental"],
+    []
+  );
 
   const visible = useMemo(
     () => (filter === "ALL" ? clips : clips.filter((c) => c.category === filter)),
@@ -156,32 +157,39 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </pre>
         </section>
 
-        {/* Tight header — tiny tagline, no giant h1 */}
-        <section className="px-6 md:px-10 pt-6 pb-4 max-w-[1500px] mx-auto">
-          <h1 className="font-black leading-[0.95] tracking-[-0.03em] text-[#eaffb8] text-3xl md:text-4xl lg:text-5xl po-glow">
-            Reel wall <span className="italic text-[#c8ff00]">/ on loop.</span>
-          </h1>
-        </section>
+        {/* Compact header row — heading left, terminal-style filter right.
+            One row on desktop, stacks on mobile. No separate padding sections. */}
+        <section className="px-6 md:px-10 pt-5 pb-3 max-w-[1500px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+            <h1 className="font-black leading-[0.95] tracking-[-0.03em] text-[#eaffb8] text-2xl md:text-3xl lg:text-4xl po-glow">
+              Reel wall <span className="italic text-[#c8ff00]">/ on loop.</span>
+            </h1>
 
-        {/* Category filter */}
-        <section className="px-6 md:px-10 pb-4 max-w-[1500px] mx-auto">
-          <div className="flex flex-wrap gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em]">
-            {categories.map((cat) => {
-              const active = filter === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setFilter(cat)}
-                  className={`px-3 py-1.5 rounded-sm border transition-colors ${
-                    active
-                      ? "bg-[#c8ff00] text-black border-[#c8ff00]"
-                      : "border-[#c8ff00]/30 text-[#c8ff00]/70 hover:text-[#c8ff00] hover:border-[#c8ff00]/60"
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+            {/* Terminal-style pipe-separated filter — no chip chrome */}
+            <nav
+              aria-label="Filter clips by category"
+              className="flex flex-wrap items-center font-mono text-[10px] uppercase tracking-[0.22em] text-[#c8ff00]/55"
+            >
+              <span className="opacity-60 mr-2">&gt; FILTER</span>
+              {categories.map((cat, i) => {
+                const active = filter === cat;
+                return (
+                  <span key={cat} className="flex items-center">
+                    {i > 0 && <span aria-hidden className="mx-1.5 opacity-40">|</span>}
+                    <button
+                      onClick={() => setFilter(cat)}
+                      className={`py-0.5 transition-colors ${
+                        active
+                          ? "text-[#c8ff00] font-bold"
+                          : "text-[#c8ff00]/55 hover:text-[#c8ff00]"
+                      }`}
+                    >
+                      {active ? `[${cat}]` : cat}
+                    </button>
+                  </span>
+                );
+              })}
+            </nav>
           </div>
         </section>
 
