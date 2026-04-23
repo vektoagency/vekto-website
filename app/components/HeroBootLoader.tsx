@@ -42,14 +42,16 @@ export default function HeroBootLoader() {
             <span className="text-[#c8ff00]/45">VEKTO/BOOT</span>
           </div>
 
-          {/* typed lines — each line fades/types in on its own animation-delay */}
+          {/* typed lines — each line fades/types in on its own animation-delay.
+              Inline `opacity:0` guarantees the starting state from first paint,
+              even before globals.css is applied. */}
           <pre className="font-mono text-[11px] md:text-[12px] text-[#c8ff00] leading-[1.6] whitespace-pre-wrap">
             {LINES.map((l, i) => (
-              <div key={i} className="boot-line" style={{ animationDelay: `${i * 180}ms` }}>
+              <div key={i} className="boot-line" style={{ opacity: 0, animationDelay: `${i * 180}ms` }}>
                 {l}
               </div>
             ))}
-            <div className="boot-line boot-rendering" style={{ animationDelay: `${LINES.length * 180 + 120}ms` }}>
+            <div className="boot-line boot-rendering" style={{ opacity: 0, animationDelay: `${LINES.length * 180 + 120}ms` }}>
               <span className="boot-caret inline-block w-[7px] h-[13px] bg-[#c8ff00] mr-1 align-middle" />
               RENDERING
               <span aria-hidden className="boot-dots relative" />
@@ -65,60 +67,6 @@ export default function HeroBootLoader() {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes bootShimmer {
-          0% { left: -35%; }
-          100% { left: 100%; }
-        }
-        :global(.boot-shimmer) {
-          animation: bootShimmer 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-
-        @keyframes bootSpin {
-          0%   { content: "|"; }
-          25%  { content: "/"; }
-          50%  { content: "—"; }
-          75%  { content: "\\\\"; }
-          100% { content: "|"; }
-        }
-        /* Not all browsers animate content — use transform rotation on a pseudo span as fallback */
-        :global(.boot-spinner) {
-          animation: bootSpinRotate 0.8s linear infinite;
-          transform-origin: center;
-        }
-        @keyframes bootSpinRotate {
-          to { transform: rotate(360deg); }
-        }
-
-        @keyframes bootDots {
-          0%   { content: ""; }
-          25%  { content: "."; }
-          50%  { content: ".."; }
-          75%  { content: "..."; }
-          100% { content: ""; }
-        }
-        :global(.boot-dots)::after {
-          content: "";
-          animation: bootDots 1.2s steps(4, jump-none) infinite;
-        }
-
-        @keyframes bootLineIn {
-          0%   { opacity: 0; transform: translateX(-4px); }
-          100% { opacity: 1; transform: translateX(0); }
-        }
-        :global(.boot-line) {
-          opacity: 0;
-          animation: bootLineIn 220ms cubic-bezier(0.25,0.8,0.3,1) forwards;
-        }
-
-        @keyframes bootCaret {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-        :global(.boot-caret) {
-          animation: bootCaret 0.9s steps(2, jump-none) infinite;
-        }
-      `}</style>
     </div>
   );
 }
