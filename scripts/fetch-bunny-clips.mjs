@@ -61,15 +61,37 @@ const BRAND_CASE_LINKS = {
   "MENSCARE": "/work/menscare",
 };
 
+// Fallback metadata for placeholder-titled uploads (video-1s … video-12s).
+// Remove a key once the real clip is uploaded with a proper
+// "BRAND | CATEGORY | DESCRIPTION" title on Bunny.
+const PLACEHOLDER_MAP = {
+  "video-1s":  { brand: "MEN'S CARE", category: "Short-Form",   description: "Hero spot — 4.6x ROAS across 6 months." },
+  "video-2s":  { brand: "ISOSPORT",   category: "Cinematic",    description: "Cinematic brand film." },
+  "video-3s":  { brand: "MEN'S CARE", category: "Organic",      description: "Organic TikTok cut." },
+  "video-4s":  { brand: "VEKTO LAB",  category: "Experimental", description: "Shader study." },
+  "video-5s":  { brand: "MEN'S CARE", category: "Short-Form",   description: "Product demo." },
+  "video-6s":  { brand: "ISOSPORT",   category: "AI Visuals",   description: "AI-assisted packshot." },
+  "video-7s":  { brand: "VEKTO LAB",  category: "Experimental", description: "Motion R&D loop." },
+  "video-8s":  { brand: "VEKTO LAB",  category: "Experimental", description: "Generative R&D reel." },
+  "video-9s":  { brand: "MEN'S CARE", category: "AI Visuals",   description: "AI-generated b-roll." },
+  "video-10s": { brand: "ISOSPORT",   category: "Cinematic",    description: "Promo cutdown for paid social." },
+  "video-11s": { brand: "VEKTO LAB",  category: "Experimental", description: "Camera mapping test." },
+  "video-12s": { brand: "VEKTO LAB",  category: "AI Visuals",   description: "AI character exploration." },
+};
+
 function parseTitle(title) {
-  const parts = (title || "").split("|").map((s) => s.trim()).filter(Boolean);
+  const raw = (title || "").trim();
+  const parts = raw.split("|").map((s) => s.trim()).filter(Boolean);
   if (parts.length >= 3) {
     return { brand: parts[0], category: parts[1], description: parts.slice(2).join(" | ") };
   }
   if (parts.length === 2) {
     return { brand: parts[0], category: parts[1], description: "" };
   }
-  return { brand: title?.trim() || "VEKTO", category: "Experimental", description: "" };
+  // Placeholder fallback — match "video-1s" etc. case-insensitively.
+  const key = raw.toLowerCase();
+  if (PLACEHOLDER_MAP[key]) return { ...PLACEHOLDER_MAP[key] };
+  return { brand: raw || "VEKTO", category: "Experimental", description: "" };
 }
 
 function resolveLogo(brand) {
@@ -135,8 +157,13 @@ async function main() {
     });
   }
 
-  // Mark the first MEN'S CARE clip as featured (big tile), if present.
-  const firstMc = clips.findIndex((c) => /menscare/i.test(c.brand));
+  // Mark the MEN'S CARE hero spot as featured (big tile), if present.
+  // Prefer the one with an ROAS metric in its description; else first MEN'S CARE clip.
+  const normalize = (s) => (s || "").toLowerCase().replace(/[^a-z]/g, "");
+  const heroIdx = clips.findIndex(
+    (c) => normalize(c.brand) === "menscare" && /roas/i.test(c.description || "")
+  );
+  const firstMc = heroIdx >= 0 ? heroIdx : clips.findIndex((c) => normalize(c.brand) === "menscare");
   if (firstMc >= 0) {
     clips[firstMc].featured = true;
     clips[firstMc].metric = clips[firstMc].metric || "4.6x ROAS";
