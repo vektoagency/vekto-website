@@ -300,13 +300,29 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
 
   const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${spanClasses}`;
 
+  const bootDelay = Math.min(idx, 14) * 70;
+  const sweepDelay = bootDelay + 380;
+
   return (
     <button
       onClick={onExpand}
       className={tileClass}
-      style={{ animation: `poWindowIn 0.55s cubic-bezier(0.25,0.8,0.3,1) ${Math.min(idx, 12) * 55}ms backwards` }}
+      style={{
+        animation: `poTileBoot 0.9s cubic-bezier(0.2,0.75,0.35,1) ${bootDelay}ms backwards`,
+        transformOrigin: "center",
+      }}
     >
       {Media}
+      {/* Bright green scan-sweep that rolls through each tile on entry */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 h-[14%] pointer-events-none mix-blend-screen"
+        style={{
+          background: "linear-gradient(to bottom, transparent, rgba(200,255,0,0.55) 45%, rgba(232,255,120,0.9) 50%, rgba(200,255,0,0.55) 55%, transparent)",
+          filter: "blur(1px)",
+          animation: `poTileSweep 0.75s cubic-bezier(0.35,0,0.6,1) ${sweepDelay}ms backwards`,
+        }}
+      />
       {clip.href && (
         <Link
           href={clip.href}

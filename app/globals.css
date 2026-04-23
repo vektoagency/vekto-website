@@ -711,3 +711,21 @@ html {
   60%  { opacity: 0.7; filter: brightness(1.15) blur(1px); }
   100% { opacity: 1; transform: none; filter: none; }
 }
+
+/* CRT power-on: a thin bright horizontal line flashes, expands vertically,
+   then color saturates in — classic tube TV turning on for each clip tile. */
+@keyframes poTileBoot {
+  0%   { opacity: 0; transform: scaleY(0.02); filter: brightness(2.6) saturate(0) contrast(1.6); }
+  18%  { opacity: 1; transform: scaleY(0.04); filter: brightness(3.2) saturate(0) contrast(1.8); }
+  38%  { opacity: 1; transform: scaleY(1); filter: brightness(2) saturate(0.15) contrast(1.4); }
+  70%  { opacity: 1; transform: scaleY(1); filter: brightness(1.25) saturate(0.7) contrast(1.1); }
+  100% { opacity: 1; transform: scaleY(1); filter: brightness(1) saturate(1) contrast(1); }
+}
+
+/* Bright green phosphor scanline that sweeps top-to-bottom inside the tile
+   once it's at full size — the "channel locking in" sweep. */
+@keyframes poTileSweep {
+  0%   { transform: translateY(-120%); opacity: 0.95; }
+  70%  { opacity: 0.6; }
+  100% { transform: translateY(220%); opacity: 0; }
+}

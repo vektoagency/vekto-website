@@ -27,7 +27,9 @@ export default function HeroPravec() {
   const startZoom = () => {
     window.dispatchEvent(new Event("vekto:zoom-started"));
     setZoomedIn(true);
-    setTimeout(() => setOverlayOpen(true), 820);
+    // Wait for the full camera lerp to settle before revealing the reel wall,
+    // so the Mac reads as "fully zoomed in" before the DOM overlay paints over it.
+    setTimeout(() => setOverlayOpen(true), 1450);
   };
 
   const handleScreenClick = () => {
