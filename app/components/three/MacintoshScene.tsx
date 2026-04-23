@@ -11,7 +11,19 @@ import MacintoshGLB from "./MacintoshGLB";
 type Props = {
   zoomedIn: boolean;
   onScreenClick?: () => void;
+  onReady?: () => void;
 };
+
+// Fires once after the Suspense boundary resolves (GLB parsed, scene built).
+function ReadySignal({ onReady }: { onReady?: () => void }) {
+  useEffect(() => {
+    if (!onReady) return;
+    // One extra frame gives the shader time to compile.
+    const id = requestAnimationFrame(() => onReady());
+    return () => cancelAnimationFrame(id);
+  }, [onReady]);
+  return null;
+}
 
 type ScreenInfo = {
   center: THREE.Vector3;
@@ -73,7 +85,7 @@ function CameraRig({
   return null;
 }
 
-export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
+export default function MacintoshScene({ zoomedIn, onScreenClick, onReady }: Props) {
   const [hovered, setHovered] = useState(false);
   const [screen, setScreen] = useState<ScreenInfo | null>(null);
   const [inView, setInView] = useState(true);
@@ -128,6 +140,8 @@ export default function MacintoshScene({ zoomedIn, onScreenClick }: Props) {
             onScreenClick={() => onScreenClick?.()}
             onScreenLocated={setScreen}
           />
+
+          <ReadySignal onReady={onReady} />
 
           <ContactShadows
             position={[0, -0.88, 0.2]}

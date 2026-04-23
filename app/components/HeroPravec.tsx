@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import MacintoshScene from "./three/MacintoshScene";
+import HeroBootLoader from "./HeroBootLoader";
 
 // Lazy-load the overlay only when needed — keeps the initial bundle lean.
 const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
@@ -12,6 +13,7 @@ export default function HeroPravec() {
   const [overlayOpen, setOverlayOpen] = useState(false);
   // Gate WebGL mount until after hydrate — Canvas needs window/document.
   const [mounted, setMounted] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const startZoom = () => {
@@ -50,7 +52,21 @@ export default function HeroPravec() {
   return (
     <>
       <div className={zoomedIn ? "fixed inset-0 z-[55]" : "absolute inset-0"}>
-        {mounted && <MacintoshScene zoomedIn={zoomedIn} onScreenClick={handleScreenClick} />}
+        {mounted && (
+          <MacintoshScene
+            zoomedIn={zoomedIn}
+            onScreenClick={handleScreenClick}
+            onReady={() => setSceneReady(true)}
+          />
+        )}
+        {!sceneReady && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+            style={{ opacity: sceneReady ? 0 : 1 }}
+          >
+            <HeroBootLoader />
+          </div>
+        )}
       </div>
       <PortfolioOverlay open={overlayOpen} onClose={handleOverlayClose} />
     </>
