@@ -10,6 +10,7 @@ import MacintoshGLB from "./MacintoshGLB";
 
 type Props = {
   zoomedIn: boolean;
+  paused?: boolean;
   onScreenClick?: () => void;
   onReady?: () => void;
 };
@@ -85,7 +86,7 @@ function CameraRig({
   return null;
 }
 
-export default function MacintoshScene({ zoomedIn, onScreenClick, onReady }: Props) {
+export default function MacintoshScene({ zoomedIn, paused = false, onScreenClick, onReady }: Props) {
   const [hovered, setHovered] = useState(false);
   const [screen, setScreen] = useState<ScreenInfo | null>(null);
   const [inView, setInView] = useState(true);
@@ -105,7 +106,9 @@ export default function MacintoshScene({ zoomedIn, onScreenClick, onReady }: Pro
     return () => obs.disconnect();
   }, []);
 
-  const frameloop = zoomedIn || inView ? "always" : "never";
+  // Pause rendering entirely when the portfolio overlay is covering the scene —
+  // the R3F loop was burning ~60fps behind an opaque modal.
+  const frameloop = paused ? "never" : zoomedIn || inView ? "always" : "never";
 
   return (
     <div ref={wrapperRef} className="absolute inset-0">

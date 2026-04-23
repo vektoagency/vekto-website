@@ -74,6 +74,7 @@ export default function HeroPravec() {
           >
             <MacintoshScene
               zoomedIn={zoomedIn}
+              paused={overlayOpen}
               onScreenClick={handleScreenClick}
               onReady={() => setSceneReady(true)}
             />

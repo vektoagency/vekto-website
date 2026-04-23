@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import bunnyData from "../data/bunny-clips.json";
 
 type Clip = {
@@ -81,21 +80,23 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       className={`fixed inset-0 z-[80] ${open ? "po-open" : "po-closing"}`}
     >
       <div aria-hidden className="absolute inset-0 po-dim" />
-      <div aria-hidden className="absolute inset-0 po-scanlines" />
       <div aria-hidden className="absolute inset-0 po-vignette" />
 
       <div className="relative z-10 h-full w-full overflow-y-auto po-content">
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/25 bg-black/55 backdrop-blur-sm font-mono text-[10px] uppercase tracking-[0.3em]">
+        <div className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/25 bg-black/90 font-mono text-[10px] uppercase tracking-[0.3em]">
           <div className="flex items-center gap-3 text-[#c8ff00]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
             VEKTO/REEL.DB — {visible.length} CLIPS
           </div>
           <button
             onClick={onClose}
-            className="flex items-center gap-2 text-[#c8ff00]/70 hover:text-[#c8ff00] transition-colors border border-[#c8ff00]/25 hover:border-[#c8ff00]/60 rounded-sm px-3 py-1.5"
+            className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#c8ff00] hover:bg-[#e0ff4a] border border-[#c8ff00] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(200,255,0,0.35)]"
             aria-label="Close portfolio"
           >
-            <span>× EJECT</span>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="group-hover:-translate-x-0.5 transition-transform">
+              <path d="M6 1L2 5L6 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+            </svg>
+            <span>Back</span>
           </button>
         </div>
 
@@ -188,26 +189,16 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
         loading={idx < 6 ? "eager" : "lazy"}
       />
 
-      <div className="absolute inset-0 mix-blend-screen opacity-25 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center, rgba(200,255,0,0.20), transparent 65%)" }} />
-      <div className="absolute inset-0 po-scanlines opacity-60 pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
         style={{ background: "linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.3) 60%, transparent)" }} />
 
-      <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between gap-2 pointer-events-none">
-        {clip.logo ? (
-          <div className="relative w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm border border-white/15 p-1">
-            <Image src={clip.logo} alt={clip.brand} fill className="object-contain p-0.5" />
-          </div>
-        ) : (
-          <span />
-        )}
-        {clip.metric && (
+      {clip.metric && (
+        <div className="absolute top-2.5 right-2.5 pointer-events-none">
           <span className="font-mono text-[9px] uppercase tracking-[0.2em] bg-[#c8ff00] text-black px-1.5 py-0.5 rounded-sm font-bold">
             {clip.metric}
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="absolute bottom-2 left-2.5 right-2.5 pointer-events-none">
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white font-bold leading-tight">
