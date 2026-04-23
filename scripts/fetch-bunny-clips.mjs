@@ -140,6 +140,16 @@ async function main() {
 
     const id = v.guid;
     const base = `https://${cdnHostname}/${id}`;
+
+    // Bunny reports renditions as "240p,360p,480p,720p". Pick the highest
+    // so the player isn't pinned to 720p when a 1080p rendition exists.
+    const resList = (v.availableResolutions || "")
+      .split(",")
+      .map((s) => parseInt(s, 10))
+      .filter((n) => !Number.isNaN(n))
+      .sort((a, b) => b - a);
+    const bestRes = resList[0] || 720;
+
     clips.push({
       id,
       brand,
@@ -147,7 +157,7 @@ async function main() {
       category,
       description,
       thumbnail: `${base}/${v.thumbnailFileName || "thumbnail.jpg"}`,
-      previewMp4: `${base}/play_720p.mp4`,
+      previewMp4: `${base}/play_${bestRes}p.mp4`,
       hlsPlaylist: `${base}/playlist.m3u8`,
       embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${id}?autoplay=true&muted=false&loop=false&preload=true`,
       duration: v.length || null,

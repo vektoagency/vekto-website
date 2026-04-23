@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import bunnyData from "../data/bunny-clips.json";
 
 type Clip = {
@@ -272,25 +271,13 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
           <img src={clip.thumbnail} alt={clip.brand} className="absolute inset-0 w-full h-full object-cover" />
         )}
 
-        <div className="absolute inset-0 po-scanlines opacity-30 pointer-events-none" />
-
-        <div className="absolute top-2 right-2 flex gap-2 z-10">
-          {clip.href && (
-            <Link
-              href={clip.href}
-              className="font-mono text-[10px] uppercase tracking-[0.25em] bg-[#c8ff00] text-black px-3 py-1.5 rounded-sm font-bold"
-            >
-              case →
-            </Link>
-          )}
-          <button
-            onClick={onClose}
-            className="font-mono text-[10px] uppercase tracking-[0.25em] border border-[#c8ff00]/50 text-[#c8ff00] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#c8ff00]/10"
-            aria-label="Close preview"
-          >
-            × close
-          </button>
-        </div>
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 z-10 font-mono text-[10px] uppercase tracking-[0.25em] border border-[#c8ff00]/50 text-[#c8ff00] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#c8ff00]/10"
+          aria-label="Close preview"
+        >
+          × close
+        </button>
 
         <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
           <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-white font-bold leading-tight">
