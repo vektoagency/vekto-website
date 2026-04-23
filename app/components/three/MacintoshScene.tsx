@@ -38,12 +38,12 @@ type ScreenInfo = {
 // keyboard + mouse aren't cramped against the viewport edge.
 const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.9, 1.35, 6.2);
 const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, 0.0, 0.3);
-// Mobile framing — Canvas is fullscreen portrait. Camera positions the
-// Mac in the middle third of the viewport so text can overlay safely at
-// the top and bottom via dark gradients. fov is widened below because
-// portrait aspect squeezes horizontal room.
-const MOBILE_IDLE_CAM = new THREE.Vector3(0, 0.15, 6.2);
-const MOBILE_IDLE_TARGET = new THREE.Vector3(0, -0.4, 0.3);
+// Mobile framing — Canvas is fullscreen portrait. Camera is pulled back
+// and offset to the left so the Mac renders smaller and sits in the
+// right third of the viewport, mirroring the desktop feel. fov stays
+// wide because portrait aspect squeezes horizontal room.
+const MOBILE_IDLE_CAM = new THREE.Vector3(-0.35, 0.1, 7.4);
+const MOBILE_IDLE_TARGET = new THREE.Vector3(-0.9, -0.45, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
