@@ -35,7 +35,7 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
   // ("BRAND | CATEGORY | DESCRIPTION"). scripts/fetch-bunny-clips.mjs warns
   // if a clip's category doesn't match one of these.
   const categories = useMemo(
-    () => ["ALL", "Short-Form", "Organic", "UGC", "Cinematic", "Experimental"],
+    () => ["ALL", "Organic", "UGC", "Cinematic", "Experimental"],
     []
   );
 
