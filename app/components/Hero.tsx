@@ -21,16 +21,61 @@ export default function Hero() {
       <HeroVideosMobile />
 
       {/* Desktop atmosphere + HUD ornaments. Sits behind the transparent
-          canvas so CRT shader covers these naturally during zoom. */}
+          canvas so CRT shader covers these naturally during zoom.
+          Reads as a dim studio: cool ceiling, warm desk glow, lime CRT
+          halo, a soft horizon line where wall meets floor. */}
       <div aria-hidden className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Tonal base — warm floor, cool top, CRT halo behind the screen */}
+        {/* Base wash — cool navy top fading into warm near-black floor */}
         <div className="absolute inset-0" style={{
           background: `
-            radial-gradient(ellipse 42% 55% at 74% 45%, rgba(200,255,0,0.10) 0%, rgba(200,255,0,0.03) 40%, transparent 76%),
-            radial-gradient(ellipse 62% 28% at 76% 98%, rgba(190,170,95,0.14) 0%, transparent 72%),
-            linear-gradient(to right, #090a07 0%, #090a07 55%, #0b0c08 76%, #050603 100%),
-            linear-gradient(to bottom, #060705 0%, #0b0c08 45%, #070805 100%)
+            linear-gradient(to bottom,
+              #0a1016 0%,
+              #080a0d 30%,
+              #09090a 58%,
+              #0a0806 82%,
+              #0c0805 100%)
           `,
+        }} />
+
+        {/* Off-screen key light from top-left — cool teal spill,
+            like a window or softbox raking the scene. */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 60% 50% at 12% 8%, rgba(120,200,220,0.10) 0%, rgba(80,160,200,0.04) 35%, transparent 70%)",
+        }} />
+
+        {/* Warm practical light from behind/above the desk — amber wash
+            on the right wall, like a lamp or window catching dust. */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 55% 65% at 92% 25%, rgba(235,180,110,0.09) 0%, rgba(200,140,80,0.03) 40%, transparent 75%)",
+        }} />
+
+        {/* Lime CRT bounce — the Mac screen spills its own light onto
+            the wall and desk in front of it. */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 48% 58% at 74% 48%, rgba(200,255,0,0.13) 0%, rgba(200,255,0,0.04) 40%, transparent 78%)",
+        }} />
+
+        {/* Horizon line — a faint bright band where wall meets desk;
+            makes the scene read as a 3D space instead of a flat panel. */}
+        <div
+          className="absolute left-0 right-0"
+          style={{
+            top: "74%",
+            height: "1px",
+            background: "linear-gradient(to right, transparent 0%, rgba(200,255,0,0.28) 18%, rgba(235,190,110,0.22) 55%, rgba(200,255,0,0.10) 85%, transparent 100%)",
+            boxShadow: "0 0 24px rgba(200,255,0,0.10)",
+          }}
+        />
+
+        {/* Floor: subtle amber sheen that fades toward camera — desk
+            surface catching the warm practical light from above. */}
+        <div className="absolute inset-x-0 bottom-0 h-[30%]" style={{
+          background: "linear-gradient(to bottom, transparent 0%, rgba(120,80,45,0.10) 55%, rgba(55,35,20,0.18) 100%)",
+        }} />
+
+        {/* Ceiling: a shallow darker cap to keep eyes centered. */}
+        <div className="absolute inset-x-0 top-0 h-[22%]" style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%)",
         }} />
 
         {/* Blueprint grid — dim lime, masked soft around the screen so it
@@ -38,20 +83,29 @@ export default function Hero() {
         <div
           className="absolute inset-y-0 right-0 w-[55%]"
           style={{
-            opacity: 0.06,
+            opacity: 0.055,
             backgroundImage:
               "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
             backgroundSize: "72px 72px",
-            WebkitMaskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 35%, transparent 85%)",
-            maskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 35%, transparent 85%)",
+            WebkitMaskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
+            maskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
           }}
         />
+
+        {/* Faint dust motes — two offset radial spots on the warm side. */}
+        <div className="absolute inset-0 opacity-40" style={{
+          background: `
+            radial-gradient(circle 2px at 82% 34%, rgba(235,200,150,0.55), transparent 60%),
+            radial-gradient(circle 1.5px at 68% 22%, rgba(235,200,150,0.45), transparent 60%),
+            radial-gradient(circle 1px at 88% 62%, rgba(200,255,0,0.5), transparent 60%)
+          `,
+        }} />
 
         {/* Very subtle horizontal scanlines over the right half */}
         <div
           className="absolute inset-y-0 right-0 w-[50%]"
           style={{
-            opacity: 0.05,
+            opacity: 0.04,
             backgroundImage:
               "repeating-linear-gradient(to bottom, rgba(200,255,0,0.6) 0px, rgba(200,255,0,0.6) 1px, transparent 1px, transparent 4px)",
           }}
@@ -64,9 +118,14 @@ export default function Hero() {
 
         {/* Floor glow directly under the Mac for grounding */}
         <div
-          className="absolute bottom-0 right-[8%] w-[52%] h-[14%]"
-          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.08), transparent 70%)" }}
+          className="absolute bottom-0 right-[8%] w-[52%] h-[16%]"
+          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.14), transparent 70%)" }}
         />
+
+        {/* Edge vignette — soft dark corners pull focus to the Mac. */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 110% 90% at 70% 50%, transparent 45%, rgba(0,0,0,0.45) 95%)",
+        }} />
       </div>
 
       {/* Desktop: canvas is fullscreen and transparent; Mac is panned
