@@ -537,11 +537,12 @@ html {
    CRT shader keeps showing through underneath. Strong at the edges,
    softer toward center so the phosphor glow is still visible. */
 .po-dim {
-  /* Must be fully opaque — the Macintosh CRT shader underneath outputs
-     a very bright lime character grid (22 rows × 50 cols). Even 8%
-     bleed-through at alpha 0.92 was reading as a visible film-strip
-     pattern behind the overlay header. */
-  background: #060606;
+  /* Fully opaque phosphor bed — keeps the CRT/studio look the overlay
+     had originally, but no semi-transparency so nothing underneath
+     (Mac CRT shader, Hero gradients) can bleed through. */
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(200, 255, 0, 0.10) 0%, rgba(18, 22, 8, 0.85) 45%, #050804 92%),
+    #040603;
   pointer-events: none;
 }
 
