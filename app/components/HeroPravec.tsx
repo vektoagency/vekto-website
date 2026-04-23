@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import PortfolioOverlay from "./PortfolioOverlay";
 
 const MacintoshScene = dynamic(() => import("./three/MacintoshScene"), {
   ssr: false,
@@ -14,6 +13,9 @@ const MacintoshScene = dynamic(() => import("./three/MacintoshScene"), {
     </div>
   ),
 });
+
+// Lazy-load the overlay only when needed — keeps the initial bundle lean.
+const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
 
 export default function HeroPravec() {
   const [zoomedIn, setZoomedIn] = useState(false);
