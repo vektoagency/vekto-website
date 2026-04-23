@@ -93,14 +93,13 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       className={`fixed inset-0 z-[80] ${open ? "po-open" : "po-closing"}`}
     >
       <div aria-hidden className="absolute inset-0 po-dim" />
-      <div aria-hidden className="absolute inset-0 po-vignette" />
 
       <div className="relative z-10 h-full w-full overflow-y-auto po-content">
         <div
-          className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/45 font-mono text-[10px] uppercase tracking-[0.3em] backdrop-blur-lg"
+          className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/45 font-mono text-[11px] uppercase tracking-[0.3em]"
           style={{
-            background: "linear-gradient(to bottom, rgba(60,60,58,0.35) 0%, rgba(40,40,38,0.18) 100%)",
-            boxShadow: "0 1px 0 rgba(200,255,0,0.15)",
+            background: "#161616",
+            boxShadow: "0 2px 0 rgba(200,255,0,0.18), 0 10px 24px -12px rgba(0,0,0,0.6)",
           }}
         >
           <div className="flex items-center gap-3 text-[#c8ff00]">
