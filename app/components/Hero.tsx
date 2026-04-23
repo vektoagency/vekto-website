@@ -37,6 +37,32 @@ export default function Hero() {
           `,
         }} />
 
+        {/* Right-side accent gradient — a warm-to-cool horizontal wash
+            that adds depth behind the Mac. Teal/indigo on the right
+            edge fading through to the mid-frame gives the scene a
+            distinct sunset-studio feel. */}
+        <div className="absolute inset-y-0 right-0 w-[70%]" style={{
+          background: `
+            linear-gradient(to left,
+              rgba(60,110,140,0.22) 0%,
+              rgba(40,70,110,0.14) 25%,
+              rgba(30,40,80,0.08) 55%,
+              transparent 100%)
+          `,
+        }} />
+
+        {/* Deep indigo sheen top-right — a pool of color that reads as
+            a colored gel on the backdrop. */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 50% 55% at 88% 12%, rgba(90,120,200,0.18) 0%, rgba(60,80,160,0.07) 35%, transparent 72%)",
+        }} />
+
+        {/* Warm magenta/amber catch on the right edge — sunset-window
+            vibe that warms the bottom-right corner. */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 45% 55% at 98% 70%, rgba(210,130,100,0.16) 0%, rgba(180,90,70,0.06) 40%, transparent 75%)",
+        }} />
+
         {/* Off-screen key light from top-left — cool teal spill,
             like a window or softbox raking the scene. */}
         <div className="absolute inset-0" style={{
