@@ -29,7 +29,11 @@ export default function HeroLeftCurtain({ children, className = "", style }: Pro
         ...style,
         opacity: fading ? 0 : 1,
         transition: "opacity 620ms cubic-bezier(0.22,0.61,0.36,1)",
-        pointerEvents: fading ? "none" : "auto",
+        // Only force pointer-events off while fading. When visible, leave
+        // it undefined so the caller's className (e.g. pointer-events-none
+        // on the mobile curtain) decides — otherwise we'd swallow taps
+        // meant for the Mac canvas underneath.
+        ...(fading ? { pointerEvents: "none" as const } : {}),
       }}
     >
       {children}
