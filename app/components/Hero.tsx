@@ -1,7 +1,6 @@
 import { HeroVideosMobile } from "./HeroVideos";
 import HeroPravec from "./HeroPravec";
 import HeroLeftCurtain from "./HeroLeftCurtain";
-import HeroMobileMac from "./HeroMobileMac";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
@@ -166,15 +165,15 @@ export default function Hero() {
       {/* ── MOBILE text ── */}
       <div className="lg:hidden relative z-10 flex flex-col items-center justify-center text-center px-6 w-full min-h-screen pt-20 pb-12">
         <Stagger delay={0}>
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/40 rounded-full px-4 py-1.5 mb-5">
+          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/40 rounded-full px-4 py-1.5 mb-6">
             <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
             <span className="text-xs text-[#c8ff00] font-medium tracking-widest uppercase">
               AI-Powered Creative Agency
             </span>
           </div>
         </Stagger>
-        <Stagger delay={120}>
-          <h1 className="text-[34px] font-bold leading-[1.08] tracking-tight mb-4 text-white"
+        <Stagger delay={150}>
+          <h1 className="text-4xl font-bold leading-[1.1] tracking-tight mb-5 text-white"
             style={{ textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
             <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
             <br />
@@ -183,18 +182,13 @@ export default function Hero() {
             of Companies
           </h1>
         </Stagger>
-        <Stagger delay={240}>
-          <p className="text-[15px] text-[#d8d8d8] leading-relaxed mb-6 max-w-xs"
+        <Stagger delay={300}>
+          <p className="text-base text-[#d8d8d8] leading-relaxed mb-8 max-w-xs"
             style={{ textShadow: "0 1px 12px rgba(0,0,0,0.7)" }}>
             From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.
           </p>
         </Stagger>
-        <Stagger delay={360}>
-          <div className="mb-7">
-            <HeroMobileMac />
-          </div>
-        </Stagger>
-        <Stagger delay={480}>
+        <Stagger delay={450}>
           <div className="flex flex-col gap-3 w-full max-w-xs">
             <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Let&apos;s Talk
