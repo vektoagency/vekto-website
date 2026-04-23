@@ -71,6 +71,16 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose, expanded]);
 
+  // Pause the R3F Mac scene while a clip is actively playing — the GPU
+  // budget should go entirely to the video player, not to bloom + shader.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.dispatchEvent(new Event(expanded ? "vekto:player-open" : "vekto:player-closed"));
+    return () => {
+      if (expanded) window.dispatchEvent(new Event("vekto:player-closed"));
+    };
+  }, [expanded]);
+
   if (!mounted) return null;
 
   return (
@@ -238,7 +248,9 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
       >
         {clip.embedUrl ? (
           <iframe
-            src={clip.embedUrl}
+            // Strip Bunny's preload=true — it races with playback and
+            // saturates bandwidth on slower links, causing first-frame stutter.
+            src={clip.embedUrl.replace(/[?&]preload=true/, "")}
             className="absolute inset-0 w-full h-full"
             loading="lazy"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

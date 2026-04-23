@@ -168,7 +168,7 @@ async function main() {
       thumbnail: `${base}/${v.thumbnailFileName || "thumbnail.jpg"}`,
       previewMp4: `${base}/play_${bestRes}p.mp4`,
       hlsPlaylist: `${base}/playlist.m3u8`,
-      embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${id}?autoplay=true&muted=false&loop=false&preload=true`,
+      embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${id}?autoplay=true&muted=false&loop=false`,
       duration: v.length || null,
       metric: null,
       href: resolveCaseLink(brand),

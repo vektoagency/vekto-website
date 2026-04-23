@@ -11,11 +11,26 @@ const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: fals
 export default function HeroPravec() {
   const [zoomedIn, setZoomedIn] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const [playerOpen, setPlayerOpen] = useState(false);
   // Gate WebGL mount until after hydrate — Canvas needs window/document.
   const [mounted, setMounted] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [loaderGone, setLoaderGone] = useState(false);
   useEffect(() => setMounted(true), []);
+
+  // The portfolio overlay fires these when a lightbox opens/closes —
+  // we pause the WebGL loop while a video is playing so all GPU goes
+  // to the Bunny iframe.
+  useEffect(() => {
+    const onOpen = () => setPlayerOpen(true);
+    const onClose = () => setPlayerOpen(false);
+    window.addEventListener("vekto:player-open", onOpen);
+    window.addEventListener("vekto:player-closed", onClose);
+    return () => {
+      window.removeEventListener("vekto:player-open", onOpen);
+      window.removeEventListener("vekto:player-closed", onClose);
+    };
+  }, []);
 
   // Unmount the loader after its fade-out completes.
   useEffect(() => {
@@ -74,6 +89,7 @@ export default function HeroPravec() {
           >
             <MacintoshScene
               zoomedIn={zoomedIn}
+              paused={playerOpen}
               onScreenClick={handleScreenClick}
               onReady={() => setSceneReady(true)}
             />
