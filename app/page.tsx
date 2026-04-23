@@ -5,7 +5,7 @@ import Clients from "./components/Clients";
 import Services from "./components/Services";
 import Stats from "./components/Stats";
 import WhyVekto from "./components/WhyVekto";
-import Work from "./components/Work";
+import Process from "./components/Process";
 import Pricing from "./components/Pricing";
 import Contact from "./components/Contact";
 import ContactModal from "./components/ContactModal";
@@ -22,7 +22,7 @@ export default function Home() {
         <Services />
         <Stats />
         <WhyVekto />
-        <Work />
+        <Process />
         <Pricing />
         <Contact />
       </main>
