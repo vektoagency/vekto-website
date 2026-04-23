@@ -61,7 +61,7 @@ function CameraRig({
 
   useFrame((_, delta) => {
     // Delta-based lerp — frame-rate independent (same smoothness on 60Hz and 120Hz).
-    const rate = zoomedIn ? 0.14 : 0.05;
+    const rate = zoomedIn ? 0.10 : 0.05;
     const t = 1 - Math.pow(1 - rate, Math.min(delta, 0.05) * 60);
     const targetCam = zoomedIn ? zoomCam : DEFAULT_IDLE_CAM;
     const targetLook = zoomedIn ? zoomTarget : DEFAULT_IDLE_TARGET;

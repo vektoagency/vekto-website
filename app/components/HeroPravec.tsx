@@ -24,7 +24,7 @@ export default function HeroPravec() {
   const startZoom = () => {
     window.dispatchEvent(new Event("vekto:zoom-started"));
     setZoomedIn(true);
-    setTimeout(() => setOverlayOpen(true), 620);
+    setTimeout(() => setOverlayOpen(true), 820);
   };
 
   const handleScreenClick = () => {
