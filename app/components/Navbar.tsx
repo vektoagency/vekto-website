@@ -71,7 +71,7 @@ export default function Navbar() {
               <button
                 key="portfolio"
                 onClick={handlePortfolio}
-                className="text-sm text-[#9a958e] hover:text-white transition-colors cursor-pointer"
+                className="text-sm text-white/85 hover:text-white transition-colors cursor-pointer"
               >
                 {l.label}
               </button>
@@ -79,7 +79,7 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className="text-sm text-[#9a958e] hover:text-white transition-colors"
+                className="text-sm text-white/85 hover:text-white transition-colors"
               >
                 {l.label}
               </a>
@@ -119,7 +119,7 @@ export default function Navbar() {
               <button
                 key="portfolio"
                 onClick={handlePortfolio}
-                className="text-left text-[#9a958e] hover:text-white transition-colors cursor-pointer"
+                className="text-left text-white/85 hover:text-white transition-colors cursor-pointer"
               >
                 {l.label}
               </button>
@@ -128,7 +128,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-[#9a958e] hover:text-white transition-colors"
+                className="text-white/85 hover:text-white transition-colors"
               >
                 {l.label}
               </a>

@@ -766,25 +766,21 @@ html {
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile CRT tap-indicator — pulsing lime ring expands outward from the
-   TAP chip so users see the screen is interactive without hover. */
-.hero-tap-indicator {
-  animation: heroTapBob 2.4s ease-in-out infinite;
+/* Mobile hero tap-hint — pill sits above CTAs with a breathing lime
+   border + a small arrow that bobs up toward the Mac so users see
+   the screen is the interactive target. */
+.hero-tap-hint {
+  animation: heroTapHintGlow 2.4s ease-in-out infinite;
 }
-@keyframes heroTapBob {
-  0%, 100% { transform: translate(-50%, -50%); }
-  50%      { transform: translate(-50%, calc(-50% - 4px)); }
+@keyframes heroTapHintGlow {
+  0%, 100% { box-shadow: 0 0 14px -4px rgba(200,255,0,0.30); border-color: rgba(200,255,0,0.35); }
+  50%      { box-shadow: 0 0 26px 0px  rgba(200,255,0,0.55); border-color: rgba(200,255,0,0.70); }
 }
-.hero-tap-ring {
-  animation: heroTapRing 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
-  transform-origin: center;
-  opacity: 0;
+.hero-tap-arrow {
+  display: inline-block;
+  animation: heroTapArrow 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
-.hero-tap-ring-delayed {
-  animation-delay: 0.9s;
-}
-@keyframes heroTapRing {
-  0%   { transform: scale(0.6); opacity: 0.75; }
-  70%  { opacity: 0.15; }
-  100% { transform: scale(2.2); opacity: 0; }
+@keyframes heroTapArrow {
+  0%, 100% { transform: translateY(0);   opacity: 0.65; }
+  50%      { transform: translateY(-4px); opacity: 1;    }
 }

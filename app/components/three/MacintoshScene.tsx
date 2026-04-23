@@ -44,7 +44,9 @@ const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, 0.0, 0.3);
 // placement). fov stays wide because portrait aspect squeezes
 // horizontal room.
 const MOBILE_IDLE_CAM = new THREE.Vector3(-0.15, 0.1, 6.9);
-const MOBILE_IDLE_TARGET = new THREE.Vector3(-0.37, -0.45, 0.3);
+// target.y raised (less negative) so the camera looks less downward →
+// Mac lands lower in the portrait frame, clear of the H1 on tall phones.
+const MOBILE_IDLE_TARGET = new THREE.Vector3(-0.37, -0.12, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
