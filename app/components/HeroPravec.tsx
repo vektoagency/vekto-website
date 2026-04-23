@@ -8,7 +8,7 @@ import HeroBootLoader from "./HeroBootLoader";
 // Lazy-load the overlay only when needed — keeps the initial bundle lean.
 const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
 
-export default function HeroPravec() {
+export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}) {
   const [zoomedIn, setZoomedIn] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [playerOpen, setPlayerOpen] = useState(false);
@@ -90,6 +90,7 @@ export default function HeroPravec() {
             <MacintoshScene
               zoomedIn={zoomedIn}
               paused={playerOpen}
+              mobile={mobile}
               onScreenClick={handleScreenClick}
               onReady={() => setSceneReady(true)}
             />
@@ -103,7 +104,7 @@ export default function HeroPravec() {
               transitionDuration: "500ms",
             }}
           >
-            <HeroBootLoader />
+            <HeroBootLoader mobile={mobile} />
           </div>
         )}
       </div>
