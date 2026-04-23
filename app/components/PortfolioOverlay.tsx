@@ -127,8 +127,8 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </nav>
         </section>
 
-        <section className="px-6 md:px-10 pb-12 max-w-[1500px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+        <section className="px-6 md:px-12 pb-16 max-w-[1240px] mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {visible.map((c, i) => (
               <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
             ))}
@@ -168,8 +168,19 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
 
 /* ---------- Tile — static thumbnail, description reveal on hover ---------- */
 function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: () => void }) {
-  const spanClasses = clip.featured ? "md:col-span-2 md:row-span-2" : "";
-  const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${spanClasses}`;
+  // Designer stagger — middle column in the 3-col grid drops a bit,
+  // so the reel reads as a layout instead of a spreadsheet.
+  // Featured tile (2x2) breaks the rhythm deliberately.
+  const mod = idx % 3;
+  const staggerClass = clip.featured
+    ? ""
+    : mod === 1
+    ? "lg:translate-y-10"
+    : mod === 2
+    ? "lg:translate-y-4"
+    : "";
+  const spanClasses = clip.featured ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : "";
+  const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${spanClasses} ${staggerClass}`;
   const bootDelay = Math.min(idx, 14) * 70;
 
   return (
