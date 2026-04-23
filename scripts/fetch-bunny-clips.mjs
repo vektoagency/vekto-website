@@ -56,6 +56,7 @@ const BRAND_LOGOS = {
   "BANSKO ESTATES": "/images/logo.png",
   "ISTINSKIMED.BG": "/images/logo.png",
   "BIANCO LATTE": "/images/logo.png",
+  "PARFEN": "/images/logo.png",
   "GIFTO.BG": "/images/logo.png",
 };
 
