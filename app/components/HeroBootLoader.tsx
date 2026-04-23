@@ -10,16 +10,22 @@ const LINES = [
   "> BOOTING DESKTOP .......",
 ];
 
+// Classic unix spinner — rotates through at ~10 fps.
+const SPINNER = ["|", "/", "—", "\\"];
+
 export default function HeroBootLoader() {
   const [step, setStep] = useState(0);
+  const [spin, setSpin] = useState(0);
+  const [dots, setDots] = useState(0);
 
+  // Typewriter for the boot lines.
   useEffect(() => {
     let cancel = false;
     const run = async () => {
       for (let i = 0; i <= LINES.length; i++) {
         if (cancel) return;
         setStep(i);
-        await new Promise((r) => setTimeout(r, 120 + Math.random() * 90));
+        await new Promise((r) => setTimeout(r, 140 + Math.random() * 110));
       }
     };
     run();
@@ -28,13 +34,26 @@ export default function HeroBootLoader() {
     };
   }, []);
 
+  // Always-running spinner (shows it's alive even if typewriter finishes).
+  useEffect(() => {
+    const id = setInterval(() => setSpin((s) => (s + 1) % SPINNER.length), 100);
+    return () => clearInterval(id);
+  }, []);
+
+  // Dots animation on the current line.
+  useEffect(() => {
+    const id = setInterval(() => setDots((d) => (d + 1) % 4), 320);
+    return () => clearInterval(id);
+  }, []);
+
+  const typingDone = step >= LINES.length;
+
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute top-1/2 left-[74%] -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[340px]">
-        {/* Scan-line + vignette backdrop card */}
+      <div className="absolute top-1/2 left-[74%] -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[360px]">
         <div
-          className="relative rounded-sm border border-[#c8ff00]/25 bg-black/35 backdrop-blur-sm px-5 py-4 overflow-hidden"
-          style={{ boxShadow: "0 10px 40px -10px rgba(200,255,0,0.25)" }}
+          className="relative rounded-sm border border-[#c8ff00]/30 bg-black/40 backdrop-blur-sm px-5 py-4 overflow-hidden"
+          style={{ boxShadow: "0 10px 40px -10px rgba(200,255,0,0.35)" }}
         >
           {/* scanlines */}
           <div
@@ -46,13 +65,13 @@ export default function HeroBootLoader() {
             }}
           />
 
-          {/* status bar */}
-          <div className="flex items-center justify-between mb-3 font-mono text-[9px] uppercase tracking-[0.3em] text-[#c8ff00]/70">
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-              VEKTO/BOOT
+          {/* Header with prominent spinner + LOADING label */}
+          <div className="flex items-center justify-between mb-3 font-mono text-[10px] uppercase tracking-[0.3em]">
+            <span className="flex items-center gap-2 text-[#c8ff00]">
+              <span className="inline-flex w-4 justify-center font-bold">{SPINNER[spin]}</span>
+              LOADING{".".repeat(dots)}
             </span>
-            <span className="text-[#c8ff00]/45">v1.0</span>
+            <span className="text-[#c8ff00]/45">VEKTO/BOOT</span>
           </div>
 
           {/* typed lines */}
@@ -66,23 +85,33 @@ export default function HeroBootLoader() {
                 <span className="inline-block w-[7px] h-[13px] bg-[#c8ff00] ml-1 align-middle animate-pulse" />
               </div>
             )}
-            {step >= LINES.length && (
+            {typingDone && (
               <div className="text-[#c8ff00]">
                 <span className="inline-block w-[7px] h-[13px] bg-[#c8ff00] mr-1 align-middle animate-pulse" />
-                READY_
+                RENDERING{".".repeat(dots)}
               </div>
             )}
           </pre>
 
-          {/* progress bar */}
-          <div className="mt-4 h-0.5 bg-[#c8ff00]/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#c8ff00] transition-all duration-200"
-              style={{ width: `${Math.min((step / LINES.length) * 100, 100)}%` }}
+          {/* Indeterminate shimmer bar — constantly moving to signal activity,
+              regardless of the typewriter progress. */}
+          <div className="mt-4 h-1 bg-[#c8ff00]/10 rounded-full overflow-hidden relative">
+            <div className="absolute inset-y-0 w-1/3 rounded-full boot-shimmer"
+              style={{ background: "linear-gradient(to right, transparent, #c8ff00, transparent)" }}
             />
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes bootShimmer {
+          0% { left: -35%; }
+          100% { left: 100%; }
+        }
+        .boot-shimmer {
+          animation: bootShimmer 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+      `}</style>
     </div>
   );
 }
