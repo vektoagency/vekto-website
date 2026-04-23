@@ -1,5 +1,6 @@
 import HeroPravec from "./HeroPravec";
 import HeroLeftCurtain from "./HeroLeftCurtain";
+import HeroMobileMac from "./HeroMobileMac";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
@@ -199,9 +200,7 @@ export default function Hero() {
         </Stagger>
 
         <Stagger delay={340}>
-          <div className="relative w-full max-w-[340px] aspect-[4/5] mx-auto">
-            <HeroPravec mobile />
-          </div>
+          <HeroMobileMac />
         </Stagger>
 
         <Stagger delay={520}>

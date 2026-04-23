@@ -10,7 +10,6 @@ import MacintoshGLB from "./MacintoshGLB";
 type Props = {
   zoomedIn: boolean;
   paused?: boolean;
-  mobile?: boolean;
   onScreenClick?: () => void;
   onReady?: () => void;
 };
@@ -38,9 +37,6 @@ type ScreenInfo = {
 // keyboard + mouse aren't cramped against the viewport edge.
 const DEFAULT_IDLE_CAM = new THREE.Vector3(-0.9, 1.35, 6.2);
 const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, 0.0, 0.3);
-// Mobile framing — Mac centered in its bounded container.
-const MOBILE_IDLE_CAM = new THREE.Vector3(0, 0.4, 5.0);
-const MOBILE_IDLE_TARGET = new THREE.Vector3(0, -0.2, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
@@ -48,16 +44,12 @@ const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
 function CameraRig({
   zoomedIn,
   screen,
-  mobile,
 }: {
   zoomedIn: boolean;
   screen: ScreenInfo | null;
-  mobile?: boolean;
 }) {
   const { camera } = useThree();
-  const idleCam = mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM;
-  const idleTarget = mobile ? MOBILE_IDLE_TARGET : DEFAULT_IDLE_TARGET;
-  const target = useRef(new THREE.Vector3().copy(idleTarget));
+  const target = useRef(new THREE.Vector3().copy(DEFAULT_IDLE_TARGET));
 
   // Build zoom cam/target from the real screen mesh if available
   const { zoomCam, zoomTarget } = useMemo(() => {
@@ -83,8 +75,8 @@ function CameraRig({
     // Delta-based lerp — frame-rate independent (same smoothness on 60Hz and 120Hz).
     const rate = zoomedIn ? 0.10 : 0.05;
     const t = 1 - Math.pow(1 - rate, Math.min(delta, 0.05) * 60);
-    const targetCam = zoomedIn ? zoomCam : idleCam;
-    const targetLook = zoomedIn ? zoomTarget : idleTarget;
+    const targetCam = zoomedIn ? zoomCam : DEFAULT_IDLE_CAM;
+    const targetLook = zoomedIn ? zoomTarget : DEFAULT_IDLE_TARGET;
     camera.position.lerp(targetCam, t);
     target.current.lerp(targetLook, t);
     camera.lookAt(target.current);
@@ -93,7 +85,7 @@ function CameraRig({
   return null;
 }
 
-export default function MacintoshScene({ zoomedIn, paused = false, mobile = false, onScreenClick, onReady }: Props) {
+export default function MacintoshScene({ zoomedIn, paused = false, onScreenClick, onReady }: Props) {
   const [hovered, setHovered] = useState(false);
   const [screen, setScreen] = useState<ScreenInfo | null>(null);
   const [inView, setInView] = useState(true);
@@ -120,11 +112,11 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
   return (
     <div ref={wrapperRef} className="absolute inset-0">
       <Canvas
-        shadows={!mobile}
-        dpr={mobile ? 1 : [1, 1.5]}
+        shadows
+        dpr={[1, 1.5]}
         frameloop={frameloop}
-        camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 36 : 32 }}
-        gl={{ antialias: true, alpha: true, powerPreference: mobile ? "default" : "high-performance" }}
+        camera={{ position: DEFAULT_IDLE_CAM.toArray(), fov: 32 }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
       >
 
@@ -163,25 +155,20 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
           />
         </Suspense>
 
-        <CameraRig zoomedIn={zoomedIn} screen={screen} mobile={mobile} />
+        <CameraRig zoomedIn={zoomedIn} screen={screen} />
 
-        {/* Mobile skips postprocessing entirely — bloom + vignette are
-            the most expensive passes on the GPU and the CSS atmosphere
-            behind the canvas already provides the dim-studio feel. */}
-        {!mobile && (
-          <EffectComposer multisampling={0}>
-            <Bloom
-              intensity={zoomedIn ? 0.9 : 0.4}
-              luminanceThreshold={0.78}
-              luminanceSmoothing={0.22}
-              mipmapBlur
-            />
-            <Vignette eskil={false} offset={0.5} darkness={zoomedIn ? 0.78 : 0.55} />
-          </EffectComposer>
-        )}
+        <EffectComposer multisampling={0}>
+          <Bloom
+            intensity={zoomedIn ? 0.9 : 0.4}
+            luminanceThreshold={0.78}
+            luminanceSmoothing={0.22}
+            mipmapBlur
+          />
+          <Vignette eskil={false} offset={0.5} darkness={zoomedIn ? 0.78 : 0.55} />
+        </EffectComposer>
       </Canvas>
 
-      {!zoomedIn && !mobile && (
+      {!zoomedIn && (
         <div className="pointer-events-none absolute inset-y-0 left-[74%] -translate-x-1/2 z-10 flex flex-col justify-center pt-24 pb-16 text-center">
           {/* Caption — occupies the same slot as the left column's "AI-Powered Creative Agency" badge */}
           <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 mb-8 mt-[46px] ${hovered ? "opacity-100" : "opacity-90"}`}>
