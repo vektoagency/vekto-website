@@ -2,17 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-
-const MacintoshScene = dynamic(() => import("./three/MacintoshScene"), {
-  ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute top-1/2 left-[74%] -translate-x-1/2 -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#5a5048] animate-pulse">
-        Booting…
-      </div>
-    </div>
-  ),
-});
+import MacintoshScene from "./three/MacintoshScene";
 
 // Lazy-load the overlay only when needed — keeps the initial bundle lean.
 const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
@@ -20,6 +10,9 @@ const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: fals
 export default function HeroPravec() {
   const [zoomedIn, setZoomedIn] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
+  // Gate WebGL mount until after hydrate — Canvas needs window/document.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const startZoom = () => {
     window.dispatchEvent(new Event("vekto:zoom-started"));
@@ -57,7 +50,7 @@ export default function HeroPravec() {
   return (
     <>
       <div className={zoomedIn ? "fixed inset-0 z-[55]" : "absolute inset-0"}>
-        <MacintoshScene zoomedIn={zoomedIn} onScreenClick={handleScreenClick} />
+        {mounted && <MacintoshScene zoomedIn={zoomedIn} onScreenClick={handleScreenClick} />}
       </div>
       <PortfolioOverlay open={overlayOpen} onClose={handleOverlayClose} />
     </>
