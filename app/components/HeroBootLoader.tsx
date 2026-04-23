@@ -47,11 +47,11 @@ export default function HeroBootLoader() {
               even before globals.css is applied. */}
           <pre className="font-mono text-[11px] md:text-[12px] text-[#c8ff00] leading-[1.6] whitespace-pre-wrap">
             {LINES.map((l, i) => (
-              <div key={i} className="boot-line" style={{ opacity: 0, animationDelay: `${i * 180}ms` }}>
+              <div key={i} className="boot-line" style={{ animationDelay: `${i * 180}ms` }}>
                 {l}
               </div>
             ))}
-            <div className="boot-line boot-rendering" style={{ opacity: 0, animationDelay: `${LINES.length * 180 + 120}ms` }}>
+            <div className="boot-line boot-rendering" style={{ animationDelay: `${LINES.length * 180 + 120}ms` }}>
               <span className="boot-caret inline-block w-[7px] h-[13px] bg-[#c8ff00] mr-1 align-middle" />
               RENDERING
               <span aria-hidden className="boot-dots relative" />

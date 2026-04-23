@@ -729,12 +729,14 @@ html {
 }
 
 @keyframes bootLineIn {
-  0%   { opacity: 0; transform: translateX(-4px); }
+  0%   { opacity: 0; transform: translateX(-6px); }
   100% { opacity: 1; transform: translateX(0); }
 }
+/* fill-mode "both" = the 0% keyframe state (opacity 0) applies during the
+   animation-delay, and the 100% state persists after — no inline override
+   needed, no flash of visible content before the animation starts. */
 .boot-line {
-  opacity: 0;
-  animation: bootLineIn 220ms cubic-bezier(0.25,0.8,0.3,1) forwards;
+  animation: bootLineIn 260ms cubic-bezier(0.25,0.8,0.3,1) both;
 }
 
 @keyframes bootCaret {
