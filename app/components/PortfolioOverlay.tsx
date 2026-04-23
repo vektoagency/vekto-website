@@ -179,6 +179,14 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
   );
 }
 
+function formatDuration(seconds: number | null | undefined): string | null {
+  if (!seconds || seconds < 1) return null;
+  const s = Math.round(seconds);
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${m}:${r.toString().padStart(2, "0")}`;
+}
+
 /* ---------- Tile — static thumbnail, description reveal on hover ---------- */
 function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: () => void }) {
   // Light staggered offset so the grid reads as a layout rather than
@@ -192,6 +200,7 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
   const aspectClass = isLandscape ? "aspect-video col-span-2" : "aspect-[9/16]";
   const tileClass = `group relative ${aspectClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${staggerClass}`;
   const bootDelay = Math.min(idx, 14) * 50;
+  const durationLabel = formatDuration(clip.duration);
 
   return (
     <button
@@ -210,6 +219,12 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
         loading={idx < 6 ? "eager" : "lazy"}
         decoding="async"
       />
+
+      {durationLabel && (
+        <div className="absolute top-2 right-2 z-[2] font-mono text-[9px] tracking-[0.15em] text-white/90 bg-black/65 border border-[#c8ff00]/30 px-1.5 py-0.5 rounded-sm pointer-events-none">
+          {durationLabel}
+        </div>
+      )}
 
       <div className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
         style={{ background: "linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.3) 60%, transparent)" }} />
