@@ -1,4 +1,3 @@
-import { HeroVideosMobile } from "./HeroVideos";
 import HeroPravec from "./HeroPravec";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import HeroMobileMac from "./HeroMobileMac";
@@ -19,7 +18,29 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      <HeroVideosMobile />
+      {/* Mobile atmospheric backdrop — replaces the old scrolling video
+          mosaic with a focused, shader.se-inspired lit-stage vibe: cool
+          navy top, deep indigo mid, warm amber floor with a lime halo
+          directly behind where the Mac sits. */}
+      <div aria-hidden className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(to bottom,
+            #0a1016 0%,
+            #0b0a14 28%,
+            #0b0a0b 55%,
+            #120a06 82%,
+            #180c06 100%)`,
+        }} />
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 75% 45% at 50% 62%, rgba(200,255,0,0.15) 0%, rgba(200,255,0,0.04) 40%, transparent 75%)",
+        }} />
+        <div className="absolute inset-x-0 bottom-0 h-[45%]" style={{
+          background: "radial-gradient(ellipse 100% 60% at 50% 100%, rgba(210,130,90,0.18) 0%, rgba(150,70,40,0.06) 50%, transparent 100%)",
+        }} />
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 60% 40% at 50% 8%, rgba(90,140,200,0.12) 0%, transparent 70%)",
+        }} />
+      </div>
 
       {/* Desktop atmosphere + HUD ornaments. Sits behind the transparent
           canvas so CRT shader covers these naturally during zoom.
@@ -152,30 +173,19 @@ export default function Hero() {
         <HeroPravec />
       </div>
 
-      {/* Mobile gradients top/bottom */}
-      <div className="lg:hidden absolute inset-x-0 top-0 h-32 z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, #080808, transparent)" }} />
-      <div className="lg:hidden absolute inset-x-0 bottom-0 h-40 z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to top, #080808, transparent)" }} />
-
-      {/* Mobile dark overlay */}
-      <div className="lg:hidden absolute inset-0 bg-[#060606]/82 z-[1]" />
-      <div className="lg:hidden absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, transparent 70%)" }} />
-
-      {/* ── MOBILE text ── */}
-      <div className="lg:hidden relative z-10 flex flex-col items-center justify-center text-center px-6 w-full min-h-screen pt-20 pb-12">
+      {/* ── MOBILE hero (shader.se-inspired focused layout) ── */}
+      <div className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-24 pb-10">
         <Stagger delay={0}>
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/40 rounded-full px-4 py-1.5 mb-5">
-            <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="text-xs text-[#c8ff00] font-medium tracking-widest uppercase">
+          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+            <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
               AI-Powered Creative Agency
             </span>
           </div>
         </Stagger>
-        <Stagger delay={120}>
-          <h1 className="text-[34px] font-bold leading-[1.08] tracking-tight mb-4 text-white"
-            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
+        <Stagger delay={100}>
+          <h1 className="text-[36px] sm:text-[40px] font-bold leading-[1.04] tracking-tight mb-3 text-white"
+            style={{ textShadow: "0 2px 22px rgba(0,0,0,0.7)" }}>
             <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
             <br />
             for the Future
@@ -183,26 +193,31 @@ export default function Hero() {
             of Companies
           </h1>
         </Stagger>
-        <Stagger delay={240}>
-          <p className="text-[15px] text-[#d8d8d8] leading-relaxed mb-6 max-w-xs"
-            style={{ textShadow: "0 1px 12px rgba(0,0,0,0.7)" }}>
-            From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.
+        <Stagger delay={220}>
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/70 mb-7">
+            Tap the screen to inspect our reel
           </p>
         </Stagger>
-        <Stagger delay={360}>
-          <div className="mb-7">
-            <HeroMobileMac />
-          </div>
+
+        <Stagger delay={340}>
+          <HeroMobileMac />
         </Stagger>
-        <Stagger delay={480}>
-          <div className="flex flex-col gap-3 w-full max-w-xs">
-            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
+
+        <Stagger delay={520}>
+          <div className="mt-8 flex flex-col gap-3 w-full max-w-[280px]">
+            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
               Let&apos;s Talk
             </a>
-            <PortfolioTriggerButton className="border border-white/20 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-center cursor-pointer">
+            <PortfolioTriggerButton className="border border-white/20 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/10 transition-colors text-center cursor-pointer">
               See Our Work
             </PortfolioTriggerButton>
           </div>
+        </Stagger>
+
+        <Stagger delay={640}>
+          <p className="mt-8 text-[12px] text-[#8a8a8a] leading-relaxed max-w-[300px]">
+            From cinematic storytelling to AI-powered short-form systems — visual ecosystems built to scale.
+          </p>
         </Stagger>
       </div>
 
