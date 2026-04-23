@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import bunnyData from "../data/bunny-clips.json";
 
 type Clip = {
@@ -86,7 +87,10 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
 
   if (!mounted) return null;
 
-  return (
+  // Portal to document.body so the overlay escapes the Hero's mobile
+  // wrapper (which has `z-[1]` creating a stacking context that traps
+  // children below the Hero's z-[2] gradients and z-10 text curtain).
+  return createPortal(
     <div
       aria-modal
       role="dialog"
@@ -184,7 +188,8 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       </div>
 
       {expanded && <ClipLightbox clip={expanded} onClose={() => setExpanded(null)} />}
-    </div>
+    </div>,
+    document.body
   );
 }
 
