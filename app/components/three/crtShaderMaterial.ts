@@ -50,12 +50,6 @@ const fragmentShader = /* glsl */ `
 
     float text = charOn * yShape * xShape;
 
-    float header = smoothstep(0.92, 0.98, uv.y) * 0.9;
-    float cursorRow = step(0.06, uv.y) * step(uv.y, 0.10);
-    float cursorCol = step(0.05, uv.x) * step(uv.x, 0.07);
-    float cursorBlink = step(0.5, fract(uTime * 1.2));
-    float cursor = cursorRow * cursorCol * cursorBlink;
-
     float scan = 0.85 + 0.15 * sin(vUv.y * 720.0);
     float flicker = 0.95 + 0.05 * noise(vec2(uTime * 4.0, 0.0));
 
@@ -63,7 +57,7 @@ const fragmentShader = /* glsl */ `
     float vign = 1.0 - dot(cv, cv) * 1.1;
     vign = clamp(vign, 0.0, 1.0);
 
-    float brightness = (text * 1.4 + header + cursor * 1.8) * scan * flicker * vign;
+    float brightness = text * 1.4 * scan * flicker * vign;
     brightness *= uIntensity;
 
     vec3 color = uPhosphor * brightness;
