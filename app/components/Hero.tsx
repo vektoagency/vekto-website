@@ -17,82 +17,73 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* Mobile atmospheric backdrop — mirrors the desktop studio palette
-          (cool ceiling → warm floor, indigo + amber gels, lime CRT bounce)
-          adapted for portrait: color pools are re-centered around where
-          the Mac lands on mobile (~65% across, middle third). */}
+      {/* Mobile atmospheric backdrop — cleaner, more cinematic studio
+          setup tuned for portrait. Reads as a single-subject photograph:
+          deep moody black with a soft cool ambient, one strong warm
+          key light from top-left raking the Mac, a lime CRT halo behind
+          the monitor, and a heavy floor puddle grounding the machine. */}
       <div aria-hidden className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Base wash — cool navy top fading into warm near-black floor */}
+        {/* Base — near-pure black with subtle cool lift so highlights pop */}
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to bottom,
-            #0a1016 0%,
-            #080a0d 30%,
-            #09090a 58%,
-            #0a0806 82%,
-            #0c0805 100%)`,
+            #060a10 0%,
+            #050608 40%,
+            #060504 78%,
+            #080503 100%)`,
         }} />
 
-        {/* Deep indigo sheen top — colored gel on the ceiling */}
+        {/* Big warm key light spill from top-left — the main light source */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 80% 40% at 58% 10%, rgba(90,120,200,0.18) 0%, rgba(60,80,160,0.07) 40%, transparent 75%)",
+          background: "radial-gradient(ellipse 90% 65% at 18% 12%, rgba(240,190,130,0.14) 0%, rgba(200,140,80,0.05) 45%, transparent 80%)",
         }} />
 
-        {/* Warm amber catch on the right edge — sunset-window vibe */}
+        {/* Cool fill from the opposite side for shape separation */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 60% 45% at 92% 55%, rgba(210,130,100,0.20) 0%, rgba(180,90,70,0.08) 40%, transparent 78%)",
+          background: "radial-gradient(ellipse 70% 55% at 95% 75%, rgba(70,110,170,0.14) 0%, rgba(40,70,130,0.05) 50%, transparent 85%)",
         }} />
 
-        {/* Cool teal spill top-left — like a softbox raking the scene */}
+        {/* Lime CRT halo behind the monitor — tighter + brighter than before */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 65% 40% at 10% 15%, rgba(120,200,220,0.10) 0%, rgba(80,160,200,0.04) 40%, transparent 75%)",
+          background: "radial-gradient(ellipse 55% 32% at 58% 44%, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0.07) 40%, transparent 75%)",
         }} />
 
-        {/* Lime CRT bounce — Mac screen spills its own light */}
+        {/* Secondary lime spill bleeding upward onto 'ceiling' */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 70% 45% at 58% 48%, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0.04) 42%, transparent 78%)",
+          background: "radial-gradient(ellipse 60% 25% at 58% 28%, rgba(200,255,0,0.06) 0%, transparent 75%)",
         }} />
 
-        {/* Floor: amber sheen fading toward the camera */}
-        <div className="absolute inset-x-0 bottom-0 h-[35%]" style={{
-          background: "linear-gradient(to bottom, transparent 0%, rgba(120,80,45,0.12) 55%, rgba(55,35,20,0.22) 100%)",
-        }} />
-
-        {/* Ceiling: shallow darker cap */}
-        <div className="absolute inset-x-0 top-0 h-[20%]" style={{
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%)",
-        }} />
-
-        {/* Faint blueprint grid behind the Mac, masked soft */}
+        {/* Heavy floor puddle directly under the Mac — anchors the machine */}
         <div
-          className="absolute inset-0"
+          className="absolute left-1/2 -translate-x-1/2"
           style={{
-            opacity: 0.05,
-            backgroundImage:
-              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
-            backgroundSize: "52px 52px",
-            WebkitMaskImage: "radial-gradient(ellipse 55% 45% at 58% 50%, black 25%, transparent 80%)",
-            maskImage: "radial-gradient(ellipse 55% 45% at 58% 50%, black 25%, transparent 80%)",
+            bottom: "15%",
+            width: "75%",
+            height: "18%",
+            background: "radial-gradient(ellipse at 58% 100%, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0.08) 35%, transparent 70%)",
+            filter: "blur(6px)",
           }}
         />
 
-        {/* Dust motes */}
-        <div className="absolute inset-0 opacity-45" style={{
-          background: `
-            radial-gradient(circle 1.5px at 78% 38%, rgba(235,200,150,0.55), transparent 60%),
-            radial-gradient(circle 1px at 62% 22%, rgba(235,200,150,0.45), transparent 60%),
-            radial-gradient(circle 1px at 84% 60%, rgba(200,255,0,0.5), transparent 60%)
-          `,
+        {/* Floor gradient — warm soft kiss fading toward the camera */}
+        <div className="absolute inset-x-0 bottom-0 h-[38%]" style={{
+          background: "linear-gradient(to bottom, transparent 0%, rgba(90,60,35,0.12) 55%, rgba(30,18,10,0.3) 100%)",
         }} />
 
-        {/* Floor glow directly under the Mac */}
-        <div
-          className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-[70%] h-[12%]"
-          style={{ background: "radial-gradient(ellipse at 58% 100%, rgba(200,255,0,0.15), transparent 70%)" }}
-        />
+        {/* Strong ceiling cap — keeps eyes on the Mac */}
+        <div className="absolute inset-x-0 top-0 h-[28%]" style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)",
+        }} />
 
-        {/* Edge vignette — soft dark corners, off-center to the right where Mac sits */}
+        {/* Horizon line — subtle seam where 'wall' meets 'floor', right where Mac's keyboard sits */}
+        <div className="absolute inset-x-0" style={{
+          top: "68%",
+          height: "1px",
+          background: "linear-gradient(to right, transparent 10%, rgba(200,255,0,0.15) 50%, transparent 90%)",
+        }} />
+
+        {/* Strong edge vignette — pulls focus dramatically to Mac */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 110% 85% at 58% 50%, transparent 40%, rgba(0,0,0,0.5) 95%)",
+          background: "radial-gradient(ellipse 95% 75% at 58% 50%, transparent 30%, rgba(0,0,0,0.75) 95%)",
         }} />
       </div>
 
@@ -246,7 +237,7 @@ export default function Hero() {
           sits in the middle third, clear of the text at top/bottom.
           Wrapped in HeroLeftCurtain so the whole text stack fades out on
           zoom-start and fades back in on zoom-end (mirrors desktop). */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-10 pointer-events-none">
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-24 pointer-events-none">
         {/* Top cluster — pointer-events-auto only on interactive children */}
         <div className="flex flex-col items-center">
           <Stagger delay={0}>

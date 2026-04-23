@@ -43,8 +43,8 @@ const DEFAULT_IDLE_TARGET = new THREE.Vector3(-2.0, 0.0, 0.3);
 // viewport (halfway between dead-centre and the desktop right-third
 // placement). fov stays wide because portrait aspect squeezes
 // horizontal room.
-const MOBILE_IDLE_CAM = new THREE.Vector3(-0.12, 0.1, 6.9);
-const MOBILE_IDLE_TARGET = new THREE.Vector3(-0.3, -0.45, 0.3);
+const MOBILE_IDLE_CAM = new THREE.Vector3(-0.16, 0.1, 6.9);
+const MOBILE_IDLE_TARGET = new THREE.Vector3(-0.4, -0.45, 0.3);
 // Fallback zoom target if screen mesh hasn't been located yet.
 const FALLBACK_ZOOM_CAM = new THREE.Vector3(0, 0.4, 2.0);
 const FALLBACK_ZOOM_TARGET = new THREE.Vector3(0, 0.4, 0.5);
