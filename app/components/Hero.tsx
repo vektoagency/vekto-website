@@ -55,18 +55,6 @@ export default function Hero() {
           background: "radial-gradient(ellipse 48% 58% at 74% 48%, rgba(200,255,0,0.13) 0%, rgba(200,255,0,0.04) 40%, transparent 78%)",
         }} />
 
-        {/* Horizon line — a faint bright band where wall meets desk;
-            makes the scene read as a 3D space instead of a flat panel. */}
-        <div
-          className="absolute left-0 right-0"
-          style={{
-            top: "74%",
-            height: "1px",
-            background: "linear-gradient(to right, transparent 0%, rgba(200,255,0,0.28) 18%, rgba(235,190,110,0.22) 55%, rgba(200,255,0,0.10) 85%, transparent 100%)",
-            boxShadow: "0 0 24px rgba(200,255,0,0.10)",
-          }}
-        />
-
         {/* Floor: subtle amber sheen that fades toward camera — desk
             surface catching the warm practical light from above. */}
         <div className="absolute inset-x-0 bottom-0 h-[30%]" style={{
