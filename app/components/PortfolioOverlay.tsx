@@ -97,10 +97,10 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
 
       <div className="relative z-10 h-full w-full overflow-y-auto po-content">
         <div
-          className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/40 font-mono text-[10px] uppercase tracking-[0.3em] backdrop-blur-md"
+          className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/45 font-mono text-[10px] uppercase tracking-[0.3em] backdrop-blur-lg"
           style={{
-            background: "linear-gradient(to bottom, rgba(18,18,18,0.85) 0%, rgba(14,14,14,0.72) 100%)",
-            boxShadow: "0 1px 0 rgba(200,255,0,0.08), 0 8px 24px -16px rgba(0,0,0,0.8)",
+            background: "linear-gradient(to bottom, rgba(60,60,58,0.35) 0%, rgba(40,40,38,0.18) 100%)",
+            boxShadow: "0 1px 0 rgba(200,255,0,0.15)",
           }}
         >
           <div className="flex items-center gap-3 text-[#c8ff00]">
