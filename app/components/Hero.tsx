@@ -236,21 +236,45 @@ export default function Hero() {
       </div>
 
       {/* Top gradient — makes badge + H1 readable over the Mac */}
-      <div className="lg:hidden absolute inset-x-0 top-0 h-[42%] z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.7) 55%, transparent 100%)" }} />
+      <div className="lg:hidden absolute inset-x-0 top-0 h-[30%] z-[2] pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.94) 0%, rgba(8,8,8,0.6) 65%, transparent 100%)" }} />
       {/* Bottom gradient — same for CTAs */}
-      <div className="lg:hidden absolute inset-x-0 bottom-0 h-[40%] z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.75) 50%, transparent 100%)" }} />
+      <div className="lg:hidden absolute inset-x-0 bottom-0 h-[34%] z-[2] pointer-events-none"
+        style={{ background: "linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.75) 55%, transparent 100%)" }} />
+
+      {/* Viewfinder corner brackets — frame the Mac area with subtle lime
+          L-shapes for a HUD / camera-rig vibe. Sit below the content
+          layer so text can sit on top and remain readable. */}
+      <div aria-hidden className="lg:hidden absolute inset-0 z-[3] pointer-events-none">
+        <div className="absolute top-[24%] left-[6%] w-5 h-5 border-l-[1.5px] border-t-[1.5px] border-[#c8ff00]/35" />
+        <div className="absolute top-[24%] right-[6%] w-5 h-5 border-r-[1.5px] border-t-[1.5px] border-[#c8ff00]/35" />
+        <div className="absolute bottom-[24%] left-[6%] w-5 h-5 border-l-[1.5px] border-b-[1.5px] border-[#c8ff00]/35" />
+        <div className="absolute bottom-[24%] right-[6%] w-5 h-5 border-r-[1.5px] border-b-[1.5px] border-[#c8ff00]/35" />
+        {/* Centre-top tick mark */}
+        <div className="absolute top-[24%] left-1/2 -translate-x-1/2 w-px h-2 bg-[#c8ff00]/35" />
+        {/* Centre-bottom tick mark */}
+        <div className="absolute bottom-[24%] left-1/2 -translate-x-1/2 w-px h-2 bg-[#c8ff00]/35" />
+      </div>
+
+      {/* HUD caption below the Mac — matches the desktop
+          "MACINTOSH 128K · 1984 — VEKTO/OS" line in feel. */}
+      <div
+        aria-hidden
+        className="lg:hidden absolute left-1/2 -translate-x-1/2 z-[3] font-mono text-[9px] tracking-[0.3em] uppercase text-[#c8ff00]/45 pointer-events-none"
+        style={{ bottom: "22.5%" }}
+      >
+        MACINTOSH 128K · 1984 · VEKTO/OS
+      </div>
 
       {/* Mobile content — overlays the Canvas with justify-between so Mac
           sits in the middle third, clear of the text at top/bottom.
           Wrapped in HeroLeftCurtain so the whole text stack fades out on
           zoom-start and fades back in on zoom-end (mirrors desktop). */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-10 pointer-events-none">
-        {/* Top cluster — pointer-events-auto only on interactive children */}
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-16 pb-7 pointer-events-none">
+        {/* Top cluster */}
         <div className="flex flex-col items-center">
           <Stagger delay={0}>
-            <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-4 bg-black/30 backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-3 bg-black/30 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
                 AI-Powered Creative Agency
@@ -258,7 +282,7 @@ export default function Hero() {
             </div>
           </Stagger>
           <Stagger delay={100}>
-            <h1 className="text-[32px] sm:text-[36px] font-bold leading-[1.05] tracking-tight text-white"
+            <h1 className="text-[30px] sm:text-[34px] font-bold leading-[1.05] tracking-tight text-white"
               style={{ textShadow: "0 2px 22px rgba(0,0,0,0.85)" }}>
               <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
               <br />
@@ -267,23 +291,26 @@ export default function Hero() {
           </Stagger>
         </div>
 
-        {/* Flexible spacer so the bottom cluster hugs the footer */}
-        <div className="flex-1" />
-
-        {/* Bottom cluster */}
-        <div className="flex flex-col items-center">
+        {/* Bottom cluster — pushed to the footer but hugs Mac keyboard via
+            negative-ish margin so there isn't a dead gap between them. */}
+        <div className="mt-auto flex flex-col items-center">
           <Stagger delay={420}>
-            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70 mb-5"
+            <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/85 mb-4"
               style={{ textShadow: "0 1px 10px rgba(0,0,0,0.9)" }}>
-              Tap the screen to inspect our reel
-            </p>
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="absolute inset-0 rounded-full bg-[#c8ff00] animate-ping opacity-60" />
+                <span className="relative rounded-full bg-[#c8ff00] w-1.5 h-1.5" />
+              </span>
+              Tap CRT · Open reel
+              <span className="text-[#c8ff00]/50">▸</span>
+            </div>
           </Stagger>
           <Stagger delay={520}>
-            <div className="flex flex-col gap-3 w-full max-w-[280px] pointer-events-auto">
-              <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
+            <div className="flex flex-col gap-2.5 w-full max-w-[280px] pointer-events-auto">
+              <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center shadow-[0_10px_30px_-10px_rgba(200,255,0,0.55)]">
                 Let&apos;s Talk
               </a>
-              <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer">
+              <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/35 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer">
                 See Our Work
               </PortfolioTriggerButton>
             </div>
