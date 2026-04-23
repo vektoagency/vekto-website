@@ -125,21 +125,21 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
         <section className="px-6 md:px-10 pt-5 pb-4 max-w-[1500px] mx-auto">
           <nav
             aria-label="Filter clips by category"
-            className="flex flex-wrap items-center gap-x-1 gap-y-2 font-mono text-[13px] md:text-[14px] uppercase tracking-[0.18em] text-[#c8ff00] rounded-md border border-[#c8ff00]/25 px-3 py-2.5 font-semibold"
+            className="flex flex-wrap items-center gap-x-0.5 md:gap-x-1 gap-y-1.5 font-mono text-[10px] md:text-[14px] uppercase tracking-[0.14em] md:tracking-[0.18em] text-[#c8ff00] rounded-md border border-[#c8ff00]/25 px-2.5 md:px-3 py-1.5 md:py-2.5 font-semibold"
             style={{
               background: "linear-gradient(135deg, rgba(200,255,0,0.06) 0%, rgba(200,255,0,0.02) 100%)",
               boxShadow: "inset 0 0 0 1px rgba(200,255,0,0.05), 0 0 22px -10px rgba(200,255,0,0.35)",
             }}
           >
-            <span className="mr-3 text-[11px] md:text-[12px] text-[#c8ff00]">&gt; FILTER</span>
+            <span className="mr-1.5 md:mr-3 text-[9px] md:text-[12px] text-[#c8ff00]">&gt; FILTER</span>
             {categories.map((cat, i) => {
               const active = filter === cat;
               return (
                 <span key={cat} className="flex items-center">
-                  {i > 0 && <span aria-hidden className="mx-2 text-[#c8ff00]/45">|</span>}
+                  {i > 0 && <span aria-hidden className="mx-1 md:mx-2 text-[#c8ff00]/45">|</span>}
                   <button
                     onClick={() => setFilter(cat)}
-                    className={`py-1 px-1 transition-colors ${
+                    className={`py-0.5 md:py-1 px-0.5 md:px-1 transition-colors ${
                       active
                         ? "text-[#c8ff00] font-bold"
                         : "text-[#c8ff00] hover:text-white"
