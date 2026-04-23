@@ -537,12 +537,13 @@ html {
    CRT shader keeps showing through underneath. Strong at the edges,
    softer toward center so the phosphor glow is still visible. */
 .po-dim {
-  /* Fully opaque phosphor bed — keeps the CRT/studio look the overlay
-     had originally, but no semi-transparency so nothing underneath
-     (Mac CRT shader, Hero gradients) can bleed through. */
+  /* Semi-transparent phosphor wash — lets the Mac CRT shader show
+     through as an atmospheric backdrop (same effect as desktop), but
+     dim enough that the pattern reads as a soft phosphor glow, not
+     distracting character rows. The header + filter have their own
+     solid surfaces on top so readability isn't affected. */
   background:
-    radial-gradient(ellipse at 50% 42%, rgba(200, 255, 0, 0.10) 0%, rgba(18, 22, 8, 0.85) 45%, #050804 92%),
-    #040603;
+    radial-gradient(ellipse 95% 85% at 50% 45%, rgba(5, 8, 4, 0.55) 0%, rgba(3, 5, 2, 0.80) 60%, rgba(0, 0, 0, 0.92) 100%);
   pointer-events: none;
 }
 
