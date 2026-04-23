@@ -53,6 +53,10 @@ const BRAND_LOGOS = {
   "ISOSPORT": "/images/logo-isosport.png",
   "VEKTO LAB": "/images/logo.png",
   "VEKTO": "/images/logo.png",
+  "BANSKO ESTATES": "/images/logo.png",
+  "ISTINSKIMED.BG": "/images/logo.png",
+  "BIANCO LATTE": "/images/logo.png",
+  "GIFTO.BG": "/images/logo.png",
 };
 
 // Case study links per brand (null if no page yet).
