@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-23T13:51:05.443Z",
+  "generatedAt": "2026-04-23T14:16:55.873Z",
   "libraryId": "637364",
   "cdnHostname": "vz-5279644d-ac4.b-cdn.net",
   "clips": [
@@ -41,10 +41,10 @@
     },
     {
       "id": "07be6d30-0764-4cd1-bac5-23f2cfecd853",
-      "brand": "KRISTA G",
-      "logo": "/images/logo.png",
+      "brand": "MEN'S CARE",
+      "logo": "/images/logo-menscare.png",
       "category": "UGC",
-      "description": "MEN'S CARE collab — UGC hook.",
+      "description": "Product UGC cut.",
       "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/thumbnail.jpg",
       "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/play_1080p.mp4",
       "hlsPlaylist": "https://vz-5279644d-ac4.b-cdn.net/07be6d30-0764-4cd1-bac5-23f2cfecd853/playlist.m3u8",
@@ -54,7 +54,7 @@
       "height": 3840,
       "portrait": true,
       "metric": null,
-      "href": null,
+      "href": "/work/menscare",
       "featured": false
     },
     {
