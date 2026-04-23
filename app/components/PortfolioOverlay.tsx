@@ -128,7 +128,7 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
         </section>
 
         <section className="px-6 md:px-12 pb-16 max-w-[1240px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7">
             {visible.map((c, i) => (
               <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
             ))}
@@ -168,27 +168,20 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
 
 /* ---------- Tile — static thumbnail, description reveal on hover ---------- */
 function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: () => void }) {
-  // Designer stagger — middle column in the 3-col grid drops a bit,
-  // so the reel reads as a layout instead of a spreadsheet.
-  // Featured tile (2x2) breaks the rhythm deliberately.
-  const mod = idx % 3;
-  const staggerClass = clip.featured
-    ? ""
-    : mod === 1
-    ? "lg:translate-y-10"
-    : mod === 2
-    ? "lg:translate-y-4"
-    : "";
-  const spanClasses = clip.featured ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : "";
-  const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${spanClasses} ${staggerClass}`;
-  const bootDelay = Math.min(idx, 14) * 70;
+  // Light staggered offset so the grid reads as a layout rather than
+  // a spreadsheet. Pattern repeats every 4 cols: 0, 12, 6, 18 px down.
+  const mod = idx % 4;
+  const staggerClass =
+    mod === 1 ? "lg:translate-y-3" : mod === 2 ? "lg:translate-y-6" : mod === 3 ? "lg:translate-y-9" : "";
+  const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${staggerClass}`;
+  const bootDelay = Math.min(idx, 14) * 50;
 
   return (
     <button
       onClick={onExpand}
       className={tileClass}
       style={{
-        animation: `poTileBoot 0.9s cubic-bezier(0.2,0.75,0.35,1) ${bootDelay}ms backwards`,
+        animation: `poTileBoot 0.55s cubic-bezier(0.25,0.8,0.3,1) ${bootDelay}ms backwards`,
         transformOrigin: "center",
       }}
     >

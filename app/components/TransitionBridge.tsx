@@ -90,14 +90,8 @@ export default function TransitionBridge() {
             "radial-gradient(circle at var(--tb-x, 75%) var(--tb-y, 50%), #e8ff5a 0%, #c8ff00 10%, #4a5c0d 34%, #0a0805 62%, #0a0805 100%)",
         }}
       />
-      {/* Scanlines — feels like inside a CRT */}
-      <div className="absolute inset-0 tb-scanlines" />
-      {/* Noise grain */}
-      <div className="absolute inset-0 tb-grain" />
       {/* White flash at peak of covering */}
       {phase === "covering" && <div className="absolute inset-0 bg-white tb-flash" />}
-      {/* Horizontal bootsweep on reveal (CRT turn-on) */}
-      {phase === "revealing" && <div className="absolute inset-0 tb-sweep" />}
     </div>
   );
 }

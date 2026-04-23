@@ -139,6 +139,11 @@ async function main() {
   const unknownCategories = new Set();
 
   for (const v of items) {
+    // Skip legacy placeholder uploads (titled "video-1s" … "video-12s").
+    // Real clips use "BRAND | CATEGORY | DESCRIPTION" format.
+    if (/^video-\d+s?$/i.test((v.title || "").trim())) {
+      continue;
+    }
     const { brand, category, description } = parseTitle(v.title);
     if (!KNOWN_CATEGORIES.includes(category)) unknownCategories.add(category);
 

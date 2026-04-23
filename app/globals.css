@@ -759,11 +759,10 @@ html {
   color-scheme: dark;
 }
 
-/* CRT power-on: a thin bright horizontal line flashes, expands vertically.
-   Filter animations are expensive on 12+ tiles — transform + opacity only. */
+/* Smooth fade-slide — no more CRT scaleY flash that read as a
+   horizontal line + noise across the grid on open. */
 @keyframes poTileBoot {
-  0%   { opacity: 0; transform: scaleY(0.02); }
-  22%  { opacity: 1; transform: scaleY(0.04); }
-  100% { opacity: 1; transform: scaleY(1); }
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
