@@ -271,24 +271,22 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
           <img src={clip.thumbnail} alt={clip.brand} className="absolute inset-0 w-full h-full object-cover" />
         )}
 
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 z-10 font-mono text-[10px] uppercase tracking-[0.25em] border border-[#c8ff00]/50 text-[#c8ff00] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#c8ff00]/10"
-          aria-label="Close preview"
-        >
-          × close
-        </button>
-
-        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
-          <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-white font-bold leading-tight">
-            {clip.brand}
+        <div className="absolute top-0 left-0 right-0 z-10 flex items-start justify-between gap-2 p-2.5 bg-gradient-to-b from-black/85 via-black/40 to-transparent pointer-events-none">
+          <div className="min-w-0 flex-1">
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white font-bold leading-tight truncate">
+              {clip.brand}
+            </div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80 truncate">
+              {clip.category}
+            </div>
           </div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80 mb-1">
-            {clip.category}
-          </div>
-          {clip.description && (
-            <p className="text-[12px] leading-snug text-white/85">{clip.description}</p>
-          )}
+          <button
+            onClick={onClose}
+            className="pointer-events-auto shrink-0 font-mono text-[10px] uppercase tracking-[0.25em] border border-[#c8ff00]/50 text-[#c8ff00] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#c8ff00]/10"
+            aria-label="Close preview"
+          >
+            × close
+          </button>
         </div>
       </div>
     </div>
