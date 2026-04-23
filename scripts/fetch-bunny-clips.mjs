@@ -159,6 +159,12 @@ async function main() {
       .sort((a, b) => b - a);
     const bestRes = resList[0] || 720;
 
+    const width = v.width || 0;
+    const height = v.height || 0;
+    // Default to portrait when Bunny hasn't reported dimensions yet
+    // (right after upload). The UI then renders the 9:16 tile shape.
+    const portrait = width && height ? height >= width : true;
+
     clips.push({
       id,
       brand,
@@ -170,6 +176,9 @@ async function main() {
       hlsPlaylist: `${base}/playlist.m3u8`,
       embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${id}?autoplay=true&muted=false&loop=false`,
       duration: v.length || null,
+      width: width || null,
+      height: height || null,
+      portrait,
       metric: null,
       href: resolveCaseLink(brand),
       featured: false,

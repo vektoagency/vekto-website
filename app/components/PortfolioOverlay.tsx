@@ -14,6 +14,9 @@ type Clip = {
   hlsPlaylist: string | null;   // Bunny HLS .m3u8 — reserved for future hls.js use
   embedUrl: string | null;      // Bunny iframe embed — used inside lightbox
   duration: number | null;
+  width?: number | null;
+  height?: number | null;
+  portrait?: boolean;           // false = 16:9 landscape clip
   metric?: string | null;
   href?: string | null;
   featured?: boolean;
@@ -138,7 +141,7 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
         </section>
 
         <section className="px-6 md:px-12 pb-16 max-w-[1240px] mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
             {visible.map((c, i) => (
               <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
             ))}
@@ -183,7 +186,11 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
   const mod = idx % 4;
   const staggerClass =
     mod === 1 ? "lg:translate-y-3" : mod === 2 ? "lg:translate-y-6" : mod === 3 ? "lg:translate-y-9" : "";
-  const tileClass = `group relative aspect-[9/16] overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${staggerClass}`;
+  // Landscape clips span 2 grid columns and get a 16:9 frame so they
+  // don't get squashed into the portrait cell shape.
+  const isLandscape = clip.portrait === false;
+  const aspectClass = isLandscape ? "aspect-video col-span-2" : "aspect-[9/16]";
+  const tileClass = `group relative ${aspectClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${staggerClass}`;
   const bootDelay = Math.min(idx, 14) * 50;
 
   return (
@@ -228,6 +235,22 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
 
 /* ---------- Lightbox — Bunny iframe embed when available, MP4 fallback ---------- */
 function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
+  const isLandscape = clip.portrait === false;
+  // Portrait: size by height so the tall 9:16 frame stays inside the viewport.
+  // Landscape: size by width — 16:9 clips read better when they span most of the screen.
+  const frameStyle: React.CSSProperties = isLandscape
+    ? {
+        aspectRatio: "16 / 9",
+        width: "min(92vw, 1280px)",
+        maxHeight: "85vh",
+        boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
+      }
+    : {
+        aspectRatio: "9 / 16",
+        height: "min(85vh, 780px)",
+        maxWidth: "92vw",
+        boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
+      };
   return (
     <div
       className="fixed inset-0 z-[90] flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-sm"
@@ -236,12 +259,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
       <div
         className="relative rounded-sm overflow-hidden border border-[#c8ff00]/40 bg-black vekto-player"
         onClick={(e) => e.stopPropagation()}
-        style={{
-          aspectRatio: "9 / 16",
-          height: "min(85vh, 780px)",
-          maxWidth: "92vw",
-          boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
-        }}
+        style={frameStyle}
       >
         {clip.embedUrl ? (
           <iframe
