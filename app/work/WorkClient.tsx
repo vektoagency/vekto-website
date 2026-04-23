@@ -351,7 +351,7 @@ export default function WorkClient() {
                 <button
                   key={c}
                   onClick={() => setFilter(c)}
-                  className={`relative whitespace-nowrap font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.25em] font-semibold px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full transition-colors duration-300 ${
+                  className={`relative whitespace-nowrap font-mono text-[8px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.25em] font-semibold px-2 sm:px-4 py-1 sm:py-2 rounded-full transition-colors duration-300 ${
                     isActive ? "text-black" : "text-white/85 hover:text-white"
                   }`}
                 >
