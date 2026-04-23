@@ -172,54 +172,55 @@ export default function Hero() {
         <HeroPravec />
       </div>
 
-      {/* ── MOBILE hero (shader.se-inspired focused layout) ── */}
-      <div className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-24 pb-10">
-        <Stagger delay={0}>
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
-              AI-Powered Creative Agency
-            </span>
-          </div>
-        </Stagger>
-        <Stagger delay={100}>
-          <h1 className="text-[36px] sm:text-[40px] font-bold leading-[1.04] tracking-tight mb-3 text-white"
-            style={{ textShadow: "0 2px 22px rgba(0,0,0,0.7)" }}>
-            <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
-            <br />
-            for the Future
-            <br />
-            of Companies
-          </h1>
-        </Stagger>
-        <Stagger delay={220}>
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/70 mb-7">
-            Tap the screen to inspect our reel
-          </p>
-        </Stagger>
+      {/* ── MOBILE hero — Mac as hero element with text stacked above/below.
+          Layout is justify-between so breathing room scales with viewport:
+          top cluster (badge + H1) · Mac · bottom cluster (CTAs + tagline). */}
+      <div className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-8">
+        {/* Top cluster */}
+        <div className="flex flex-col items-center">
+          <Stagger delay={0}>
+            <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+              <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
+                AI-Powered Creative Agency
+              </span>
+            </div>
+          </Stagger>
+          <Stagger delay={100}>
+            <h1 className="text-[30px] sm:text-[34px] font-bold leading-[1.05] tracking-tight text-white"
+              style={{ textShadow: "0 2px 22px rgba(0,0,0,0.7)" }}>
+              <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
+              <br />
+              for the Future of Companies
+            </h1>
+          </Stagger>
+        </div>
 
-        <Stagger delay={340}>
-          <div className="relative w-full max-w-[340px] aspect-[4/5] mx-auto">
+        {/* Mac — bounded square so it never crowds the text above/below */}
+        <Stagger delay={300} className="my-6 w-full flex justify-center">
+          <div className="relative w-full max-w-[300px] aspect-square">
             <HeroPravec mobile />
           </div>
         </Stagger>
 
-        <Stagger delay={520}>
-          <div className="mt-8 flex flex-col gap-3 w-full max-w-[280px]">
-            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
-              Let&apos;s Talk
-            </a>
-            <PortfolioTriggerButton className="border border-white/20 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/10 transition-colors text-center cursor-pointer">
-              See Our Work
-            </PortfolioTriggerButton>
-          </div>
-        </Stagger>
-
-        <Stagger delay={640}>
-          <p className="mt-8 text-[12px] text-[#8a8a8a] leading-relaxed max-w-[300px]">
-            From cinematic storytelling to AI-powered short-form systems — visual ecosystems built to scale.
-          </p>
-        </Stagger>
+        {/* Bottom cluster */}
+        <div className="flex flex-col items-center">
+          <Stagger delay={420}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/60 mb-5">
+              Tap the screen to inspect our reel
+            </p>
+          </Stagger>
+          <Stagger delay={520}>
+            <div className="flex flex-col gap-3 w-full max-w-[280px]">
+              <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
+                Let&apos;s Talk
+              </a>
+              <PortfolioTriggerButton className="border border-white/20 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/10 transition-colors text-center cursor-pointer">
+                See Our Work
+              </PortfolioTriggerButton>
+            </div>
+          </Stagger>
+        </div>
       </div>
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
