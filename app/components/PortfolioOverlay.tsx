@@ -113,20 +113,20 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
           </button>
         </div>
 
-        <section className="px-6 md:px-10 pt-4 pb-3 max-w-[1500px] mx-auto">
+        <section className="px-6 md:px-10 pt-6 pb-4 max-w-[1500px] mx-auto">
           <nav
             aria-label="Filter clips by category"
-            className="flex flex-wrap items-center font-mono text-[10px] uppercase tracking-[0.22em] text-[#c8ff00]/55"
+            className="flex flex-wrap items-center gap-x-1 gap-y-2 font-mono text-[13px] md:text-[14px] uppercase tracking-[0.18em] text-[#c8ff00]/55"
           >
-            <span className="opacity-60 mr-2">&gt; FILTER</span>
+            <span className="opacity-60 mr-3 text-[11px] md:text-[12px]">&gt; FILTER</span>
             {categories.map((cat, i) => {
               const active = filter === cat;
               return (
                 <span key={cat} className="flex items-center">
-                  {i > 0 && <span aria-hidden className="mx-1.5 opacity-40">|</span>}
+                  {i > 0 && <span aria-hidden className="mx-2 opacity-40">|</span>}
                   <button
                     onClick={() => setFilter(cat)}
-                    className={`py-0.5 transition-colors ${
+                    className={`py-1 px-1 transition-colors ${
                       active
                         ? "text-[#c8ff00] font-bold"
                         : "text-[#c8ff00]/55 hover:text-[#c8ff00]"
