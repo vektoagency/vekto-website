@@ -240,11 +240,25 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[440px] aspect-[9/16] rounded-sm overflow-hidden border border-[#c8ff00]/40 bg-black"
+        className="relative rounded-sm overflow-hidden border border-[#c8ff00]/40 bg-black vekto-player"
         onClick={(e) => e.stopPropagation()}
-        style={{ boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)" }}
+        style={{
+          aspectRatio: "9 / 16",
+          height: "min(85vh, 780px)",
+          maxWidth: "92vw",
+          boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
+        }}
       >
-        {clip.embedUrl ? (
+        {clip.previewMp4 ? (
+          <video
+            src={clip.previewMp4}
+            poster={clip.thumbnail}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            playsInline
+            controls
+          />
+        ) : clip.embedUrl ? (
           <iframe
             src={clip.embedUrl}
             className="absolute inset-0 w-full h-full"
@@ -252,16 +266,6 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title={`${clip.brand} — ${clip.description}`}
-          />
-        ) : clip.previewMp4 ? (
-          <video
-            src={clip.previewMp4}
-            poster={clip.thumbnail}
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            loop
-            playsInline
-            controls
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element

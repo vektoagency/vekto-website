@@ -751,6 +751,14 @@ html {
   100% { opacity: 1; transform: none; filter: none; }
 }
 
+/* Tint native <video> controls toward the VEKTO lime accent.
+   WebKit ignores accent-color on media controls but Chrome/Firefox
+   use it for the scrubber/volume sliders. */
+.vekto-player video {
+  accent-color: #c8ff00;
+  color-scheme: dark;
+}
+
 /* CRT power-on: a thin bright horizontal line flashes, expands vertically,
    then color saturates in — classic tube TV turning on for each clip tile. */
 @keyframes poTileBoot {
