@@ -108,6 +108,9 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
   }, [screenInfo, onScreenLocated]);
 
   useFrame((state, delta) => {
+    const dt = Math.min(delta, 0.05);
+    const rotRate = 1 - Math.pow(1 - 0.05, dt * 60);
+    const intRate = 1 - Math.pow(1 - 0.12, dt * 60);
     if (root.current) {
       const t = state.clock.getElapsedTime();
       root.current.position.y = Math.sin(t * 0.7) * 0.015 - 0.8;
@@ -117,15 +120,15 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
       const BASE_ROT_Y = -0.38;
       const tx = BASE_ROT_Y + pointer.x * 0.08;
       const ty = -pointer.y * 0.04;
-      root.current.rotation.y += (tx - root.current.rotation.y) * 0.05;
-      root.current.rotation.x += (ty - root.current.rotation.x) * 0.05;
+      root.current.rotation.y += (tx - root.current.rotation.y) * rotRate;
+      root.current.rotation.x += (ty - root.current.rotation.x) * rotRate;
     }
     crtMaterial.uniforms.uTime.value += delta;
     // Ramp intensity during zoom so the shader saturates into the phosphor
     // flash that hides the handoff to the DOM overlay.
     const target = zoomedIn ? 2.4 : hovered ? 1.5 : 1.2;
     const cur = crtMaterial.uniforms.uIntensity.value;
-    crtMaterial.uniforms.uIntensity.value = cur + (target - cur) * 0.12;
+    crtMaterial.uniforms.uIntensity.value = cur + (target - cur) * intRate;
   });
 
   // Invisible click/hover plane oriented to face along the screen's normal,

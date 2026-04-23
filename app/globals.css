@@ -37,6 +37,9 @@ body {
 
 html {
   scroll-behavior: smooth;
+  /* Reserve scrollbar space so when body is locked (portfolio overlay)
+     the 3D canvas doesn't shift horizontally — eliminates hand-off jank. */
+  scrollbar-gutter: stable;
 }
 
 /* Custom scrollbar */

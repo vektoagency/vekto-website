@@ -59,12 +59,14 @@ function CameraRig({
     return { zoomCam: camPos, zoomTarget: tgtPos };
   }, [screen]);
 
-  useFrame(() => {
-    const lerp = zoomedIn ? 0.14 : 0.05;
+  useFrame((_, delta) => {
+    // Delta-based lerp — frame-rate independent (same smoothness on 60Hz and 120Hz).
+    const rate = zoomedIn ? 0.14 : 0.05;
+    const t = 1 - Math.pow(1 - rate, Math.min(delta, 0.05) * 60);
     const targetCam = zoomedIn ? zoomCam : DEFAULT_IDLE_CAM;
     const targetLook = zoomedIn ? zoomTarget : DEFAULT_IDLE_TARGET;
-    camera.position.lerp(targetCam, lerp);
-    target.current.lerp(targetLook, lerp);
+    camera.position.lerp(targetCam, t);
+    target.current.lerp(targetLook, t);
     camera.lookAt(target.current);
   });
 
