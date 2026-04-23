@@ -342,7 +342,7 @@ export default function WorkClient() {
       <Ticker text="· BROADCAST ACTIVE · REEL IN PROGRESS · PORTFOLIO.DB · VEKTO ARCHIVE · " />
 
       {/* ----------- FILTER ----------- */}
-      <section className="py-4 px-5 md:px-8 border-b border-[#1a1a1a] bg-black/40">
+      <section className="py-2 sm:py-4 px-3 sm:px-5 md:px-8 border-b border-[#1a1a1a] bg-black/40">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-6">
           <div className="flex flex-wrap sm:flex-nowrap items-center gap-1 sm:overflow-x-auto no-scrollbar">
             {CATEGORIES.map((c) => {
