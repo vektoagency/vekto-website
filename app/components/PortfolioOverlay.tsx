@@ -96,7 +96,13 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       <div aria-hidden className="absolute inset-0 po-vignette" />
 
       <div className="relative z-10 h-full w-full overflow-y-auto po-content">
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/25 bg-black/90 font-mono text-[10px] uppercase tracking-[0.3em]">
+        <div
+          className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/40 font-mono text-[10px] uppercase tracking-[0.3em] backdrop-blur-md"
+          style={{
+            background: "linear-gradient(to bottom, rgba(18,18,18,0.85) 0%, rgba(14,14,14,0.72) 100%)",
+            boxShadow: "0 1px 0 rgba(200,255,0,0.08), 0 8px 24px -16px rgba(0,0,0,0.8)",
+          }}
+        >
           <div className="flex items-center gap-3 text-[#c8ff00]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
             VEKTO/REEL.DB — {visible.length} CLIPS
