@@ -34,12 +34,12 @@ export default function Hero() {
 
         {/* Deep indigo sheen top — colored gel on the ceiling */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 80% 40% at 65% 10%, rgba(90,120,200,0.18) 0%, rgba(60,80,160,0.07) 40%, transparent 75%)",
+          background: "radial-gradient(ellipse 80% 40% at 58% 10%, rgba(90,120,200,0.18) 0%, rgba(60,80,160,0.07) 40%, transparent 75%)",
         }} />
 
         {/* Warm amber catch on the right edge — sunset-window vibe */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 60% 45% at 95% 55%, rgba(210,130,100,0.20) 0%, rgba(180,90,70,0.08) 40%, transparent 78%)",
+          background: "radial-gradient(ellipse 60% 45% at 92% 55%, rgba(210,130,100,0.20) 0%, rgba(180,90,70,0.08) 40%, transparent 78%)",
         }} />
 
         {/* Cool teal spill top-left — like a softbox raking the scene */}
@@ -49,7 +49,7 @@ export default function Hero() {
 
         {/* Lime CRT bounce — Mac screen spills its own light */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 70% 45% at 65% 48%, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0.04) 42%, transparent 78%)",
+          background: "radial-gradient(ellipse 70% 45% at 58% 48%, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0.04) 42%, transparent 78%)",
         }} />
 
         {/* Floor: amber sheen fading toward the camera */}
@@ -70,8 +70,8 @@ export default function Hero() {
             backgroundImage:
               "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
             backgroundSize: "52px 52px",
-            WebkitMaskImage: "radial-gradient(ellipse 55% 45% at 65% 50%, black 25%, transparent 80%)",
-            maskImage: "radial-gradient(ellipse 55% 45% at 65% 50%, black 25%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse 55% 45% at 58% 50%, black 25%, transparent 80%)",
+            maskImage: "radial-gradient(ellipse 55% 45% at 58% 50%, black 25%, transparent 80%)",
           }}
         />
 
@@ -92,7 +92,7 @@ export default function Hero() {
 
         {/* Edge vignette — soft dark corners, off-center to the right where Mac sits */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 110% 85% at 65% 50%, transparent 40%, rgba(0,0,0,0.5) 95%)",
+          background: "radial-gradient(ellipse 110% 85% at 58% 50%, transparent 40%, rgba(0,0,0,0.5) 95%)",
         }} />
       </div>
 
@@ -243,8 +243,10 @@ export default function Hero() {
         style={{ background: "linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.75) 50%, transparent 100%)" }} />
 
       {/* Mobile content — overlays the Canvas with justify-between so Mac
-          sits in the middle third, clear of the text at top/bottom. */}
-      <div className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-10 pointer-events-none">
+          sits in the middle third, clear of the text at top/bottom.
+          Wrapped in HeroLeftCurtain so the whole text stack fades out on
+          zoom-start and fades back in on zoom-end (mirrors desktop). */}
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-10 pointer-events-none">
         {/* Top cluster — pointer-events-auto only on interactive children */}
         <div className="flex flex-col items-center">
           <Stagger delay={0}>
@@ -287,7 +289,7 @@ export default function Hero() {
             </div>
           </Stagger>
         </div>
-      </div>
+      </HeroLeftCurtain>
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
       <HeroLeftCurtain
