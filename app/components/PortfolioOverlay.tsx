@@ -235,16 +235,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
           boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
         }}
       >
-        {clip.previewMp4 ? (
-          <video
-            src={clip.previewMp4}
-            poster={clip.thumbnail}
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            playsInline
-            controls
-          />
-        ) : clip.embedUrl ? (
+        {clip.embedUrl ? (
           <iframe
             src={clip.embedUrl}
             className="absolute inset-0 w-full h-full"
@@ -252,6 +243,15 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title={`${clip.brand} — ${clip.description}`}
+          />
+        ) : clip.previewMp4 ? (
+          <video
+            src={clip.previewMp4}
+            poster={clip.thumbnail}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            playsInline
+            controls
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
