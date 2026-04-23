@@ -191,6 +191,7 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
         alt={`${clip.brand} — ${clip.description}`}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         loading={idx < 6 ? "eager" : "lazy"}
+        decoding="async"
       />
 
       <div className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"

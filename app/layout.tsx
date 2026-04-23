@@ -47,6 +47,11 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/images/hero-anim/video-2s.webp" />
         <link rel="preload" as="image" href="/images/hero-anim/video-4s.webp" />
         <link rel="preload" as="image" href="/images/hero-anim/video-5s.webp" />
+        {/* Warm up Bunny Stream connections so thumbnails + the iframe
+            player don't pay DNS/TLS cost the moment the reel opens. */}
+        <link rel="preconnect" href="https://vz-5279644d-ac4.b-cdn.net" crossOrigin="" />
+        <link rel="preconnect" href="https://iframe.mediadelivery.net" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://video.bunnycdn.com" />
       </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
         {children}
