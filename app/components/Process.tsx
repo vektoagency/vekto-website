@@ -53,13 +53,13 @@ export default function Process() {
   return (
     <section
       id="process"
-      className="py-20 px-6"
+      className="py-14 md:py-20 px-5 md:px-6"
       style={{ background: "linear-gradient(to bottom, #080808, #0a0a0d, #080808)" }}
     >
       <div className="max-w-6xl mx-auto">
-        <AnimateIn className="mb-10 max-w-3xl">
-          <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">How It Works</p>
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+        <AnimateIn className="mb-8 md:mb-10 max-w-3xl">
+          <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3">How It Works</p>
+          <h2 className="text-[26px] md:text-5xl font-bold leading-[1.1]">
             From first call to
             <br />
             <span className="text-[#c8ff00]">compounding content</span>
@@ -70,13 +70,13 @@ export default function Process() {
           <div className="relative rounded-2xl border border-[#161616] bg-[#0b0b0b] overflow-hidden">
             {/* Step selector row — the connecting line sits behind the pills */}
             <div className="relative">
-              <div aria-hidden className="absolute inset-x-6 top-1/2 h-px bg-[#1d1d1d]" />
+              <div aria-hidden className="absolute inset-x-4 md:inset-x-6 top-[22px] md:top-1/2 h-px bg-[#1d1d1d]" />
               <div
                 aria-hidden
-                className="absolute top-1/2 h-px bg-[#c8ff00]/70 transition-all duration-500 ease-out"
+                className="absolute top-[22px] md:top-1/2 h-px bg-[#c8ff00]/70 transition-all duration-500 ease-out"
                 style={{
-                  left: "1.5rem",
-                  width: `calc((100% - 3rem) * ${active / (steps.length - 1)})`,
+                  left: "1rem",
+                  width: `calc((100% - 2rem) * ${active / (steps.length - 1)})`,
                 }}
               />
               <div className="relative grid grid-cols-4">
@@ -88,7 +88,7 @@ export default function Process() {
                       key={s.number}
                       onClick={() => setActive(i)}
                       onMouseEnter={() => setActive(i)}
-                      className="group flex flex-col items-center justify-center py-6 md:py-8 px-2 text-center cursor-pointer outline-none"
+                      className="group flex flex-col items-center justify-start pt-2.5 pb-3 md:py-8 px-1 md:px-2 text-center cursor-pointer outline-none"
                       aria-pressed={isActive}
                     >
                       <span
@@ -103,7 +103,7 @@ export default function Process() {
                         {s.number}
                       </span>
                       <span
-                        className={`mt-2.5 font-mono text-[9px] md:text-[11px] uppercase tracking-[0.25em] transition-colors ${
+                        className={`mt-2 md:mt-2.5 font-mono text-[8px] md:text-[11px] uppercase tracking-[0.14em] md:tracking-[0.25em] transition-colors ${
                           isActive ? "text-[#c8ff00]" : "text-[#666] group-hover:text-[#aaa]"
                         }`}
                       >
@@ -116,19 +116,19 @@ export default function Process() {
             </div>
 
             {/* Detail panel — swaps in/out when active step changes */}
-            <div className="border-t border-[#161616] px-6 md:px-10 py-7 md:py-9">
+            <div className="border-t border-[#161616] px-5 md:px-10 py-5 md:py-9">
               <div key={current.number} className="animate-[fadeInUp_0.45s_ease_both]">
-                <h3 className="text-xl md:text-3xl font-semibold text-white leading-tight mb-3">
+                <h3 className="text-lg md:text-3xl font-semibold text-white leading-tight mb-2.5 md:mb-3">
                   {current.title}
                 </h3>
-                <p className="text-[#a0a0a0] text-sm md:text-base leading-relaxed max-w-3xl mb-5">
+                <p className="text-[#a0a0a0] text-[13px] md:text-base leading-relaxed max-w-3xl mb-4 md:mb-5">
                   {current.body}
                 </p>
-                <ul className="flex flex-wrap gap-2">
+                <ul className="flex flex-wrap gap-1.5 md:gap-2">
                   {current.bullets.map((b) => (
                     <li
                       key={b}
-                      className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] border border-[#c8ff00]/25 text-[#c8ff00]/90 bg-[#c8ff00]/[0.04] px-3 py-1.5 rounded-full"
+                      className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.14em] md:tracking-[0.2em] border border-[#c8ff00]/25 text-[#c8ff00]/90 bg-[#c8ff00]/[0.04] px-2 md:px-3 py-1 md:py-1.5 rounded-full"
                     >
                       {b}
                     </li>
@@ -137,17 +137,19 @@ export default function Process() {
               </div>
             </div>
 
-            {/* Footer bar — auto-play progress + CTA */}
-            <div className="border-t border-[#161616] flex items-center justify-between gap-4 px-6 md:px-10 py-4 bg-[#0a0a0a]">
-              <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]/70">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-                Step {active + 1} / {steps.length}
+            {/* Footer bar — auto-play progress + CTA. Mobile shows compact
+                "1/4" label + arrow-only button so it fits on one row. */}
+            <div className="border-t border-[#161616] flex items-center justify-between gap-3 px-4 md:px-10 py-3 md:py-4 bg-[#0a0a0a]">
+              <div className="flex items-center gap-2 md:gap-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-[#c8ff00]/75 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse shrink-0" />
+                <span className="hidden sm:inline">Step {active + 1} / {steps.length}</span>
+                <span className="sm:hidden">{active + 1}/{steps.length}</span>
               </div>
               <a
                 href="#contact"
-                className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-black bg-[#c8ff00] hover:bg-[#d4ff33] px-4 py-2 rounded-full transition-colors"
+                className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-black bg-[#c8ff00] hover:bg-[#d4ff33] px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors whitespace-nowrap"
               >
-                Start a project →
+                Start project →
               </a>
             </div>
           </div>
