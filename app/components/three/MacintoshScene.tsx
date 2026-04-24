@@ -153,6 +153,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
           <MacintoshGLB
             hovered={hovered}
             zoomedIn={zoomedIn}
+            mobile={mobile}
             onHoverChange={setHovered}
             onScreenClick={() => onScreenClick?.()}
             onScreenLocated={setScreen}

@@ -12,6 +12,7 @@ const SCREEN_MESH_NAME = "Computer_Screen_0";
 type Props = {
   hovered: boolean;
   zoomedIn?: boolean;
+  mobile?: boolean;
   onHoverChange: (h: boolean) => void;
   onScreenClick: () => void;
   onScreenLocated?: (data: { center: THREE.Vector3; normal: THREE.Vector3; width: number; height: number }) => void;
@@ -22,7 +23,7 @@ type Props = {
  * the material on the `Computer_Screen_0` mesh with our CRT phosphor shader,
  * so the phosphor lands exactly on the screen geometry — no guesses.
  */
-export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScreenClick, onScreenLocated }: Props) {
+export default function MacintoshGLB({ hovered, zoomedIn, mobile, onHoverChange, onScreenClick, onScreenLocated }: Props) {
   const root = useRef<THREE.Group>(null);
   const { scene } = useGLTF(MODEL_URL);
   const { pointer } = useThree();
@@ -125,8 +126,13 @@ export default function MacintoshGLB({ hovered, zoomedIn, onHoverChange, onScree
     }
     crtMaterial.uniforms.uTime.value += delta;
     // Ramp intensity during zoom so the shader saturates into the phosphor
-    // flash that hides the handoff to the DOM overlay.
-    const target = zoomedIn ? 2.4 : hovered ? 1.5 : 1.2;
+    // flash that hides the handoff to the DOM overlay. On mobile there's
+    // no hover, so we add a slow breathing pulse (2s period) between 1.2
+    // and 1.55 — mirrors the desktop hover brightening as a "tap me"
+    // affordance on the CRT.
+    const t = state.clock.getElapsedTime();
+    const mobilePulse = mobile && !zoomedIn ? 1.2 + 0.35 * (0.5 + 0.5 * Math.sin(t * Math.PI)) : null;
+    const target = zoomedIn ? 2.4 : hovered ? 1.5 : mobilePulse ?? 1.2;
     const cur = crtMaterial.uniforms.uIntensity.value;
     crtMaterial.uniforms.uIntensity.value = cur + (target - cur) * intRate;
   });
