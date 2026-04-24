@@ -125,13 +125,12 @@ export default function MacintoshGLB({ hovered, zoomedIn, mobile, onHoverChange,
       root.current.rotation.x += (ty - root.current.rotation.x) * rotRate;
     }
     crtMaterial.uniforms.uTime.value += delta;
-    // Ramp intensity during zoom so the shader saturates into the phosphor
-    // flash that hides the handoff to the DOM overlay. On mobile there's
-    // no hover, so we add a slow breathing pulse (2s period) between 1.2
-    // and 1.55 — mirrors the desktop hover brightening as a "tap me"
-    // affordance on the CRT.
+    // On mobile there's no hover, so we pulse uIntensity between 1.0 and
+    // 2.0 on a 1.6s cycle — a clearly visible breathing phosphor that
+    // signals the CRT is interactive. The lerp rate smooths it out so
+    // it reads as a pulse, not a flicker.
     const t = state.clock.getElapsedTime();
-    const mobilePulse = mobile && !zoomedIn ? 1.2 + 0.35 * (0.5 + 0.5 * Math.sin(t * Math.PI)) : null;
+    const mobilePulse = mobile && !zoomedIn ? 1.0 + 1.0 * (0.5 + 0.5 * Math.sin(t * 1.25 * Math.PI)) : null;
     const target = zoomedIn ? 2.4 : hovered ? 1.5 : mobilePulse ?? 1.2;
     const cur = crtMaterial.uniforms.uIntensity.value;
     crtMaterial.uniforms.uIntensity.value = cur + (target - cur) * intRate;
