@@ -128,7 +128,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
     <div ref={wrapperRef} className="absolute inset-0">
       <Canvas
         shadows={!mobile}
-        dpr={mobile ? 1 : [1, 1.5]}
+        dpr={mobile ? 1 : [1, 2]}
         frameloop={frameloop}
         camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 52 : 32 }}
         gl={{ antialias: true, alpha: true, powerPreference: mobile ? "default" : "high-performance" }}
@@ -177,7 +177,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
             the most expensive passes on the GPU and the CSS atmosphere
             behind the canvas already provides the dim-studio feel. */}
         {!mobile && (
-          <EffectComposer multisampling={0}>
+          <EffectComposer multisampling={4}>
             <Bloom
               intensity={zoomedIn ? 0.9 : 0.4}
               luminanceThreshold={0.78}
