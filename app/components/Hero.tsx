@@ -210,7 +210,10 @@ export default function Hero() {
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
       <HeroLeftCurtain
         className="hidden lg:flex absolute inset-y-0 left-0 w-[62%] z-10 flex-col justify-center px-16 xl:px-24 pt-24 pb-16"
-        style={{ background: "linear-gradient(to right, #080808 0%, #080808 72%, transparent 100%)" }}
+        style={{
+          background:
+            "linear-gradient(to right, #080808 0%, #080808 55%, rgba(8,8,8,0.92) 70%, rgba(8,8,8,0.7) 82%, rgba(8,8,8,0.4) 92%, transparent 100%)",
+        }}
       >
         <Stagger delay={0} className="w-fit">
           <div className="inline-flex items-center gap-2 border border-[#c8ff00]/30 rounded-full px-4 py-1.5 mb-8">
