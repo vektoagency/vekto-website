@@ -87,48 +87,11 @@ export default function Hero() {
         }} />
       </div>
 
-      {/* Desktop atmosphere — kept minimal so the dark canvas stays
-          even and free of visible gradient banding. Just three layers:
-          a single near-flat base wash, a localized lime CRT bounce
-          behind the Mac, and the technical caption + grid as ornament. */}
+      {/* Desktop atmosphere — diagnostic mode: pure flat black so we
+          can see whether any visible "line" is coming from CSS layers
+          or from the 3D scene (ContactShadows/Bloom/MSAA outline). */}
       <div aria-hidden className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Single near-flat base — flat dark with a barely-perceptible
-            warm cast at the bottom. No multi-stop gradient = no banding. */}
         <div className="absolute inset-0" style={{ background: "#080808" }} />
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, transparent 60%, rgba(60,40,20,0.18) 100%)",
-        }} />
-
-        {/* Lime CRT bounce — the Mac screen spills its own light onto
-            the wall behind it. Localized so it doesn't compound into bands. */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 38% 45% at 74% 48%, rgba(200,255,0,0.16) 0%, rgba(200,255,0,0.05) 40%, transparent 75%)",
-        }} />
-
-        {/* Blueprint grid — dim lime, masked soft around the screen so it
-            reads like a technical schematic fading out at the edges. */}
-        <div
-          className="absolute inset-y-0 right-0 w-[55%]"
-          style={{
-            opacity: 0.055,
-            backgroundImage:
-              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-            WebkitMaskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
-            maskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
-          }}
-        />
-
-        {/* Bottom-right technical caption */}
-        <div className="absolute bottom-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40">
-          MACINTOSH 128K · 1984 — VEKTO/OS
-        </div>
-
-        {/* Floor glow directly under the Mac for grounding */}
-        <div
-          className="absolute bottom-0 right-[8%] w-[52%] h-[16%]"
-          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.14), transparent 70%)" }}
-        />
       </div>
 
       {/* Desktop: canvas is fullscreen and transparent; Mac is panned
