@@ -184,7 +184,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
               luminanceSmoothing={0.22}
               mipmapBlur
             />
-            <Vignette eskil={false} offset={0.5} darkness={zoomedIn ? 0.78 : 0.55} />
+            <Vignette eskil={false} offset={0.55} darkness={zoomedIn ? 0.78 : 0.22} />
           </EffectComposer>
         )}
       </Canvas>
