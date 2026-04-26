@@ -206,9 +206,10 @@ export default function Hero() {
           style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.14), transparent 70%)" }}
         />
 
-        {/* Edge vignette — soft dark corners pull focus to the Mac. */}
+        {/* Edge vignette — centered so the falloff is symmetric and
+            the left side doesn't darken into a visible band. */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 110% 90% at 70% 50%, transparent 45%, rgba(0,0,0,0.45) 95%)",
+          background: "radial-gradient(ellipse 130% 110% at 55% 50%, transparent 55%, rgba(0,0,0,0.32) 100%)",
         }} />
       </div>
 
