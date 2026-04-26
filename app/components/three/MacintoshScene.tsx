@@ -177,7 +177,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
             the most expensive passes on the GPU and the CSS atmosphere
             behind the canvas already provides the dim-studio feel. */}
         {!mobile && (
-          <EffectComposer multisampling={4}>
+          <EffectComposer multisampling={2}>
             <Bloom
               intensity={zoomedIn ? 0.9 : 0.4}
               luminanceThreshold={0.78}
