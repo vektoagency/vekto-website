@@ -105,15 +105,15 @@ export default function Hero() {
         }} />
 
         {/* Right-side accent gradient — a warm-to-cool horizontal wash
-            that adds depth behind the Mac. Teal/indigo on the right
-            edge fading through to the mid-frame gives the scene a
-            distinct sunset-studio feel. */}
-        <div className="absolute inset-y-0 right-0 w-[70%]" style={{
+            that adds depth behind the Mac. Spans full width so the
+            fade reaches all the way to the left edge with no visible
+            seam where the layer starts. */}
+        <div className="absolute inset-0" style={{
           background: `
             linear-gradient(to left,
               rgba(60,110,140,0.22) 0%,
-              rgba(40,70,110,0.14) 25%,
-              rgba(30,40,80,0.08) 55%,
+              rgba(40,70,110,0.14) 35%,
+              rgba(30,40,80,0.05) 70%,
               transparent 100%)
           `,
         }} />
@@ -182,13 +182,16 @@ export default function Hero() {
           `,
         }} />
 
-        {/* Very subtle horizontal scanlines over the right half */}
+        {/* Very subtle horizontal scanlines — masked so the strip has
+            no hard left edge that would read as a seam. */}
         <div
-          className="absolute inset-y-0 right-0 w-[50%]"
+          className="absolute inset-0"
           style={{
             opacity: 0.04,
             backgroundImage:
               "repeating-linear-gradient(to bottom, rgba(200,255,0,0.6) 0px, rgba(200,255,0,0.6) 1px, transparent 1px, transparent 4px)",
+            WebkitMaskImage: "linear-gradient(to right, transparent 0%, transparent 30%, black 65%, black 100%)",
+            maskImage: "linear-gradient(to right, transparent 0%, transparent 30%, black 65%, black 100%)",
           }}
         />
 
