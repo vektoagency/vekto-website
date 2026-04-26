@@ -163,10 +163,10 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
 
           <ContactShadows
             position={[0, -0.88, 0.2]}
-            opacity={0.55}
-            scale={6}
-            blur={2.4}
-            far={2.5}
+            opacity={0.4}
+            scale={4.5}
+            blur={3}
+            far={2}
             color="#000000"
           />
         </Suspense>
@@ -179,9 +179,9 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
         {!mobile && (
           <EffectComposer multisampling={2}>
             <Bloom
-              intensity={zoomedIn ? 0.9 : 0.4}
-              luminanceThreshold={0.78}
-              luminanceSmoothing={0.22}
+              intensity={zoomedIn ? 0.85 : 0.28}
+              luminanceThreshold={0.82}
+              luminanceSmoothing={0.3}
               mipmapBlur
             />
             <Vignette eskil={false} offset={0.55} darkness={zoomedIn ? 0.78 : 0.22} />

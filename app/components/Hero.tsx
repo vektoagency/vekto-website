@@ -87,11 +87,41 @@ export default function Hero() {
         }} />
       </div>
 
-      {/* Desktop atmosphere — diagnostic mode: pure flat black so we
-          can see whether any visible "line" is coming from CSS layers
-          or from the 3D scene (ContactShadows/Bloom/MSAA outline). */}
+      {/* Desktop atmosphere — kept minimal: flat black base + subtle
+          warm bottom + lime CRT halo + blueprint grid + floor glow.
+          No multi-stop linear gradients = no banding. */}
       <div aria-hidden className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0" style={{ background: "#080808" }} />
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to bottom, transparent 65%, rgba(60,40,20,0.16) 100%)",
+        }} />
+
+        {/* Lime CRT bounce — soft halo behind the monitor */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 36% 42% at 74% 48%, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0.04) 42%, transparent 78%)",
+        }} />
+
+        {/* Blueprint grid — soft-masked schematic fade */}
+        <div
+          className="absolute inset-y-0 right-0 w-[55%]"
+          style={{
+            opacity: 0.055,
+            backgroundImage:
+              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
+            backgroundSize: "72px 72px",
+            WebkitMaskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
+            maskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
+          }}
+        />
+
+        <div className="absolute bottom-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40">
+          MACINTOSH 128K · 1984 — VEKTO/OS
+        </div>
+
+        <div
+          className="absolute bottom-0 right-[8%] w-[52%] h-[16%]"
+          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.12), transparent 70%)" }}
+        />
       </div>
 
       {/* Desktop: canvas is fullscreen and transparent; Mac is panned
