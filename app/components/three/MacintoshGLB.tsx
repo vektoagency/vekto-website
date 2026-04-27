@@ -110,17 +110,16 @@ export default function MacintoshGLB({ hovered, zoomedIn, mobile, onHoverChange,
 
   useFrame((state, delta) => {
     const dt = Math.min(delta, 0.05);
-    const rotRate = 1 - Math.pow(1 - 0.05, dt * 60);
+    // Heavier inertia on the parallax tilt — slower lerp + smaller target
+    // multipliers so cursor flicks don't yank the model. Reads as silky.
+    const rotRate = 1 - Math.pow(1 - 0.025, dt * 60);
     const intRate = 1 - Math.pow(1 - 0.12, dt * 60);
     if (root.current) {
       const t = state.clock.getElapsedTime();
       root.current.position.y = Math.sin(t * 0.7) * 0.015 - 0.8;
-      // Mac sits on the right of the viewport and reads best with a
-      // 3/4-view angle — body turned so the screen faces slightly back
-      // toward the text column on the left.
       const BASE_ROT_Y = -0.38;
-      const tx = BASE_ROT_Y + pointer.x * 0.08;
-      const ty = -pointer.y * 0.04;
+      const tx = BASE_ROT_Y + pointer.x * 0.05;
+      const ty = -pointer.y * 0.025;
       root.current.rotation.y += (tx - root.current.rotation.y) * rotRate;
       root.current.rotation.x += (ty - root.current.rotation.x) * rotRate;
     }

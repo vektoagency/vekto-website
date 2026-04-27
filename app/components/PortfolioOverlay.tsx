@@ -213,7 +213,7 @@ function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: 
   const isLandscape = clip.portrait === false;
   const aspectClass = isLandscape ? "aspect-video col-span-2" : "aspect-[9/16]";
   const tileClass = `group relative ${aspectClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${staggerClass}`;
-  const bootDelay = Math.min(idx, 14) * 50;
+  const bootDelay = Math.min(idx, 10) * 28;
   const durationLabel = formatDuration(clip.duration);
 
   return (
