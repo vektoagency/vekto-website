@@ -130,8 +130,8 @@ function renderField(key: string, value: string | string[]): string {
 }
 
 export async function submitBrief(data: BriefSubmission) {
-  if (!data.email || !data.brand || !data.name) {
-    return { success: false, error: "Missing required fields" };
+  if (!data.email) {
+    return { success: false, error: "Missing email" };
   }
 
   const rows = (Object.keys(FIELD_LABELS) as Array<keyof BriefSubmission>)
@@ -139,17 +139,21 @@ export async function submitBrief(data: BriefSubmission) {
     .filter(Boolean)
     .join("");
 
+  const brandLabel = data.brand?.trim() || "(no brand)";
+  const nameLabel = data.name?.trim() || "(no name)";
+  const headerLine = [nameLabel, data.email, data.phone].filter((s) => s && s.trim()).join(" · ");
+
   const html = `
     <div style="background:#080808;color:#ece8e1;font-family:Arial,sans-serif;padding:32px">
       <div style="max-width:720px;margin:0 auto;background:#0d0d0d;border:1px solid #1e1e1c;border-radius:6px;overflow:hidden">
         <div style="padding:24px 28px;border-bottom:2px solid #c8ff00;background:linear-gradient(135deg,#0d0d0d 0%,#0a0a0a 100%)">
           <div style="font-family:monospace;font-size:11px;letter-spacing:0.3em;color:#c8ff00;text-transform:uppercase;margin-bottom:8px">VEKTO / NEW BRIEF</div>
-          <h1 style="margin:0;font-size:22px;color:#fff">${escapeHtml(data.brand)}</h1>
-          <div style="margin-top:6px;color:#9a958e;font-size:13px">${escapeHtml(data.name)} · ${escapeHtml(data.email)}${data.phone ? ` · ${escapeHtml(data.phone)}` : ""}</div>
+          <h1 style="margin:0;font-size:22px;color:#fff">${escapeHtml(brandLabel)}</h1>
+          <div style="margin-top:6px;color:#9a958e;font-size:13px">${escapeHtml(headerLine)}</div>
         </div>
         <table style="width:100%;border-collapse:collapse">${rows}</table>
         <div style="padding:16px 28px;background:#0a0a0a;color:#666;font-size:11px;font-family:monospace;letter-spacing:0.18em;text-transform:uppercase">
-          Submitted in ${data.lang.toUpperCase()} · vekto.agency/brief
+          Submitted in ${data.lang.toUpperCase()} · vektoagency.com/brief
         </div>
       </div>
     </div>
@@ -159,7 +163,7 @@ export async function submitBrief(data: BriefSubmission) {
     await resend.emails.send({
       from: "VEKTO Brief <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL!,
-      subject: `[BRIEF] ${data.brand} — ${data.name}`,
+      subject: `[BRIEF] ${brandLabel} — ${nameLabel}`,
       html,
       replyTo: data.email,
     });

@@ -462,7 +462,7 @@ export default function BriefClient() {
             ) : (
               <button
                 onClick={handleSubmit}
-                disabled={submitting || !form.name || !form.email || !form.brand}
+                disabled={submitting || !form.email}
                 className="bg-[#c8ff00] text-black font-semibold px-8 py-3 rounded-full hover:bg-[#d4ff33] transition-colors text-[14px] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ boxShadow: "0 10px 30px -10px rgba(200,255,0,0.55)" }}
               >
