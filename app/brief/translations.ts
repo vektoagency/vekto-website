@@ -44,7 +44,7 @@ export const briefCopy = {
       brandPh: "",
       website: "Уебсайт",
       websitePh: "https://...",
-      ig: "Instagram handle (optional)",
+      ig: "Instagram handle",
       igPh: "",
       industry: "Индустрия / ниша",
       industryOptions: [
@@ -218,7 +218,7 @@ export const briefCopy = {
       brandPh: "",
       website: "Website",
       websitePh: "https://...",
-      ig: "Instagram handle (optional)",
+      ig: "Instagram handle",
       igPh: "",
       industry: "Industry / niche",
       industryOptions: [
