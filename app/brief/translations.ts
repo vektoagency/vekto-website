@@ -24,8 +24,8 @@ export const briefCopy = {
     },
     success: {
       title: "Brief получен.",
-      body: "Ще го прегледаме до 24 часа и ще ти пратим preliminary стратегия + 3 предложени hook angle-а. Междувременно — резервирай 30-минутен Discovery call директно тук:",
-      bookCta: "Резервирай Discovery Call",
+      body: "Благодарим, че отдели време. Ще прегледаме всичко лично и ще ти пишем на имейла, който ни остави.",
+      bookCta: "",
       backHome: "← Към сайта",
     },
     error: {
@@ -198,8 +198,8 @@ export const briefCopy = {
     },
     success: {
       title: "Brief received.",
-      body: "We'll review it within 24 hours and send back a preliminary strategy + 3 proposed hook angles. In the meantime — book a 30-minute Discovery call:",
-      bookCta: "Book Discovery Call",
+      body: "Thanks for taking the time. We'll review everything personally and reach out at the email you provided.",
+      bookCta: "",
       backHome: "← Back to site",
     },
     error: {

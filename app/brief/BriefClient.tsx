@@ -417,19 +417,11 @@ export default function BriefClient() {
             <p className="text-[15px] md:text-lg text-[#a0a0a0] leading-relaxed mb-8 max-w-xl mx-auto">
               {t.success.body}
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button
-                data-cal-namespace="30min"
-                data-cal-link="vekto/30min"
-                data-cal-config='{"layout":"month_view","theme":"dark"}'
-                className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer"
-                style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
-              >
-                {t.success.bookCta}
-              </button>
+            <div className="flex justify-center">
               <Link
                 href="/"
-                className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/40 text-[#c8ff00] font-semibold px-8 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors font-mono text-sm uppercase tracking-[0.2em]"
+                className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors font-mono text-sm uppercase tracking-[0.2em]"
+                style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
               >
                 {t.success.backHome}
               </Link>
