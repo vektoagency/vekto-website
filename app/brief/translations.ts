@@ -41,11 +41,11 @@ export const briefCopy = {
     step1: {
       title: "Кои сте",
       brand: "Име на компания",
-      brandPh: "напр. MENS CARE",
+      brandPh: "",
       website: "Уебсайт",
       websitePh: "https://...",
       ig: "Instagram handle (optional)",
-      igPh: "@вашиятакаунт",
+      igPh: "",
       industry: "Индустрия / ниша",
       industryOptions: [
         "Beauty / Grooming",
@@ -215,11 +215,11 @@ export const briefCopy = {
     step1: {
       title: "Who you are",
       brand: "Company name",
-      brandPh: "e.g. MENS CARE",
+      brandPh: "",
       website: "Website",
       websitePh: "https://...",
       ig: "Instagram handle (optional)",
-      igPh: "@yourhandle",
+      igPh: "",
       industry: "Industry / niche",
       industryOptions: [
         "Beauty / Grooming",
