@@ -23,6 +23,7 @@ const initialForm: BriefSubmission = {
   problem: "",
   usp: "",
   competitors: "",
+  competitorsStrengths: "",
   tone: "",
   platforms: [],
   postsPerMonth: "",
@@ -261,6 +262,9 @@ export default function BriefClient() {
             </Field>
             <Field label={t.step2.competitors}>
               <Textarea value={form.competitors} onChange={(v) => update("competitors", v)} placeholder={t.step2.competitorsPh} rows={3} />
+            </Field>
+            <Field label={t.step2.competitorsStrengths}>
+              <Textarea value={form.competitorsStrengths} onChange={(v) => update("competitorsStrengths", v)} placeholder={t.step2.competitorsStrengthsPh} rows={3} />
             </Field>
             <Field label={t.step2.tone}>
               <Pills value={form.tone} onChange={(v) => update("tone", v)} options={t.step2.toneOptions} />

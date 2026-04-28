@@ -23,6 +23,7 @@ export type BriefSubmission = {
   problem: string;
   usp: string;
   competitors: string;
+  competitorsStrengths: string;
   tone: string;
   // step 3
   platforms: string[];
@@ -74,6 +75,7 @@ const FIELD_LABELS: Record<string, string> = {
   problem: "Problem solved",
   usp: "USP",
   competitors: "Top competitors",
+  competitorsStrengths: "Competitors' strengths",
   tone: "Brand tone",
   platforms: "Active platforms",
   postsPerMonth: "Posts last month",
