@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, type RunListItem } from "@/lib/dashboard-api";
+import { api, type RunListItem, type RunRating } from "@/lib/dashboard-api";
+import RunRatingCmp, { RatingBadge } from "@/components/RunRating";
 
 type StatusFilter = "all" | "succeeded" | "running" | "failed";
+type RatingFilter = "all" | "unrated" | RunRating;
 
 export default function ProjectsPage() {
   const router = useRouter();
@@ -14,6 +16,7 @@ export default function ProjectsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [brandFilter, setBrandFilter] = useState<string>("all");
+  const [ratingFilter, setRatingFilter] = useState<RatingFilter>("all");
 
   useEffect(() => {
     (async () => {
@@ -43,6 +46,10 @@ export default function ProjectsPage() {
         if (statusFilter !== "running" && r.status !== statusFilter) return false;
       }
       if (brandFilter !== "all" && r.client !== brandFilter) return false;
+      if (ratingFilter !== "all") {
+        if (ratingFilter === "unrated" && r.rating != null) return false;
+        if (ratingFilter !== "unrated" && r.rating !== ratingFilter) return false;
+      }
       if (search) {
         const s = search.toLowerCase();
         if (
@@ -106,6 +113,17 @@ export default function ProjectsPage() {
             </option>
           ))}
         </select>
+        <select
+          value={ratingFilter}
+          onChange={(e) => setRatingFilter(e.target.value as RatingFilter)}
+          className="rounded-lg bg-black/40 border border-white/15 px-3 py-2 text-sm text-white outline-none"
+        >
+          <option value="all">All ratings</option>
+          <option value="good">✅ става</option>
+          <option value="edit">✂️ за едит</option>
+          <option value="bad">❌ не става</option>
+          <option value="unrated">Unrated</option>
+        </select>
       </div>
 
       {/* Stats */}
@@ -134,6 +152,7 @@ export default function ProjectsPage() {
                 <th className="px-4 py-3">Product</th>
                 <th className="px-4 py-3">Started</th>
                 <th className="px-4 py-3">Cost</th>
+                <th className="px-4 py-3">Rating</th>
                 <th className="px-4 py-3">Action</th>
               </tr>
             </thead>
@@ -148,6 +167,23 @@ export default function ProjectsPage() {
                   <td className="px-4 py-3 text-white/50">{formatDate(r.started_at)}</td>
                   <td className="px-4 py-3 text-white/60">
                     {r.total_usd != null ? `$${r.total_usd.toFixed(2)}` : "—"}
+                  </td>
+                  <td className="px-4 py-3">
+                    {r.status === "succeeded" ? (
+                      <RunRatingCmp
+                        runId={r.id}
+                        initialRating={r.rating}
+                        initialNote={r.rating_note}
+                        size="sm"
+                        onChange={(newRating) => {
+                          setRuns((prev) =>
+                            prev?.map((x) => (x.id === r.id ? { ...x, rating: newRating } : x)) ?? null
+                          );
+                        }}
+                      />
+                    ) : (
+                      <RatingBadge rating={r.rating} />
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex gap-3">

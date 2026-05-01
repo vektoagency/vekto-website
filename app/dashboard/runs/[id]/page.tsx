@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { api, apiBaseUrl } from "@/lib/dashboard-api";
+import { api, apiBaseUrl, type RunRating } from "@/lib/dashboard-api";
+import RunRatingCmp from "@/components/RunRating";
 
 interface PipelineEvent {
   type: string;
@@ -99,6 +100,10 @@ export default function RunPage() {
                   Open in Drive ↗
                 </a>
               )}
+              <div className="mt-4">
+                <div className="mb-2 text-sm font-medium text-white/70">Оценка:</div>
+                <RunRatingCmp runId={id} initialRating={null} initialNote={null} />
+              </div>
               <div className="mt-4 flex gap-3">
                 <Link href="/dashboard/new" className="text-sm text-white/70 hover:text-white">+ Generate another</Link>
                 <Link href="/dashboard" className="text-sm text-white/70 hover:text-white">Back to dashboard</Link>

@@ -36,6 +36,8 @@ export interface BriefListItem {
   updated_at: string;
 }
 
+export type RunRating = "bad" | "edit" | "good";
+
 export interface RunListItem {
   id: string;
   brief_id: string;
@@ -48,6 +50,9 @@ export interface RunListItem {
   started_at: string;
   completed_at: string | null;
   error: string | null;
+  rating: RunRating | null;
+  rating_note: string | null;
+  rated_at: string | null;
 }
 
 export const api = {
@@ -151,6 +156,17 @@ export const api = {
   async cancelRun(runId: string): Promise<{ ok: boolean; was?: string; status?: string }> {
     return call(`/api/dashboard/runs/${encodeURIComponent(runId)}/cancel`, {
       method: "POST",
+    });
+  },
+  async rateRun(runId: string, rating: RunRating, note?: string): Promise<{ ok: boolean }> {
+    return call(`/api/dashboard/runs/${encodeURIComponent(runId)}/rating`, {
+      method: "POST",
+      body: JSON.stringify({ rating, note }),
+    });
+  },
+  async clearRating(runId: string): Promise<{ ok: boolean }> {
+    return call(`/api/dashboard/runs/${encodeURIComponent(runId)}/rating`, {
+      method: "DELETE",
     });
   },
   runSseUrl(runId: string): string {
