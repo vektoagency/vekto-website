@@ -17,10 +17,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <nav className="flex items-center gap-6 text-sm text-white/70">
             <Link href="/dashboard" className="hover:text-white">Home</Link>
             <Link href="/dashboard/new" className="hover:text-white">+ New brief</Link>
-            <Link href="/dashboard/projects" className="hover:text-white">Projects</Link>
-            <form action="/api/dashboard-logout" method="post">
-              <button type="submit" className="text-white/40 hover:text-white">Logout</button>
-            </form>
+            <Link href="/dashboard/brands" className="hover:text-white">Brands</Link>
           </nav>
         </div>
       </header>

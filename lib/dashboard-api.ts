@@ -123,6 +123,62 @@ export const api = {
   runSseUrl(runId: string): string {
     return `${API_BASE}/api/dashboard/runs/${encodeURIComponent(runId)}/sse`;
   },
+
+  // Brands
+  async listBrands(): Promise<{ brands: Brand[] }> {
+    return call("/api/dashboard/brands");
+  },
+  async getBrand(id: string): Promise<{ brand: Brand }> {
+    return call(`/api/dashboard/brands/${encodeURIComponent(id)}`);
+  },
+  async createBrand(brand: Partial<Brand>): Promise<{ brand: Brand }> {
+    return call("/api/dashboard/brands", {
+      method: "POST",
+      body: JSON.stringify(brand),
+    });
+  },
+  async updateBrand(id: string, brand: Partial<Brand>): Promise<{ brand: Brand }> {
+    return call(`/api/dashboard/brands/${encodeURIComponent(id)}`, {
+      method: "PUT",
+      body: JSON.stringify(brand),
+    });
+  },
+  async deleteBrand(id: string): Promise<{ ok: true }> {
+    return call(`/api/dashboard/brands/${encodeURIComponent(id)}`, {
+      method: "DELETE",
+    });
+  },
 };
+
+export interface BrandProduct {
+  name: string;
+  description?: string;
+  category?: string;
+  url?: string;
+  image_urls?: string[];
+  hero_features?: string[];
+  personality?: string;
+  use_context?: string;
+  competitor_differentiator?: string;
+  price_usd?: number;
+  tagline?: string;
+}
+
+export interface Brand {
+  id: string;
+  slug: string;
+  name: string;
+  tone: string | null;
+  target_audience: string | null;
+  values: string[];
+  dont: string[];
+  voice_examples: string[];
+  primary_color: string | null;
+  logo_url: string | null;
+  products: BrandProduct[];
+  brand_library: unknown;
+  created_at: string;
+  updated_at: string;
+}
 
 export const apiBaseUrl = API_BASE;
