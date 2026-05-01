@@ -76,6 +76,13 @@ export const api = {
     fd.append("file", file);
     return call("/api/dashboard/intake", { method: "POST", body: fd });
   },
+  async intakeBatch(files: File[]): Promise<{
+    results: Array<{ filename: string; brief?: any; warnings?: string[]; error?: string }>;
+  }> {
+    const fd = new FormData();
+    for (const f of files) fd.append("files", f);
+    return call("/api/dashboard/intake-batch", { method: "POST", body: fd });
+  },
   async intakeText(text: string): Promise<{
     brief: any;
     warnings: string[];
@@ -125,8 +132,40 @@ export const api = {
   async listRuns(): Promise<{ runs: RunListItem[] }> {
     return call("/api/dashboard/runs");
   },
+  async batchRun(briefIds: string[]): Promise<{
+    queued: Array<{ brief_id: string; run_id: string }>;
+    skipped: string[];
+  }> {
+    return call("/api/dashboard/runs/batch", {
+      method: "POST",
+      body: JSON.stringify({ brief_ids: briefIds }),
+    });
+  },
+  async listActiveRuns(): Promise<{
+    active: RunListItem[];
+    queued: RunListItem[];
+    concurrency_limit: number;
+  }> {
+    return call("/api/dashboard/runs/active");
+  },
+  async cancelRun(runId: string): Promise<{ ok: boolean; was?: string; status?: string }> {
+    return call(`/api/dashboard/runs/${encodeURIComponent(runId)}/cancel`, {
+      method: "POST",
+    });
+  },
   runSseUrl(runId: string): string {
     return `${API_BASE}/api/dashboard/runs/${encodeURIComponent(runId)}/sse`;
+  },
+
+  // Settings
+  async getSettings(): Promise<{ concurrency_limit: number }> {
+    return call("/api/dashboard/settings");
+  },
+  async setSettings(settings: { concurrency_limit?: number }): Promise<{ concurrency_limit: number }> {
+    return call("/api/dashboard/settings", {
+      method: "POST",
+      body: JSON.stringify(settings),
+    });
   },
 
   // Brands
