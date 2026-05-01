@@ -301,14 +301,16 @@ export default function NewBriefPage() {
       {briefDraft && (
         <div className="space-y-4">
           {warnings.length > 0 && (
-            <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4">
-              <div className="mb-2 text-sm font-medium text-yellow-300">⚠ Warnings</div>
-              <ul className="list-disc pl-5 text-sm text-yellow-100/90 space-y-1">
+            <details className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-xs text-white/50">
+              <summary className="cursor-pointer hover:text-white/80">
+                {warnings.length} parser note{warnings.length === 1 ? "" : "s"} (click to expand)
+              </summary>
+              <ul className="mt-2 list-disc pl-5 space-y-1">
                 {warnings.map((w, i) => (
                   <li key={i}>{w}</li>
                 ))}
               </ul>
-            </div>
+            </details>
           )}
 
           <div className="rounded-xl border border-white/10 bg-white/5 p-4">
