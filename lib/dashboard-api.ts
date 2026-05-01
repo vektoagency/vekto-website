@@ -115,6 +115,11 @@ export const api = {
       method: "POST",
     });
   },
+  async cloneBrief(id: string): Promise<{ id: string; brief: any }> {
+    return call(`/api/dashboard/briefs/${encodeURIComponent(id)}/clone`, {
+      method: "POST",
+    });
+  },
 
   // Runs
   async listRuns(): Promise<{ runs: RunListItem[] }> {

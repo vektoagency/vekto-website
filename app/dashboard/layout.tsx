@@ -17,7 +17,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <nav className="flex items-center gap-6 text-sm text-white/70">
             <Link href="/dashboard" className="hover:text-white">Home</Link>
             <Link href="/dashboard/new" className="hover:text-white">+ New brief</Link>
+            <Link href="/dashboard/projects" className="hover:text-white">Projects</Link>
             <Link href="/dashboard/brands" className="hover:text-white">Brands</Link>
+            <Link href="/dashboard/costs" className="hover:text-white">Costs</Link>
           </nav>
         </div>
       </header>
