@@ -18,11 +18,8 @@ export default function NewBriefPage() {
   const [mode, setMode] = useState<"file" | "text" | "batch">("file");
   const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState("");
-  const [briefDraft, setBriefDraft] = useState<any>(null);
-  const [warnings, setWarnings] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [editingJson, setEditingJson] = useState<string>("");
 
   // Batch mode state
   const [batchFiles, setBatchFiles] = useState<File[]>([]);
@@ -75,35 +72,19 @@ export default function NewBriefPage() {
     }
   }
 
-  async function handleParse() {
+  async function handleGenerate() {
     setError(null);
     setLoading(true);
     try {
+      // Step 1: parse the brief (intake)
       const res = mode === "file" && file
         ? await api.intakeFile(file)
         : await api.intakeText(text);
-      setBriefDraft(res.brief);
-      setWarnings(res.warnings ?? []);
-      setEditingJson(JSON.stringify(res.brief, null, 2));
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleSaveAndRun() {
-    setError(null);
-    setLoading(true);
-    try {
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(editingJson);
-      } catch {
-        throw new Error("JSON is invalid — fix syntax errors first");
-      }
-      const saved = await api.saveBrief(parsed);
+      // Step 2: save it
+      const saved = await api.saveBrief(res.brief);
+      // Step 3: queue the run
       const run = await api.runBrief(saved.id);
+      // Step 4: jump straight to the run page
       router.push(`/dashboard/runs/${run.run_id}`);
     } catch (err) {
       setError((err as Error).message);
@@ -120,7 +101,7 @@ export default function NewBriefPage() {
         </p>
       </div>
 
-      {!briefDraft && !batchResults && (
+      {!batchResults && (
         <div className="rounded-xl border border-white/10 bg-white/5 p-6">
           <div className="mb-4 flex gap-2">
             <button
@@ -211,7 +192,7 @@ export default function NewBriefPage() {
           )}
 
           <button
-            onClick={mode === "batch" ? handleBatchParse : handleParse}
+            onClick={mode === "batch" ? handleBatchParse : handleGenerate}
             disabled={
               loading ||
               (mode === "file" && !file) ||
@@ -223,10 +204,10 @@ export default function NewBriefPage() {
             {loading
               ? mode === "batch"
                 ? `Parsing ${batchFiles.length} briefs...`
-                : "Parsing..."
+                : "Generating..."
               : mode === "batch"
-                ? `Parse ${batchFiles.length} briefs →`
-                : "Parse brief →"}
+                ? `🚀 Parse ${batchFiles.length} briefs →`
+                : "🚀 Generate"}
           </button>
           {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
         </div>
@@ -298,59 +279,6 @@ export default function NewBriefPage() {
         </div>
       )}
 
-      {briefDraft && (
-        <div className="space-y-4">
-          {warnings.length > 0 && (
-            <details className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-xs text-white/50">
-              <summary className="cursor-pointer hover:text-white/80">
-                {warnings.length} parser note{warnings.length === 1 ? "" : "s"} (click to expand)
-              </summary>
-              <ul className="mt-2 list-disc pl-5 space-y-1">
-                {warnings.map((w, i) => (
-                  <li key={i}>{w}</li>
-                ))}
-              </ul>
-            </details>
-          )}
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <div className="mb-2 flex items-center justify-between">
-              <div className="text-sm font-medium">Brief JSON (editable)</div>
-              <div className="text-xs text-white/40">
-                Client: {briefDraft.client} · {briefDraft.product?.name} · {briefDraft.creative?.duration ?? "?"}
-              </div>
-            </div>
-            <textarea
-              value={editingJson}
-              onChange={(e) => setEditingJson(e.target.value)}
-              rows={28}
-              className="w-full rounded-lg bg-black/60 border border-white/10 px-4 py-3 font-mono text-xs text-white outline-none focus:border-orange-500"
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              onClick={handleSaveAndRun}
-              disabled={loading}
-              className="rounded-lg bg-orange-500 px-5 py-3 font-medium text-black hover:bg-orange-400 disabled:opacity-50"
-            >
-              {loading ? "Starting..." : "🚀 Save & Generate"}
-            </button>
-            <button
-              onClick={() => {
-                setBriefDraft(null);
-                setEditingJson("");
-                setFile(null);
-                setText("");
-              }}
-              className="rounded-lg border border-white/15 px-5 py-3 text-white/70 hover:bg-white/5"
-            >
-              ← Back
-            </button>
-          </div>
-          {error && <p className="text-sm text-red-400">{error}</p>}
-        </div>
-      )}
     </div>
   );
 }
