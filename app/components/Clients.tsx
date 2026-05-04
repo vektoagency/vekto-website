@@ -87,14 +87,9 @@ export default function Clients() {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <AnimateIn>
-          {/* Section label — centered, mono, with bookend dashes for editorial feel */}
-          <div className="flex items-center justify-center gap-3 md:gap-4 mb-5 md:mb-7">
-            <span aria-hidden className="h-px w-8 md:w-12 bg-[#c8ff00]/35" />
-            <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.32em] text-[#c8ff00]">
-              Trusted by
-            </span>
-            <span aria-hidden className="h-px w-8 md:w-12 bg-[#c8ff00]/35" />
-          </div>
+          <p className="text-center text-xs text-[#c8ff00] uppercase tracking-widest mb-12">
+            Trusted by forward-thinking brands
+          </p>
 
           {/* Two rows scrolling in opposite directions, with edge masks
               so logos fade in/out at the section borders for a polished
