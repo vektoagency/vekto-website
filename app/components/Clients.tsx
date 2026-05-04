@@ -4,19 +4,20 @@ type Client = {
   name: string;
   logo: string;
   url: string;
+  desc: string;
   circular?: boolean;
   invert?: boolean;
 };
 
 const clients: Client[] = [
-  { name: "ISOSPORT", logo: "/images/logo-isosport.png", url: "https://neopak.eu" },
-  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", circular: true },
-  { name: "PARFEN", logo: "/images/logo-parfen.png", url: "https://parfen.online", invert: true },
-  { name: "BIOTICA", logo: "/images/logo-biotica.png", url: "https://biotica.bg", circular: true, invert: true },
-  { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag-bg.com" },
-  { name: "GIFTO", logo: "/images/logo-gifto2.png", url: "https://gifto.bg" },
-  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventures.bg" },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.png", url: "https://neopak.eu", desc: "Energy & functional beverages" },
+  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", desc: "Beard & hair growth", circular: true },
+  { name: "PARFEN", logo: "/images/logo-parfen.png", url: "https://parfen.online", desc: "Designer-inspired perfumes", invert: true },
+  { name: "BIOTICA", logo: "/images/logo-biotica.png", url: "https://biotica.bg", desc: "Natural supplements", circular: true, invert: true },
+  { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg", desc: "Acne skincare brand" },
+  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag-bg.com", desc: "Natural cosmetics" },
+  { name: "GIFTO", logo: "/images/logo-gifto2.png", url: "https://gifto.bg", desc: "Experience voucher platform" },
+  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventures.bg", desc: "Adventure tourism" },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
@@ -30,7 +31,7 @@ function BrandTile({ c }: { c: Client }) {
       href={c.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative shrink-0 w-[150px] md:w-[210px] h-[96px] md:h-[124px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      className="group relative shrink-0 w-[170px] md:w-[230px] h-[110px] md:h-[140px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
       aria-label={`${c.name} — open website`}
     >
       {/* Phosphor glow on hover — bottom-up sweep */}
@@ -44,8 +45,8 @@ function BrandTile({ c }: { c: Client }) {
       />
 
       {/* Logo frame — same dimensions for every tile */}
-      <div className="absolute inset-x-0 top-0 bottom-9 md:bottom-11 flex items-center justify-center">
-        <div className="relative flex items-center justify-center w-[110px] h-[36px] md:w-[150px] md:h-[50px]">
+      <div className="absolute inset-x-0 top-0 bottom-[44px] md:bottom-[56px] flex items-center justify-center">
+        <div className="relative flex items-center justify-center w-[110px] h-[34px] md:w-[150px] md:h-[46px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={c.logo}
@@ -62,10 +63,13 @@ function BrandTile({ c }: { c: Client }) {
         </div>
       </div>
 
-      {/* Brand name — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex items-center justify-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
-        <span className="text-[#9a958e] group-hover:text-[#c8ff00] transition-colors duration-500 truncate">
+      {/* Brand name + description — bottom strip */}
+      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
+        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-[#c8ff00]/85 group-hover:text-[#c8ff00] transition-colors duration-500 truncate w-full">
           {c.name}
+        </span>
+        <span className="text-[9px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
+          {c.desc}
         </span>
       </div>
     </a>
