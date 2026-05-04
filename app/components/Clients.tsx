@@ -17,25 +17,16 @@ function BrandTile({ c }: { c: Client }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
   return (
     <div
-      className="group relative shrink-0 w-[150px] md:w-[210px] h-[96px] md:h-[124px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#c8ff00]/10 hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      className="relative shrink-0 w-[150px] md:w-[210px] h-[96px] md:h-[124px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] select-none"
     >
-      {/* Phosphor glow on hover — bottom-up sweep */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 100% at 50% 100%, rgba(200,255,0,0.22) 0%, transparent 75%)",
-        }}
-      />
-
       {/* Logo — center */}
       <div className="absolute inset-x-0 top-0 bottom-9 md:bottom-11 flex items-center justify-center px-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={c.logo}
           alt={c.name}
-          className="md:hidden opacity-65 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
+          draggable={false}
+          className="md:hidden opacity-80"
           style={{
             maxWidth: c.circular ? "42px" : "108px",
             maxHeight: c.circular ? "42px" : "34px",
@@ -47,7 +38,8 @@ function BrandTile({ c }: { c: Client }) {
         <img
           src={c.logo}
           alt={c.name}
-          className="hidden md:block opacity-65 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
+          draggable={false}
+          className="hidden md:block opacity-80"
           style={{
             maxWidth: c.circular ? "60px" : "150px",
             maxHeight: c.circular ? "60px" : "48px",
@@ -58,10 +50,8 @@ function BrandTile({ c }: { c: Client }) {
       </div>
 
       {/* Brand name — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex items-center justify-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
-        <span className="text-[#9a958e] group-hover:text-[#c8ff00] transition-colors duration-500 truncate">
-          {c.name}
-        </span>
+      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex items-center justify-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] border-t border-[#161616]">
+        <span className="text-[#9a958e] truncate">{c.name}</span>
       </div>
     </div>
   );
