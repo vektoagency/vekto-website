@@ -84,15 +84,9 @@ export default function Clients() {
 
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <AnimateIn>
-          {/* Header: title + small "TRUSTED" mono tag — editorial pairing */}
-          <div className="text-center mb-8 md:mb-10">
-            <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-[#c8ff00]/70 mb-3">
-              ◆ Network
-            </p>
-            <h3 className="text-base md:text-lg text-[#ece8e1] font-light leading-snug max-w-md mx-auto">
-              Trusted by forward-thinking brands
-            </h3>
-          </div>
+          <p className="text-center text-xs text-[#c8ff00] uppercase tracking-widest mb-12">
+            Trusted by forward-thinking brands
+          </p>
 
           {/* Grid — bordered cells, 4 columns desktop, 4 columns mobile (smaller). */}
           <div className="grid grid-cols-4 border-l border-t border-[#161616] rounded-sm overflow-hidden bg-[#080808]/40 backdrop-blur-[1px]">
