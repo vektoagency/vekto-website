@@ -16,7 +16,7 @@ const clients: Client[] = [
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg" },
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag.com" },
   { name: "GIFTO", logo: "/images/logo-gifto2.png", url: "https://gifto.bg" },
-  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventuresbg.com" },
+  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventures.bg" },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
