@@ -1,59 +1,74 @@
 import AnimateIn from "./AnimateIn";
 
-type Client = { name: string; logo: string; circular?: boolean; invert?: boolean };
+type Client = {
+  name: string;
+  logo: string;
+  url: string;
+  circular?: boolean;
+  invert?: boolean;
+};
 
 const clients: Client[] = [
-  { name: "ISOSPORT", logo: "/images/logo-isosport.png" },
-  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", circular: true },
-  { name: "PARFEN", logo: "/images/logo-parfen.png", invert: true },
-  { name: "BIOTICA", logo: "/images/logo-biotica.png", circular: true, invert: true },
-  { name: "BEMEACNE", logo: "/images/logo-bemeacne.png" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png" },
-  { name: "GIFTO", logo: "/images/logo-gifto2.png" },
-  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png" },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.png", url: "https://isosport.bg" },
+  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebg.com", circular: true },
+  { name: "PARFEN", logo: "/images/logo-parfen.png", url: "https://parfen.online", invert: true },
+  { name: "BIOTICA", logo: "/images/logo-biotica.png", url: "https://biotica.bg", circular: true, invert: true },
+  { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg" },
+  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag.com" },
+  { name: "GIFTO", logo: "/images/logo-gifto2.png", url: "https://gifto.bg" },
+  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventuresbg.com" },
 ];
 
+// Single fixed-size logo frame ensures every logo lands in the same slot,
+// scaled to fit. Wide logos fill horizontally, circular ones fill the
+// shorter axis — but the *container* size is identical for all tiles, so
+// the visual rhythm stays consistent across the whole feed.
 function BrandTile({ c }: { c: Client }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
   return (
-    <div
-      className="relative shrink-0 w-[150px] md:w-[210px] h-[96px] md:h-[124px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] select-none"
+    <a
+      href={c.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative shrink-0 w-[150px] md:w-[210px] h-[96px] md:h-[124px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      aria-label={`${c.name} — open website`}
     >
-      {/* Logo — center */}
-      <div className="absolute inset-x-0 top-0 bottom-9 md:bottom-11 flex items-center justify-center px-4">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={c.logo}
-          alt={c.name}
-          draggable={false}
-          className="md:hidden opacity-80"
-          style={{
-            maxWidth: c.circular ? "42px" : "108px",
-            maxHeight: c.circular ? "42px" : "34px",
-            objectFit: "contain",
-            filter: invert,
-          }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={c.logo}
-          alt={c.name}
-          draggable={false}
-          className="hidden md:block opacity-80"
-          style={{
-            maxWidth: c.circular ? "60px" : "150px",
-            maxHeight: c.circular ? "60px" : "48px",
-            objectFit: "contain",
-            filter: invert,
-          }}
-        />
+      {/* Phosphor glow on hover — bottom-up sweep */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 100% at 50% 100%, rgba(200,255,0,0.22) 0%, transparent 75%)",
+        }}
+      />
+
+      {/* Logo frame — same dimensions for every tile */}
+      <div className="absolute inset-x-0 top-0 bottom-9 md:bottom-11 flex items-center justify-center">
+        <div className="relative flex items-center justify-center w-[110px] h-[36px] md:w-[150px] md:h-[50px]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={c.logo}
+            alt={c.name}
+            draggable={false}
+            className="opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              filter: invert,
+            }}
+          />
+        </div>
       </div>
 
       {/* Brand name — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex items-center justify-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] border-t border-[#161616]">
-        <span className="text-[#9a958e] truncate">{c.name}</span>
+      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex items-center justify-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
+        <span className="text-[#9a958e] group-hover:text-[#c8ff00] transition-colors duration-500 truncate">
+          {c.name}
+        </span>
       </div>
-    </div>
+    </a>
   );
 }
 
