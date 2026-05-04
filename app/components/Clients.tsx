@@ -3,6 +3,9 @@ import AnimateIn from "./AnimateIn";
 const clients = [
   { name: "ISOSPORT", logo: "/images/logo-isosport.png" },
   { name: "MEN'S CARE", logo: "/images/logo-menscare.png", circular: true },
+  { name: "PARFEN", logo: "/images/logo-parfen.png" },
+  { name: "BIOTICA", logo: "/images/logo-biotica.png", circular: true },
+  { name: "BEMEACNE", logo: "/images/logo-bemeacne.png" },
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png" },
   { name: "GIFTO", logo: "/images/logo-gifto2.png" },
   { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png" },
