@@ -89,7 +89,7 @@ export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}
           >
             <MacintoshScene
               zoomedIn={zoomedIn}
-              paused={playerOpen || overlayOpen}
+              paused={playerOpen}
               mobile={mobile}
               onScreenClick={handleScreenClick}
               onReady={() => setSceneReady(true)}

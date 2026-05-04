@@ -41,8 +41,25 @@ const fragmentShader = /* glsl */ `
     float rowT = fract(uv.y * 22.0);
     float col = floor(uv.x * 50.0);
     float appear = step(col, uTime * 12.0 - rows * 2.0);
+
+    // Static "personality" per cell — its base brightness/likelihood
+    // of being on. Combined with a per-cell time cycle so the grid
+    // breathes and twinkles continuously instead of freezing once
+    // the typewriter intro finishes.
     float charNoise = hash(vec2(col, rows));
-    float charOn = step(0.35, charNoise) * appear;
+
+    // Each cell gets a unique slow oscillation. Cells near the
+    // on/off threshold flicker; cells well above stay solid.
+    float cellPhase = hash(vec2(col + 13.0, rows + 7.0)) * 6.2832;
+    float cellLife = sin(uTime * 0.65 + cellPhase) * 0.5 + 0.5;
+    float threshold = 0.30 + cellLife * 0.18;
+    float charOn = step(threshold, charNoise) * appear;
+
+    // Diagonal wave of bright cells traveling across the grid —
+    // adds visible motion on top of the local twinkle.
+    float wave = sin(uTime * 0.55 - rows * 0.42 + col * 0.06) * 0.5 + 0.5;
+    float waveOn = step(0.86, wave) * step(0.55, charNoise) * appear;
+    charOn = max(charOn, waveOn * 1.25);
 
     float yShape = smoothstep(0.15, 0.5, rowT) * (1.0 - smoothstep(0.5, 0.85, rowT));
     float xShape = 1.0 - abs(fract(uv.x * 50.0) - 0.5) * 2.0;
