@@ -5,10 +5,10 @@
   "clips": [
     {
       "id": "vekto-product-demo-1",
-      "brand": "VEKTO",
+      "brand": "Biotica",
       "logo": null,
       "category": "Product",
-      "description": "Product Presentation — Demo 1.",
+      "description": "Product presentation.",
       "thumbnail": "/videos/thumbnails/product-demo-1.jpg",
       "previewMp4": "/videos/product-demo-1.mp4",
       "hlsPlaylist": null,
@@ -23,10 +23,10 @@
     },
     {
       "id": "vekto-product-demo-2",
-      "brand": "VEKTO",
+      "brand": "Taste Flavor Co.",
       "logo": null,
       "category": "Product",
-      "description": "Product Presentation — Demo 2.",
+      "description": "Product presentation.",
       "thumbnail": "/videos/thumbnails/product-demo-2.jpg",
       "previewMp4": "/videos/product-demo-2.mp4",
       "hlsPlaylist": null,
