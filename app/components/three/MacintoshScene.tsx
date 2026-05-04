@@ -127,8 +127,11 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
   return (
     <div ref={wrapperRef} className="absolute inset-0">
       <Canvas
-        shadows={!mobile}
-        dpr={mobile ? 1 : [1, 2]}
+        // No real-time shadow pass — directional shadows on the Mac
+        // body are barely perceptible vs the cost. ContactShadows below
+        // handles the floor shadow on its own (separate render target).
+        shadows={false}
+        dpr={mobile ? 1 : [1, 1.75]}
         frameloop={frameloop}
         camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 52 : 32 }}
         gl={{ antialias: true, alpha: true, powerPreference: mobile ? "default" : "high-performance" }}
@@ -136,14 +139,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
       >
 
         <Suspense fallback={null}>
-          <directionalLight
-            position={[3.5, 4.5, 3.5]}
-            intensity={1.3}
-            color="#fff2d8"
-            castShadow
-            shadow-mapSize-width={1024}
-            shadow-mapSize-height={1024}
-          />
+          <directionalLight position={[3.5, 4.5, 3.5]} intensity={1.3} color="#fff2d8" />
           <directionalLight position={[-4, 2.5, 1.5]} intensity={0.45} color="#8fb3ff" />
           <pointLight position={[-2.2, 1.4, -2.5]} intensity={3.2} distance={7} color="#c8ff00" />
           <ambientLight intensity={0.32} color="#2b2518" />
@@ -161,6 +157,9 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
 
           <ReadySignal onReady={onReady} />
 
+          {/* `frames={1}` bakes the shadow once after layout settles —
+              the Mac wobble is too small for a moving shadow to read,
+              so this turns the shadow render into a one-shot cost. */}
           <ContactShadows
             position={[0, -0.88, 0.2]}
             opacity={0.4}
@@ -168,6 +167,8 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
             blur={3}
             far={2}
             color="#000000"
+            resolution={256}
+            frames={1}
           />
         </Suspense>
 
