@@ -13,10 +13,11 @@ const clients: Client[] = [
   { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png" },
 ];
 
-// Split into two rows that scroll in opposite directions. Distribution
-// is even-vs-odd so each row shows 4 brands and reads like a curated set.
-const rowA: Client[] = clients.filter((_, i) => i % 2 === 0);
-const rowB: Client[] = clients.filter((_, i) => i % 2 === 1);
+// Both rows show all 8 brands but offset, so any repetition the eye
+// catches is across rows rather than within a single sweep — feels far
+// less repetitive than splitting the set in two.
+const rowA: Client[] = clients;
+const rowB: Client[] = [...clients.slice(4), ...clients.slice(0, 4)]; // shift by 4 for stagger
 
 function LogoCell({ c }: { c: Client }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
@@ -53,12 +54,24 @@ function LogoCell({ c }: { c: Client }) {
   );
 }
 
-function Row({ items, direction }: { items: Client[]; direction: "left" | "right" }) {
-  // Quadruple so the loop is seamless even on ultra-wide displays.
-  const looped = [...items, ...items, ...items, ...items];
-  const cls = direction === "left" ? "scroll-left" : "scroll-right";
+function Row({ items, direction, duration }: { items: Client[]; direction: "left" | "right"; duration: number }) {
+  // Double exactly — keyframes go 0 → -50%, so any 2× repetition loops seamlessly.
+  // Going wider (4×) just adds DOM nodes for no visual benefit.
+  const looped = [...items, ...items];
+  const animation = `${direction === "left" ? "scrollLeft" : "scrollRight"} ${duration}s linear infinite`;
   return (
-    <div className={`${cls} flex items-center`} style={{ width: "max-content" }}>
+    <div
+      className="flex items-center"
+      style={{
+        width: "max-content",
+        animation,
+        // GPU layer + cheap interpolation hint — smooths the marquee on
+        // weaker devices where the previous setup felt choppy.
+        willChange: "transform",
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+      }}
+    >
       {looped.map((c, i) => (
         <LogoCell key={`${c.name}-${i}`} c={c} />
       ))}
@@ -97,10 +110,10 @@ export default function Clients() {
           >
             <div className="flex flex-col gap-1.5 md:gap-3">
               <div className="overflow-hidden h-[40px] md:h-[60px] flex items-center">
-                <Row items={rowA} direction="left" />
+                <Row items={rowA} direction="left" duration={90} />
               </div>
               <div className="overflow-hidden h-[40px] md:h-[60px] flex items-center">
-                <Row items={rowB} direction="right" />
+                <Row items={rowB} direction="right" duration={120} />
               </div>
             </div>
           </div>
