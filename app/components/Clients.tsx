@@ -9,8 +9,8 @@ type Client = {
 };
 
 const clients: Client[] = [
-  { name: "ISOSPORT", logo: "/images/logo-isosport.png", url: "https://isosport.bg" },
-  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebg.com", circular: true },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.png", url: "https://neopak.eu" },
+  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", circular: true },
   { name: "PARFEN", logo: "/images/logo-parfen.png", url: "https://parfen.online", invert: true },
   { name: "BIOTICA", logo: "/images/logo-biotica.png", url: "https://biotica.bg", circular: true, invert: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg" },
