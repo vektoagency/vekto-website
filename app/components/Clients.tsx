@@ -14,7 +14,7 @@ const clients: Client[] = [
   { name: "PARFEN", logo: "/images/logo-parfen.png", url: "https://parfen.online", invert: true },
   { name: "BIOTICA", logo: "/images/logo-biotica.png", url: "https://biotica.bg", circular: true, invert: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag.com" },
+  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag-bg.com" },
   { name: "GIFTO", logo: "/images/logo-gifto2.png", url: "https://gifto.bg" },
   { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventures.bg" },
 ];
