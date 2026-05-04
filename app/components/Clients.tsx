@@ -13,68 +13,61 @@ const clients: Client[] = [
   { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png" },
 ];
 
-// Both rows show all 8 brands but offset, so any repetition the eye
-// catches is across rows rather than within a single sweep — feels far
-// less repetitive than splitting the set in two.
-const rowA: Client[] = clients;
-const rowB: Client[] = [...clients.slice(4), ...clients.slice(0, 4)]; // shift by 4 for stagger
-
-function LogoCell({ c }: { c: Client }) {
+function LogoCell({ c, idx }: { c: Client; idx: number }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
-  if (c.circular) {
-    return (
-      <div className="flex-shrink-0 flex items-center justify-center px-5 md:px-8">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={c.logo}
-          alt={c.name}
-          className="opacity-65 hover:opacity-100 transition-opacity duration-300"
-          style={{ height: "44px", width: "44px", objectFit: "contain", filter: invert }}
-        />
-      </div>
-    );
-  }
-  return (
-    <div className="flex-shrink-0 flex items-center justify-center px-5 md:px-8">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={c.logo}
-        alt={c.name}
-        className="md:hidden opacity-65 hover:opacity-100 transition-opacity duration-300"
-        style={{ height: "26px", width: "auto", maxWidth: "100px", objectFit: "contain", filter: invert }}
-      />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={c.logo}
-        alt={c.name}
-        className="hidden md:block opacity-65 hover:opacity-100 transition-opacity duration-300"
-        style={{ height: "44px", width: "auto", maxWidth: "180px", objectFit: "contain", filter: invert }}
-      />
-    </div>
-  );
-}
-
-function Row({ items, direction, duration }: { items: Client[]; direction: "left" | "right"; duration: number }) {
-  // Double exactly — keyframes go 0 → -50%, so any 2× repetition loops seamlessly.
-  // Going wider (4×) just adds DOM nodes for no visual benefit.
-  const looped = [...items, ...items];
-  const animation = `${direction === "left" ? "scrollLeft" : "scrollRight"} ${duration}s linear infinite`;
+  // Stagger fade-in when section enters viewport — feels orchestrated.
+  const stagger = `${idx * 60}ms`;
   return (
     <div
-      className="flex items-center"
+      className="group relative flex items-center justify-center h-[64px] md:h-[96px] px-3 md:px-4 border-r border-b border-[#161616] last:border-r-0 lg:[&:nth-child(4n)]:border-r-0 [&:nth-child(7)]:border-b-0 [&:nth-child(8)]:border-b-0 lg:[&:nth-child(5)]:border-b-0 lg:[&:nth-child(6)]:border-b-0 lg:[&:nth-child(7)]:border-b-0 lg:[&:nth-child(8)]:border-b-0 transition-colors hover:bg-[#c8ff00]/[0.03]"
       style={{
-        width: "max-content",
-        animation,
-        // GPU layer + cheap interpolation hint — smooths the marquee on
-        // weaker devices where the previous setup felt choppy.
-        willChange: "transform",
-        transform: "translateZ(0)",
-        backfaceVisibility: "hidden",
+        animation: `clientCellIn 0.7s cubic-bezier(0.25,0.8,0.3,1) ${stagger} both`,
       }}
     >
-      {looped.map((c, i) => (
-        <LogoCell key={`${c.name}-${i}`} c={c} />
-      ))}
+      {/* Lime glow on hover — phosphor sweep matches the CRT brand */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 100% at 50% 100%, rgba(200,255,0,0.18) 0%, transparent 70%)",
+        }}
+      />
+      {c.circular ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={c.logo}
+            alt={c.name}
+            className="md:hidden opacity-55 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
+            style={{ height: "40px", width: "40px", objectFit: "contain", filter: invert }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={c.logo}
+            alt={c.name}
+            className="hidden md:block opacity-55 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
+            style={{ height: "62px", width: "62px", objectFit: "contain", filter: invert }}
+          />
+        </>
+      ) : (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={c.logo}
+            alt={c.name}
+            className="md:hidden opacity-55 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
+            style={{ height: "26px", width: "auto", maxWidth: "82px", objectFit: "contain", filter: invert }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={c.logo}
+            alt={c.name}
+            className="hidden md:block opacity-55 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
+            style={{ height: "44px", width: "auto", maxWidth: "150px", objectFit: "contain", filter: invert }}
+          />
+        </>
+      )}
     </div>
   );
 }
@@ -82,38 +75,40 @@ function Row({ items, direction, duration }: { items: Client[]; direction: "left
 export default function Clients() {
   return (
     <section
-      className="py-7 md:py-12 border-y border-[#1e1e1c]"
+      className="py-8 md:py-14 border-y border-[#1e1e1c] relative overflow-hidden"
       style={{ background: "linear-gradient(to bottom, #070707 0%, #0a0a0a 50%, #070707 100%)" }}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <AnimateIn>
-          <p className="text-center text-xs text-[#c8ff00] uppercase tracking-widest mb-12">
-            Trusted by forward-thinking brands
-          </p>
+      {/* Top + bottom phosphor edge — subtle lime hint on the borders */}
+      <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/35 to-transparent" />
+      <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/20 to-transparent" />
 
-          {/* Two rows scrolling in opposite directions, with edge masks
-              so logos fade in/out at the section borders for a polished
-              editorial feel. */}
-          <div
-            className="relative overflow-hidden"
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-              maskImage:
-                "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-            }}
-          >
-            <div className="flex flex-col gap-1.5 md:gap-3">
-              <div className="overflow-hidden h-[40px] md:h-[60px] flex items-center">
-                <Row items={rowA} direction="left" duration={90} />
-              </div>
-              <div className="overflow-hidden h-[40px] md:h-[60px] flex items-center">
-                <Row items={rowB} direction="right" duration={120} />
-              </div>
-            </div>
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <AnimateIn>
+          {/* Header: title + small "TRUSTED" mono tag — editorial pairing */}
+          <div className="text-center mb-8 md:mb-10">
+            <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-[#c8ff00]/70 mb-3">
+              ◆ Network
+            </p>
+            <h3 className="text-base md:text-lg text-[#ece8e1] font-light leading-snug max-w-md mx-auto">
+              Trusted by forward-thinking brands
+            </h3>
+          </div>
+
+          {/* Grid — bordered cells, 4 columns desktop, 4 columns mobile (smaller). */}
+          <div className="grid grid-cols-4 border-l border-t border-[#161616] rounded-sm overflow-hidden bg-[#080808]/40 backdrop-blur-[1px]">
+            {clients.map((c, i) => (
+              <LogoCell key={c.name} c={c} idx={i} />
+            ))}
           </div>
         </AnimateIn>
       </div>
+
+      <style>{`
+        @keyframes clientCellIn {
+          from { opacity: 0; transform: translateY(10px) scale(0.98); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
     </section>
   );
 }
