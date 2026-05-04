@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import AnimateIn from "./AnimateIn";
 
 type Client = {
@@ -77,8 +80,25 @@ function BrandTile({ c }: { c: Client }) {
 }
 
 export default function Clients() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  // Pause the marquee whenever the section is offscreen — saves GPU work
+  // and prevents the animation from drifting/desyncing while invisible.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       className="py-9 md:py-14 border-y border-[#1e1e1c] relative overflow-hidden"
       style={{ background: "linear-gradient(to bottom, #070707 0%, #0a0a0a 50%, #070707 100%)" }}
     >
@@ -102,7 +122,7 @@ export default function Clients() {
         }}
       >
         <div
-          className="flex feed-track py-3"
+          className={`flex feed-track py-3 ${inView ? "" : "feed-paused"}`}
           style={{
             width: "max-content",
             willChange: "transform",
@@ -120,10 +140,14 @@ export default function Clients() {
           to   { transform: translate3d(-33.3333%, 0, 0); }
         }
         .feed-track {
-          animation: feedScroll 70s linear infinite;
+          /* Slower duration smooths perceived motion — eye reads it as
+             premium glide rather than busy scroll. */
+          animation: feedScroll 110s linear infinite;
           backface-visibility: hidden;
+          transform: translateZ(0);
         }
-        .feed-track:hover {
+        .feed-track:hover,
+        .feed-paused {
           animation-play-state: paused;
         }
         @media (prefers-reduced-motion: reduce) {
