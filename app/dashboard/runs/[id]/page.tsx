@@ -182,32 +182,108 @@ function friendlyStage(events: PipelineEvent[]): string {
 }
 
 function computeProgress(events: PipelineEvent[]): number {
+  if (events.length === 0) return 0;
   const last = events[events.length - 1];
-  if (!last) return 0;
   if (last.type === "done") return 100;
-  const map: Record<string, number> = {
-    selecting_template: 5,
-    template_selected: 8,
-    filling_prompts: 10,
-    prompts_filled: 12,
-    planning_segments: 15,
-    segments_planned: 18,
-    generating_character_refs: 25,
-    character_ref_ready: 30,
-    submitting_segment: 40,
-    segment_submitted: 45,
-    segment_polling: 50,
-    segment_downloaded: 65,
-    extracting_continuity_assets: 70,
-    uploading_continuity_assets: 72,
-    concatenating_segments: 80,
-    concatenated_segments: 85,
-    transcribing: 88,
-    transcribed: 92,
-    uploading_to_drive: 95,
-    drive_uploaded: 98,
-  };
-  return map[last.type] ?? 50;
+
+  // Stage budgets (cumulative %):
+  //   0-15%  : setup (template selection, prompt fill, segment planning)
+  //   15-30% : NB2 character ref generation (scales by completed/total)
+  //   30-85% : segment generation (scales by completed segments + sub-event)
+  //   85-92% : concat + music
+  //   92-98% : R2 + Drive delivery
+  //   100%   : done
+
+  // Discover totals from event metadata
+  const segPlanned = events.find((e) => e.type === "segments_planned") as
+    | (PipelineEvent & { segment_count?: number })
+    | undefined;
+  const totalSegments = segPlanned?.segment_count ?? 3;
+
+  const charGen = events.find((e) => e.type === "generating_character_refs") as
+    | (PipelineEvent & { count?: number })
+    | undefined;
+  const totalChars = charGen?.count ?? 0;
+
+  const completedChars = events.filter((e) => e.type === "character_ref_ready").length;
+  const completedSegments = events.filter((e) => e.type === "segment_downloaded").length;
+
+  const t = last.type;
+
+  // Setup phase (0-15%)
+  if (t === "selecting_template") return 3;
+  if (t === "template_selected") return 6;
+  if (t === "filling_prompts") return 9;
+  if (t === "prompts_filled") return 12;
+  if (t === "resuming_run") return 14;
+  if (t === "planning_segments") return 13;
+  if (t === "segments_planned") return 15;
+
+  // Char refs phase (15-30%)
+  if (t === "generating_character_refs") return 16;
+  if (t === "character_ref_ready") {
+    if (totalChars === 0) return 30;
+    return Math.round(15 + (completedChars / totalChars) * 15);
+  }
+
+  // Segment generation phase (30-85%)
+  const SEG_START = 30;
+  const SEG_END = 85;
+  const perSeg = (SEG_END - SEG_START) / Math.max(totalSegments, 1);
+
+  const segEventTypes = ["submitting_segment", "segment_submitted", "segment_polling", "segment_downloaded", "segment_skipped"];
+  if (segEventTypes.includes(t)) {
+    const evWithIdx = last as PipelineEvent & { index?: number };
+    const segIdx = evWithIdx.index ?? completedSegments + 1;
+    const segIdx0Based = Math.max(0, segIdx - 1);
+    const baseProgress = SEG_START + segIdx0Based * perSeg;
+    // Sub-progress within current segment
+    const subFraction =
+      t === "submitting_segment"
+        ? 0.1
+        : t === "segment_submitted"
+        ? 0.25
+        : t === "segment_polling"
+        ? 0.6 // poll phase is the longest — give it the most chunk
+        : t === "segment_downloaded" || t === "segment_skipped"
+        ? 1.0
+        : 0.5;
+    return Math.min(SEG_END, Math.round(baseProgress + perSeg * subFraction));
+  }
+
+  // Continuity / asset upload (between segments) — small bumps
+  if (t === "extracting_continuity_assets" || t === "uploading_continuity_assets") {
+    const bump = SEG_START + completedSegments * perSeg;
+    return Math.min(SEG_END, Math.round(bump));
+  }
+
+  // Concat phase (85-90%)
+  if (t === "concatenating_segments") return 85;
+  if (t === "concatenated_segments") return 88;
+
+  // Music phase (88-92%)
+  if (t === "generating_music") return 89;
+  if (t === "music_mixed" || t === "music_skipped") return 92;
+
+  // Captions (mostly OFF; if ON then ~92-94%)
+  if (t === "transcribing") return 92;
+  if (t === "transcribed") return 94;
+
+  // Upload + delivery phase (94-98%)
+  if (t === "uploading_to_r2") return 95;
+  if (t === "uploaded_to_r2") return 96;
+  if (t === "editing") return 96;
+  if (t === "edited") return 97;
+  if (t === "uploading_to_drive") return 97;
+  if (t === "drive_uploaded") return 98;
+  if (t === "delivering_email") return 98;
+  if (t === "delivered") return 99;
+
+  // Fallback: estimate from completed segments
+  if (completedSegments > 0) {
+    return Math.min(SEG_END, Math.round(SEG_START + completedSegments * perSeg));
+  }
+  return 15;
 }
 
 function formatEvent(ev: PipelineEvent): string {
