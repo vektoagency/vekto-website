@@ -25,7 +25,9 @@ type Props = {
  */
 export default function MacintoshGLB({ hovered, zoomedIn, mobile, onHoverChange, onScreenClick, onScreenLocated }: Props) {
   const root = useRef<THREE.Group>(null);
-  const { scene } = useGLTF(MODEL_URL);
+  // 2nd arg `true` enables Draco decoder — required because the GLB is
+  // Draco-compressed (3.5 MB → 348 KB). Decoder fetches from gstatic CDN.
+  const { scene } = useGLTF(MODEL_URL, true);
   const { pointer } = useThree();
 
   // One shared shader material, reused and animated in useFrame.
@@ -172,4 +174,4 @@ export default function MacintoshGLB({ hovered, zoomedIn, mobile, onHoverChange,
   );
 }
 
-useGLTF.preload(MODEL_URL);
+useGLTF.preload(MODEL_URL, true);
