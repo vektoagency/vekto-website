@@ -66,6 +66,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Native HTML5 video player accent — applies to the local MP4 fallback
+   in PortfolioOverlay (Bunny iframe handles its own colours via
+   iframe_color query param). Modern browsers respect accent-color. */
+.vekto-native-video {
+  accent-color: #c8ff00;
+}
+
 /* Blog prose styles */
 .prose {
   color: var(--foreground);

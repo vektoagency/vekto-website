@@ -292,9 +292,15 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
       >
         {clip.embedUrl ? (
           <iframe
-            // Strip Bunny's preload=true — it races with playback and
-            // saturates bandwidth on slower links, causing first-frame stutter.
-            src={clip.embedUrl.replace(/[?&]preload=true/, "")}
+            // Strip Bunny's preload=true (saturates bandwidth on slower
+            // links) and inject our brand colour so player accents land
+            // lime instead of Bunny's default orange.
+            src={(() => {
+              const u = new URL(clip.embedUrl);
+              u.searchParams.delete("preload");
+              u.searchParams.set("iframe_color", "c8ff00");
+              return u.toString();
+            })()}
             className="absolute inset-0 w-full h-full"
             loading="lazy"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -305,7 +311,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
           <video
             src={clip.previewMp4}
             poster={clip.thumbnail}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover vekto-native-video"
             autoPlay
             playsInline
             controls
