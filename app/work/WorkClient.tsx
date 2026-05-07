@@ -26,7 +26,7 @@ const projects: Project[] = [
     client: "MEN'S CARE",
     logo: "/images/logo-menscare.png",
     circularLogo: true,
-    poster: "/images/work-menscare.jpg",
+    poster: "/images/work-menscare.webp",
     reel: [`${V}/video-1s.webp`, `${V}/video-5s.webp`, `${V}/video-9s.webp`, `${V}/video-3s.webp`],
     title: "Brand Elevation & Content Strategy",
     tagline: "Scaled a premium grooming brand to 2,500+ new orders while holding 4.6x ROAS across 6 months.",
@@ -39,7 +39,7 @@ const projects: Project[] = [
   {
     client: "ISOSPORT",
     logo: "/images/logo-isosport.png",
-    poster: "/images/work-isosport.jpg",
+    poster: "/images/work-isosport.webp",
     reel: [`${V}/video-2s.webp`, `${V}/video-6s.webp`, `${V}/video-10s.webp`],
     title: "Promotional Video Campaign",
     tagline: "Cinematic promos fused with AI visuals to elevate brand presence across channels.",
@@ -51,7 +51,7 @@ const projects: Project[] = [
   {
     client: "VEKTO LAB",
     logo: "/images/logo.png",
-    poster: "/images/work-menscare.jpg",
+    poster: "/images/work-menscare.webp",
     reel: [`${V}/video-4s.webp`, `${V}/video-8s.webp`, `${V}/video-12s.webp`],
     title: "Next Case Study Coming Soon",
     tagline: "A new brand collaboration currently in production — launching soon.",

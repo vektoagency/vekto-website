@@ -25,7 +25,7 @@ export default function MensCarePage() {
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-end px-6 pb-16 pt-32 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/work-menscare.jpg" alt="Men's Care" fill className="object-cover opacity-30" />
+          <Image src="/images/work-menscare.webp" alt="Men's Care" fill className="object-cover opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/60 to-transparent" />
         </div>
         <div className="relative max-w-7xl mx-auto w-full">
