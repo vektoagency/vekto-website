@@ -149,7 +149,7 @@ export default function Clients() {
           transform: translateZ(0);
         }
         @media (min-width: 768px) {
-          .feed-track { animation-duration: 110s; }
+          .feed-track { animation-duration: 50s; }
         }
         .feed-track:hover,
         .feed-paused {
