@@ -151,7 +151,6 @@ export default function Clients() {
         @media (min-width: 768px) {
           .feed-track { animation-duration: 50s; }
         }
-        .feed-track:hover,
         .feed-paused {
           animation-play-state: paused;
         }
