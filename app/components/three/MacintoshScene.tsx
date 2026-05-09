@@ -10,6 +10,7 @@ import MacintoshGLB from "./MacintoshGLB";
 type Props = {
   zoomedIn: boolean;
   paused?: boolean;
+  overlayOpen?: boolean;
   mobile?: boolean;
   onScreenClick?: () => void;
   onReady?: () => void;
@@ -100,7 +101,7 @@ function CameraRig({
   return null;
 }
 
-export default function MacintoshScene({ zoomedIn, paused = false, mobile = false, onScreenClick, onReady }: Props) {
+export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen = false, mobile = false, onScreenClick, onReady }: Props) {
   const [hovered, setHovered] = useState(false);
   const [screen, setScreen] = useState<ScreenInfo | null>(null);
   const [inView, setInView] = useState(true);
@@ -131,7 +132,14 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
         // body are barely perceptible vs the cost. ContactShadows below
         // handles the floor shadow on its own (separate render target).
         shadows={false}
-        dpr={mobile ? 1 : [1, 1.75]}
+        // Lower idle DPR (Mac visible but no zoom interaction) keeps GPU
+        // work down. When portfolio overlay covers the canvas, we drop
+        // to 0.5 — Mac is invisible behind the opaque overlay anyway.
+        dpr={
+          mobile
+            ? overlayOpen ? 0.5 : 1
+            : overlayOpen ? 0.5 : zoomedIn ? 1.75 : 1.5
+        }
         frameloop={frameloop}
         camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 52 : 32 }}
         gl={{ antialias: true, alpha: true, powerPreference: mobile ? "default" : "high-performance" }}
@@ -174,10 +182,10 @@ export default function MacintoshScene({ zoomedIn, paused = false, mobile = fals
 
         <CameraRig zoomedIn={zoomedIn} screen={screen} mobile={mobile} />
 
-        {/* Mobile skips postprocessing entirely — bloom + vignette are
-            the most expensive passes on the GPU and the CSS atmosphere
-            behind the canvas already provides the dim-studio feel. */}
-        {!mobile && (
+        {/* Mobile skips postprocessing entirely. Desktop also skips it
+            when the overlay is open (Mac invisible behind opaque overlay,
+            no point burning GPU on bloom/vignette). */}
+        {!mobile && !overlayOpen && (
           <EffectComposer multisampling={2}>
             <Bloom
               intensity={zoomedIn ? 0.85 : 0.28}

@@ -44,6 +44,15 @@ export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}
   useEffect(() => {
     if (!sceneReady) return;
     window.dispatchEvent(new Event("vekto:hero-ready"));
+    // Pre-warm the PortfolioOverlay chunk after the Mac is ready, while the
+    // browser is otherwise idle. By the time the user actually clicks the
+    // screen, the JS + CSS for the overlay is already cached → no lag.
+    const prewarm = () => import("./PortfolioOverlay");
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      window.requestIdleCallback(prewarm, { timeout: 2000 });
+    } else {
+      setTimeout(prewarm, 1500);
+    }
   }, [sceneReady]);
 
   const startZoom = () => {
@@ -97,6 +106,7 @@ export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}
             <MacintoshScene
               zoomedIn={zoomedIn}
               paused={playerOpen}
+              overlayOpen={overlayOpen}
               mobile={mobile}
               onScreenClick={handleScreenClick}
               onReady={() => setSceneReady(true)}
