@@ -34,7 +34,7 @@ function BrandTile({ c }: { c: Client }) {
       href={c.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative shrink-0 w-[170px] md:w-[230px] h-[110px] md:h-[140px] mx-1.5 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      className="group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
       aria-label={`${c.name} — open website`}
     >
       {/* Phosphor glow on hover — bottom-up sweep */}
@@ -48,8 +48,8 @@ function BrandTile({ c }: { c: Client }) {
       />
 
       {/* Logo frame — same dimensions for every tile */}
-      <div className="absolute inset-x-0 top-0 bottom-[44px] md:bottom-[56px] flex items-center justify-center">
-        <div className="relative flex items-center justify-center w-[110px] h-[34px] md:w-[150px] md:h-[46px]">
+      <div className="absolute inset-x-0 top-0 bottom-[36px] md:bottom-[56px] flex items-center justify-center">
+        <div className="relative flex items-center justify-center w-[92px] h-[26px] md:w-[150px] md:h-[46px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={c.logo}
@@ -67,11 +67,11 @@ function BrandTile({ c }: { c: Client }) {
       </div>
 
       {/* Brand name + description — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-3 py-2 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
-        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-[#c8ff00]/85 group-hover:text-[#c8ff00] transition-colors duration-500 truncate w-full">
+      <div className="absolute inset-x-0 bottom-0 px-2 md:px-3 py-1.5 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
+        <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-[#c8ff00]/85 group-hover:text-[#c8ff00] transition-colors duration-500 truncate w-full">
           {c.name}
         </span>
-        <span className="text-[9px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
+        <span className="text-[8px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
           {c.desc}
         </span>
       </div>
@@ -99,15 +99,15 @@ export default function Clients() {
   return (
     <section
       ref={sectionRef}
-      className="py-9 md:py-14 border-y border-[#1e1e1c] relative overflow-hidden"
+      className="py-6 md:py-14 border-y border-[#1e1e1c] relative overflow-hidden"
       style={{ background: "linear-gradient(to bottom, #070707 0%, #0a0a0a 50%, #070707 100%)" }}
     >
       <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/30 to-transparent" />
       <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/20 to-transparent" />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-6 md:mb-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-4 md:mb-8">
         <AnimateIn>
-          <p className="text-center text-xs text-[#c8ff00] uppercase tracking-widest">
+          <p className="text-center text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest">
             Trusted by forward-thinking brands
           </p>
         </AnimateIn>
@@ -141,10 +141,15 @@ export default function Clients() {
         }
         .feed-track {
           /* Slower duration smooths perceived motion — eye reads it as
-             premium glide rather than busy scroll. */
-          animation: feedScroll 110s linear infinite;
+             premium glide rather than busy scroll. Mobile gets a faster
+             cycle because tiles are narrower → otherwise the same brand
+             takes too long to come back into view. */
+          animation: feedScroll 60s linear infinite;
           backface-visibility: hidden;
           transform: translateZ(0);
+        }
+        @media (min-width: 768px) {
+          .feed-track { animation-duration: 110s; }
         }
         .feed-track:hover,
         .feed-paused {

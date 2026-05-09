@@ -68,17 +68,17 @@ export default function Process() {
 
         <AnimateIn>
           <div className="relative rounded-2xl border border-[#161616] bg-[#0b0b0b] overflow-hidden">
-            {/* Step selector row — the connecting line sits behind the pills */}
+            {/* Step selector row — the connecting line sits behind the pills.
+                Lime progress bar uses a container with the same insets as the
+                base track so they always align (was hard-coded for mobile only). */}
             <div className="relative">
               <div aria-hidden className="absolute inset-x-4 md:inset-x-6 top-[22px] md:top-1/2 h-px bg-[#1d1d1d]" />
-              <div
-                aria-hidden
-                className="absolute top-[22px] md:top-1/2 h-px bg-[#c8ff00]/70 transition-all duration-500 ease-out"
-                style={{
-                  left: "1rem",
-                  width: `calc((100% - 2rem) * ${active / (steps.length - 1)})`,
-                }}
-              />
+              <div aria-hidden className="absolute inset-x-4 md:inset-x-6 top-[22px] md:top-1/2 h-px overflow-hidden">
+                <div
+                  className="h-full bg-[#c8ff00]/70 transition-all duration-500 ease-out"
+                  style={{ width: `${(active / (steps.length - 1)) * 100}%` }}
+                />
+              </div>
               <div className="relative grid grid-cols-4">
                 {steps.map((s, i) => {
                   const isActive = i === active;
