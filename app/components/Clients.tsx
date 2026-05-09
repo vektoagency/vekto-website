@@ -144,7 +144,7 @@ export default function Clients() {
              premium glide rather than busy scroll. Mobile gets a faster
              cycle because tiles are narrower → otherwise the same brand
              takes too long to come back into view. */
-          animation: feedScroll 60s linear infinite;
+          animation: feedScroll 35s linear infinite;
           backface-visibility: hidden;
           transform: translateZ(0);
         }
