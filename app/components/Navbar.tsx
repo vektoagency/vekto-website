@@ -39,7 +39,6 @@ export default function Navbar() {
     { label: "Services", href: "#services" },
     { label: "Why VEKTO", href: "#why" },
     { label: "Portfolio", action: "portfolio" },
-    { label: "Pricing", href: "#pricing" },
     { label: "Contact", href: "#contact" },
   ];
 

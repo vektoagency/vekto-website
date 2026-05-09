@@ -7,7 +7,7 @@ const sections = [
   { id: "services", label: "Services" },
   { id: "why",      label: "Why VEKTO" },
   { id: "work",     label: "Our Work" },
-  { id: "pricing",  label: "Pricing" },
+  { id: "process",  label: "Process" },
   { id: "contact",  label: "Contact" },
 ];
 

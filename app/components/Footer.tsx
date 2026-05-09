@@ -7,7 +7,7 @@ export default function Footer() {
     { label: "Services", href: "#services" },
     { label: "Why VEKTO", href: "#why" },
     { label: "Our Work", href: "#work" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Process", href: "#process" },
   ];
 
   return (

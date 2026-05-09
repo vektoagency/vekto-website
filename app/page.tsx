@@ -4,7 +4,6 @@ import SectionNav from "./components/SectionNav";
 import Hero from "./components/Hero";
 import Clients from "./components/Clients";
 import WhyVekto from "./components/WhyVekto";
-import Pricing from "./components/Pricing";
 import Footer from "./components/Footer";
 
 // Below-the-fold client components — defer their hydration JS so the
@@ -28,7 +27,6 @@ export default function Home() {
         <Stats />
         <WhyVekto />
         <Process />
-        <Pricing />
         <Contact />
       </main>
       <Footer />
