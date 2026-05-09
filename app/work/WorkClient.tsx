@@ -38,7 +38,7 @@ const projects: Project[] = [
   },
   {
     client: "ISOSPORT",
-    logo: "/images/logo-isosport.png",
+    logo: "/images/logo-isosport.webp",
     poster: "/images/work-isosport.webp",
     reel: [`${V}/video-2s.webp`, `${V}/video-6s.webp`, `${V}/video-10s.webp`],
     title: "Promotional Video Campaign",
@@ -50,7 +50,7 @@ const projects: Project[] = [
   },
   {
     client: "VEKTO LAB",
-    logo: "/images/logo.png",
+    logo: "/images/logo.webp",
     poster: "/images/work-menscare.webp",
     reel: [`${V}/video-4s.webp`, `${V}/video-8s.webp`, `${V}/video-12s.webp`],
     title: "Next Case Study Coming Soon",

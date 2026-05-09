@@ -60,7 +60,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center h-10 w-[120px]">
-          <Image src="/images/logo.png" alt="VEKTO" width={120} height={40} className="object-contain" priority />
+          <Image src="/images/logo.webp" alt="VEKTO" width={120} height={40} className="object-contain" priority />
         </a>
 
         {/* Desktop nav */}

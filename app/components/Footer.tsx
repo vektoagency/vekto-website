@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-12 mb-10">
           {/* Brand */}
           <div>
-            <Image src="/images/logo.png" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />
+            <Image src="/images/logo.webp" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />
             <p className="text-sm text-[#9a958e] leading-relaxed max-w-sm mb-5">
               AI-Driven Vision for the Future of Companies. Cinematic storytelling
               and AI-powered short-form systems built to scale.

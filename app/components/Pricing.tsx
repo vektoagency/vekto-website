@@ -47,7 +47,7 @@ export default function Pricing() {
             <div className="text-[#c8ff00] text-3xl font-bold hidden md:block">→</div>
             <div className="text-3xl md:text-2xl font-bold text-[#c8ff00] md:hidden">↓</div>
             <div className="text-center">
-              <div style={{ width: 80, height: 30, backgroundColor: "#c8ff00", maskImage: "url('/images/logo.png')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.png')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto 8px" }} />
+              <div style={{ width: 80, height: 30, backgroundColor: "#c8ff00", maskImage: "url('/images/logo.webp')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.webp')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto 8px" }} />
               <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Starting from</p>
               <p className="text-3xl md:text-4xl font-bold text-white">€40</p>
               <p className="text-sm text-[#a0a0a0] mt-1">per video, VAT included</p>

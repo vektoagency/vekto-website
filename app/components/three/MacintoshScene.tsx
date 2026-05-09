@@ -27,6 +27,31 @@ function ReadySignal({ onReady }: { onReady?: () => void }) {
   return null;
 }
 
+// In demand-mode, R3F only renders when invalidate() is called. We pulse
+// invalidate at the target FPS so the CRT shader keeps animating but at a
+// rate of our choosing — 30fps idle (50% GPU saving), 60fps when zooming
+// or hovering for snappy feel. targetFps=0 means stop entirely.
+function FrameRateController({ targetFps }: { targetFps: number }) {
+  const invalidate = useThree((s) => s.invalidate);
+  useEffect(() => {
+    if (!targetFps) return;
+    const interval = 1000 / targetFps;
+    let lastTime = performance.now();
+    let rafId = 0;
+    const tick = () => {
+      const now = performance.now();
+      if (now - lastTime >= interval) {
+        invalidate();
+        lastTime = now;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [targetFps, invalidate]);
+  return null;
+}
+
 type ScreenInfo = {
   center: THREE.Vector3;
   normal: THREE.Vector3;
@@ -121,9 +146,18 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
     return () => obs.disconnect();
   }, []);
 
-  // Pause rendering entirely when the portfolio overlay is covering the scene —
-  // the R3F loop was burning ~60fps behind an opaque modal.
-  const frameloop = paused ? "never" : zoomedIn || inView ? "always" : "never";
+  // Use demand mode and drive the cadence ourselves. Idle = 30fps,
+  // zoom/hover = 60fps for snappy interaction, offscreen/paused = 0.
+  const targetFps = paused
+    ? 0
+    : !inView
+      ? 0
+      : zoomedIn || hovered
+        ? 60
+        : overlayOpen
+          ? 15
+          : 30;
+  const frameloop = "demand";
 
   return (
     <div ref={wrapperRef} className="absolute inset-0">
@@ -164,6 +198,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
           />
 
           <ReadySignal onReady={onReady} />
+          <FrameRateController targetFps={targetFps} />
 
           {/* `frames={1}` bakes the shadow once after layout settles —
               the Mac wobble is too small for a moving shadow to read,

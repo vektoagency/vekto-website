@@ -56,7 +56,7 @@ export default function WhyVekto() {
                 <tr className="border-b border-[#1a1a1a] bg-[#0d0d0d]">
                   <th className="text-left py-4 px-4 md:px-6 text-[#555] font-medium w-[28%]">Aspect</th>
                   <th className="py-4 px-4 md:px-6 text-[#c8ff00] font-semibold w-[24%]">
-                    <div style={{ width: 72, height: 28, backgroundColor: "#c8ff00", maskImage: "url('/images/logo.png')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.png')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto" }} />
+                    <div style={{ width: 72, height: 28, backgroundColor: "#c8ff00", maskImage: "url('/images/logo.webp')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.webp')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto" }} />
                   </th>
                   <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">Traditional Agency</th>
                   <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">In-House</th>

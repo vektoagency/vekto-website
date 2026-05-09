@@ -52,6 +52,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://vz-5279644d-ac4.b-cdn.net" crossOrigin="" />
         <link rel="preconnect" href="https://iframe.mediadelivery.net" crossOrigin="" />
         <link rel="dns-prefetch" href="https://video.bunnycdn.com" />
+        {/* Draco decoder is fetched from gstatic by drei's useGLTF when the
+            GLB is Draco-compressed — opening the connection early saves
+            ~150ms TLS handshake on first GLB parse. */}
+        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="" />
       </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
         {children}

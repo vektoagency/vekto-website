@@ -13,14 +13,14 @@ type Client = {
 };
 
 const clients: Client[] = [
-  { name: "ISOSPORT", logo: "/images/logo-isosport.png", url: "https://neopak.eu", desc: "Energy & functional beverages" },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: "Energy & functional beverages" },
   { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", desc: "Beard & hair growth", circular: true },
-  { name: "PARFEN", logo: "/images/logo-parfen.png", url: "https://parfen.online", desc: "Designer-inspired perfumes", invert: true },
-  { name: "BIOTICA", logo: "/images/logo-biotica.png", url: "https://biotica.bg", desc: "Natural supplements", circular: true, invert: true },
-  { name: "BEMEACNE", logo: "/images/logo-bemeacne.png", url: "https://bemeacne.bg", desc: "Acne skincare brand" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.png", url: "https://kristag-bg.com", desc: "Natural cosmetics" },
-  { name: "GIFTO", logo: "/images/logo-gifto2.png", url: "https://gifto.bg", desc: "Experience voucher platform" },
-  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.png", url: "https://adventures.bg", desc: "Adventure tourism" },
+  { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: "Designer-inspired perfumes", invert: true },
+  { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: "Natural supplements", circular: true, invert: true },
+  { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: "Acne skincare brand" },
+  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: "Natural cosmetics" },
+  { name: "GIFTO", logo: "/images/logo-gifto2.webp", url: "https://gifto.bg", desc: "Experience voucher platform" },
+  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.webp", url: "https://adventures.bg", desc: "Adventure tourism" },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
