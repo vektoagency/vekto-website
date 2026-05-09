@@ -1,5 +1,6 @@
 import HeroPravec from "./HeroPravec";
 import HeroLeftCurtain from "./HeroLeftCurtain";
+import HeroTapHint from "./HeroTapHint";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
@@ -178,15 +179,7 @@ export default function Hero() {
 
         {/* Bottom cluster */}
         <div className="flex flex-col items-center">
-          <Stagger delay={420}>
-            <div className="inline-flex items-center gap-2 mb-5 px-3 py-1.5 rounded-full border border-[#c8ff00]/40 bg-black/55 backdrop-blur-sm hero-tap-hint"
-              style={{ boxShadow: "0 0 18px -2px rgba(200,255,0,0.35)" }}>
-              <span aria-hidden className="hero-tap-arrow text-[#c8ff00] text-[13px] leading-none">↑</span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]">
-                Tap the screen to open our reel
-              </span>
-            </div>
-          </Stagger>
+          <HeroTapHint />
           <Stagger delay={520}>
             <div className="flex flex-col gap-3 w-full max-w-[280px] pointer-events-auto">
               <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">

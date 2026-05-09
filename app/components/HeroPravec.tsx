@@ -39,6 +39,13 @@ export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}
     return () => clearTimeout(t);
   }, [sceneReady]);
 
+  // Broadcast scene-ready so peer components (e.g. mobile tap-hint pill)
+  // can sync their reveal with the moment the Mac fades in.
+  useEffect(() => {
+    if (!sceneReady) return;
+    window.dispatchEvent(new Event("vekto:hero-ready"));
+  }, [sceneReady]);
+
   const startZoom = () => {
     window.dispatchEvent(new Event("vekto:zoom-started"));
     setZoomedIn(true);
