@@ -19,8 +19,8 @@ const clients: Client[] = [
   { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: "Natural supplements", circular: true, invert: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: "Acne skincare brand" },
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: "Natural cosmetics" },
-  { name: "GIFTO", logo: "/images/logo-gifto2.webp", url: "https://gifto.bg", desc: "Experience voucher platform" },
-  { name: "ADVENTURES BG", logo: "/images/logo-adventuresbg.webp", url: "https://adventures.bg", desc: "Adventure tourism" },
+  { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: "Experience voucher platform" },
+  { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: "Adventure tourism" },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
