@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { sendContactEmail } from "../actions/contact";
+import { useT } from "../i18n/LangProvider";
 
 type Mode = "call" | "message";
 
@@ -33,6 +34,44 @@ export default function ContactModal() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const t = useT({
+    bg: {
+      eyebrow: "Прати съобщение · отговор до 24ч",
+      title: "Разкажи ни за проекта си",
+      close: "Затвори",
+      name: "Име",
+      namePh: "Иван Иванов",
+      email: "Имейл",
+      emailPh: "ти@company.com",
+      company: "Фирма",
+      companyPh: "Твоят бизнес",
+      messageLabel: "Разкажи ни за проекта си",
+      messagePh: "Искаме да направим серия от кратки видеа за бизнеса си...",
+      submit: "Прати →",
+      submitting: "Изпраща се…",
+      successTitle: "Съобщението е изпратено!",
+      successBody: "Ще ти отговорим в рамките на 24 часа.",
+      error: "Нещо се обърка. Опитай отново.",
+    },
+    en: {
+      eyebrow: "Send Message · reply in 24h",
+      title: "Tell us about your project",
+      close: "Close",
+      name: "Name",
+      namePh: "Luca Rossi",
+      email: "Email",
+      emailPh: "luca@company.com",
+      company: "Company",
+      companyPh: "Acme Studio",
+      messageLabel: "Tell us about your project",
+      messagePh: "We want to create a short-form video series for our brand...",
+      submit: "Send Message →",
+      submitting: "Sending...",
+      successTitle: "Message sent!",
+      successBody: "We'll get back to you within 24 hours.",
+      error: "Something went wrong. Please try again.",
+    },
+  });
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -62,7 +101,7 @@ export default function ContactModal() {
     const result = await sendContactEmail(formData);
     setLoading(false);
     if (result.success) setSent(true);
-    else setError("Something went wrong. Please try again.");
+    else setError(t.error);
   };
 
   if (!open) return null;
@@ -85,13 +124,13 @@ export default function ContactModal() {
               <MessageIcon />
             </div>
             <div>
-              <p className="text-[10px] text-[#c8ff00] uppercase tracking-[0.2em] mb-0.5">Send Message · reply in 24h</p>
-              <h3 className="text-lg font-bold text-white leading-tight">Tell us about your project</h3>
+              <p className="text-[10px] text-[#c8ff00] uppercase tracking-[0.2em] mb-0.5">{t.eyebrow}</p>
+              <h3 className="text-lg font-bold text-white leading-tight">{t.title}</h3>
             </div>
           </div>
           <button
             onClick={close}
-            aria-label="Close"
+            aria-label={t.close}
             className="w-9 h-9 rounded-full border border-[#1a1a1a] text-[#888] hover:text-white hover:border-[#333] flex items-center justify-center transition-colors flex-shrink-0"
           >
             <CloseIcon />
@@ -103,25 +142,25 @@ export default function ContactModal() {
           {sent ? (
             <div className="text-center py-10">
               <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-[#c8ff00] text-black flex items-center justify-center text-2xl font-bold">✓</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Message sent!</h3>
-              <p className="text-[#a0a0a0]">We&apos;ll get back to you within 24 hours.</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{t.successTitle}</h3>
+              <p className="text-[#a0a0a0]">{t.successBody}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">Name</label>
+                  <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.name}</label>
                   <input
-                    required type="text" placeholder="Luca Rossi" name="name"
+                    required type="text" placeholder={t.namePh} name="name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">Email</label>
+                  <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.email}</label>
                   <input
-                    required type="email" placeholder="luca@company.com" name="email"
+                    required type="email" placeholder={t.emailPh} name="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
@@ -129,18 +168,18 @@ export default function ContactModal() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">Company</label>
+                <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.company}</label>
                 <input
-                  type="text" placeholder="Acme Studio" name="company"
+                  type="text" placeholder={t.companyPh} name="company"
                   value={form.company}
                   onChange={(e) => setForm({ ...form, company: e.target.value })}
                   className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">Tell us about your project</label>
+                <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.messageLabel}</label>
                 <textarea
-                  required rows={3} placeholder="We want to create a short-form video series for our brand..." name="message"
+                  required rows={3} placeholder={t.messagePh} name="message"
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm resize-none"
@@ -152,7 +191,7 @@ export default function ContactModal() {
                 disabled={loading}
                 className="w-full bg-[#c8ff00] text-black font-semibold py-4 rounded-full hover:bg-[#d4ff33] transition-colors disabled:opacity-50"
               >
-                {loading ? "Sending..." : "Send Message →"}
+                {loading ? t.submitting : t.submit}
               </button>
             </form>
           )}

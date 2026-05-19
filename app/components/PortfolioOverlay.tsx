@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import bunnyData from "../data/bunny-clips.json";
+import { useT } from "../i18n/LangProvider";
 
 type Clip = {
   id: string;
@@ -31,14 +32,47 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
   const [mounted, setMounted] = useState(false);
   const [filter, setFilter] = useState<string>("ALL");
   const [expanded, setExpanded] = useState<Clip | null>(null);
-
-  // Explicit category list — must match the values used in Bunny titles
-  // ("BRAND | CATEGORY | DESCRIPTION"). scripts/fetch-bunny-clips.mjs warns
-  // if a clip's category doesn't match one of these.
-  const categories = useMemo(
-    () => ["ALL", "Product", "Organic", "UGC", "Cinematic", "Experimental"],
-    []
-  );
+  const t = useT({
+    bg: {
+      header: "VEKTO/РИЙЛ.БД",
+      clipsSuffix: "КЛИПА",
+      back: "Назад",
+      filter: "> ФИЛТЪР",
+      categories: [
+        { id: "ALL", label: "ВСИЧКИ" },
+        { id: "Product", label: "Продукт" },
+        { id: "Organic", label: "Органичен" },
+        { id: "UGC", label: "UGC" },
+        { id: "Cinematic", label: "Кинематографичен" },
+        { id: "Experimental", label: "Експериментален" },
+      ],
+      nextUp: "] СЛЕДВАЩ",
+      ctaH2Top: "Искаш ли да си",
+      ctaH2Bottom: "следващото case study?",
+      bookCta: "Резервирай разговор",
+      backToHome: "← Обратно към сайта",
+    },
+    en: {
+      header: "VEKTO/REEL.DB",
+      clipsSuffix: "CLIPS",
+      back: "Back",
+      filter: "> FILTER",
+      categories: [
+        { id: "ALL", label: "ALL" },
+        { id: "Product", label: "Product" },
+        { id: "Organic", label: "Organic" },
+        { id: "UGC", label: "UGC" },
+        { id: "Cinematic", label: "Cinematic" },
+        { id: "Experimental", label: "Experimental" },
+      ],
+      nextUp: "] NEXT UP",
+      ctaH2Top: "Want to be our",
+      ctaH2Bottom: "next case study?",
+      bookCta: "Book a Call",
+      backToHome: "← Back to desktop",
+    },
+  });
+  const categories = t.categories;
 
   const visible = useMemo(
     () => (filter === "ALL" ? clips : clips.filter((c) => c.category === filter)),
@@ -108,17 +142,17 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
         >
           <div className="flex items-center gap-3 text-[#c8ff00]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-            VEKTO/REEL.DB — {visible.length} CLIPS
+            {t.header} — {visible.length} {t.clipsSuffix}
           </div>
           <button
             onClick={onClose}
             className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#c8ff00] hover:bg-[#e0ff4a] border border-[#c8ff00] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(200,255,0,0.35)]"
-            aria-label="Close portfolio"
+            aria-label={t.back}
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="group-hover:-translate-x-0.5 transition-transform">
               <path d="M6 1L2 5L6 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
             </svg>
-            <span>Back</span>
+            <span>{t.back}</span>
           </button>
         </div>
 
@@ -131,21 +165,21 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
               boxShadow: "inset 0 0 0 1px rgba(200,255,0,0.05), 0 0 22px -10px rgba(200,255,0,0.35)",
             }}
           >
-            <span className="mr-1.5 md:mr-3 text-[9px] md:text-[12px] text-[#c8ff00]">&gt; FILTER</span>
+            <span className="mr-1.5 md:mr-3 text-[9px] md:text-[12px] text-[#c8ff00]">{t.filter}</span>
             {categories.map((cat, i) => {
-              const active = filter === cat;
+              const active = filter === cat.id;
               return (
-                <span key={cat} className="flex items-center">
+                <span key={cat.id} className="flex items-center">
                   {i > 0 && <span aria-hidden className="mx-1 md:mx-2 text-[#c8ff00]/45">|</span>}
                   <button
-                    onClick={() => setFilter(cat)}
+                    onClick={() => setFilter(cat.id)}
                     className={`py-0.5 md:py-1 px-0.5 md:px-1 transition-colors ${
                       active
                         ? "text-[#c8ff00] font-bold"
                         : "text-[#c8ff00] hover:text-white"
                     }`}
                   >
-                    {active ? `[${cat}]` : cat}
+                    {active ? `[${cat.label}]` : cat.label}
                   </button>
                 </span>
               );
@@ -162,10 +196,10 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
         </section>
 
         <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] mb-4">] NEXT UP</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] mb-4">{t.nextUp}</p>
           <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow">
-            Want to be our<br />
-            <span className="text-[#c8ff00]">next case study?</span>
+            {t.ctaH2Top}<br />
+            <span className="text-[#c8ff00]">{t.ctaH2Bottom}</span>
           </h2>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
@@ -175,13 +209,13 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
               className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-10 py-4 rounded-sm hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
               style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
             >
-              Book a Call
+              {t.bookCta}
             </button>
             <button
               onClick={onClose}
               className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/40 text-[#c8ff00] font-semibold px-10 py-4 rounded-sm hover:bg-[#c8ff00]/10 transition-colors cursor-pointer font-mono text-sm uppercase tracking-[0.2em]"
             >
-              ← Back to desktop
+              {t.backToHome}
             </button>
           </div>
         </section>

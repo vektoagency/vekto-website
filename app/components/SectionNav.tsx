@@ -1,19 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const sections = [
-  { id: "hero",     label: "Home" },
-  { id: "services", label: "Services" },
-  { id: "why",      label: "Why VEKTO" },
-  { id: "work",     label: "Our Work" },
-  { id: "process",  label: "Process" },
-  { id: "contact",  label: "Contact" },
-];
+import { useT } from "../i18n/LangProvider";
 
 export default function SectionNav() {
   const [active, setActive] = useState("hero");
   const [hovered, setHovered] = useState<string | null>(null);
+  const t = useT({
+    bg: {
+      sections: [
+        { id: "hero", label: "Начало" },
+        { id: "services", label: "Услуги" },
+        { id: "why", label: "Защо VEKTO" },
+        { id: "work", label: "Нашата работа" },
+        { id: "process", label: "Процес" },
+        { id: "contact", label: "Контакт" },
+      ],
+    },
+    en: {
+      sections: [
+        { id: "hero", label: "Home" },
+        { id: "services", label: "Services" },
+        { id: "why", label: "Why VEKTO" },
+        { id: "work", label: "Our Work" },
+        { id: "process", label: "Process" },
+        { id: "contact", label: "Contact" },
+      ],
+    },
+  });
+  const sections = t.sections;
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
