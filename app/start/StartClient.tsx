@@ -16,6 +16,7 @@ export default function StartClient() {
   const [phone, setPhone] = useState("");
   const [contentTypes, setContentTypes] = useState<string[]>([]);
   const [budget, setBudget] = useState(2500); // €/month — slider value
+  const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -68,6 +69,7 @@ export default function StartClient() {
       contentTypeLabel: ctLabels,
       budget: String(budget),
       budgetLabel,
+      message,
     });
     setSubmitting(false);
     if (res.success) {
@@ -152,6 +154,15 @@ export default function StartClient() {
                   suffix={t.fields.budgetSuffix}
                   maxLabel={t.fields.budgetMaxLabel}
                   lang={lang}
+                />
+              </Field>
+
+              <Field label={t.fields.message}>
+                <Textarea
+                  value={message}
+                  onChange={setMessage}
+                  placeholder={t.fields.messagePh}
+                  rows={4}
                 />
               </Field>
             </div>
@@ -292,6 +303,28 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
       </label>
       {children}
     </div>
+  );
+}
+
+function Textarea({
+  value,
+  onChange,
+  placeholder,
+  rows = 4,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  rows?: number;
+}) {
+  return (
+    <textarea
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      rows={rows}
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors resize-y leading-relaxed"
+    />
   );
 }
 

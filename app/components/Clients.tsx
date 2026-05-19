@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import AnimateIn from "./AnimateIn";
+import { useT, useLang } from "../i18n/LangProvider";
 
 type Client = {
   name: string;
   logo: string;
   url: string;
-  desc: string;
+  desc: { bg: string; en: string };
   circular?: boolean;
   invert?: boolean;
   // Multi-row / stacked marks (logo above word, etc.) — render taller so
@@ -16,34 +17,35 @@ type Client = {
 };
 
 const bgClients: Client[] = [
-  { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: "Energy & functional beverages" },
-  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", desc: "Beard & hair growth", circular: true },
-  { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: "Designer-inspired perfumes", invert: true },
-  { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: "Natural supplements", circular: true, invert: true },
-  { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: "Acne skincare brand" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: "Natural cosmetics" },
-  { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: "Experience voucher platform" },
-  { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: "Adventure tourism" },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: { bg: "Енергийни и функционални напитки", en: "Energy & functional beverages" } },
+  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", desc: { bg: "Растеж на брада и коса", en: "Beard & hair growth" }, circular: true },
+  { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: { bg: "Дизайнерски инспирирани парфюми", en: "Designer-inspired perfumes" }, invert: true },
+  { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: { bg: "Натурални хранителни добавки", en: "Natural supplements" }, circular: true, invert: true },
+  { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: { bg: "Грижа за кожа срещу акне", en: "Acne skincare brand" } },
+  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: { bg: "Натурална козметика", en: "Natural cosmetics" } },
+  { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: { bg: "Подаръчни ваучери за преживявания", en: "Experience voucher platform" } },
+  { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: { bg: "Приключенски туризъм", en: "Adventure tourism" } },
 ];
 
 const usClients: Client[] = [
-  { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: "Sleep wearable device", invert: true },
-  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: "Fitness supplements", stacked: true },
+  { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: { bg: "Уред за по-добър сън", en: "Sleep wearable device" }, invert: true },
+  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: { bg: "Добавки за фитнес", en: "Fitness supplements" }, stacked: true },
   // Dark wordmarks — invert to white so they're visible on the dark tile.
   // Mirrors the BG row pattern (PARFEN, BIOTICA use the same trick).
-  { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: "Family immune & gut supplements", invert: true },
-  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: "Zero-sugar energy drinks", invert: true, stacked: true },
+  { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: { bg: "Имунитет и чревно здраве за цялото семейство", en: "Family immune & gut supplements" }, invert: true },
+  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: { bg: "Енергийни напитки без захар", en: "Zero-sugar energy drinks" }, invert: true, stacked: true },
   // Orange wordmark — visible on dark, no invert.
-  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: "Low-calorie gourmet sauces", stacked: true },
-  { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: "Plant-based energy drinks", invert: true },
+  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: { bg: "Гурме сосове с нисък калориен прием", en: "Low-calorie gourmet sauces" }, stacked: true },
+  { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: { bg: "Растителни енергийни напитки", en: "Plant-based energy drinks" }, invert: true },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
 // scaled to fit. Wide logos fill horizontally, circular ones fill the
 // shorter axis — but the *container* size is identical for all tiles, so
 // the visual rhythm stays consistent across the whole feed.
-function BrandTile({ c }: { c: Client }) {
+function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
+  const desc = c.desc[lang];
   return (
     <a
       href={c.url}
@@ -88,7 +90,7 @@ function BrandTile({ c }: { c: Client }) {
           {c.name}
         </span>
         <span className="text-[8px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
-          {c.desc}
+          {desc}
         </span>
       </div>
     </a>
@@ -98,6 +100,19 @@ function BrandTile({ c }: { c: Client }) {
 export default function Clients() {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const { lang } = useLang();
+  const t = useT({
+    bg: {
+      title: "Бранд партньори, които ни се довериха",
+      regionBg: "◆ България",
+      regionUs: "◆ САЩ / Свят",
+    },
+    en: {
+      title: "Trusted by forward-thinking brands",
+      regionBg: "◆ Bulgaria",
+      regionUs: "◆ USA / Worldwide",
+    },
+  });
 
   // Pause the marquee whenever the section is offscreen — saves GPU work
   // and prevents the animation from drifting/desyncing while invisible.
@@ -124,7 +139,7 @@ export default function Clients() {
       <div className="max-w-6xl mx-auto px-4 md:px-6 mb-4 md:mb-8">
         <AnimateIn>
           <p className="text-center text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest">
-            Trusted by forward-thinking brands
+            {t.title}
           </p>
         </AnimateIn>
       </div>
@@ -132,7 +147,7 @@ export default function Clients() {
       {/* Region label — Bulgaria */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
         <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
-          ◆ Bulgaria
+          {t.regionBg}
         </span>
         <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
       </div>
@@ -153,7 +168,7 @@ export default function Clients() {
           }}
         >
           {[...bgClients, ...bgClients, ...bgClients].map((c, i) => (
-            <BrandTile key={`bg-${c.name}-${i}`} c={c} />
+            <BrandTile key={`bg-${c.name}-${i}`} c={c} lang={lang} />
           ))}
         </div>
       </div>
@@ -161,7 +176,7 @@ export default function Clients() {
       {/* Region label — USA / Worldwide */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 mt-4 md:mt-5 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
         <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
-          ◆ USA / Worldwide
+          {t.regionUs}
         </span>
         <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
       </div>
@@ -182,7 +197,7 @@ export default function Clients() {
           }}
         >
           {[...usClients, ...usClients, ...usClients].map((c, i) => (
-            <BrandTile key={`us-${c.name}-${i}`} c={c} />
+            <BrandTile key={`us-${c.name}-${i}`} c={c} lang={lang} />
           ))}
         </div>
       </div>

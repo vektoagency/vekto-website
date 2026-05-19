@@ -21,6 +21,8 @@ export const startCopy = {
       brandPh: "https://...",
       phone: "Телефон / WhatsApp (по избор)",
       phonePh: "+359 ...",
+      message: "Съобщение (по избор)",
+      messagePh: "Разкажи накратко с какво се занимаваш и какво искаш да постигнем заедно.",
       contentType: "Какво съдържание ти трябва",
       contentTypeOptions: [
         { id: "cinematic", label: "Cinematic brand film" },
@@ -67,6 +69,8 @@ export const startCopy = {
       brandPh: "https://...",
       phone: "Phone / WhatsApp (optional)",
       phonePh: "+1 ...",
+      message: "Message (optional)",
+      messagePh: "Tell us briefly what you do and what you'd like to achieve together.",
       contentType: "What content do you need",
       contentTypeOptions: [
         { id: "cinematic", label: "Cinematic brand film" },

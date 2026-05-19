@@ -20,11 +20,11 @@ function Stagger({ children, delay, className = "" }: { children: React.ReactNod
 export default function Hero() {
   const t = useT({
     bg: {
-      badge: "AI-Driven креативна агенция",
-      h1Em: "AI-Driven визия",
-      h1RestDesktop: ["за бъдещето", "на компаниите"],
-      h1RestMobile: "за бъдещето на компаниите",
-      sub: "От cinematic storytelling до AI short-form системи — изграждаме визуални екосистеми за scale.",
+      badge: "Креативна агенция с AI",
+      h1Em: "Бъдещето на бранда ти",
+      h1RestDesktop: ["задвижено", "от AI"],
+      h1RestMobile: "задвижено от AI",
+      sub: "От кинематографични филми до къси формати за социалните мрежи — създаваме съдържание, което продава и расте с бизнеса ти.",
       ctaPrimary: "Започни",
       ctaSecondary: "Виж работата ни",
     },

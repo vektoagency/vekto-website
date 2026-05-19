@@ -36,9 +36,9 @@ export default function Stats() {
   const t = useT({
     bg: {
       stats: [
-        { value: 3, suffix: "x", label: "По-бърза доставка vs агенции", symbol: null as string | null },
+        { value: 3, suffix: "x", label: "По-бързо от агенциите", symbol: null as string | null },
         { value: null, suffix: "", label: "Всяка идея, всеки формат", symbol: "∞" },
-        { value: 60, suffix: "%", label: "По-ниска цена, повече output", symbol: null },
+        { value: 60, suffix: "%", label: "По-ниска цена, повече съдържание", symbol: null },
       ],
     },
     en: {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "../i18n/LangProvider";
 
 /**
  * Mobile-only "Tap the screen to open our reel" pill.
@@ -11,6 +12,10 @@ import { useEffect, useState } from "react";
  */
 export default function HeroTapHint() {
   const [show, setShow] = useState(false);
+  const t = useT({
+    bg: "Натисни екрана, за да видиш нашата работа",
+    en: "Tap the screen to open our reel",
+  });
 
   useEffect(() => {
     const onReady = () => setShow(true);
@@ -36,7 +41,7 @@ export default function HeroTapHint() {
     >
       <span aria-hidden className="hero-tap-arrow text-[#c8ff00] text-[13px] leading-none">↑</span>
       <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]">
-        Tap the screen to open our reel
+        {t}
       </span>
     </div>
   );

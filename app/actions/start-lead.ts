@@ -14,6 +14,7 @@ export type StartLead = {
   contentTypeLabel: string;
   budget: string;
   budgetLabel: string;
+  message: string;
 };
 
 function escape(s: string): string {
@@ -47,7 +48,8 @@ export async function submitStartLead(data: StartLead) {
     row("Brand / site", data.brand) +
     row("Phone", data.phone) +
     row("Content type", data.contentTypeLabel) +
-    row("Monthly budget", data.budgetLabel);
+    row("Monthly budget", data.budgetLabel) +
+    row("Message", data.message);
 
   const html = `
     <div style="background:#080808;color:#ece8e1;font-family:Arial,sans-serif;padding:32px">
