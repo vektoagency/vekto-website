@@ -25,7 +25,7 @@ export default function Hero() {
       h1RestDesktop: ["за бъдещето", "на бизнеса ти"],
       h1RestMobile: "за бъдещето на бизнеса ти",
       sub: "От кинематографични филми до видеа за социалните мрежи — създаваме съдържание, което продава и расте с бизнеса ти.",
-      ctaPrimary: "Започни",
+      ctaPrimary: "Свържи се",
       ctaSecondary: "Виж работата ни",
     },
     en: {
@@ -34,7 +34,7 @@ export default function Hero() {
       h1RestDesktop: ["for the Future", "of Companies"],
       h1RestMobile: "for the Future of Companies",
       sub: "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
-      ctaPrimary: "Get Started",
+      ctaPrimary: "Get in Touch",
       ctaSecondary: "See Our Work",
     },
   });
