@@ -16,7 +16,7 @@ export const startCopy = {
       name: "Име",
       namePh: "Иван Иванов",
       email: "Email",
-      emailPh: "ти@brand.com",
+      emailPh: "ivan@biznes.bg",
       brand: "Бранд / уебсайт",
       brandPh: "https://...",
       phone: "Телефон / WhatsApp (по избор)",
@@ -38,8 +38,9 @@ export const startCopy = {
     cta: {
       submit: "Изпрати →",
       submitting: "Изпраща се…",
-      orBook: "Или резервирай 30-минутен call директно:",
-      bookCta: "Discovery Call",
+      orBook: "Или се свържи директно:",
+      bookCta: "Резервирай среща",
+      callCta: "Обади се",
     },
     success: {
       title: "Получихме брифа ти.",
@@ -86,8 +87,9 @@ export const startCopy = {
     cta: {
       submit: "Send →",
       submitting: "Sending…",
-      orBook: "Or book a 30-min call directly:",
-      bookCta: "Discovery Call",
+      orBook: "Or reach us directly:",
+      bookCta: "Book a Call",
+      callCta: "Call now",
     },
     success: {
       title: "Got your brief.",
