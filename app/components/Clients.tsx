@@ -10,10 +10,6 @@ type Client = {
   desc: string;
   circular?: boolean;
   invert?: boolean;
-  // When true, the logo plate gets a near-white card background so dark/
-  // colour brand marks read at full saturation (e.g. Anomaly, Lucky,
-  // Taste Flavor). Used for the US/Worldwide row.
-  lightTile?: boolean;
 };
 
 const bgClients: Client[] = [
@@ -28,14 +24,15 @@ const bgClients: Client[] = [
 ];
 
 const usClients: Client[] = [
-  // White-on-transparent logos — render on the standard dark tile.
   { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: "Sleep wearable device" },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: "Fitness supplements" },
-  // Coloured / dark logos — render on a near-white tile so brand colours show.
-  { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: "Family immune & gut supplements", lightTile: true },
-  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: "Zero-sugar energy drinks", lightTile: true },
-  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: "Low-calorie gourmet sauces", lightTile: true },
-  { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: "Plant-based energy drinks", lightTile: true },
+  // Dark wordmarks — invert to white so they're visible on the dark tile.
+  // Mirrors the BG row pattern (PARFEN, BIOTICA use the same trick).
+  { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: "Family immune & gut supplements", invert: true },
+  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: "Zero-sugar energy drinks", invert: true },
+  // Orange wordmark — visible on dark, no invert.
+  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: "Low-calorie gourmet sauces" },
+  { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: "Plant-based energy drinks", invert: true },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
@@ -44,9 +41,6 @@ const usClients: Client[] = [
 // the visual rhythm stays consistent across the whole feed.
 function BrandTile({ c }: { c: Client }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
-  // Light tiles get a near-white plate behind just the logo so the brand
-  // colour shows at full saturation; bottom strip stays on the dark base
-  // so the brand-name text styling matches across the whole marquee.
   return (
     <a
       href={c.url}
@@ -55,11 +49,6 @@ function BrandTile({ c }: { c: Client }) {
       className="group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
       aria-label={`${c.name} — open website`}
     >
-      {/* Optional light plate behind logo for dark/coloured brand marks */}
-      {c.lightTile && (
-        <div className="absolute inset-x-0 top-0 bottom-[36px] md:bottom-[56px] bg-[#f4f1ea]" />
-      )}
-
       {/* Phosphor glow on hover — bottom-up sweep */}
       <span
         aria-hidden
