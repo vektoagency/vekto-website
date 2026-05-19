@@ -59,23 +59,20 @@ function BrandTile({ c }: { c: Client }) {
         }}
       />
 
-      {/* Logo frame — same dimensions for every tile */}
-      <div className="absolute inset-x-0 top-0 bottom-[36px] md:bottom-[56px] flex items-center justify-center">
-        <div className="relative flex items-center justify-center w-[92px] h-[26px] md:w-[150px] md:h-[46px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={c.logo}
-            alt={c.name}
-            draggable={false}
-            className="opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
-            style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
-              objectFit: "contain",
-              filter: invert,
-            }}
-          />
-        </div>
+      {/* Logo — fixed visual HEIGHT for ALL marks so wide and square
+          logos read at equal weight across the marquee. Width is auto
+          (capped via max-w-*) so wide marks don't push past the tile. */}
+      <div className="absolute inset-x-0 top-0 bottom-[36px] md:bottom-[56px] flex items-center justify-center px-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={c.logo}
+          alt={c.name}
+          draggable={false}
+          className={`opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105 w-auto max-w-[100px] md:max-w-[160px] ${
+            c.circular ? "h-[34px] md:h-[52px]" : "h-[24px] md:h-[36px]"
+          }`}
+          style={{ objectFit: "contain", filter: invert }}
+        />
       </div>
 
       {/* Brand name + description — bottom strip */}
