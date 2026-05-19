@@ -31,7 +31,7 @@ export default function Contact() {
       eyebrow: "Свържи се",
       h2: ["Готов ли си да построиш", "нещо култово?"],
       sub: "Избери това, което ти пасва — онлайн среща или попълни кратка анкета. Във всеки случай ще се върнем с план, направен за теб.",
-      bookCall: "Резервирай онлайн среща",
+      bookCall: "Резервирай среща",
       bookSuffix: "30 мин · безплатно",
       startForm: "Попълни анкетата",
       startFormSuffix: "≈ 1 минута",
@@ -88,7 +88,7 @@ export default function Contact() {
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
-              className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
+              className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-semibold px-6 py-3.5 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
               style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
             >
               <CalendarIcon />
@@ -97,7 +97,7 @@ export default function Contact() {
             </button>
             <a
               href={`tel:${PHONE}`}
-              className="inline-flex items-center justify-center gap-2.5 border border-[#c8ff00]/50 text-[#c8ff00] font-semibold px-8 py-4 rounded-full hover:bg-[#c8ff00]/10 transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 border border-[#c8ff00]/50 text-[#c8ff00] font-semibold px-6 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors cursor-pointer"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -107,7 +107,7 @@ export default function Contact() {
             </a>
             <a
               href="/start"
-              className="inline-flex items-center justify-center gap-2.5 border border-[#222] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 border border-[#222] text-white font-semibold px-6 py-3.5 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors cursor-pointer"
             >
               <MessageIcon />
               {t.startForm}
