@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import AnimateIn from "./AnimateIn";
-import { openContactModal } from "./ContactModal";
 import { useT } from "../i18n/LangProvider";
 
 const PHONE = "+359882251474";
@@ -31,22 +30,22 @@ export default function Contact() {
     bg: {
       eyebrow: "Свържи се",
       h2: ["Готов ли си да построиш", "нещо култово?"],
-      sub: "Избери това което ти пасва — кратък call или съобщение. И в двата случая връщаме с tailored план.",
-      bookCall: "Резервирай разговор",
+      sub: "Избери това, което ти пасва — онлайн среща или попълни кратка анкета. Във всеки случай ще се върнем с план, направен за теб.",
+      bookCall: "Резервирай онлайн среща",
       bookSuffix: "30 мин · безплатно",
-      sendMsg: "Прати съобщение",
-      sendSuffix: "отговор до 24ч",
+      startForm: "Попълни анкетата",
+      startFormSuffix: "≈ 1 минута",
       callBtn: "Обади се",
       perks: ["Предложение до 24ч", "Без обвързване"],
     },
     en: {
       eyebrow: "Get in Touch",
       h2: ["Ready to build", "something iconic?"],
-      sub: "Pick what fits you best — hop on a quick call or drop us a message. Either way, we'll come back with a tailored plan.",
-      bookCall: "Book a Call",
+      sub: "Pick what fits you best — book an online meeting or fill out a quick survey. Either way, we'll come back with a plan made for you.",
+      bookCall: "Book an Online Meeting",
       bookSuffix: "30 min · free",
-      sendMsg: "Send Message",
-      sendSuffix: "reply in 24h",
+      startForm: "Fill out the survey",
+      startFormSuffix: "≈ 1 minute",
       callBtn: "Call now",
       perks: ["Proposal within 24h", "No commitments"],
     },
@@ -106,14 +105,14 @@ export default function Contact() {
               {t.callBtn}
               <span className="text-[#c8ff00]/60 text-xs font-normal ml-1 tabular-nums">{PHONE_DISPLAY}</span>
             </a>
-            <button
-              onClick={() => openContactModal("message")}
+            <a
+              href="/start"
               className="inline-flex items-center justify-center gap-2.5 border border-[#222] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors cursor-pointer"
             >
               <MessageIcon />
-              {t.sendMsg}
-              <span className="text-[#666] text-xs font-normal ml-1">{t.sendSuffix}</span>
-            </button>
+              {t.startForm}
+              <span className="text-[#666] text-xs font-normal ml-1">{t.startFormSuffix}</span>
+            </a>
           </div>
         </AnimateIn>
 
