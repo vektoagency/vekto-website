@@ -123,7 +123,9 @@ function CameraRig({
 
   useFrame((_, delta) => {
     // Delta-based lerp — frame-rate independent (same smoothness on 60Hz and 120Hz).
-    const rate = zoomedIn ? 0.10 : 0.05;
+    // Zoom-out gets a much slower rate (0.025) so pulling back from the
+    // phosphor reads as a deliberate cinematic exit rather than a snap.
+    const rate = zoomedIn ? 0.10 : 0.025;
     const t = 1 - Math.pow(1 - rate, Math.min(delta, 0.05) * 60);
     const targetCam = zoomedIn ? zoomCam : idleCam;
     const targetLook = zoomedIn ? zoomTarget : idleTarget;
