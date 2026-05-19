@@ -163,13 +163,13 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
         // body are barely perceptible vs the cost. ContactShadows below
         // handles the floor shadow on its own (separate render target).
         shadows={false}
-        // Match the device's native pixel ratio (capped at 2) for the
-        // sharpest, smoothest look. Drop to 0.5 only when the opaque
-        // overlay covers the canvas — Mac is invisible behind it.
+        // Light DPR (1.25 idle / 1.75 zoomed) keeps fragment-shader cost
+        // down so the page's other GPU consumers (Trusted-by marquee,
+        // tile hover effects) get enough budget to stay buttery.
         dpr={
           mobile
-            ? overlayOpen ? 0.5 : 1.5
-            : overlayOpen ? 0.5 : 2
+            ? overlayOpen ? 0.5 : 1
+            : overlayOpen ? 0.5 : zoomedIn ? 1.75 : 1.25
         }
         frameloop={frameloop}
         camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 52 : 32 }}
@@ -214,18 +214,20 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
 
         <CameraRig zoomedIn={zoomedIn} screen={screen} mobile={mobile} />
 
-        {/* Mobile skips postprocessing entirely. Desktop also skips it
-            when the overlay is open (Mac invisible behind opaque overlay,
-            no point burning GPU on bloom/vignette). */}
-        {!mobile && !overlayOpen && (
-          <EffectComposer multisampling={2}>
+        {/* Postprocessing only fires when zoomed in — the CRT shader is
+            the only HDR-bright element, and its bloom is only visible up
+            close. Idle hero skips post-FX entirely so the canvas doesn't
+            steal GPU budget from the marquee / page animations. Mobile
+            and overlay-open also skip. */}
+        {!mobile && !overlayOpen && zoomedIn && (
+          <EffectComposer multisampling={0}>
             <Bloom
-              intensity={zoomedIn ? 0.85 : 0.28}
+              intensity={0.85}
               luminanceThreshold={0.82}
               luminanceSmoothing={0.3}
               mipmapBlur
             />
-            <Vignette eskil={false} offset={0.55} darkness={zoomedIn ? 0.78 : 0.22} />
+            <Vignette eskil={false} offset={0.55} darkness={0.78} />
           </EffectComposer>
         )}
       </Canvas>
