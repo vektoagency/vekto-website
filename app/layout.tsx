@@ -46,6 +46,10 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>
+        {/* Meta Business Manager — domain ownership verification.
+            Required for iOS 14+ conversion attribution + Aggregated
+            Event Measurement priority across ad accounts. */}
+        <meta name="facebook-domain-verification" content="vjkn3pxyadgj004wiu2vslghpbxq77" />
         {/* Preload the Mac GLB + portfolio reel assets so the CRT portfolio
             animation fires instantly on first click. */}
         <link rel="preload" as="fetch" href="/models/mac-128k.glb" type="model/gltf-binary" crossOrigin="anonymous" />
