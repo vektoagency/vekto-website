@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
+import MetaPixel from "./components/MetaPixel";
 import { LangProvider, type Lang } from "./i18n/LangProvider";
 
 const geist = Geist({
@@ -67,6 +68,7 @@ export default async function RootLayout({
           {children}
           <TransitionBridge />
         </LangProvider>
+        <MetaPixel />
       </body>
     </html>
   );

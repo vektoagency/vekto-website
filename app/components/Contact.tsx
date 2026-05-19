@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import AnimateIn from "./AnimateIn";
 import { useT } from "../i18n/LangProvider";
+import { trackEvent } from "./MetaPixel";
 
 const PHONE = "+359882251474";
 const PHONE_DISPLAY = "+359 88 225 1474";
@@ -89,6 +90,7 @@ export default function Contact() {
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
+              onClick={() => trackEvent("Schedule", { source: "contact_section" })}
               className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-semibold px-6 py-3.5 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
               style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
             >
@@ -101,6 +103,7 @@ export default function Contact() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={`tel:${PHONE}`}
+                onClick={() => trackEvent("Contact", { source: "contact_section" })}
                 className="inline-flex items-center justify-center gap-2.5 border border-[#c8ff00]/50 text-[#c8ff00] font-semibold px-6 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors cursor-pointer"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

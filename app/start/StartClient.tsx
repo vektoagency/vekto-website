@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { startCopy, type Lang } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
+import { trackEvent } from "../components/MetaPixel";
 
 const LANG_KEY = "vekto-start-lang";
 
@@ -73,6 +74,9 @@ export default function StartClient() {
     });
     setSubmitting(false);
     if (res.success) {
+      // Meta Pixel — fire Lead event with the monthly budget as value.
+      // Helps Meta's algo bid for higher-budget leads as we scale ads.
+      trackEvent("Lead", { value: budget, currency: "EUR", content_name: ctLabels });
       setDone(true);
       if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
