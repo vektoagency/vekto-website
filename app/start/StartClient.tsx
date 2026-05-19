@@ -14,8 +14,8 @@ export default function StartClient() {
   const [email, setEmail] = useState("");
   const [brand, setBrand] = useState("");
   const [phone, setPhone] = useState("");
-  const [contentType, setContentType] = useState("");
-  const [budget, setBudget] = useState("");
+  const [contentTypes, setContentTypes] = useState<string[]>([]);
+  const [budget, setBudget] = useState(2500); // €/month — slider value
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -50,18 +50,24 @@ export default function StartClient() {
       return;
     }
     setSubmitting(true);
-    const ctOpt = t.fields.contentTypeOptions.find((o) => o.id === contentType);
-    const bdOpt = t.fields.budgetOptions.find((o) => o.id === budget);
+    const ctLabels = contentTypes
+      .map((id) => t.fields.contentTypeOptions.find((o) => o.id === id)?.label)
+      .filter(Boolean)
+      .join(", ");
+    const budgetLabel =
+      budget >= 10000
+        ? t.fields.budgetMaxLabel
+        : `${budget.toLocaleString(lang === "bg" ? "bg-BG" : "en-US")} ${t.fields.budgetSuffix}`;
     const res = await submitStartLead({
       lang,
       name,
       email,
       brand,
       phone,
-      contentType,
-      contentTypeLabel: ctOpt?.label ?? "",
-      budget,
-      budgetLabel: bdOpt?.label ?? "",
+      contentType: contentTypes.join(","),
+      contentTypeLabel: ctLabels,
+      budget: String(budget),
+      budgetLabel,
     });
     setSubmitting(false);
     if (res.success) {
@@ -126,15 +132,27 @@ export default function StartClient() {
               </div>
 
               <Field label={t.fields.contentType}>
-                <Pills
-                  value={contentType}
-                  onChange={setContentType}
+                <PillsMulti
+                  values={contentTypes}
+                  onToggle={(id) =>
+                    setContentTypes((cur) =>
+                      cur.includes(id) ? cur.filter((v) => v !== id) : [...cur, id]
+                    )
+                  }
                   options={t.fields.contentTypeOptions}
                 />
               </Field>
 
               <Field label={t.fields.budget}>
-                <Pills value={budget} onChange={setBudget} options={t.fields.budgetOptions} />
+                <BudgetSlider
+                  value={budget}
+                  onChange={setBudget}
+                  max={10000}
+                  step={250}
+                  suffix={t.fields.budgetSuffix}
+                  maxLabel={t.fields.budgetMaxLabel}
+                  lang={lang}
+                />
               </Field>
             </div>
 
@@ -214,6 +232,51 @@ export default function StartClient() {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        /* Custom range slider — lime thumb, dark transparent track (real
+           visuals are painted by the two divs behind the input). */
+        .vekto-range {
+          height: 28px;
+        }
+        .vekto-range::-webkit-slider-runnable-track {
+          height: 6px;
+          background: transparent;
+          border-radius: 999px;
+        }
+        .vekto-range::-moz-range-track {
+          height: 6px;
+          background: transparent;
+          border-radius: 999px;
+        }
+        .vekto-range::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 22px;
+          height: 22px;
+          margin-top: -8px;
+          border-radius: 999px;
+          background: #c8ff00;
+          border: 3px solid #050505;
+          box-shadow: 0 0 0 1px #c8ff00, 0 0 18px rgba(200, 255, 0, 0.7);
+          cursor: grab;
+          transition: transform 0.15s ease;
+        }
+        .vekto-range:active::-webkit-slider-thumb {
+          transform: scale(1.18);
+          cursor: grabbing;
+        }
+        .vekto-range::-moz-range-thumb {
+          width: 22px;
+          height: 22px;
+          border-radius: 999px;
+          background: #c8ff00;
+          border: 3px solid #050505;
+          box-shadow: 0 0 0 1px #c8ff00, 0 0 18px rgba(200, 255, 0, 0.7);
+          cursor: grab;
+        }
+        .vekto-range:active::-moz-range-thumb {
+          transform: scale(1.18);
+          cursor: grabbing;
+        }
       `}</style>
     </div>
   );
@@ -257,34 +320,108 @@ function Input({
   );
 }
 
-function Pills({
-  value,
-  onChange,
+function PillsMulti({
+  values,
+  onToggle,
   options,
 }: {
-  value: string;
-  onChange: (v: string) => void;
+  values: string[];
+  onToggle: (id: string) => void;
   options: ReadonlyArray<{ id: string; label: string }>;
 }) {
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((o) => {
-        const active = value === o.id;
+        const active = values.includes(o.id);
         return (
           <button
             key={o.id}
             type="button"
-            onClick={() => onChange(active ? "" : o.id)}
-            className={`text-left px-4 py-2.5 rounded-md text-[13px] md:text-sm transition-all ${
+            onClick={() => onToggle(o.id)}
+            className={`flex items-center gap-2 text-left px-4 py-2.5 rounded-md text-[13px] md:text-sm transition-all ${
               active
                 ? "bg-[#c8ff00] text-black font-semibold border border-[#c8ff00]"
                 : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#c8ff00]/40 hover:text-[#c8ff00]"
             }`}
           >
-            {o.label}
+            <span
+              aria-hidden
+              className={`w-3.5 h-3.5 border rounded-sm flex items-center justify-center shrink-0 ${
+                active ? "border-black bg-black" : "border-[#c8ff00]/40"
+              }`}
+            >
+              {active && (
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
+            </span>
+            <span>{o.label}</span>
           </button>
         );
       })}
+    </div>
+  );
+}
+
+function BudgetSlider({
+  value,
+  onChange,
+  max,
+  step,
+  suffix,
+  maxLabel,
+  lang,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+  max: number;
+  step: number;
+  suffix: string;
+  maxLabel: string;
+  lang: "bg" | "en";
+}) {
+  const pct = Math.min(100, (value / max) * 100);
+  const display =
+    value >= max
+      ? maxLabel
+      : `${value.toLocaleString(lang === "bg" ? "bg-BG" : "en-US")} ${suffix}`;
+  return (
+    <div>
+      {/* Live value — big, mono, lime */}
+      <div className="flex items-baseline gap-2 mb-3">
+        <span className="font-mono text-2xl md:text-3xl font-bold tracking-tight text-[#c8ff00] tabular-nums">
+          {display}
+        </span>
+      </div>
+      <div className="relative">
+        {/* Background track */}
+        <div className="absolute inset-y-1/2 -translate-y-1/2 left-0 right-0 h-1.5 bg-[#1e1e1c] rounded-full pointer-events-none" />
+        {/* Lime fill */}
+        <div
+          aria-hidden
+          className="absolute inset-y-1/2 -translate-y-1/2 left-0 h-1.5 bg-[#c8ff00] rounded-full pointer-events-none transition-[width] duration-150"
+          style={{
+            width: `${pct}%`,
+            boxShadow: "0 0 12px rgba(200,255,0,0.5)",
+          }}
+        />
+        <input
+          type="range"
+          min={500}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="vekto-range relative w-full appearance-none bg-transparent cursor-grab active:cursor-grabbing"
+          aria-label="Budget"
+        />
+      </div>
+      {/* Min/max ticks */}
+      <div className="flex items-center justify-between mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#666]">
+        <span>500 €</span>
+        <span>{maxLabel}</span>
+      </div>
     </div>
   );
 }

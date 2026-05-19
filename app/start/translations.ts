@@ -7,7 +7,7 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO / GET STARTED",
-      h1: "Кажи ни за бранда си.",
+      h1: "Кажи ни за бизнеса си.",
       sub: "Отговаряме до 24 часа. Без обвързване, без shady fine print.",
       langToggle: "EN",
       home: "← Към сайта",
@@ -30,11 +30,8 @@ export const startCopy = {
         { id: "unsure", label: "Не съм сигурен — препоръчайте" },
       ],
       budget: "Месечен бюджет",
-      budgetOptions: [
-        { id: "lt-1500", label: "< 1500 €" },
-        { id: "1500-5000", label: "1500–5000 €" },
-        { id: "gt-5000", label: "5000 €+" },
-      ],
+      budgetSuffix: "€ / месец",
+      budgetMaxLabel: "10 000 €+",
     },
     cta: {
       submit: "Изпрати →",
@@ -56,7 +53,7 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO / GET STARTED",
-      h1: "Tell us about your brand.",
+      h1: "Tell us about your business.",
       sub: "We reply within 24 hours. No commitment, no shady fine print.",
       langToggle: "БГ",
       home: "← Back to site",
@@ -79,11 +76,8 @@ export const startCopy = {
         { id: "unsure", label: "Not sure — recommend" },
       ],
       budget: "Monthly budget",
-      budgetOptions: [
-        { id: "lt-1500", label: "< €1,500" },
-        { id: "1500-5000", label: "€1,500–5,000" },
-        { id: "gt-5000", label: "€5,000+" },
-      ],
+      budgetSuffix: "€ / month",
+      budgetMaxLabel: "€10,000+",
     },
     cta: {
       submit: "Send →",

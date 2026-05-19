@@ -182,8 +182,8 @@ export default function Hero() {
           <HeroTapHint />
           <Stagger delay={520}>
             <div className="flex flex-col gap-3 w-full max-w-[280px] pointer-events-auto">
-              <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
-                Let&apos;s Talk
+              <a href="/start" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
+                Get Started
               </a>
               <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer">
                 See Our Work
@@ -225,8 +225,8 @@ export default function Hero() {
         </Stagger>
         <Stagger delay={450}>
           <div className="flex gap-4">
-            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
-              Let&apos;s Talk
+            <a href="/start" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
+              Get Started
             </a>
             <PortfolioTriggerButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors cursor-pointer">
               See Our Work
