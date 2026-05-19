@@ -8,7 +8,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO / GET STARTED",
       h1: "Кажи ни за бизнеса си.",
-      sub: "Отговаряме до 24 часа. Без обвързване, без shady fine print.",
+      sub: "Отговаряме до 24 часа. Без обвързване, без скрити условия.",
       langToggle: "EN",
       home: "← Към сайта",
     },
@@ -57,7 +57,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO / GET STARTED",
       h1: "Tell us about your business.",
-      sub: "We reply within 24 hours. No commitment, no shady fine print.",
+      sub: "We reply within 24 hours. No commitment, no hidden terms.",
       langToggle: "БГ",
       home: "← Back to site",
     },
