@@ -6,6 +6,7 @@ import { Environment, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import * as THREE from "three";
 import MacintoshGLB from "./MacintoshGLB";
+import { useT } from "../../i18n/LangProvider";
 
 type Props = {
   zoomedIn: boolean;
@@ -142,6 +143,10 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
   const [screen, setScreen] = useState<ScreenInfo | null>(null);
   const [inView, setInView] = useState(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const tCaption = useT({
+    bg: { portfolio: "ПОРТФОЛИОТО ЖИВЕЕ ВЪТРЕ", clickToEnter: "▸ натисни, за да влезеш", clickScreen: "натисни екрана ↓" },
+    en: { portfolio: "OUR PORTFOLIO LIVES INSIDE", clickToEnter: "▸ click to enter", clickScreen: "click the screen ↓" },
+  });
 
   // Pause the render loop whenever the Mac scrolls out of view. Keeps the
   // idle GPU load at ~0% when the user is below the hero. When zoomed in
@@ -249,10 +254,10 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
           <div className={`inline-flex flex-col items-center gap-1.5 transition-opacity duration-500 mb-8 mt-[46px] ${hovered ? "opacity-100" : "opacity-90"}`}>
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-              OUR PORTFOLIO LIVES INSIDE
+              {tCaption.portfolio}
             </span>
             <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/85">
-              {hovered ? "▸ click to enter" : "click the screen ↓"}
+              {hovered ? tCaption.clickToEnter : tCaption.clickScreen}
             </span>
           </div>
           {/* Invisible spacer mirroring left column's h1 + p + buttons + tagline
