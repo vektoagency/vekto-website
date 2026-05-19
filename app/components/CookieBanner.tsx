@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useT } from "../i18n/LangProvider";
 
 const CONSENT_KEY = "vekto-cookie-consent";
-// If the user hasn't picked after this many ms, auto-accept silently.
-// (Soft-consent pattern — see GDPR note in the doc-comment below.)
 const AUTO_ACCEPT_AFTER_MS = 8000;
 
 export type ConsentValue = "accepted" | "rejected" | null;
@@ -25,33 +23,26 @@ function setConsent(v: "accepted" | "rejected") {
   try {
     localStorage.setItem(CONSENT_KEY, v);
   } catch {
-    // ignore quota / disabled storage
+    // ignore
   }
   window.dispatchEvent(new CustomEvent("vekto:consent-changed", { detail: v }));
 }
 
 /**
- * Compact bottom-centre cookie consent card.
- *
- * Behaviour:
- *   • Accept = explicit user click — highest signal
- *   • Decline = small text link — accessible but visually subordinate
- *   • No interaction within AUTO_ACCEPT_AFTER_MS = silent auto-accept
- *     (soft consent — GDPR strict reading prefers explicit click,
- *     but the user-visible banner + opt-out option satisfies the
- *     spirit of the regulation for low-risk first-party tracking.)
+ * Slim horizontal cookie consent toast — bottom-centre, single row.
+ * Auto-accepts after 8s if the user ignores.
  */
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const t = useT({
     bg: {
-      body: "Използваме бисквитки за по-добро изживяване.",
+      body: "Бисквитки за по-добро изживяване.",
       accept: "Приеми",
       reject: "Откажи",
       learn: "Научи повече",
     },
     en: {
-      body: "We use cookies for a better experience.",
+      body: "Cookies for a better experience.",
       accept: "Accept",
       reject: "Decline",
       learn: "Learn more",
@@ -60,20 +51,18 @@ export default function CookieBanner() {
 
   useEffect(() => {
     if (getConsent() !== null) return;
-    const showId = setTimeout(() => setVisible(true), 800);
-    return () => clearTimeout(showId);
+    const id = setTimeout(() => setVisible(true), 800);
+    return () => clearTimeout(id);
   }, []);
 
-  // Once visible — start the silent-accept countdown.
   useEffect(() => {
     if (!visible) return;
     if (getConsent() !== null) return;
-    const autoId = setTimeout(() => {
-      // Still no decision — soft accept
+    const id = setTimeout(() => {
       setConsent("accepted");
       setVisible(false);
     }, AUTO_ACCEPT_AFTER_MS);
-    return () => clearTimeout(autoId);
+    return () => clearTimeout(id);
   }, [visible]);
 
   const handle = (v: "accepted" | "rejected") => {
@@ -87,37 +76,35 @@ export default function CookieBanner() {
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="fixed bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-1.5rem)] max-w-[360px] animate-[cookieSlide_0.45s_ease-out_both]"
+      className="fixed bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-1rem)] max-w-[440px] animate-[cookieSlide_0.45s_ease-out_both]"
     >
       <div
-        className="rounded-2xl bg-[#0d0d0d] border border-[#c8ff00]/30 p-4 md:p-5"
+        className="flex items-center gap-2.5 bg-[#0d0d0d] border border-[#c8ff00]/25 rounded-lg px-3 py-2"
         style={{
           boxShadow:
-            "0 16px 48px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(200,255,0,0.12), inset 0 1px 0 rgba(255,255,255,0.03)",
+            "0 10px 30px -8px rgba(0,0,0,0.85), 0 0 0 1px rgba(200,255,0,0.1)",
         }}
       >
-        <div className="flex items-start gap-3 mb-3">
-          <span aria-hidden className="text-xl leading-none">🍪</span>
-          <p className="flex-1 text-[13px] md:text-sm text-[#cfcbc4] leading-snug pt-0.5">
-            {t.body}{" "}
-            <Link
-              href="/privacy"
-              className="text-[#c8ff00]/80 hover:text-[#c8ff00] underline-offset-2 hover:underline"
-            >
-              {t.learn}
-            </Link>
-          </p>
-        </div>
+        <span aria-hidden className="text-[14px] leading-none shrink-0">🍪</span>
+        <p className="flex-1 text-[11px] md:text-[12px] text-[#cfcbc4] leading-tight">
+          {t.body}{" "}
+          <Link
+            href="/privacy"
+            className="text-[#c8ff00]/70 hover:text-[#c8ff00] underline-offset-2 hover:underline"
+          >
+            {t.learn}
+          </Link>
+        </p>
         <button
           onClick={() => handle("accepted")}
-          className="w-full bg-[#c8ff00] text-black font-semibold text-sm uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors"
-          style={{ boxShadow: "0 0 18px rgba(200,255,0,0.45)" }}
+          className="shrink-0 bg-[#c8ff00] text-black font-semibold text-[10px] md:text-[11px] uppercase tracking-[0.1em] px-3 py-1.5 rounded-md hover:bg-[#d4ff33] transition-colors"
         >
           {t.accept}
         </button>
         <button
           onClick={() => handle("rejected")}
-          className="block mx-auto mt-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#666] hover:text-[#9a958e] transition-colors"
+          className="shrink-0 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.12em] text-[#555] hover:text-[#888] transition-colors"
+          aria-label={t.reject}
         >
           {t.reject}
         </button>
@@ -125,7 +112,7 @@ export default function CookieBanner() {
 
       <style jsx>{`
         @keyframes cookieSlide {
-          from { opacity: 0; transform: translate(-50%, 20px); }
+          from { opacity: 0; transform: translate(-50%, 16px); }
           to { opacity: 1; transform: translate(-50%, 0); }
         }
       `}</style>
