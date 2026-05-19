@@ -146,18 +146,15 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
     return () => obs.disconnect();
   }, []);
 
-  // Use demand mode and drive the cadence ourselves. Idle = 30fps,
-  // zoom/hover = 60fps for snappy interaction, offscreen/paused = 0.
-  const targetFps = paused
-    ? 0
-    : !inView
-      ? 0
-      : zoomedIn || hovered
-        ? 60
-        : overlayOpen
-          ? 15
-          : 30;
-  const frameloop = "demand";
+  // For maximal smoothness, use native "always" mode whenever the Mac is
+  // visible — every rAF tick renders, synced to the display refresh rate.
+  // Manual fps gating (the previous 30fps idle) produced visible stutter
+  // because frame intervals weren't uniform. We only fall back to demand
+  // mode while the overlay covers the canvas (15fps is invisible anyway).
+  const visible = !paused && inView;
+  const frameloop = paused || !inView ? "never" : overlayOpen ? "demand" : "always";
+  // FrameRateController only kicks in for the demand-mode overlay case.
+  const targetFps = !visible ? 0 : overlayOpen ? 15 : 0;
 
   return (
     <div ref={wrapperRef} className="absolute inset-0">
@@ -166,13 +163,13 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
         // body are barely perceptible vs the cost. ContactShadows below
         // handles the floor shadow on its own (separate render target).
         shadows={false}
-        // Lower idle DPR (Mac visible but no zoom interaction) keeps GPU
-        // work down. When portfolio overlay covers the canvas, we drop
-        // to 0.5 — Mac is invisible behind the opaque overlay anyway.
+        // Match the device's native pixel ratio (capped at 2) for the
+        // sharpest, smoothest look. Drop to 0.5 only when the opaque
+        // overlay covers the canvas — Mac is invisible behind it.
         dpr={
           mobile
-            ? overlayOpen ? 0.5 : 1
-            : overlayOpen ? 0.5 : zoomedIn ? 1.75 : 1.5
+            ? overlayOpen ? 0.5 : 1.5
+            : overlayOpen ? 0.5 : 2
         }
         frameloop={frameloop}
         camera={{ position: (mobile ? MOBILE_IDLE_CAM : DEFAULT_IDLE_CAM).toArray(), fov: mobile ? 52 : 32 }}
