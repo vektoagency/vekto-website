@@ -18,6 +18,12 @@ export default function StartClient() {
   const [contentTypes, setContentTypes] = useState<string[]>([]);
   const [budget, setBudget] = useState(2500); // €/month — slider value
   const [message, setMessage] = useState("");
+  // UTM params captured once at mount — preserved through form submit
+  // so we know which ad creative drove the lead.
+  const [utm, setUtm] = useState<{
+    source?: string; medium?: string; campaign?: string;
+    content?: string; term?: string; referrer?: string;
+  }>({});
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -28,6 +34,21 @@ export default function StartClient() {
     try {
       const saved = localStorage.getItem(LANG_KEY);
       if (saved === "bg" || saved === "en") setLang(saved);
+    } catch {
+      // ignore
+    }
+    // Capture UTM params from URL — persists through form submission so we
+    // can attribute the lead to its source campaign / ad creative.
+    try {
+      const params = new URLSearchParams(window.location.search);
+      setUtm({
+        source: params.get("utm_source") || undefined,
+        medium: params.get("utm_medium") || undefined,
+        campaign: params.get("utm_campaign") || undefined,
+        content: params.get("utm_content") || undefined,
+        term: params.get("utm_term") || undefined,
+        referrer: document.referrer || undefined,
+      });
     } catch {
       // ignore
     }
@@ -71,6 +92,12 @@ export default function StartClient() {
       budget: String(budget),
       budgetLabel,
       message,
+      utmSource: utm.source,
+      utmMedium: utm.medium,
+      utmCampaign: utm.campaign,
+      utmContent: utm.content,
+      utmTerm: utm.term,
+      referrer: utm.referrer,
     });
     setSubmitting(false);
     if (res.success) {
@@ -338,7 +365,8 @@ function Textarea({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors resize-y leading-relaxed"
+      // 16px+ font prevents iOS Safari auto-zoom on focus.
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors resize-y leading-relaxed"
     />
   );
 }
@@ -356,6 +384,12 @@ function Input({
   type?: string;
   required?: boolean;
 }) {
+  // Pick the right mobile keyboard for each input type — saves the user
+  // taps and triggers the correct system shortcuts (e.g. @ on email kb).
+  const inputMode: React.HTMLAttributes<HTMLInputElement>["inputMode"] =
+    type === "email" ? "email" : type === "tel" ? "tel" : type === "url" ? "url" : "text";
+  const autoComplete =
+    type === "email" ? "email" : type === "tel" ? "tel" : type === "url" ? "url" : "off";
   return (
     <input
       type={type}
@@ -363,7 +397,12 @@ function Input({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       required={required}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
+      inputMode={inputMode}
+      autoComplete={autoComplete}
+      autoCapitalize={type === "email" || type === "url" ? "off" : "sentences"}
+      spellCheck={type === "email" || type === "url" || type === "tel" ? false : undefined}
+      // 16px+ font on mobile prevents iOS Safari from zooming on focus.
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
     />
   );
 }
@@ -386,7 +425,9 @@ function PillsMulti({
             key={o.id}
             type="button"
             onClick={() => onToggle(o.id)}
-            className={`flex items-center gap-2 text-left px-4 py-2.5 rounded-md text-[13px] md:text-sm transition-all ${
+            // Touch target ≥44px tall on mobile (WCAG/Apple HIG); padding
+            // is generous so users with big fingers don't miss-tap pills.
+            className={`flex items-center gap-2 text-left px-4 py-3 md:py-2.5 rounded-md text-sm md:text-sm min-h-[44px] md:min-h-0 transition-all ${
               active
                 ? "bg-[#c8ff00] text-black font-semibold border border-[#c8ff00]"
                 : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#c8ff00]/40 hover:text-[#c8ff00]"

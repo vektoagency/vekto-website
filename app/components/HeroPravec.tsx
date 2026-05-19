@@ -12,11 +12,22 @@ export default function HeroPravec({ mobile = false }: { mobile?: boolean } = {}
   const [zoomedIn, setZoomedIn] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [playerOpen, setPlayerOpen] = useState(false);
-  // Gate WebGL mount until after hydrate — Canvas needs window/document.
+  // Gate WebGL mount until after hydrate AND first idle window — keeps the
+  // hero's LCP element (text/headline) un-blocked by the heavy three.js
+  // bundle + GLB fetch. On slow connections this can shave 1-2s off LCP,
+  // which Meta uses as a quality signal for paid traffic.
   const [mounted, setMounted] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [loaderGone, setLoaderGone] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const w = typeof window !== "undefined" ? (window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number }) : null;
+    if (w?.requestIdleCallback) {
+      w.requestIdleCallback(() => setMounted(true), { timeout: 1200 });
+    } else {
+      const id = setTimeout(() => setMounted(true), 600);
+      return () => clearTimeout(id);
+    }
+  }, []);
 
   // The portfolio overlay fires these when a lightbox opens/closes —
   // we pause the WebGL loop while a video is playing so all GPU goes

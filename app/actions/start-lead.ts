@@ -15,6 +15,13 @@ export type StartLead = {
   budget: string;
   budgetLabel: string;
   message: string;
+  // UTM params from ad clicks — let us see which campaign/creative drives leads.
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmContent?: string;
+  utmTerm?: string;
+  referrer?: string;
 };
 
 function escape(s: string): string {
@@ -49,7 +56,14 @@ export async function submitStartLead(data: StartLead) {
     row("Phone", data.phone) +
     row("Content type", data.contentTypeLabel) +
     row("Monthly budget", data.budgetLabel) +
-    row("Message", data.message);
+    row("Message", data.message) +
+    // Ad attribution — only render rows that have values
+    row("Source", data.utmSource || "") +
+    row("Medium", data.utmMedium || "") +
+    row("Campaign", data.utmCampaign || "") +
+    row("Ad / Content", data.utmContent || "") +
+    row("Term", data.utmTerm || "") +
+    row("Referrer", data.referrer || "");
 
   const html = `
     <div style="background:#080808;color:#ece8e1;font-family:Arial,sans-serif;padding:32px">
@@ -68,10 +82,12 @@ export async function submitStartLead(data: StartLead) {
   `;
 
   try {
+    // Tag subject with source if it's a paid lead — easy filter in inbox
+    const sourceTag = data.utmSource ? ` [${data.utmSource.toUpperCase()}]` : "";
     await resend.emails.send({
       from: "VEKTO Lead <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL!,
-      subject: `[LEAD] ${brandLabel} — ${data.contentTypeLabel || "?"} · ${data.budgetLabel || "?"}`,
+      subject: `[LEAD]${sourceTag} ${brandLabel} — ${data.contentTypeLabel || "?"} · ${data.budgetLabel || "?"}`,
       html,
       replyTo: data.email,
     });
