@@ -2,12 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import AnimateIn from "./AnimateIn";
-
-const stats = [
-  { value: 3, suffix: "x", label: "Delivery speed vs agencies", symbol: null },
-  { value: null, suffix: "",  label: "Every idea, every format",    symbol: "∞" },
-  { value: 60,   suffix: "%", label: "Lower cost, higher output",   symbol: null },
-];
+import { useT } from "../i18n/LangProvider";
 
 function CountUp({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0);
@@ -38,6 +33,23 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
 }
 
 export default function Stats() {
+  const t = useT({
+    bg: {
+      stats: [
+        { value: 3, suffix: "x", label: "По-бърза доставка vs агенции", symbol: null as string | null },
+        { value: null, suffix: "", label: "Всяка идея, всеки формат", symbol: "∞" },
+        { value: 60, suffix: "%", label: "По-ниска цена, повече output", symbol: null },
+      ],
+    },
+    en: {
+      stats: [
+        { value: 3, suffix: "x", label: "Delivery speed vs agencies", symbol: null as string | null },
+        { value: null, suffix: "", label: "Every idea, every format", symbol: "∞" },
+        { value: 60, suffix: "%", label: "Lower cost, higher output", symbol: null },
+      ],
+    },
+  });
+  const stats = t.stats;
   return (
     <section className="px-4 py-3 md:py-16" style={{ background: "#060606" }}>
       <div className="max-w-7xl mx-auto">

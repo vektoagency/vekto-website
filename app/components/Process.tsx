@@ -2,44 +2,87 @@
 
 import { useEffect, useState } from "react";
 import AnimateIn from "./AnimateIn";
+import { useT } from "../i18n/LangProvider";
 
-const steps = [
-  {
-    number: "01",
-    tag: "Discover",
-    title: "We learn your brand inside out",
-    body:
-      "Deep-dive call, audit of your current content + positioning, and a crystal-clear brief on the audience we need to move.",
-    bullets: ["Brand + audience audit", "Competitor scan", "Positioning brief"],
+const dict = {
+  bg: {
+    eyebrow: "Как работим",
+    h2: ["От първи разговор до", "compounding съдържание"],
+    progressLabel: "Стъпка",
+    cta: "Започни проекта →",
+    steps: [
+      {
+        number: "01",
+        tag: "Discover",
+        title: "Опознаваме бранда ти отвътре",
+        body: "Deep-dive разговор, audit на текущото съдържание + positioning и кристално ясен brief за аудиторията.",
+        bullets: ["Brand + аудитория audit", "Конкурентен scan", "Positioning brief"],
+      },
+      {
+        number: "02",
+        tag: "Strategy",
+        title: "Angles + funnel, маппвани",
+        body: "Изграждаме креативна система — hook banks, series формати, и пътя от scroll до продажба. Никакви одноразови гатанки.",
+        bullets: ["Hook + angle библиотека", "Series формати", "Funnel mapping"],
+      },
+      {
+        number: "03",
+        tag: "Production",
+        title: "AI + cinematic pipeline",
+        body: "In-house стек fuses AI визуализации, real footage и cinematic direction — бърз output без agency drag.",
+        bullets: ["AI-assisted кадри", "Cinematic direction", "Седмичен output"],
+      },
+      {
+        number: "04",
+        tag: "Scale",
+        title: "Ship, измервай, удвоявай",
+        body: "Tracking какво работи, cut на това което не, и compound на winner-ите. Съдържанието става growth engine.",
+        bullets: ["Performance tracking", "Winner compounding", "Quarterly reviews"],
+      },
+    ],
   },
-  {
-    number: "02",
-    tag: "Strategy",
-    title: "Angles + funnel, mapped",
-    body:
-      "We build a creative system: hook banks, series formats, and the journey from scroll to sale. No one-off guesses.",
-    bullets: ["Hook + angle library", "Series formats", "Funnel mapping"],
+  en: {
+    eyebrow: "How It Works",
+    h2: ["From first call to", "compounding content"],
+    progressLabel: "Step",
+    cta: "Start project →",
+    steps: [
+      {
+        number: "01",
+        tag: "Discover",
+        title: "We learn your brand inside out",
+        body: "Deep-dive call, audit of your current content + positioning, and a crystal-clear brief on the audience we need to move.",
+        bullets: ["Brand + audience audit", "Competitor scan", "Positioning brief"],
+      },
+      {
+        number: "02",
+        tag: "Strategy",
+        title: "Angles + funnel, mapped",
+        body: "We build a creative system: hook banks, series formats, and the journey from scroll to sale. No one-off guesses.",
+        bullets: ["Hook + angle library", "Series formats", "Funnel mapping"],
+      },
+      {
+        number: "03",
+        tag: "Production",
+        title: "AI + cinematic pipeline",
+        body: "Our in-house stack fuses AI visuals, real footage, and cinematic direction — fast output without the usual agency drag.",
+        bullets: ["AI-assisted shots", "Cinematic direction", "Weekly output"],
+      },
+      {
+        number: "04",
+        tag: "Scale",
+        title: "Ship, measure, double down",
+        body: "We track what lands, cut what doesn't, and compound the winners. Content becomes a growth engine, not a cost centre.",
+        bullets: ["Performance tracking", "Winner compounding", "Quarterly reviews"],
+      },
+    ],
   },
-  {
-    number: "03",
-    tag: "Production",
-    title: "AI + cinematic pipeline",
-    body:
-      "Our in-house stack fuses AI visuals, real footage, and cinematic direction — fast output without the usual agency drag.",
-    bullets: ["AI-assisted shots", "Cinematic direction", "Weekly output"],
-  },
-  {
-    number: "04",
-    tag: "Scale",
-    title: "Ship, measure, double down",
-    body:
-      "We track what lands, cut what doesn't, and compound the winners. Content becomes a growth engine, not a cost centre.",
-    bullets: ["Performance tracking", "Winner compounding", "Quarterly reviews"],
-  },
-];
+};
 
 export default function Process() {
   const [active, setActive] = useState(0);
+  const t = useT(dict);
+  const steps = t.steps;
 
   // Gentle auto-advance so the panel demonstrates its own interactivity.
   // Any user interaction (hover/click) restarts the timer from the new step.
@@ -58,11 +101,11 @@ export default function Process() {
     >
       <div className="max-w-6xl mx-auto">
         <AnimateIn className="mb-8 md:mb-10 max-w-3xl">
-          <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3">How It Works</p>
+          <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
           <h2 className="text-[26px] md:text-5xl font-bold leading-[1.1]">
-            From first call to
+            {t.h2[0]}
             <br />
-            <span className="text-[#c8ff00]">compounding content</span>
+            <span className="text-[#c8ff00]">{t.h2[1]}</span>
           </h2>
         </AnimateIn>
 
@@ -142,14 +185,14 @@ export default function Process() {
             <div className="border-t border-[#161616] flex items-center justify-between gap-3 px-4 md:px-10 py-3 md:py-4 bg-[#0a0a0a]">
               <div className="flex items-center gap-2 md:gap-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-[#c8ff00]/75 whitespace-nowrap">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse shrink-0" />
-                <span className="hidden sm:inline">Step {active + 1} / {steps.length}</span>
+                <span className="hidden sm:inline">{t.progressLabel} {active + 1} / {steps.length}</span>
                 <span className="sm:hidden">{active + 1}/{steps.length}</span>
               </div>
               <a
-                href="#contact"
+                href="/start"
                 className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-black bg-[#c8ff00] hover:bg-[#d4ff33] px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors whitespace-nowrap"
               >
-                Start project →
+                {t.cta}
               </a>
             </div>
           </div>

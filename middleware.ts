@@ -23,5 +23,21 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  const res = NextResponse.next();
+
+  // Geo-based language preference — only set the cookie if it's not already
+  // present (so a user's manual toggle override stays sticky). Country is
+  // provided by Vercel via x-vercel-ip-country (also a backup geo.country).
+  const existing = req.cookies.get("vekto-lang")?.value;
+  if (!existing || (existing !== "bg" && existing !== "en")) {
+    const country = (req.headers.get("x-vercel-ip-country") ?? "").toUpperCase();
+    const lang = country === "BG" ? "bg" : "en";
+    res.cookies.set("vekto-lang", lang, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+  }
+
+  return res;
 }

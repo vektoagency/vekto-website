@@ -1,7 +1,10 @@
+"use client";
+
 import HeroPravec from "./HeroPravec";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import HeroTapHint from "./HeroTapHint";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
+import { useT } from "../i18n/LangProvider";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -15,6 +18,26 @@ function Stagger({ children, delay, className = "" }: { children: React.ReactNod
 }
 
 export default function Hero() {
+  const t = useT({
+    bg: {
+      badge: "AI-Driven креативна агенция",
+      h1Em: "AI-Driven визия",
+      h1RestDesktop: ["за бъдещето", "на компаниите"],
+      h1RestMobile: "за бъдещето на компаниите",
+      sub: "От cinematic storytelling до AI short-form системи — изграждаме визуални екосистеми за scale.",
+      ctaPrimary: "Започни",
+      ctaSecondary: "Виж работата ни",
+    },
+    en: {
+      badge: "AI-Powered Creative Agency",
+      h1Em: "AI-Driven Vision",
+      h1RestDesktop: ["for the Future", "of Companies"],
+      h1RestMobile: "for the Future of Companies",
+      sub: "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+      ctaPrimary: "Get Started",
+      ctaSecondary: "See Our Work",
+    },
+  });
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
@@ -160,16 +183,16 @@ export default function Hero() {
             <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-4 bg-black/30 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
-                AI-Powered Creative Agency
+                {t.badge}
               </span>
             </div>
           </Stagger>
           <Stagger delay={100}>
             <h1 className="text-[32px] sm:text-[36px] font-bold leading-[1.05] tracking-tight text-white"
               style={{ textShadow: "0 2px 22px rgba(0,0,0,0.85)" }}>
-              <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
+              <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
               <br />
-              for the Future of Companies
+              {t.h1RestMobile}
             </h1>
           </Stagger>
         </div>
@@ -183,10 +206,10 @@ export default function Hero() {
           <Stagger delay={520}>
             <div className="flex flex-col gap-3 w-full max-w-[280px] pointer-events-auto">
               <a href="/start" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
-                Get Started
+                {t.ctaPrimary}
               </a>
               <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer">
-                See Our Work
+                {t.ctaSecondary}
               </PortfolioTriggerButton>
             </div>
           </Stagger>
@@ -205,31 +228,31 @@ export default function Hero() {
           <div className="inline-flex items-center gap-2 border border-[#c8ff00]/30 rounded-full px-4 py-1.5 mb-8">
             <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
             <span className="text-xs text-[#c8ff00] font-medium tracking-widest uppercase">
-              AI-Powered Creative Agency
+              {t.badge}
             </span>
           </div>
         </Stagger>
         <Stagger delay={150}>
           <h1 className="text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
-            <em className="not-italic text-[#c8ff00]">AI-Driven Vision</em>
+            <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
             <br />
-            for the Future
+            {t.h1RestDesktop[0]}
             <br />
-            of Companies
+            {t.h1RestDesktop[1]}
           </h1>
         </Stagger>
         <Stagger delay={300}>
           <p className="max-w-md text-lg text-[#a0a0a0] leading-relaxed mb-10">
-            From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.
+            {t.sub}
           </p>
         </Stagger>
         <Stagger delay={450}>
           <div className="flex gap-4">
             <a href="/start" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
-              Get Started
+              {t.ctaPrimary}
             </a>
             <PortfolioTriggerButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors cursor-pointer">
-              See Our Work
+              {t.ctaSecondary}
             </PortfolioTriggerButton>
           </div>
         </Stagger>

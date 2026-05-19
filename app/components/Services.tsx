@@ -3,56 +3,99 @@
 import Image from "next/image";
 import { useState } from "react";
 import AnimateIn from "./AnimateIn";
+import { useT } from "../i18n/LangProvider";
 
-const services = [
-  {
-    number: "01",
-    title: "Short-Form Authority Series",
-    image: "/images/service-1.webp",
-    description: "Engaging, high-impact short-form videos for social media that position your brand as an authority in your space — optimized for maximum reach and engagement.",
-    tags: ["Social Media", "Short-Form", "Strategy"],
+const dict = {
+  bg: {
+    eyebrow: "Какво правим",
+    h2: ["Услуги, построени", "да scale-ват бранда ти"],
+    sub: "Всяка услуга е AI-powered и носи резултати, които традиционните агенции не могат да направят.",
+    services: [
+      {
+        number: "01",
+        title: "Short-Form Authority Series",
+        image: "/images/service-1.webp",
+        description: "Кратки видеа с висок impact за социалните мрежи, които позиционират бранда ти като authority — оптимизирани за максимален reach и engagement.",
+        tags: ["Social Media", "Short-Form", "Стратегия"],
+      },
+      {
+        number: "02",
+        title: "AI Дигитални аватари и говорители",
+        image: "/images/service-2.webp",
+        description: "Custom AI-powered аватари за представяне на бранда. Доставяме multilingual съдържание на scale с консистентно качество — без нужда от студио.",
+        tags: ["AI Аватар", "Multilingual", "Автоматизация"],
+      },
+      {
+        number: "03",
+        title: "Кинематографични brand филми",
+        image: "/images/service-3.webp",
+        description: "High-end immersive storytelling с пълен production pipeline — от концепция до post-processing. AI-enhanced за premium cinematic финал.",
+        tags: ["Cinematic", "Brand филм", "Продукция"],
+      },
+      {
+        number: "04",
+        title: "AI Product Visual Engineering",
+        image: "/images/service-4.webp",
+        description: "Хипер-реалистични AI-enhanced продуктови визуализации, оптимизирани за e-commerce и marketing. Premium presentation, която конвертира.",
+        tags: ["Продуктови визуализации", "E-commerce", "AI"],
+      },
+    ],
   },
-  {
-    number: "02",
-    title: "AI Digital Avatars & Virtual Spokespersons",
-    image: "/images/service-2.webp",
-    description: "Custom AI-powered avatars for brand representation. Deliver multilingual content at scale with consistent, high-quality presentations — no studio needed.",
-    tags: ["AI Avatar", "Multilingual", "Automation"],
+  en: {
+    eyebrow: "What We Do",
+    h2: ["Services built", "to scale your brand"],
+    sub: "Every service is powered by AI and designed to deliver results that traditional agencies can't match.",
+    services: [
+      {
+        number: "01",
+        title: "Short-Form Authority Series",
+        image: "/images/service-1.webp",
+        description: "Engaging, high-impact short-form videos for social media that position your brand as an authority in your space — optimized for maximum reach and engagement.",
+        tags: ["Social Media", "Short-Form", "Strategy"],
+      },
+      {
+        number: "02",
+        title: "AI Digital Avatars & Virtual Spokespersons",
+        image: "/images/service-2.webp",
+        description: "Custom AI-powered avatars for brand representation. Deliver multilingual content at scale with consistent, high-quality presentations — no studio needed.",
+        tags: ["AI Avatar", "Multilingual", "Automation"],
+      },
+      {
+        number: "03",
+        title: "Cinematic Brand Films",
+        image: "/images/service-3.webp",
+        description: "High-end immersive storytelling with full production pipeline from concept to post-processing. AI-enhanced for a premium cinematic finish.",
+        tags: ["Cinematic", "Brand Film", "Production"],
+      },
+      {
+        number: "04",
+        title: "AI Product Visual Engineering",
+        image: "/images/service-4.webp",
+        description: "Hyper-realistic AI-enhanced product visuals optimized for eCommerce and marketing assets. Premium presentation that converts.",
+        tags: ["Product Visuals", "eCommerce", "AI"],
+      },
+    ],
   },
-  {
-    number: "03",
-    title: "Cinematic Brand Films",
-    image: "/images/service-3.webp",
-    description: "High-end immersive storytelling with full production pipeline from concept to post-processing. AI-enhanced for a premium cinematic finish.",
-    tags: ["Cinematic", "Brand Film", "Production"],
-  },
-  {
-    number: "04",
-    title: "AI Product Visual Engineering",
-    image: "/images/service-4.webp",
-    description: "Hyper-realistic AI-enhanced product visuals optimized for eCommerce and marketing assets. Premium presentation that converts.",
-    tags: ["Product Visuals", "eCommerce", "AI"],
-  },
-];
+};
 
 export default function Services() {
   const [active, setActive] = useState(0);
+  const t = useT(dict);
+  const services = t.services;
 
   return (
     <section id="services" className="py-28 px-6" style={{ background: "linear-gradient(to bottom, #080808, #0a0a0f, #080808)" }}>
       <div className="max-w-7xl mx-auto">
         <AnimateIn className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
-            <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">What We Do</p>
+            <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              Services built
+              {t.h2[0]}
               <br />
-              to scale your brand
+              {t.h2[1]}
             </h2>
           </div>
-          <p className="max-w-sm text-[#a0a0a0] leading-relaxed">
-            Every service is powered by AI and designed to deliver results that traditional agencies can&apos;t match.
-          </p>
+          <p className="max-w-sm text-[#a0a0a0] leading-relaxed">{t.sub}</p>
         </AnimateIn>
 
         {/* Desktop layout */}

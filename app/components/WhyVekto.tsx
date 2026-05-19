@@ -1,32 +1,67 @@
+"use client";
+
 import AnimateIn from "./AnimateIn";
+import { useT } from "../i18n/LangProvider";
 
-const comparisons = [
-  { aspect: "Speed",             vekto: "2–3 days",              traditional: "2–4 weeks",       inhouse: "1–2 weeks" },
-  { aspect: "Cost",              vekto: "Predictable & lean",     traditional: "High & variable", inhouse: "High fixed cost" },
-  { aspect: "Quality",           vekto: "AI + human craft",       traditional: "Human only",      inhouse: "Varies" },
-  { aspect: "Brand Consistency", vekto: "AI-enforced",            traditional: "Manual",          inhouse: "Varies" },
-  { aspect: "Availability",      vekto: "24/7",                   traditional: "Business hours",  inhouse: "Business hours" },
-  { aspect: "Languages",         vekto: "Multilingual natively",  traditional: "Extra cost",      inhouse: "Rarely supported" },
-];
-
-const pillars = [
-  { icon: "⚡", title: "Speed at Scale",         description: "AI-powered pipelines deliver content in days. No waiting, no bottlenecks — just results." },
-  { icon: "🎯", title: "Strategic Creativity",   description: "Every piece of content is built with intent — designed to convert, engage, and grow your brand." },
-  { icon: "🤖", title: "AI-Native Workflow",     description: "We don't bolt AI onto old processes. Our entire workflow is built around AI from day one." },
-  { icon: "🌍", title: "Multilingual by Default",description: "Reach global audiences with AI avatars and content that speaks every language natively." },
-];
+const dict = {
+  bg: {
+    eyebrow: "Защо VEKTO",
+    h2: ["Креативният партньор,", "който заслужава бранда ти"],
+    pillars: [
+      { icon: "⚡", title: "Скорост на scale", description: "AI-powered pipelines доставят съдържание за дни. Без чакане, без bottleneck-и — само резултати." },
+      { icon: "🎯", title: "Стратегическа креативност", description: "Всяко парче съдържание е построено с намерение — да конвертира, ангажира и развие бранда ти." },
+      { icon: "🤖", title: "AI-Native Workflow", description: "Не лепим AI върху стари процеси. Целият ни workflow е built около AI от ден първи." },
+      { icon: "🌍", title: "Multilingual по подразбиране", description: "Достигни глобална аудитория с AI аватари и съдържание, което говори всеки език нативно." },
+    ],
+    compareH3: "Как се сравняваме",
+    swipeHint: "← плъзни за сравнение →",
+    headers: { aspect: "Аспект", vekto: "VEKTO", traditional: "Традиционна агенция", inhouse: "In-house" },
+    rows: [
+      { aspect: "Скорост", vekto: "2–3 дни", traditional: "2–4 седмици", inhouse: "1–2 седмици" },
+      { aspect: "Цена", vekto: "Предвидима & lean", traditional: "Висока & variable", inhouse: "Висок fixed cost" },
+      { aspect: "Качество", vekto: "AI + human craft", traditional: "Само human", inhouse: "Variable" },
+      { aspect: "Brand консистентност", vekto: "AI-enforced", traditional: "Ръчно", inhouse: "Variable" },
+      { aspect: "Достъпност", vekto: "24/7", traditional: "Работно време", inhouse: "Работно време" },
+      { aspect: "Езици", vekto: "Multilingual нативно", traditional: "Доплащане", inhouse: "Рядко поддържан" },
+    ],
+  },
+  en: {
+    eyebrow: "Why VEKTO",
+    h2: ["The creative partner", "your brand deserves"],
+    pillars: [
+      { icon: "⚡", title: "Speed at Scale", description: "AI-powered pipelines deliver content in days. No waiting, no bottlenecks — just results." },
+      { icon: "🎯", title: "Strategic Creativity", description: "Every piece of content is built with intent — designed to convert, engage, and grow your brand." },
+      { icon: "🤖", title: "AI-Native Workflow", description: "We don't bolt AI onto old processes. Our entire workflow is built around AI from day one." },
+      { icon: "🌍", title: "Multilingual by Default", description: "Reach global audiences with AI avatars and content that speaks every language natively." },
+    ],
+    compareH3: "How we stack up",
+    swipeHint: "← swipe to compare →",
+    headers: { aspect: "Aspect", vekto: "VEKTO", traditional: "Traditional Agency", inhouse: "In-House" },
+    rows: [
+      { aspect: "Speed", vekto: "2–3 days", traditional: "2–4 weeks", inhouse: "1–2 weeks" },
+      { aspect: "Cost", vekto: "Predictable & lean", traditional: "High & variable", inhouse: "High fixed cost" },
+      { aspect: "Quality", vekto: "AI + human craft", traditional: "Human only", inhouse: "Varies" },
+      { aspect: "Brand Consistency", vekto: "AI-enforced", traditional: "Manual", inhouse: "Varies" },
+      { aspect: "Availability", vekto: "24/7", traditional: "Business hours", inhouse: "Business hours" },
+      { aspect: "Languages", vekto: "Multilingual natively", traditional: "Extra cost", inhouse: "Rarely supported" },
+    ],
+  },
+};
 
 export default function WhyVekto() {
+  const t = useT(dict);
+  const comparisons = t.rows;
+  const pillars = t.pillars;
   return (
     <section id="why" className="py-28 px-6" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f, #060606)" }}>
       <div className="max-w-7xl mx-auto">
 
         <AnimateIn className="text-center mb-20">
-          <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">Why VEKTO</p>
+          <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold">
-            The creative partner
+            {t.h2[0]}
             <br />
-            <span className="text-[#c8ff00]">your brand deserves</span>
+            <span className="text-[#c8ff00]">{t.h2[1]}</span>
           </h2>
         </AnimateIn>
 
@@ -45,21 +80,21 @@ export default function WhyVekto() {
 
         {/* Comparison table */}
         <AnimateIn>
-          <h3 className="text-2xl font-bold text-center mb-4">How we stack up</h3>
+          <h3 className="text-2xl font-bold text-center mb-4">{t.compareH3}</h3>
 
           {/* Mobile scroll hint */}
-          <p className="text-center text-xs text-[#444] mb-6 md:hidden">← swipe to compare →</p>
+          <p className="text-center text-xs text-[#444] mb-6 md:hidden">{t.swipeHint}</p>
 
           <div className="overflow-x-auto rounded-2xl border border-[#1a1a1a] -mx-2 px-2 md:mx-0 md:px-0">
             <table className="w-full text-xs md:text-sm" style={{ minWidth: "560px" }}>
               <thead>
                 <tr className="border-b border-[#1a1a1a] bg-[#0d0d0d]">
-                  <th className="text-left py-4 px-4 md:px-6 text-[#555] font-medium w-[28%]">Aspect</th>
+                  <th className="text-left py-4 px-4 md:px-6 text-[#555] font-medium w-[28%]">{t.headers.aspect}</th>
                   <th className="py-4 px-4 md:px-6 text-[#c8ff00] font-semibold w-[24%]">
                     <div style={{ width: 72, height: 28, backgroundColor: "#c8ff00", maskImage: "url('/images/logo.webp')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.webp')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto" }} />
                   </th>
-                  <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">Traditional Agency</th>
-                  <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">In-House</th>
+                  <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">{t.headers.traditional}</th>
+                  <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">{t.headers.inhouse}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#111]">

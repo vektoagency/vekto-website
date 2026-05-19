@@ -3,6 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useT } from "../i18n/LangProvider";
+import LangToggle from "./LangToggle";
+
+const PHONE = "+359882251474";
+const PHONE_DISPLAY = "+359 88 225 1474";
 
 type NavLink =
   | { label: string; href: string; action?: undefined }
@@ -14,6 +19,10 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const t = useT({
+    bg: { services: "Услуги", why: "Защо VEKTO", portfolio: "Портфолио", contact: "Контакт", cta: "Започни", callAria: "Обади се" },
+    en: { services: "Services", why: "Why VEKTO", portfolio: "Portfolio", contact: "Contact", cta: "Get Started", callAria: "Call us" },
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -36,10 +45,10 @@ export default function Navbar() {
   }, []);
 
   const links: NavLink[] = [
-    { label: "Services", href: "#services" },
-    { label: "Why VEKTO", href: "#why" },
-    { label: "Portfolio", action: "portfolio" },
-    { label: "Contact", href: "#contact" },
+    { label: t.services, href: "#services" },
+    { label: t.why, href: "#why" },
+    { label: t.portfolio, action: "portfolio" },
+    { label: t.contact, href: "#contact" },
   ];
 
   const handlePortfolio = () => {
@@ -86,13 +95,26 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* CTA */}
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors"
-        >
-          Let&apos;s Talk
-        </a>
+        {/* Right cluster — call, lang toggle, primary CTA */}
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href={`tel:${PHONE}`}
+            aria-label={t.callAria}
+            className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] text-white/85 hover:text-[#c8ff00] transition-colors"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
+            </svg>
+            <span className="tabular-nums">{PHONE_DISPLAY}</span>
+          </a>
+          <LangToggle />
+          <a
+            href="/start"
+            className="inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors"
+          >
+            {t.cta}
+          </a>
+        </div>
 
         {/* Mobile burger */}
         <button
@@ -134,12 +156,24 @@ export default function Navbar() {
             )
           )}
           <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors"
+            href={`tel:${PHONE}`}
+            className="inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.14em] text-white/85"
           >
-            Let&apos;s Talk
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
+            </svg>
+            {PHONE_DISPLAY}
           </a>
+          <div className="flex items-center justify-between gap-3 pt-1">
+            <LangToggle />
+            <a
+              href="/start"
+              onClick={() => setMenuOpen(false)}
+              className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors flex-1"
+            >
+              {t.cta}
+            </a>
+          </div>
         </div>
       )}
     </header>

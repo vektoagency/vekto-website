@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
+import { LangProvider, type Lang } from "./i18n/LangProvider";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -32,13 +34,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get("vekto-lang")?.value;
+  const lang: Lang = cookieLang === "bg" ? "bg" : "en";
   return (
-    <html lang="en" className={`${geist.variable} h-full antialiased`}>
+    <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>
         {/* Preload the Mac GLB + portfolio reel assets so the CRT portfolio
             animation fires instantly on first click. */}
@@ -58,8 +63,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="" />
       </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
-        {children}
-        <TransitionBridge />
+        <LangProvider initialLang={lang}>
+          {children}
+          <TransitionBridge />
+        </LangProvider>
       </body>
     </html>
   );
