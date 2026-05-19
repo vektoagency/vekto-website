@@ -43,9 +43,9 @@ export const startCopy = {
       callCta: "Обади се",
     },
     success: {
-      title: "Получихме брифа ти.",
-      body: "Ще ти пишем на имейла до 24 часа. Междувременно — можеш да резервираш 30-минутен call:",
-      bookCta: "Резервирай Discovery Call",
+      title: "Брифът е получен.",
+      body: "Благодарим, че отдели време. Ще прегледаме всичко лично и ще ти пишем на имейла до 24 часа. Междувременно — можеш да резервираш 30-минутна среща:",
+      bookCta: "Резервирай среща",
       backHome: "← Към сайта",
     },
     error: {
@@ -92,9 +92,9 @@ export const startCopy = {
       callCta: "Call now",
     },
     success: {
-      title: "Got your brief.",
-      body: "We'll reply by email within 24 hours. Meanwhile — book a 30-min call:",
-      bookCta: "Book Discovery Call",
+      title: "Brief received.",
+      body: "Thanks for taking the time. We'll review everything personally and reply by email within 24 hours. Meanwhile — book a 30-minute meeting:",
+      bookCta: "Book a Meeting",
       backHome: "← Back to site",
     },
     error: {
