@@ -12,7 +12,7 @@ type Client = {
   invert?: boolean;
 };
 
-const clients: Client[] = [
+const bgClients: Client[] = [
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: "Energy & functional beverages" },
   { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", desc: "Beard & hair growth", circular: true },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: "Designer-inspired perfumes", invert: true },
@@ -21,6 +21,15 @@ const clients: Client[] = [
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: "Natural cosmetics" },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: "Experience voucher platform" },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: "Adventure tourism" },
+];
+
+const usClients: Client[] = [
+  { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: "Sleep wearable device" },
+  { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: "Family immune & gut supplements", invert: true },
+  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: "Zero-sugar energy drinks", invert: true },
+  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: "Low-calorie gourmet sauces", invert: true },
+  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: "Fitness supplements", invert: true },
+  { name: "ETHAN'S", logo: "/images/logo-ethans.svg", url: "https://ethans.com", desc: "Plant-based energy drinks", invert: true },
 ];
 
 // Single fixed-size logo frame ensures every logo lands in the same slot,
@@ -113,7 +122,15 @@ export default function Clients() {
         </AnimateIn>
       </div>
 
-      {/* Marquee track — continuous slide, hover pauses, edges masked */}
+      {/* Region label — Bulgaria */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
+        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
+          ◆ Bulgaria
+        </span>
+        <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
+      </div>
+
+      {/* Marquee track — Bulgaria — left-scrolling, edges masked */}
       <div
         className="relative overflow-hidden"
         style={{
@@ -128,8 +145,37 @@ export default function Clients() {
             willChange: "transform",
           }}
         >
-          {[...clients, ...clients, ...clients].map((c, i) => (
-            <BrandTile key={`${c.name}-${i}`} c={c} />
+          {[...bgClients, ...bgClients, ...bgClients].map((c, i) => (
+            <BrandTile key={`bg-${c.name}-${i}`} c={c} />
+          ))}
+        </div>
+      </div>
+
+      {/* Region label — USA / Worldwide */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mt-4 md:mt-5 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
+        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
+          ◆ USA / Worldwide
+        </span>
+        <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
+      </div>
+
+      {/* Marquee track — USA — right-scrolling (opposite direction), edges masked */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+          maskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+        }}
+      >
+        <div
+          className={`flex feed-track-reverse py-3 ${inView ? "" : "feed-paused"}`}
+          style={{
+            width: "max-content",
+            willChange: "transform",
+          }}
+        >
+          {[...usClients, ...usClients, ...usClients].map((c, i) => (
+            <BrandTile key={`us-${c.name}-${i}`} c={c} />
           ))}
         </div>
       </div>
@@ -139,7 +185,12 @@ export default function Clients() {
           from { transform: translate3d(0, 0, 0); }
           to   { transform: translate3d(-33.3333%, 0, 0); }
         }
-        .feed-track {
+        @keyframes feedScrollReverse {
+          from { transform: translate3d(-33.3333%, 0, 0); }
+          to   { transform: translate3d(0, 0, 0); }
+        }
+        .feed-track,
+        .feed-track-reverse {
           /* Slower duration smooths perceived motion — eye reads it as
              premium glide rather than busy scroll. Mobile gets a faster
              cycle because tiles are narrower → otherwise the same brand
@@ -148,14 +199,19 @@ export default function Clients() {
           backface-visibility: hidden;
           transform: translateZ(0);
         }
+        .feed-track-reverse {
+          animation-name: feedScrollReverse;
+        }
         @media (min-width: 768px) {
-          .feed-track { animation-duration: 50s; }
+          .feed-track,
+          .feed-track-reverse { animation-duration: 50s; }
         }
         .feed-paused {
           animation-play-state: paused;
         }
         @media (prefers-reduced-motion: reduce) {
-          .feed-track { animation: none; }
+          .feed-track,
+          .feed-track-reverse { animation: none; }
         }
       `}</style>
     </section>
