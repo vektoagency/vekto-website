@@ -97,17 +97,26 @@ function CameraRig({
     if (!screen) {
       return { zoomCam: FALLBACK_ZOOM_CAM.clone(), zoomTarget: FALLBACK_ZOOM_TARGET.clone() };
     }
-    // Stand off from the screen along its normal by enough distance to frame it
-    // at the current fov. Distance = max(width, height) / (2 * tan(fov/2))
-    // fov vertical = 32deg, tan(16) ≈ 0.287
+    // screen.center / .normal were captured BEFORE the model's BASE_ROT_Y
+    // is applied at runtime — apply the same Y rotation here so camera
+    // approaches the screen face along its true post-rotation axis.
+    // Otherwise the camera lands at an angle, screen falls left in
+    // viewport, right edge of canvas shows the Mac side instead of
+    // pure phosphor. (BASE_ROT_Y = -0.38 in MacintoshGLB useFrame.)
+    const BASE_ROT_Y = -0.38;
+    const rotY = new THREE.Matrix4().makeRotationY(BASE_ROT_Y);
+    const rotCenter = screen.center.clone().applyMatrix4(rotY);
+    const rotNormal = screen.normal.clone().applyMatrix4(rotY).normalize();
+
+    // Stand off from the screen along its (rotated) normal. Aggressive
+    // 0.30 multiplier so phosphor overfills the viewport horizontally
+    // even on wide aspect ratios (16:9 desktop).
     const maxSide = Math.max(screen.width, screen.height);
-    // Very aggressive crop — camera lands so close that the phosphor fills
-    // the entire viewport and literally becomes the page background.
-    const standoff = maxSide / (2 * Math.tan((32 * Math.PI) / 360)) * 0.38;
-    const camPos = screen.center.clone().add(screen.normal.clone().multiplyScalar(standoff));
-    // Account for the model group's y-offset applied in MacintoshGLB's useFrame (root.y=-0.8)
+    const standoff = (maxSide / (2 * Math.tan((32 * Math.PI) / 360))) * 0.30;
+    const camPos = rotCenter.clone().add(rotNormal.clone().multiplyScalar(standoff));
+    // Account for the model group's y-offset applied in MacintoshGLB useFrame (root.y=-0.8)
     camPos.y += -0.8;
-    const tgtPos = screen.center.clone();
+    const tgtPos = rotCenter.clone();
     tgtPos.y += -0.8;
     return { zoomCam: camPos, zoomTarget: tgtPos };
   }, [screen]);
