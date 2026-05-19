@@ -75,7 +75,7 @@ function BrandTile({ c }: { c: Client }) {
             c.circular
               ? "h-[34px] md:h-[52px]"
               : c.stacked
-                ? "h-[40px] md:h-[58px]"
+                ? "h-[32px] md:h-[46px]"
                 : "h-[24px] md:h-[36px]"
           }`}
           style={{ objectFit: "contain", filter: invert }}
