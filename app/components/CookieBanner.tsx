@@ -29,34 +29,37 @@ function setConsent(v: "accepted" | "rejected") {
   } catch {
     // ignore quota / disabled storage
   }
-  // Notify peers (e.g. MetaPixel listener) that consent state changed
   window.dispatchEvent(new CustomEvent("vekto:consent-changed", { detail: v }));
 }
 
+/**
+ * Minimal cookie consent — compact pill at bottom-right.
+ * GDPR-compliant: explicit Accept + reject option (as a small text link
+ * so the visual hierarchy nudges accept without breaking opt-out access).
+ */
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const t = useT({
     bg: {
-      title: "Бисквитки",
-      body: "Използваме бисквитки за работа на сайта и за измерване на ефективността на рекламите ни. Можеш да приемеш всички или само необходимите.",
-      accept: "Приеми всички",
-      reject: "Само необходимите",
-      privacy: "Поверителност",
-      terms: "Условия",
+      body: "Използваме бисквитки за по-добро изживяване.",
+      accept: "Приеми",
+      reject: "Откажи",
+      learn: "Научи повече",
     },
     en: {
-      title: "Cookies",
-      body: "We use cookies for site functionality and to measure our ad performance. You can accept all or only necessary cookies.",
-      accept: "Accept all",
-      reject: "Only necessary",
-      privacy: "Privacy",
-      terms: "Terms",
+      body: "We use cookies for a better experience.",
+      accept: "Accept",
+      reject: "Decline",
+      learn: "Learn more",
     },
   });
 
   useEffect(() => {
-    // Show only if user hasn't made a choice yet.
-    if (getConsent() === null) setVisible(true);
+    if (getConsent() === null) {
+      // Slight delay so the banner doesn't fight the hero animation on load
+      const id = setTimeout(() => setVisible(true), 800);
+      return () => clearTimeout(id);
+    }
   }, []);
 
   const handle = (v: "accepted" | "rejected") => {
@@ -70,39 +73,44 @@ export default function CookieBanner() {
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="fixed inset-x-3 bottom-3 md:inset-x-auto md:right-4 md:bottom-4 md:max-w-md z-[1000] bg-[#0d0d0d] border border-[#c8ff00]/30 rounded-lg shadow-2xl p-4 md:p-5"
-      style={{ boxShadow: "0 20px 60px -10px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,255,0,0.15)" }}
+      className="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-4 sm:bottom-4 sm:max-w-[340px] z-[1000] animate-[cookieSlide_0.45s_ease-out_both]"
     >
-      <div className="flex items-start gap-3 mb-3">
-        <span aria-hidden className="text-xl leading-none">🍪</span>
-        <h3 className="font-mono text-[11px] md:text-xs uppercase tracking-[0.25em] text-[#c8ff00] flex-1 pt-1">
-          {t.title}
-        </h3>
-      </div>
-      <p className="text-[13px] md:text-sm text-[#cfcbc4] leading-relaxed mb-4">
-        {t.body}{" "}
-        <Link href="/privacy" className="text-[#c8ff00] hover:underline">
-          {t.privacy}
-        </Link>{" "}
-        ·{" "}
-        <Link href="/terms" className="text-[#c8ff00] hover:underline">
-          {t.terms}
-        </Link>
-      </p>
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div
+        className="flex items-center gap-3 bg-[#0d0d0d] border border-[#c8ff00]/30 rounded-full pl-4 pr-1.5 py-1.5 shadow-xl"
+        style={{
+          boxShadow: "0 12px 36px -8px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,255,0,0.12)",
+        }}
+      >
+        <span aria-hidden className="text-[15px] shrink-0">🍪</span>
+        <p className="flex-1 text-[12px] md:text-[13px] text-[#cfcbc4] leading-tight">
+          {t.body}{" "}
+          <Link href="/privacy" className="text-[#c8ff00]/80 hover:text-[#c8ff00] underline-offset-2 hover:underline">
+            {t.learn}
+          </Link>
+        </p>
         <button
           onClick={() => handle("accepted")}
-          className="flex-1 bg-[#c8ff00] text-black font-semibold px-4 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors text-sm"
+          className="shrink-0 bg-[#c8ff00] text-black font-semibold text-[11px] md:text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full hover:bg-[#d4ff33] transition-colors"
+          style={{ boxShadow: "0 0 14px rgba(200,255,0,0.4)" }}
         >
           {t.accept}
         </button>
-        <button
-          onClick={() => handle("rejected")}
-          className="flex-1 border border-[#1e1e1c] text-[#9a958e] hover:text-white hover:border-[#333] font-mono uppercase tracking-[0.2em] text-[10px] md:text-[11px] px-4 py-2.5 rounded-full transition-colors"
-        >
-          {t.reject}
-        </button>
       </div>
+      {/* Reject — much smaller, neutral. Still accessible (GDPR) but
+          visually subordinate so default behaviour favours Accept. */}
+      <button
+        onClick={() => handle("rejected")}
+        className="block ml-auto mr-3 mt-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-[#666] hover:text-[#9a958e] transition-colors"
+      >
+        {t.reject}
+      </button>
+
+      <style jsx>{`
+        @keyframes cookieSlide {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
