@@ -24,7 +24,7 @@ const bgClients: Client[] = [
 ];
 
 const usClients: Client[] = [
-  { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: "Sleep wearable device" },
+  { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: "Sleep wearable device", invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: "Fitness supplements" },
   // Dark wordmarks — invert to white so they're visible on the dark tile.
   // Mirrors the BG row pattern (PARFEN, BIOTICA use the same trick).
