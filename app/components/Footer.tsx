@@ -24,6 +24,8 @@ export default function Footer() {
       callUs: "Обади се",
       bookCall: "Резервирай безплатен call",
       rights: "Всички права запазени.",
+      privacy: "Поверителност",
+      terms: "Условия",
     },
     en: {
       tagline: "AI-Driven Vision for the Future of Companies. Cinematic storytelling and AI-powered short-form systems built to scale.",
@@ -40,6 +42,8 @@ export default function Footer() {
       callUs: "Call us",
       bookCall: "Book a free call",
       rights: "All rights reserved.",
+      privacy: "Privacy",
+      terms: "Terms",
     },
   });
 
@@ -105,7 +109,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[#1e1e1c] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-[#4a4540]">© {year} VEKTO. {t.rights}</p>
-          <p className="text-xs text-[#4a4540]">vektoagency.com</p>
+          <div className="flex items-center gap-5 text-xs text-[#4a4540]">
+            <a href="/privacy" className="hover:text-[#9a958e] transition-colors">{t.privacy}</a>
+            <a href="/terms" className="hover:text-[#9a958e] transition-colors">{t.terms}</a>
+            <span>vektoagency.com</span>
+          </div>
         </div>
       </div>
     </footer>
