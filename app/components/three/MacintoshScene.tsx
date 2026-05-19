@@ -144,7 +144,7 @@ export default function MacintoshScene({ zoomedIn, paused = false, overlayOpen =
   const [inView, setInView] = useState(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tCaption = useT({
-    bg: { portfolio: "ПОРТФОЛИОТО ЖИВЕЕ ВЪТРЕ", clickToEnter: "▸ натисни, за да влезеш", clickScreen: "натисни екрана ↓" },
+    bg: { portfolio: "ПОРТФОЛИОТО НИ ЖИВЕЕ ВЪТРЕ", clickToEnter: "▸ натисни, за да влезеш", clickScreen: "натисни екрана ↓" },
     en: { portfolio: "OUR PORTFOLIO LIVES INSIDE", clickToEnter: "▸ click to enter", clickScreen: "click the screen ↓" },
   });
 
