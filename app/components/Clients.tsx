@@ -103,7 +103,7 @@ export default function Clients() {
   const { lang } = useLang();
   const t = useT({
     bg: {
-      title: "Бранд партньори, които ни се довериха",
+      title: "Бизнес партньори, които ни се довериха",
       regionBg: "◆ България",
       regionUs: "◆ САЩ / Свят",
     },
