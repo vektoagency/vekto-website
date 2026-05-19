@@ -10,6 +10,9 @@ type Client = {
   desc: string;
   circular?: boolean;
   invert?: boolean;
+  // Multi-row / stacked marks (logo above word, etc.) — render taller so
+  // each glyph stays legible at the marquee scale.
+  stacked?: boolean;
 };
 
 const bgClients: Client[] = [
@@ -25,13 +28,13 @@ const bgClients: Client[] = [
 
 const usClients: Client[] = [
   { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: "Sleep wearable device", invert: true },
-  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: "Fitness supplements" },
+  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: "Fitness supplements", stacked: true },
   // Dark wordmarks — invert to white so they're visible on the dark tile.
   // Mirrors the BG row pattern (PARFEN, BIOTICA use the same trick).
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: "Family immune & gut supplements", invert: true },
-  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: "Zero-sugar energy drinks", invert: true },
+  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: "Zero-sugar energy drinks", invert: true, stacked: true },
   // Orange wordmark — visible on dark, no invert.
-  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: "Low-calorie gourmet sauces" },
+  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: "Low-calorie gourmet sauces", stacked: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: "Plant-based energy drinks", invert: true },
 ];
 
@@ -69,7 +72,11 @@ function BrandTile({ c }: { c: Client }) {
           alt={c.name}
           draggable={false}
           className={`opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105 w-auto max-w-[100px] md:max-w-[160px] ${
-            c.circular ? "h-[34px] md:h-[52px]" : "h-[24px] md:h-[36px]"
+            c.circular
+              ? "h-[34px] md:h-[52px]"
+              : c.stacked
+                ? "h-[40px] md:h-[58px]"
+                : "h-[24px] md:h-[36px]"
           }`}
           style={{ objectFit: "contain", filter: invert }}
         />
