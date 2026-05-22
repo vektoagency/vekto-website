@@ -149,10 +149,8 @@ export default function Hero() {
           below covers the rest so the layout reads the same as before.
           On click, camera zooms while the curtain fades out — one
           directionless motion, no rect expansion. */}
-      {/* DESKTOP: Portfolio window lives on the right side of the hero.
-          Widened to 52% + pushed slightly left so it doesn't leave a
-          dead zone between the text column and the window. */}
-      <div className="hidden lg:flex absolute inset-y-0 right-0 w-[52%] items-center justify-start pl-2 xl:pl-6">
+      {/* DESKTOP: Portfolio window lives on the right side of the hero. */}
+      <div className="hidden lg:flex absolute inset-y-0 right-0 w-[44%] items-center justify-center">
         <PortfolioWindow />
       </div>
 
@@ -216,10 +214,10 @@ export default function Hero() {
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
       <HeroLeftCurtain
-        className="hidden lg:flex absolute inset-y-0 left-0 w-[62%] z-10 flex-col justify-center px-16 xl:px-24 pt-24 pb-16"
+        className="hidden lg:flex absolute inset-y-0 left-0 w-[64%] z-10 flex-col justify-center px-12 xl:px-20 pt-24 pb-16"
         style={{
           background:
-            "linear-gradient(to right, #080808 0%, #080808 55%, rgba(8,8,8,0.92) 70%, rgba(8,8,8,0.7) 82%, rgba(8,8,8,0.4) 92%, transparent 100%)",
+            "linear-gradient(to right, #080808 0%, #080808 60%, rgba(8,8,8,0.92) 75%, rgba(8,8,8,0.7) 86%, rgba(8,8,8,0.4) 94%, transparent 100%)",
         }}
       >
         <Stagger delay={0} className="w-fit">
@@ -231,7 +229,7 @@ export default function Hero() {
           </div>
         </Stagger>
         <Stagger delay={150}>
-          <h1 className="text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+          <h1 className="text-[64px] xl:text-[88px] font-bold leading-[1.04] tracking-tight mb-7">
             <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
             <br />
             {t.h1RestDesktop[0]}
@@ -240,7 +238,7 @@ export default function Hero() {
           </h1>
         </Stagger>
         <Stagger delay={300}>
-          <p className="max-w-md text-lg text-[#a0a0a0] leading-relaxed mb-10">
+          <p className="max-w-xl text-lg xl:text-xl text-[#a0a0a0] leading-relaxed mb-10">
             {t.sub}
           </p>
         </Stagger>

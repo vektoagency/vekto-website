@@ -102,7 +102,7 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
           className={`group relative block rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-out ${
             mobile
               ? "w-[78%] max-w-[300px] aspect-[3/4]"
-              : "w-[94%] max-w-[560px] aspect-[4/5] xl:aspect-[5/6]"
+              : "w-[88%] max-w-[480px] aspect-[3/4]"
           }`}
           style={{
             background: "#0a0a0a",
