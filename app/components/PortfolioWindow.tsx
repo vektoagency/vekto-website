@@ -16,38 +16,30 @@ type Clip = {
   portrait?: boolean;
 };
 
-// Hero preview budget — 9 clips fit comfortably in a 3x3 scrolling window
-// and keeps total decode-pipeline pressure manageable.
+// Desktop card preview budget — 9 clips in a 3x3 scrolling window, sized
+// small enough that 9 simultaneous mp4 decoders are fine on desktop.
 const cardClips = (bunnyData.clips as Clip[])
   .filter((c) => c.thumbnail)
   .slice(0, 9);
 
-// Full-bleed (mobile background) uses Bunny clips only, so every tile can
-// render as an animated WebP — zero video decoders, smooth scroll on phones.
-// Local mp4 clips don't have a /preview.webp variant, so they're excluded.
+// Mobile fullBleed budget — 6 clips spread across 2 wider columns. Each
+// tile is ~2x the size of the 3-col card variant, so the mp4 quality
+// reads much better, and only ~5 tiles are visible at once → decoder
+// pressure stays well below the iOS Safari simultaneous-video ceiling.
 const fullBleedClips = (bunnyData.clips as Clip[])
-  .filter((c) => c.thumbnail && c.previewMp4 && !c.previewMp4.startsWith("/"))
-  .slice(0, 9);
+  .filter((c) => c.thumbnail)
+  .slice(0, 6);
 
 /**
- * 480p sweet spot for desktop card — crisp at thumbnail size, ~300-500 KB
- * per clip, and desktops happily decode 9 in parallel.
+ * 480p sweet spot — crisp at thumbnail/mid scale, ~300-500 KB per clip,
+ * and modern browsers happily decode the in-viewport set in parallel.
+ * 720p felt heavy on mobile decoders; animated WebP looked smeary —
+ * 480p mp4 threads the needle.
  */
 function previewVideoUrl(src: string | null): string | null {
   if (!src) return null;
   if (src.startsWith("/")) return src; // local mp4 — already small
   return src.replace("play_1080p.mp4", "play_480p.mp4");
-}
-
-/**
- * Animated WebP preview — Bunny generates these by default at /preview.webp.
- * ~130 KB each, decoded as an image (no video pipeline), loops natively.
- * 9× WebP costs ~zero CPU vs 9× decoded mp4 — the big mobile perf unlock.
- */
-function previewWebpUrl(src: string | null): string | null {
-  if (!src) return null;
-  if (src.startsWith("/")) return null; // local mp4 — no webp variant
-  return src.replace("play_1080p.mp4", "preview.webp");
 }
 
 /**
@@ -83,11 +75,14 @@ export default function PortfolioWindow({
     return () => obs.disconnect();
   }, []);
 
-  // Split clips into 3 columns, duplicated for seamless loop.
+  // Split clips into columns, duplicated for seamless loop. Mobile
+  // fullBleed uses 2 wide columns (bigger tiles, fewer decoders), desktop
+  // card uses 3 columns (classic dense grid).
   const columns = useMemo(() => {
     const source = fullBleed ? fullBleedClips : cardClips;
-    const cols: Clip[][] = [[], [], []];
-    source.forEach((c, i) => cols[i % 3].push(c));
+    const colCount = fullBleed ? 2 : 3;
+    const cols: Clip[][] = Array.from({ length: colCount }, () => []);
+    source.forEach((c, i) => cols[i % colCount].push(c));
     return cols.map((col) => [...col, ...col]);
   }, [fullBleed]);
 
@@ -158,18 +153,19 @@ export default function PortfolioWindow({
             transformOrigin: "center",
           }}
         >
-          {/* Inner grid — 3 columns scrolling vertically at different speeds */}
-          <div className={`absolute grid grid-cols-3 overflow-hidden ${
+          {/* Inner grid — 2 cols on mobile fullBleed (bigger tiles), 3 cols
+              everywhere else. Alternating scroll directions for visual life. */}
+          <div className={`absolute grid overflow-hidden ${
             fullBleed
-              ? "inset-0 gap-1"
-              : `rounded-xl ${mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"}`
+              ? "inset-0 gap-1.5 grid-cols-2"
+              : `rounded-xl grid-cols-3 ${mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"}`
           }`}>
             {columns.map((col, idx) => (
               <ScrollColumn
                 key={idx}
                 clips={col}
-                direction={idx === 1 ? "down" : "up"}
-                speed={28 + idx * 6}
+                direction={idx % 2 === 0 ? "up" : "down"}
+                speed={32 + idx * 6}
               />
             ))}
           </div>
@@ -242,11 +238,10 @@ export default function PortfolioWindow({
 }
 
 /**
- * Tile that shows the static poster first, then upgrades to the moving
- * media. WebP (Bunny's /preview.webp) is preferred everywhere — it's
- * GPU-decoded as an image, no video pipeline, and 9 of them cost nothing.
- * Local clips that have no WebP fall back to mp4, mounted after a stagger
- * so they never pile up simultaneously.
+ * Tile renders the static poster immediately, then upgrades to the
+ * playing mp4 after `mountDelay` ms. Stagger means the browser never
+ * spins up the full set of decoders simultaneously — they come online
+ * ~220 ms apart, so initial paint stays responsive.
  */
 function PreviewTile({
   clip,
@@ -255,29 +250,24 @@ function PreviewTile({
   clip: Clip;
   mountDelay: number;
 }) {
-  const webpSrc = previewWebpUrl(clip.previewMp4);
-  const videoSrc = webpSrc ? null : previewVideoUrl(clip.previewMp4);
-  const needsDecoder = !!videoSrc;
-
-  // WebP-only tiles mount immediately (image pipeline is cheap). MP4
-  // fallback tiles still respect the stagger to avoid decoder pile-up.
-  const [mountMedia, setMountMedia] = useState(!needsDecoder);
+  const [mountVideo, setMountVideo] = useState(false);
 
   useEffect(() => {
-    if (!needsDecoder) return;
-    const id = setTimeout(() => setMountMedia(true), mountDelay);
+    const id = setTimeout(() => setMountVideo(true), mountDelay);
     return () => clearTimeout(id);
-  }, [mountDelay, needsDecoder]);
+  }, [mountDelay]);
+
+  const videoSrc = previewVideoUrl(clip.previewMp4);
 
   return (
     <div className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0">
-      {/* Poster — always visible underneath, fades when media paints over */}
+      {/* Poster — always visible underneath, fades when video paints over */}
       {clip.thumbnail.startsWith("/") ? (
         <Image
           src={clip.thumbnail}
           alt={clip.brand}
           fill
-          sizes="(max-width: 768px) 30vw, 200px"
+          sizes="(max-width: 768px) 50vw, 200px"
           className="object-cover"
         />
       ) : (
@@ -291,22 +281,8 @@ function PreviewTile({
         />
       )}
 
-      {/* Animated WebP — preferred on mobile fullBleed, GPU-decoded as image */}
-      {mountMedia && webpSrc && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={webpSrc}
-          alt=""
-          aria-hidden
-          loading="lazy"
-          decoding="async"
-          draggable={false}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      )}
-
-      {/* MP4 — desktop card mode, mounted after stagger delay */}
-      {mountMedia && videoSrc && (
+      {/* Video — mounted after stagger delay, plays on top of poster */}
+      {mountVideo && videoSrc && (
         <video
           src={videoSrc}
           muted
