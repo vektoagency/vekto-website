@@ -148,8 +148,10 @@ export default function Hero() {
           below covers the rest so the layout reads the same as before.
           On click, camera zooms while the curtain fades out — one
           directionless motion, no rect expansion. */}
-      {/* DESKTOP: Portfolio window lives on the right side of the hero. */}
-      <div className="hidden lg:flex absolute inset-y-0 right-0 w-[44%] items-center justify-center">
+      {/* DESKTOP: Portfolio window lives on the right side of the hero.
+          Top padding clears the fixed Navbar so the thumbnails don't bleed
+          into the logo / nav links area. */}
+      <div className="hidden lg:flex absolute right-0 top-24 bottom-10 w-[44%] items-center justify-center">
         <PortfolioWindow />
       </div>
 
