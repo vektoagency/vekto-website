@@ -1,5 +1,6 @@
 "use client";
 
+import HeroCinematicBg from "./HeroCinematicBg";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 import PortfolioWindow from "./PortfolioWindow";
@@ -40,12 +41,12 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* MOBILE: PortfolioWindow as full-bleed animated background.
-          Sits beneath the readability gradients + text/CTAs. Tapping
-          anywhere outside the CTAs falls through to the window's own
-          button (pointer-events: none on the overlay layers above). */}
+      {/* MOBILE: single fullscreen cinematic reel as background.
+          Cycles through 6 best clips with crossfade — peak 2 decoders
+          (active + preloading next). Massive perf win vs the grid,
+          and 720p quality since only 1 clip is fully visible. */}
       <div className="lg:hidden absolute inset-0 z-[1]">
-        <PortfolioWindow mobile fullBleed />
+        <HeroCinematicBg />
       </div>
 
       {/* MOBILE readability scrim — heavy top + bottom dark gradients
