@@ -1,7 +1,6 @@
 "use client";
 
 import HeroLeftCurtain from "./HeroLeftCurtain";
-import HeroTapHint from "./HeroTapHint";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 import PortfolioWindow from "./PortfolioWindow";
 import { useT } from "../i18n/LangProvider";
@@ -154,27 +153,12 @@ export default function Hero() {
         <PortfolioWindow />
       </div>
 
-      {/* MOBILE: portfolio window sits in the middle third of the viewport,
-          between the top text and bottom CTAs. Smaller scale so it doesn't
-          push the buttons off-screen. */}
-      <div className="lg:hidden absolute inset-x-0 top-[28%] bottom-[34%] flex items-center justify-center z-[1] pointer-events-auto">
-        <PortfolioWindow mobile />
-      </div>
-
-      {/* Top gradient — makes badge + H1 readable over the Mac */}
-      <div className="lg:hidden absolute inset-x-0 top-0 h-[42%] z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.7) 55%, transparent 100%)" }} />
-      {/* Bottom gradient — same for CTAs */}
-      <div className="lg:hidden absolute inset-x-0 bottom-0 h-[40%] z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.75) 50%, transparent 100%)" }} />
-
-      {/* Mobile content — overlays the Canvas with justify-between so Mac
-          sits in the middle third, clear of the text at top/bottom.
-          Wrapped in HeroLeftCurtain so the whole text stack fades out on
-          zoom-start and fades back in on zoom-end (mirrors desktop). */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-6 w-full min-h-screen pt-20 pb-24 pointer-events-none">
-        {/* Top cluster — pointer-events-auto only on interactive children */}
-        <div className="flex flex-col items-center">
+      {/* ── MOBILE: clean vertical stack — text top, window centerpiece,
+          CTAs bottom. No more overlay hack with gradients — the window
+          is part of the flow, balanced spacing. */}
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-20 pb-10 gap-6 pointer-events-none">
+        {/* Text cluster */}
+        <div className="flex flex-col items-center pointer-events-auto">
           <Stagger delay={0}>
             <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-4 bg-black/30 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
@@ -184,32 +168,42 @@ export default function Hero() {
             </div>
           </Stagger>
           <Stagger delay={100}>
-            <h1 className="text-[32px] sm:text-[36px] font-bold leading-[1.05] tracking-tight text-white"
-              style={{ textShadow: "0 2px 22px rgba(0,0,0,0.85)" }}>
+            <h1
+              className="text-[34px] sm:text-[40px] font-bold leading-[1.05] tracking-tight text-white mb-3"
+              style={{ textShadow: "0 2px 22px rgba(0,0,0,0.85)" }}
+            >
               <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
               <br />
               {t.h1RestMobile}
             </h1>
           </Stagger>
-        </div>
-
-        {/* Flexible spacer so the bottom cluster hugs the footer */}
-        <div className="flex-1" />
-
-        {/* Bottom cluster */}
-        <div className="flex flex-col items-center">
-          <HeroTapHint />
-          <Stagger delay={520}>
-            <div className="flex flex-col gap-3 w-full max-w-[280px] pointer-events-auto">
-              <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center">
-                {t.ctaPrimary}
-              </a>
-              <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer">
-                {t.ctaSecondary}
-              </PortfolioTriggerButton>
-            </div>
+          <Stagger delay={200}>
+            <p className="text-[14px] sm:text-[15px] text-[#a0a0a0] leading-relaxed max-w-[340px]">
+              {t.sub}
+            </p>
           </Stagger>
         </div>
+
+        {/* PortfolioWindow — flexes to fill available vertical space */}
+        <div className="flex-1 w-full flex items-center justify-center pointer-events-auto min-h-[260px]">
+          <PortfolioWindow mobile />
+        </div>
+
+        {/* CTAs */}
+        <Stagger delay={420} className="w-full pointer-events-auto">
+          <div className="flex flex-col gap-3 w-full max-w-[320px] mx-auto">
+            <a
+              href="#contact"
+              className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center text-[15px]"
+              style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+            >
+              {t.ctaPrimary}
+            </a>
+            <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer text-[14px]">
+              {t.ctaSecondary}
+            </PortfolioTriggerButton>
+          </div>
+        </Stagger>
       </HeroLeftCurtain>
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
