@@ -43,7 +43,10 @@ function previewVideoUrl(src: string | null): string | null {
  * shows actual brand work above the fold, and keeps the same overlay
  * behaviour downstream.
  */
-export default function PortfolioWindow({ mobile = false }: { mobile?: boolean } = {}) {
+export default function PortfolioWindow({
+  mobile = false,
+  fullBleed = false,
+}: { mobile?: boolean; fullBleed?: boolean } = {}) {
   const [zoomed, setZoomed] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [inView, setInView] = useState(true);
@@ -115,17 +118,21 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
           type="button"
           onClick={startZoom}
           aria-label="Open portfolio"
-          className={`group relative block rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-out ${
-            mobile
-              ? "w-[78%] max-w-[300px] aspect-[3/4]"
-              : "w-[88%] max-w-[480px] aspect-[3/4]"
+          className={`group relative block overflow-hidden cursor-pointer transition-all duration-500 ease-out ${
+            fullBleed
+              ? "w-full h-full"
+              : mobile
+                ? "w-[78%] max-w-[300px] aspect-[3/4] rounded-2xl"
+                : "w-[88%] max-w-[480px] aspect-[3/4] rounded-2xl"
           }`}
           style={{
             background: "#0a0a0a",
-            border: "1.5px solid rgba(200, 255, 0, 0.4)",
-            boxShadow: zoomed
-              ? "0 0 80px rgba(200,255,0,0.45)"
-              : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
+            border: fullBleed ? "none" : "1.5px solid rgba(200, 255, 0, 0.4)",
+            boxShadow: fullBleed
+              ? "none"
+              : zoomed
+                ? "0 0 80px rgba(200,255,0,0.45)"
+                : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
             // Subtle pull-in: small scale-up + fade. The overlay covers
             // the rest of the visual transition — no huge cropped frame.
             transform: zoomed ? "scale(1.18)" : "scale(1)",
@@ -134,37 +141,45 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
           }}
         >
           {/* Inner grid — 3 columns scrolling vertically at different speeds */}
-          <div className={`absolute grid grid-cols-3 overflow-hidden rounded-xl ${
-            mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"
+          <div className={`absolute grid grid-cols-3 overflow-hidden ${
+            fullBleed
+              ? "inset-0 gap-1"
+              : `rounded-xl ${mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"}`
           }`}>
             {columns.map((col, idx) => (
               <ScrollColumn key={idx} clips={col} direction={idx === 1 ? "down" : "up"} speed={28 + idx * 6} />
             ))}
           </div>
 
-          {/* Soft top/bottom fade for cinematic edge */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-10 z-[3]"
-            style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 100%)" }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-10 z-[3]"
-            style={{ background: "linear-gradient(to top, #0a0a0a 0%, transparent 100%)" }}
-          />
+          {/* Soft top/bottom fade for cinematic edge — only in card mode */}
+          {!fullBleed && (
+            <>
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-10 z-[3]"
+                style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 100%)" }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-10 z-[3]"
+                style={{ background: "linear-gradient(to top, #0a0a0a 0%, transparent 100%)" }}
+              />
+            </>
+          )}
 
-          {/* Hint pill — always visible on mobile (no hover), hover-only on desktop */}
-          <div
-            className={`absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-[#c8ff00]/40 transition-opacity duration-300 ${
-              mobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-            }`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]">
-              Натисни за разглеждане
-            </span>
-          </div>
+          {/* Hint pill — only in card mode; full-bleed uses external CTAs instead */}
+          {!fullBleed && (
+            <div
+              className={`absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-[#c8ff00]/40 transition-opacity duration-300 ${
+                mobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+              <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]">
+                Натисни за разглеждане
+              </span>
+            </div>
+          )}
         </button>
       </div>
 

@@ -40,75 +40,43 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* Mobile atmospheric backdrop — cleaner, more cinematic studio
-          setup tuned for portrait. Reads as a single-subject photograph:
-          deep moody black with a soft cool ambient, one strong warm
-          key light from top-left raking the Mac, a lime CRT halo behind
-          the monitor, and a heavy floor puddle grounding the machine. */}
-      <div aria-hidden className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Base — near-pure black with subtle cool lift so highlights pop */}
-        <div className="absolute inset-0" style={{
-          background: `linear-gradient(to bottom,
-            #060a10 0%,
-            #050608 40%,
-            #060504 78%,
-            #080503 100%)`,
-        }} />
-
-        {/* Big warm key light spill from top-left — the main light source */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 90% 65% at 18% 12%, rgba(240,190,130,0.14) 0%, rgba(200,140,80,0.05) 45%, transparent 80%)",
-        }} />
-
-        {/* Cool fill from the opposite side for shape separation */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 70% 55% at 95% 75%, rgba(70,110,170,0.14) 0%, rgba(40,70,130,0.05) 50%, transparent 85%)",
-        }} />
-
-        {/* Lime CRT halo behind the monitor — tighter + brighter than before */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 55% 32% at 58% 44%, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0.07) 40%, transparent 75%)",
-        }} />
-
-        {/* Secondary lime spill bleeding upward onto 'ceiling' */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 60% 25% at 58% 28%, rgba(200,255,0,0.06) 0%, transparent 75%)",
-        }} />
-
-        {/* Heavy floor puddle directly under the Mac — anchors the machine */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{
-            bottom: "15%",
-            width: "75%",
-            height: "18%",
-            background: "radial-gradient(ellipse at 58% 100%, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0.08) 35%, transparent 70%)",
-            filter: "blur(6px)",
-          }}
-        />
-
-        {/* Floor gradient — warm soft kiss fading toward the camera */}
-        <div className="absolute inset-x-0 bottom-0 h-[38%]" style={{
-          background: "linear-gradient(to bottom, transparent 0%, rgba(90,60,35,0.12) 55%, rgba(30,18,10,0.3) 100%)",
-        }} />
-
-        {/* Strong ceiling cap — keeps eyes on the Mac */}
-        <div className="absolute inset-x-0 top-0 h-[28%]" style={{
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)",
-        }} />
-
-        {/* Horizon line — subtle seam where 'wall' meets 'floor', right where Mac's keyboard sits */}
-        <div className="absolute inset-x-0" style={{
-          top: "68%",
-          height: "1px",
-          background: "linear-gradient(to right, transparent 10%, rgba(200,255,0,0.15) 50%, transparent 90%)",
-        }} />
-
-        {/* Strong edge vignette — pulls focus dramatically to Mac */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 95% 75% at 58% 50%, transparent 30%, rgba(0,0,0,0.75) 95%)",
-        }} />
+      {/* MOBILE: PortfolioWindow as full-bleed animated background.
+          Sits beneath the readability gradients + text/CTAs. Tapping
+          anywhere outside the CTAs falls through to the window's own
+          button (pointer-events: none on the overlay layers above). */}
+      <div className="lg:hidden absolute inset-0 z-[1]">
+        <PortfolioWindow mobile fullBleed />
       </div>
+
+      {/* MOBILE readability scrim — heavy top + bottom dark gradients
+          keep the headline and CTAs legible over the moving footage.
+          pointer-events-none so taps reach the videos underneath. */}
+      <div
+        aria-hidden
+        className="lg:hidden absolute inset-x-0 top-0 h-[55%] z-[2] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.78) 35%, rgba(8,8,8,0.4) 70%, transparent 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="lg:hidden absolute inset-x-0 bottom-0 h-[42%] z-[2] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.78) 35%, rgba(8,8,8,0.35) 75%, transparent 100%)",
+        }}
+      />
+
+      {/* Subtle lime edge glow on mobile — keeps brand presence over the video bg */}
+      <div
+        aria-hidden
+        className="lg:hidden absolute inset-0 z-[2] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 100% 60% at 50% 50%, transparent 45%, rgba(200,255,0,0.05) 75%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
 
       {/* Desktop atmosphere — kept minimal: flat black base + subtle
           warm bottom + lime CRT halo + blueprint grid + floor glow.
@@ -155,14 +123,16 @@ export default function Hero() {
         <PortfolioWindow />
       </div>
 
-      {/* ── MOBILE: clean vertical stack — text top, window centerpiece,
-          CTAs bottom. No more overlay hack with gradients — the window
-          is part of the flow, balanced spacing. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-20 pb-10 gap-6 pointer-events-none">
-        {/* Text cluster */}
-        <div className="flex flex-col items-center pointer-events-auto">
+      {/* ── MOBILE: text/CTAs floated over the video background.
+          Container is pointer-events-none so taps fall through to the
+          PortfolioWindow's tap-to-open button; only the CTAs themselves
+          capture taps. Text gets a strong shadow + the dark gradient
+          scrim above does the heavy lifting on readability. */}
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-20 pb-10 pointer-events-none">
+        {/* Text cluster — pointer-events-none so taps hit the videos behind */}
+        <div className="flex flex-col items-center">
           <Stagger delay={0}>
-            <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-3.5 py-1 mb-4 bg-black/30 backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 border border-[#c8ff00]/40 rounded-full px-3.5 py-1 mb-4 bg-black/55 backdrop-blur-md">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
                 {t.badge}
@@ -172,7 +142,7 @@ export default function Hero() {
           <Stagger delay={100}>
             <h1
               className="text-[34px] sm:text-[40px] font-bold leading-[1.05] tracking-tight text-white mb-3"
-              style={{ textShadow: "0 2px 22px rgba(0,0,0,0.85)" }}
+              style={{ textShadow: "0 2px 24px rgba(0,0,0,0.95), 0 0 12px rgba(0,0,0,0.8)" }}
             >
               <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
               <br />
@@ -180,18 +150,19 @@ export default function Hero() {
             </h1>
           </Stagger>
           <Stagger delay={200}>
-            <p className="text-[14px] sm:text-[15px] text-[#a0a0a0] leading-relaxed max-w-[340px]">
+            <p
+              className="text-[14px] sm:text-[15px] text-[#cfcfcf] leading-relaxed max-w-[340px]"
+              style={{ textShadow: "0 2px 14px rgba(0,0,0,0.9)" }}
+            >
               {t.sub}
             </p>
           </Stagger>
         </div>
 
-        {/* PortfolioWindow — flexes to fill available vertical space */}
-        <div className="flex-1 w-full flex items-center justify-center pointer-events-auto min-h-[260px]">
-          <PortfolioWindow mobile />
-        </div>
+        {/* Flex spacer — pushes CTAs to the bottom while keeping text up top */}
+        <div className="flex-1" />
 
-        {/* CTAs */}
+        {/* CTAs — the only mobile-bottom interactive layer over the videos */}
         <Stagger delay={420} className="w-full pointer-events-auto">
           <div className="flex flex-col gap-3 w-full max-w-[320px] mx-auto">
             <a
@@ -201,7 +172,7 @@ export default function Hero() {
             >
               {t.ctaPrimary}
             </a>
-            <PortfolioTriggerButton className="border border-white/25 text-white font-semibold px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-sm hover:bg-white/10 transition-colors text-center cursor-pointer text-[14px]">
+            <PortfolioTriggerButton className="border border-white/30 text-white font-semibold px-8 py-3.5 rounded-full bg-black/55 backdrop-blur-md hover:bg-white/10 transition-colors text-center cursor-pointer text-[14px]">
               {t.ctaSecondary}
             </PortfolioTriggerButton>
           </div>
