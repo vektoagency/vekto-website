@@ -12,10 +12,21 @@ type Clip = {
   id: string;
   brand: string;
   thumbnail: string;
+  previewMp4: string | null;
   portrait?: boolean;
 };
 
 const clips = (bunnyData.clips as Clip[]).filter((c) => c.thumbnail);
+
+/**
+ * Bunny preview URLs ship as /play_1080p.mp4 which is ~10-30 MB and far
+ * too heavy for nine thumbnails autoplaying in a hero. Swap to 360p so
+ * total payload stays under ~3-5 MB for the whole grid.
+ */
+function lightenedVideoUrl(src: string | null): string | null {
+  if (!src) return null;
+  return src.replace("play_1080p.mp4", "play_360p.mp4");
+}
 
 /**
  * Portfolio "window" — minimal lime-bordered card containing three
@@ -202,32 +213,48 @@ function ScrollColumn({
         className={`pw-col dir-${direction} flex flex-col gap-2 md:gap-2.5`}
         style={{ animationDuration: `${speed}s` }}
       >
-        {clips.map((c, i) => (
-          <div
-            key={`${c.id}-${i}`}
-            className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
-          >
-            {c.thumbnail.startsWith("/") ? (
-              <Image
-                src={c.thumbnail}
-                alt={c.brand}
-                fill
-                sizes="(max-width: 768px) 30vw, 150px"
-                className="object-cover"
-              />
-            ) : (
-              // External (Bunny) — use plain img to avoid Next loader cost on hero
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={c.thumbnail}
-                alt={c.brand}
-                loading="lazy"
-                draggable={false}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            )}
-          </div>
-        ))}
+        {clips.map((c, i) => {
+          const videoSrc = lightenedVideoUrl(c.previewMp4);
+          return (
+            <div
+              key={`${c.id}-${i}`}
+              className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
+            >
+              {videoSrc ? (
+                // Auto-playing muted video preview — feels like the reels
+                // are actually running in the hero. Poster keeps the slot
+                // pretty while the mp4 is still downloading.
+                <video
+                  src={videoSrc}
+                  poster={c.thumbnail}
+                  muted
+                  autoPlay
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : c.thumbnail.startsWith("/") ? (
+                <Image
+                  src={c.thumbnail}
+                  alt={c.brand}
+                  fill
+                  sizes="(max-width: 768px) 30vw, 150px"
+                  className="object-cover"
+                />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={c.thumbnail}
+                  alt={c.brand}
+                  loading="lazy"
+                  draggable={false}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
