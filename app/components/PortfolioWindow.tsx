@@ -16,25 +16,21 @@ type Clip = {
   portrait?: boolean;
 };
 
-// Hero preview budget — only the first 9 clips fit comfortably in a 3x3
-// scrolling window. Loading more just costs bandwidth nobody sees.
+// Hero preview budget — 9 clips fit comfortably in a 3x3 scrolling window
+// and keeps total decode-pipeline pressure manageable.
 const clips = (bunnyData.clips as Clip[])
   .filter((c) => c.thumbnail)
   .slice(0, 9);
 
 /**
- * Bunny generates a tiny animated WebP preview at /preview.webp for each
- * clip — roughly 50-150 KB and decoded natively by the browser, so 9 of
- * them feel "live" without the MP4 decode pipeline cost that froze the
- * hero. Falls back to the static thumbnail if the preview is missing.
+ * 480p sweet spot — looks crisp at thumbnail size, ~300-500 KB per clip,
+ * and modern browsers happily decode 9 of them in parallel. 1080p felt
+ * laggy; 360p / animated WebP felt blurry — 480p threads the needle.
  */
-function animatedPreviewUrl(thumbnail: string): string | null {
-  if (!thumbnail || thumbnail.startsWith("/")) return null;
-  // Bunny convention: same /{guid}/ path, swap thumbnail.jpg → preview.webp
-  if (thumbnail.includes("/thumbnail.jpg")) {
-    return thumbnail.replace("/thumbnail.jpg", "/preview.webp");
-  }
-  return null;
+function previewVideoUrl(src: string | null): string | null {
+  if (!src) return null;
+  if (src.startsWith("/")) return src; // local mp4 — already small
+  return src.replace("play_1080p.mp4", "play_480p.mp4");
 }
 
 /**
@@ -207,6 +203,60 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
   );
 }
 
+/**
+ * Tile that shows the static poster first, then upgrades to the playing
+ * mp4 after `mountDelay` ms. Staggering the mounts across the grid means
+ * the browser never has to spin up 9 decoders simultaneously — each
+ * starts ~220 ms after the previous one, so the page stays responsive.
+ */
+function PreviewTile({ clip, mountDelay }: { clip: Clip; mountDelay: number }) {
+  const [mountVideo, setMountVideo] = useState(false);
+
+  useEffect(() => {
+    const id = setTimeout(() => setMountVideo(true), mountDelay);
+    return () => clearTimeout(id);
+  }, [mountDelay]);
+
+  const videoSrc = previewVideoUrl(clip.previewMp4);
+
+  return (
+    <div className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0">
+      {/* Poster — always visible underneath, fades when video paints over it */}
+      {clip.thumbnail.startsWith("/") ? (
+        <Image
+          src={clip.thumbnail}
+          alt={clip.brand}
+          fill
+          sizes="(max-width: 768px) 30vw, 200px"
+          className="object-cover"
+        />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={clip.thumbnail}
+          alt={clip.brand}
+          loading="eager"
+          draggable={false}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
+      {/* Video — mounted after stagger delay, plays on top of poster */}
+      {mountVideo && videoSrc && (
+        <video
+          src={videoSrc}
+          muted
+          autoPlay
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+    </div>
+  );
+}
+
 function ScrollColumn({
   clips,
   direction,
@@ -222,44 +272,9 @@ function ScrollColumn({
         className={`pw-col dir-${direction} flex flex-col gap-2 md:gap-2.5`}
         style={{ animationDuration: `${speed}s` }}
       >
-        {clips.map((c, i) => {
-          const animated = animatedPreviewUrl(c.thumbnail);
-          return (
-            <div
-              key={`${c.id}-${i}`}
-              className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
-            >
-              {animated ? (
-                // Animated WebP — native browser decode, ~70 KB per clip.
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={animated}
-                  alt={c.brand}
-                  loading="eager"
-                  draggable={false}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              ) : c.thumbnail.startsWith("/") ? (
-                <Image
-                  src={c.thumbnail}
-                  alt={c.brand}
-                  fill
-                  sizes="(max-width: 768px) 30vw, 150px"
-                  className="object-cover"
-                />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={c.thumbnail}
-                  alt={c.brand}
-                  loading="lazy"
-                  draggable={false}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              )}
-            </div>
-          );
-        })}
+        {clips.map((c, i) => (
+          <PreviewTile key={`${c.id}-${i}`} clip={c} mountDelay={i * 220} />
+        ))}
       </div>
     </div>
   );
