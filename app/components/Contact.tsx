@@ -85,26 +85,33 @@ export default function Contact() {
 
         <AnimateIn>
           <div className="flex flex-col items-center gap-3">
-            {/* Primary CTA — sits on its own line */}
+            {/* Primary CTA — same shape and weight as the hero primary
+                (px-7 py-4 / font-bold / lime fill + strong glow) so the
+                two read as one design system, not two different sites. */}
             <button
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
               onClick={() => trackEvent("Schedule", { source: "contact_section" })}
-              className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-semibold px-6 py-3.5 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
-              style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+              className="group inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-bold px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all hover:-translate-y-0.5 cursor-pointer text-[15px]"
+              style={{
+                boxShadow:
+                  "0 16px 44px -10px rgba(200,255,0,0.7), 0 0 32px -4px rgba(200,255,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
+              }}
             >
               <CalendarIcon />
               {t.bookCall}
               <span className="text-black/60 text-xs font-normal ml-1">{t.bookSuffix}</span>
             </button>
 
-            {/* Secondary CTAs — stacked below the primary */}
+            {/* Secondary CTAs — lime-outline (same treatment as hero's
+                secondary) for the "call" action; white-outline for the
+                tertiary form action. Both share px-7 py-4 / font-bold. */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={`tel:${PHONE}`}
                 onClick={() => trackEvent("Contact", { source: "contact_section" })}
-                className="inline-flex items-center justify-center gap-2.5 border border-[#c8ff00]/50 text-[#c8ff00] font-semibold px-6 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2.5 border border-[#c8ff00]/55 text-[#c8ff00] font-bold px-7 py-4 rounded-full hover:bg-[#c8ff00]/10 active:scale-[0.98] transition-all cursor-pointer text-[15px]"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -114,11 +121,11 @@ export default function Contact() {
               </a>
               <a
                 href="/start"
-                className="inline-flex items-center justify-center gap-2.5 border border-[#222] text-white font-semibold px-6 py-3.5 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2.5 border border-white/25 text-white font-bold px-7 py-4 rounded-full bg-black/40 backdrop-blur-md hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 active:scale-[0.98] transition-all cursor-pointer text-[15px]"
               >
                 <MessageIcon />
                 {t.startForm}
-                <span className="text-[#666] text-xs font-normal ml-1">{t.startFormSuffix}</span>
+                <span className="text-white/55 text-xs font-normal ml-1">{t.startFormSuffix}</span>
               </a>
             </div>
           </div>

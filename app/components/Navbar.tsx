@@ -105,20 +105,24 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile burger */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-            {menuOpen ? (
-              <path d="M6 6l12 12M6 18L18 6" />
-            ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+        {/* Mobile right cluster — always-visible lang toggle + burger
+            so visitors can flip language without first opening the menu. */}
+        <div className="md:hidden flex items-center gap-2.5">
+          <LangToggle />
+          <button
+            className="text-white p-1"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+              {menuOpen ? (
+                <path d="M6 6l12 12M6 18L18 6" />
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -144,16 +148,13 @@ export default function Navbar() {
               </a>
             )
           )}
-          <div className="flex items-center justify-between gap-3 pt-1">
-            <LangToggle />
-            <a
-              href="/start"
-              onClick={() => setMenuOpen(false)}
-              className="bg-[#c8ff00] text-black font-semibold px-5 py-2.5 rounded-full text-center hover:bg-[#d4ff33] transition-colors flex-1"
-            >
-              {t.cta}
-            </a>
-          </div>
+          <a
+            href="/start"
+            onClick={() => setMenuOpen(false)}
+            className="bg-[#c8ff00] text-black font-semibold px-5 py-3 rounded-full text-center hover:bg-[#d4ff33] transition-colors mt-1"
+          >
+            {t.cta}
+          </a>
         </div>
       )}
     </header>

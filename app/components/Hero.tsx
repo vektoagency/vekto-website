@@ -45,33 +45,34 @@ export default function Hero() {
         <PortfolioWindow mobile fullBleed />
       </div>
 
-      {/* MOBILE readability scrim — heavy top + bottom dark gradients
-          keep the headline and CTAs legible over the moving footage.
-          pointer-events-none so taps reach the videos underneath. */}
+      {/* MOBILE readability scrim — lighter than before because the
+          frosted glass command panel below carries most of the text
+          readability work. These now exist mainly to soften the video
+          edges into the nav/footer instead of as a heavy text scrim. */}
       <div
         aria-hidden
-        className="lg:hidden absolute inset-x-0 top-0 h-[55%] z-[2] pointer-events-none"
+        className="lg:hidden absolute inset-x-0 top-0 h-[28%] z-[2] pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.78) 35%, rgba(8,8,8,0.4) 70%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.5) 50%, transparent 100%)",
         }}
       />
       <div
         aria-hidden
-        className="lg:hidden absolute inset-x-0 bottom-0 h-[42%] z-[2] pointer-events-none"
+        className="lg:hidden absolute inset-x-0 bottom-0 h-[24%] z-[2] pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.78) 35%, rgba(8,8,8,0.35) 75%, transparent 100%)",
+            "linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.45) 55%, transparent 100%)",
         }}
       />
 
-      {/* Subtle lime edge glow on mobile — keeps brand presence over the video bg */}
+      {/* Subtle edge vignette — pulls focus to the center cluster */}
       <div
         aria-hidden
         className="lg:hidden absolute inset-0 z-[2] pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 100% 60% at 50% 50%, transparent 45%, rgba(200,255,0,0.05) 75%, rgba(0,0,0,0.55) 100%)",
+            "radial-gradient(ellipse 110% 70% at 50% 50%, transparent 45%, rgba(0,0,0,0.45) 100%)",
         }}
       />
 
@@ -125,69 +126,86 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center justify-center text-center px-5 w-full min-h-screen pt-20 pb-10 pointer-events-none">
-        {/* Single unified cluster — text + CTAs grouped tight as one focal
-            anchor instead of stretched corner-to-corner. Centered vertically
-            so the cluster owns the middle and videos breathe top/bottom. */}
-        <div className="flex flex-col items-center w-full max-w-[400px]">
-          <Stagger delay={0}>
-            <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 border border-[#c8ff00]/55 backdrop-blur-md"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(200,255,0,0.18) 0%, rgba(200,255,0,0.08) 100%)",
-                boxShadow:
-                  "0 0 24px -6px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
-              }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-              <span className="text-[11px] text-[#c8ff00] font-semibold tracking-[0.24em] uppercase">
-                {t.badge}
-              </span>
-            </div>
-          </Stagger>
-          <Stagger delay={100}>
-            <h1
-              className="text-[42px] sm:text-[52px] font-extrabold leading-[1.02] tracking-[-0.02em] text-white mb-4"
-              style={{
-                textShadow:
-                  "0 4px 36px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.85)",
-              }}
-            >
-              <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
-              <br />
-              {t.h1RestMobile}
-            </h1>
-          </Stagger>
-          <Stagger delay={200}>
-            <p
-              className="text-[15px] sm:text-[16px] text-[#e8e8e8] leading-[1.55] font-medium max-w-[360px] mb-8"
-              style={{ textShadow: "0 2px 20px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.9)" }}
-            >
-              {t.sub}
-            </p>
-          </Stagger>
-          <Stagger delay={380} className="w-full pointer-events-auto">
-            <div className="flex flex-col gap-3 w-full max-w-[340px] mx-auto">
-              <a
-                href="#contact"
-                className="group bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-center text-[16px] inline-flex items-center justify-center gap-2"
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-[15vh] pb-10 pointer-events-none">
+        {/* Glass command panel — frosted card around badge / H1 / sub / CTAs
+            so the whole cluster reads as a single focal anchor sitting
+            crisply above the moving footage instead of floating text and
+            buttons that blend into the busy background. */}
+        <div className="relative w-full max-w-[400px] mx-auto pointer-events-auto">
+          <div
+            aria-hidden
+            className="absolute -inset-x-5 -inset-y-7 rounded-[28px] border border-white/10"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(10,10,10,0.62) 0%, rgba(8,8,8,0.78) 100%)",
+              backdropFilter: "blur(16px) saturate(115%)",
+              WebkitBackdropFilter: "blur(16px) saturate(115%)",
+              boxShadow:
+                "0 30px 70px -20px rgba(0,0,0,0.85), 0 0 70px -10px rgba(200,255,0,0.07), inset 0 1px 0 rgba(255,255,255,0.06)",
+            }}
+          />
+
+          <div className="relative flex flex-col items-center">
+            <Stagger delay={0}>
+              <div
+                className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-5 border border-[#c8ff00]/55"
                 style={{
+                  background:
+                    "linear-gradient(135deg, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0.08) 100%)",
                   boxShadow:
-                    "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 36px -4px rgba(200,255,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
+                    "0 0 22px -6px rgba(200,255,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06)",
                 }}
               >
-                <span>{t.ctaPrimary}</span>
-                <span className="text-[18px] leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </a>
-              <PortfolioTriggerButton
-                className="group border border-white/40 text-white font-semibold px-8 py-4 rounded-full bg-black/65 backdrop-blur-md hover:bg-white/10 active:scale-[0.98] transition-all text-center cursor-pointer text-[15px] inline-flex items-center justify-center gap-2"
-              >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-                <span>{t.ctaSecondary}</span>
-              </PortfolioTriggerButton>
-            </div>
-          </Stagger>
+                <span className="text-[10px] text-[#c8ff00] font-semibold tracking-[0.24em] uppercase">
+                  {t.badge}
+                </span>
+              </div>
+            </Stagger>
+            <Stagger delay={100}>
+              <h1 className="text-[38px] sm:text-[44px] font-extrabold leading-[1.04] tracking-[-0.02em] text-white mb-3">
+                <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
+                <br />
+                {t.h1RestMobile}
+              </h1>
+            </Stagger>
+            <Stagger delay={200}>
+              <p className="text-[14px] sm:text-[15px] text-[#d8d8d8] leading-[1.55] max-w-[340px] mb-7">
+                {t.sub}
+              </p>
+            </Stagger>
+            <Stagger delay={350} className="w-full">
+              <div className="flex flex-col gap-3 w-full max-w-[320px] mx-auto">
+                <a
+                  href="#contact"
+                  className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px]"
+                  style={{
+                    boxShadow:
+                      "0 16px 44px -10px rgba(200,255,0,0.7), 0 0 32px -4px rgba(200,255,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  }}
+                >
+                  <span>{t.ctaPrimary}</span>
+                  <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
+                </a>
+                <PortfolioTriggerButton
+                  className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-bold px-7 py-4 rounded-full bg-black/40 backdrop-blur-md hover:bg-[#c8ff00]/10 active:scale-[0.98] transition-all cursor-pointer text-[15px]"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  <span>{t.ctaSecondary}</span>
+                </PortfolioTriggerButton>
+              </div>
+            </Stagger>
+          </div>
         </div>
       </HeroLeftCurtain>
 
