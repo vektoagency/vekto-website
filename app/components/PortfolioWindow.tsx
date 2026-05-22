@@ -54,12 +54,14 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
     return cols.map((col) => [...col, ...col]);
   }, []);
 
-  // Open / close flow
+  // Open / close flow — subtle "pull-in" feel: window scales slightly +
+  // fades, the overlay fades in over the top before the scale ever gets
+  // ugly. Keeps the transition cinematic without cropping the grid.
   const startZoom = () => {
     window.dispatchEvent(new Event("vekto:zoom-started"));
     setZoomed(true);
-    // Wait for the zoom animation to land before overlaying the reel wall
-    setTimeout(() => setOverlayOpen(true), 700);
+    // Overlay slides in midway through the scale → no awkward static frame
+    setTimeout(() => setOverlayOpen(true), 250);
   };
 
   const handleClose = () => {
@@ -67,7 +69,7 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
     setTimeout(() => {
       setZoomed(false);
       window.dispatchEvent(new Event("vekto:zoom-ended"));
-    }, 350);
+    }, 300);
   };
 
   // External trigger from "See our work" buttons elsewhere on the page.
@@ -97,7 +99,7 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
           type="button"
           onClick={startZoom}
           aria-label="Open portfolio"
-          className={`group relative block rounded-2xl overflow-hidden cursor-pointer transition-transform duration-700 ${
+          className={`group relative block rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-out ${
             mobile
               ? "w-[78%] max-w-[300px] aspect-[3/4]"
               : "w-[94%] max-w-[560px] aspect-[4/5] xl:aspect-[5/6]"
@@ -106,9 +108,12 @@ export default function PortfolioWindow({ mobile = false }: { mobile?: boolean }
             background: "#0a0a0a",
             border: "1.5px solid rgba(200, 255, 0, 0.4)",
             boxShadow: zoomed
-              ? "0 0 0 0 rgba(200,255,0,0.4)"
+              ? "0 0 80px rgba(200,255,0,0.45)"
               : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
-            transform: zoomed ? `scale(${mobile ? 4 : 3.5})` : "scale(1)",
+            // Subtle pull-in: small scale-up + fade. The overlay covers
+            // the rest of the visual transition — no huge cropped frame.
+            transform: zoomed ? "scale(1.18)" : "scale(1)",
+            opacity: zoomed ? 0 : 1,
             transformOrigin: "center",
           }}
         >
