@@ -1,9 +1,9 @@
 "use client";
 
-import HeroPravec from "./HeroPravec";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import HeroTapHint from "./HeroTapHint";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
+import PortfolioWindow from "./PortfolioWindow";
 import { useT } from "../i18n/LangProvider";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
@@ -153,16 +153,17 @@ export default function Hero() {
           below covers the rest so the layout reads the same as before.
           On click, camera zooms while the curtain fades out — one
           directionless motion, no rect expansion. */}
-      <div className="hidden lg:block absolute inset-0">
-        <HeroPravec />
+      {/* DESKTOP: Portfolio window lives on the right side of the hero,
+          mirroring where the Mac used to sit. Click → zoom into the
+          container → portfolio overlay opens. */}
+      <div className="hidden lg:flex absolute inset-y-0 right-0 w-[42%] items-center justify-center">
+        <PortfolioWindow />
       </div>
 
-      {/* ── MOBILE hero — Mac renders fullscreen behind the content (same
-          architecture as desktop) so the tap-to-zoom animation runs edge
-          to edge with no container resize. Text sits on top with dark
-          gradients for readability. */}
-      <div className="lg:hidden absolute inset-0 z-[1]">
-        <HeroPravec mobile />
+      {/* MOBILE: portfolio window sits behind the text stack — text on top
+          via the curtain below. */}
+      <div className="lg:hidden absolute inset-0 flex items-center justify-center z-[1] pointer-events-auto">
+        <PortfolioWindow />
       </div>
 
       {/* Top gradient — makes badge + H1 readable over the Mac */}

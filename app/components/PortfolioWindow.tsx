@@ -1,0 +1,200 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import bunnyData from "../data/bunny-clips.json";
+
+// Lazy-load the heavy overlay — same pattern as before.
+const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
+
+type Clip = {
+  id: string;
+  brand: string;
+  thumbnail: string;
+  portrait?: boolean;
+};
+
+const clips = (bunnyData.clips as Clip[]).filter((c) => c.thumbnail);
+
+/**
+ * Portfolio "window" — minimal lime-bordered card containing three
+ * vertically-scrolling columns of clip thumbnails. Clicking the
+ * window (or the "See our work" button via the global event) zooms
+ * the card into the viewport and reveals the existing PortfolioOverlay.
+ *
+ * Replaces the 3D Mac CRT as the hero's portfolio trigger — lighter,
+ * shows actual brand work above the fold, and keeps the same overlay
+ * behaviour downstream.
+ */
+export default function PortfolioWindow() {
+  const [zoomed, setZoomed] = useState(false);
+  const [overlayOpen, setOverlayOpen] = useState(false);
+
+  // Split clips into 3 columns, duplicated for seamless loop.
+  const columns = useMemo(() => {
+    const cols: Clip[][] = [[], [], []];
+    clips.forEach((c, i) => cols[i % 3].push(c));
+    return cols.map((col) => [...col, ...col]);
+  }, []);
+
+  // Open / close flow
+  const startZoom = () => {
+    window.dispatchEvent(new Event("vekto:zoom-started"));
+    setZoomed(true);
+    // Wait for the zoom animation to land before overlaying the reel wall
+    setTimeout(() => setOverlayOpen(true), 700);
+  };
+
+  const handleClose = () => {
+    setOverlayOpen(false);
+    setTimeout(() => {
+      setZoomed(false);
+      window.dispatchEvent(new Event("vekto:zoom-ended"));
+    }, 350);
+  };
+
+  // External trigger from "See our work" buttons elsewhere on the page.
+  useEffect(() => {
+    const onTrigger = () => {
+      if (!zoomed) startZoom();
+    };
+    window.addEventListener("vekto:open-portfolio", onTrigger);
+    return () => window.removeEventListener("vekto:open-portfolio", onTrigger);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoomed]);
+
+  return (
+    <>
+      <div
+        className={`portfolio-window ${zoomed ? "is-zoomed" : ""}`}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <button
+          type="button"
+          onClick={startZoom}
+          aria-label="Open portfolio"
+          className="group relative block w-[88%] max-w-[460px] aspect-[3/4] md:aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer transition-transform duration-700"
+          style={{
+            background: "#0a0a0a",
+            border: "1.5px solid rgba(200, 255, 0, 0.4)",
+            boxShadow: zoomed
+              ? "0 0 0 0 rgba(200,255,0,0.4)"
+              : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
+            transform: zoomed ? "scale(3.5)" : "scale(1)",
+            transformOrigin: "center",
+          }}
+        >
+          {/* Inner grid — 3 columns scrolling vertically at different speeds */}
+          <div className="absolute inset-2 md:inset-3 grid grid-cols-3 gap-2 md:gap-2.5 overflow-hidden rounded-xl">
+            {columns.map((col, idx) => (
+              <ScrollColumn key={idx} clips={col} direction={idx === 1 ? "down" : "up"} speed={28 + idx * 6} />
+            ))}
+          </div>
+
+          {/* Soft top/bottom fade for cinematic edge */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-10 z-[3]"
+            style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 100%)" }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-10 z-[3]"
+            style={{ background: "linear-gradient(to top, #0a0a0a 0%, transparent 100%)" }}
+          />
+
+          {/* Hover hint pill — bottom centre */}
+          <div
+            className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-[#c8ff00]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+            <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]">
+              Натисни за разглеждане
+            </span>
+          </div>
+        </button>
+      </div>
+
+      <PortfolioOverlay open={overlayOpen} onClose={handleClose} />
+
+      <style jsx global>{`
+        @keyframes pwScrollUp {
+          from { transform: translate3d(0, 0, 0); }
+          to   { transform: translate3d(0, -50%, 0); }
+        }
+        @keyframes pwScrollDown {
+          from { transform: translate3d(0, -50%, 0); }
+          to   { transform: translate3d(0, 0, 0); }
+        }
+        .pw-col {
+          will-change: transform;
+        }
+        .pw-col.dir-up   { animation-name: pwScrollUp; }
+        .pw-col.dir-down { animation-name: pwScrollDown; }
+        .pw-col {
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        .portfolio-window:hover .pw-col {
+          animation-play-state: paused;
+        }
+        .portfolio-window.is-zoomed .pw-col {
+          animation-play-state: paused;
+        }
+      `}</style>
+    </>
+  );
+}
+
+function ScrollColumn({
+  clips,
+  direction,
+  speed,
+}: {
+  clips: Clip[];
+  direction: "up" | "down";
+  speed: number;
+}) {
+  return (
+    <div className="relative h-full overflow-hidden">
+      <div
+        className={`pw-col dir-${direction} flex flex-col gap-2 md:gap-2.5`}
+        style={{ animationDuration: `${speed}s` }}
+      >
+        {clips.map((c, i) => (
+          <div
+            key={`${c.id}-${i}`}
+            className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
+          >
+            {c.thumbnail.startsWith("/") ? (
+              <Image
+                src={c.thumbnail}
+                alt={c.brand}
+                fill
+                sizes="(max-width: 768px) 30vw, 150px"
+                className="object-cover"
+              />
+            ) : (
+              // External (Bunny) — use plain img to avoid Next loader cost on hero
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={c.thumbnail}
+                alt={c.brand}
+                loading="lazy"
+                draggable={false}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
