@@ -238,10 +238,18 @@ export default function PortfolioWindow({
 }
 
 /**
- * Tile renders the static poster immediately, then upgrades to the
- * playing mp4 after `mountDelay` ms. Stagger means the browser never
- * spins up the full set of decoders simultaneously — they come online
- * ~220 ms apart, so initial paint stays responsive.
+ * Tile renders the static poster immediately. The <video> element is
+ * lazy-mounted only after the tile has scrolled into view at least once
+ * — that means initial pageload only fetches videos for the handful of
+ * tiles actually visible above the fold, not the full 12-tile DOM set.
+ * Once mounted, the video stays mounted, and an IntersectionObserver
+ * pauses it the instant it leaves the viewport (freeing its decoder
+ * slot) and resumes it on re-entry. Net effect: active decoder count
+ * never exceeds what's actually on screen — usually 4-5, well under
+ * the iOS Safari simultaneous-video ceiling.
+ *
+ * `mountDelay` is preserved as a small staggered play kickoff so the
+ * 4-5 visible tiles don't all hit the decoder at the same millisecond.
  */
 function PreviewTile({
   clip,
@@ -250,17 +258,55 @@ function PreviewTile({
   clip: Clip;
   mountDelay: number;
 }) {
-  const [mountVideo, setMountVideo] = useState(false);
+  const tileRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [staggerPassed, setStaggerPassed] = useState(false);
 
+  // Small staggered kickoff so the first wave of visible tiles spin
+  // up decoders ~220 ms apart rather than all at once.
   useEffect(() => {
-    const id = setTimeout(() => setMountVideo(true), mountDelay);
+    const id = setTimeout(() => setStaggerPassed(true), mountDelay);
     return () => clearTimeout(id);
   }, [mountDelay]);
+
+  // Track this tile's intersection with the viewport. rootMargin of
+  // 30% pre-mounts the video slightly before the tile is on screen so
+  // there's no visible "poster → first frame" flash on scroll-in.
+  useEffect(() => {
+    const el = tileRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) setHasBeenVisible(true);
+      },
+      { threshold: 0, rootMargin: "30% 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Drive play/pause off visibility. Paused videos release their
+  // decoder, so total decoder pressure tracks on-screen tile count.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (isVisible && staggerPassed) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  }, [isVisible, staggerPassed, hasBeenVisible]);
 
   const videoSrc = previewVideoUrl(clip.previewMp4);
 
   return (
-    <div className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0">
+    <div
+      ref={tileRef}
+      className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
+    >
       {/* Poster — always visible underneath, fades when video paints over */}
       {clip.thumbnail.startsWith("/") ? (
         <Image
@@ -281,12 +327,12 @@ function PreviewTile({
         />
       )}
 
-      {/* Video — mounted after stagger delay, plays on top of poster */}
-      {mountVideo && videoSrc && (
+      {/* Video — lazy-mounted on first visibility, IO controls play/pause */}
+      {hasBeenVisible && videoSrc && (
         <video
+          ref={videoRef}
           src={videoSrc}
           muted
-          autoPlay
           loop
           playsInline
           preload="auto"
