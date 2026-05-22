@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import bunnyData from "../data/bunny-clips.json";
 
 // Lazy-load the heavy overlay — same pattern as before.
@@ -27,9 +27,25 @@ const clips = (bunnyData.clips as Clip[]).filter((c) => c.thumbnail);
  * shows actual brand work above the fold, and keeps the same overlay
  * behaviour downstream.
  */
-export default function PortfolioWindow() {
+export default function PortfolioWindow({ mobile = false }: { mobile?: boolean } = {}) {
   const [zoomed, setZoomed] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const [inView, setInView] = useState(true);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Pause scrolling when the window is offscreen — saves CPU/GPU as the
+  // user reads the rest of the homepage. Resumes the moment it scrolls
+  // back into view.
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   // Split clips into 3 columns, duplicated for seamless loop.
   const columns = useMemo(() => {
@@ -67,7 +83,8 @@ export default function PortfolioWindow() {
   return (
     <>
       <div
-        className={`portfolio-window ${zoomed ? "is-zoomed" : ""}`}
+        ref={wrapperRef}
+        className={`portfolio-window ${zoomed ? "is-zoomed" : ""} ${inView ? "" : "is-offscreen"}`}
         style={{
           width: "100%",
           height: "100%",
@@ -80,19 +97,25 @@ export default function PortfolioWindow() {
           type="button"
           onClick={startZoom}
           aria-label="Open portfolio"
-          className="group relative block w-[88%] max-w-[460px] aspect-[3/4] md:aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer transition-transform duration-700"
+          className={`group relative block rounded-2xl overflow-hidden cursor-pointer transition-transform duration-700 ${
+            mobile
+              ? "w-[78%] max-w-[300px] aspect-[3/4]"
+              : "w-[88%] max-w-[460px] aspect-[3/4] md:aspect-[4/5]"
+          }`}
           style={{
             background: "#0a0a0a",
             border: "1.5px solid rgba(200, 255, 0, 0.4)",
             boxShadow: zoomed
               ? "0 0 0 0 rgba(200,255,0,0.4)"
               : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
-            transform: zoomed ? "scale(3.5)" : "scale(1)",
+            transform: zoomed ? `scale(${mobile ? 4 : 3.5})` : "scale(1)",
             transformOrigin: "center",
           }}
         >
           {/* Inner grid — 3 columns scrolling vertically at different speeds */}
-          <div className="absolute inset-2 md:inset-3 grid grid-cols-3 gap-2 md:gap-2.5 overflow-hidden rounded-xl">
+          <div className={`absolute grid grid-cols-3 overflow-hidden rounded-xl ${
+            mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"
+          }`}>
             {columns.map((col, idx) => (
               <ScrollColumn key={idx} clips={col} direction={idx === 1 ? "down" : "up"} speed={28 + idx * 6} />
             ))}
@@ -110,9 +133,11 @@ export default function PortfolioWindow() {
             style={{ background: "linear-gradient(to top, #0a0a0a 0%, transparent 100%)" }}
           />
 
-          {/* Hover hint pill — bottom centre */}
+          {/* Hint pill — always visible on mobile (no hover), hover-only on desktop */}
           <div
-            className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-[#c8ff00]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className={`absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-[#c8ff00]/40 transition-opacity duration-300 ${
+              mobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            }`}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
             <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]">
@@ -142,11 +167,15 @@ export default function PortfolioWindow() {
           animation-timing-function: linear;
           animation-iteration-count: infinite;
         }
-        .portfolio-window:hover .pw-col {
+        /* Animation keeps running on hover — feels alive even when the
+           cursor lingers over the window. Only the zoom-in transition
+           AND offscreen state pause the columns. */
+        .portfolio-window.is-zoomed .pw-col,
+        .portfolio-window.is-offscreen .pw-col {
           animation-play-state: paused;
         }
-        .portfolio-window.is-zoomed .pw-col {
-          animation-play-state: paused;
+        @media (prefers-reduced-motion: reduce) {
+          .pw-col { animation: none; }
         }
       `}</style>
     </>

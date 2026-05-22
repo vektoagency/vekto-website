@@ -138,10 +138,6 @@ export default function Hero() {
           }}
         />
 
-        <div className="absolute bottom-10 right-28 font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/40">
-          MACINTOSH 128K · 1984 — VEKTO/OS
-        </div>
-
         <div
           className="absolute bottom-0 right-[8%] w-[52%] h-[16%]"
           style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.12), transparent 70%)" }}
@@ -160,10 +156,11 @@ export default function Hero() {
         <PortfolioWindow />
       </div>
 
-      {/* MOBILE: portfolio window sits behind the text stack — text on top
-          via the curtain below. */}
-      <div className="lg:hidden absolute inset-0 flex items-center justify-center z-[1] pointer-events-auto">
-        <PortfolioWindow />
+      {/* MOBILE: portfolio window sits in the middle third of the viewport,
+          between the top text and bottom CTAs. Smaller scale so it doesn't
+          push the buttons off-screen. */}
+      <div className="lg:hidden absolute inset-x-0 top-[28%] bottom-[34%] flex items-center justify-center z-[1] pointer-events-auto">
+        <PortfolioWindow mobile />
       </div>
 
       {/* Top gradient — makes badge + H1 readable over the Mac */}
