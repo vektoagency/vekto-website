@@ -125,21 +125,34 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-20 pb-28 pointer-events-none">
-        {/* Text cluster — pointer-events-none so taps hit the videos behind */}
-        <div className="flex flex-col items-center">
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center justify-center text-center px-5 w-full min-h-screen pt-20 pb-10 pointer-events-none">
+        {/* Single unified cluster — text + CTAs grouped tight as one focal
+            anchor instead of stretched corner-to-corner. Centered vertically
+            so the cluster owns the middle and videos breathe top/bottom. */}
+        <div className="flex flex-col items-center w-full max-w-[400px]">
           <Stagger delay={0}>
-            <div className="inline-flex items-center gap-2 border border-[#c8ff00]/40 rounded-full px-3.5 py-1 mb-4 bg-black/55 backdrop-blur-md">
+            <div
+              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 border border-[#c8ff00]/55 backdrop-blur-md"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(200,255,0,0.18) 0%, rgba(200,255,0,0.08) 100%)",
+                boxShadow:
+                  "0 0 24px -6px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
+              }}
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-              <span className="text-[10px] text-[#c8ff00] font-medium tracking-[0.22em] uppercase">
+              <span className="text-[11px] text-[#c8ff00] font-semibold tracking-[0.24em] uppercase">
                 {t.badge}
               </span>
             </div>
           </Stagger>
           <Stagger delay={100}>
             <h1
-              className="text-[34px] sm:text-[40px] font-bold leading-[1.05] tracking-tight text-white mb-3"
-              style={{ textShadow: "0 2px 24px rgba(0,0,0,0.95), 0 0 12px rgba(0,0,0,0.8)" }}
+              className="text-[42px] sm:text-[52px] font-extrabold leading-[1.02] tracking-[-0.02em] text-white mb-4"
+              style={{
+                textShadow:
+                  "0 4px 36px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.85)",
+              }}
             >
               <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
               <br />
@@ -148,32 +161,34 @@ export default function Hero() {
           </Stagger>
           <Stagger delay={200}>
             <p
-              className="text-[14px] sm:text-[15px] text-[#cfcfcf] leading-relaxed max-w-[340px]"
-              style={{ textShadow: "0 2px 14px rgba(0,0,0,0.9)" }}
+              className="text-[15px] sm:text-[16px] text-[#e8e8e8] leading-[1.55] font-medium max-w-[360px] mb-8"
+              style={{ textShadow: "0 2px 20px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.9)" }}
             >
               {t.sub}
             </p>
           </Stagger>
+          <Stagger delay={380} className="w-full pointer-events-auto">
+            <div className="flex flex-col gap-3 w-full max-w-[340px] mx-auto">
+              <a
+                href="#contact"
+                className="group bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-center text-[16px] inline-flex items-center justify-center gap-2"
+                style={{
+                  boxShadow:
+                    "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 36px -4px rgba(200,255,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
+                }}
+              >
+                <span>{t.ctaPrimary}</span>
+                <span className="text-[18px] leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </a>
+              <PortfolioTriggerButton
+                className="group border border-white/40 text-white font-semibold px-8 py-4 rounded-full bg-black/65 backdrop-blur-md hover:bg-white/10 active:scale-[0.98] transition-all text-center cursor-pointer text-[15px] inline-flex items-center justify-center gap-2"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+                <span>{t.ctaSecondary}</span>
+              </PortfolioTriggerButton>
+            </div>
+          </Stagger>
         </div>
-
-        {/* Flex spacer — pushes CTAs to the bottom while keeping text up top */}
-        <div className="flex-1" />
-
-        {/* CTAs — the only mobile-bottom interactive layer over the videos */}
-        <Stagger delay={420} className="w-full pointer-events-auto">
-          <div className="flex flex-col gap-3 w-full max-w-[320px] mx-auto">
-            <a
-              href="#contact"
-              className="bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-center text-[15px]"
-              style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
-            >
-              {t.ctaPrimary}
-            </a>
-            <PortfolioTriggerButton className="border border-white/30 text-white font-semibold px-8 py-3.5 rounded-full bg-black/55 backdrop-blur-md hover:bg-white/10 transition-colors text-center cursor-pointer text-[14px]">
-              {t.ctaSecondary}
-            </PortfolioTriggerButton>
-          </div>
-        </Stagger>
       </HeroLeftCurtain>
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
