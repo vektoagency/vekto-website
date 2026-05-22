@@ -18,19 +18,36 @@ type Clip = {
 
 // Hero preview budget — 9 clips fit comfortably in a 3x3 scrolling window
 // and keeps total decode-pipeline pressure manageable.
-const clips = (bunnyData.clips as Clip[])
+const cardClips = (bunnyData.clips as Clip[])
   .filter((c) => c.thumbnail)
   .slice(0, 9);
 
+// Full-bleed (mobile background) uses Bunny clips only, so every tile can
+// render as an animated WebP — zero video decoders, smooth scroll on phones.
+// Local mp4 clips don't have a /preview.webp variant, so they're excluded.
+const fullBleedClips = (bunnyData.clips as Clip[])
+  .filter((c) => c.thumbnail && c.previewMp4 && !c.previewMp4.startsWith("/"))
+  .slice(0, 9);
+
 /**
- * 480p sweet spot — looks crisp at thumbnail size, ~300-500 KB per clip,
- * and modern browsers happily decode 9 of them in parallel. 1080p felt
- * laggy; 360p / animated WebP felt blurry — 480p threads the needle.
+ * 480p sweet spot for desktop card — crisp at thumbnail size, ~300-500 KB
+ * per clip, and desktops happily decode 9 in parallel.
  */
 function previewVideoUrl(src: string | null): string | null {
   if (!src) return null;
   if (src.startsWith("/")) return src; // local mp4 — already small
   return src.replace("play_1080p.mp4", "play_480p.mp4");
+}
+
+/**
+ * Animated WebP preview — Bunny generates these by default at /preview.webp.
+ * ~130 KB each, decoded as an image (no video pipeline), loops natively.
+ * 9× WebP costs ~zero CPU vs 9× decoded mp4 — the big mobile perf unlock.
+ */
+function previewWebpUrl(src: string | null): string | null {
+  if (!src) return null;
+  if (src.startsWith("/")) return null; // local mp4 — no webp variant
+  return src.replace("play_1080p.mp4", "preview.webp");
 }
 
 /**
@@ -68,10 +85,11 @@ export default function PortfolioWindow({
 
   // Split clips into 3 columns, duplicated for seamless loop.
   const columns = useMemo(() => {
+    const source = fullBleed ? fullBleedClips : cardClips;
     const cols: Clip[][] = [[], [], []];
-    clips.forEach((c, i) => cols[i % 3].push(c));
+    source.forEach((c, i) => cols[i % 3].push(c));
     return cols.map((col) => [...col, ...col]);
-  }, []);
+  }, [fullBleed]);
 
   // Open / close flow — subtle "pull-in" feel: window scales slightly +
   // fades, the overlay fades in over the top before the scale ever gets
@@ -147,7 +165,12 @@ export default function PortfolioWindow({
               : `rounded-xl ${mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"}`
           }`}>
             {columns.map((col, idx) => (
-              <ScrollColumn key={idx} clips={col} direction={idx === 1 ? "down" : "up"} speed={28 + idx * 6} />
+              <ScrollColumn
+                key={idx}
+                clips={col}
+                direction={idx === 1 ? "down" : "up"}
+                speed={28 + idx * 6}
+              />
             ))}
           </div>
 
@@ -219,24 +242,36 @@ export default function PortfolioWindow({
 }
 
 /**
- * Tile that shows the static poster first, then upgrades to the playing
- * mp4 after `mountDelay` ms. Staggering the mounts across the grid means
- * the browser never has to spin up 9 decoders simultaneously — each
- * starts ~220 ms after the previous one, so the page stays responsive.
+ * Tile that shows the static poster first, then upgrades to the moving
+ * media. WebP (Bunny's /preview.webp) is preferred everywhere — it's
+ * GPU-decoded as an image, no video pipeline, and 9 of them cost nothing.
+ * Local clips that have no WebP fall back to mp4, mounted after a stagger
+ * so they never pile up simultaneously.
  */
-function PreviewTile({ clip, mountDelay }: { clip: Clip; mountDelay: number }) {
-  const [mountVideo, setMountVideo] = useState(false);
+function PreviewTile({
+  clip,
+  mountDelay,
+}: {
+  clip: Clip;
+  mountDelay: number;
+}) {
+  const webpSrc = previewWebpUrl(clip.previewMp4);
+  const videoSrc = webpSrc ? null : previewVideoUrl(clip.previewMp4);
+  const needsDecoder = !!videoSrc;
+
+  // WebP-only tiles mount immediately (image pipeline is cheap). MP4
+  // fallback tiles still respect the stagger to avoid decoder pile-up.
+  const [mountMedia, setMountMedia] = useState(!needsDecoder);
 
   useEffect(() => {
-    const id = setTimeout(() => setMountVideo(true), mountDelay);
+    if (!needsDecoder) return;
+    const id = setTimeout(() => setMountMedia(true), mountDelay);
     return () => clearTimeout(id);
-  }, [mountDelay]);
-
-  const videoSrc = previewVideoUrl(clip.previewMp4);
+  }, [mountDelay, needsDecoder]);
 
   return (
     <div className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0">
-      {/* Poster — always visible underneath, fades when video paints over it */}
+      {/* Poster — always visible underneath, fades when media paints over */}
       {clip.thumbnail.startsWith("/") ? (
         <Image
           src={clip.thumbnail}
@@ -256,8 +291,22 @@ function PreviewTile({ clip, mountDelay }: { clip: Clip; mountDelay: number }) {
         />
       )}
 
-      {/* Video — mounted after stagger delay, plays on top of poster */}
-      {mountVideo && videoSrc && (
+      {/* Animated WebP — preferred on mobile fullBleed, GPU-decoded as image */}
+      {mountMedia && webpSrc && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={webpSrc}
+          alt=""
+          aria-hidden
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
+      {/* MP4 — desktop card mode, mounted after stagger delay */}
+      {mountMedia && videoSrc && (
         <video
           src={videoSrc}
           muted
@@ -288,7 +337,11 @@ function ScrollColumn({
         style={{ animationDuration: `${speed}s` }}
       >
         {clips.map((c, i) => (
-          <PreviewTile key={`${c.id}-${i}`} clip={c} mountDelay={i * 220} />
+          <PreviewTile
+            key={`${c.id}-${i}`}
+            clip={c}
+            mountDelay={i * 220}
+          />
         ))}
       </div>
     </div>

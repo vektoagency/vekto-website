@@ -128,7 +128,7 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-20 pb-10 pointer-events-none">
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-20 pb-28 pointer-events-none">
         {/* Text cluster — pointer-events-none so taps hit the videos behind */}
         <div className="flex flex-col items-center">
           <Stagger delay={0}>
