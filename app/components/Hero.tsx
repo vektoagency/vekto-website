@@ -149,10 +149,10 @@ export default function Hero() {
           below covers the rest so the layout reads the same as before.
           On click, camera zooms while the curtain fades out — one
           directionless motion, no rect expansion. */}
-      {/* DESKTOP: Portfolio window lives on the right side of the hero,
-          mirroring where the Mac used to sit. Click → zoom into the
-          container → portfolio overlay opens. */}
-      <div className="hidden lg:flex absolute inset-y-0 right-0 w-[42%] items-center justify-center">
+      {/* DESKTOP: Portfolio window lives on the right side of the hero.
+          Widened to 52% + pushed slightly left so it doesn't leave a
+          dead zone between the text column and the window. */}
+      <div className="hidden lg:flex absolute inset-y-0 right-0 w-[52%] items-center justify-start pl-2 xl:pl-6">
         <PortfolioWindow />
       </div>
 
