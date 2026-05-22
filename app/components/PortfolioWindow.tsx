@@ -16,16 +16,25 @@ type Clip = {
   portrait?: boolean;
 };
 
-const clips = (bunnyData.clips as Clip[]).filter((c) => c.thumbnail);
+// Hero preview budget — only the first 9 clips fit comfortably in a 3x3
+// scrolling window. Loading more just costs bandwidth nobody sees.
+const clips = (bunnyData.clips as Clip[])
+  .filter((c) => c.thumbnail)
+  .slice(0, 9);
 
 /**
- * Bunny preview URLs ship as /play_1080p.mp4 which is ~10-30 MB and far
- * too heavy for nine thumbnails autoplaying in a hero. Swap to 360p so
- * total payload stays under ~3-5 MB for the whole grid.
+ * Bunny generates a tiny animated WebP preview at /preview.webp for each
+ * clip — roughly 50-150 KB and decoded natively by the browser, so 9 of
+ * them feel "live" without the MP4 decode pipeline cost that froze the
+ * hero. Falls back to the static thumbnail if the preview is missing.
  */
-function lightenedVideoUrl(src: string | null): string | null {
-  if (!src) return null;
-  return src.replace("play_1080p.mp4", "play_360p.mp4");
+function animatedPreviewUrl(thumbnail: string): string | null {
+  if (!thumbnail || thumbnail.startsWith("/")) return null;
+  // Bunny convention: same /{guid}/ path, swap thumbnail.jpg → preview.webp
+  if (thumbnail.includes("/thumbnail.jpg")) {
+    return thumbnail.replace("/thumbnail.jpg", "/preview.webp");
+  }
+  return null;
 }
 
 /**
@@ -214,24 +223,20 @@ function ScrollColumn({
         style={{ animationDuration: `${speed}s` }}
       >
         {clips.map((c, i) => {
-          const videoSrc = lightenedVideoUrl(c.previewMp4);
+          const animated = animatedPreviewUrl(c.thumbnail);
           return (
             <div
               key={`${c.id}-${i}`}
               className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
             >
-              {videoSrc ? (
-                // Auto-playing muted video preview — feels like the reels
-                // are actually running in the hero. Poster keeps the slot
-                // pretty while the mp4 is still downloading.
-                <video
-                  src={videoSrc}
-                  poster={c.thumbnail}
-                  muted
-                  autoPlay
-                  loop
-                  playsInline
-                  preload="metadata"
+              {animated ? (
+                // Animated WebP — native browser decode, ~70 KB per clip.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={animated}
+                  alt={c.brand}
+                  loading="eager"
+                  draggable={false}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : c.thumbnail.startsWith("/") ? (
