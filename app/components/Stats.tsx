@@ -51,7 +51,7 @@ export default function Stats() {
   });
   const stats = t.stats;
   return (
-    <section className="px-4 py-3 md:py-16" style={{ background: "#060606" }}>
+    <section className="px-4 py-10 md:py-16" style={{ background: "#060606" }}>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 divide-x divide-[#1a1a1a] border border-[#1a1a1a] rounded-2xl overflow-hidden">
           {stats.map((s, i) => (

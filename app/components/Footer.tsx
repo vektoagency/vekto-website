@@ -48,9 +48,9 @@ export default function Footer() {
   });
 
   return (
-    <footer className="border-t border-[#1e1e1c] py-14 px-6" style={{ background: "#060606" }}>
+    <footer className="border-t border-[#1e1e1c] py-10 md:py-14 px-6" style={{ background: "#060606" }}>
       <div className="max-w-7xl mx-auto">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-12 mb-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-8 md:gap-12 mb-8 md:mb-10">
           {/* Brand */}
           <div>
             <Image src="/images/logo.webp" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />

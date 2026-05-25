@@ -86,16 +86,16 @@ export default function Services() {
   return (
     <section id="services" className="py-20 md:py-28 px-6" style={{ background: "linear-gradient(to bottom, #080808, #0a0a0f, #080808)" }}>
       <div className="max-w-7xl mx-auto">
-        <AnimateIn className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <AnimateIn className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10 md:mb-16">
           <div>
             <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight text-balance">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight text-balance">
               {t.h2[0]}
               <br />
               {t.h2[1]}
             </h2>
           </div>
-          <p className="max-w-sm text-[#a0a0a0] leading-relaxed text-balance">{t.sub}</p>
+          <p className="max-w-sm text-[#a0a0a0] text-sm md:text-base leading-relaxed text-balance">{t.sub}</p>
         </AnimateIn>
 
         {/* Desktop layout */}
@@ -157,18 +157,18 @@ export default function Services() {
         <div className="lg:hidden divide-y divide-[#1a1a1a]">
           {services.map((s, i) => (
             <AnimateIn key={s.number} delay={i * 80}>
-              <div className="group py-8">
+              <div className="group py-6">
                 <div className="relative w-full rounded-xl overflow-hidden mb-4" style={{ aspectRatio: "16/9" }}>
                   <Image src={s.image} alt={s.title} fill className="object-cover" />
                 </div>
-                <div className="flex items-start gap-4">
-                  <span className="text-[#333] text-sm font-mono mt-1">{s.number}</span>
+                <div className="flex items-start gap-3.5">
+                  <span className="text-[#c8ff00]/70 text-sm font-mono mt-1 shrink-0">{s.number}</span>
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{s.title}</h3>
-                    <p className="text-[#a0a0a0] text-sm leading-relaxed mb-3">{s.description}</p>
-                    <div className="flex flex-wrap gap-2">
+                    <h3 className="text-lg font-semibold text-white mb-2 text-balance leading-snug">{s.title}</h3>
+                    <p className="text-[#a0a0a0] text-[13px] leading-relaxed mb-3 text-balance">{s.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
                       {s.tags.map((t) => (
-                        <span key={t} className="text-xs border border-[#222] text-[#666] px-3 py-1 rounded-full">
+                        <span key={t} className="text-[10px] border border-[#222] text-[#888] px-2.5 py-0.5 rounded-full">
                           {t}
                         </span>
                       ))}

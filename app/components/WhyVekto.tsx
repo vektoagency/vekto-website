@@ -6,7 +6,7 @@ import { useT } from "../i18n/LangProvider";
 const dict = {
   bg: {
     eyebrow: "Защо VEKTO",
-    h2: ["Креативният партньор,", "който бизнесът ти заслужава"],
+    h2: ["Креативният партньор,", "който заслужаваш"],
     pillars: [
       { icon: "⚡", title: "Скорост в мащаб", description: "AI-задвижени процеси доставят съдържание за дни. Без чакане, без задръствания — само резултати." },
       { icon: "🎯", title: "Стратегическа креативност", description: "Всяко парче съдържание е създадено с цел — да продава, ангажира и развие бизнеса ти." },
@@ -56,7 +56,7 @@ export default function WhyVekto() {
     <section id="why" className="py-20 md:py-28 px-6" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f, #060606)" }}>
       <div className="max-w-7xl mx-auto">
 
-        <AnimateIn className="text-center mb-20">
+        <AnimateIn className="text-center mb-12 md:mb-20">
           <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold text-balance">
             {t.h2[0]}
@@ -66,7 +66,7 @@ export default function WhyVekto() {
         </AnimateIn>
 
         {/* Pillars */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-24">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16 md:mb-24">
           {pillars.map((p, i) => (
             <AnimateIn key={p.title} delay={i * 100}>
               <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl p-5 md:p-6 hover:border-[#c8ff00]/30 hover:shadow-[0_0_20px_rgba(200,255,0,0.05)] transition-all duration-300 h-full">
