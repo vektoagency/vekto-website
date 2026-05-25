@@ -25,13 +25,14 @@ const heroClips: Clip[] = (() => {
   return (curated.length > 0 ? curated : all).slice(0, 6);
 })();
 
-// 720p MP4 for Bunny clips (native source resolution, no upscale at
-// full-bleed mobile size). Local mp4s are already pre-optimised and
-// served as-is. Only one clip is ever fully visible, peak 2 decoders.
+// 480p MP4 for Bunny clips — same quality target as the grid variant.
+// Roughly 40% smaller than 720p (~3MB vs ~5MB), so the first frame
+// paints noticeably faster on mobile networks. At ~400px wide phone
+// viewports there's no visible quality drop.
 function videoUrl(src: string | null): string | null {
   if (!src) return null;
   if (src.startsWith("/")) return src; // local mp4 — already small
-  return src.replace("play_1080p.mp4", "play_720p.mp4");
+  return src.replace("play_1080p.mp4", "play_480p.mp4");
 }
 
 const SLIDE_DURATION_MS = 8000; // each clip plays ~8s before next crossfade
