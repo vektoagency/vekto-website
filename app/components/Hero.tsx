@@ -129,10 +129,14 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-[12vh] pb-[7vh] pointer-events-none">
-        {/* Top zone — just H1 + a tight one-line sub. Two elements, both
-            strong text-shadows for readability over the scrim, nothing
-            else competing for attention. */}
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center justify-center text-center px-5 w-full min-h-svh pt-[13vh] pb-[10vh] pointer-events-none">
+        {/* Single cluster (H1 + sub + CTAs) — justify-center keeps the
+            whole block in the vertical middle of the viewport, so CTAs
+            land in the 55-75% thumb zone on every phone size from
+            iPhone SE up to Pro Max. No flex-1 spacer = no "buttons
+            stuck to the bottom" on tall phones. min-h-[100svh] uses the
+            *small* viewport height so layout is stable while iOS Safari
+            shows/hides its URL bar (no jump on first scroll). */}
         <div className="w-full max-w-[420px] mx-auto">
           <Stagger delay={0}>
             <h1
@@ -157,14 +161,10 @@ export default function Hero() {
           </Stagger>
         </div>
 
-        {/* Video band breathes here naturally — no fixed-height spacer,
-            just flex-1 between the two text zones. */}
-        <div className="flex-1" />
-
-        {/* Bottom zone — single dominant CTA + a tiny ghost link for the
-            secondary action. Hierarchy is loud and clear: one thing to do,
-            one optional detour. */}
-        <Stagger delay={300} className="w-full pointer-events-auto">
+        {/* CTAs sit right under the text — fixed 40px gap, so the whole
+            cluster reads as one unit. Position is driven by justify-center
+            on the curtain, not by viewport-pinned padding. */}
+        <Stagger delay={300} className="w-full mt-10 pointer-events-auto">
           <div className="flex flex-col items-center gap-4 w-full max-w-[340px] mx-auto">
             <a
               href="#contact"
