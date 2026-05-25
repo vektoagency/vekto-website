@@ -195,16 +195,24 @@ export default function PortfolioWindow({
             </>
           )}
 
-          {/* Hint pill — only in card mode; full-bleed uses external CTAs instead */}
+          {/* Hint pill — only in card mode; full-bleed uses external CTAs
+              instead. Always visible (no hover-gating) so visitors immediately
+              know the card is clickable. Subtle scale-up on hover gives the
+              feedback that the hover state used to communicate. */}
           {!fullBleed && (
             <div
-              className={`absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-[#c8ff00]/40 transition-opacity duration-300 ${
-                mobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-              }`}
+              className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/75 backdrop-blur-md border border-[#c8ff00]/55 transition-transform duration-300 group-hover:scale-105"
+              style={{
+                boxShadow:
+                  "0 6px 20px -6px rgba(0,0,0,0.7), 0 0 18px -4px rgba(200,255,0,0.25)",
+              }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]">
                 Натисни за разглеждане
+              </span>
+              <span className="text-[#c8ff00] text-[11px] md:text-[12px] leading-none" aria-hidden>
+                ↗
               </span>
             </div>
           )}
