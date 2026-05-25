@@ -1,6 +1,6 @@
 "use client";
 
-import HeroCinematicBg from "./HeroCinematicBg";
+import HeroSpotlightGrid from "./HeroSpotlightGrid";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 import PortfolioWindow from "./PortfolioWindow";
@@ -43,12 +43,13 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* MOBILE: single cinematic clip as full-bleed background, cycling
-          smoothly through the curated heroFeaturedClipIds. Peak 2 decoders
-          (active + preloading next), zero grid chaos — feels like a brand
-          reel playing behind the text. */}
+      {/* MOBILE: 2x2 brand mosaic with rotating spotlight. One tile at a
+          time plays its video (lime ring + glow + scale up), others show
+          their static poster dimmed. Peak 2 decoders (active + preloading
+          next-up). Quality stays — single-video-at-a-time means we can
+          afford 720p without lag. */}
       <div className="lg:hidden absolute inset-0 z-[1]">
-        <HeroCinematicBg />
+        <HeroSpotlightGrid />
       </div>
 
       {/* MOBILE readability scrims — strong top + bottom dark gradients
