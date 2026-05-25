@@ -61,6 +61,17 @@ export default function HeroCinematicBg() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(true);
 
+  // Defer mounting layer B until layer A has had a chance to start
+  // playing. Without this, both <video> tags fight for the same network
+  // bandwidth on first load and the visible clip takes longer to paint
+  // its first frame. After 1.8s, layer A is playing and we mount layer B
+  // silently in the background for the upcoming crossfade.
+  const [layerBReady, setLayerBReady] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setLayerBReady(true), 1800);
+    return () => clearTimeout(t);
+  }, []);
+
   // Pause rotation + playback when the hero scrolls offscreen so we
   // don't burn cycles on a section the user isn't looking at.
   useEffect(() => {
@@ -126,7 +137,7 @@ export default function HeroCinematicBg() {
             }}
           />
         )}
-        {clipB && (
+        {clipB && layerBReady && (
           <video
             src={videoUrl(clipB.previewMp4) ?? undefined}
             poster={clipB.thumbnail}

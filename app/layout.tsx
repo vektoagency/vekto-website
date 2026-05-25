@@ -6,6 +6,26 @@ import TransitionBridge from "./components/TransitionBridge";
 import MetaPixel from "./components/MetaPixel";
 import CookieBanner from "./components/CookieBanner";
 import { LangProvider, type Lang } from "./i18n/LangProvider";
+import bunnyData from "./data/bunny-clips.json";
+import { heroFeaturedClipIds } from "./data/hero-featured-clips";
+
+// Resolve the URL of the first clip that will appear in the mobile hero
+// cinematic background, so we can preload it from <head> — the browser
+// starts the fetch during initial HTML parse, before React even hydrates
+// the HeroCinematicBg client component. By the time the <video> tag
+// mounts, the bytes are usually already in cache → first frame paints
+// essentially instantly.
+const firstHeroClipUrl: string | null = (() => {
+  const firstId = heroFeaturedClipIds[0];
+  if (!firstId) return null;
+  const clip = (bunnyData.clips as Array<{ id: string; previewMp4: string | null }>).find(
+    (c) => c.id === firstId
+  );
+  const src = clip?.previewMp4;
+  if (!src) return null;
+  if (src.startsWith("/")) return src;
+  return src.replace("play_1080p.mp4", "play_480p.mp4");
+})();
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -51,13 +71,17 @@ export default async function RootLayout({
             Required for iOS 14+ conversion attribution + Aggregated
             Event Measurement priority across ad accounts. */}
         <meta name="facebook-domain-verification" content="vjkn3pxyadgj004wiu2vslghpbxq77" />
-        {/* Preload the Mac GLB + portfolio reel assets so the CRT portfolio
-            animation fires instantly on first click. */}
-        <link rel="preload" as="fetch" href="/models/mac-128k.glb" type="model/gltf-binary" crossOrigin="anonymous" />
-        <link rel="preload" as="image" href="/images/hero-anim/video-1s.webp" />
-        <link rel="preload" as="image" href="/images/hero-anim/video-2s.webp" />
-        <link rel="preload" as="image" href="/images/hero-anim/video-4s.webp" />
-        <link rel="preload" as="image" href="/images/hero-anim/video-5s.webp" />
+        {/* Preload the first mobile-hero cinematic clip — fetch starts
+            during HTML parse, before React hydrates, so the first frame
+            paints almost instantly when HeroCinematicBg mounts. */}
+        {firstHeroClipUrl && (
+          <link
+            rel="preload"
+            as="video"
+            href={firstHeroClipUrl}
+            crossOrigin="anonymous"
+          />
+        )}
         {/* Warm up Bunny Stream connections so thumbnails + the iframe
             player don't pay DNS/TLS cost the moment the reel opens. */}
         <link rel="preconnect" href="https://vz-5279644d-ac4.b-cdn.net" crossOrigin="" />
