@@ -76,7 +76,7 @@ export default function CookieBanner() {
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="fixed bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-1rem)] max-w-[440px] animate-[cookieSlide_0.45s_ease-out_both]"
+      className="fixed bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-1rem)] max-w-[440px] animate-[cookieFade_0.4s_ease-out_both]"
     >
       <div
         className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 bg-[#0d0d0d] border border-[#c8ff00]/25 rounded-lg px-3 py-2.5"
@@ -120,9 +120,9 @@ export default function CookieBanner() {
       </div>
 
       <style jsx>{`
-        @keyframes cookieSlide {
-          from { opacity: 0; transform: translate(-50%, 16px); }
-          to { opacity: 1; transform: translate(-50%, 0); }
+        @keyframes cookieFade {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </div>
