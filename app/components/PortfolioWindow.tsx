@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import bunnyData from "../data/bunny-clips.json";
+import { heroFeaturedClipIds } from "../data/hero-featured-clips";
 
 // Lazy-load the heavy overlay — same pattern as before.
 const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
@@ -22,14 +23,21 @@ const cardClips = (bunnyData.clips as Clip[])
   .filter((c) => c.thumbnail)
   .slice(0, 9);
 
-// Mobile fullBleed budget — 6 clips across 2 wider columns. Each tile
-// sized so ~2.5 fit vertically in viewport (no monster full-screen tiles
-// that bleed off the top/bottom). Combined with the per-tile IO lazy
-// mount + pause-when-offscreen, peak decoder count stays at ~5 — well
-// inside the iOS Safari simultaneous-video ceiling.
-const fullBleedClips = (bunnyData.clips as Clip[])
-  .filter((c) => c.thumbnail)
-  .slice(0, 6);
+// Mobile fullBleed budget — clips hand-picked in hero-featured-clips.ts.
+// 6 clips across 2 wider columns; tiles sized so ~2.5 fit vertically in
+// viewport. Combined with per-tile IO lazy mount + pause-when-offscreen,
+// peak decoder count stays at ~5 — well inside the iOS Safari ceiling.
+// Falls back to the first 6 valid Bunny clips if the curated list is
+// empty or all IDs miss.
+const fullBleedClips: Clip[] = (() => {
+  const allBunny = (bunnyData.clips as Clip[]).filter(
+    (c) => c.thumbnail && c.previewMp4 && !c.previewMp4.startsWith("/")
+  );
+  const curated = heroFeaturedClipIds
+    .map((id) => allBunny.find((c) => c.id === id))
+    .filter((c): c is Clip => c != null);
+  return (curated.length > 0 ? curated : allBunny).slice(0, 6);
+})();
 
 /**
  * 480p sweet spot — crisp at thumbnail/mid scale, ~300-500 KB per clip,
