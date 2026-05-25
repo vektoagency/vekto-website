@@ -48,7 +48,7 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
       ],
       nextUp: "] СЛЕДВАЩ",
       ctaH2Top: "Искаш ли да си",
-      ctaH2Bottom: "следващото case study?",
+      ctaH2Bottom: "следващата ни история?",
       bookCta: "Резервирай разговор",
       backToHome: "← Обратно към сайта",
     },

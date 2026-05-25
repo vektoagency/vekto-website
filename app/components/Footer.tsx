@@ -10,9 +10,9 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const t = useT({
     bg: {
-      tagline: "AI-Driven визия за бъдещето на компаниите. Cinematic storytelling и AI-powered short-form системи за scale.",
+      tagline: "AI визия за бъдещето на бизнесите. Кинематографични филми и системи за социалните мрежи, движени от AI и създадени да растат.",
       based: "От България · Работим в цял свят",
-      explore: "Изследвай",
+      explore: "Разгледай",
       exploreLinks: [
         { label: "Услуги", href: "#services" },
         { label: "Защо VEKTO", href: "#why" },
@@ -22,7 +22,7 @@ export default function Footer() {
       contactH: "Свържи се",
       startProject: "Започни проект",
       callUs: "Обади се",
-      bookCall: "Резервирай безплатен call",
+      bookCall: "Резервирай безплатна среща",
       rights: "Всички права запазени.",
       privacy: "Поверителност",
       terms: "Условия",
