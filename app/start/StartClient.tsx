@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { getCalApi } from "@calcom/embed-react";
 import { startCopy, type Lang } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
 import { trackEvent } from "../components/MetaPixel";
@@ -63,6 +64,30 @@ export default function StartClient() {
       // ignore
     }
   }, [lang, hydrated]);
+
+  // Register the Cal.com "30min" namespace so the data-cal-* buttons
+  // ("Резервирай среща" in the form + success screen) actually open the
+  // booking modal. Without this call, the buttons render but click is
+  // a no-op — Contact.tsx does the same on the home page.
+  useEffect(() => {
+    (async () => {
+      try {
+        const cal = await getCalApi({ namespace: "30min" });
+        cal("ui", {
+          theme: "dark",
+          cssVarsPerTheme: {
+            light: { "cal-brand": "#c8ff00" },
+            dark: { "cal-brand": "#c8ff00" },
+          },
+          hideEventTypeDetails: false,
+          layout: "month_view",
+        });
+      } catch {
+        // Cal embed script unreachable / blocked — button stays inert,
+        // user can still book via /start form or phone CTA.
+      }
+    })();
+  }, []);
 
   const t = startCopy[lang];
 
