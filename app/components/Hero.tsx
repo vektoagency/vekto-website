@@ -133,7 +133,7 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-svh pt-[12vh] pb-[16vh] pointer-events-none">
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-svh pt-[12vh] pb-[20vh] pointer-events-none">
         {/* Two-anchor layout: text glues to the top (right under the
             nav), CTAs glue to the bottom thumb-zone (16vh above the
             bottom edge). flex-1 spacer absorbs the middle, so the video
