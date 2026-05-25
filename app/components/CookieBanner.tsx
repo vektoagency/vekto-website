@@ -79,35 +79,44 @@ export default function CookieBanner() {
       className="fixed bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-1rem)] max-w-[440px] animate-[cookieSlide_0.45s_ease-out_both]"
     >
       <div
-        className="flex items-center gap-2.5 bg-[#0d0d0d] border border-[#c8ff00]/25 rounded-lg px-3 py-2"
+        className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 bg-[#0d0d0d] border border-[#c8ff00]/25 rounded-lg px-3 py-2.5"
         style={{
           boxShadow:
             "0 10px 30px -8px rgba(0,0,0,0.85), 0 0 0 1px rgba(200,255,0,0.1)",
         }}
       >
-        <span aria-hidden className="text-[14px] leading-none shrink-0">🍪</span>
-        <p className="flex-1 text-[11px] md:text-[12px] text-[#cfcbc4] leading-tight">
-          {t.body}{" "}
-          <Link
-            href="/privacy"
-            className="text-[#c8ff00]/70 hover:text-[#c8ff00] underline-offset-2 hover:underline"
+        {/* Body row: emoji + text wraps cleanly without competing with
+            the button row on narrow mobile widths. */}
+        <div className="flex items-start sm:items-center gap-2 flex-1">
+          <span aria-hidden className="text-[14px] leading-none shrink-0 mt-0.5 sm:mt-0">
+            🍪
+          </span>
+          <p className="text-[11px] md:text-[12px] text-[#cfcbc4] leading-snug">
+            {t.body}{" "}
+            <Link
+              href="/privacy"
+              className="text-[#c8ff00]/70 hover:text-[#c8ff00] underline-offset-2 hover:underline"
+            >
+              {t.learn}
+            </Link>
+          </p>
+        </div>
+        {/* Button row: right-aligned on mobile (its own line), inline on sm+ */}
+        <div className="flex items-center justify-end gap-2 shrink-0">
+          <button
+            onClick={() => handle("rejected")}
+            className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.12em] text-[#666] hover:text-[#aaa] transition-colors px-2 py-1"
+            aria-label={t.reject}
           >
-            {t.learn}
-          </Link>
-        </p>
-        <button
-          onClick={() => handle("accepted")}
-          className="shrink-0 bg-[#c8ff00] text-black font-semibold text-[10px] md:text-[11px] uppercase tracking-[0.1em] px-3 py-1.5 rounded-md hover:bg-[#d4ff33] transition-colors"
-        >
-          {t.accept}
-        </button>
-        <button
-          onClick={() => handle("rejected")}
-          className="shrink-0 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.12em] text-[#555] hover:text-[#888] transition-colors"
-          aria-label={t.reject}
-        >
-          {t.reject}
-        </button>
+            {t.reject}
+          </button>
+          <button
+            onClick={() => handle("accepted")}
+            className="bg-[#c8ff00] text-black font-semibold text-[10px] md:text-[11px] uppercase tracking-[0.1em] px-3.5 py-1.5 rounded-md hover:bg-[#d4ff33] transition-colors whitespace-nowrap"
+          >
+            {t.accept}
+          </button>
+        </div>
       </div>
 
       <style jsx>{`
