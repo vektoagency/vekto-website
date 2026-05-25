@@ -58,6 +58,24 @@
       "featured": true
     },
     {
+      "id": "vekto-showreel",
+      "brand": "VEKTO LAB",
+      "logo": null,
+      "category": "Experimental",
+      "description": "Studio showreel.",
+      "thumbnail": "/videos/thumbnails/vekto-showreel.jpg",
+      "previewMp4": "/videos/vekto-showreel.mp4",
+      "hlsPlaylist": null,
+      "embedUrl": null,
+      "duration": 26,
+      "width": 720,
+      "height": 1296,
+      "portrait": true,
+      "metric": null,
+      "href": null,
+      "featured": true
+    },
+    {
       "id": "vekto-product-demo-2",
       "brand": "Taste Flavor Co.",
       "logo": null,

@@ -27,5 +27,5 @@ export const heroFeaturedClipIds: string[] = [
   "vekto-product-demo-1",                       // Biotica — Product (LOCAL)
   "vekto-product-demo-2",                       // Taste Flavor Co. — Product (LOCAL)
   "a57d4f6d-f0a3-426a-884f-3d4f63ec24b9",       // ISOSPORT — Cinematic
-  "06b550bb-c1c9-4b4c-b7d3-ae031d6d920a",       // VEKTO LAB — Experimental
+  "vekto-showreel",                             // VEKTO LAB studio showreel (LOCAL, was Bunny VEKTO LAB clip)
 ];
