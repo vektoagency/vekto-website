@@ -10,7 +10,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const t = useT({
     bg: {
-      tagline: "AI визия за бъдещето на бизнеса. Кинематографични филми и съдържание за социалните мрежи.",
+      tagline: "AI визия за бъдещето на бизнеса. От кинематографични филми до съдържание за социалните мрежи.",
       based: "От България · Работим в цял свят",
       explore: "Разгледай",
       exploreLinks: [
@@ -28,7 +28,7 @@ export default function Footer() {
       terms: "Условия",
     },
     en: {
-      tagline: "AI-Driven Vision for the Future of Companies. Cinematic storytelling and AI-powered short-form systems built to scale.",
+      tagline: "AI vision for the future of business. From cinematic films to social media content.",
       based: "Based in Bulgaria · Working worldwide",
       explore: "Explore",
       exploreLinks: [
