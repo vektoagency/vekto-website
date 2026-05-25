@@ -22,13 +22,13 @@ const cardClips = (bunnyData.clips as Clip[])
   .filter((c) => c.thumbnail)
   .slice(0, 9);
 
-// Mobile fullBleed budget — 6 clips spread across 2 wider columns. Each
-// tile is ~2x the size of the 3-col card variant, so the mp4 quality
-// reads much better, and only ~5 tiles are visible at once → decoder
-// pressure stays well below the iOS Safari simultaneous-video ceiling.
+// Mobile fullBleed budget — 4 clips in a single tall column. With each
+// tile sized to ~full screen width, only ~1.2 tiles are ever in viewport
+// at once, so peak decoder count is 1-2. Looks like a continuous cinematic
+// feed instead of a busy grid, and removes the lag floor entirely.
 const fullBleedClips = (bunnyData.clips as Clip[])
   .filter((c) => c.thumbnail)
-  .slice(0, 6);
+  .slice(0, 4);
 
 /**
  * 480p sweet spot — crisp at thumbnail/mid scale, ~300-500 KB per clip,
@@ -76,11 +76,11 @@ export default function PortfolioWindow({
   }, []);
 
   // Split clips into columns, duplicated for seamless loop. Mobile
-  // fullBleed uses 2 wide columns (bigger tiles, fewer decoders), desktop
-  // card uses 3 columns (classic dense grid).
+  // fullBleed uses a single wide column (cinematic feed, fewest decoders),
+  // desktop card uses 3 columns (classic dense grid).
   const columns = useMemo(() => {
     const source = fullBleed ? fullBleedClips : cardClips;
-    const colCount = fullBleed ? 2 : 3;
+    const colCount = fullBleed ? 1 : 3;
     const cols: Clip[][] = Array.from({ length: colCount }, () => []);
     source.forEach((c, i) => cols[i % colCount].push(c));
     return cols.map((col) => [...col, ...col]);
@@ -153,11 +153,11 @@ export default function PortfolioWindow({
             transformOrigin: "center",
           }}
         >
-          {/* Inner grid — 2 cols on mobile fullBleed (bigger tiles), 3 cols
-              everywhere else. Alternating scroll directions for visual life. */}
+          {/* Inner grid — 1 wide column on mobile fullBleed (cinematic
+              feed), 3 cols everywhere else. */}
           <div className={`absolute grid overflow-hidden ${
             fullBleed
-              ? "inset-0 gap-1.5 grid-cols-2"
+              ? "inset-0 grid-cols-1"
               : `rounded-xl grid-cols-3 ${mobile ? "inset-1.5 gap-1.5" : "inset-2 md:inset-3 gap-2 md:gap-2.5"}`
           }`}>
             {columns.map((col, idx) => (
@@ -165,7 +165,7 @@ export default function PortfolioWindow({
                 key={idx}
                 clips={col}
                 direction={idx % 2 === 0 ? "up" : "down"}
-                speed={32 + idx * 6}
+                speed={fullBleed ? 28 : 32 + idx * 6}
               />
             ))}
           </div>

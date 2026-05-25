@@ -24,6 +24,7 @@ export default function Hero() {
       h1RestDesktop: ["за бъдещето", "на бизнеса ти"],
       h1RestMobile: "за бъдещето на бизнеса ти",
       sub: "От кинематографични филми до видеа за социалните мрежи — създаваме съдържание, което продава и расте с бизнеса ти.",
+      subMobile: "Кинематографични филми и видеа за социалните мрежи.",
       ctaPrimary: "Свържи се",
       ctaSecondary: "Виж работата ни",
     },
@@ -33,6 +34,7 @@ export default function Hero() {
       h1RestDesktop: ["for the Future", "of Companies"],
       h1RestMobile: "for the Future of Companies",
       sub: "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+      subMobile: "Cinematic films and short-form content for social.",
       ctaPrimary: "Get in Touch",
       ctaSecondary: "See Our Work",
     },
@@ -45,34 +47,35 @@ export default function Hero() {
         <PortfolioWindow mobile fullBleed />
       </div>
 
-      {/* MOBILE readability scrim — lighter than before because the
-          frosted glass command panel below carries most of the text
-          readability work. These now exist mainly to soften the video
-          edges into the nav/footer instead of as a heavy text scrim. */}
+      {/* MOBILE readability scrims — strong top + bottom dark gradients
+          frame the cinematic video band in the middle. No glass panel:
+          text and CTAs sit naturally in the dark zones, video breathes
+          uninterrupted in the middle ~30% of the screen. Reads as a
+          cinematic "letterbox" rather than a UI overlay. */}
       <div
         aria-hidden
-        className="lg:hidden absolute inset-x-0 top-0 h-[28%] z-[2] pointer-events-none"
+        className="lg:hidden absolute inset-x-0 top-0 h-[42%] z-[2] pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.5) 50%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.78) 45%, rgba(8,8,8,0.32) 80%, transparent 100%)",
         }}
       />
       <div
         aria-hidden
-        className="lg:hidden absolute inset-x-0 bottom-0 h-[24%] z-[2] pointer-events-none"
+        className="lg:hidden absolute inset-x-0 bottom-0 h-[38%] z-[2] pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.45) 55%, transparent 100%)",
+            "linear-gradient(to top, rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.75) 45%, rgba(8,8,8,0.3) 82%, transparent 100%)",
         }}
       />
 
-      {/* Subtle edge vignette — pulls focus to the center cluster */}
+      {/* Edge vignette — pulls focus to the center video band */}
       <div
         aria-hidden
         className="lg:hidden absolute inset-0 z-[2] pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 110% 70% at 50% 50%, transparent 45%, rgba(0,0,0,0.45) 100%)",
+            "radial-gradient(ellipse 110% 70% at 50% 50%, transparent 55%, rgba(0,0,0,0.4) 100%)",
         }}
       />
 
@@ -126,87 +129,64 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-[15vh] pb-10 pointer-events-none">
-        {/* Glass command panel — frosted card around badge / H1 / sub / CTAs
-            so the whole cluster reads as a single focal anchor sitting
-            crisply above the moving footage instead of floating text and
-            buttons that blend into the busy background. */}
-        <div className="relative w-full max-w-[400px] mx-auto pointer-events-auto">
-          <div
-            aria-hidden
-            className="absolute -inset-x-5 -inset-y-7 rounded-[28px] border border-white/10"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(10,10,10,0.62) 0%, rgba(8,8,8,0.78) 100%)",
-              backdropFilter: "blur(16px) saturate(115%)",
-              WebkitBackdropFilter: "blur(16px) saturate(115%)",
-              boxShadow:
-                "0 30px 70px -20px rgba(0,0,0,0.85), 0 0 70px -10px rgba(200,255,0,0.07), inset 0 1px 0 rgba(255,255,255,0.06)",
-            }}
-          />
-
-          <div className="relative flex flex-col items-center">
-            <Stagger delay={0}>
-              <div
-                className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-5 border border-[#c8ff00]/55"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0.08) 100%)",
-                  boxShadow:
-                    "0 0 22px -6px rgba(200,255,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06)",
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
-                <span className="text-[10px] text-[#c8ff00] font-semibold tracking-[0.24em] uppercase">
-                  {t.badge}
-                </span>
-              </div>
-            </Stagger>
-            <Stagger delay={100}>
-              <h1 className="text-[38px] sm:text-[44px] font-extrabold leading-[1.04] tracking-[-0.02em] text-white mb-3">
-                <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
-                <br />
-                {t.h1RestMobile}
-              </h1>
-            </Stagger>
-            <Stagger delay={200}>
-              <p className="text-[14px] sm:text-[15px] text-[#d8d8d8] leading-[1.55] max-w-[340px] mb-7">
-                {t.sub}
-              </p>
-            </Stagger>
-            <Stagger delay={350} className="w-full">
-              <div className="flex flex-col gap-3 w-full max-w-[320px] mx-auto">
-                <a
-                  href="#contact"
-                  className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px]"
-                  style={{
-                    boxShadow:
-                      "0 16px 44px -10px rgba(200,255,0,0.7), 0 0 32px -4px rgba(200,255,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
-                  }}
-                >
-                  <span>{t.ctaPrimary}</span>
-                  <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-                <PortfolioTriggerButton
-                  className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-bold px-7 py-4 rounded-full bg-black/40 backdrop-blur-md hover:bg-[#c8ff00]/10 active:scale-[0.98] transition-all cursor-pointer text-[15px]"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                  <span>{t.ctaSecondary}</span>
-                </PortfolioTriggerButton>
-              </div>
-            </Stagger>
-          </div>
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-screen pt-[12vh] pb-[7vh] pointer-events-none">
+        {/* Top zone — just H1 + a tight one-line sub. Two elements, both
+            strong text-shadows for readability over the scrim, nothing
+            else competing for attention. */}
+        <div className="w-full max-w-[420px] mx-auto">
+          <Stagger delay={0}>
+            <h1
+              className="text-[42px] sm:text-[50px] font-extrabold leading-[1.02] tracking-[-0.025em] text-white"
+              style={{
+                textShadow:
+                  "0 4px 36px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.9)",
+              }}
+            >
+              <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
+              <br />
+              {t.h1RestMobile}
+            </h1>
+          </Stagger>
+          <Stagger delay={120}>
+            <p
+              className="mt-4 text-[14px] text-[#d8d8d8] leading-[1.5] max-w-[320px] mx-auto"
+              style={{ textShadow: "0 2px 18px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.95)" }}
+            >
+              {t.subMobile}
+            </p>
+          </Stagger>
         </div>
+
+        {/* Video band breathes here naturally — no fixed-height spacer,
+            just flex-1 between the two text zones. */}
+        <div className="flex-1" />
+
+        {/* Bottom zone — single dominant CTA + a tiny ghost link for the
+            secondary action. Hierarchy is loud and clear: one thing to do,
+            one optional detour. */}
+        <Stagger delay={300} className="w-full pointer-events-auto">
+          <div className="flex flex-col items-center gap-4 w-full max-w-[340px] mx-auto">
+            <a
+              href="#contact"
+              className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold w-full px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px]"
+              style={{
+                boxShadow:
+                  "0 18px 50px -10px rgba(200,255,0,0.75), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)",
+              }}
+            >
+              <span>{t.ctaPrimary}</span>
+              <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">
+                →
+              </span>
+            </a>
+            <PortfolioTriggerButton
+              className="inline-flex items-center gap-1.5 text-[#c8ff00]/90 hover:text-[#c8ff00] font-medium text-[13px] tracking-wide cursor-pointer transition-colors"
+            >
+              <span>{t.ctaSecondary}</span>
+              <span className="text-[14px]">↗</span>
+            </PortfolioTriggerButton>
+          </div>
+        </Stagger>
       </HeroLeftCurtain>
 
       {/* ── DESKTOP: text left (curtain fades out on zoom) ── */}
