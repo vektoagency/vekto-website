@@ -53,12 +53,12 @@ export default function WhyVekto() {
   const comparisons = t.rows;
   const pillars = t.pillars;
   return (
-    <section id="why" className="py-28 px-6" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f, #060606)" }}>
+    <section id="why" className="py-20 md:py-28 px-6" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f, #060606)" }}>
       <div className="max-w-7xl mx-auto">
 
         <AnimateIn className="text-center mb-20">
           <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
-          <h2 className="text-3xl md:text-5xl font-bold">
+          <h2 className="text-3xl md:text-5xl font-bold text-balance">
             {t.h2[0]}
             <br />
             <span className="text-[#c8ff00]">{t.h2[1]}</span>

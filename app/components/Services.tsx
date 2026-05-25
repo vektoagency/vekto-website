@@ -84,18 +84,18 @@ export default function Services() {
   const services = t.services;
 
   return (
-    <section id="services" className="py-28 px-6" style={{ background: "linear-gradient(to bottom, #080808, #0a0a0f, #080808)" }}>
+    <section id="services" className="py-20 md:py-28 px-6" style={{ background: "linear-gradient(to bottom, #080808, #0a0a0f, #080808)" }}>
       <div className="max-w-7xl mx-auto">
         <AnimateIn className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
             <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight text-balance">
               {t.h2[0]}
               <br />
               {t.h2[1]}
             </h2>
           </div>
-          <p className="max-w-sm text-[#a0a0a0] leading-relaxed">{t.sub}</p>
+          <p className="max-w-sm text-[#a0a0a0] leading-relaxed text-balance">{t.sub}</p>
         </AnimateIn>
 
         {/* Desktop layout */}

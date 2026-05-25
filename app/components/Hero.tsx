@@ -22,7 +22,7 @@ export default function Hero() {
       badge: "Креативна агенция с AI",
       h1Em: "AI визия",
       h1RestDesktop: ["за бъдещето", "на бизнеса ти"],
-      h1RestMobile: "за бъдещето на бизнеса ти",
+      h1RestMobile: "за бизнеса ти",
       sub: "От кинематографични филми до видеа за социалните мрежи — създаваме съдържание, което продава и расте с бизнеса ти.",
       subMobile: "Кинематографични филми и видеа за социалните мрежи.",
       ctaPrimary: "Свържи се",
@@ -32,7 +32,7 @@ export default function Hero() {
       badge: "AI-Powered Creative Agency",
       h1Em: "AI-Driven Vision",
       h1RestDesktop: ["for the Future", "of Companies"],
-      h1RestMobile: "for the Future of Companies",
+      h1RestMobile: "for your business",
       sub: "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
       subMobile: "Cinematic films and short-form content for social.",
       ctaPrimary: "Get in Touch",
@@ -136,7 +136,7 @@ export default function Hero() {
         <div className="w-full max-w-[420px] mx-auto">
           <Stagger delay={0}>
             <h1
-              className="text-[42px] sm:text-[50px] font-extrabold leading-[1.02] tracking-[-0.025em] text-white"
+              className="text-[44px] font-extrabold leading-[1.02] tracking-[-0.025em] text-white text-balance"
               style={{
                 textShadow:
                   "0 4px 36px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.9)",
@@ -149,7 +149,7 @@ export default function Hero() {
           </Stagger>
           <Stagger delay={120}>
             <p
-              className="mt-4 text-[14px] text-[#d8d8d8] leading-[1.5] max-w-[320px] mx-auto"
+              className="mt-4 text-[14px] text-[#d8d8d8] leading-[1.5] max-w-[300px] mx-auto text-balance"
               style={{ textShadow: "0 2px 18px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.95)" }}
             >
               {t.subMobile}

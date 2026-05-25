@@ -30,7 +30,7 @@ export default function Contact() {
   const t = useT({
     bg: {
       eyebrow: "Свържи се",
-      h2: ["Готов ли си да построиш", "нещо култово?"],
+      h2: ["Готов да създадем", "нещо култово?"],
       sub: "Избери това, което ти пасва — онлайн среща или попълни кратка анкета. Във всеки случай ще се върнем с план, направен за теб.",
       bookCall: "Резервирай среща",
       bookSuffix: "30 мин · безплатно",
@@ -68,19 +68,19 @@ export default function Contact() {
   }, []);
 
   return (
-    <section id="contact" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f)" }}>
+    <section id="contact" className="relative py-20 md:py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f)" }}>
       <div aria-hidden className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full pointer-events-none opacity-[0.10]"
         style={{ background: "radial-gradient(circle, #c8ff00 0%, transparent 60%)" }} />
 
       <div className="relative max-w-3xl mx-auto text-center">
         <AnimateIn>
           <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-4">{t.eyebrow}</p>
-          <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-balance">
             {t.h2[0]}
             <br />
             <span className="text-[#c8ff00]">{t.h2[1]}</span>
           </h2>
-          <p className="text-[#a0a0a0] text-lg leading-relaxed mb-10 max-w-xl mx-auto">{t.sub}</p>
+          <p className="text-[#a0a0a0] text-lg leading-relaxed mb-10 max-w-xl mx-auto text-balance">{t.sub}</p>
         </AnimateIn>
 
         <AnimateIn>

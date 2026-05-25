@@ -102,7 +102,7 @@ export default function Process() {
       <div className="max-w-6xl mx-auto">
         <AnimateIn className="mb-8 md:mb-10 max-w-3xl">
           <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
-          <h2 className="text-[26px] md:text-5xl font-bold leading-[1.1]">
+          <h2 className="text-[26px] md:text-5xl font-bold leading-[1.1] text-balance">
             {t.h2[0]}
             <br />
             <span className="text-[#c8ff00]">{t.h2[1]}</span>

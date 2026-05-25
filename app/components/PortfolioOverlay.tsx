@@ -197,7 +197,7 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
 
         <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] mb-4">{t.nextUp}</p>
-          <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow">
+          <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow text-balance">
             {t.ctaH2Top}<br />
             <span className="text-[#c8ff00]">{t.ctaH2Bottom}</span>
           </h2>
