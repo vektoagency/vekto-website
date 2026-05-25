@@ -1,5 +1,6 @@
 "use client";
 
+import HeroCinematicBg from "./HeroCinematicBg";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 import PortfolioWindow from "./PortfolioWindow";
@@ -42,9 +43,12 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* MOBILE: PortfolioWindow grid as full-bleed animated background. */}
+      {/* MOBILE: single cinematic clip as full-bleed background, cycling
+          smoothly through the curated heroFeaturedClipIds. Peak 2 decoders
+          (active + preloading next), zero grid chaos — feels like a brand
+          reel playing behind the text. */}
       <div className="lg:hidden absolute inset-0 z-[1]">
-        <PortfolioWindow mobile fullBleed />
+        <HeroCinematicBg />
       </div>
 
       {/* MOBILE readability scrims — strong top + bottom dark gradients
