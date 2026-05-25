@@ -1,6 +1,6 @@
 "use client";
 
-import HeroSpotlightGrid from "./HeroSpotlightGrid";
+import HeroCinematicBg from "./HeroCinematicBg";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
 import PortfolioWindow from "./PortfolioWindow";
@@ -43,13 +43,12 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* MOBILE: 2x2 brand mosaic with rotating spotlight. One tile at a
-          time plays its video (lime ring + glow + scale up), others show
-          their static poster dimmed. Peak 2 decoders (active + preloading
-          next-up). Quality stays — single-video-at-a-time means we can
-          afford 720p without lag. */}
+      {/* MOBILE: single cinematic clip as full-bleed background, cycling
+          smoothly through the curated heroFeaturedClipIds. Peak 2 decoders
+          (active + preloading next), zero grid chaos — feels like a brand
+          reel playing behind the text. */}
       <div className="lg:hidden absolute inset-0 z-[1]">
-        <HeroSpotlightGrid />
+        <HeroCinematicBg />
       </div>
 
       {/* MOBILE readability scrims — strong top + bottom dark gradients
@@ -145,70 +144,50 @@ export default function Hero() {
         <div className="w-full max-w-[420px] mx-auto">
           <Stagger delay={0}>
             <h1
-              className="text-[44px] font-extrabold leading-[1.0] tracking-[-0.03em] text-white text-balance"
+              className="text-[44px] font-extrabold leading-[1.02] tracking-[-0.025em] text-white text-balance"
               style={{
                 textShadow:
                   "0 4px 36px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.9)",
               }}
             >
-              {/* Lime accent gets a subtle gradient + drop-shadow glow for
-                  depth — reads as a deliberate brand mark instead of a
-                  flat highlight color. */}
-              <em
-                className="not-italic bg-gradient-to-br from-[#eaff7a] via-[#c8ff00] to-[#9fd400] bg-clip-text text-transparent"
-                style={{ filter: "drop-shadow(0 2px 14px rgba(200,255,0,0.45))" }}
-              >
-                {t.h1Em}
-              </em>
+              <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
               <br />
               {t.h1RestMobile}
             </h1>
           </Stagger>
           <Stagger delay={120}>
             <p
-              className="mt-5 text-[15px] text-white/90 font-medium leading-[1.55] max-w-[330px] mx-auto text-balance"
-              style={{ textShadow: "0 2px 20px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,0.95)" }}
+              className="mt-4 text-[14px] text-[#d8d8d8] leading-[1.5] max-w-[300px] mx-auto text-balance"
+              style={{ textShadow: "0 2px 18px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.95)" }}
             >
               {t.subMobile}
             </p>
           </Stagger>
         </div>
 
-        {/* CTAs — primary lime-fill + secondary lime-outline. Same width
-            and shape as a button system, different visual weight so the
-            hierarchy reads instantly. Both more visible than a ghost link
-            over the busy background. */}
-        <Stagger delay={300} className="w-full mt-9 pointer-events-auto">
-          <div className="flex flex-col items-center gap-3 w-full max-w-[340px] mx-auto">
+        {/* CTAs sit right under the text — fixed 40px gap, so the whole
+            cluster reads as one unit. Position is driven by justify-center
+            on the curtain, not by viewport-pinned padding. */}
+        <Stagger delay={300} className="w-full mt-10 pointer-events-auto">
+          <div className="flex flex-col items-center gap-4 w-full max-w-[340px] mx-auto">
             <a
               href="#contact"
-              className="group relative inline-flex items-center justify-center gap-2.5 bg-[#c8ff00] text-black font-bold w-full px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px] overflow-hidden"
+              className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold w-full px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px]"
               style={{
                 boxShadow:
-                  "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 42px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.55)",
+                  "0 18px 50px -10px rgba(200,255,0,0.75), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)",
               }}
             >
-              {/* Subtle diagonal shimmer on hover/press — feels alive */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)",
-                }}
-              />
-              <span className="relative">{t.ctaPrimary}</span>
-              <span className="relative text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">
+              <span>{t.ctaPrimary}</span>
+              <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>
             </a>
             <PortfolioTriggerButton
-              className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-bold w-full px-7 py-3.5 rounded-full bg-black/45 backdrop-blur-md hover:bg-[#c8ff00]/10 hover:border-[#c8ff00]/80 active:scale-[0.98] transition-all cursor-pointer text-[14px]"
+              className="inline-flex items-center gap-1.5 text-[#c8ff00]/90 hover:text-[#c8ff00] font-medium text-[13px] tracking-wide cursor-pointer transition-colors"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M8 5v14l11-7z" />
-              </svg>
               <span>{t.ctaSecondary}</span>
+              <span className="text-[14px]">↗</span>
             </PortfolioTriggerButton>
           </div>
         </Stagger>
