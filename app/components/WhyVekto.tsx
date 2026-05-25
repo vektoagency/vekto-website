@@ -6,11 +6,11 @@ import { useT } from "../i18n/LangProvider";
 const dict = {
   bg: {
     eyebrow: "Защо VEKTO",
-    h2: ["Креативният партньор,", "който заслужаваш"],
+    h2: ["Твоят партньор", "за AI съдържание"],
     pillars: [
       { icon: "⚡", title: "Бързо и в обем", description: "AI ни позволява да доставяме съдържание за дни. Без чакане, без забавяне — само резултати." },
       { icon: "🎯", title: "Креативност с цел", description: "Всяко наше видео има конкретна цел — да продава, да задържа внимание и да движи бизнеса напред." },
-      { icon: "🤖", title: "AI в основата", description: "Работим с AI от самото начало. Не го закачаме отгоре на стари процеси, а градим всичко около него." },
+      { icon: "🤖", title: "AI в основата", description: "Работим с AI от ден едно. Не е добавка към стари процеси, а основата, върху която изграждаме всичко." },
       { icon: "🌍", title: "На всеки език", description: "Стигаме до клиенти по цял свят. AI аватари и съдържание, което звучи естествено на всеки език." },
     ],
     compareH3: "Как се сравняваме",
@@ -27,11 +27,11 @@ const dict = {
   },
   en: {
     eyebrow: "Why VEKTO",
-    h2: ["The creative partner", "your brand deserves"],
+    h2: ["Your partner", "for AI content"],
     pillars: [
       { icon: "⚡", title: "Speed at Scale", description: "AI-powered pipelines deliver content in days. No waiting, no bottlenecks — just results." },
       { icon: "🎯", title: "Strategic Creativity", description: "Every piece of content is built with intent — designed to convert, engage, and grow your brand." },
-      { icon: "🤖", title: "AI-Native Workflow", description: "We don't bolt AI onto old processes. Our entire workflow is built around AI from day one." },
+      { icon: "🤖", title: "AI-Native Workflow", description: "We work with AI from day one. Not an add-on to old processes — it's the foundation we build everything on." },
       { icon: "🌍", title: "Multilingual by Default", description: "Reach global audiences with AI avatars and content that speaks every language natively." },
     ],
     compareH3: "How we stack up",
