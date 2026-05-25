@@ -133,11 +133,13 @@ export default function Hero() {
           PortfolioWindow's tap-to-open button; only the CTAs themselves
           capture taps. Text gets a strong shadow + the dark gradient
           scrim above does the heavy lifting on readability. */}
-      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-svh pt-[12vh] pb-[8vh] pointer-events-none">
-        {/* Text sits near the top (right under the nav), with a generous
-            gap before the CTAs — so the two zones read as separate
-            chapters: "message" up top, "action" in the middle thumb
-            zone. Video band breathes between them and below the CTAs. */}
+      <HeroLeftCurtain className="lg:hidden relative z-10 flex flex-col items-center text-center px-5 w-full min-h-svh pt-[12vh] pb-[16vh] pointer-events-none">
+        {/* Two-anchor layout: text glues to the top (right under the
+            nav), CTAs glue to the bottom thumb-zone (16vh above the
+            bottom edge). flex-1 spacer absorbs the middle, so the video
+            band gets the whole center of the screen as breathing room.
+            Result: CTAs sit around 70-80% of viewport — comfortable
+            thumb reach without "stuck to the edge" feeling. */}
         <div className="w-full max-w-[420px] mx-auto">
           <Stagger delay={0}>
             <h1
@@ -162,9 +164,11 @@ export default function Hero() {
           </Stagger>
         </div>
 
-        {/* CTAs sit lower down with a strong gap from the text — the
-            separation tells the eye: "this is the action zone." */}
-        <Stagger delay={300} className="w-full mt-16 pointer-events-auto">
+        {/* flex-1 spacer between text and CTAs — middle of viewport
+            becomes pure video band, CTAs anchor to the bottom thumb-zone. */}
+        <div className="flex-1" />
+
+        <Stagger delay={300} className="w-full pointer-events-auto">
           <div className="flex flex-col items-center gap-3.5 w-full max-w-[340px] mx-auto">
             <a
               href="#contact"
