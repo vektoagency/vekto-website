@@ -59,18 +59,25 @@ export default function HeroCinematicBg() {
   const [idxB, setIdxB] = useState(heroClips.length > 1 ? 1 : 0);
 
   const wrapRef = useRef<HTMLDivElement>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
   const [inView, setInView] = useState(true);
 
   // Defer mounting layer B until layer A has had a chance to start
   // playing. Without this, both <video> tags fight for the same network
   // bandwidth on first load and the visible clip takes longer to paint
-  // its first frame. After 1.8s, layer A is playing and we mount layer B
-  // silently in the background for the upcoming crossfade.
-  const [layerBReady, setLayerBReady] = useState(false);
+  // its first frame.
+  const [layerBMounted, setLayerBMounted] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setLayerBReady(true), 1800);
+    const t = setTimeout(() => setLayerBMounted(true), 1200);
     return () => clearTimeout(t);
   }, []);
+
+  // Track when layer B has buffered enough to play through smoothly.
+  // The first crossfade is gated on this so we never reveal a half-
+  // buffered "frozen frame" video. After the first cycle, both layers
+  // are warm, so this only matters for the first swap.
+  const [layerBCanPlay, setLayerBCanPlay] = useState(false);
 
   // Pause rotation + playback when the hero scrolls offscreen so we
   // don't burn cycles on a section the user isn't looking at.
@@ -85,11 +92,12 @@ export default function HeroCinematicBg() {
     return () => obs.disconnect();
   }, []);
 
-  // Crossfade rotation: flip active layer every SLIDE_DURATION_MS, then
-  // after the fade completes, advance the now-inactive layer's clip
-  // index so it's preloaded for the next swap.
+  // Crossfade rotation — only starts once layer B is ready to play.
+  // Flips active layer every SLIDE_DURATION_MS; after the fade
+  // completes, advances the now-inactive layer's clip index so it's
+  // preloaded for the next swap.
   useEffect(() => {
-    if (!inView || heroClips.length < 2) return;
+    if (!inView || heroClips.length < 2 || !layerBCanPlay) return;
     const id = setInterval(() => {
       setActiveA((prev) => {
         const next = !prev;
@@ -104,7 +112,18 @@ export default function HeroCinematicBg() {
       });
     }, SLIDE_DURATION_MS);
     return () => clearInterval(id);
-  }, [inView]);
+  }, [inView, layerBCanPlay]);
+
+  // Mobile browsers throttle (or pause) <video> with opacity:0 to save
+  // battery — so the moment a layer becomes visible we explicitly call
+  // play() on it to make sure it's running, not stuck on a buffered
+  // frame. Triggers on every visibility flip + every clip index change.
+  useEffect(() => {
+    const active = activeA ? videoARef.current : videoBRef.current;
+    if (active) {
+      active.play().catch(() => {});
+    }
+  }, [activeA, idxA, idxB]);
 
   const onTap = () => {
     window.dispatchEvent(new Event("vekto:open-portfolio"));
@@ -123,6 +142,7 @@ export default function HeroCinematicBg() {
       >
         {clipA && (
           <video
+            ref={videoARef}
             src={videoUrl(clipA.previewMp4) ?? undefined}
             poster={clipA.thumbnail}
             muted
@@ -137,8 +157,9 @@ export default function HeroCinematicBg() {
             }}
           />
         )}
-        {clipB && layerBReady && (
+        {clipB && layerBMounted && (
           <video
+            ref={videoBRef}
             src={videoUrl(clipB.previewMp4) ?? undefined}
             poster={clipB.thumbnail}
             muted
@@ -146,6 +167,7 @@ export default function HeroCinematicBg() {
             loop
             playsInline
             preload="auto"
+            onCanPlay={() => setLayerBCanPlay(true)}
             className="absolute inset-0 w-full h-full object-cover transition-opacity ease-out"
             style={{
               opacity: activeA ? 0 : 1,
