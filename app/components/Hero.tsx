@@ -157,7 +157,7 @@ export default function Hero() {
           </Stagger>
           <Stagger delay={120}>
             <p
-              className="mt-4 text-[14px] text-[#d8d8d8] leading-[1.5] max-w-[300px] mx-auto text-balance"
+              className="mt-5 text-[15px] text-white/85 font-medium leading-[1.55] max-w-[320px] mx-auto text-balance"
               style={{ textShadow: "0 2px 18px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.95)" }}
             >
               {t.subMobile}
@@ -165,11 +165,12 @@ export default function Hero() {
           </Stagger>
         </div>
 
-        {/* CTAs sit right under the text — fixed 40px gap, so the whole
-            cluster reads as one unit. Position is driven by justify-center
-            on the curtain, not by viewport-pinned padding. */}
+        {/* CTAs — minimal refinement: primary keeps its prominent lime
+            fill, secondary moves from flat text link to a soft pill so
+            it reads as clearly clickable without competing with primary.
+            Visual hierarchy stays strict. */}
         <Stagger delay={300} className="w-full mt-10 pointer-events-auto">
-          <div className="flex flex-col items-center gap-4 w-full max-w-[340px] mx-auto">
+          <div className="flex flex-col items-center gap-3.5 w-full max-w-[340px] mx-auto">
             <a
               href="#contact"
               className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold w-full px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px]"
@@ -184,7 +185,7 @@ export default function Hero() {
               </span>
             </a>
             <PortfolioTriggerButton
-              className="inline-flex items-center gap-1.5 text-[#c8ff00]/90 hover:text-[#c8ff00] font-medium text-[13px] tracking-wide cursor-pointer transition-colors"
+              className="inline-flex items-center gap-1.5 text-[#c8ff00] hover:text-white font-semibold text-[13px] tracking-[0.04em] px-5 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 hover:border-white/20 backdrop-blur-sm cursor-pointer transition-all"
             >
               <span>{t.ctaSecondary}</span>
               <span className="text-[14px]">↗</span>
