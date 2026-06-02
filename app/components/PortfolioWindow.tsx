@@ -281,11 +281,33 @@ function PreviewTile({
   const [isVisible, setIsVisible] = useState(false);
   const [staggerPassed, setStaggerPassed] = useState(false);
 
-  // Small staggered kickoff so the first wave of visible tiles spin
-  // up decoders ~220 ms apart rather than all at once.
+  // Hold off video mounts until the browser hits an idle moment after
+  // first paint. Then apply the small per-tile stagger so the first
+  // wave of visible tiles spin up decoders ~220 ms apart rather than
+  // all at once. Result: initial paint isn't blocked by video network
+  // fetches + decoder spin-up; poster images carry the hero card
+  // visually for ~1 s while the page finishes hydrating, then videos
+  // pop in smoothly.
   useEffect(() => {
-    const id = setTimeout(() => setStaggerPassed(true), mountDelay);
-    return () => clearTimeout(id);
+    let stopped = false;
+    const apply = () => {
+      if (stopped) return;
+      setTimeout(() => {
+        if (!stopped) setStaggerPassed(true);
+      }, mountDelay);
+    };
+    type W = Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+    const w = typeof window !== "undefined" ? (window as W) : null;
+    if (w?.requestIdleCallback) {
+      w.requestIdleCallback(apply, { timeout: 1500 });
+    } else {
+      setTimeout(apply, 400);
+    }
+    return () => {
+      stopped = true;
+    };
   }, [mountDelay]);
 
   // Track this tile's intersection with the viewport. rootMargin of

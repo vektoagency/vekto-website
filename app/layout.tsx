@@ -14,17 +14,18 @@ import { heroFeaturedClipIds } from "./data/hero-featured-clips";
 // starts the fetch during initial HTML parse, before React even hydrates
 // the HeroCinematicBg client component. By the time the <video> tag
 // mounts, the bytes are usually already in cache → first frame paints
-// essentially instantly.
-const firstHeroClipUrl: string | null = (() => {
+// essentially instantly. We also preload the poster JPG so it can paint
+// before the video even has its first frame.
+const firstHero: { videoUrl: string | null; posterUrl: string | null } = (() => {
   const firstId = heroFeaturedClipIds[0];
-  if (!firstId) return null;
-  const clip = (bunnyData.clips as Array<{ id: string; previewMp4: string | null }>).find(
-    (c) => c.id === firstId
-  );
-  const src = clip?.previewMp4;
-  if (!src) return null;
-  if (src.startsWith("/")) return src;
-  return src.replace("play_1080p.mp4", "play_480p.mp4");
+  if (!firstId) return { videoUrl: null, posterUrl: null };
+  const clip = (
+    bunnyData.clips as Array<{ id: string; previewMp4: string | null; thumbnail: string | null }>
+  ).find((c) => c.id === firstId);
+  const src = clip?.previewMp4 ?? null;
+  const poster = clip?.thumbnail ?? null;
+  const videoUrl = !src ? null : src.startsWith("/") ? src : src.replace("play_1080p.mp4", "play_480p.mp4");
+  return { videoUrl, posterUrl: poster };
 })();
 
 const geist = Geist({
@@ -71,15 +72,25 @@ export default async function RootLayout({
             Required for iOS 14+ conversion attribution + Aggregated
             Event Measurement priority across ad accounts. */}
         <meta name="facebook-domain-verification" content="vjkn3pxyadgj004wiu2vslghpbxq77" />
-        {/* Preload the first mobile-hero cinematic clip — fetch starts
-            during HTML parse, before React hydrates, so the first frame
-            paints almost instantly when HeroCinematicBg mounts. */}
-        {firstHeroClipUrl && (
+        {/* Preload the first mobile-hero cinematic clip + its poster —
+            fetch starts during HTML parse, before React hydrates, so
+            both the still poster AND the first video frame paint almost
+            instantly when HeroCinematicBg mounts. */}
+        {firstHero.posterUrl && (
+          <link
+            rel="preload"
+            as="image"
+            href={firstHero.posterUrl}
+            fetchPriority="high"
+          />
+        )}
+        {firstHero.videoUrl && (
           <link
             rel="preload"
             as="video"
-            href={firstHeroClipUrl}
+            href={firstHero.videoUrl}
             crossOrigin="anonymous"
+            fetchPriority="high"
           />
         )}
         {/* Warm up Bunny Stream connections so thumbnails + the iframe

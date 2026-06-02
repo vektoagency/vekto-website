@@ -92,6 +92,28 @@ export default function HeroCinematicBg() {
     return () => obs.disconnect();
   }, []);
 
+  // Prewarm the PortfolioOverlay chunk during idle time after hero
+  // mounts. By the time the user taps the background or clicks "Виж
+  // работата ни", the JS + CSS for the overlay is already cached → it
+  // opens instantly instead of going through a chunk fetch + parse.
+  useEffect(() => {
+    const prewarm = () => import("./PortfolioOverlay");
+    type WindowWithIdle = Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+    const w = typeof window !== "undefined" ? (window as WindowWithIdle) : null;
+    if (w?.requestIdleCallback) {
+      const id = w.requestIdleCallback(prewarm, { timeout: 2500 });
+      return () => {
+        const cancel = (w as Window & { cancelIdleCallback?: (id: number) => void })
+          .cancelIdleCallback;
+        cancel?.(id);
+      };
+    }
+    const t = setTimeout(prewarm, 1500);
+    return () => clearTimeout(t);
+  }, []);
+
   // Crossfade rotation — only starts once layer B is ready to play.
   // Flips active layer every SLIDE_DURATION_MS; after the fade
   // completes, advances the now-inactive layer's clip index so it's
@@ -150,6 +172,11 @@ export default function HeroCinematicBg() {
             loop
             playsInline
             preload="auto"
+            // High-priority hint so the browser routes spare bandwidth
+            // to this video first — pairs with the <link rel="preload">
+            // in <head>. Mobile Chrome especially honors this.
+            // @ts-expect-error — fetchPriority valid HTML attr, React 19 typing lag
+            fetchpriority="high"
             className="absolute inset-0 w-full h-full object-cover transition-opacity ease-out"
             style={{
               opacity: activeA ? 1 : 0,
