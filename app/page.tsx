@@ -1,12 +1,13 @@
 import dynamic from "next/dynamic";
 import Navbar from "./components/Navbar";
-import SectionNav from "./components/SectionNav";
 import Hero from "./components/Hero";
 import Footer from "./components/Footer";
 
 // Below-the-fold client components — defer their hydration JS so the
 // initial route bundle stays lean. Still SSR'd, so HTML appears
-// immediately and SEO is unaffected.
+// immediately and SEO is unaffected. SectionNav is desktop-only and
+// purely decorative scroll navigation — also deferred.
+const SectionNav = dynamic(() => import("./components/SectionNav"));
 const Clients = dynamic(() => import("./components/Clients"));
 const Services = dynamic(() => import("./components/Services"));
 const Stats = dynamic(() => import("./components/Stats"));

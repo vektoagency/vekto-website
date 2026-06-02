@@ -9,24 +9,25 @@ import { LangProvider, type Lang } from "./i18n/LangProvider";
 import bunnyData from "./data/bunny-clips.json";
 import { heroFeaturedClipIds } from "./data/hero-featured-clips";
 
-// Resolve the URL of the first clip that will appear in the mobile hero
-// cinematic background, so we can preload it from <head> — the browser
-// starts the fetch during initial HTML parse, before React even hydrates
-// the HeroCinematicBg client component. By the time the <video> tag
-// mounts, the bytes are usually already in cache → first frame paints
-// essentially instantly. We also preload the poster JPG so it can paint
-// before the video even has its first frame.
-const firstHero: { videoUrl: string | null; posterUrl: string | null } = (() => {
-  const firstId = heroFeaturedClipIds[0];
-  if (!firstId) return { videoUrl: null, posterUrl: null };
-  const clip = (
-    bunnyData.clips as Array<{ id: string; previewMp4: string | null; thumbnail: string | null }>
-  ).find((c) => c.id === firstId);
+// Resolve URLs for the hero clips that will appear in HeroCinematicBg.
+// The first clip's video + poster are preloaded with fetchPriority='high'
+// → first frame paints almost instantly. Clips 2-4 are prefetched (lower
+// priority, idle download) so they're warm in cache by the time each
+// crossfade swaps to them — the whole rotation feels gap-less.
+type ClipRecord = { id: string; previewMp4: string | null; thumbnail: string | null };
+function resolveHeroClip(clipId: string): { videoUrl: string | null; posterUrl: string | null } {
+  const clip = (bunnyData.clips as ClipRecord[]).find((c) => c.id === clipId);
   const src = clip?.previewMp4 ?? null;
   const poster = clip?.thumbnail ?? null;
   const videoUrl = !src ? null : src.startsWith("/") ? src : src.replace("play_1080p.mp4", "play_480p.mp4");
   return { videoUrl, posterUrl: poster };
-})();
+}
+const firstHero = heroFeaturedClipIds[0]
+  ? resolveHeroClip(heroFeaturedClipIds[0])
+  : { videoUrl: null, posterUrl: null };
+const nextHeroClips: Array<{ videoUrl: string | null }> = heroFeaturedClipIds
+  .slice(1, 4)
+  .map((id) => resolveHeroClip(id));
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -92,6 +93,20 @@ export default async function RootLayout({
             crossOrigin="anonymous"
             fetchPriority="high"
           />
+        )}
+        {/* Prefetch the upcoming clips at low priority so they're warm
+            in cache by the time each crossfade swaps to them — no
+            buffering pause mid-rotation. */}
+        {nextHeroClips.map((c, i) =>
+          c.videoUrl ? (
+            <link
+              key={i}
+              rel="prefetch"
+              as="video"
+              href={c.videoUrl}
+              crossOrigin="anonymous"
+            />
+          ) : null
         )}
         {/* Warm up Bunny Stream connections so thumbnails + the iframe
             player don't pay DNS/TLS cost the moment the reel opens. */}
