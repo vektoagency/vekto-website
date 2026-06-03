@@ -92,6 +92,29 @@ export default function HeroCinematicBg() {
     return () => obs.disconnect();
   }, []);
 
+  // Pause hero videos while the portfolio overlay is open OR a clip
+  // lightbox is actively playing — otherwise the hero's 2 decoders
+  // compete with the lightbox's decoder + network bandwidth, causing
+  // the watched clip to stutter (the original "забива" complaint).
+  // IntersectionObserver alone can't detect "covered by overlay" —
+  // the hero's bounding box is still in viewport even when fully
+  // hidden behind the fixed-position portfolio.
+  const [coveredByOverlay, setCoveredByOverlay] = useState(false);
+  useEffect(() => {
+    const onOpen = () => setCoveredByOverlay(true);
+    const onClose = () => setCoveredByOverlay(false);
+    window.addEventListener("vekto:zoom-started", onOpen);
+    window.addEventListener("vekto:zoom-ended", onClose);
+    window.addEventListener("vekto:player-open", onOpen);
+    window.addEventListener("vekto:player-closed", onClose);
+    return () => {
+      window.removeEventListener("vekto:zoom-started", onOpen);
+      window.removeEventListener("vekto:zoom-ended", onClose);
+      window.removeEventListener("vekto:player-open", onOpen);
+      window.removeEventListener("vekto:player-closed", onClose);
+    };
+  }, []);
+
   // Prewarm the PortfolioOverlay chunk during idle time after hero
   // mounts. By the time the user taps the background or clicks "Виж
   // работата ни", the JS + CSS for the overlay is already cached → it
@@ -117,9 +140,9 @@ export default function HeroCinematicBg() {
   // Crossfade rotation — only starts once layer B is ready to play.
   // Flips active layer every SLIDE_DURATION_MS; after the fade
   // completes, advances the now-inactive layer's clip index so it's
-  // preloaded for the next swap.
+  // preloaded for the next swap. Pauses while the overlay is open.
   useEffect(() => {
-    if (!inView || heroClips.length < 2 || !layerBCanPlay) return;
+    if (!inView || heroClips.length < 2 || !layerBCanPlay || coveredByOverlay) return;
     const id = setInterval(() => {
       setActiveA((prev) => {
         const next = !prev;
@@ -136,16 +159,23 @@ export default function HeroCinematicBg() {
     return () => clearInterval(id);
   }, [inView, layerBCanPlay]);
 
-  // Mobile browsers throttle (or pause) <video> with opacity:0 to save
-  // battery — so the moment a layer becomes visible we explicitly call
-  // play() on it to make sure it's running, not stuck on a buffered
-  // frame. Triggers on every visibility flip + every clip index change.
+  // Drive both videos' play/pause state explicitly so we can pause
+  // them while the overlay is open (freeing decoder slots + bandwidth
+  // for the watched clip) and unpause them when it closes. Mobile
+  // browsers also throttle opacity:0 videos, so calling play() on
+  // the now-visible layer after every flip prevents "frozen frame"
+  // stutters on crossfade.
   useEffect(() => {
-    const active = activeA ? videoARef.current : videoBRef.current;
-    if (active) {
-      active.play().catch(() => {});
+    const a = videoARef.current;
+    const b = videoBRef.current;
+    if (coveredByOverlay || !inView) {
+      a?.pause();
+      b?.pause();
+      return;
     }
-  }, [activeA, idxA, idxB]);
+    const active = activeA ? a : b;
+    active?.play().catch(() => {});
+  }, [activeA, idxA, idxB, coveredByOverlay, inView]);
 
   const onTap = () => {
     window.dispatchEvent(new Event("vekto:open-portfolio"));

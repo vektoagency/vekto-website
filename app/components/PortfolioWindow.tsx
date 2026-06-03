@@ -280,6 +280,26 @@ function PreviewTile({
   const [hasBeenVisible, setHasBeenVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [staggerPassed, setStaggerPassed] = useState(false);
+  // True while the portfolio overlay is open OR a clip is actively
+  // playing in the lightbox. Tiles are covered/invisible to the user
+  // at that point, but their videos keep consuming decoder slots +
+  // network bandwidth → the watched clip in the lightbox stutters.
+  // Pausing here gives full decoder + bandwidth to the watched clip.
+  const [coveredByOverlay, setCoveredByOverlay] = useState(false);
+  useEffect(() => {
+    const onOpen = () => setCoveredByOverlay(true);
+    const onClose = () => setCoveredByOverlay(false);
+    window.addEventListener("vekto:zoom-started", onOpen);
+    window.addEventListener("vekto:zoom-ended", onClose);
+    window.addEventListener("vekto:player-open", onOpen);
+    window.addEventListener("vekto:player-closed", onClose);
+    return () => {
+      window.removeEventListener("vekto:zoom-started", onOpen);
+      window.removeEventListener("vekto:zoom-ended", onClose);
+      window.removeEventListener("vekto:player-open", onOpen);
+      window.removeEventListener("vekto:player-closed", onClose);
+    };
+  }, []);
 
   // Hold off video mounts until the browser hits an idle moment after
   // first paint. Then apply the small per-tile stagger so the first
@@ -327,17 +347,18 @@ function PreviewTile({
     return () => obs.disconnect();
   }, []);
 
-  // Drive play/pause off visibility. Paused videos release their
-  // decoder, so total decoder pressure tracks on-screen tile count.
+  // Drive play/pause off visibility AND overlay state. Paused videos
+  // release their decoder, so total decoder pressure tracks on-screen
+  // tile count + frees up completely while the lightbox is playing.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (isVisible && staggerPassed) {
+    if (isVisible && staggerPassed && !coveredByOverlay) {
       v.play().catch(() => {});
     } else {
       v.pause();
     }
-  }, [isVisible, staggerPassed, hasBeenVisible]);
+  }, [isVisible, staggerPassed, hasBeenVisible, coveredByOverlay]);
 
   const videoSrc = previewVideoUrl(clip.previewMp4);
 
