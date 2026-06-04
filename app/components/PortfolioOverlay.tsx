@@ -336,7 +336,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
               return u.toString();
             })()}
             className="absolute inset-0 w-full h-full"
-            loading="lazy"
+            loading="eager"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title={`${clip.brand} — ${clip.description}`}

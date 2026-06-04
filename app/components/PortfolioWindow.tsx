@@ -387,15 +387,17 @@ function PreviewTile({
         />
       )}
 
-      {/* Video — lazy-mounted on first visibility, IO controls play/pause */}
-      {hasBeenVisible && videoSrc && (
+      {/* Video — lazy-mounted on first visibility, IO controls play/pause.
+          Unmounted entirely when overlay/lightbox active — frees network
+          completely so the watched iframe gets full bandwidth. */}
+      {hasBeenVisible && videoSrc && !coveredByOverlay && (
         <video
           ref={videoRef}
           src={videoSrc}
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
