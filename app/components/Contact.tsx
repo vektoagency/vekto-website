@@ -52,8 +52,12 @@ export default function Contact() {
     },
   });
 
+  // Defer Cal.com embed init until the browser is idle — pulls ~30 KB of
+  // their player JS off the critical path. With a 2.5 s timeout fallback
+  // for browsers without requestIdleCallback. Namespace registration still
+  // happens before the user can plausibly click the button.
   useEffect(() => {
-    (async () => {
+    const initCal = async () => {
       const cal = await getCalApi({ namespace: "30min" });
       cal("ui", {
         theme: "dark",
@@ -64,7 +68,16 @@ export default function Contact() {
         hideEventTypeDetails: false,
         layout: "month_view",
       });
-    })();
+    };
+    type WindowWithIdle = Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+    const w = typeof window !== "undefined" ? (window as WindowWithIdle) : null;
+    if (w?.requestIdleCallback) {
+      w.requestIdleCallback(() => initCal(), { timeout: 2500 });
+    } else {
+      setTimeout(initCal, 1500);
+    }
   }, []);
 
   return (
