@@ -10,16 +10,21 @@ import bunnyData from "./data/bunny-clips.json";
 import { heroFeaturedClipIds } from "./data/hero-featured-clips";
 
 // Resolve URLs for the hero clips that will appear in HeroCinematicBg.
-// The first clip's video + poster are preloaded with fetchPriority='high'
-// → first frame paints almost instantly. Clips 2-4 are prefetched (lower
-// priority, idle download) so they're warm in cache by the time each
-// crossfade swaps to them — the whole rotation feels gap-less.
+// HeroCinematicBg is mobile-only (lg:hidden) so we resolve to the
+// mobile-specific 480p variants for local clips — Biotica drops from
+// 6.1 MB → 1.9 MB which is ~70%% less bandwidth for first frame.
+// Bunny clips already use play_480p.mp4. Desktop card + portfolio
+// lightbox use the full-resolution originals from JSON.
 type ClipRecord = { id: string; previewMp4: string | null; thumbnail: string | null };
 function resolveHeroClip(clipId: string): { videoUrl: string | null; posterUrl: string | null } {
   const clip = (bunnyData.clips as ClipRecord[]).find((c) => c.id === clipId);
   const src = clip?.previewMp4 ?? null;
   const poster = clip?.thumbnail ?? null;
-  const videoUrl = !src ? null : src.startsWith("/") ? src : src.replace("play_1080p.mp4", "play_480p.mp4");
+  const videoUrl = !src
+    ? null
+    : src.startsWith("/")
+      ? src.replace(/\.mp4$/, "-480p.mp4")
+      : src.replace("play_1080p.mp4", "play_480p.mp4");
   return { videoUrl, posterUrl: poster };
 }
 const firstHero = heroFeaturedClipIds[0]
@@ -76,13 +81,16 @@ export default async function RootLayout({
         {/* Preload the first mobile-hero cinematic clip + its poster —
             fetch starts during HTML parse, before React hydrates, so
             both the still poster AND the first video frame paint almost
-            instantly when HeroCinematicBg mounts. */}
+            instantly when HeroCinematicBg mounts. Media query gates the
+            preload to mobile only — desktop uses PortfolioWindow card
+            instead and doesn't need these files. */}
         {firstHero.posterUrl && (
           <link
             rel="preload"
             as="image"
             href={firstHero.posterUrl}
             fetchPriority="high"
+            media="(max-width: 1023px)"
           />
         )}
         {firstHero.videoUrl && (
@@ -92,11 +100,12 @@ export default async function RootLayout({
             href={firstHero.videoUrl}
             crossOrigin="anonymous"
             fetchPriority="high"
+            media="(max-width: 1023px)"
           />
         )}
-        {/* Prefetch the upcoming clips at low priority so they're warm
-            in cache by the time each crossfade swaps to them — no
-            buffering pause mid-rotation. */}
+        {/* Prefetch the upcoming mobile clips at low priority so they're
+            warm in cache by the time each crossfade swaps to them — no
+            buffering pause mid-rotation. Mobile-only via media query. */}
         {nextHeroClips.map((c, i) =>
           c.videoUrl ? (
             <link
@@ -105,6 +114,7 @@ export default async function RootLayout({
               as="video"
               href={c.videoUrl}
               crossOrigin="anonymous"
+              media="(max-width: 1023px)"
             />
           ) : null
         )}

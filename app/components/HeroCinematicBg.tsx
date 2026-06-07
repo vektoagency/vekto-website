@@ -25,13 +25,19 @@ const heroClips: Clip[] = (() => {
   return (curated.length > 0 ? curated : all).slice(0, 6);
 })();
 
-// 480p MP4 for Bunny clips — same quality target as the grid variant.
-// Roughly 40% smaller than 720p (~3MB vs ~5MB), so the first frame
-// paints noticeably faster on mobile networks. At ~400px wide phone
-// viewports there's no visible quality drop.
+// 480p MP4 for Bunny clips AND mobile-specific 480p variants for local
+// clips (-480p.mp4). For Biotica/Taste/Showreel the mobile variant is
+// ~60-70%% smaller than the original 720p (1.9 MB vs 6.1 MB for Biotica),
+// so first frame paints much faster on mobile networks. At ~400 px wide
+// phone viewports there's no visible quality drop. Desktop card +
+// portfolio lightbox still use the full-resolution originals.
 function videoUrl(src: string | null): string | null {
   if (!src) return null;
-  if (src.startsWith("/")) return src; // local mp4 — already small
+  if (src.startsWith("/")) {
+    // Local clip — swap to the mobile-specific 480p variant. Falls back
+    // to original if no -480p sibling exists (eg. clips added later).
+    return src.replace(/\.mp4$/, "-480p.mp4");
+  }
   return src.replace("play_1080p.mp4", "play_480p.mp4");
 }
 
