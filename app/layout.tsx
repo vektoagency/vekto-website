@@ -77,7 +77,7 @@ export default async function RootLayout({
         {/* Meta Business Manager — domain ownership verification.
             Required for iOS 14+ conversion attribution + Aggregated
             Event Measurement priority across ad accounts. */}
-        <meta name="facebook-domain-verification" content="vjkn3pxyadgj004wiu2vslghpbxq77" />
+        <meta name="facebook-domain-verification" content="bdtob8m89vuhtr9lk6kzwbiq9rb4t5" />
         {/* Preload the first mobile-hero cinematic clip + its poster —
             fetch starts during HTML parse, before React hydrates, so
             both the still poster AND the first video frame paint almost
