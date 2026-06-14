@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getConsent, type ConsentValue } from "./CookieBanner";
 
-const PIXEL_ID = "1015468071151075";
+const PIXEL_ID = "2075226313205817";
 
 declare global {
   interface Window {
