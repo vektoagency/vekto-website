@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { cookies } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
 import MetaPixel from "./components/MetaPixel";
@@ -135,6 +136,11 @@ export default async function RootLayout({
           <CookieBanner />
         </LangProvider>
         <MetaPixel />
+        {/* Vercel Web Analytics — site-wide sessions, page views, top
+            referrers, countries, devices, Core Web Vitals. Privacy-first
+            (no cookies, no PII), ~1 KB script. Completely independent of
+            Meta Pixel / CAPI — no interference with ad attribution. */}
+        <Analytics />
       </body>
     </html>
   );
