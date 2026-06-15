@@ -35,15 +35,7 @@ const copy = {
         ],
       },
       {
-        title: "3. Оферта и плащане",
-        body: [
-          "След попълване на /start или /brief формата, изпращаме персонална оферта в рамките на 24-48 часа.",
-          "Плащанията се извършват по банков път или платформи като Stripe / Revolut. Аванс от 50% се изисква за стартиране на проекта; останалите 50% — при доставка.",
-          "Цени са в евро/лева и включват ДДС когато е приложимо.",
-        ],
-      },
-      {
-        title: "4. Срокове и доставки",
+        title: "3. Срокове и доставки",
         body: [
           "Сроковете се определят в договора за всеки проект. Стандартното време за доставка на първи material е 5-10 работни дни.",
           "Включени са до 2 кръга редакции в обявената цена. Допълнителни редакции се таксуват отделно.",
@@ -51,7 +43,7 @@ const copy = {
         ],
       },
       {
-        title: "5. Интелектуална собственост",
+        title: "4. Интелектуална собственост",
         body: [
           "След пълно плащане, клиентът получава пълни права за използване на финалното съдържание.",
           "VEKTO запазва правото да използва завършения материал в портфолио, case studies, маркетингови материали — освен при изрично писмено забранение от клиента.",
@@ -59,37 +51,19 @@ const copy = {
         ],
       },
       {
-        title: "6. Отказ и анулиране",
-        body: [
-          "Клиентът може да прекрати проекта писмено по всяко време.",
-          "При анулиране ПРЕДИ start: пълно възстановяване минус 10% административна такса.",
-          "При анулиране СЛЕД старт: аванса не подлежи на връщане, но клиентът получава всички готови материали към момента.",
-        ],
-      },
-      {
-        title: "7. Отговорност",
-        body: [
-          "VEKTO се ангажира с професионалното изпълнение на услугите. Не носим отговорност за:",
-          "• Загуба на печалба, индиректни щети или последствия от използването на доставеното съдържание",
-          "• Резултати от рекламни кампании (които зависят от външни фактори)",
-          "• Промени в политиките на трети платформи (Meta, TikTok, YouTube)",
-          "Общата ни отговорност не надвишава сумата, платена от клиента за конкретния проект.",
-        ],
-      },
-      {
-        title: "8. Конфиденциалност",
+        title: "5. Конфиденциалност",
         body: [
           "Двете страни се ангажират да пазят бизнес информацията на другата страна конфиденциална. NDA може да бъде подписан при поискване преди стартиране на работа.",
         ],
       },
       {
-        title: "9. Промени в Условията",
+        title: "6. Промени в Условията",
         body: [
           "Можем да актуализираме тези Условия. Действащите условия за всеки проект са тези, валидни към датата на подписване на договор за този проект.",
         ],
       },
       {
-        title: "10. Приложимо право",
+        title: "7. Приложимо право",
         body: [
           "Тези Условия се регулират от законодателството на Република България. Спорове се решават чрез преговори; при невъзможност — от компетентен български съд.",
         ],
@@ -123,15 +97,7 @@ const copy = {
         ],
       },
       {
-        title: "3. Proposal and payment",
-        body: [
-          "After submitting /start or /brief, we send a personalized proposal within 24-48 hours.",
-          "Payments are processed via bank transfer or platforms like Stripe / Revolut. A 50% deposit is required to start; the remaining 50% upon delivery.",
-          "Prices are in EUR/BGN and include VAT where applicable.",
-        ],
-      },
-      {
-        title: "4. Timelines and delivery",
+        title: "3. Timelines and delivery",
         body: [
           "Timelines are defined in the project agreement. Standard first-material delivery is 5-10 business days.",
           "Up to 2 rounds of revisions are included in the stated price. Additional revisions are billed separately.",
@@ -139,7 +105,7 @@ const copy = {
         ],
       },
       {
-        title: "5. Intellectual property",
+        title: "4. Intellectual property",
         body: [
           "Upon full payment, the client receives full usage rights to the final content.",
           "VEKTO retains the right to use completed work in portfolio, case studies, and marketing — unless explicitly prohibited in writing by the client.",
@@ -147,37 +113,19 @@ const copy = {
         ],
       },
       {
-        title: "6. Cancellation",
-        body: [
-          "Client may terminate the project in writing at any time.",
-          "Cancellation BEFORE start: full refund minus 10% admin fee.",
-          "Cancellation AFTER start: deposit is non-refundable, but client receives all materials completed up to that point.",
-        ],
-      },
-      {
-        title: "7. Liability",
-        body: [
-          "VEKTO commits to professional execution of services. We are not liable for:",
-          "• Loss of profit, indirect or consequential damages from using delivered content",
-          "• Ad campaign results (which depend on external factors)",
-          "• Changes in third-party platform policies (Meta, TikTok, YouTube)",
-          "Our total liability does not exceed the amount paid by the client for the specific project.",
-        ],
-      },
-      {
-        title: "8. Confidentiality",
+        title: "5. Confidentiality",
         body: [
           "Both parties commit to keeping each other's business information confidential. An NDA can be signed on request before work begins.",
         ],
       },
       {
-        title: "9. Changes to Terms",
+        title: "6. Changes to Terms",
         body: [
           "We may update these Terms. The applicable terms for each project are those valid at the date of project agreement signature.",
         ],
       },
       {
-        title: "10. Governing law",
+        title: "7. Governing law",
         body: [
           "These Terms are governed by the laws of the Republic of Bulgaria. Disputes are resolved through negotiation; if not possible, by competent Bulgarian courts.",
         ],
