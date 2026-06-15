@@ -87,13 +87,44 @@ export default function Contact() {
 
       <div className="relative max-w-3xl mx-auto text-center">
         <AnimateIn>
-          <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-4">{t.eyebrow}</p>
-          <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-balance">
-            {t.h2[0]}
+          {/* Eyebrow — pulse dot + lime label, matches Hero badge treatment */}
+          <div className="inline-flex items-center gap-2 mb-5 md:mb-6">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inset-0 rounded-full bg-[#c8ff00] animate-ping opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#c8ff00]" />
+            </span>
+            <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] font-medium">
+              {t.eyebrow}
+            </p>
+          </div>
+
+          {/* H2 — bigger on mobile, lime gradient + drop-shadow glow on
+              the highlighted second line. Mirrors the Hero H1 treatment
+              so the two read as one design system. */}
+          <h2
+            className="text-[40px] sm:text-5xl md:text-[64px] font-extrabold leading-[1.02] tracking-[-0.02em] mb-5 md:mb-6 text-balance"
+            style={{
+              textShadow: "0 2px 24px rgba(0,0,0,0.5)",
+            }}
+          >
+            <span className="text-white">{t.h2[0]}</span>
             <br />
-            <span className="text-[#c8ff00]">{t.h2[1]}</span>
+            <span
+              className="relative inline-block bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
+                WebkitBackgroundClip: "text",
+                filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.4))",
+              }}
+            >
+              {t.h2[1]}
+            </span>
           </h2>
-          <p className="text-[#a0a0a0] text-lg leading-relaxed mb-10 max-w-xl mx-auto text-balance">{t.sub}</p>
+
+          <p className="text-[#a8a8a8] text-[15px] md:text-lg leading-relaxed mb-10 max-w-[520px] md:max-w-xl mx-auto text-balance">
+            {t.sub}
+          </p>
         </AnimateIn>
 
         <AnimateIn>
