@@ -40,14 +40,18 @@ const fullBleedClips: Clip[] = (() => {
 })();
 
 /**
- * 480p sweet spot — crisp at thumbnail/mid scale, ~300-500 KB per clip,
- * and modern browsers happily decode the in-viewport set in parallel.
- * 720p felt heavy on mobile decoders; animated WebP looked smeary —
- * 480p mp4 threads the needle.
+ * Tile-scale video URL. Local clips have a "-480p.mp4" sibling that's
+ * the same 720p H.264 CRF 28 encode we use for the mobile hero — much
+ * lighter than the originals (~1 MB vs ~5 MB) and plenty sharp at the
+ * ~150 px tile display width. Bunny clips swap 1080p → 480p variant.
+ * The full-resolution originals are reserved for the portfolio
+ * lightbox where users actually watch a clip at large size.
  */
 function previewVideoUrl(src: string | null): string | null {
   if (!src) return null;
-  if (src.startsWith("/")) return src; // local mp4 — already small
+  if (src.startsWith("/")) {
+    return src.replace(/\.mp4$/, "-480p.mp4");
+  }
   return src.replace("play_1080p.mp4", "play_480p.mp4");
 }
 
