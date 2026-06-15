@@ -102,7 +102,7 @@ export default function Contact() {
               the highlighted second line. Mirrors the Hero H1 treatment
               so the two read as one design system. */}
           <h2
-            className="text-[40px] sm:text-5xl md:text-[64px] font-extrabold leading-[1.02] tracking-[-0.02em] mb-5 md:mb-6 text-balance"
+            className="text-[32px] sm:text-5xl md:text-[64px] font-extrabold leading-[1.05] sm:leading-[1.02] tracking-[-0.02em] mb-5 md:mb-6 text-balance"
             style={{
               textShadow: "0 2px 24px rgba(0,0,0,0.5)",
             }}
