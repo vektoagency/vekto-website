@@ -19,12 +19,60 @@ declare global {
  * Contact button clicks, Calendly bookings, etc. No-ops until the
  * user has explicitly accepted marketing cookies.
  *
- *   trackEvent("Lead", { value: 2500, currency: "EUR" });
+ * Pass `options.eventID` (a UUID) when the same event will also be
+ * mirrored via Conversions API server-side — Meta dedupes browser +
+ * server fires that share the same event ID within a ~5 min window.
+ *
+ *   trackEvent("Lead", { value: 2500, currency: "EUR" }, { eventID: id });
  */
-export function trackEvent(event: string, params?: Record<string, unknown>) {
+export function trackEvent(
+  event: string,
+  params?: Record<string, unknown>,
+  options?: { eventID?: string }
+) {
   if (typeof window === "undefined") return;
   if (getConsent() !== "accepted") return;
-  if (window.fbq) window.fbq("track", event, params);
+  if (!window.fbq) return;
+  if (options?.eventID) {
+    window.fbq("track", event, params, { eventID: options.eventID });
+  } else {
+    window.fbq("track", event, params);
+  }
+}
+
+/**
+ * Fire a Meta event via BOTH browser pixel and server-side Conversions
+ * API in a single call. Generates the shared event ID, runs the browser
+ * fire synchronously, and posts to /api/capi in the background (no
+ * await — never blocks the user click).
+ *
+ * Use for Schedule + Contact clicks where we want the full coverage
+ * boost on iOS / AdBlock / cookie-rejected users.
+ */
+export function trackEventBoth(
+  event: "Schedule" | "Contact" | "ViewContent",
+  params?: { contentName?: string; contentCategory?: string; value?: number; currency?: string }
+) {
+  if (typeof window === "undefined") return;
+  if (getConsent() !== "accepted") return;
+  const eventId =
+    "randomUUID" in crypto ? crypto.randomUUID() : `${event}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  // Browser fire
+  if (window.fbq) {
+    window.fbq("track", event, params, { eventID: eventId });
+  }
+  // Server mirror (fire-and-forget — failure never breaks UX)
+  void fetch("/api/capi", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      event,
+      eventId,
+      sourceUrl: window.location.href,
+      customData: params,
+    }),
+    keepalive: true, // survives page navigation (tel: link, Cal open)
+  }).catch(() => {});
 }
 
 /**

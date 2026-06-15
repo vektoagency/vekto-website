@@ -106,6 +106,13 @@ export default function StartClient() {
       budget >= 10000
         ? t.fields.budgetMaxLabel
         : `${budget.toLocaleString(lang === "bg" ? "bg-BG" : "en-US")} ${t.fields.budgetSuffix}`;
+    // Generate one event_id used by BOTH the browser pixel fire and the
+    // server-side CAPI fire (inside submitStartLead). Meta dedupes on
+    // this id within ~5 min so each Lead counts exactly once.
+    const eventId =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `lead_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const res = await submitStartLead({
       lang,
       name,
@@ -117,6 +124,7 @@ export default function StartClient() {
       budget: String(budget),
       budgetLabel,
       message,
+      eventId,
       utmSource: utm.source,
       utmMedium: utm.medium,
       utmCampaign: utm.campaign,
@@ -127,8 +135,12 @@ export default function StartClient() {
     setSubmitting(false);
     if (res.success) {
       // Meta Pixel — fire Lead event with the monthly budget as value.
-      // Helps Meta's algo bid for higher-budget leads as we scale ads.
-      trackEvent("Lead", { value: budget, currency: "EUR", content_name: ctLabels });
+      // eventID matches the CAPI fire above so Meta dedupes the pair.
+      trackEvent(
+        "Lead",
+        { value: budget, currency: "EUR", content_name: ctLabels },
+        { eventID: eventId }
+      );
       setDone(true);
       if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
     } else {

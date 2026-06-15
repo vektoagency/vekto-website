@@ -1,6 +1,8 @@
 "use server";
 
 import { Resend } from "resend";
+import { headers, cookies } from "next/headers";
+import { fireMetaCapiEvent } from "../lib/meta-capi";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,9 +14,13 @@ export type StartLead = {
   phone: string;
   contentType: string;
   contentTypeLabel: string;
-  budget: string;
+  budget: string;       // numeric string (e.g., "2500")
   budgetLabel: string;
   message: string;
+  // Generated client-side (crypto.randomUUID) and reused by both the
+  // browser pixel AND the server-side CAPI fire below — Meta dedups on
+  // event_id within a ~5 min window, counting each Lead exactly once.
+  eventId: string;
   // UTM params from ad clicks — let us see which campaign/creative drives leads.
   utmSource?: string;
   utmMedium?: string;
@@ -91,8 +97,51 @@ export async function submitStartLead(data: StartLead) {
       html,
       replyTo: data.email,
     });
-    return { success: true };
   } catch {
     return { success: false, error: "Failed to send" };
   }
+
+  // After the email is safely sent, mirror the Lead event to Meta's
+  // Conversions API server-side. Pixel already fires on the client, but
+  // ~30-50% of iOS / AdBlock / cookie-rejected users miss that. CAPI
+  // bypasses all those — dedup by event_id ensures Meta counts each
+  // conversion exactly once. Failure of this fire never breaks the
+  // user-facing success response (meta-capi.ts swallows errors).
+  try {
+    const h = await headers();
+    const c = await cookies();
+    const budgetValue = parseFloat(data.budget) || undefined;
+    const [firstName, ...lastParts] = data.name.trim().split(/\s+/);
+    const lastName = lastParts.join(" ");
+    await fireMetaCapiEvent({
+      eventName: "Lead",
+      eventId: data.eventId,
+      eventSourceUrl: `https://vektoagency.com/start${data.utmSource ? `?utm_source=${data.utmSource}` : ""}`,
+      userData: {
+        email: data.email,
+        phone: data.phone,
+        firstName: firstName || undefined,
+        lastName: lastName || undefined,
+        country: data.lang === "bg" ? "bg" : undefined,
+        fbp: c.get("_fbp")?.value,
+        fbc: c.get("_fbc")?.value,
+        clientIp:
+          h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+          h.get("x-real-ip") ||
+          undefined,
+        clientUserAgent: h.get("user-agent") || undefined,
+      },
+      customData: {
+        value: budgetValue,
+        currency: "EUR",
+        contentName: data.contentTypeLabel || data.contentType || undefined,
+        contentCategory: "Lead",
+      },
+    });
+  } catch (err) {
+    // Don't break the form success — pixel already fired client-side.
+    console.error("[start-lead] CAPI mirror failed", err);
+  }
+
+  return { success: true };
 }
