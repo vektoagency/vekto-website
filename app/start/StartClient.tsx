@@ -288,12 +288,6 @@ export default function StartClient() {
                   </span>
                 </h1>
 
-                <p
-                  className="text-[15px] md:text-xl text-[#a8a8a8] leading-relaxed max-w-[640px] mx-auto mb-5 md:mb-7 text-balance animate-[startFade_0.6s_0.1s_ease-out_both]"
-                >
-                  {t.meta.sub}
-                </p>
-
                 {/* Trust badges row — hard numbers + safety claim */}
                 <div className="flex flex-wrap items-center justify-center gap-x-4 md:gap-x-7 gap-y-2 mb-6 md:mb-8 animate-[startFade_0.65s_0.15s_ease-out_both]">
                   {t.meta.trustBadges.map((b) => (
