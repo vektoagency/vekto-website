@@ -505,7 +505,7 @@ export default function StartClient() {
                       className="reveal text-center px-3 py-5 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d]"
                     >
                       <div className="font-extrabold text-[#c8ff00] tabular-nums tracking-tight text-[40px] md:text-6xl leading-none mb-2 md:mb-3">
-                        <CountUp target={s.value} />
+                        <CountUp target={s.value} decimals={s.decimals} />
                         <span>{s.suffix}</span>
                       </div>
                       <p className="text-[11.5px] md:text-[13.5px] text-[#a0a0a0] leading-snug text-balance">
@@ -787,7 +787,7 @@ export default function StartClient() {
 }
 
 /* ───────────  Animated number counter (count-up on viewport entry)  ─────────── */
-function CountUp({ target }: { target: number }) {
+function CountUp({ target, decimals = 0 }: { target: number; decimals?: number }) {
   const [val, setVal] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
@@ -803,7 +803,7 @@ function CountUp({ target }: { target: number }) {
           let cur = 0;
           const id = setInterval(() => {
             cur = Math.min(cur + inc, target);
-            setVal(Math.round(cur));
+            setVal(cur);
             if (cur >= target) clearInterval(id);
           }, 1400 / steps);
         }
@@ -813,7 +813,7 @@ function CountUp({ target }: { target: number }) {
     obs.observe(el);
     return () => obs.disconnect();
   }, [target]);
-  return <span ref={ref}>{val}</span>;
+  return <span ref={ref}>{val.toFixed(decimals)}</span>;
 }
 
 /* ───────────  FAQ accordion item  ─────────── */

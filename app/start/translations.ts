@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Най-добрите AI видеа",
-      h1Bottom: "за бизнеса ти.",
-      sub: "Кинематографични филми и social видеа, готови за 5 дни. От €1500/мес. Без €10K retainer и 3 месеца чакане.",
+      h1Top: "Премиум видеа,",
+      h1Bottom: "създадени да продават.",
+      sub: "Кинематографични филми и social видеа от ново поколение — готови за 5 дни. От €1500/мес. Без €10K retainer и 3 месеца чакане.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -87,10 +87,10 @@ export const startCopy = {
       h2: "Защо",
       h2Highlight: "30+ бранда избраха VEKTO",
       items: [
-        { value: 30, suffix: "+", label: "Доволни бранда в портфолиото" },
-        { value: 150, suffix: "+", label: "Доставени видеа последните 6 месеца" },
-        { value: 24, suffix: "ч", label: "Среден отговор на бриф" },
-        { value: 6, suffix: "×", label: "По-бързо от традиционните агенции" },
+        { value: 30, suffix: "+", decimals: 0, label: "Доволни бранда в портфолиото" },
+        { value: 1000, suffix: "+", decimals: 0, label: "Доставени видео проекта" },
+        { value: 4.8, suffix: "×", decimals: 1, label: "Средно ROAS от наши реклами" },
+        { value: 6, suffix: "×", decimals: 0, label: "По-бързо от традиционните агенции" },
       ],
     },
     compare: {
@@ -100,10 +100,10 @@ export const startCopy = {
       headers: ["Параметър", "VEKTO", "Агенция", "In-house"],
       rows: [
         ["Време за първа доставка", "3-5 дни", "3-4 седмици", "1-2 седмици"],
-        ["Месечен разход", "€1500-3000", "€5000+", "€3000+ заплата"],
+        ["Тествани формати на месец", "30+ варианта", "3-5 варианта", "5-10 варианта"],
+        ["Скалиране на winning формат", "За 24-48ч", "За седмици", "За дни"],
         ["AI обработка", "✓", "✗", "✗"],
         ["Многоезичност", "✓", "Доплащане", "Рядко"],
-        ["Без обвързване", "✓", "12 мес. договор", "—"],
         ["Достъпност", "24/7", "Работно време", "Работно време"],
       ],
     },
@@ -139,12 +139,12 @@ export const startCopy = {
       ],
     },
     finalCta: {
-      eyebrow: "ГОТОВ ДА ЗАПОЧНЕМ?",
-      h2: "Първите ти видеа —",
-      h2Highlight: "за 5 дни",
-      sub: "60 секунди да попълниш анкетата. 24 часа да получиш персонализирана оферта. 5 дни до готови видеа.",
+      eyebrow: "ВРЕМЕ Е ЗА СЛЕДВАЩОТО НИВО",
+      h2: "От идея до",
+      h2Highlight: "готови видеа за 5 дни.",
+      sub: "Лична оферта до 24 часа. Първи материали в ръцете ти за 5 дни. Без месеци чакане, без €10K retainer, без сложни договори — само резултат.",
       scrollToForm: "Попълни анкетата →",
-      orBook: "Или резервирай 30-минутен разговор",
+      orBook: "Или резервирай разговор",
     },
     stickyMobile: {
       label: "Започни",
@@ -164,9 +164,9 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "The best AI videos",
-      h1Bottom: "for your business.",
-      sub: "Cinematic films and social videos, ready in 5 days. From €1500/mo. No €10K retainer or 3-month waits.",
+      h1Top: "Premium videos,",
+      h1Bottom: "engineered to convert.",
+      sub: "Next-gen cinematic films and social videos — delivered in 5 days. From €1500/mo. No €10K retainer or 3-month waits.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
@@ -242,10 +242,10 @@ export const startCopy = {
       h2: "Why",
       h2Highlight: "30+ brands chose VEKTO",
       items: [
-        { value: 30, suffix: "+", label: "Happy brands in our portfolio" },
-        { value: 150, suffix: "+", label: "Videos delivered in last 6 months" },
-        { value: 24, suffix: "h", label: "Average brief response time" },
-        { value: 6, suffix: "×", label: "Faster than traditional agencies" },
+        { value: 30, suffix: "+", decimals: 0, label: "Happy brands in our portfolio" },
+        { value: 1000, suffix: "+", decimals: 0, label: "Delivered video projects" },
+        { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS on our ads" },
+        { value: 6, suffix: "×", decimals: 0, label: "Faster than traditional agencies" },
       ],
     },
     compare: {
@@ -255,10 +255,10 @@ export const startCopy = {
       headers: ["Aspect", "VEKTO", "Agency", "In-house"],
       rows: [
         ["First-delivery time", "3-5 days", "3-4 weeks", "1-2 weeks"],
-        ["Monthly cost", "€1500-3000", "€5000+", "€3000+ salary"],
+        ["Formats tested per month", "30+ variants", "3-5 variants", "5-10 variants"],
+        ["Scaling a winning format", "In 24-48h", "In weeks", "In days"],
         ["AI processing", "✓", "✗", "✗"],
         ["Multilingual", "✓", "Extra cost", "Rarely"],
-        ["No commitment", "✓", "12-mo contract", "—"],
         ["Availability", "24/7", "Business hours", "Business hours"],
       ],
     },
@@ -294,12 +294,12 @@ export const startCopy = {
       ],
     },
     finalCta: {
-      eyebrow: "READY TO START?",
-      h2: "Your first videos —",
-      h2Highlight: "in 5 days",
-      sub: "60 seconds to fill the brief. 24 hours to receive a personalized proposal. 5 days to delivered videos.",
-      scrollToForm: "Fill the brief →",
-      orBook: "Or book a 30-minute call",
+      eyebrow: "TIME FOR THE NEXT LEVEL",
+      h2: "From idea to",
+      h2Highlight: "delivered videos in 5 days.",
+      sub: "Personal proposal within 24 hours. First materials in your hands in 5 days. No months of waiting, no €10K retainer, no complex contracts — just results.",
+      scrollToForm: "Fill the survey →",
+      orBook: "Or book a call",
     },
     stickyMobile: {
       label: "Start",
