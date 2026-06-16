@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "От незабележим",
-      h1Bottom: "до незабравим.",
-      sub: "Видеа • Реклами • Social • Стратегия — задвижвани от собствен AI отдел.",
+      h1Top: "Бранд без посока?",
+      h1Bottom: "Дай му вектор.",
+      sub: "Стратегия • Креатив • Видео • Реклами • Social media — пълен маркетинг екип за бранда ти.",
       trustBadges: [
         "30+ доволни бранда",
         "4.8× средно ROAS",
@@ -166,9 +166,9 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "From invisible",
-      h1Bottom: "to unforgettable.",
-      sub: "Video • Ads • Social • Strategy — powered by an in-house AI unit.",
+      h1Top: "Brand without direction?",
+      h1Bottom: "Give it a vector.",
+      sub: "Strategy • Creative • Video • Ads • Social media — a full marketing team for your brand.",
       trustBadges: [
         "30+ happy brands",
         "4.8× average ROAS",
