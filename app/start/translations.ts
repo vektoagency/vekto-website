@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Маркетинг,",
-      h1Bottom: "който продава.",
-      sub: "Видеа • Реклами • Social • Стратегия — от един AI екип.",
+      h1Top: "Маркетинг агенция",
+      h1Bottom: "със собствен AI отдел.",
+      sub: "Видеа • Реклами • Social • Стратегия — за бизнеси, които искат растеж.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -165,9 +165,9 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "Marketing",
-      h1Bottom: "that sells.",
-      sub: "Video • Ads • Social • Strategy — from one AI team.",
+      h1Top: "A marketing agency",
+      h1Bottom: "with in-house AI.",
+      sub: "Video • Ads • Social • Strategy — for businesses that want growth.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
