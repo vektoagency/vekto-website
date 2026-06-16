@@ -11,7 +11,7 @@ export const startCopy = {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
       h1Top: "Не всеки бранд расте.",
       h1Bottom: "Тези с посока — да.",
-      sub: "Стратегия • Креатив • Видео • Реклами • Social media — пълен маркетинг екип за бранда ти.",
+      sub: "Маркетинг агенция за бранда, който иска повече от пазара.",
       trustBadges: [
         "30+ доволни бранда",
         "4.8× средно ROAS",
@@ -168,7 +168,7 @@ export const startCopy = {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
       h1Top: "Not every brand grows.",
       h1Bottom: "Those with direction do.",
-      sub: "Strategy • Creative • Video • Ads • Social media — a full marketing team for your brand.",
+      sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
         "30+ happy brands",
         "4.8× average ROAS",
