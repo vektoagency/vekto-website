@@ -9,8 +9,8 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Бранд без посока?",
-      h1Bottom: "Дай му вектор.",
+      h1Top: "Не всеки бранд расте.",
+      h1Bottom: "Тези с посока — да.",
       sub: "Стратегия • Креатив • Видео • Реклами • Social media — пълен маркетинг екип за бранда ти.",
       trustBadges: [
         "30+ доволни бранда",
@@ -166,8 +166,8 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "Brand without direction?",
-      h1Bottom: "Give it a vector.",
+      h1Top: "Not every brand grows.",
+      h1Bottom: "Those with direction do.",
       sub: "Strategy • Creative • Video • Ads • Social media — a full marketing team for your brand.",
       trustBadges: [
         "30+ happy brands",

@@ -256,7 +256,7 @@ export default function StartClient() {
                   </g>
                 </svg>
               </div>
-              <div className="relative max-w-4xl mx-auto px-5 md:px-8 pt-7 md:pt-16 pb-6 md:pb-10 text-center">
+              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-7 md:pt-16 pb-6 md:pb-10 text-center">
                 {/* Pulsing eyebrow chip */}
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
@@ -272,7 +272,7 @@ export default function StartClient() {
                 </div>
 
                 <h1
-                  className="text-[34px] sm:text-5xl md:text-[68px] font-extrabold leading-[1.04] tracking-[-0.02em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  className="text-[38px] sm:text-[60px] md:text-[80px] lg:text-[104px] font-extrabold leading-[1.0] tracking-[-0.035em] mb-5 md:mb-7 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
                 >
                   <span className="text-white">{t.meta.h1Top}</span>
