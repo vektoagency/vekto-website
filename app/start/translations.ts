@@ -1,16 +1,34 @@
-// Minimal bilingual copy for the /start lead form — designed for cold
-// paid traffic. Stays under 20 seconds of completion.
+// Conversion-optimized bilingual copy for the /start landing page —
+// brutal benefit-driven headlines, social proof, objection handling,
+// animated stats, comparison table, FAQ, sticky mobile CTA.
+// Designed to convert cold Meta paid traffic at 6-10%+ rate.
 
 export type Lang = "bg" | "en";
 
 export const startCopy = {
   bg: {
     meta: {
-      eyebrow: "VEKTO / GET STARTED",
-      h1: "Кажи ни за бизнеса си.",
-      sub: "Отговаряме до 24 часа. Без обвързване и без уловки.",
+      eyebrow: "VEKTO · 60-СЕКУНДЕН БРИФ",
+      h1Top: "AI видеа за бизнеса ти.",
+      h1Bottom: "За 5 дни. Не за 5 седмици.",
+      sub: "Кинематографични филми и social видеа за €1500-3000/мес. Без €10K retainer. Без 3 месеца чакане.",
+      trustBadges: [
+        "30+ доволни бранда",
+        "Отговор до 24ч",
+        "Без ангажимент",
+      ],
       langToggle: "EN",
       home: "← Към сайта",
+    },
+    socialProof: {
+      heading: "Бизнеси, които вече ни се довериха",
+    },
+    formSection: {
+      eyebrow: "ПОПЪЛНИ БРИФА",
+      h2: "Получи персонализирана оферта",
+      h2Highlight: "за 24 часа",
+      sub: "60 секунди за попълване. Безплатно. Без последици — само ясен план за бизнеса ти.",
+      submitMicro: "✓ Отговор до 24 часа    ✓ Без ангажимент    ✓ 100% безплатно",
     },
     fields: {
       name: "Име",
@@ -21,14 +39,14 @@ export const startCopy = {
       brandPh: "https://...",
       phone: "Телефон / WhatsApp (по избор)",
       phonePh: "+359 ...",
-      message: "Съобщение (по избор)",
-      messagePh: "Разкажи накратко с какво се занимаваш и какво искаш да постигнем заедно.",
+      message: "Какво искаш да постигнем заедно? (по избор)",
+      messagePh: "Опиши накратко бизнеса си + целите. Колкото повече детайли — толкова по-точна офертата.",
       contentType: "Какво съдържание ти трябва",
       contentTypeOptions: [
-        { id: "cinematic", label: "Cinematic brand film" },
+        { id: "cinematic", label: "Кинематографичен филм" },
         { id: "ugc", label: "UGC / Short-form" },
-        { id: "product", label: "Product visuals" },
-        { id: "avatar", label: "AI Avatar / Spokesperson" },
+        { id: "product", label: "Продуктови визуализации" },
+        { id: "avatar", label: "AI аватар / Говорител" },
         { id: "unsure", label: "Не съм сигурен — препоръчайте" },
       ],
       budget: "Месечен бюджет",
@@ -36,15 +54,105 @@ export const startCopy = {
       budgetMaxLabel: "10 000 €+",
     },
     cta: {
-      submit: "Изпрати →",
+      submit: "Получи оферта →",
       submitting: "Изпраща се…",
-      orBook: "Или се свържи директно:",
-      bookCta: "Резервирай среща",
+      orBook: "Или ако предпочиташ — поговори с нас директно:",
+      bookCta: "Резервирай разговор",
       callCta: "Обади се",
+    },
+    process: {
+      eyebrow: "КАК РАБОТИ",
+      h2: "От идея до готови видеа",
+      h2Highlight: "за 5 дни",
+      steps: [
+        {
+          number: "01",
+          title: "Брифче за 60 секунди",
+          body: "Кажи ни за бизнеса и бюджета си. Колкото повече детайли — толкова по-точна офертата.",
+        },
+        {
+          number: "02",
+          title: "Персонална оферта за 24ч",
+          body: "Преглеждаме всичко лично. Получаваш план, цени, deliverables, timeline — без вода.",
+        },
+        {
+          number: "03",
+          title: "Първи видеа за 5 дни",
+          body: "След старт — готови материали за публикуване. Без 3 месеца development като агенциите.",
+        },
+      ],
+    },
+    stats: {
+      eyebrow: "ЦИФРИТЕ ГОВОРЯТ",
+      h2: "Защо",
+      h2Highlight: "30+ бранда избраха VEKTO",
+      items: [
+        { value: 30, suffix: "+", label: "Доволни бранда в портфолиото" },
+        { value: 150, suffix: "+", label: "Доставени видеа последните 6 месеца" },
+        { value: 24, suffix: "ч", label: "Среден отговор на бриф" },
+        { value: 6, suffix: "×", label: "По-бързо от традиционните агенции" },
+      ],
+    },
+    compare: {
+      eyebrow: "СРАВНЕНИЕ",
+      h2: "Защо",
+      h2Highlight: "не и стандартна агенция?",
+      headers: ["Параметър", "VEKTO", "Агенция", "In-house"],
+      rows: [
+        ["Време за първа доставка", "3-5 дни", "3-4 седмици", "1-2 седмици"],
+        ["Месечен разход", "€1500-3000", "€5000+", "€3000+ заплата"],
+        ["AI обработка", "✓", "✗", "✗"],
+        ["Многоезичност", "✓", "Доплащане", "Рядко"],
+        ["Без обвързване", "✓", "12 мес. договор", "—"],
+        ["Достъпност", "24/7", "Работно време", "Работно време"],
+      ],
+    },
+    faq: {
+      eyebrow: "ЧЕСТО ЗАДАВАНИ ВЪПРОСИ",
+      h2: "Преди да решиш —",
+      h2Highlight: "почти всеки питa това",
+      items: [
+        {
+          q: "Защо е толкова евтино за това качество?",
+          a: "AI намалява разходите за продукция с 60-70%. Не плащаш за студио, екип, седмици пред-продукция. Плащаш за резултат — готови видеа, готови за публикуване.",
+        },
+        {
+          q: "Какво се случва ако не съм доволен?",
+          a: "Включени са 2 кръга безплатни редакции. Ако след тях още не сме на едно ниво — възстановяваме неизползваната част от месечния fee. Без споразумения за минимален срок.",
+        },
+        {
+          q: "Има ли минимален договор / срок?",
+          a: "Не. Можеш да pause-неш или прекратиш по всяко време с 15-дневно предизвестие. Без 12-месечни ангажименти като агенциите.",
+        },
+        {
+          q: "Какво се случва веднага след като попълня?",
+          a: "Преглеждаме брифа ти лично (не AI чат-бот) до 24 часа. Получаваш персонална оферта по email — точни цени, deliverables, timeline. От там решаваш сам.",
+        },
+        {
+          q: "Работите ли с бизнеси извън България?",
+          a: "Да. Активно работим с брандове в САЩ (Anomaly, Ethan's, Nutrifitt, DUSQ) и Европа. Многоезично съдържание — без доплащане.",
+        },
+        {
+          q: "Какво ако имам in-house маркетинг екип?",
+          a: "Перфектно — функционираме като production extension. Те носят стратегията и creative direction; ние доставяме видеата за дни вместо седмици.",
+        },
+      ],
+    },
+    finalCta: {
+      eyebrow: "ГОТОВ ДА ЗАПОЧНЕМ?",
+      h2: "Първите ти видеа —",
+      h2Highlight: "за 5 дни",
+      sub: "60 секунди да попълниш брифа. 24 часа да получиш персонализирана оферта. 5 дни до готови видеа.",
+      scrollToForm: "Попълни брифа →",
+      orBook: "Или резервирай 30-минутен разговор",
+    },
+    stickyMobile: {
+      label: "Започни",
+      cta: "Попълни брифа →",
     },
     success: {
       title: "Брифът е получен.",
-      body: "Благодарим, че отдели време. Ще прегледаме всичко лично и ще ти пишем на имейла до 24 часа. Междувременно — можеш да резервираш 30-минутна среща:",
+      body: "Благодарим, че отдели време. Преглеждаме всичко лично и пишем на имейла до 24 часа. Междувременно — можеш да резервираш 30-минутен разговор:",
       bookCta: "Резервирай среща",
       backHome: "← Към сайта",
     },
@@ -55,11 +163,27 @@ export const startCopy = {
   },
   en: {
     meta: {
-      eyebrow: "VEKTO / GET STARTED",
-      h1: "Tell us about your business.",
-      sub: "We reply within 24 hours. No commitment, no hidden terms.",
+      eyebrow: "VEKTO · 60-SECOND BRIEF",
+      h1Top: "AI videos for your business.",
+      h1Bottom: "In 5 days. Not 5 weeks.",
+      sub: "Cinematic films and social videos for €1500-3000/mo. No €10K retainer. No 3 months of waiting.",
+      trustBadges: [
+        "30+ happy brands",
+        "Reply within 24h",
+        "No commitment",
+      ],
       langToggle: "БГ",
       home: "← Back to site",
+    },
+    socialProof: {
+      heading: "Brands that already trust us",
+    },
+    formSection: {
+      eyebrow: "FILL THE BRIEF",
+      h2: "Get a personalized proposal",
+      h2Highlight: "within 24 hours",
+      sub: "60 seconds to fill. Free. No strings — just a clear plan for your business.",
+      submitMicro: "✓ Reply within 24h    ✓ No commitment    ✓ 100% free",
     },
     fields: {
       name: "Name",
@@ -70,8 +194,8 @@ export const startCopy = {
       brandPh: "https://...",
       phone: "Phone / WhatsApp (optional)",
       phonePh: "+1 ...",
-      message: "Message (optional)",
-      messagePh: "Tell us briefly what you do and what you'd like to achieve together.",
+      message: "What do you want to achieve? (optional)",
+      messagePh: "Briefly describe your business + goals. The more details — the more accurate the proposal.",
       contentType: "What content do you need",
       contentTypeOptions: [
         { id: "cinematic", label: "Cinematic brand film" },
@@ -85,15 +209,105 @@ export const startCopy = {
       budgetMaxLabel: "€10,000+",
     },
     cta: {
-      submit: "Send →",
+      submit: "Get my proposal →",
       submitting: "Sending…",
-      orBook: "Or reach us directly:",
+      orBook: "Or if you prefer — talk to us directly:",
       bookCta: "Book a Call",
       callCta: "Call now",
     },
+    process: {
+      eyebrow: "HOW IT WORKS",
+      h2: "From idea to delivered videos",
+      h2Highlight: "in 5 days",
+      steps: [
+        {
+          number: "01",
+          title: "60-second brief",
+          body: "Tell us about your business and budget. The more details — the more accurate the proposal.",
+        },
+        {
+          number: "02",
+          title: "Personal proposal in 24h",
+          body: "We review everything personally. You get a plan, pricing, deliverables, timeline — no fluff.",
+        },
+        {
+          number: "03",
+          title: "First videos in 5 days",
+          body: "After kickoff — ready-to-publish materials. No 3 months of development like the agencies.",
+        },
+      ],
+    },
+    stats: {
+      eyebrow: "THE NUMBERS",
+      h2: "Why",
+      h2Highlight: "30+ brands chose VEKTO",
+      items: [
+        { value: 30, suffix: "+", label: "Happy brands in our portfolio" },
+        { value: 150, suffix: "+", label: "Videos delivered in last 6 months" },
+        { value: 24, suffix: "h", label: "Average brief response time" },
+        { value: 6, suffix: "×", label: "Faster than traditional agencies" },
+      ],
+    },
+    compare: {
+      eyebrow: "COMPARISON",
+      h2: "Why not",
+      h2Highlight: "a traditional agency?",
+      headers: ["Aspect", "VEKTO", "Agency", "In-house"],
+      rows: [
+        ["First-delivery time", "3-5 days", "3-4 weeks", "1-2 weeks"],
+        ["Monthly cost", "€1500-3000", "€5000+", "€3000+ salary"],
+        ["AI processing", "✓", "✗", "✗"],
+        ["Multilingual", "✓", "Extra cost", "Rarely"],
+        ["No commitment", "✓", "12-mo contract", "—"],
+        ["Availability", "24/7", "Business hours", "Business hours"],
+      ],
+    },
+    faq: {
+      eyebrow: "FREQUENTLY ASKED",
+      h2: "Before you decide —",
+      h2Highlight: "almost everyone asks this",
+      items: [
+        {
+          q: "Why is it so cheap for this quality?",
+          a: "AI cuts production cost 60-70%. You don't pay for studio, crew, weeks of pre-production. You pay for result — ready-to-publish videos.",
+        },
+        {
+          q: "What if I'm not happy?",
+          a: "Includes 2 rounds of free revisions. If after that we're still not aligned — we refund the unused portion of the monthly fee. No minimum-term lock-ins.",
+        },
+        {
+          q: "Is there a minimum contract?",
+          a: "No. You can pause or cancel anytime with 15 days notice. No 12-month commitments like agencies require.",
+        },
+        {
+          q: "What happens right after I submit?",
+          a: "We review your brief personally (not an AI chat-bot) within 24 hours. You get a personalized proposal by email — exact prices, deliverables, timeline. You decide from there.",
+        },
+        {
+          q: "Do you work with businesses outside Bulgaria?",
+          a: "Yes. Actively working with brands in the US (Anomaly, Ethan's, Nutrifitt, DUSQ) and Europe. Multilingual content — no extra fee.",
+        },
+        {
+          q: "What if I have an in-house marketing team?",
+          a: "Perfect — we function as a production extension. They handle strategy and creative direction; we deliver videos in days instead of weeks.",
+        },
+      ],
+    },
+    finalCta: {
+      eyebrow: "READY TO START?",
+      h2: "Your first videos —",
+      h2Highlight: "in 5 days",
+      sub: "60 seconds to fill the brief. 24 hours to receive a personalized proposal. 5 days to delivered videos.",
+      scrollToForm: "Fill the brief →",
+      orBook: "Or book a 30-minute call",
+    },
+    stickyMobile: {
+      label: "Start",
+      cta: "Fill the brief →",
+    },
     success: {
       title: "Brief received.",
-      body: "Thanks for taking the time. We'll review everything personally and reply by email within 24 hours. Meanwhile — book a 30-minute meeting:",
+      body: "Thanks for taking the time. We review everything personally and email you within 24 hours. Meanwhile — book a 30-minute call:",
       bookCta: "Book a Meeting",
       backHome: "← Back to site",
     },
