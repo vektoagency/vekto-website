@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Маркетинг от ново поколение.",
-      h1Bottom: "Резултат за дни, не месеци.",
-      sub: "Видеа, реклами, social — всичко от един AI екип.",
+      h1Top: "Маркетинг,",
+      h1Bottom: "който продава.",
+      sub: "Видеа • Реклами • Social • Стратегия — от един AI екип.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -26,7 +26,7 @@ export const startCopy = {
     formSection: {
       eyebrow: "ПОПЪЛНИ АНКЕТАТА",
       h2: "Получи персонализирана оферта",
-      h2Highlight: "за 24 часа",
+      h2Highlight: "до 24ч.",
       sub: "60 секунди за попълване. Безплатно. Без последици — само ясен план за бизнеса ти.",
       submitMicro: "✓ Отговор до 24 часа    ✓ Без ангажимент    ✓ 100% безплатно",
     },
@@ -140,10 +140,10 @@ export const startCopy = {
       ],
     },
     finalCta: {
-      eyebrow: "ВРЕМЕ Е ЗА СЛЕДВАЩОТО НИВО",
-      h2: "От идея до",
-      h2Highlight: "готови материали за 5 дни.",
-      sub: "Една анкета. Лична оферта до 24ч. Първи материали за 5 дни.",
+      eyebrow: "ВРЕМЕ Е",
+      h2: "Бранд, който се отличава —",
+      h2Highlight: "бизнес, който расте.",
+      sub: "Видео, реклами, social и стратегия. Всичко за големия резултат.",
       scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай разговор",
     },
@@ -165,9 +165,9 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "Next-gen marketing.",
-      h1Bottom: "Results in days, not months.",
-      sub: "Videos, ads, social — all from one AI team.",
+      h1Top: "Marketing",
+      h1Bottom: "that sells.",
+      sub: "Video • Ads • Social • Strategy — from one AI team.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
@@ -180,9 +180,9 @@ export const startCopy = {
       heading: "Brands that already trust us",
     },
     formSection: {
-      eyebrow: "FILL THE BRIEF",
+      eyebrow: "FILL THE SURVEY",
       h2: "Get a personalized proposal",
-      h2Highlight: "within 24 hours",
+      h2Highlight: "within 24h.",
       sub: "60 seconds to fill. Free. No strings — just a clear plan for your business.",
       submitMicro: "✓ Reply within 24h    ✓ No commitment    ✓ 100% free",
     },
@@ -296,10 +296,10 @@ export const startCopy = {
       ],
     },
     finalCta: {
-      eyebrow: "TIME FOR THE NEXT LEVEL",
-      h2: "From idea to",
-      h2Highlight: "delivered work in 5 days.",
-      sub: "One survey. Personal proposal in 24h. First materials in 5 days.",
+      eyebrow: "IT'S TIME",
+      h2: "A brand that stands out —",
+      h2Highlight: "a business that grows.",
+      sub: "Video, ads, social, and strategy. Everything for real growth.",
       scrollToForm: "Fill the survey →",
       orBook: "Or book a call",
     },
