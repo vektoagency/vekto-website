@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Маркетинг екип от ново поколение,",
-      h1Bottom: "създаден да продава.",
-      sub: "Брандови видеа, реклами и social съдържание — всичко от един AI-задвижван екип. Бързо. Гъвкаво. Без сложни договори.",
+      h1Top: "Маркетинг от ново поколение.",
+      h1Bottom: "Резултат за дни, не месеци.",
+      sub: "Видеа, реклами, social — всичко от един AI екип.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -79,7 +79,7 @@ export const startCopy = {
         {
           number: "03",
           title: "Първи материали за 5 дни",
-          body: "След старт — готово съдържание за публикуване (видеа, реклами, social). Без 3 месеца development като агенциите.",
+          body: "Готово съдържание за публикуване. Не седмици. Не месеци.",
         },
       ],
     },
@@ -143,7 +143,7 @@ export const startCopy = {
       eyebrow: "ВРЕМЕ Е ЗА СЛЕДВАЩОТО НИВО",
       h2: "От идея до",
       h2Highlight: "готови материали за 5 дни.",
-      sub: "Лична оферта до 24 часа. Първи материали в ръцете ти за 5 дни. Без месеци чакане. Без сложни договори. Само резултат.",
+      sub: "Една анкета. Лична оферта до 24ч. Първи материали за 5 дни.",
       scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай разговор",
     },
@@ -165,9 +165,9 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "A next-gen marketing team,",
-      h1Bottom: "built to sell.",
-      sub: "Branded videos, ads, and social content — all from one AI-powered team. Fast. Flexible. No complex contracts.",
+      h1Top: "Next-gen marketing.",
+      h1Bottom: "Results in days, not months.",
+      sub: "Videos, ads, social — all from one AI team.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
@@ -235,7 +235,7 @@ export const startCopy = {
         {
           number: "03",
           title: "First deliverables in 5 days",
-          body: "After kickoff — ready-to-publish content (videos, ads, social). No 3 months of development like the agencies.",
+          body: "Ready-to-publish content. Not weeks. Not months.",
         },
       ],
     },
@@ -299,7 +299,7 @@ export const startCopy = {
       eyebrow: "TIME FOR THE NEXT LEVEL",
       h2: "From idea to",
       h2Highlight: "delivered work in 5 days.",
-      sub: "Personal proposal within 24 hours. First materials in your hands in 5 days. No months of waiting. No complex contracts. Just results.",
+      sub: "One survey. Personal proposal in 24h. First materials in 5 days.",
       scrollToForm: "Fill the survey →",
       orBook: "Or book a call",
     },
