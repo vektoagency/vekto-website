@@ -10,7 +10,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
       h1Top: "Бранд без посока?",
-      h1Bottom: "Дай му вектор.",
+      h1Bottom: "Дай му {logo}р.",
       sub: "Стратегия • Креатив • Видео • Реклами • Social media — пълен маркетинг екип за бранда ти.",
       trustBadges: [
         "30+ доволни бранда",
@@ -167,7 +167,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
       h1Top: "Brand without direction?",
-      h1Bottom: "Give it a vector.",
+      h1Bottom: "Give it a {logo}r.",
       sub: "Strategy • Creative • Video • Ads • Social media — a full marketing team for your brand.",
       trustBadges: [
         "30+ happy brands",

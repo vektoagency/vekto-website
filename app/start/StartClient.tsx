@@ -238,13 +238,47 @@ export default function StartClient() {
                   <span className="text-white">{t.meta.h1Top}</span>
                   <br />
                   <span
-                    className="inline-block bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
-                      filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))",
-                    }}
+                    className="inline-flex items-baseline flex-wrap justify-center"
+                    style={{ filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))" }}
                   >
-                    {t.meta.h1Bottom}
+                    {(() => {
+                      const parts = t.meta.h1Bottom.split("{logo}");
+                      const gradient =
+                        "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)";
+                      return parts.map((part, i) => (
+                        <span key={i} className="inline-flex items-baseline">
+                          {part && (
+                            <span
+                              className="bg-clip-text text-transparent"
+                              style={{ backgroundImage: gradient }}
+                            >
+                              {part}
+                            </span>
+                          )}
+                          {i < parts.length - 1 && (
+                            <span
+                              aria-label="VEKTO"
+                              className="inline-block"
+                              style={{
+                                verticalAlign: "baseline",
+                                width: "4.2em",
+                                height: "0.7em",
+                                WebkitMaskImage: "url('/images/logo.webp')",
+                                WebkitMaskRepeat: "no-repeat",
+                                WebkitMaskSize: "contain",
+                                WebkitMaskPosition: "center bottom",
+                                maskImage: "url('/images/logo.webp')",
+                                maskRepeat: "no-repeat",
+                                maskSize: "contain",
+                                maskPosition: "center bottom",
+                                background: gradient,
+                                transform: "translateY(-0.02em)",
+                              }}
+                            />
+                          )}
+                        </span>
+                      ));
+                    })()}
                   </span>
                 </h1>
 
