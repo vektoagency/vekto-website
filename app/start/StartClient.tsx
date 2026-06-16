@@ -272,7 +272,7 @@ export default function StartClient() {
                 </div>
 
                 <h1
-                  className="text-[38px] sm:text-[60px] md:text-[80px] lg:text-[104px] font-extrabold leading-[1.0] tracking-[-0.035em] mb-5 md:mb-7 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  className="text-[28px] sm:text-[44px] md:text-[60px] lg:text-[80px] font-extrabold leading-[1.05] tracking-[-0.025em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
                 >
                   <span className="text-white">{t.meta.h1Top}</span>
@@ -344,6 +344,8 @@ export default function StartClient() {
                         src={c.logo}
                         alt={c.name}
                         draggable={false}
+                        loading="lazy"
+                        decoding="async"
                         className="h-7 md:h-9 w-auto object-contain"
                         style={{ filter: c.invert ? "brightness(0) invert(1)" : undefined }}
                       />
