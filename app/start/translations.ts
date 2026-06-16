@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Кинематографични видеа,",
-      h1Bottom: "създадени да продават.",
-      sub: "Брандирани филми и social съдържание — готови за 5 дни. Без месеци чакане. Без сложни договори.",
+      h1Top: "Маркетинг екип от ново поколение,",
+      h1Bottom: "създаден да продава.",
+      sub: "Брандови видеа, реклами и social съдържание — всичко от един AI-задвижван екип. Бързо. Гъвкаво. Без сложни договори.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -43,10 +43,11 @@ export const startCopy = {
       messagePh: "Опиши накратко бизнеса си + целите. Колкото повече детайли — толкова по-точна офертата.",
       contentType: "Какво съдържание ти трябва",
       contentTypeOptions: [
-        { id: "cinematic", label: "Кинематографичен филм" },
+        { id: "cinematic", label: "Брандови видеа / филми" },
         { id: "ugc", label: "UGC / Short-form" },
+        { id: "ads", label: "Управление на реклами" },
+        { id: "social", label: "Social media management" },
         { id: "product", label: "Продуктови визуализации" },
-        { id: "avatar", label: "AI аватар / Говорител" },
         { id: "unsure", label: "Не съм сигурен — препоръчайте" },
       ],
       budget: "Месечен бюджет",
@@ -77,8 +78,8 @@ export const startCopy = {
         },
         {
           number: "03",
-          title: "Първи видеа за 5 дни",
-          body: "След старт — готови материали за публикуване. Без 3 месеца development като агенциите.",
+          title: "Първи материали за 5 дни",
+          body: "След старт — готово съдържание за публикуване (видеа, реклами, social). Без 3 месеца development като агенциите.",
         },
       ],
     },
@@ -88,7 +89,7 @@ export const startCopy = {
       h2Highlight: "30+ бранда избраха VEKTO",
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Доволни бранда в портфолиото" },
-        { value: 1000, suffix: "+", decimals: 0, label: "Доставени видео проекта" },
+        { value: 1000, suffix: "+", decimals: 0, label: "Доставени проекта в портфолиото" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Средно ROAS от наши проекти" },
         { value: 6, suffix: "×", decimals: 0, label: "По-бързо от традиционните агенции" },
       ],
@@ -141,7 +142,7 @@ export const startCopy = {
     finalCta: {
       eyebrow: "ВРЕМЕ Е ЗА СЛЕДВАЩОТО НИВО",
       h2: "От идея до",
-      h2Highlight: "готови видеа за 5 дни.",
+      h2Highlight: "готови материали за 5 дни.",
       sub: "Лична оферта до 24 часа. Първи материали в ръцете ти за 5 дни. Без месеци чакане. Без сложни договори. Само резултат.",
       scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай разговор",
@@ -164,9 +165,9 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "Premium videos,",
-      h1Bottom: "engineered to convert.",
-      sub: "Branded films and social content from a new generation — delivered in 5 days. No months of waiting. No complex contracts.",
+      h1Top: "A next-gen marketing team,",
+      h1Bottom: "built to sell.",
+      sub: "Branded videos, ads, and social content — all from one AI-powered team. Fast. Flexible. No complex contracts.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
@@ -198,10 +199,11 @@ export const startCopy = {
       messagePh: "Briefly describe your business + goals. The more details — the more accurate the proposal.",
       contentType: "What content do you need",
       contentTypeOptions: [
-        { id: "cinematic", label: "Cinematic brand film" },
+        { id: "cinematic", label: "Brand videos / films" },
         { id: "ugc", label: "UGC / Short-form" },
+        { id: "ads", label: "Paid ads management" },
+        { id: "social", label: "Social media management" },
         { id: "product", label: "Product visuals" },
-        { id: "avatar", label: "AI Avatar / Spokesperson" },
         { id: "unsure", label: "Not sure — recommend" },
       ],
       budget: "Monthly budget",
@@ -232,8 +234,8 @@ export const startCopy = {
         },
         {
           number: "03",
-          title: "First videos in 5 days",
-          body: "After kickoff — ready-to-publish materials. No 3 months of development like the agencies.",
+          title: "First deliverables in 5 days",
+          body: "After kickoff — ready-to-publish content (videos, ads, social). No 3 months of development like the agencies.",
         },
       ],
     },
@@ -243,7 +245,7 @@ export const startCopy = {
       h2Highlight: "30+ brands chose VEKTO",
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Happy brands in our portfolio" },
-        { value: 1000, suffix: "+", decimals: 0, label: "Delivered video projects" },
+        { value: 1000, suffix: "+", decimals: 0, label: "Delivered projects in our portfolio" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS across our projects" },
         { value: 6, suffix: "×", decimals: 0, label: "Faster than traditional agencies" },
       ],
@@ -296,7 +298,7 @@ export const startCopy = {
     finalCta: {
       eyebrow: "TIME FOR THE NEXT LEVEL",
       h2: "From idea to",
-      h2Highlight: "delivered videos in 5 days.",
+      h2Highlight: "delivered work in 5 days.",
       sub: "Personal proposal within 24 hours. First materials in your hands in 5 days. No months of waiting. No complex contracts. Just results.",
       scrollToForm: "Fill the survey →",
       orBook: "Or book a call",
