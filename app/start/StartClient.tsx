@@ -216,7 +216,7 @@ export default function StartClient() {
                 className="absolute -top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full pointer-events-none opacity-[0.18]"
                 style={{ background: "radial-gradient(circle, #c8ff00 0%, transparent 65%)" }}
               />
-              <div className="relative max-w-4xl mx-auto px-5 md:px-8 pt-10 md:pt-20 pb-8 md:pb-14 text-center">
+              <div className="relative max-w-4xl mx-auto px-5 md:px-8 pt-7 md:pt-16 pb-6 md:pb-10 text-center">
                 {/* Pulsing eyebrow chip */}
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
@@ -249,19 +249,19 @@ export default function StartClient() {
                 </h1>
 
                 <p
-                  className="text-[15px] md:text-xl text-[#a8a8a8] leading-relaxed max-w-[640px] mx-auto mb-7 md:mb-9 text-balance animate-[startFade_0.6s_0.1s_ease-out_both]"
+                  className="text-[15px] md:text-xl text-[#a8a8a8] leading-relaxed max-w-[640px] mx-auto mb-5 md:mb-7 text-balance animate-[startFade_0.6s_0.1s_ease-out_both]"
                 >
                   {t.meta.sub}
                 </p>
 
-                {/* Trust badges row */}
-                <div className="flex flex-wrap items-center justify-center gap-x-5 md:gap-x-8 gap-y-3 mb-8 md:mb-10 animate-[startFade_0.65s_0.15s_ease-out_both]">
+                {/* Trust badges row — hard numbers + safety claim */}
+                <div className="flex flex-wrap items-center justify-center gap-x-4 md:gap-x-7 gap-y-2 mb-6 md:mb-8 animate-[startFade_0.65s_0.15s_ease-out_both]">
                   {t.meta.trustBadges.map((b) => (
-                    <div key={b} className="flex items-center gap-2">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                    <div key={b} className="flex items-center gap-1.5">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
-                      <span className="text-[12px] md:text-sm text-[#cfcbc4]">{b}</span>
+                      <span className="text-[12.5px] md:text-sm text-[#cfcbc4] font-medium">{b}</span>
                     </div>
                   ))}
                 </div>
@@ -275,11 +275,14 @@ export default function StartClient() {
                   <span>{t.cta.submit}</span>
                   <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">↓</span>
                 </button>
+                <p className="mt-3 text-[11px] md:text-[12px] text-[#888] tracking-wide animate-[startFade_0.75s_0.25s_ease-out_both]">
+                  {t.meta.ctaMicro}
+                </p>
               </div>
             </section>
 
             {/* ─────────────  SOCIAL PROOF MARQUEE  ───────────── */}
-            <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-6 md:py-8 relative overflow-hidden">
+            <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-4 md:py-6 relative overflow-hidden">
               <p className="text-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/85 mb-5 md:mb-6">
                 {t.socialProof.heading}
               </p>
@@ -312,7 +315,7 @@ export default function StartClient() {
 
             {/* ─────────────  FORM SECTION (the conversion point)  ───────────── */}
             <section ref={formRef} className="relative scroll-mt-20">
-              <div className="max-w-2xl mx-auto px-5 md:px-8 py-12 md:py-20">
+              <div className="max-w-2xl mx-auto px-5 md:px-8 py-8 md:py-14">
                 <div data-animate className="reveal text-center mb-8 md:mb-10">
                   <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
                     {t.formSection.eyebrow}

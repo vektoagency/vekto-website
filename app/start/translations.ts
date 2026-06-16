@@ -9,14 +9,15 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Маркетинг агенция",
-      h1Bottom: "със собствен AI отдел.",
-      sub: "Видеа • Реклами • Social • Стратегия — за бизнеси, които искат растеж.",
+      h1Top: "От незабележим",
+      h1Bottom: "до незабравим.",
+      sub: "Видеа • Реклами • Social • Стратегия — задвижвани от собствен AI отдел.",
       trustBadges: [
         "30+ доволни бранда",
-        "Отговор до 24ч",
+        "4.8× средно ROAS",
         "Без ангажимент",
       ],
+      ctaMicro: "60 секунди · безплатно · лична оферта до 24ч",
       langToggle: "EN",
       home: "← Към сайта",
     },
@@ -28,7 +29,7 @@ export const startCopy = {
       h2: "Получи персонализирана оферта",
       h2Highlight: "до 24ч.",
       sub: "60 секунди за попълване. Безплатно. Без последици — само ясен план за бизнеса ти.",
-      submitMicro: "✓ Отговор до 24 часа    ✓ Без ангажимент    ✓ 100% безплатно",
+      submitMicro: "✓ Отговор до 24ч    ✓ Без ангажимент    ✓ 100% безплатно",
     },
     fields: {
       name: "Име",
@@ -165,14 +166,15 @@ export const startCopy = {
   en: {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
-      h1Top: "A marketing agency",
-      h1Bottom: "with in-house AI.",
-      sub: "Video • Ads • Social • Strategy — for businesses that want growth.",
+      h1Top: "From invisible",
+      h1Bottom: "to unforgettable.",
+      sub: "Video • Ads • Social • Strategy — powered by an in-house AI unit.",
       trustBadges: [
         "30+ happy brands",
-        "Reply within 24h",
+        "4.8× average ROAS",
         "No commitment",
       ],
+      ctaMicro: "60 seconds · free · personal proposal within 24h",
       langToggle: "БГ",
       home: "← Back to site",
     },
