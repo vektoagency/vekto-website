@@ -497,18 +497,18 @@ export default function StartClient() {
                     </span>
                   </h2>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
                   {t.stats.items.map((s) => (
                     <div
                       key={s.label}
                       data-animate
-                      className="reveal text-center p-5 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d]"
+                      className="reveal text-center px-3 py-5 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d]"
                     >
-                      <div className="font-extrabold text-[#c8ff00] tabular-nums tracking-tight text-4xl md:text-6xl leading-none mb-2 md:mb-3">
+                      <div className="font-extrabold text-[#c8ff00] tabular-nums tracking-tight text-[40px] md:text-6xl leading-none mb-2 md:mb-3">
                         <CountUp target={s.value} />
                         <span>{s.suffix}</span>
                       </div>
-                      <p className="text-[12px] md:text-[13.5px] text-[#a0a0a0] leading-snug">
+                      <p className="text-[11.5px] md:text-[13.5px] text-[#a0a0a0] leading-snug text-balance">
                         {s.label}
                       </p>
                     </div>

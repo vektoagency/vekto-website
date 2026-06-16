@@ -8,10 +8,10 @@ export type Lang = "bg" | "en";
 export const startCopy = {
   bg: {
     meta: {
-      eyebrow: "VEKTO · 60-СЕКУНДЕН БРИФ",
-      h1Top: "AI видеа за бизнеса ти.",
-      h1Bottom: "За 5 дни. Не за 5 седмици.",
-      sub: "Кинематографични филми и social видеа за €1500-3000/мес. Без €10K retainer. Без 3 месеца чакане.",
+      eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
+      h1Top: "Най-добрите AI видеа",
+      h1Bottom: "за бизнеса ти.",
+      sub: "Кинематографични филми и social видеа, готови за 5 дни. От €1500/мес. Без €10K retainer и 3 месеца чакане.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -24,7 +24,7 @@ export const startCopy = {
       heading: "Бизнеси, които вече ни се довериха",
     },
     formSection: {
-      eyebrow: "ПОПЪЛНИ БРИФА",
+      eyebrow: "ПОПЪЛНИ АНКЕТАТА",
       h2: "Получи персонализирана оферта",
       h2Highlight: "за 24 часа",
       sub: "60 секунди за попълване. Безплатно. Без последици — само ясен план за бизнеса ти.",
@@ -67,7 +67,7 @@ export const startCopy = {
       steps: [
         {
           number: "01",
-          title: "Брифче за 60 секунди",
+          title: "Анкета за 60 секунди",
           body: "Кажи ни за бизнеса и бюджета си. Колкото повече детайли — толкова по-точна офертата.",
         },
         {
@@ -95,8 +95,8 @@ export const startCopy = {
     },
     compare: {
       eyebrow: "СРАВНЕНИЕ",
-      h2: "Защо",
-      h2Highlight: "не и стандартна агенция?",
+      h2: "Защо не",
+      h2Highlight: "стандартна агенция?",
       headers: ["Параметър", "VEKTO", "Агенция", "In-house"],
       rows: [
         ["Време за първа доставка", "3-5 дни", "3-4 седмици", "1-2 седмици"],
@@ -142,13 +142,13 @@ export const startCopy = {
       eyebrow: "ГОТОВ ДА ЗАПОЧНЕМ?",
       h2: "Първите ти видеа —",
       h2Highlight: "за 5 дни",
-      sub: "60 секунди да попълниш брифа. 24 часа да получиш персонализирана оферта. 5 дни до готови видеа.",
-      scrollToForm: "Попълни брифа →",
+      sub: "60 секунди да попълниш анкетата. 24 часа да получиш персонализирана оферта. 5 дни до готови видеа.",
+      scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай 30-минутен разговор",
     },
     stickyMobile: {
       label: "Започни",
-      cta: "Попълни брифа →",
+      cta: "Попълни анкетата →",
     },
     success: {
       title: "Брифът е получен.",
@@ -163,10 +163,10 @@ export const startCopy = {
   },
   en: {
     meta: {
-      eyebrow: "VEKTO · 60-SECOND BRIEF",
-      h1Top: "AI videos for your business.",
-      h1Bottom: "In 5 days. Not 5 weeks.",
-      sub: "Cinematic films and social videos for €1500-3000/mo. No €10K retainer. No 3 months of waiting.",
+      eyebrow: "VEKTO · 60-SECOND SURVEY",
+      h1Top: "The best AI videos",
+      h1Bottom: "for your business.",
+      sub: "Cinematic films and social videos, ready in 5 days. From €1500/mo. No €10K retainer or 3-month waits.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
