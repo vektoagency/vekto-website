@@ -9,9 +9,9 @@ export const startCopy = {
   bg: {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
-      h1Top: "Премиум видеа,",
+      h1Top: "Кинематографични видеа,",
       h1Bottom: "създадени да продават.",
-      sub: "Кинематографични филми и social видеа от ново поколение — готови за 5 дни. От €1500/мес. Без €10K retainer и 3 месеца чакане.",
+      sub: "Брандирани филми и social съдържание — готови за 5 дни. Без месеци чакане. Без сложни договори.",
       trustBadges: [
         "30+ доволни бранда",
         "Отговор до 24ч",
@@ -89,7 +89,7 @@ export const startCopy = {
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Доволни бранда в портфолиото" },
         { value: 1000, suffix: "+", decimals: 0, label: "Доставени видео проекта" },
-        { value: 4.8, suffix: "×", decimals: 1, label: "Средно ROAS от наши реклами" },
+        { value: 4.8, suffix: "×", decimals: 1, label: "Средно ROAS от наши проекти" },
         { value: 6, suffix: "×", decimals: 0, label: "По-бързо от традиционните агенции" },
       ],
     },
@@ -142,7 +142,7 @@ export const startCopy = {
       eyebrow: "ВРЕМЕ Е ЗА СЛЕДВАЩОТО НИВО",
       h2: "От идея до",
       h2Highlight: "готови видеа за 5 дни.",
-      sub: "Лична оферта до 24 часа. Първи материали в ръцете ти за 5 дни. Без месеци чакане, без €10K retainer, без сложни договори — само резултат.",
+      sub: "Лична оферта до 24 часа. Първи материали в ръцете ти за 5 дни. Без месеци чакане. Без сложни договори. Само резултат.",
       scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай разговор",
     },
@@ -166,7 +166,7 @@ export const startCopy = {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
       h1Top: "Premium videos,",
       h1Bottom: "engineered to convert.",
-      sub: "Next-gen cinematic films and social videos — delivered in 5 days. From €1500/mo. No €10K retainer or 3-month waits.",
+      sub: "Branded films and social content from a new generation — delivered in 5 days. No months of waiting. No complex contracts.",
       trustBadges: [
         "30+ happy brands",
         "Reply within 24h",
@@ -244,7 +244,7 @@ export const startCopy = {
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Happy brands in our portfolio" },
         { value: 1000, suffix: "+", decimals: 0, label: "Delivered video projects" },
-        { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS on our ads" },
+        { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS across our projects" },
         { value: 6, suffix: "×", decimals: 0, label: "Faster than traditional agencies" },
       ],
     },
@@ -297,7 +297,7 @@ export const startCopy = {
       eyebrow: "TIME FOR THE NEXT LEVEL",
       h2: "From idea to",
       h2Highlight: "delivered videos in 5 days.",
-      sub: "Personal proposal within 24 hours. First materials in your hands in 5 days. No months of waiting, no €10K retainer, no complex contracts — just results.",
+      sub: "Personal proposal within 24 hours. First materials in your hands in 5 days. No months of waiting. No complex contracts. Just results.",
       scrollToForm: "Fill the survey →",
       orBook: "Or book a call",
     },
