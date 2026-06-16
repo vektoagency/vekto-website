@@ -216,6 +216,46 @@ export default function StartClient() {
                 className="absolute -top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full pointer-events-none opacity-[0.18]"
                 style={{ background: "radial-gradient(circle, #c8ff00 0%, transparent 65%)" }}
               />
+              {/* Animated vector field — diagonal arrows stagger-draw on
+                  load, literally rendering 'vectors' behind the headline.
+                  Brand-coherent (agency name = vector), designer polish
+                  (stroke-dashoffset draw-in is high-end web craft). */}
+              <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+                <svg
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 1400 800"
+                  preserveAspectRatio="xMidYMid slice"
+                >
+                  <defs>
+                    <marker
+                      id="vk-arrow"
+                      viewBox="0 0 10 10"
+                      refX="9"
+                      refY="5"
+                      markerWidth="5"
+                      markerHeight="5"
+                      orient="auto"
+                    >
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" opacity="0.55" />
+                    </marker>
+                  </defs>
+                  <g
+                    className="vector-field"
+                    stroke="#c8ff00"
+                    strokeWidth="1.3"
+                    fill="none"
+                    strokeLinecap="round"
+                    markerEnd="url(#vk-arrow)"
+                  >
+                    <line x1="-30" y1="720" x2="290" y2="290" pathLength="100" />
+                    <line x1="190" y1="820" x2="510" y2="390" pathLength="100" />
+                    <line x1="390" y1="730" x2="710" y2="300" pathLength="100" />
+                    <line x1="610" y1="860" x2="930" y2="430" pathLength="100" />
+                    <line x1="820" y1="730" x2="1140" y2="300" pathLength="100" />
+                    <line x1="1050" y1="830" x2="1370" y2="410" pathLength="100" />
+                  </g>
+                </svg>
+              </div>
               <div className="relative max-w-4xl mx-auto px-5 md:px-8 pt-7 md:pt-16 pb-6 md:pb-10 text-center">
                 {/* Pulsing eyebrow chip */}
                 <div
@@ -238,47 +278,13 @@ export default function StartClient() {
                   <span className="text-white">{t.meta.h1Top}</span>
                   <br />
                   <span
-                    className="inline-flex items-baseline flex-wrap justify-center"
-                    style={{ filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))" }}
+                    className="inline-block bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
+                      filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))",
+                    }}
                   >
-                    {(() => {
-                      const parts = t.meta.h1Bottom.split("{logo}");
-                      const gradient =
-                        "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)";
-                      return parts.map((part, i) => (
-                        <span key={i} className="inline-flex items-baseline">
-                          {part && (
-                            <span
-                              className="bg-clip-text text-transparent"
-                              style={{ backgroundImage: gradient }}
-                            >
-                              {part}
-                            </span>
-                          )}
-                          {i < parts.length - 1 && (
-                            <span
-                              aria-label="VEKTO"
-                              className="inline-block"
-                              style={{
-                                verticalAlign: "baseline",
-                                width: "4.2em",
-                                height: "0.7em",
-                                WebkitMaskImage: "url('/images/logo.webp')",
-                                WebkitMaskRepeat: "no-repeat",
-                                WebkitMaskSize: "contain",
-                                WebkitMaskPosition: "center bottom",
-                                maskImage: "url('/images/logo.webp')",
-                                maskRepeat: "no-repeat",
-                                maskSize: "contain",
-                                maskPosition: "center bottom",
-                                background: gradient,
-                                transform: "translateY(-0.02em)",
-                              }}
-                            />
-                          )}
-                        </span>
-                      ));
-                    })()}
+                    {t.meta.h1Bottom}
                   </span>
                 </h1>
 
@@ -765,6 +771,30 @@ export default function StartClient() {
         @keyframes startFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        /* Vector field hero bg — stagger-draw diagonal arrows. The
+           literal 'vectors' behind 'Дай му вектор.' wordplay. */
+        .vector-field line {
+          stroke-dasharray: 100;
+          stroke-dashoffset: 100;
+          opacity: 0;
+          animation: vector-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .vector-field line:nth-child(1) { animation-delay: 0.25s; }
+        .vector-field line:nth-child(2) { animation-delay: 0.40s; }
+        .vector-field line:nth-child(3) { animation-delay: 0.55s; }
+        .vector-field line:nth-child(4) { animation-delay: 0.70s; }
+        .vector-field line:nth-child(5) { animation-delay: 0.85s; }
+        .vector-field line:nth-child(6) { animation-delay: 1.00s; }
+        @keyframes vector-draw {
+          to { stroke-dashoffset: 0; opacity: 0.18; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .vector-field line {
+            stroke-dashoffset: 0;
+            opacity: 0.18;
+            animation: none;
+          }
         }
         /* Scroll-triggered reveal — fade up when entering viewport */
         [data-animate].reveal {
