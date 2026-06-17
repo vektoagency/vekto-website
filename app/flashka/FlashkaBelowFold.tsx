@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { flashkaCopy } from "./translations";
+import { flashkaCopy, type Lang } from "./translations";
 
-type Props = { scrollToForm: () => void };
+type Props = { lang: Lang; scrollToForm: () => void };
 
-export default function FlashkaBelowFold({ scrollToForm }: Props) {
-  const t = flashkaCopy;
+export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
+  const t = flashkaCopy[lang];
 
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>("[data-animate-fk]");

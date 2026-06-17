@@ -4,7 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
-import { flashkaCopy } from "./translations";
+import { flashkaCopy, type Lang } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
 import { trackEvent } from "../components/MetaPixel";
 import FlashkaDrive from "./FlashkaDrive";
@@ -15,7 +15,11 @@ const FlashkaBelowFold = dynamic(() => import("./FlashkaBelowFold"), {
   loading: () => null,
 });
 
+const LANG_KEY = "vekto-flashka-lang";
+
 export default function FlashkaClient() {
+  const [lang, setLang] = useState<Lang>("bg");
+  const [hydrated, setHydrated] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [brand, setBrand] = useState("");
@@ -30,9 +34,13 @@ export default function FlashkaClient() {
   const formRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const t = flashkaCopy;
+  const t = flashkaCopy[lang];
 
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem(LANG_KEY);
+      if (saved === "bg" || saved === "en") setLang(saved);
+    } catch {}
     try {
       const params = new URLSearchParams(window.location.search);
       setUtm({
@@ -44,7 +52,13 @@ export default function FlashkaClient() {
         referrer: document.referrer || undefined,
       });
     } catch {}
+    setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try { localStorage.setItem(LANG_KEY, lang); } catch {}
+  }, [lang, hydrated]);
 
   useEffect(() => {
     const initCal = async () => {
@@ -95,7 +109,7 @@ export default function FlashkaClient() {
         ? crypto.randomUUID()
         : `flashka_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const res = await submitStartLead({
-      lang: "bg",
+      lang,
       source: "flashka",
       name, email, brand,
       phone: "",
@@ -140,9 +154,13 @@ export default function FlashkaClient() {
           >
             {t.meta.home}
           </Link>
-          <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] border border-[#c8ff00]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm">
-            VEKTO
-          </span>
+          <button
+            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] border border-[#c8ff00]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#c8ff00]/10 transition-colors"
+            aria-label="Toggle language"
+          >
+            {t.meta.langToggle}
+          </button>
         </div>
       </header>
 
@@ -321,7 +339,7 @@ export default function FlashkaClient() {
               </div>
             </section>
 
-            <FlashkaBelowFold scrollToForm={scrollToForm} />
+            <FlashkaBelowFold lang={lang} scrollToForm={scrollToForm} />
 
             {/* Sticky mobile CTA */}
             <div
