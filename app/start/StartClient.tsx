@@ -283,7 +283,7 @@ export default function StartClient() {
                   className="text-[28px] sm:text-[44px] md:text-[60px] lg:text-[80px] font-extrabold leading-[1.05] tracking-[-0.025em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
                 >
-                  <span className="text-white">{t.meta.h1Top}</span>
+                  <span className="hero-h1-outline">{t.meta.h1Top}</span>
                   <br />
                   <span
                     className="inline-block bg-clip-text text-transparent"
@@ -775,6 +775,37 @@ export default function StartClient() {
         @keyframes startFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        /* Hero h1Top — outlined letters (transparent fill, white stroke).
+           Differentiates the hero typography from the form section h2
+           which uses solid white. Visual story: faded outline = the
+           negative truth; lime solid below = the resolution. */
+        .hero-h1-outline {
+          color: transparent;
+          -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.9);
+          text-stroke: 1.4px rgba(255, 255, 255, 0.9);
+          paint-order: stroke fill;
+        }
+        @media (min-width: 768px) {
+          .hero-h1-outline {
+            -webkit-text-stroke-width: 1.8px;
+            text-stroke-width: 1.8px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-h1-outline {
+            -webkit-text-stroke-width: 2.2px;
+            text-stroke-width: 2.2px;
+          }
+        }
+        /* Fallback for browsers without text-stroke support (older FF).
+           Falls back to plain white so the headline still reads. */
+        @supports not ((-webkit-text-stroke: 1px white) or (text-stroke: 1px white)) {
+          .hero-h1-outline {
+            color: rgba(255, 255, 255, 0.92);
+            -webkit-text-stroke: 0;
+            text-stroke: 0;
+          }
         }
         /* Vector field hero bg — stagger-draw diagonal arrows. The
            literal 'vectors' behind 'Дай му вектор.' wordplay. */
