@@ -15,21 +15,14 @@ export type Lang = "bg" | "en";
 export const flashkaCopy = {
   bg: {
     meta: {
-      eyebrow: "VEKTO · ЗА 5-ТЕ НОВИ БРАНДА В БГ",
+      eyebrow: "VEKTO · 5 СПОТА · ВЕЧЕ В БЪЛГАРИЯ",
       h1Top: "Кодът е в",
       h1Bottom: "30+ успешни бранда.",
       sub: "Цялата ни оперативна система — на тази флашка. Прилагаме я с 30+ бранда в БГ и САЩ. Сега я отваряме за нови 5 бизнеса.",
       ctaPrimary: "Кандидатствай",
-      ctaMicro: "60 секунди · кандидатстване · отговор до 24ч",
+      ctaMicroItems: ["60 секунди", "безплатно", "отговор до 24ч"] as const,
       home: "← Към сайта",
       langToggle: "EN",
-    },
-
-    frame: {
-      eyebrow: "ВАЖНО",
-      h2: "Това е нашата оперативна система.",
-      h2Highlight: "Структурата на работата, която работи.",
-      body: "Прилагаме я с 30+ клиента в БГ и САЩ. Когато станеш такъв, екипът ни я пуска в твоя бизнес.",
     },
 
     inside: {
@@ -94,8 +87,8 @@ export const flashkaCopy = {
 
     formSection: {
       eyebrow: "КАНДИДАТСТВАЙ",
-      h2: "60 секунди.",
-      h2Highlight: "Отговор до 24 часа.",
+      h2: "Отговор",
+      h2Highlight: "до 24 часа.",
       sub: "Преглеждаме всяка кандидатура лично. Пишем ти само ако има match.",
       submitMicro: "✓ Безплатна кандидатура   ✓ Отговор до 24ч   ✓ Без ангажимент",
     },
@@ -150,11 +143,11 @@ export const flashkaCopy = {
     },
 
     finalCta: {
-      eyebrow: "ВРЕМЕ ЗА РЕШЕНИЕ",
-      h2: "Една анкета.",
-      h2Highlight: "Едно решение.",
-      sub: "60 секунди. До 24 часа имаш отговор — да или не, без хитрости.",
-      scrollToForm: "Кандидатствай →",
+      eyebrow: "СПОТОВЕТЕ СВЪРШВАТ",
+      h2: "Следващият бранд с $10M+ оборот",
+      h2Highlight: "може да си ти.",
+      sub: "Остават 5 спота. Една анкета. До 24 часа имаш отговор — да или не, без хитрости.",
+      scrollToForm: "Кандидатствай сега →",
       orBook: "Или резервирай разговор",
     },
 
@@ -177,21 +170,14 @@ export const flashkaCopy = {
 
   en: {
     meta: {
-      eyebrow: "VEKTO · FOR THE NEXT 5 BRANDS IN BG",
+      eyebrow: "VEKTO · 5 SPOTS · NOW IN BULGARIA",
       h1Top: "The code is in",
       h1Bottom: "30+ successful brands.",
       sub: "Our entire operating system — on this flash drive. We apply it with 30+ brands in BG and US. Now opening it for 5 new businesses.",
       ctaPrimary: "Apply",
-      ctaMicro: "60 seconds · application · reply within 24h",
+      ctaMicroItems: ["60 seconds", "free", "reply within 24h"] as const,
       home: "← Back to site",
       langToggle: "БГ",
-    },
-
-    frame: {
-      eyebrow: "IMPORTANT",
-      h2: "This is our operating system.",
-      h2Highlight: "The work structure that works.",
-      body: "We apply it with 30+ clients in BG and US. When you become one, our team puts it in your business.",
     },
 
     inside: {
@@ -256,8 +242,8 @@ export const flashkaCopy = {
 
     formSection: {
       eyebrow: "APPLY",
-      h2: "60 seconds.",
-      h2Highlight: "Reply within 24 hours.",
+      h2: "Reply",
+      h2Highlight: "within 24 hours.",
       sub: "We review every application personally. We only write back if there's a fit.",
       submitMicro: "✓ Free application   ✓ Reply within 24h   ✓ No commitment",
     },
@@ -312,11 +298,11 @@ export const flashkaCopy = {
     },
 
     finalCta: {
-      eyebrow: "TIME TO DECIDE",
-      h2: "One application.",
-      h2Highlight: "One decision.",
-      sub: "60 seconds. Within 24 hours you have an answer — yes or no, no tricks.",
-      scrollToForm: "Apply →",
+      eyebrow: "SPOTS ARE FILLING",
+      h2: "The next brand with $10M+ revenue",
+      h2Highlight: "could be you.",
+      sub: "5 spots left. One application. Within 24 hours you have an answer — yes or no, no tricks.",
+      scrollToForm: "Apply now →",
       orBook: "Or book a call",
     },
 

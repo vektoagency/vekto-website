@@ -215,9 +215,29 @@ export default function FlashkaClient() {
                   <span>{t.meta.ctaPrimary}</span>
                   <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
                 </button>
-                <p className="mt-3 text-[11px] md:text-[12px] text-[#888] tracking-wide animate-[startFade_0.75s_0.25s_ease-out_both]">
-                  {t.meta.ctaMicro}
-                </p>
+                {/* CTA micro chips — three lime-check trust beats
+                    instead of dot-separated muted text. More designed,
+                    more readable, scans as social-proof badges. */}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 animate-[startFade_0.75s_0.25s_ease-out_both]">
+                  {t.meta.ctaMicroItems.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center gap-1.5 text-[11.5px] md:text-[12.5px] text-[#cfcbc4]"
+                    >
+                      <svg
+                        width="11" height="11"
+                        viewBox="0 0 24 24"
+                        fill="none" stroke="#c8ff00"
+                        strokeWidth="3"
+                        strokeLinecap="round" strokeLinejoin="round"
+                        className="shrink-0"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>{item}</span>
+                    </span>
+                  ))}
+                </div>
 
                 {/* Embedded USB drive — pure inline SVG plugged into a
                     'port milled into the page'. LED pulses lime. This
@@ -226,29 +246,6 @@ export default function FlashkaClient() {
                     toward the form section below. Same composition on
                     mobile (uses clamp(), no media queries). */}
                 <FlashkaDrive />
-              </div>
-            </section>
-
-            {/* ─────────────  FRAME (pattern interrupt)  ───────────── */}
-            <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-12 md:py-16">
-              <div className="max-w-3xl mx-auto px-5 md:px-8 text-center">
-                <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-4">
-                  {t.frame.eyebrow}
-                </p>
-                <h2 className="text-[28px] sm:text-4xl md:text-[44px] font-extrabold leading-[1.08] tracking-[-0.02em] mb-5 md:mb-6 text-balance">
-                  <span className="text-white">{t.frame.h2}</span>{" "}
-                  <span
-                    className="bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
-                    }}
-                  >
-                    {t.frame.h2Highlight}
-                  </span>
-                </h2>
-                <p className="text-[15px] md:text-[18px] text-[#a8a8a8] leading-relaxed max-w-[640px] mx-auto text-balance">
-                  {t.frame.body}
-                </p>
               </div>
             </section>
 
