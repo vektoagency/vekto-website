@@ -69,7 +69,7 @@ export const flashkaCopy = {
       h2Highlight: "БГ и САЩ. Реални числа.",
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Бранда я ползват в БГ и САЩ" },
-        { value: 10, suffix: "M+", decimals: 0, label: "$ генериран оборот общо" },
+        { value: 3, suffix: "M+", decimals: 0, label: "$ генериран оборот за различни брандове" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Среден ROAS от наши кампании" },
         { value: 5, suffix: "", decimals: 0, label: "Свободни спота за нови бизнеси" },
       ],
@@ -155,7 +155,7 @@ export const flashkaCopy = {
     finalCta: {
       eyebrow: "СПОТОВЕТЕ СВЪРШВАТ",
       h2: "Следващият бранд с 4.8× ROAS",
-      h2Highlight: "може да си ти.",
+      h2Highlight: "може да е вашият.",
       sub: "Остават 5 спота. Една анкета. До 24 часа имаш отговор — да или не, без хитрости.",
       scrollToForm: "Кандидатствай сега →",
       orBook: "Или резервирай разговор",
@@ -234,7 +234,7 @@ export const flashkaCopy = {
       h2Highlight: "BG and US. Real numbers.",
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Brands using it in BG and US" },
-        { value: 10, suffix: "M+", decimals: 0, label: "$ total revenue generated" },
+        { value: 3, suffix: "M+", decimals: 0, label: "$ revenue generated across brands" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS on our campaigns" },
         { value: 5, suffix: "", decimals: 0, label: "Spots open for new businesses" },
       ],

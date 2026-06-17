@@ -418,23 +418,24 @@ export default function FlashkaClient() {
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         .flashka-drive-wrap {
-          width: clamp(220px, 30vw, 320px);
-          margin: clamp(18px, 3.5vh, 32px) auto clamp(6px, 2vh, 16px);
+          /* Smaller — reads as a real product, not a decorative blob */
+          width: clamp(180px, 22vw, 240px);
+          margin: clamp(16px, 3vh, 28px) auto clamp(4px, 1.5vh, 12px);
           animation: flashkaInsert 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .flashka-drive-wrap svg {
           width: 100%;
           height: auto;
-          /* Tight viewBox (0 28 380 102) crops empty SVG space — drive
-             content occupies y=36-125 so a 102-unit window centers it
-             cleanly. aspect-ratio kept in sync with viewBox so the SVG
-             can't collapse in browsers that mis-compute height:auto +
-             width:100% on inline SVG. */
           aspect-ratio: 380 / 102;
           display: block;
+          /* Layered shadow stack: (1) tight ground shadow anchors the
+             drive to the page surface, (2) larger soft body shadow for
+             depth, (3) lime halo for the powered-on bloom. The first
+             one is the most important for the 'real product' feel. */
           filter:
-            drop-shadow(0 18px 28px rgba(0, 0, 0, 0.7))
-            drop-shadow(0 0 32px rgba(200, 255, 0, 0.2));
+            drop-shadow(0 4px 6px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 16px 28px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 28px rgba(200, 255, 0, 0.24));
         }
         .flashka-drive-led {
           transform-origin: center;
