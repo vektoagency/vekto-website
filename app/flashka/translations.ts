@@ -25,6 +25,12 @@ export const flashkaCopy = {
       langToggle: "EN",
     },
 
+    clients: {
+      eyebrow: "ИМ СЕ ДОВЕРИХА",
+      h2: "Бизнеси, които работят",
+      h2Highlight: "с нашата система.",
+    },
+
     about: {
       eyebrow: "ЗАД ВСИЧКО",
       h2: "За VEKTO.",
@@ -188,6 +194,12 @@ export const flashkaCopy = {
       ctaMicroItems: ["60 seconds", "free", "reply within 24h"] as const,
       home: "← Back to site",
       langToggle: "БГ",
+    },
+
+    clients: {
+      eyebrow: "TRUSTED BY",
+      h2: "Businesses running",
+      h2Highlight: "on our system.",
     },
 
     about: {

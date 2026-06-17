@@ -3,6 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 import { flashkaCopy, type Lang } from "./translations";
 
+// Brand logos for the client trust strip — mirrors the /start roster
+// so the same brand world reads as 'these are the businesses on the
+// system the page is selling'. Order picked so visually-loud brands
+// alternate with quieter ones.
+const FLASHKA_CLIENTS = [
+  { name: "DUSQ", logo: "/images/logo-dusq.webp", invert: true },
+  { name: "PARFEN", logo: "/images/logo-parfen.webp", invert: true },
+  { name: "MEN'S CARE", logo: "/images/logo-menscare.png" },
+  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true },
+  { name: "ANOMALY", logo: "/images/logo-anomaly.webp", invert: true },
+  { name: "ETHAN'S", logo: "/images/logo-ethans.webp", invert: true },
+  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp" },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.webp" },
+  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true },
+  { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
+  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp" },
+  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp" },
+];
+
 // Pre-form sections (the EDUCATIONAL leg of the funnel for cold paid
 // traffic). Visitor flow: hero → here (proof + about + inside +
 // qualify) → form. Order matches direct-response funnel best practice:
@@ -70,6 +89,59 @@ export default function FlashkaBelowFold({ lang }: Props) {
                 <p className="text-[11.5px] md:text-[13.5px] text-[#a0a0a0] leading-snug text-balance">
                   {s.label}
                 </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────  CLIENTS (trust strip after the stats)  ─────────
+          Sits between the Proof stats and the About explainer. The
+          stats anchor numerically; this anchors visually. Logos run
+          as a slow horizontal marquee (gradient mask on edges, fade
+          to bg). Same brand world as /start so visitors who saw the
+          home page see continuity. */}
+      <section className="border-b border-[#1e1e1c] py-8 md:py-12 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-5 md:px-8">
+          <div data-animate-fk className="reveal-fk text-center mb-6 md:mb-8">
+            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+              {t.clients.eyebrow}
+            </p>
+            <h2 className="text-[22px] sm:text-3xl md:text-[36px] font-extrabold leading-[1.15] tracking-[-0.02em] text-balance">
+              <span className="text-white">{t.clients.h2}</span>{" "}
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
+              >
+                {t.clients.h2Highlight}
+              </span>
+            </h2>
+          </div>
+        </div>
+        {/* Marquee row — full-bleed, masks edges so logos fade in/out */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+            maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+          }}
+        >
+          <div className="flex flashka-marquee gap-8 md:gap-12 w-max items-center">
+            {[...FLASHKA_CLIENTS, ...FLASHKA_CLIENTS, ...FLASHKA_CLIENTS].map((c, i) => (
+              <div
+                key={`${c.name}-${i}`}
+                className="shrink-0 h-10 md:h-12 flex items-center justify-center px-2 md:px-3 opacity-70 hover:opacity-100 transition-opacity"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={c.logo}
+                  alt={c.name}
+                  draggable={false}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-6 md:h-8 w-auto object-contain"
+                  style={{ filter: c.invert ? "brightness(0) invert(1)" : undefined }}
+                />
               </div>
             ))}
           </div>
@@ -230,8 +302,21 @@ export default function FlashkaBelowFold({ lang }: Props) {
           opacity: 1;
           transform: translateY(0);
         }
+        /* Client logos marquee — slow drift across the 3x-replicated
+           row so the loop is seamless. GPU-accelerated transform-only
+           animation, no layout work. */
+        @keyframes flashkaMarquee {
+          from { transform: translate3d(0, 0, 0); }
+          to   { transform: translate3d(-33.3333%, 0, 0); }
+        }
+        .flashka-marquee {
+          animation: flashkaMarquee 42s linear infinite;
+          backface-visibility: hidden;
+          transform: translateZ(0);
+        }
         @media (prefers-reduced-motion: reduce) {
           [data-animate-fk].reveal-fk { opacity: 1; transform: none; }
+          .flashka-marquee { animation: none; }
         }
       `}</style>
     </>
