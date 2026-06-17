@@ -404,11 +404,11 @@ export default function FlashkaClient() {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        /* Embedded USB drive visual — sits below the hero CTA as the
-           hero's visual full-stop. Pure CSS animations (opacity +
-           transform only, GPU-cheap), no filter:blur loops, no
-           mix-blend-mode. ~50 lines, all the lime halo lives in the
-           single static drop-shadow + the SVG LED's radial gradient. */
+        /* Embedded USB drive — photoreal cap+body with CSS 3D tilt
+           + specular sweep + reflection underneath. All GPU-cheap
+           (transform/opacity/filter only). The 3D-feel comes from
+           perspective on the outer wrap and a slow rotateY+rotateX
+           wobble on the inner wrap. */
         @keyframes flashkaLed {
           0%, 100% { opacity: 0.55; }
           50%      { opacity: 1; }
@@ -417,29 +417,48 @@ export default function FlashkaClient() {
           from { opacity: 0; transform: translate3d(0, 28px, 0); }
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
-        .flashka-drive-wrap {
-          /* Smaller — reads as a real product, not a decorative blob */
-          width: clamp(180px, 22vw, 240px);
+        @keyframes flashkaTilt {
+          0%, 100% { transform: rotateY(-7deg) rotateX(2deg) translateY(0); }
+          50%      { transform: rotateY( 7deg) rotateX(-1deg) translateY(-3px); }
+        }
+        @keyframes flashkaSpec {
+          /* Specular highlight that slides across the body */
+          0%, 100% { transform: translateX(-30%); opacity: 0; }
+          40%      { opacity: 1; }
+          60%      { opacity: 1; }
+          100%     { transform: translateX( 30%); opacity: 0; }
+        }
+        .flashka-drive-perspective {
+          width: clamp(190px, 24vw, 260px);
           margin: clamp(16px, 3vh, 28px) auto clamp(4px, 1.5vh, 12px);
+          perspective: 900px;
+          perspective-origin: 50% 50%;
           animation: flashkaInsert 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
-        .flashka-drive-wrap svg {
+        .flashka-drive-wrap {
+          transform-style: preserve-3d;
+          animation: flashkaTilt 7s ease-in-out infinite;
+          will-change: transform;
+        }
+        .flashka-drive-svg {
           width: 100%;
           height: auto;
-          aspect-ratio: 380 / 102;
+          aspect-ratio: 380 / 170;
           display: block;
-          /* Layered shadow stack: (1) tight ground shadow anchors the
-             drive to the page surface, (2) larger soft body shadow for
-             depth, (3) lime halo for the powered-on bloom. The first
-             one is the most important for the 'real product' feel. */
+          /* Layered shadow stack for product-photo realism */
           filter:
             drop-shadow(0 4px 6px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 16px 28px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 28px rgba(200, 255, 0, 0.24));
+            drop-shadow(0 18px 30px rgba(0, 0, 0, 0.6))
+            drop-shadow(0 0 36px rgba(200, 255, 0, 0.28));
         }
         .flashka-drive-led {
           transform-origin: center;
           animation: flashkaLed 2.4s ease-in-out infinite;
+        }
+        .flashka-drive-spec {
+          mix-blend-mode: screen;
+          animation: flashkaSpec 5s ease-in-out infinite;
+          will-change: transform, opacity;
         }
         .flashka-drive-caption {
           margin-top: 10px;
@@ -451,8 +470,10 @@ export default function FlashkaClient() {
           color: rgba(200, 255, 0, 0.55);
         }
         @media (prefers-reduced-motion: reduce) {
-          .flashka-drive-wrap { animation: none; }
+          .flashka-drive-perspective { animation: none; }
+          .flashka-drive-wrap { animation: none; transform: none; }
           .flashka-drive-led  { animation: none; opacity: 0.85; }
+          .flashka-drive-spec { animation: none; opacity: 0; }
         }
         .flashka-mesh-bg {
           background:
