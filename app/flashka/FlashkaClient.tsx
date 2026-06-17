@@ -204,11 +204,11 @@ export default function FlashkaClient() {
 
                 <button
                   onClick={scrollToForm}
-                  className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-7 md:px-9 py-3.5 md:py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px] md:text-[16px] animate-[startFade_0.7s_0.2s_ease-out_both]"
+                  className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 md:px-10 py-4 md:py-4 min-h-[52px] rounded-full hover:bg-[#d4ff33] active:scale-[0.96] transition-all text-[16px] md:text-[17px] animate-[startFade_0.7s_0.2s_ease-out_both] touch-manipulation"
                   style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                 >
                   <span>{t.meta.ctaPrimary}</span>
-                  <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
+                  <span className="text-[18px] leading-none transition-transform duration-200 group-hover:translate-x-1 group-active:translate-x-2">→</span>
                 </button>
                 {/* CTA micro chips — three lime-check trust beats
                     instead of dot-separated muted text. More designed,
@@ -293,7 +293,7 @@ export default function FlashkaClient() {
                     <button
                       onClick={handleSubmit}
                       disabled={submitting || !email.trim()}
-                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 min-h-[56px] rounded-full hover:bg-[#d4ff33] active:scale-[0.97] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                       style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                     >
                       <span>{submitting ? t.cta.submitting : t.cta.submit}</span>
@@ -563,7 +563,7 @@ function Input({
       autoComplete={autoComplete}
       autoCapitalize={type === "email" || type === "url" ? "off" : "sentences"}
       spellCheck={type === "email" || type === "url" || type === "tel" ? false : undefined}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-2 focus:ring-[#c8ff00]/35 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-all hover:border-[#2a2a28]"
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-2 focus:ring-[#c8ff00]/35 rounded-md px-4 py-4 md:py-3.5 min-h-[52px] md:min-h-0 text-[16px] md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-all hover:border-[#2a2a28] touch-manipulation"
     />
   );
 }

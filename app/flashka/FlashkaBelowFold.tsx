@@ -80,7 +80,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
               <div
                 key={s.label}
                 data-animate-fk
-                className="reveal-fk text-center px-3 py-5 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/25 transition-colors"
+                className="reveal-fk text-center px-3 py-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(200,255,0,0.25)] active:scale-[0.98] transition-all duration-200 touch-manipulation"
               >
                 <div className="font-extrabold text-[#c8ff00] tabular-nums tracking-tight text-[40px] md:text-6xl leading-none mb-2 md:mb-3">
                   <CountUp target={s.value} decimals={s.decimals} />
@@ -162,7 +162,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/25 transition-colors"
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/35 hover:-translate-y-1 hover:shadow-[0_14px_36px_-12px_rgba(200,255,0,0.18)] active:scale-[0.99] transition-all duration-200 touch-manipulation"
             >
               <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/85 mb-3">
                 {t.about.vektoLabel}
@@ -173,8 +173,8 @@ export default function FlashkaBelowFold({ lang }: Props) {
             </div>
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.04] hover:border-[#c8ff00]/45 transition-colors"
-              style={{ boxShadow: "0 12px 36px -16px rgba(200,255,0,0.18)" }}
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.04] hover:border-[#c8ff00]/55 hover:-translate-y-1 active:scale-[0.99] transition-all duration-200 touch-manipulation"
+              style={{ boxShadow: "0 12px 36px -16px rgba(200,255,0,0.25)" }}
             >
               <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00] mb-3">
                 {t.about.driveLabel}
@@ -209,7 +209,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
               <div
                 key={s.number}
                 data-animate-fk
-                className="reveal-fk group relative p-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/40 hover:bg-[#101010] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_rgba(200,255,0,0.18)] transition-all duration-200"
+                className="reveal-fk group relative p-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/50 hover:bg-[#101010] hover:-translate-y-1 hover:shadow-[0_14px_36px_-10px_rgba(200,255,0,0.22)] active:scale-[0.99] transition-all duration-200 touch-manipulation"
               >
                 <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#c8ff00]/85 mb-3 inline-block">
                   / {s.number}
@@ -246,7 +246,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.03]"
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.03] hover:border-[#c8ff00]/50 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(200,255,0,0.2)] transition-all duration-200 touch-manipulation"
             >
               <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] mb-5">
                 {t.qualify.yesTitle}
@@ -264,7 +264,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
             </div>
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d]"
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#333] hover:-translate-y-0.5 transition-all duration-200 touch-manipulation"
             >
               <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#888] mb-5">
                 {t.qualify.noTitle}

@@ -87,7 +87,7 @@ export default function FlashkaPostForm({ lang, scrollToForm }: Props) {
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
             <button
               onClick={scrollToForm}
-              className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px] md:text-[16px]"
+              className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 min-h-[52px] rounded-full hover:bg-[#d4ff33] active:scale-[0.96] transition-all text-[15px] md:text-[16px] touch-manipulation"
               style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
             >
               {t.finalCta.scrollToForm}
@@ -96,7 +96,7 @@ export default function FlashkaPostForm({ lang, scrollToForm }: Props) {
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
-              className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-8 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors text-[14px] md:text-[15px] cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-8 py-3.5 min-h-[48px] rounded-full hover:bg-[#c8ff00]/10 active:scale-[0.97] transition-all text-[14px] md:text-[15px] cursor-pointer touch-manipulation"
             >
               📅 {t.finalCta.orBook}
             </button>
@@ -127,8 +127,10 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className={`rounded-xl border transition-colors ${
-        open ? "border-[#c8ff00]/35 bg-[#0d0d0d]" : "border-[#1e1e1c] bg-[#0a0a0a] hover:border-[#c8ff00]/20"
+      className={`rounded-xl border transition-all duration-200 touch-manipulation ${
+        open
+          ? "border-[#c8ff00]/45 bg-[#0d0d0d] shadow-[0_8px_24px_-12px_rgba(200,255,0,0.18)]"
+          : "border-[#1e1e1c] bg-[#0a0a0a] hover:border-[#c8ff00]/30 active:scale-[0.995]"
       }`}
     >
       <button
