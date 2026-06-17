@@ -11,7 +11,7 @@ export default function FlashkaDrive() {
   return (
     <div className="flashka-drive-wrap" aria-hidden="true">
       <svg
-        viewBox="0 0 380 150"
+        viewBox="0 28 380 102"
         xmlns="http://www.w3.org/2000/svg"
         role="presentation"
       >

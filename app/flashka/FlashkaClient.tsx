@@ -180,7 +180,7 @@ export default function FlashkaClient() {
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-7 md:pt-14 pb-8 md:pb-12 text-center">
+              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-6 md:pb-8 text-center">
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
                   style={{ boxShadow: "0 0 24px -6px rgba(200,255,0,0.4)" }}
@@ -446,31 +446,33 @@ export default function FlashkaClient() {
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         .flashka-drive-wrap {
-          width: clamp(260px, 38vw, 380px);
-          margin: clamp(28px, 6vh, 56px) auto clamp(8px, 3vh, 24px);
+          width: clamp(220px, 30vw, 320px);
+          margin: clamp(18px, 3.5vh, 32px) auto clamp(6px, 2vh, 16px);
           animation: flashkaInsert 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .flashka-drive-wrap svg {
           width: 100%;
           height: auto;
-          /* Lock the aspect ratio explicitly so the SVG can't collapse
-             to a smaller intrinsic height in browsers that compute
-             height:auto + width:100% incorrectly on inline SVG. */
-          aspect-ratio: 380 / 150;
+          /* Tight viewBox (0 28 380 102) crops empty SVG space — drive
+             content occupies y=36-125 so a 102-unit window centers it
+             cleanly. aspect-ratio kept in sync with viewBox so the SVG
+             can't collapse in browsers that mis-compute height:auto +
+             width:100% on inline SVG. */
+          aspect-ratio: 380 / 102;
           display: block;
           filter:
-            drop-shadow(0 22px 36px rgba(0, 0, 0, 0.75))
-            drop-shadow(0 0 42px rgba(200, 255, 0, 0.22));
+            drop-shadow(0 18px 28px rgba(0, 0, 0, 0.7))
+            drop-shadow(0 0 32px rgba(200, 255, 0, 0.2));
         }
         .flashka-drive-led {
           transform-origin: center;
           animation: flashkaLed 2.4s ease-in-out infinite;
         }
         .flashka-drive-caption {
-          margin-top: 14px;
+          margin-top: 10px;
           text-align: center;
           font-family: ui-monospace, 'Geist Mono', monospace;
-          font-size: 10px;
+          font-size: 9.5px;
           letter-spacing: 0.32em;
           text-transform: uppercase;
           color: rgba(200, 255, 0, 0.55);
