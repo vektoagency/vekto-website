@@ -7,6 +7,7 @@ import { getCalApi } from "@calcom/embed-react";
 import { flashkaCopy } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
 import { trackEvent } from "../components/MetaPixel";
+import FlashkaDrive from "./FlashkaDrive";
 
 // Lazy-load below-fold (inside · proof · qualify · faq · finalCta) so
 // the hero+form chunk stays lean for cold paid-traffic landings.
@@ -208,6 +209,14 @@ export default function FlashkaClient() {
                 <p className="mt-3 text-[11px] md:text-[12px] text-[#888] tracking-wide animate-[startFade_0.75s_0.25s_ease-out_both]">
                   {t.meta.ctaMicro}
                 </p>
+
+                {/* Embedded USB drive — pure inline SVG plugged into a
+                    'port milled into the page'. LED pulses lime. This
+                    is the hero's visual full-stop: the eye lands on it
+                    after reading the CTA, the LED pulls focus down
+                    toward the form section below. Same composition on
+                    mobile (uses clamp(), no media queries). */}
+                <FlashkaDrive />
               </div>
             </section>
 
@@ -426,6 +435,49 @@ export default function FlashkaClient() {
         @keyframes startFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        /* Embedded USB drive visual — sits below the hero CTA as the
+           hero's visual full-stop. Pure CSS animations (opacity +
+           transform only, GPU-cheap), no filter:blur loops, no
+           mix-blend-mode. ~50 lines, all the lime halo lives in the
+           single static drop-shadow + the SVG LED's radial gradient. */
+        @keyframes flashkaLed {
+          0%, 100% { opacity: 0.55; }
+          50%      { opacity: 1; }
+        }
+        @keyframes flashkaInsert {
+          from { opacity: 0; transform: translate3d(0, 28px, 0); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+        .flashka-drive-wrap {
+          width: clamp(260px, 38vw, 380px);
+          margin: clamp(28px, 6vh, 56px) auto clamp(8px, 3vh, 24px);
+          animation: flashkaInsert 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .flashka-drive-wrap svg {
+          width: 100%;
+          height: auto;
+          display: block;
+          filter:
+            drop-shadow(0 22px 36px rgba(0, 0, 0, 0.75))
+            drop-shadow(0 0 42px rgba(200, 255, 0, 0.22));
+        }
+        .flashka-drive-led {
+          transform-origin: center;
+          animation: flashkaLed 2.4s ease-in-out infinite;
+        }
+        .flashka-drive-caption {
+          margin-top: 14px;
+          text-align: center;
+          font-family: ui-monospace, 'Geist Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: rgba(200, 255, 0, 0.55);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .flashka-drive-wrap { animation: none; }
+          .flashka-drive-led  { animation: none; opacity: 0.85; }
         }
         .flashka-mesh-bg {
           background:

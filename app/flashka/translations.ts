@@ -8,9 +8,13 @@
 export const flashkaCopy = {
   meta: {
     eyebrow: "VEKTO · ЗА 5-ТЕ НОВИ БРАНДА В БГ",
-    h1Top: "Стратегията зад",
+    // h1Top picks up 'Кодът' directly from the ad creative ('Кодът е в
+    // тази флашка'), creating instant ad-to-LP message match. The
+    // sentence 'Кодът е в 30+ успешни бранда.' reads as a single
+    // declarative — proof anchored INSIDE the headline, not below it.
+    h1Top: "Кодът е в",
     h1Bottom: "30+ успешни бранда.",
-    sub: "Цялата ни оперативна система за маркетинг и scaling. Прилагаме я с всеки клиент. Сега я отваряме за 5 нови бранда в България.",
+    sub: "Цялата ни оперативна система — на тази флашка. Прилагаме я с 30+ бранда в БГ и САЩ. Сега я отваряме за първите 5 в България.",
     ctaPrimary: "Кандидатствай →",
     ctaMicro: "60 секунди · кандидатстване · отговор до 24ч",
     home: "← Към сайта",
