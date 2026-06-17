@@ -418,8 +418,9 @@ export default function FlashkaClient() {
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes flashkaTilt {
-          0%, 100% { transform: rotateY(-7deg) rotateX(2deg) translateY(0); }
-          50%      { transform: rotateY( 7deg) rotateX(-1deg) translateY(-3px); }
+          /* More dramatic tilt — sells the 3D presence at larger scale */
+          0%, 100% { transform: rotateY(-14deg) rotateX(5deg)  translateY(0); }
+          50%      { transform: rotateY( 14deg) rotateX(-4deg) translateY(-8px); }
         }
         @keyframes flashkaSpec {
           /* Specular highlight that slides across the body */
@@ -429,11 +430,13 @@ export default function FlashkaClient() {
           100%     { transform: translateX( 30%); opacity: 0; }
         }
         .flashka-drive-perspective {
-          width: clamp(190px, 24vw, 260px);
-          margin: clamp(16px, 3vh, 28px) auto clamp(4px, 1.5vh, 12px);
-          perspective: 900px;
+          /* BIG hero drive — 2.5x bigger than the previous comp.
+             Acts as the hero centerpiece, not a decorative endcap. */
+          width: clamp(300px, 60vw, 520px);
+          margin: clamp(20px, 4vh, 40px) auto clamp(6px, 2vh, 18px);
+          perspective: 1400px;
           perspective-origin: 50% 50%;
-          animation: flashkaInsert 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+          animation: flashkaInsert 0.9s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .flashka-drive-wrap {
           transform-style: preserve-3d;
@@ -445,11 +448,11 @@ export default function FlashkaClient() {
           height: auto;
           aspect-ratio: 380 / 170;
           display: block;
-          /* Layered shadow stack for product-photo realism */
+          /* Stronger shadow stack — bigger drive needs more weight */
           filter:
-            drop-shadow(0 4px 6px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 18px 30px rgba(0, 0, 0, 0.6))
-            drop-shadow(0 0 36px rgba(200, 255, 0, 0.28));
+            drop-shadow(0 6px 8px rgba(0, 0, 0, 0.65))
+            drop-shadow(0 28px 48px rgba(0, 0, 0, 0.7))
+            drop-shadow(0 0 56px rgba(200, 255, 0, 0.34));
         }
         .flashka-drive-led {
           transform-origin: center;
@@ -461,13 +464,13 @@ export default function FlashkaClient() {
           will-change: transform, opacity;
         }
         .flashka-drive-caption {
-          margin-top: 10px;
+          margin-top: 14px;
           text-align: center;
           font-family: ui-monospace, 'Geist Mono', monospace;
-          font-size: 9.5px;
-          letter-spacing: 0.32em;
+          font-size: 11px;
+          letter-spacing: 0.35em;
           text-transform: uppercase;
-          color: rgba(200, 255, 0, 0.55);
+          color: rgba(200, 255, 0, 0.6);
         }
         @media (prefers-reduced-motion: reduce) {
           .flashka-drive-perspective { animation: none; }
