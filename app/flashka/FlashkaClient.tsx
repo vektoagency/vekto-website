@@ -19,8 +19,6 @@ export default function FlashkaClient() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [brand, setBrand] = useState("");
-  const [sector, setSector] = useState<string>("ecom");
-  const [budget, setBudget] = useState(2500);
   const [utm, setUtm] = useState<{
     source?: string; medium?: string; campaign?: string;
     content?: string; term?: string; referrer?: string;
@@ -92,12 +90,6 @@ export default function FlashkaClient() {
       return;
     }
     setSubmitting(true);
-    const sectorLabel =
-      t.fields.sectorOptions.find((o) => o.id === sector)?.label || sector;
-    const budgetLabel =
-      budget >= 10000
-        ? t.fields.budgetMaxLabel
-        : `${budget.toLocaleString("bg-BG")} ${t.fields.budgetSuffix}`;
     const eventId =
       typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID()
@@ -107,10 +99,10 @@ export default function FlashkaClient() {
       source: "flashka",
       name, email, brand,
       phone: "",
-      contentType: sector,
-      contentTypeLabel: sectorLabel,
-      budget: String(budget),
-      budgetLabel,
+      contentType: "",
+      contentTypeLabel: "",
+      budget: "",
+      budgetLabel: "",
       message: "",
       eventId,
       utmSource: utm.source,
@@ -124,7 +116,7 @@ export default function FlashkaClient() {
     if (res.success) {
       trackEvent(
         "Lead",
-        { value: budget, currency: "EUR", content_name: `flashka:${sectorLabel}` },
+        { content_name: "flashka" },
         { eventID: eventId }
       );
       setDone(true);
@@ -280,25 +272,6 @@ export default function FlashkaClient() {
 
                   <Field label={t.fields.brand}>
                     <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} type="url" />
-                  </Field>
-
-                  <Field label={t.fields.sector}>
-                    <PillsSingle
-                      value={sector}
-                      onChange={setSector}
-                      options={t.fields.sectorOptions}
-                    />
-                  </Field>
-
-                  <Field label={t.fields.budget}>
-                    <BudgetSlider
-                      value={budget}
-                      onChange={setBudget}
-                      max={10000}
-                      step={250}
-                      suffix={t.fields.budgetSuffix}
-                      maxLabel={t.fields.budgetMaxLabel}
-                    />
                   </Field>
 
                   <div className="pt-2">
@@ -554,70 +527,3 @@ function Input({
   );
 }
 
-function PillsSingle({
-  value, onChange, options,
-}: { value: string; onChange: (id: string) => void; options: ReadonlyArray<{ id: string; label: string }>; }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((o) => {
-        const active = value === o.id;
-        return (
-          <button
-            key={o.id}
-            type="button"
-            onClick={() => onChange(o.id)}
-            className={`flex items-center gap-2 text-left px-4 py-3 md:py-2.5 rounded-md text-sm min-h-[44px] md:min-h-0 transition-all ${
-              active
-                ? "bg-[#c8ff00] text-black font-semibold border border-[#c8ff00]"
-                : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#c8ff00]/40 hover:text-[#c8ff00]"
-            }`}
-          >
-            <span>{o.label}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function BudgetSlider({
-  value, onChange, max, step, suffix, maxLabel,
-}: { value: number; onChange: (v: number) => void; max: number; step: number; suffix: string; maxLabel: string; }) {
-  const pct = Math.min(100, (value / max) * 100);
-  const display =
-    value >= max ? maxLabel
-      : `${value.toLocaleString("bg-BG")} ${suffix}`;
-  return (
-    <div>
-      <div className="flex items-baseline gap-2 mb-3">
-        <span className="font-mono text-2xl md:text-3xl font-bold tracking-tight text-[#c8ff00] tabular-nums">
-          {display}
-        </span>
-      </div>
-      <div className="relative">
-        <div className="absolute inset-y-1/2 -translate-y-1/2 left-0 right-0 h-1.5 bg-[#1e1e1c] rounded-full pointer-events-none" />
-        <div
-          aria-hidden
-          className="absolute inset-y-1/2 -translate-y-1/2 left-0 h-1.5 bg-[#c8ff00] rounded-full pointer-events-none transition-[width] duration-150"
-          style={{
-            width: `${pct}%`,
-            boxShadow: "0 0 18px rgba(200,255,0,0.55)",
-          }}
-        />
-        <input
-          type="range"
-          min={500}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className="vekto-range relative w-full bg-transparent appearance-none cursor-pointer"
-        />
-      </div>
-      <div className="flex justify-between mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[#666]">
-        <span>500 €</span>
-        <span>{maxLabel}</span>
-      </div>
-    </div>
-  );
-}

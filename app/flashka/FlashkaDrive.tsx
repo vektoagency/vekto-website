@@ -39,6 +39,19 @@ export default function FlashkaDrive() {
             <stop offset="0%" stopColor="#020202" />
             <stop offset="100%" stopColor="#0c0c0c" />
           </linearGradient>
+          {/* Logo mask — uses the image's alpha channel so any image
+              color (the brand logo is dark-on-transparent) becomes a
+              silhouette we can fill with lime via the masked rect
+              below. maskType=alpha is the key — luminance would
+              invert this since the logo is dark, not white. */}
+          <mask id="fdLogoMask" style={{ maskType: "alpha" }}>
+            <image
+              href="/images/logo.webp"
+              x="207" y="65"
+              width="120" height="22"
+              preserveAspectRatio="xMidYMid meet"
+            />
+          </mask>
         </defs>
 
         {/* Port cavity — the "page has been milled" surface */}
@@ -72,18 +85,16 @@ export default function FlashkaDrive() {
         <rect x="172" y="37" width="190" height="1" fill="rgba(255,255,255,0.08)" />
         {/* Hairline lime accent strip — brand kiss along the top edge */}
         <rect x="172" y="40" width="190" height="1.5" fill="#c8ff00" opacity="0.45" />
-        {/* Engraved VEKTO wordmark — barely visible, the premium tell */}
-        <text
-          x="267" y="80"
-          textAnchor="middle"
-          fontFamily="ui-monospace, 'Geist Mono', monospace"
-          fontSize="11"
-          fontWeight="600"
-          letterSpacing="2.8"
-          fill="rgba(200,255,0,0.22)"
-        >
-          VEKTO
-        </text>
+        {/* Engraved VEKTO logo — the real brand wordmark from
+            /images/logo.webp, masked via fdLogoMask and filled lime
+            at 45%% so it reads as etched into the matte-black housing. */}
+        <rect
+          x="207" y="65"
+          width="120" height="22"
+          fill="#c8ff00"
+          opacity="0.45"
+          mask="url(#fdLogoMask)"
+        />
         {/* Lanyard hole on far-right */}
         <circle cx="350" cy="75" r="3.5" fill="#020202" stroke="#1a1a1a" strokeWidth="0.5" />
 
