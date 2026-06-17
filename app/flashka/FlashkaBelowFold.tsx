@@ -27,6 +27,56 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
 
   return (
     <>
+      {/* ─────────────  ABOUT (who we are + what the drive is)  ─────────
+          Two-column explainer that anchors the LP for visitors who
+          aren't ready to fill the form yet. Left card: who VEKTO is
+          (the agency behind the offer). Right card: what the flash
+          drive metaphor actually means. Drive card carries a lime-
+          tinted border + faint lime tint to mirror the brand kiss. */}
+      <section className="border-y border-[#1e1e1c] py-10 md:py-16">
+        <div className="max-w-5xl mx-auto px-5 md:px-8">
+          <div data-animate-fk className="reveal-fk text-center mb-8 md:mb-12">
+            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+              {t.about.eyebrow}
+            </p>
+            <h2 className="text-[28px] sm:text-4xl md:text-[44px] font-extrabold leading-[1.08] tracking-[-0.02em] text-balance">
+              <span className="text-white">{t.about.h2}</span>{" "}
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
+              >
+                {t.about.h2Highlight}
+              </span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            <div
+              data-animate-fk
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/25 transition-colors"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/85 mb-3">
+                {t.about.vektoLabel}
+              </p>
+              <p className="text-[14px] md:text-[15.5px] text-[#cfcbc4] leading-relaxed">
+                {t.about.vektoBody}
+              </p>
+            </div>
+            <div
+              data-animate-fk
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.04] hover:border-[#c8ff00]/45 transition-colors"
+              style={{ boxShadow: "0 12px 36px -16px rgba(200,255,0,0.18)" }}
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00] mb-3">
+                {t.about.driveLabel}
+              </p>
+              <p className="text-[14px] md:text-[15.5px] text-[#dcdcd6] leading-relaxed">
+                {t.about.driveBody}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─────────────  INSIDE (what's on the flash drive)  ───────────── */}
       <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">

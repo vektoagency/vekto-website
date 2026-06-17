@@ -25,6 +25,16 @@ export const flashkaCopy = {
       langToggle: "EN",
     },
 
+    about: {
+      eyebrow: "ЗАД ВСИЧКО",
+      h2: "За VEKTO.",
+      h2Highlight: "За флашката.",
+      vektoLabel: "АГЕНЦИЯТА",
+      vektoBody: "VEKTO е маркетинг агенция от ново поколение. Работим с 30+ бранда в БГ и САЩ — стартъпи, e-commerce, услуги. Видео, реклами, scaling, цяла маркетинг система под един покрив.",
+      driveLabel: "ФЛАШКАТА",
+      driveBody: "Метафора за нашата вътрешна оперативна система. Конкретна структура от framework-и, AI инструменти, ad templates и scaling протоколи. Прилагаме я с всеки клиент. Сега я отваряме за нови 5.",
+    },
+
     inside: {
       eyebrow: "КАКВО Е ВЪТРЕ",
       h2: "4 модула. 1 система.",
@@ -178,6 +188,16 @@ export const flashkaCopy = {
       ctaMicroItems: ["60 seconds", "free", "reply within 24h"] as const,
       home: "← Back to site",
       langToggle: "БГ",
+    },
+
+    about: {
+      eyebrow: "BEHIND IT ALL",
+      h2: "About VEKTO.",
+      h2Highlight: "About the drive.",
+      vektoLabel: "THE AGENCY",
+      vektoBody: "VEKTO is a next-gen marketing agency. We work with 30+ brands in BG and US — startups, e-commerce, services. Video, ads, scaling, the full marketing system under one roof.",
+      driveLabel: "THE DRIVE",
+      driveBody: "The metaphor for our internal operating system. A concrete structure of frameworks, AI tools, ad templates, and scaling protocols. We apply it with every client. Opening it for 5 new ones now.",
     },
 
     inside: {
