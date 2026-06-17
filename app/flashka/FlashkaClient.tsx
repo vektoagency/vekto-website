@@ -11,7 +11,15 @@ import FlashkaDrive from "./FlashkaDrive";
 
 // Lazy-load below-fold (inside · proof · qualify · faq · finalCta) so
 // the hero+form chunk stays lean for cold paid-traffic landings.
+// Funnel split into two lazy chunks: pre-form sections (proof + about
+// + inside + qualify) educate the visitor before the form, post-form
+// sections (faq + finalCta) handle objections + last-chance close for
+// visitors who scrolled past the form. Both lazy-imported so the
+// initial JS bundle stays small for cold paid-traffic landings.
 const FlashkaBelowFold = dynamic(() => import("./FlashkaBelowFold"), {
+  loading: () => null,
+});
+const FlashkaPostForm = dynamic(() => import("./FlashkaPostForm"), {
   loading: () => null,
 });
 
@@ -249,6 +257,13 @@ export default function FlashkaClient() {
               </div>
             </section>
 
+            {/* Pre-form education leg of the funnel: proof (instant
+                credibility) → about (who we are + what the drive is)
+                → inside (4 system modules) → qualify (yes/no fit).
+                Visitor lands here from the ad, reads the hero, then
+                scrolls through education BEFORE they hit the form. */}
+            <FlashkaBelowFold lang={lang} />
+
             {/* ─────────────  FORM (the application)  ───────────── */}
             <section ref={formRef} className="relative scroll-mt-20">
               <div className="max-w-2xl mx-auto px-5 md:px-8 py-10 md:py-16">
@@ -336,7 +351,11 @@ export default function FlashkaClient() {
               </div>
             </section>
 
-            <FlashkaBelowFold lang={lang} scrollToForm={scrollToForm} />
+            {/* Post-form sections — last-chance close for visitors who
+                scrolled past the form without filling. FAQ handles their
+                objections; Final CTA gives them a scarcity push back
+                to the form OR an alternate call-booking path. */}
+            <FlashkaPostForm lang={lang} scrollToForm={scrollToForm} />
 
             {/* Sticky mobile CTA */}
             <div
