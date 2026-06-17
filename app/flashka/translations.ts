@@ -26,9 +26,8 @@ export const flashkaCopy = {
     },
 
     clients: {
-      eyebrow: "ИМ СЕ ДОВЕРИХА",
-      h2: "Бизнеси, които работят",
-      h2Highlight: "с нашата система.",
+      eyebrow: "С НАС РАБОТЯТ",
+      sub: "30+ бранда в България и САЩ. Видео, реклами, scaling.",
     },
 
     about: {
@@ -197,9 +196,8 @@ export const flashkaCopy = {
     },
 
     clients: {
-      eyebrow: "TRUSTED BY",
-      h2: "Businesses running",
-      h2Highlight: "on our system.",
+      eyebrow: "WORKING WITH US",
+      sub: "30+ brands across BG and US. Video, ads, scaling.",
     },
 
     about: {

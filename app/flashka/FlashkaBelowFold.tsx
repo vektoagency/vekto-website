@@ -95,27 +95,21 @@ export default function FlashkaBelowFold({ lang }: Props) {
         </div>
       </section>
 
-      {/* ─────────────  CLIENTS (trust strip after the stats)  ─────────
-          Sits between the Proof stats and the About explainer. The
-          stats anchor numerically; this anchors visually. Logos run
-          as a slow horizontal marquee (gradient mask on edges, fade
-          to bg). Same brand world as /start so visitors who saw the
-          home page see continuity. */}
+      {/* ─────────────  CLIENTS (lean trust strip after the stats)  ─────
+          Deliberately styled DIFFERENT from other sections: no big
+          white+lime h2, just a small eyebrow + a single supporting
+          line + the logo marquee. Reads as a 'credit line', not a
+          competing section heading — gives visual variety to the
+          stack of identically-shaped section h2's across the page. */}
       <section className="border-b border-[#1e1e1c] py-8 md:py-12 overflow-hidden">
-        <div className="max-w-5xl mx-auto px-5 md:px-8">
-          <div data-animate-fk className="reveal-fk text-center mb-6 md:mb-8">
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+        <div className="max-w-3xl mx-auto px-5 md:px-8">
+          <div data-animate-fk className="reveal-fk text-center mb-5 md:mb-7">
+            <p className="font-mono text-[10px] md:text-[11px] text-[#c8ff00]/85 uppercase tracking-[0.32em] mb-2">
               {t.clients.eyebrow}
             </p>
-            <h2 className="text-[22px] sm:text-3xl md:text-[36px] font-extrabold leading-[1.15] tracking-[-0.02em] text-balance">
-              <span className="text-white">{t.clients.h2}</span>{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
-              >
-                {t.clients.h2Highlight}
-              </span>
-            </h2>
+            <p className="text-[13px] md:text-[14.5px] text-[#9a958e] leading-relaxed">
+              {t.clients.sub}
+            </p>
           </div>
         </div>
         {/* Marquee row — full-bleed, masks edges so logos fade in/out */}
