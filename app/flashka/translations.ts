@@ -1,113 +1,112 @@
-// Direct-response copy for /flashka — the dedicated landing for
-// Meta paid traffic coming from the 'векто адс' campaign. The ads
-// stack a single promise: '$1M revenue from one export file on a
-// USB stick, system tested with 30+ brands in US, now in Bulgaria,
-// first 5 spots'. The LP has to match that promise in 3 seconds and
-// then walk the reader from curiosity -> mechanism -> proof -> apply.
+// Direct-response copy for /flashka — paid-traffic LP for the
+// 'векто адс' campaign. The флашка is the metaphor for VEKTO's
+// internal operating system: the strategy + AI tools + frameworks
+// they actually apply with every client. The LP doesn't sell a
+// download — it sells AGENCY ACCESS. Applying = becoming a client
+// for whom they execute the system on a 90-day engagement.
 
 export const flashkaCopy = {
   meta: {
-    eyebrow: "VEKTO · САМО ЗА ПЪРВИТЕ 5 БРАНДА В БГ",
-    h1Top: "На тази флашка е кодът зад",
-    h1Bottom: "$1 000 000 оборот.",
-    sub: "Системата работи в САЩ с 30+ бранда. Сега я носим в България — за 5-те, които са готови да я ползват.",
-    ctaPrimary: "Кандидатствай за флашката",
+    eyebrow: "VEKTO · ЗА 5-ТЕ НОВИ БРАНДА В БГ",
+    h1Top: "Стратегията зад",
+    h1Bottom: "30+ успешни бранда.",
+    sub: "Цялата ни оперативна система за маркетинг и scaling. Прилагаме я с всеки клиент. Сега я отваряме за 5 нови бранда в България.",
+    ctaPrimary: "Кандидатствай →",
     ctaMicro: "60 секунди · кандидатстване · отговор до 24ч",
     home: "← Към сайта",
   },
 
-  // Pattern interrupt — sets the frame that this isn't a course/agency
-  // pitch but a system-access offer. Removes objections like 'is this
-  // another guru pitch?' before the reader builds them.
+  // Pattern interrupt — frames the offer correctly: not a download,
+  // not a course, an agency engagement where the strategy gets applied
+  // FOR you. Kills the 'is this a guru pitch / PDF / online portal'
+  // objections before they form.
   frame: {
     eyebrow: "ВАЖНО",
-    h2: "Това не е курс.",
-    h2Highlight: "Не е оферта. Това е system access.",
-    body:
-      "Получаваш конкретна флашка с export файл — точната структура, по която 30+ бранда в БГ и САЩ растат от $0 до $1M+ оборот. Не е PDF за четене. Не е video курс за гледане. Това е plug-and-play система за изпълнение.",
+    h2: "Не курс. Не PDF.",
+    h2Highlight: "Това е нашата оперативна система.",
+    body: "Същата стратегия, която прилагаме с 30+ бранда в БГ и САЩ. Когато станеш клиент — екипът ни я пуска в твоя бизнес. Не я раздаваме самостоятелно.",
   },
 
-  // The reveal — what's actually on the flash drive. Concrete bulleted
-  // list anchors the abstract promise to deliverables. 5 items because
-  // 5 spots → reinforces the scarcity beat.
+  // Inside — what's actually on the agency's playbook. Concrete
+  // deliverables anchor abstract strategy. Reframed as 'this is what
+  // we run with every client' rather than 'here's what you get'.
   inside: {
-    eyebrow: "КАКВО ИМА НА ФЛАШКАТА",
-    h2: "5 файла. 1 система.",
-    h2Highlight: "Над $30M доказан оборот.",
+    eyebrow: "КАКВО Е ВЪТРЕ",
+    h2: "5 модула. 1 система.",
+    h2Highlight: "Същата, с която работим.",
     items: [
       {
         number: "01",
-        title: "Funnel blueprint",
-        body: "Точният поток: ad → landing → checkout. Кое работи, кое не, на кой етап хората отпадат и как да го коригираш за 24ч.",
+        title: "Funnel framework",
+        body: "Точният поток ad → лендинг → продажба. С benchmarks за всяка стъпка. Прилагаме го с всеки клиент.",
       },
       {
         number: "02",
         title: "AI creative engine",
-        body: "Нашата AI pipeline за 30+ видео реклами на месец. Без агенция fee, без 6 седмици чакане. Скрипт, видео, монтаж — за 5 дни.",
+        body: "Pipeline за 30+ видео реклами месечно. Без агенция fee, без 6 седмици чакане.",
       },
       {
         number: "03",
         title: "Scaling matrix",
-        body: "Точните стъпки от $1K → $10K → $100K дневен ad бюджет. Кога да дублираш кампания, кога да я убиеш, кога да чакаш.",
+        body: "Стъпките от $1K → $10K → $100K дневен ad бюджет. Кога да дублираш, кога да убиеш кампания.",
       },
       {
         number: "04",
         title: "Conversion stack",
-        body: "Реклама, лендинг, email, retention — целият tech и copy stack, който качи 30+ бранда над $1M годишно.",
+        body: "Целият tech и copy stack: ad platforms, лендинг шаблони, email flows, retention механизми.",
       },
       {
         number: "05",
-        title: "Лична консултация",
-        body: "90 минути 1-на-1 с топ член от екипа. Преглеждаме твоя бизнес, оптимизираме системата за твоята ниша. Лично, не имейл.",
+        title: "Прилагане 1-на-1",
+        body: "Екипът ни пуска системата в твоя бизнес. Не я даваме самостоятелно — прилагаме я с теб.",
       },
     ],
   },
 
-  // Proof block — 4 stat counters. ROAS + revenue numbers hit hardest
-  // for direct-response readers; brands+spots reinforce specificity.
+  // Proof block — 4 stat counters anchored to real outcomes from the
+  // system in production across 30+ client brands.
   proof: {
     eyebrow: "ДОКАЗАНО",
-    h2: "30+ бранда вече я ползват.",
-    h2Highlight: "САЩ от 4 години. БГ — от сега.",
+    h2: "30+ бранда я ползват.",
+    h2Highlight: "БГ и САЩ. Реални числа.",
     items: [
-      { value: 30, suffix: "+", decimals: 0, label: "Бранда я ползват в БГ + САЩ" },
-      { value: 1, suffix: "M+", decimals: 0, label: "$ среден оборот на бранд" },
+      { value: 30, suffix: "+", decimals: 0, label: "Бранда я ползват в БГ и САЩ" },
+      { value: 1, suffix: "M+", decimals: 0, label: "$ среден оборот на клиент" },
       { value: 4.8, suffix: "×", decimals: 1, label: "Среден ROAS от наши кампании" },
       { value: 5, suffix: "", decimals: 0, label: "Свободни спота за България" },
     ],
   },
 
-  // Qualification — two columns. The 'who it's for' list speaks to the
-  // ideal reader directly ('това си ти'); the 'NOT for' kills tire-
-  // kickers before they fill the form and lifts the perceived value.
+  // Qualification — reframed as client-fit, not download-eligibility.
+  // YES list says 'this is who we work well with'. NO list pre-
+  // disqualifies tire-kickers and lifts perceived selectivity.
   qualify: {
     eyebrow: "ЗА КОГО",
-    h2: "Системата работи",
+    h2: "Работим заедно",
     h2Highlight: "ако...",
     yesTitle: "Подходящ си ако:",
     yesItems: [
-      "Имаш активен ecom, info-продукт или service бизнес.",
-      "Месечен ad бюджет поне €1,000 (или си готов да го отделиш).",
-      "Целта ти е scaling, не proof-of-concept или 'дали ще проработи'.",
-      "Готов си да изпълниш конкретен план за 60 дни — без отлагане.",
+      "Имаш активен бизнес — ecom, услуги или info-продукт.",
+      "Готов си за 90-дневен ангажимент с конкретни цели.",
+      "Целта ти е scaling, не proof-of-concept.",
+      "Отворен си за външна стратегия и бърза итерация.",
     ],
     noTitle: "Не е за теб ако:",
     noItems: [
       "Тепърва стартираш и нямаш активен бизнес.",
-      "Търсиш бърза печалба без планомерна работа.",
-      "Не си отворен за външна стратегия или промяна в подхода.",
-      "Чакаш 'някой друг' да направи всичко вместо теб.",
+      "Очакваш гарантиран резултат без работа от твоя страна.",
+      "Търсиш единично PDF / курс без external екип.",
+      "Не си готов за месечен ангажимент.",
     ],
   },
 
-  // The form — same fields as /start but reframed as an 'application'.
-  // 'Кандидатствай' verb chosen deliberately (matches the ad CTA + the
-  // qualification frame above). Field labels rewritten for context.
+  // The form — application, not download request. Verb is
+  // 'Кандидатствай' throughout to match the ad CTA.
   formSection: {
     eyebrow: "КАНДИДАТСТВАЙ",
     h2: "60 секунди.",
     h2Highlight: "Отговор до 24 часа.",
-    sub: "Преглеждаме всяка кандидатура лично. Не е автоматизирана оферта — пишем ти само ако има match с програмата.",
+    sub: "Преглеждаме всяка кандидатура лично. Пишем ти само ако има match.",
     submitMicro: "✓ Безплатна кандидатура   ✓ Отговор до 24ч   ✓ Без ангажимент",
   },
 
@@ -128,58 +127,57 @@ export const flashkaCopy = {
       { id: "saas", label: "SaaS / Tech" },
       { id: "other", label: "Друго" },
     ],
-    budget: "Месечен ad бюджет",
+    budget: "Месечен маркетинг бюджет",
     budgetSuffix: "€ / месец",
     budgetMaxLabel: "10 000 €+",
-    message: "Какъв резултат искаш в следващите 90 дни?",
-    messagePh: "Кратко: текущо положение + целта ти. Колкото по-конкретно — толкова по-точна е оценката ни.",
+    message: "Каква е целта в следващите 90 дни?",
+    messagePh: "Кратко: къде си сега и къде искаш да си. Колкото по-конкретно — толкова по-точна е оценката.",
   },
 
   cta: {
-    submit: "Кандидатствай за флашката →",
+    submit: "Кандидатствай →",
     submitting: "Изпращаме…",
     orBook: "Или директно с екипа:",
     bookCta: "Резервирай разговор",
     callCta: "Обади се",
   },
 
-  // FAQ — addresses the 4-5 objections that come up most: why limited,
-  // what if not approved, price, why physical USB, in-house team, time
-  // to results. Each Q is the actual question a skeptical reader asks.
+  // FAQ — reframed for agency engagement (not product download).
+  // 6 most-common objections from the application/discovery call
+  // stage of client onboarding.
   faq: {
     eyebrow: "ВЪПРОСИ",
     h2: "Преди да кандидатстваш —",
     h2Highlight: "почти всеки пита това.",
     items: [
       {
-        q: "Защо ограничавате до 5 бранда?",
-        a: "Защото личната консултация е 90 минути 1-на-1 с топ член от екипа. На 6-ти спот качеството пада. Предпочитаме 5 бранда с $1M+ резултати пред 50 със среден.",
+        q: "Защо ограничавате до 5 нови бранда?",
+        a: "Защото onboarding-ът на нов клиент изисква 90-минутна сесия + 30 дни наблюдение от старши член на екипа. На 6-ти бранд качеството пада. Предпочитаме 5 с резултат пред 15 със среден.",
       },
       {
-        q: "Какво ако не съм одобрен?",
-        a: "Получаваш честно 'не сега' с конкретни 3 стъпки какво да направиш първо. Без upsell, без 'но имаме друг продукт за €X'. Връщаме се, когато си готов.",
+        q: "Какво се случва ако кандидатствам?",
+        a: "До 24 часа получаваш отговор: одобрен с покана за discovery call, или 'не сега' с конкретни препоръки. Без upsell, без 'имаме друг продукт за €X'.",
       },
       {
         q: "Колко струва?",
-        a: "Цената обсъждаме само с одобрените кандидати — зависи от мащаба на бизнеса ти. По принцип системата се отплаща за 30-45 дни от ROAS подобрението. Затова не пишем число тук.",
+        a: "Цената зависи от мащаба и нишата. Обсъждаме я само с одобрените кандидати на discovery call-а. По принцип системата се отплаща за 30-45 дни от ROAS подобрението.",
       },
       {
-        q: "Защо точно флашка, не PDF или онлайн портал?",
-        a: "На физическата флашка е structured export със системата + AI промптове + ad creative templates + видео tutorials. Получаваш я в ръката си. По-сериозно от 'свали PDF от линк'. По-сигурно от 'портал, който ще изчезне след година'.",
+        q: "Защо точно флашка?",
+        a: "Метафора за нашата цялостна оперативна система — framework, AI tools, ad templates, scaling протоколи. Прилагаме я с теб 90 дни. При сериозни клиенти физическата флашка е и литерален носител на цялата документация.",
       },
       {
         q: "Какво ако вече имаме маркетинг екип?",
-        a: "Перфектно. Системата е made-to-plug-in като extension, не replacement. Често работим заедно с in-house team — те носят brand context, ние носим execution framework.",
+        a: "Перфектно — често работим заедно с in-house teams. Те носят brand context, ние носим execution framework. Plug-in extension, не replacement.",
       },
       {
-        q: "Колко време отнема да видим резултат?",
-        a: "30-45 дни до първите измерими подобрения в ROAS. 60-90 дни до пълно scaling на winning кампания. По-бързо не обещаваме — който обещава, лъже.",
+        q: "Колко време работим заедно?",
+        a: "Минимум 90-дневен ангажимент за измерими резултати. След това — продължение на месечна база. Без 12-месечни договори като големите агенции.",
       },
     ],
   },
 
-  // Final CTA — pure scarcity + commitment beat. Repeats the 5-spot
-  // limit but reframes as 'first come, first serve' to drive action.
+  // Final CTA — pure scarcity beat.
   finalCta: {
     eyebrow: "ОСТАВАТ ОГРАНИЧЕНИ СПОТОВЕ",
     h2: "5 бранда. 1 страна.",
@@ -195,7 +193,7 @@ export const flashkaCopy = {
 
   success: {
     title: "Кандидатурата е получена.",
-    body: "Преглеждаме всичко лично — не автомат. Пишем ти на имейла до 24 часа с конкретен отговор: одобрен с next steps, или 'не сега' с препоръки. Междувременно можеш да резервираш разговор:",
+    body: "Преглеждаме всичко лично — не автомат. Пишем ти на имейла до 24 часа: одобрен с next steps, или 'не сега' с препоръки. Междувременно можеш да резервираш разговор:",
     bookCta: "Резервирай среща",
     backHome: "← Към сайта",
   },
