@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -35,14 +35,16 @@ const nextHeroClips: Array<{ videoUrl: string | null }> = heroFeaturedClipIds
   .slice(1, 4)
   .map((id) => resolveHeroClip(id));
 
-// Switched from Geist to Manrope — Manrope was designed by Mikhail
-// Sharanda with Cyrillic as a first-class script (not bolted on), so
-// 'Не всеки бизнес расте.' looks intentional, not awkward. CSS var
-// name kept as --font-geist-sans so we don't need to touch globals.css
-// or every component that consumes it.
-const fontSans = Manrope({
+// IBM Plex Sans — distinctive technical sans, designed by IBM with
+// Cyrillic as a first-class subset. Sharp, professional, agency feel
+// without being generic. CSS var name kept as --font-geist-sans so
+// existing consumers (globals.css, components) work unchanged. Need
+// explicit weights since IBM Plex Sans is not a variable font in
+// next/font/google.
+const fontSans = IBM_Plex_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   preload: true,
 });
