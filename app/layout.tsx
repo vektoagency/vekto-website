@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -35,9 +35,14 @@ const nextHeroClips: Array<{ videoUrl: string | null }> = heroFeaturedClipIds
   .slice(1, 4)
   .map((id) => resolveHeroClip(id));
 
-const geist = Geist({
+// Switched from Geist to Manrope — Manrope was designed by Mikhail
+// Sharanda with Cyrillic as a first-class script (not bolted on), so
+// 'Не всеки бизнес расте.' looks intentional, not awkward. CSS var
+// name kept as --font-geist-sans so we don't need to touch globals.css
+// or every component that consumes it.
+const fontSans = Manrope({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   display: "swap",
   preload: true,
 });
@@ -73,7 +78,7 @@ export default async function RootLayout({
   const cookieLang = cookieStore.get("vekto-lang")?.value;
   const lang: Lang = cookieLang === "bg" ? "bg" : "en";
   return (
-    <html lang={lang} className={`${geist.variable} h-full antialiased`}>
+    <html lang={lang} className={`${fontSans.variable} h-full antialiased`}>
       <head>
         {/* Meta Business Manager — domain ownership verification.
             Required for iOS 14+ conversion attribution + Aggregated
