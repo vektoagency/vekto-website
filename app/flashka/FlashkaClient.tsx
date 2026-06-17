@@ -176,7 +176,7 @@ export default function FlashkaClient() {
         {!done ? (
           <>
             {/* ─────────────  HERO  ───────────── */}
-            <section ref={heroRef} className="relative overflow-hidden">
+            <section ref={heroRef} className="relative">
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
@@ -257,14 +257,12 @@ export default function FlashkaClient() {
               </div>
             </section>
 
-            {/* Pre-form education leg of the funnel: proof (instant
-                credibility) → about (who we are + what the drive is)
-                → inside (4 system modules) → qualify (yes/no fit).
-                Visitor lands here from the ad, reads the hero, then
-                scrolls through education BEFORE they hit the form. */}
-            <FlashkaBelowFold lang={lang} />
-
-            {/* ─────────────  FORM (the application)  ───────────── */}
+            {/* ─────────────  FORM (the application)  ─────────────
+                Form sits IMMEDIATELY under the hero — minimal scroll
+                from the hero CTA. Goal is form fills, so we trade
+                'educate-before-asking' for 'capture-the-ready-now'.
+                Visitors who scroll past form get the education + last-
+                chance CTA below. */}
             <section ref={formRef} className="relative scroll-mt-20">
               <div className="max-w-2xl mx-auto px-5 md:px-8 py-10 md:py-16">
                 <div className="text-center mb-8 md:mb-10">
@@ -351,8 +349,14 @@ export default function FlashkaClient() {
               </div>
             </section>
 
-            {/* Post-form sections — last-chance close for visitors who
-                scrolled past the form without filling. FAQ handles their
+            {/* Education + credibility for visitors who scrolled past
+                form without converting. Proof (4 stats) -> About (who we
+                are + what the drive is) -> Inside (4 modules) -> Qualify
+                (yes/no fit). Each section is a touch point that can pull
+                the visitor back up to the form via hero/sticky CTA. */}
+            <FlashkaBelowFold lang={lang} />
+
+            {/* Final recovery layer — FAQ handles their remaining
                 objections; Final CTA gives them a scarcity push back
                 to the form OR an alternate call-booking path. */}
             <FlashkaPostForm lang={lang} scrollToForm={scrollToForm} />
@@ -449,6 +453,10 @@ export default function FlashkaClient() {
         .flashka-drive-wrap svg {
           width: 100%;
           height: auto;
+          /* Lock the aspect ratio explicitly so the SVG can't collapse
+             to a smaller intrinsic height in browsers that compute
+             height:auto + width:100% incorrectly on inline SVG. */
+          aspect-ratio: 380 / 150;
           display: block;
           filter:
             drop-shadow(0 22px 36px rgba(0, 0, 0, 0.75))
