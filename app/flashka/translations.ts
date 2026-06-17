@@ -27,7 +27,7 @@ export const flashkaCopy = {
 
     clients: {
       eyebrow: "С НАС РАБОТЯТ",
-      sub: "30+ бранда в България и САЩ. Видео, реклами, scaling.",
+      sub: "Бранд за бранд, проект след проект.",
     },
 
     about: {
