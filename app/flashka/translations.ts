@@ -144,7 +144,7 @@ export const flashkaCopy = {
 
     finalCta: {
       eyebrow: "СПОТОВЕТЕ СВЪРШВАТ",
-      h2: "Следващият бранд с $10M+ оборот",
+      h2: "Следващият бранд с 4.8× ROAS",
       h2Highlight: "може да си ти.",
       sub: "Остават 5 спота. Една анкета. До 24 часа имаш отговор — да или не, без хитрости.",
       scrollToForm: "Кандидатствай сега →",
@@ -299,7 +299,7 @@ export const flashkaCopy = {
 
     finalCta: {
       eyebrow: "SPOTS ARE FILLING",
-      h2: "The next brand with $10M+ revenue",
+      h2: "The next brand with 4.8× ROAS",
       h2Highlight: "could be you.",
       sub: "5 spots left. One application. Within 24 hours you have an answer — yes or no, no tricks.",
       scrollToForm: "Apply now →",
