@@ -163,11 +163,20 @@ export default function FlashkaClient() {
         {!done ? (
           <>
             {/* ─────────────  HERO  ───────────── */}
-            <section className="relative">
+            <section className="relative overflow-hidden">
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-6 md:pb-8 text-center">
+              {/* HERO-BG FLASHKA — sits absolutely behind the content.
+                  Huge on every breakpoint, anchored bottom-right on
+                  desktop (extends off-canvas for the brutal feel),
+                  centered behind text on mobile. Content has z-10 to
+                  stay readable above. */}
+              <div aria-hidden className="flashka-hero-bg pointer-events-none">
+                <FlashkaDrive />
+              </div>
+
+              <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-6 md:pb-8 text-center">
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
                   style={{ boxShadow: "0 0 24px -6px rgba(200,255,0,0.4)" }}
@@ -234,13 +243,6 @@ export default function FlashkaClient() {
                   ))}
                 </div>
 
-                {/* Embedded USB drive — pure inline SVG plugged into a
-                    'port milled into the page'. LED pulses lime. This
-                    is the hero's visual full-stop: the eye lands on it
-                    after reading the CTA, the LED pulls focus down
-                    toward the form section below. Same composition on
-                    mobile (uses clamp(), no media queries). */}
-                <FlashkaDrive />
               </div>
             </section>
 
@@ -418,9 +420,10 @@ export default function FlashkaClient() {
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes flashkaTilt {
-          /* More dramatic tilt — sells the 3D presence at larger scale */
-          0%, 100% { transform: rotateY(-14deg) rotateX(5deg)  translateY(0); }
-          50%      { transform: rotateY( 14deg) rotateX(-4deg) translateY(-8px); }
+          /* Dramatic asymmetric tilt — drive looks like a real product
+             angled into the frame, not a flat illustration nudging. */
+          0%, 100% { transform: rotateY(-26deg) rotateX(10deg) translateY(0); }
+          50%      { transform: rotateY(-10deg) rotateX(4deg)  translateY(-14px); }
         }
         @keyframes flashkaSpec {
           /* Specular highlight that slides across the body */
@@ -429,12 +432,35 @@ export default function FlashkaClient() {
           60%      { opacity: 1; }
           100%     { transform: translateX( 30%); opacity: 0; }
         }
+        /* Hero-bg wrapper — the drive lives ABSOLUTELY behind the hero
+           content. On mobile it sits center-behind at lower opacity (text
+           reads through). On desktop it shifts to bottom-right and bleeds
+           off-canvas for the brutal product-shot feel. */
+        .flashka-hero-bg {
+          position: absolute;
+          left: 50%;
+          bottom: -8%;
+          transform: translateX(-50%);
+          width: 130vw;
+          max-width: 720px;
+          opacity: 0.6;
+          z-index: 1;
+        }
+        @media (min-width: 768px) {
+          .flashka-hero-bg {
+            left: auto;
+            right: -12%;
+            bottom: -20%;
+            transform: none;
+            width: 85vw;
+            max-width: 1100px;
+            opacity: 0.78;
+          }
+        }
         .flashka-drive-perspective {
-          /* BIG hero drive — 2.5x bigger than the previous comp.
-             Acts as the hero centerpiece, not a decorative endcap. */
-          width: clamp(300px, 60vw, 520px);
-          margin: clamp(20px, 4vh, 40px) auto clamp(6px, 2vh, 18px);
-          perspective: 1400px;
+          width: 100%;
+          margin: 0;
+          perspective: 1800px;
           perspective-origin: 50% 50%;
           animation: flashkaInsert 0.9s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
@@ -471,6 +497,11 @@ export default function FlashkaClient() {
           letter-spacing: 0.35em;
           text-transform: uppercase;
           color: rgba(200, 255, 0, 0.6);
+        }
+        /* When the drive is the hero background, hide the floating
+           caption below — it would just be muted text drifting in space. */
+        .flashka-hero-bg .flashka-drive-caption {
+          display: none;
         }
         @media (prefers-reduced-motion: reduce) {
           .flashka-drive-perspective { animation: none; }
