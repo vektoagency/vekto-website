@@ -38,9 +38,7 @@ export default function FlashkaClient() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [done, setDone] = useState(false);
-  const [showStickyCta, setShowStickyCta] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   const t = flashkaCopy[lang];
 
@@ -92,17 +90,6 @@ export default function FlashkaClient() {
     } else {
       setTimeout(initCal, 1500);
     }
-  }, []);
-
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setShowStickyCta(!entry.isIntersecting),
-      { rootMargin: "-50% 0px 0px 0px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
   }, []);
 
   const handleSubmit = async () => {
@@ -176,7 +163,7 @@ export default function FlashkaClient() {
         {!done ? (
           <>
             {/* ─────────────  HERO  ───────────── */}
-            <section ref={heroRef} className="relative">
+            <section className="relative">
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
@@ -360,21 +347,6 @@ export default function FlashkaClient() {
                 objections; Final CTA gives them a scarcity push back
                 to the form OR an alternate call-booking path. */}
             <FlashkaPostForm lang={lang} scrollToForm={scrollToForm} />
-
-            {/* Sticky mobile CTA */}
-            <div
-              className={`md:hidden fixed bottom-3 left-3 right-3 z-40 transition-all duration-300 ${
-                showStickyCta ? "translate-y-0 opacity-100" : "translate-y-[150%] opacity-0 pointer-events-none"
-              }`}
-            >
-              <button
-                onClick={scrollToForm}
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-6 py-3.5 rounded-full text-[15px] active:scale-[0.98] transition-all"
-                style={{ boxShadow: "0 18px 50px -8px rgba(200,255,0,0.85), 0 0 40px -4px rgba(200,255,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45)" }}
-              >
-                <span>{t.stickyMobile.cta}</span>
-              </button>
-            </div>
           </>
         ) : (
           <div className="min-h-[70vh] flex items-center justify-center px-5 md:px-8 py-10 md:py-16">

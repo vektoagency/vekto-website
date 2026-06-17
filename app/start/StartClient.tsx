@@ -50,10 +50,7 @@ export default function StartClient() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [done, setDone] = useState(false);
-  // Show sticky mobile CTA only after user has scrolled past the hero.
-  const [showStickyCta, setShowStickyCta] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
@@ -105,18 +102,6 @@ export default function StartClient() {
     } else {
       setTimeout(initCal, 1500);
     }
-  }, []);
-
-  // Scroll listener — show sticky mobile CTA once hero is out of view.
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setShowStickyCta(!entry.isIntersecting),
-      { rootMargin: "-50% 0px 0px 0px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
   }, []);
 
   // Scroll-triggered reveal animations on data-animate elements.
@@ -217,7 +202,7 @@ export default function StartClient() {
         {!done ? (
           <>
             {/* ─────────────  HERO (above the fold, brand promise)  ───────────── */}
-            <section ref={heroRef} className="relative overflow-hidden">
+            <section className="relative overflow-hidden">
               {/* Modern hero background — Linear/Vercel-style.
                   Three layered radial gradients (mesh) drifting slowly +
                   a subtle 1px dot grid overlay. Pure CSS, GPU-accelerated,
@@ -483,21 +468,6 @@ export default function StartClient() {
             </section>
             <StartBelowFold lang={lang} scrollToForm={scrollToForm} />
 
-            {/* ─────────────  STICKY MOBILE CTA  ───────────── */}
-            <div
-              className={`md:hidden fixed bottom-3 left-3 right-3 z-40 transition-all duration-300 ${
-                showStickyCta ? "translate-y-0 opacity-100" : "translate-y-[150%] opacity-0 pointer-events-none"
-              }`}
-            >
-              <button
-                onClick={scrollToForm}
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-6 py-3.5 rounded-full text-[15px] active:scale-[0.98] transition-all"
-                style={{ boxShadow: "0 18px 50px -8px rgba(200,255,0,0.85), 0 0 40px -4px rgba(200,255,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45)" }}
-              >
-                <span>{t.stickyMobile.cta}</span>
-                <span className="text-[17px] leading-none">↓</span>
-              </button>
-            </div>
           </>
         ) : (
           /* ─────────────  SUCCESS STATE  ───────────── */
