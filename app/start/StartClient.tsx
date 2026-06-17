@@ -219,12 +219,13 @@ export default function StartClient() {
           <>
             {/* ─────────────  HERO (above the fold, brand promise)  ───────────── */}
             <section ref={heroRef} className="relative overflow-hidden">
-              {/* Lime ambient glow behind hero text */}
-              <div
-                aria-hidden
-                className="absolute -top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full pointer-events-none opacity-[0.18]"
-                style={{ background: "radial-gradient(circle, #c8ff00 0%, transparent 65%)" }}
-              />
+              {/* Modern hero background — Linear/Vercel-style.
+                  Three layered radial gradients (mesh) drifting slowly +
+                  a subtle 1px dot grid overlay. Pure CSS, GPU-accelerated,
+                  zero images. Replaces the old single ambient glow with
+                  something that reads 2026-modern. */}
+              <div aria-hidden className="absolute inset-0 hero-mesh-bg pointer-events-none" />
+              <div aria-hidden className="absolute inset-0 hero-grid-overlay pointer-events-none" />
               {/* Animated vector field — diagonal arrows stagger-draw on
                   load, literally rendering 'vectors' behind the headline.
                   Brand-coherent (agency name = vector), designer polish
@@ -610,6 +611,35 @@ export default function StartClient() {
         @keyframes startFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        /* Modern hero mesh — three layered radial-gradients drifting
+           via translate-only transforms (GPU-accelerated, no repaint).
+           ~0.5KB CSS, no images, no JS. */
+        .hero-mesh-bg {
+          background:
+            radial-gradient(60% 50% at 22% 18%, rgba(200, 255, 0, 0.22), transparent 65%),
+            radial-gradient(55% 45% at 78% 38%, rgba(200, 255, 0, 0.14), transparent 70%),
+            radial-gradient(70% 55% at 50% 88%, rgba(180, 240, 0, 0.10), transparent 72%);
+          animation: heroMeshDrift 24s ease-in-out infinite;
+          will-change: transform;
+        }
+        @keyframes heroMeshDrift {
+          0%, 100% { transform: translate3d(0, 0, 0); }
+          33%      { transform: translate3d(2.5%, -2%, 0); }
+          66%      { transform: translate3d(-1.5%, 1.5%, 0); }
+        }
+        /* Subtle 1px dot grid overlay — Linear-style background detail.
+           Single CSS background-image, no DOM cost. Masks fade to
+           transparent at edges so it doesn't fight the gradient mesh. */
+        .hero-grid-overlay {
+          background-image:
+            radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.045) 1px, transparent 0);
+          background-size: 28px 28px;
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+          -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-mesh-bg { animation: none; }
         }
         /* Vector field hero bg — stagger-draw diagonal arrows. The
            literal 'vectors' behind 'Дай му вектор.' wordplay. */
