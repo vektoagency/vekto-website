@@ -26,9 +26,9 @@ export const flashkaCopy = {
   // objections before they form.
   frame: {
     eyebrow: "ВАЖНО",
-    h2: "Не курс. Не PDF.",
-    h2Highlight: "Това е нашата оперативна система.",
-    body: "Същата стратегия, която прилагаме с 30+ бранда в БГ и САЩ. Когато станеш клиент — екипът ни я пуска в твоя бизнес. Не я раздаваме самостоятелно.",
+    h2: "Това е нашата оперативна система.",
+    h2Highlight: "Структурата на работата, която работи.",
+    body: "Прилагаме я с 30+ клиента в БГ и САЩ. Когато станеш такъв, екипът ни я пуска в твоя бизнес.",
   },
 
   // Inside — what's actually on the agency's playbook. Concrete
@@ -36,7 +36,7 @@ export const flashkaCopy = {
   // we run with every client' rather than 'here's what you get'.
   inside: {
     eyebrow: "КАКВО Е ВЪТРЕ",
-    h2: "5 модула. 1 система.",
+    h2: "4 модула. 1 система.",
     h2Highlight: "Същата, с която работим.",
     items: [
       {
@@ -57,12 +57,7 @@ export const flashkaCopy = {
       {
         number: "04",
         title: "Conversion stack",
-        body: "Целият tech и copy stack: ad platforms, лендинг шаблони, email flows, retention механизми.",
-      },
-      {
-        number: "05",
-        title: "Прилагане 1-на-1",
-        body: "Екипът ни пуска системата в твоя бизнес. Не я даваме самостоятелно — прилагаме я с теб.",
+        body: "Целият tech и copy stack: ad platforms, лендинг шаблони, retention механизми за повторни продажби.",
       },
     ],
   },
@@ -75,9 +70,9 @@ export const flashkaCopy = {
     h2Highlight: "БГ и САЩ. Реални числа.",
     items: [
       { value: 30, suffix: "+", decimals: 0, label: "Бранда я ползват в БГ и САЩ" },
-      { value: 1, suffix: "M+", decimals: 0, label: "$ среден оборот на клиент" },
+      { value: 10, suffix: "M+", decimals: 0, label: "$ генериран оборот общо" },
       { value: 4.8, suffix: "×", decimals: 1, label: "Среден ROAS от наши кампании" },
-      { value: 5, suffix: "", decimals: 0, label: "Свободни спота за България" },
+      { value: 5, suffix: "", decimals: 0, label: "Свободни спота за нови бизнеси" },
     ],
   },
 
@@ -109,7 +104,7 @@ export const flashkaCopy = {
   formSection: {
     eyebrow: "КАНДИДАТСТВАЙ",
     h2: "60 секунди.",
-    h2Highlight: "Отговор до 24 часа.",
+    h2Highlight: "До 24ч.",
     sub: "Преглеждаме всяка кандидатура лично. Пишем ти само ако има match.",
     submitMicro: "✓ Безплатна кандидатура   ✓ Отговор до 24ч   ✓ Без ангажимент",
   },
@@ -183,12 +178,12 @@ export const flashkaCopy = {
 
   // Final CTA — pure scarcity beat.
   finalCta: {
-    eyebrow: "ОСТАВАТ ОГРАНИЧЕНИ СПОТОВЕ",
-    h2: "5 бранда. 1 страна.",
-    h2Highlight: "Първите кандидати — първи опит.",
-    sub: "Не пращаме оферти на всеки. Преглеждаме всяка кандидатура лично. Отговор до 24 часа — да или не, без хитрости.",
-    scrollToForm: "Кандидатствай сега →",
-    orBook: "Или резервирай 30-минутен разговор",
+    eyebrow: "ВРЕМЕ ЗА РЕШЕНИЕ",
+    h2: "Една анкета.",
+    h2Highlight: "Едно решение.",
+    sub: "60 секунди. До 24 часа имаш отговор — да или не, без хитрости.",
+    scrollToForm: "Кандидатствай →",
+    orBook: "Или резервирай разговор",
   },
 
   stickyMobile: {
