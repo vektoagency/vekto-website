@@ -10,7 +10,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
       h1Top: "Не всеки бизнес расте.",
-      h1Bottom: "Тези с посока — да.",
+      h1Bottom: "С правилен вектор — растат.",
       sub: "Маркетинг агенция за бранда, който иска повече от пазара.",
       trustBadges: [
         "30+ доволни бранда",
@@ -26,8 +26,8 @@ export const startCopy = {
     },
     formSection: {
       eyebrow: "ПОПЪЛНИ АНКЕТАТА",
-      h2: "Получи персонализирана оферта",
-      h2Highlight: "до 24ч.",
+      h2: "Получи оферта",
+      h2Highlight: "до 24 часа",
       sub: "60 секунди за попълване. Безплатно. Без последици — само ясен план за бизнеса ти.",
       submitMicro: "✓ Отговор до 24ч    ✓ Без ангажимент    ✓ 100% безплатно",
     },
@@ -167,7 +167,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
       h1Top: "Not every business grows.",
-      h1Bottom: "Those with direction do.",
+      h1Bottom: "With the right vector — they do.",
       sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
         "30+ happy brands",
@@ -183,8 +183,8 @@ export const startCopy = {
     },
     formSection: {
       eyebrow: "FILL THE SURVEY",
-      h2: "Get a personalized proposal",
-      h2Highlight: "within 24h.",
+      h2: "Get a proposal",
+      h2Highlight: "within 24h",
       sub: "60 seconds to fill. Free. No strings — just a clear plan for your business.",
       submitMicro: "✓ Reply within 24h    ✓ No commitment    ✓ 100% free",
     },

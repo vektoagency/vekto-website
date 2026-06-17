@@ -374,7 +374,7 @@ export default function StartClient() {
                   <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
                     {t.formSection.eyebrow}
                   </p>
-                  <h2 className="text-[28px] sm:text-4xl md:text-[44px] font-extrabold leading-[1.08] tracking-[-0.02em] mb-3 md:mb-4 text-balance">
+                  <h2 className="text-[22px] sm:text-3xl md:text-[40px] font-extrabold leading-[1.1] tracking-[-0.02em] mb-3 md:mb-4 whitespace-nowrap">
                     {t.formSection.h2}{" "}
                     <span
                       className="bg-clip-text text-transparent"
