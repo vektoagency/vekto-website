@@ -28,7 +28,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
   return (
     <>
       {/* ─────────────  INSIDE (what's on the flash drive)  ───────────── */}
-      <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-14 md:py-20">
+      <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-14">
             <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
@@ -49,7 +49,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
               <div
                 key={s.number}
                 data-animate-fk
-                className="reveal-fk relative p-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/35 hover:bg-[#101010] transition-colors"
+                className="reveal-fk group relative p-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/40 hover:bg-[#101010] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_rgba(200,255,0,0.18)] transition-all duration-200"
               >
                 <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#c8ff00]/85 mb-3 inline-block">
                   / {s.number}
@@ -67,7 +67,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
       </section>
 
       {/* ─────────────  PROOF (4 stats)  ───────────── */}
-      <section className="py-14 md:py-20">
+      <section className="py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-14">
             <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
@@ -88,7 +88,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
               <div
                 key={s.label}
                 data-animate-fk
-                className="reveal-fk text-center px-3 py-5 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d]"
+                className="reveal-fk text-center px-3 py-5 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/25 transition-colors"
               >
                 <div className="font-extrabold text-[#c8ff00] tabular-nums tracking-tight text-[40px] md:text-6xl leading-none mb-2 md:mb-3">
                   <CountUp target={s.value} decimals={s.decimals} />
@@ -104,7 +104,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
       </section>
 
       {/* ─────────────  QUALIFY (who it's for / not for)  ───────────── */}
-      <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-14 md:py-20">
+      <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-12">
             <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
@@ -163,7 +163,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
       </section>
 
       {/* ─────────────  FAQ  ───────────── */}
-      <section className="py-14 md:py-20">
+      <section className="py-10 md:py-16">
         <div className="max-w-3xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-12">
             <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
@@ -188,7 +188,7 @@ export default function FlashkaBelowFold({ lang, scrollToForm }: Props) {
       </section>
 
       {/* ─────────────  FINAL CTA  ───────────── */}
-      <section className="relative bg-[#0a0a0a] border-t border-[#1e1e1c] py-16 md:py-24 overflow-hidden">
+      <section className="relative bg-[#0a0a0a] border-t border-[#1e1e1c] py-12 md:py-20 overflow-hidden">
         <div
           aria-hidden
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full pointer-events-none opacity-[0.10]"

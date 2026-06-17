@@ -537,7 +537,7 @@ function Input({
       autoComplete={autoComplete}
       autoCapitalize={type === "email" || type === "url" ? "off" : "sentences"}
       spellCheck={type === "email" || type === "url" || type === "tel" ? false : undefined}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-2 focus:ring-[#c8ff00]/35 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-all hover:border-[#2a2a28]"
     />
   );
 }
