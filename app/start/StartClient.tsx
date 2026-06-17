@@ -41,10 +41,8 @@ export default function StartClient() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [brand, setBrand] = useState("");
-  const [phone, setPhone] = useState("");
   const [contentTypes, setContentTypes] = useState<string[]>([]);
   const [budget, setBudget] = useState(2500);
-  const [message, setMessage] = useState("");
   const [utm, setUtm] = useState<{
     source?: string; medium?: string; campaign?: string;
     content?: string; term?: string; referrer?: string;
@@ -161,12 +159,13 @@ export default function StartClient() {
         ? crypto.randomUUID()
         : `lead_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const res = await submitStartLead({
-      lang, name, email, brand, phone,
+      lang, name, email, brand,
+      phone: "",
       contentType: contentTypes.join(","),
       contentTypeLabel: ctLabels,
       budget: String(budget),
       budgetLabel,
-      message,
+      message: "",
       eventId,
       utmSource: utm.source,
       utmMedium: utm.medium,
@@ -404,14 +403,9 @@ export default function StartClient() {
                     </Field>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                    <Field label={t.fields.brand}>
-                      <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} type="url" />
-                    </Field>
-                    <Field label={t.fields.phone}>
-                      <Input value={phone} onChange={setPhone} placeholder={t.fields.phonePh} type="tel" />
-                    </Field>
-                  </div>
+                  <Field label={t.fields.brand}>
+                    <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} type="url" />
+                  </Field>
 
                   <Field label={t.fields.contentType}>
                     <PillsMulti
@@ -434,15 +428,6 @@ export default function StartClient() {
                       suffix={t.fields.budgetSuffix}
                       maxLabel={t.fields.budgetMaxLabel}
                       lang={lang}
-                    />
-                  </Field>
-
-                  <Field label={t.fields.message}>
-                    <Textarea
-                      value={message}
-                      onChange={setMessage}
-                      placeholder={t.fields.messagePh}
-                      rows={4}
                     />
                   </Field>
 
@@ -700,19 +685,6 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function Textarea({
-  value, onChange, placeholder, rows = 4,
-}: { value: string; onChange: (v: string) => void; placeholder?: string; rows?: number; }) {
-  return (
-    <textarea
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
-      rows={rows}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors resize-y leading-relaxed"
-    />
-  );
-}
 
 function Input({
   value, onChange, placeholder, type = "text", required,
