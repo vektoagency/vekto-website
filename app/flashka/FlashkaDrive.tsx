@@ -47,66 +47,71 @@ export default function FlashkaDrive() {
           <mask id="fdLogoMask" style={{ maskType: "alpha" }}>
             <image
               href="/images/logo.webp"
-              x="207" y="65"
+              x="187" y="65"
               width="120" height="22"
               preserveAspectRatio="xMidYMid meet"
             />
           </mask>
         </defs>
 
-        {/* Port cavity — the "page has been milled" surface */}
+        {/* Port cavity — narrower now (cap-to-body ratio fixed at ~30/70
+            to match a real USB stick's proportions). */}
         <rect
-          x="20" y="46" width="120" height="58" rx="4"
+          x="15" y="46" width="75" height="58" rx="4"
           fill="url(#fdPort)"
           stroke="rgba(255,255,255,0.04)" strokeWidth="1"
         />
         {/* Inner port shadow (top edge) — sells the depth */}
-        <rect x="20" y="46" width="120" height="3" fill="rgba(0,0,0,0.85)" />
+        <rect x="15" y="46" width="75" height="3" fill="rgba(0,0,0,0.85)" />
 
-        {/* USB-A metal connector — protrudes from port into housing */}
+        {/* USB-A metal connector — narrower (42 units, real-product
+            scale) and slightly overlaps the port edge so it reads as
+            'just inserted'. */}
         <rect
-          x="120" y="54" width="60" height="42"
+          x="85" y="54" width="42" height="42"
           fill="url(#fdSteel)"
           stroke="#1a1a1a" strokeWidth="0.5"
         />
-        {/* 4 contact pins inside the connector — the engineering tell */}
-        <rect x="128" y="62" width="44" height="4" fill="#1a1a1a" />
-        <rect x="128" y="70" width="44" height="4" fill="#1a1a1a" />
-        <rect x="128" y="78" width="44" height="4" fill="#1a1a1a" />
-        <rect x="128" y="86" width="44" height="4" fill="#1a1a1a" />
+        {/* 4 contact pins inside the connector */}
+        <rect x="92" y="62" width="30" height="4" fill="#1a1a1a" />
+        <rect x="92" y="70" width="30" height="4" fill="#1a1a1a" />
+        <rect x="92" y="78" width="30" height="4" fill="#1a1a1a" />
+        <rect x="92" y="86" width="30" height="4" fill="#1a1a1a" />
 
-        {/* Matte-black housing — the body of the drive */}
+        {/* Matte-black housing — now ~230 wide vs old 190, so the body
+            visually dominates the cap (the way a real USB drive does). */}
         <rect
-          x="172" y="36" width="190" height="78" rx="6"
+          x="132" y="36" width="230" height="78" rx="6"
           fill="url(#fdBody)"
           stroke="#252525" strokeWidth="1"
         />
         {/* Subtle top highlight strip — ambient bounce */}
-        <rect x="172" y="37" width="190" height="1" fill="rgba(255,255,255,0.08)" />
+        <rect x="132" y="37" width="230" height="1" fill="rgba(255,255,255,0.08)" />
         {/* Hairline lime accent strip — brand kiss along the top edge */}
-        <rect x="172" y="40" width="190" height="1.5" fill="#c8ff00" opacity="0.45" />
-        {/* Engraved VEKTO logo — the real brand wordmark from
-            /images/logo.webp, masked via fdLogoMask and filled lime
-            at 45%% so it reads as etched into the matte-black housing. */}
+        <rect x="132" y="40" width="230" height="1.5" fill="#c8ff00" opacity="0.45" />
+        {/* Engraved VEKTO logo — centered on the new body, masked via
+            fdLogoMask and filled lime at 45%% so it reads as etched
+            into the matte-black housing. */}
         <rect
-          x="207" y="65"
+          x="187" y="65"
           width="120" height="22"
           fill="#c8ff00"
           opacity="0.45"
           mask="url(#fdLogoMask)"
         />
-        {/* Lanyard hole on far-right */}
+        {/* Lanyard hole on far-right of body */}
         <circle cx="350" cy="75" r="3.5" fill="#020202" stroke="#1a1a1a" strokeWidth="0.5" />
 
-        {/* THE LED — only animated element. Radial gradient + pulse */}
+        {/* THE LED — sits on the body near the connector edge, like
+            a real drive's activity LED. Only animated element. */}
         <g className="flashka-drive-led">
-          <circle cx="190" cy="75" r="22" fill="url(#fdLed)" opacity="0.55" />
-          <circle cx="190" cy="75" r="4" fill="#eaff7a" />
+          <circle cx="160" cy="75" r="22" fill="url(#fdLed)" opacity="0.55" />
+          <circle cx="160" cy="75" r="4" fill="#eaff7a" />
         </g>
 
         {/* Machined caption beneath the port — micro editorial detail */}
         <text
-          x="80" y="125"
+          x="53" y="125"
           textAnchor="middle"
           fontFamily="ui-monospace, 'Geist Mono', monospace"
           fontSize="7"
