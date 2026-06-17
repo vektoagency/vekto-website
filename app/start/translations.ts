@@ -10,7 +10,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
       h1Top: "Не всеки бизнес расте.",
-      h1Bottom: "С посока всеки расте.",
+      h1Bottom: "С посока всеки може.",
       sub: "Маркетинг агенция за бранда, който иска повече от пазара.",
       trustBadges: [
         "30+ доволни бранда",
@@ -167,7 +167,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
       h1Top: "Not every business grows.",
-      h1Bottom: "With direction, every business grows.",
+      h1Bottom: "With direction, anyone can.",
       sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
         "30+ happy brands",
