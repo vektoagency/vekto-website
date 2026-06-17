@@ -242,17 +242,25 @@ export default function StartClient() {
                   <g
                     className="vector-field"
                     stroke="#c8ff00"
-                    strokeWidth="1.3"
+                    strokeWidth="1.5"
                     fill="none"
                     strokeLinecap="round"
                     markerEnd="url(#vk-arrow)"
                   >
-                    <line x1="-30" y1="720" x2="290" y2="290" pathLength="100" />
-                    <line x1="190" y1="820" x2="510" y2="390" pathLength="100" />
-                    <line x1="390" y1="730" x2="710" y2="300" pathLength="100" />
-                    <line x1="610" y1="860" x2="930" y2="430" pathLength="100" />
-                    <line x1="820" y1="730" x2="1140" y2="300" pathLength="100" />
-                    <line x1="1050" y1="830" x2="1370" y2="410" pathLength="100" />
+                    {/* Wide-spread anchors — visible only on desktop */}
+                    <line x1="-30" y1="720" x2="240" y2="350" pathLength="100" />
+                    <line x1="1160" y1="830" x2="1430" y2="450" pathLength="100" />
+                    {/* Dense center cluster — visible on mobile crop AND
+                        forms a clear vector field behind the headline */}
+                    <line x1="300" y1="780" x2="510" y2="500" pathLength="100" />
+                    <line x1="430" y1="700" x2="640" y2="420" pathLength="100" />
+                    <line x1="560" y1="830" x2="770" y2="540" pathLength="100" />
+                    <line x1="690" y1="710" x2="900" y2="420" pathLength="100" />
+                    <line x1="820" y1="800" x2="1030" y2="520" pathLength="100" />
+                    <line x1="950" y1="700" x2="1160" y2="420" pathLength="100" />
+                    {/* Top row — small arrows above the headline */}
+                    <line x1="380" y1="240" x2="540" y2="100" pathLength="100" />
+                    <line x1="850" y1="240" x2="1010" y2="100" pathLength="100" />
                   </g>
                 </svg>
               </div>
@@ -777,18 +785,22 @@ export default function StartClient() {
           animation: vector-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .vector-field line:nth-child(1) { animation-delay: 0.25s; }
-        .vector-field line:nth-child(2) { animation-delay: 0.40s; }
-        .vector-field line:nth-child(3) { animation-delay: 0.55s; }
-        .vector-field line:nth-child(4) { animation-delay: 0.70s; }
-        .vector-field line:nth-child(5) { animation-delay: 0.85s; }
-        .vector-field line:nth-child(6) { animation-delay: 1.00s; }
+        .vector-field line:nth-child(2) { animation-delay: 0.32s; }
+        .vector-field line:nth-child(3) { animation-delay: 0.42s; }
+        .vector-field line:nth-child(4) { animation-delay: 0.55s; }
+        .vector-field line:nth-child(5) { animation-delay: 0.62s; }
+        .vector-field line:nth-child(6) { animation-delay: 0.72s; }
+        .vector-field line:nth-child(7) { animation-delay: 0.82s; }
+        .vector-field line:nth-child(8) { animation-delay: 0.92s; }
+        .vector-field line:nth-child(9) { animation-delay: 0.50s; }
+        .vector-field line:nth-child(10) { animation-delay: 0.65s; }
         @keyframes vector-draw {
-          to { stroke-dashoffset: 0; opacity: 0.18; }
+          to { stroke-dashoffset: 0; opacity: 0.24; }
         }
         @media (prefers-reduced-motion: reduce) {
           .vector-field line {
             stroke-dashoffset: 0;
-            opacity: 0.18;
+            opacity: 0.24;
             animation: none;
           }
         }
