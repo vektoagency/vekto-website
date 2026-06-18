@@ -167,9 +167,9 @@ export default function FlashkaClient() {
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-8 md:pt-14 pb-16 md:pb-24 text-center">
+              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-6 md:pt-12 pb-12 md:pb-20 text-center">
                 <h1
-                  className="text-[32px] sm:text-[52px] md:text-[72px] lg:text-[92px] font-extrabold leading-[1.02] tracking-[-0.03em] mb-5 md:mb-7 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  className="text-[30px] sm:text-[48px] md:text-[68px] lg:text-[84px] font-extrabold leading-[1.04] tracking-[-0.03em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
                 >
                   <span className="text-white">{t.meta.h1Top}</span>
@@ -185,7 +185,7 @@ export default function FlashkaClient() {
                   </span>
                 </h1>
 
-                <p className="text-[15px] md:text-xl text-[#a8a8a8] leading-relaxed max-w-[640px] mx-auto mb-7 md:mb-9 text-balance animate-[startFade_0.6s_0.1s_ease-out_both]">
+                <p className="text-[14.5px] md:text-[18px] text-[#a8a8a8] leading-relaxed max-w-[560px] md:max-w-[620px] mx-auto mb-6 md:mb-8 text-balance animate-[startFade_0.6s_0.1s_ease-out_both]">
                   {t.meta.sub}
                 </p>
 
@@ -418,10 +418,12 @@ export default function FlashkaClient() {
           100%     { transform: translateX( 30%); opacity: 0; }
         }
         .flashka-drive-perspective {
-          /* BIG hero drive — 2.5x bigger than the previous comp.
-             Acts as the hero centerpiece, not a decorative endcap. */
-          width: clamp(300px, 60vw, 520px);
-          margin: clamp(20px, 4vh, 40px) auto clamp(6px, 2vh, 18px);
+          /* Balanced hero centerpiece — big enough to dominate but
+             not so big it hogs the viewport. Tightened upper end
+             from 520 -> 460 (desktop) so the drive shares more
+             space with the headline above. */
+          width: clamp(280px, 52vw, 460px);
+          margin: clamp(16px, 3vh, 32px) auto clamp(6px, 2vh, 16px);
           perspective: 1400px;
           perspective-origin: 50% 50%;
           animation: flashkaInsert 0.9s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
