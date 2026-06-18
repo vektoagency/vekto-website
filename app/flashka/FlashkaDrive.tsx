@@ -47,6 +47,20 @@ export default function FlashkaDrive() {
                 preserveAspectRatio="xMidYMid meet"
               />
             </mask>
+            {/* Diagonal specular sweep gradient — narrow white band */}
+            <linearGradient id="fdSpec" x1="0" y1="0" x2="1" y2="0.4">
+              <stop offset="0%"   stopColor="rgba(255,255,255,0)" />
+              <stop offset="42%"  stopColor="rgba(255,255,255,0)" />
+              <stop offset="50%"  stopColor="rgba(255,255,255,0.28)" />
+              <stop offset="58%"  stopColor="rgba(255,255,255,0)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            </linearGradient>
+            {/* Body clip-path — keeps the moving specular band cleanly
+                INSIDE the body's rounded-rectangle silhouette so the
+                highlight can't bleed past the edges. */}
+            <clipPath id="fdBodyClip">
+              <rect x="70" y="44" width="240" height="70" rx="8" />
+            </clipPath>
           </defs>
 
           {/* USB-A METAL CONNECTOR — short stub on the left */}
@@ -70,6 +84,16 @@ export default function FlashkaDrive() {
           <rect x="70" y="45" width="240" height="1.4" fill="rgba(255,255,255,0.16)" />
           <rect x="70" y="48.5" width="240" height="1.6" fill="#c8ff00" opacity="0.6" />
           <rect x="70" y="112" width="240" height="1.2" fill="rgba(255,255,255,0.1)" />
+
+          {/* Specular highlight — sliding white band, clipped to the
+              body silhouette so it can't bleed past the rounded edges. */}
+          <g clipPath="url(#fdBodyClip)">
+            <rect
+              className="flashka-drive-spec"
+              x="70" y="44" width="240" height="70"
+              fill="url(#fdSpec)"
+            />
+          </g>
 
           {/* SMALL ACTIVITY LED — near connector side of body */}
           <g className="flashka-drive-led">

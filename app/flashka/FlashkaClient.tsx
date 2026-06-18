@@ -410,6 +410,14 @@ export default function FlashkaClient() {
           0%, 100% { transform: rotateY(-9deg) rotateX(4deg)  translateY(0); }
           50%      { transform: rotateY( 9deg) rotateX(-3deg) translateY(-6px); }
         }
+        @keyframes flashkaSpec {
+          /* Sliding diagonal highlight — clipPath keeps it inside the
+             body silhouette so the band can't bleed past edges. */
+          0%   { transform: translateX(-100%); opacity: 0; }
+          25%  { opacity: 1; }
+          75%  { opacity: 1; }
+          100% { transform: translateX( 100%); opacity: 0; }
+        }
         .flashka-drive-perspective {
           /* Balanced hero centerpiece — big enough to dominate but
              not so big it hogs the viewport. Tightened upper end
@@ -442,6 +450,11 @@ export default function FlashkaClient() {
           transform-origin: center;
           animation: flashkaLed 2.4s ease-in-out infinite;
         }
+        .flashka-drive-spec {
+          transform-origin: center;
+          animation: flashkaSpec 5s ease-in-out infinite;
+          will-change: transform, opacity;
+        }
         .flashka-drive-caption {
           margin-top: 14px;
           text-align: center;
@@ -455,6 +468,7 @@ export default function FlashkaClient() {
           .flashka-drive-perspective { animation: none; }
           .flashka-drive-wrap { animation: none; transform: none; }
           .flashka-drive-led  { animation: none; opacity: 0.85; }
+          .flashka-drive-spec { animation: none; opacity: 0; }
         }
         .flashka-mesh-bg {
           background:
