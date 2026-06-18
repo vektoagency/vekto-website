@@ -37,12 +37,6 @@ export default function FlashkaDrive() {
               <stop offset="55%"  stopColor="#c8ff00" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#c8ff00" stopOpacity="0" />
             </radialGradient>
-            {/* Lime rim light — strong glow around the body edges */}
-            <radialGradient id="fdRim" cx="50%" cy="50%" r="55%">
-              <stop offset="40%"  stopColor="rgba(200,255,0,0)" />
-              <stop offset="80%"  stopColor="rgba(200,255,0,0.25)" />
-              <stop offset="100%" stopColor="rgba(200,255,0,0.5)" />
-            </radialGradient>
             {/* Logo mask — alpha-channel mask. Body sits at x=70-310,
                 center 190. */}
             <mask id="fdLogoMask" style={{ maskType: "alpha" }}>
@@ -54,14 +48,6 @@ export default function FlashkaDrive() {
               />
             </mask>
           </defs>
-
-          {/* Lime rim-light glow around the body */}
-          <rect
-            x="54" y="34"
-            width="274" height="92" rx="14"
-            fill="url(#fdRim)"
-            opacity="0.7"
-          />
 
           {/* USB-A METAL CONNECTOR — short stub on the left */}
           <rect
