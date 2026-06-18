@@ -481,10 +481,10 @@ export default function FlashkaClient() {
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes flashkaTilt {
-          /* Symmetric, gentler tilt — large amplitudes made the drive
-             look off-center at the extremes of the loop. */
-          0%, 100% { transform: rotateY(-9deg) rotateX(4deg)  translateY(0); }
-          50%      { transform: rotateY( 9deg) rotateX(-3deg) translateY(-6px); }
+          /* More dramatic 3D wobble — bigger rotation amplitude
+             showcases the new side bevels + corner details. */
+          0%, 100% { transform: rotateY(-13deg) rotateX(6deg)  translateY(0); }
+          50%      { transform: rotateY( 13deg) rotateX(-5deg) translateY(-8px); }
         }
         @keyframes flashkaSpec {
           /* Sliding diagonal highlight — clipPath keeps it inside the
@@ -517,10 +517,12 @@ export default function FlashkaClient() {
              removed floor reflection). */
           aspect-ratio: 380 / 100;
           display: block;
+          /* Deeper shadow stack for 3D anchor + lime ambient halo */
           filter:
-            drop-shadow(0 4px 6px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 16px 28px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 36px rgba(200, 255, 0, 0.22));
+            drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65))
+            drop-shadow(0 12px 22px rgba(0, 0, 0, 0.7))
+            drop-shadow(0 28px 48px rgba(0, 0, 0, 0.45))
+            drop-shadow(0 0 42px rgba(200, 255, 0, 0.26));
         }
         .flashka-drive-led {
           transform-origin: center;
