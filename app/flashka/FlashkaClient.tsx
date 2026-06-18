@@ -166,6 +166,53 @@ export default function FlashkaClient() {
             <section className="relative">
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
+              {/* Animated vector field — diagonal arrows stagger-draw
+                  on load. Same brand-coherent motif as /start: literal
+                  'vectors' behind the headline. Pure inline SVG +
+                  CSS keyframes, GPU-cheap. */}
+              <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+                <svg
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 1400 800"
+                  preserveAspectRatio="xMidYMid slice"
+                >
+                  <defs>
+                    <marker
+                      id="fk-arrow"
+                      viewBox="0 0 10 10"
+                      refX="9"
+                      refY="5"
+                      markerWidth="5"
+                      markerHeight="5"
+                      orient="auto"
+                    >
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" opacity="0.55" />
+                    </marker>
+                  </defs>
+                  <g
+                    className="flashka-vector-field"
+                    stroke="#c8ff00"
+                    strokeWidth="1.5"
+                    fill="none"
+                    strokeLinecap="round"
+                    markerEnd="url(#fk-arrow)"
+                  >
+                    {/* Wide-spread anchors — desktop only */}
+                    <line x1="-30" y1="720" x2="240" y2="350" pathLength="100" />
+                    <line x1="1160" y1="830" x2="1430" y2="450" pathLength="100" />
+                    {/* Dense center cluster — visible on mobile crop */}
+                    <line x1="300" y1="780" x2="510" y2="500" pathLength="100" />
+                    <line x1="430" y1="700" x2="640" y2="420" pathLength="100" />
+                    <line x1="560" y1="830" x2="770" y2="540" pathLength="100" />
+                    <line x1="690" y1="710" x2="900" y2="420" pathLength="100" />
+                    <line x1="820" y1="800" x2="1030" y2="520" pathLength="100" />
+                    <line x1="950" y1="700" x2="1160" y2="420" pathLength="100" />
+                    {/* Top row — small arrows above the headline */}
+                    <line x1="380" y1="240" x2="540" y2="100" pathLength="100" />
+                    <line x1="850" y1="240" x2="1010" y2="100" pathLength="100" />
+                  </g>
+                </svg>
+              </div>
 
               <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-6 md:pt-12 pb-12 md:pb-20 text-center">
                 <h1
@@ -390,6 +437,35 @@ export default function FlashkaClient() {
         @keyframes startFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        /* Hero vector field — stagger-draw diagonal arrows. Same
+           literal-vectors motif as /start: drawn-in arrowed lines
+           streak across the hero behind the headline. */
+        .flashka-vector-field line {
+          stroke-dasharray: 100;
+          stroke-dashoffset: 100;
+          opacity: 0;
+          animation: vector-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .flashka-vector-field line:nth-child(1)  { animation-delay: 0.25s; }
+        .flashka-vector-field line:nth-child(2)  { animation-delay: 0.32s; }
+        .flashka-vector-field line:nth-child(3)  { animation-delay: 0.42s; }
+        .flashka-vector-field line:nth-child(4)  { animation-delay: 0.55s; }
+        .flashka-vector-field line:nth-child(5)  { animation-delay: 0.62s; }
+        .flashka-vector-field line:nth-child(6)  { animation-delay: 0.72s; }
+        .flashka-vector-field line:nth-child(7)  { animation-delay: 0.82s; }
+        .flashka-vector-field line:nth-child(8)  { animation-delay: 0.92s; }
+        .flashka-vector-field line:nth-child(9)  { animation-delay: 0.50s; }
+        .flashka-vector-field line:nth-child(10) { animation-delay: 0.65s; }
+        @keyframes vector-draw {
+          to { stroke-dashoffset: 0; opacity: 0.24; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .flashka-vector-field line {
+            stroke-dashoffset: 0;
+            opacity: 0.24;
+            animation: none;
+          }
         }
         /* Embedded USB drive — photoreal cap+body with CSS 3D tilt
            + specular sweep + reflection underneath. All GPU-cheap
