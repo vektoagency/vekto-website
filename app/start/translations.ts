@@ -8,7 +8,7 @@ export type Lang = "bg" | "en";
 export const startCopy = {
   bg: {
     meta: {
-      eyebrow: "VEKTO · 60-СЕКУНДНА АНКЕТА",
+      eyebrow: "VEKTO",
       h1Top: "Не всеки бизнес расте.",
       h1Bottom: "С посока всеки може.",
       sub: "Маркетинг агенция за бранда, който иска повече от пазара.",
@@ -28,7 +28,7 @@ export const startCopy = {
       eyebrow: "ПОПЪЛНИ АНКЕТАТА",
       h2: "Получи оферта",
       h2Highlight: "до 24 часа",
-      sub: "60 секунди за попълване. Безплатно. Без последици — само ясен план за бизнеса ти.",
+      sub: "60 секунди да попълниш. 24 часа до отговор.",
       submitMicro: "✓ Отговор до 24ч    ✓ Без ангажимент    ✓ 100% безплатно",
     },
     fields: {
@@ -165,7 +165,7 @@ export const startCopy = {
   },
   en: {
     meta: {
-      eyebrow: "VEKTO · 60-SECOND SURVEY",
+      eyebrow: "VEKTO",
       h1Top: "Not every business grows.",
       h1Bottom: "The ones with direction do.",
       sub: "A marketing agency for brands that want more from the market.",
@@ -185,7 +185,7 @@ export const startCopy = {
       eyebrow: "FILL THE SURVEY",
       h2: "Get a proposal",
       h2Highlight: "within 24h",
-      sub: "60 seconds to fill. Free. No strings — just a clear plan for your business.",
+      sub: "60 seconds to fill. 24 hours for a reply.",
       submitMicro: "✓ Reply within 24h    ✓ No commitment    ✓ 100% free",
     },
     fields: {
