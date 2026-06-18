@@ -167,7 +167,7 @@ export default function FlashkaClient() {
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-12 md:pb-16 text-center">
+              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-16 md:pb-24 text-center">
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
                   style={{ boxShadow: "0 0 24px -6px rgba(200,255,0,0.4)" }}
@@ -449,11 +449,13 @@ export default function FlashkaClient() {
           height: auto;
           aspect-ratio: 380 / 170;
           display: block;
-          /* Stronger shadow stack — bigger drive needs more weight */
+          /* Softer shadow stack — halo was too aggressive and made the
+             bottom of the drive look cropped where the lime spread ran
+             into the section divider. */
           filter:
-            drop-shadow(0 6px 8px rgba(0, 0, 0, 0.65))
-            drop-shadow(0 28px 48px rgba(0, 0, 0, 0.7))
-            drop-shadow(0 0 56px rgba(200, 255, 0, 0.34));
+            drop-shadow(0 4px 6px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 16px 28px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 36px rgba(200, 255, 0, 0.22));
         }
         .flashka-drive-led {
           transform-origin: center;
