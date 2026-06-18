@@ -25,5 +25,23 @@ export const metadata: Metadata = {
 };
 
 export default function FlashkaPage() {
-  return <FlashkaClient />;
+  return (
+    <>
+      {/* Resource hints — Next 16 / React 19 hoist these <link> tags
+          to <head>. Loaded by the server-rendered HTML so they kick
+          off in parallel with the initial document parse, before any
+          JS hydration. Cuts ~100-300ms off first-paint of the drive
+          visual + first interaction with the Cal.com booking button. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/logo.webp"
+        fetchPriority="high"
+      />
+      <link rel="preconnect" href="https://app.cal.com" crossOrigin="" />
+      <link rel="preconnect" href="https://cal.com" crossOrigin="" />
+      <link rel="dns-prefetch" href="https://connect.facebook.net" />
+      <FlashkaClient />
+    </>
+  );
 }
