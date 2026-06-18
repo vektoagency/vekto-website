@@ -167,20 +167,7 @@ export default function FlashkaClient() {
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-16 md:pb-24 text-center">
-                <div
-                  className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
-                  style={{ boxShadow: "0 0 24px -6px rgba(200,255,0,0.4)" }}
-                >
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inset-0 rounded-full bg-[#c8ff00] animate-ping opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#c8ff00]" />
-                  </span>
-                  <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-[#c8ff00] font-semibold">
-                    {t.meta.eyebrow}
-                  </span>
-                </div>
-
+              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-8 md:pt-14 pb-16 md:pb-24 text-center">
                 <h1
                   className="text-[32px] sm:text-[52px] md:text-[72px] lg:text-[92px] font-extrabold leading-[1.02] tracking-[-0.03em] mb-5 md:mb-7 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
