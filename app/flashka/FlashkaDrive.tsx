@@ -61,74 +61,74 @@ export default function FlashkaDrive() {
             </linearGradient>
             {/* Logo mask — alpha-channel mask. The dark-on-transparent
                 brand logo silhouette is the visible area. Coordinates
-                centered on the new body (x=94-334, center 214). */}
+                centered on the body (x=86-326, center 206). */}
             <mask id="fdLogoMask" style={{ maskType: "alpha" }}>
               <image
                 href="/images/logo.webp"
-                x="134" y="61"
+                x="126" y="61"
                 width="160" height="32"
                 preserveAspectRatio="xMidYMid meet"
               />
             </mask>
 
             {/* Reusable drive group so the floor reflection can mirror
-                it via a single <use>. The whole composition now spans
-                x=46-334 (288 units), centered in the 380-unit viewBox. */}
+                it via a single <use>. The whole composition spans
+                x=38-326 (288 units). Drive is shifted 8 units left of
+                geometric center so the BODY (the visual heavyweight)
+                lands at the viewBox center, not just the connector. */}
             <g id="fdDrive">
               {/* Lime rim-light glow around the body */}
               <rect
-                x="78" y="34"
+                x="70" y="34"
                 width="274" height="92" rx="14"
                 fill="url(#fdRim)"
                 opacity="0.7"
               />
 
-              {/* USB-A METAL CONNECTOR — short stub on the left, real
-                  USB-A proportions (44 wide vs body's 240). */}
+              {/* USB-A METAL CONNECTOR — short stub on the left */}
               <rect
-                x="46" y="58" width="48" height="42"
+                x="38" y="58" width="48" height="42"
                 fill="url(#fdSteel)"
                 stroke="#1a1a1a" strokeWidth="0.5"
               />
               {/* Top edge highlight on connector */}
-              <rect x="46" y="58" width="48" height="1" fill="rgba(255,255,255,0.18)" />
-              {/* 4 contact pins inside the shorter connector */}
-              <rect x="54" y="66" width="32" height="4" fill="#0d0d0d" />
-              <rect x="54" y="74" width="32" height="4" fill="#0d0d0d" />
-              <rect x="54" y="82" width="32" height="4" fill="#0d0d0d" />
-              <rect x="54" y="90" width="32" height="4" fill="#0d0d0d" />
+              <rect x="38" y="58" width="48" height="1" fill="rgba(255,255,255,0.18)" />
+              {/* 4 contact pins inside the connector */}
+              <rect x="46" y="66" width="32" height="4" fill="#0d0d0d" />
+              <rect x="46" y="74" width="32" height="4" fill="#0d0d0d" />
+              <rect x="46" y="82" width="32" height="4" fill="#0d0d0d" />
+              <rect x="46" y="90" width="32" height="4" fill="#0d0d0d" />
 
-              {/* DRIVE BODY — single sleek matte-black rectangle,
-                  centered in the viewBox now. */}
+              {/* DRIVE BODY — single sleek matte-black rectangle */}
               <rect
-                x="94" y="44" width="240" height="70" rx="8"
+                x="86" y="44" width="240" height="70" rx="8"
                 fill="url(#fdBody)"
                 stroke="#050505" strokeWidth="1"
               />
               {/* Top hairline highlight */}
-              <rect x="94" y="45" width="240" height="1.4" fill="rgba(255,255,255,0.16)" />
+              <rect x="86" y="45" width="240" height="1.4" fill="rgba(255,255,255,0.16)" />
               {/* Lime brand kiss along the very top edge */}
-              <rect x="94" y="48.5" width="240" height="1.6" fill="#c8ff00" opacity="0.6" />
+              <rect x="86" y="48.5" width="240" height="1.6" fill="#c8ff00" opacity="0.6" />
               {/* Bottom reflection edge */}
-              <rect x="94" y="112" width="240" height="1.2" fill="rgba(255,255,255,0.1)" />
+              <rect x="86" y="112" width="240" height="1.2" fill="rgba(255,255,255,0.1)" />
 
               {/* Diagonal specular sweep — the moving highlight */}
               <rect
                 className="flashka-drive-spec"
-                x="94" y="44" width="240" height="70" rx="8"
+                x="86" y="44" width="240" height="70" rx="8"
                 fill="url(#fdSpec)"
               />
 
               {/* SMALL ACTIVITY LED — near connector side of body */}
               <g className="flashka-drive-led">
-                <circle cx="122" cy="79" r="22" fill="url(#fdLed)" opacity="0.45" />
-                <circle cx="122" cy="79" r="11" fill="url(#fdLed)" opacity="0.7" />
-                <circle cx="122" cy="79" r="3.5" fill="#f5ffb0" />
+                <circle cx="114" cy="79" r="22" fill="url(#fdLed)" opacity="0.45" />
+                <circle cx="114" cy="79" r="11" fill="url(#fdLed)" opacity="0.7" />
+                <circle cx="114" cy="79" r="3.5" fill="#f5ffb0" />
               </g>
 
               {/* ENGRAVED VEKTO LOGO — centered on the body. */}
               <rect
-                x="134" y="61"
+                x="126" y="61"
                 width="160" height="32"
                 fill="#c8ff00"
                 opacity="0.7"
@@ -136,7 +136,7 @@ export default function FlashkaDrive() {
               />
               {/* Subtle inner lime glow behind the logo */}
               <rect
-                x="134" y="61"
+                x="126" y="61"
                 width="160" height="32"
                 fill="#c8ff00"
                 opacity="0.18"
@@ -145,7 +145,7 @@ export default function FlashkaDrive() {
               />
 
               {/* Lanyard hole near the right edge of body */}
-              <circle cx="322" cy="79" r="3.5" fill="#000" stroke="#1a1a1a" strokeWidth="0.5" />
+              <circle cx="314" cy="79" r="3.5" fill="#000" stroke="#1a1a1a" strokeWidth="0.5" />
             </g>
           </defs>
 
