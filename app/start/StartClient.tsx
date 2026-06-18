@@ -258,7 +258,7 @@ export default function StartClient() {
                   </g>
                 </svg>
               </div>
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-7 md:pt-16 pb-6 md:pb-10 text-center">
+              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-7 md:pt-16 pb-6 md:pb-10 text-center">
                 {/* Pulsing eyebrow chip */}
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
@@ -274,13 +274,12 @@ export default function StartClient() {
                 </div>
 
                 <h1
-                  className="text-[28px] sm:text-[44px] md:text-[60px] lg:text-[80px] font-extrabold leading-[1.05] tracking-[-0.025em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  className="text-[28px] sm:text-[40px] md:text-[56px] lg:text-[72px] font-extrabold leading-[1.05] tracking-[-0.025em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
                 >
-                  <span className="text-white">{t.meta.h1Top}</span>
-                  <br />
+                  <span className="text-white block md:whitespace-nowrap">{t.meta.h1Top}</span>
                   <span
-                    className="inline-block bg-clip-text text-transparent"
+                    className="block md:whitespace-nowrap bg-clip-text text-transparent"
                     style={{
                       backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
                       filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))",
