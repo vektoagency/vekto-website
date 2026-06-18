@@ -26,8 +26,8 @@ export const flashkaCopy = {
     },
 
     clients: {
-      eyebrow: "С НАС РАБОТЯТ",
-      sub: "Бранд за бранд, проект след проект.",
+      eyebrow: "ИЗБРАНИ ПАРТНЬОРИ",
+      sub: "От стартъпи до утвърдени брандове.",
     },
 
     about: {
@@ -196,8 +196,8 @@ export const flashkaCopy = {
     },
 
     clients: {
-      eyebrow: "WORKING WITH US",
-      sub: "30+ brands across BG and US. Video, ads, scaling.",
+      eyebrow: "SELECTED PARTNERS",
+      sub: "From startups to established brands.",
     },
 
     about: {
