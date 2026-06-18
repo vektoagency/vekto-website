@@ -167,7 +167,7 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO · 60-SECOND SURVEY",
       h1Top: "Not every business grows.",
-      h1Bottom: "With direction, anyone can.",
+      h1Bottom: "The ones with direction do.",
       sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
         "30+ happy brands",
