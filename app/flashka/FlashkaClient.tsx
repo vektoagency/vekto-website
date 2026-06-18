@@ -454,15 +454,6 @@ export default function FlashkaClient() {
             drop-shadow(0 16px 28px rgba(0, 0, 0, 0.55))
             drop-shadow(0 0 36px rgba(200, 255, 0, 0.22));
         }
-        /* Per-breakpoint micro-shift — SVG coords are mobile baseline
-           (body center at viewBox x=190). Desktop translates the SVG
-           left by 2 viewBox-units (= 2/380 of width = ~0.53%%) so body
-           center reads as x=188 on web. */
-        @media (min-width: 768px) {
-          .flashka-drive-svg {
-            transform: translateX(-0.526%);
-          }
-        }
         .flashka-drive-led {
           transform-origin: center;
           animation: flashkaLed 2.4s ease-in-out infinite;
