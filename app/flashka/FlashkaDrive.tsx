@@ -37,13 +37,14 @@ export default function FlashkaDrive() {
               <stop offset="55%"  stopColor="#c8ff00" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#c8ff00" stopOpacity="0" />
             </radialGradient>
-            {/* Logo mask — alpha-channel mask. Body sits at x=70-310,
-                center 190. */}
+            {/* Logo mask — alpha-channel mask. Small brand label
+                positioned upper-center on the body, like a real
+                product wordmark printed on the housing. */}
             <mask id="fdLogoMask" style={{ maskType: "alpha" }}>
               <image
                 href="/images/logo.webp"
-                x="110" y="61"
-                width="160" height="32"
+                x="155" y="68"
+                width="70" height="14"
                 preserveAspectRatio="xMidYMid meet"
               />
             </mask>
@@ -102,21 +103,21 @@ export default function FlashkaDrive() {
             <circle cx="98" cy="79" r="3.5" fill="#f5ffb0" />
           </g>
 
-          {/* ENGRAVED VEKTO LOGO — centered on the body. */}
+          {/* VEKTO WORDMARK — small printed brand label, upper-center. */}
           <rect
-            x="110" y="61"
-            width="160" height="32"
+            x="155" y="68"
+            width="70" height="14"
             fill="#c8ff00"
-            opacity="0.7"
+            opacity="0.8"
             mask="url(#fdLogoMask)"
           />
           <rect
-            x="110" y="61"
-            width="160" height="32"
+            x="155" y="68"
+            width="70" height="14"
             fill="#c8ff00"
-            opacity="0.18"
+            opacity="0.22"
             mask="url(#fdLogoMask)"
-            style={{ filter: "blur(2px)" }}
+            style={{ filter: "blur(1.5px)" }}
           />
 
           {/* Lanyard hole near the right edge of body */}
