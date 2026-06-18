@@ -19,6 +19,13 @@ export default function FlashkaDrive() {
   return (
     <div className="flashka-drive-perspective" aria-hidden="true">
       <div className="flashka-drive-wrap">
+        {/* 3D BOX side faces — give the drive real volumetric depth.
+            All four reveal/hide as the tilt animation rotates the
+            parent in 3D space (preserve-3d on .flashka-drive-wrap). */}
+        <div className="flashka-drive-side flashka-drive-side-right" aria-hidden />
+        <div className="flashka-drive-side flashka-drive-side-top" aria-hidden />
+        <div className="flashka-drive-side flashka-drive-side-bottom" aria-hidden />
+        <div className="flashka-drive-back" aria-hidden />
         <svg
           className="flashka-drive-svg"
           viewBox="0 28 380 100"

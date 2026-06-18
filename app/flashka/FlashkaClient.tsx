@@ -506,23 +506,78 @@ export default function FlashkaClient() {
           animation: flashkaInsert 0.9s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .flashka-drive-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 380 / 100;
           transform-style: preserve-3d;
           animation: flashkaTilt 7s ease-in-out infinite;
           will-change: transform;
         }
         .flashka-drive-svg {
+          position: absolute;
+          inset: 0;
           width: 100%;
-          height: auto;
-          /* Trimmed viewBox now 380x100 (was 170 — had room for the
-             removed floor reflection). */
+          height: 100%;
           aspect-ratio: 380 / 100;
           display: block;
+          transform: translateZ(8px);
           /* Deeper shadow stack for 3D anchor + lime ambient halo */
           filter:
             drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65))
             drop-shadow(0 12px 22px rgba(0, 0, 0, 0.7))
             drop-shadow(0 28px 48px rgba(0, 0, 0, 0.45))
             drop-shadow(0 0 42px rgba(200, 255, 0, 0.26));
+        }
+        /* ======= 3D box side faces — REAL volumetric depth ======= */
+        /* Common — each face sits in preserve-3d space, no events. */
+        .flashka-drive-side,
+        .flashka-drive-back {
+          position: absolute;
+          pointer-events: none;
+          backface-visibility: hidden;
+        }
+        /* Back face — sits 8px behind the front. Visible only at
+           extreme rotation; mostly anchors the drive's depth. */
+        .flashka-drive-back {
+          inset: 0;
+          transform: translateZ(-8px);
+          background: linear-gradient(180deg, #0a0a0a, #050505);
+          border-radius: 8px;
+        }
+        /* RIGHT side face — thin band rotated 90deg on Y axis. Reveals
+           when the drive tilts to its left (showing its right side). */
+        .flashka-drive-side-right {
+          top: 18%;
+          bottom: 18%;
+          right: 0;
+          width: 16px;
+          transform-origin: right center;
+          transform: rotateY(90deg) translateZ(0);
+          background: linear-gradient(180deg, #1a1a1a 0%, #050505 50%, #1a1a1a 100%);
+          border-top: 1px solid #c8ff00;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        /* TOP edge face — thin band rotated 90deg on X axis. */
+        .flashka-drive-side-top {
+          top: 0;
+          left: 18%;
+          right: 4%;
+          height: 16px;
+          transform-origin: center top;
+          transform: rotateX(-90deg) translateZ(0);
+          background: linear-gradient(90deg, #2a2a2a 0%, #161616 100%);
+          border-top: 1px solid rgba(255,255,255,0.18);
+        }
+        /* BOTTOM edge face */
+        .flashka-drive-side-bottom {
+          bottom: 0;
+          left: 18%;
+          right: 4%;
+          height: 16px;
+          transform-origin: center bottom;
+          transform: rotateX(90deg) translateZ(0);
+          background: linear-gradient(90deg, #161616 0%, #0a0a0a 100%);
+          box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
         }
         .flashka-drive-led {
           transform-origin: center;
