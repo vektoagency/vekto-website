@@ -410,13 +410,6 @@ export default function FlashkaClient() {
           0%, 100% { transform: rotateY(-9deg) rotateX(4deg)  translateY(0); }
           50%      { transform: rotateY( 9deg) rotateX(-3deg) translateY(-6px); }
         }
-        @keyframes flashkaSpec {
-          /* Specular highlight that slides across the body */
-          0%, 100% { transform: translateX(-30%); opacity: 0; }
-          40%      { opacity: 1; }
-          60%      { opacity: 1; }
-          100%     { transform: translateX( 30%); opacity: 0; }
-        }
         .flashka-drive-perspective {
           /* Balanced hero centerpiece — big enough to dominate but
              not so big it hogs the viewport. Tightened upper end
@@ -436,7 +429,9 @@ export default function FlashkaClient() {
         .flashka-drive-svg {
           width: 100%;
           height: auto;
-          aspect-ratio: 380 / 170;
+          /* Trimmed viewBox now 380x100 (was 170 — had room for the
+             removed floor reflection). */
+          aspect-ratio: 380 / 100;
           display: block;
           filter:
             drop-shadow(0 4px 6px rgba(0, 0, 0, 0.55))
@@ -446,11 +441,6 @@ export default function FlashkaClient() {
         .flashka-drive-led {
           transform-origin: center;
           animation: flashkaLed 2.4s ease-in-out infinite;
-        }
-        .flashka-drive-spec {
-          mix-blend-mode: screen;
-          animation: flashkaSpec 5s ease-in-out infinite;
-          will-change: transform, opacity;
         }
         .flashka-drive-caption {
           margin-top: 14px;
@@ -465,7 +455,6 @@ export default function FlashkaClient() {
           .flashka-drive-perspective { animation: none; }
           .flashka-drive-wrap { animation: none; transform: none; }
           .flashka-drive-led  { animation: none; opacity: 0.85; }
-          .flashka-drive-spec { animation: none; opacity: 0; }
         }
         .flashka-mesh-bg {
           background:

@@ -1,8 +1,6 @@
 // Modern minimalist USB drive — single black body, USB-A connector on
-// the left, VEKTO wordmark centered on the body, small lime LED. No
-// cap, no seam. Matches the look of the ad creatives:
-// matte-black product on dark with strong lime rim light + glow.
-// Pure inline SVG + CSS 3D wobble + specular sweep + floor reflection.
+// the left, VEKTO wordmark centered on the body, small lime LED.
+// Pure inline SVG + CSS 3D tilt + strong lime rim-light glow.
 // Server-component-safe (no 'use client') so it server-renders inside
 // the initial HTML and paints with the hero.
 
@@ -12,7 +10,7 @@ export default function FlashkaDrive() {
       <div className="flashka-drive-wrap">
         <svg
           className="flashka-drive-svg"
-          viewBox="0 28 380 170"
+          viewBox="0 28 380 100"
           xmlns="http://www.w3.org/2000/svg"
           role="presentation"
         >
@@ -32,15 +30,6 @@ export default function FlashkaDrive() {
               <stop offset="50%"  stopColor="#5e5e5e" />
               <stop offset="100%" stopColor="#252525" />
             </linearGradient>
-            {/* Diagonal specular sweep — the highlight that slides
-                across a real anodized surface when you tilt it. */}
-            <linearGradient id="fdSpec" x1="0" y1="0" x2="1" y2="0.5">
-              <stop offset="0%"   stopColor="rgba(255,255,255,0)" />
-              <stop offset="45%"  stopColor="rgba(255,255,255,0)" />
-              <stop offset="50%"  stopColor="rgba(255,255,255,0.20)" />
-              <stop offset="55%"  stopColor="rgba(255,255,255,0)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-            </linearGradient>
             {/* LED bloom — bright core + soft halo */}
             <radialGradient id="fdLed" cx="50%" cy="50%" r="50%">
               <stop offset="0%"   stopColor="#f5ffb0" stopOpacity="1" />
@@ -54,14 +43,8 @@ export default function FlashkaDrive() {
               <stop offset="80%"  stopColor="rgba(200,255,0,0.25)" />
               <stop offset="100%" stopColor="rgba(200,255,0,0.5)" />
             </radialGradient>
-            {/* Floor reflection mask gradient */}
-            <linearGradient id="fdReflect" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stopColor="white" stopOpacity="0.22" />
-              <stop offset="100%" stopColor="white" stopOpacity="0" />
-            </linearGradient>
             {/* Logo mask — alpha-channel mask. Body sits at x=70-310,
-                center 190 (MOBILE baseline — desktop shifts -0.53%%
-                via CSS). */}
+                center 190. */}
             <mask id="fdLogoMask" style={{ maskType: "alpha" }}>
               <image
                 href="/images/logo.webp"
@@ -70,102 +53,64 @@ export default function FlashkaDrive() {
                 preserveAspectRatio="xMidYMid meet"
               />
             </mask>
-
-            {/* Reusable drive group. Body center at x=190 (mobile).
-                Desktop CSS shifts the SVG -2 units left so body
-                center reads as 188 on web. */}
-            <g id="fdDrive">
-              {/* Lime rim-light glow around the body */}
-              <rect
-                x="54" y="34"
-                width="274" height="92" rx="14"
-                fill="url(#fdRim)"
-                opacity="0.7"
-              />
-
-              {/* USB-A METAL CONNECTOR — short stub on the left */}
-              <rect
-                x="22" y="58" width="48" height="42"
-                fill="url(#fdSteel)"
-                stroke="#1a1a1a" strokeWidth="0.5"
-              />
-              {/* Top edge highlight on connector */}
-              <rect x="22" y="58" width="48" height="1" fill="rgba(255,255,255,0.18)" />
-              {/* 4 contact pins inside the connector */}
-              <rect x="30" y="66" width="32" height="4" fill="#0d0d0d" />
-              <rect x="30" y="74" width="32" height="4" fill="#0d0d0d" />
-              <rect x="30" y="82" width="32" height="4" fill="#0d0d0d" />
-              <rect x="30" y="90" width="32" height="4" fill="#0d0d0d" />
-
-              {/* DRIVE BODY */}
-              <rect
-                x="70" y="44" width="240" height="70" rx="8"
-                fill="url(#fdBody)"
-                stroke="#050505" strokeWidth="1"
-              />
-              <rect x="70" y="45" width="240" height="1.4" fill="rgba(255,255,255,0.16)" />
-              <rect x="70" y="48.5" width="240" height="1.6" fill="#c8ff00" opacity="0.6" />
-              <rect x="70" y="112" width="240" height="1.2" fill="rgba(255,255,255,0.1)" />
-
-              <rect
-                className="flashka-drive-spec"
-                x="70" y="44" width="240" height="70" rx="8"
-                fill="url(#fdSpec)"
-              />
-
-              {/* SMALL ACTIVITY LED — near connector side of body */}
-              <g className="flashka-drive-led">
-                <circle cx="98" cy="79" r="22" fill="url(#fdLed)" opacity="0.45" />
-                <circle cx="98" cy="79" r="11" fill="url(#fdLed)" opacity="0.7" />
-                <circle cx="98" cy="79" r="3.5" fill="#f5ffb0" />
-              </g>
-
-              {/* ENGRAVED VEKTO LOGO — centered on the body. */}
-              <rect
-                x="110" y="61"
-                width="160" height="32"
-                fill="#c8ff00"
-                opacity="0.7"
-                mask="url(#fdLogoMask)"
-              />
-              <rect
-                x="110" y="61"
-                width="160" height="32"
-                fill="#c8ff00"
-                opacity="0.18"
-                mask="url(#fdLogoMask)"
-                style={{ filter: "blur(2px)" }}
-              />
-
-              {/* Lanyard hole near the right edge of body */}
-              <circle cx="298" cy="79" r="3.5" fill="#000" stroke="#1a1a1a" strokeWidth="0.5" />
-            </g>
           </defs>
 
-          {/* Real drive */}
-          <use href="#fdDrive" />
+          {/* Lime rim-light glow around the body */}
+          <rect
+            x="54" y="34"
+            width="274" height="92" rx="14"
+            fill="url(#fdRim)"
+            opacity="0.7"
+          />
 
-          {/* Floor reflection — drive mirrored vertically, masked to fade */}
-          <g transform="translate(0, 232) scale(1, -1)" opacity="0.32">
-            <mask id="fdFloorMask">
-              <rect x="0" y="0" width="380" height="120" fill="url(#fdReflect)" />
-            </mask>
-            <g mask="url(#fdFloorMask)">
-              <use href="#fdDrive" />
-            </g>
+          {/* USB-A METAL CONNECTOR — short stub on the left */}
+          <rect
+            x="22" y="58" width="48" height="42"
+            fill="url(#fdSteel)"
+            stroke="#1a1a1a" strokeWidth="0.5"
+          />
+          <rect x="22" y="58" width="48" height="1" fill="rgba(255,255,255,0.18)" />
+          <rect x="30" y="66" width="32" height="4" fill="#0d0d0d" />
+          <rect x="30" y="74" width="32" height="4" fill="#0d0d0d" />
+          <rect x="30" y="82" width="32" height="4" fill="#0d0d0d" />
+          <rect x="30" y="90" width="32" height="4" fill="#0d0d0d" />
+
+          {/* DRIVE BODY */}
+          <rect
+            x="70" y="44" width="240" height="70" rx="8"
+            fill="url(#fdBody)"
+            stroke="#050505" strokeWidth="1"
+          />
+          <rect x="70" y="45" width="240" height="1.4" fill="rgba(255,255,255,0.16)" />
+          <rect x="70" y="48.5" width="240" height="1.6" fill="#c8ff00" opacity="0.6" />
+          <rect x="70" y="112" width="240" height="1.2" fill="rgba(255,255,255,0.1)" />
+
+          {/* SMALL ACTIVITY LED — near connector side of body */}
+          <g className="flashka-drive-led">
+            <circle cx="98" cy="79" r="22" fill="url(#fdLed)" opacity="0.45" />
+            <circle cx="98" cy="79" r="11" fill="url(#fdLed)" opacity="0.7" />
+            <circle cx="98" cy="79" r="3.5" fill="#f5ffb0" />
           </g>
 
-          {/* Micro editorial caption under the drive */}
-          <text
-            x="190" y="155"
-            textAnchor="middle"
-            fontFamily="ui-monospace, 'Geist Mono', monospace"
-            fontSize="8"
-            letterSpacing="2"
-            fill="rgba(200,255,0,0.5)"
-          >
-            VEKTO OS · v.2026 · BG
-          </text>
+          {/* ENGRAVED VEKTO LOGO — centered on the body. */}
+          <rect
+            x="110" y="61"
+            width="160" height="32"
+            fill="#c8ff00"
+            opacity="0.7"
+            mask="url(#fdLogoMask)"
+          />
+          <rect
+            x="110" y="61"
+            width="160" height="32"
+            fill="#c8ff00"
+            opacity="0.18"
+            mask="url(#fdLogoMask)"
+            style={{ filter: "blur(2px)" }}
+          />
+
+          {/* Lanyard hole near the right edge of body */}
+          <circle cx="298" cy="79" r="3.5" fill="#000" stroke="#1a1a1a" strokeWidth="0.5" />
         </svg>
       </div>
     </div>
