@@ -41,8 +41,6 @@ export default function StartClient() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [brand, setBrand] = useState("");
-  const [contentTypes, setContentTypes] = useState<string[]>([]);
-  const [budget, setBudget] = useState(2500);
   const [utm, setUtm] = useState<{
     source?: string; medium?: string; campaign?: string;
     content?: string; term?: string; referrer?: string;
@@ -131,14 +129,6 @@ export default function StartClient() {
       return;
     }
     setSubmitting(true);
-    const ctLabels = contentTypes
-      .map((id) => t.fields.contentTypeOptions.find((o) => o.id === id)?.label)
-      .filter(Boolean)
-      .join(", ");
-    const budgetLabel =
-      budget >= 10000
-        ? t.fields.budgetMaxLabel
-        : `${budget.toLocaleString(lang === "bg" ? "bg-BG" : "en-US")} ${t.fields.budgetSuffix}`;
     const eventId =
       typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID()
@@ -146,10 +136,10 @@ export default function StartClient() {
     const res = await submitStartLead({
       lang, name, email, brand,
       phone: "",
-      contentType: contentTypes.join(","),
-      contentTypeLabel: ctLabels,
-      budget: String(budget),
-      budgetLabel,
+      contentType: "",
+      contentTypeLabel: "",
+      budget: "",
+      budgetLabel: "",
       message: "",
       eventId,
       utmSource: utm.source,
@@ -163,7 +153,7 @@ export default function StartClient() {
     if (res.success) {
       trackEvent(
         "Lead",
-        { value: budget, currency: "EUR", content_name: ctLabels },
+        { content_name: "start" },
         { eventID: eventId }
       );
       setDone(true);
@@ -389,30 +379,6 @@ export default function StartClient() {
 
                   <Field label={t.fields.brand}>
                     <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} type="url" />
-                  </Field>
-
-                  <Field label={t.fields.contentType}>
-                    <PillsMulti
-                      values={contentTypes}
-                      onToggle={(id) =>
-                        setContentTypes((cur) =>
-                          cur.includes(id) ? cur.filter((v) => v !== id) : [...cur, id]
-                        )
-                      }
-                      options={t.fields.contentTypeOptions}
-                    />
-                  </Field>
-
-                  <Field label={t.fields.budget}>
-                    <BudgetSlider
-                      value={budget}
-                      onChange={setBudget}
-                      max={10000}
-                      step={250}
-                      suffix={t.fields.budgetSuffix}
-                      maxLabel={t.fields.budgetMaxLabel}
-                      lang={lang}
-                    />
                   </Field>
 
                   <div className="pt-2">
@@ -678,82 +644,3 @@ function Input({
   );
 }
 
-function PillsMulti({
-  values, onToggle, options,
-}: { values: string[]; onToggle: (id: string) => void; options: ReadonlyArray<{ id: string; label: string }>; }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((o) => {
-        const active = values.includes(o.id);
-        return (
-          <button
-            key={o.id}
-            type="button"
-            onClick={() => onToggle(o.id)}
-            className={`flex items-center gap-2 text-left px-4 py-3 md:py-2.5 rounded-md text-sm md:text-sm min-h-[44px] md:min-h-0 transition-all ${
-              active
-                ? "bg-[#c8ff00] text-black font-semibold border border-[#c8ff00]"
-                : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#c8ff00]/40 hover:text-[#c8ff00]"
-            }`}
-          >
-            <span
-              aria-hidden
-              className={`w-3.5 h-3.5 border rounded-sm flex items-center justify-center shrink-0 ${
-                active ? "border-black bg-black" : "border-[#c8ff00]/40"
-              }`}
-            >
-              {active && (
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              )}
-            </span>
-            <span>{o.label}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function BudgetSlider({
-  value, onChange, max, step, suffix, maxLabel, lang,
-}: { value: number; onChange: (v: number) => void; max: number; step: number; suffix: string; maxLabel: string; lang: "bg" | "en"; }) {
-  const pct = Math.min(100, (value / max) * 100);
-  const display =
-    value >= max ? maxLabel
-      : `${value.toLocaleString(lang === "bg" ? "bg-BG" : "en-US")} ${suffix}`;
-  return (
-    <div>
-      <div className="flex items-baseline gap-2 mb-3">
-        <span className="font-mono text-2xl md:text-3xl font-bold tracking-tight text-[#c8ff00] tabular-nums">
-          {display}
-        </span>
-      </div>
-      <div className="relative">
-        <div className="absolute inset-y-1/2 -translate-y-1/2 left-0 right-0 h-1.5 bg-[#1e1e1c] rounded-full pointer-events-none" />
-        <div
-          aria-hidden
-          className="absolute inset-y-1/2 -translate-y-1/2 left-0 h-1.5 bg-[#c8ff00] rounded-full pointer-events-none transition-[width] duration-150"
-          style={{
-            width: `${pct}%`,
-            boxShadow: "0 0 18px rgba(200,255,0,0.55)",
-          }}
-        />
-        <input
-          type="range"
-          min={500}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className="vekto-range relative w-full bg-transparent appearance-none cursor-pointer"
-        />
-      </div>
-      <div className="flex justify-between mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[#666]">
-        <span>500 €</span>
-        <span>{maxLabel}</span>
-      </div>
-    </div>
-  );
-}
