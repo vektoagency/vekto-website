@@ -15,7 +15,7 @@ export type Lang = "bg" | "en";
 export const flashkaCopy = {
   bg: {
     meta: {
-      eyebrow: "VEKTO · 5 СПОТА · ВЕЧЕ В БЪЛГАРИЯ",
+      eyebrow: "VEKTO · BG · 2026",
       h1Top: "Кодът е в",
       h1Bottom: "30+ успешни бранда.",
       sub: "Цялата ни оперативна система — на тази флашка. Прилагаме я с 30+ бранда в БГ и САЩ. Сега я отваряме за нови 5 бизнеса.",
@@ -185,7 +185,7 @@ export const flashkaCopy = {
 
   en: {
     meta: {
-      eyebrow: "VEKTO · 5 SPOTS · NOW IN BULGARIA",
+      eyebrow: "VEKTO · BG · 2026",
       h1Top: "The code is in",
       h1Bottom: "30+ successful brands.",
       sub: "Our entire operating system — on this flash drive. We apply it with 30+ brands in BG and US. Now opening it for 5 new businesses.",
