@@ -167,7 +167,7 @@ export default function FlashkaClient() {
               <div aria-hidden className="absolute inset-0 flashka-mesh-bg pointer-events-none" />
               <div aria-hidden className="absolute inset-0 flashka-grid-overlay pointer-events-none" />
 
-              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-6 md:pb-8 text-center">
+              <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-5 md:pt-10 pb-12 md:pb-16 text-center">
                 <div
                   className="inline-flex items-center gap-2 mb-5 md:mb-7 px-3.5 py-1.5 rounded-full border border-[#c8ff00]/40 bg-[#c8ff00]/[0.06] animate-[startFade_0.4s_ease-out_both]"
                   style={{ boxShadow: "0 0 24px -6px rgba(200,255,0,0.4)" }}
@@ -418,9 +418,10 @@ export default function FlashkaClient() {
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes flashkaTilt {
-          /* More dramatic tilt — sells the 3D presence at larger scale */
-          0%, 100% { transform: rotateY(-14deg) rotateX(5deg)  translateY(0); }
-          50%      { transform: rotateY( 14deg) rotateX(-4deg) translateY(-8px); }
+          /* Symmetric, gentler tilt — large amplitudes made the drive
+             look off-center at the extremes of the loop. */
+          0%, 100% { transform: rotateY(-9deg) rotateX(4deg)  translateY(0); }
+          50%      { transform: rotateY( 9deg) rotateX(-3deg) translateY(-6px); }
         }
         @keyframes flashkaSpec {
           /* Specular highlight that slides across the body */
