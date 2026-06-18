@@ -172,9 +172,6 @@ export default function FlashkaDrive() {
           </text>
         </svg>
       </div>
-      <div className="flashka-drive-caption">
-        Кодът · v.2026 · България
-      </div>
     </div>
   );
 }
