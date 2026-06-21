@@ -4,24 +4,6 @@
   "cdnHostname": "vz-5279644d-ac4.b-cdn.net",
   "clips": [
     {
-      "id": "7d0a3c1c-a36f-4591-a5a5-cb9e167b80f0",
-      "brand": "DUSQ",
-      "logo": null,
-      "category": "Cinematic",
-      "description": "Brand reel.",
-      "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/7d0a3c1c-a36f-4591-a5a5-cb9e167b80f0/thumbnail.jpg",
-      "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/7d0a3c1c-a36f-4591-a5a5-cb9e167b80f0/play_1080p.mp4",
-      "hlsPlaylist": "https://vz-5279644d-ac4.b-cdn.net/7d0a3c1c-a36f-4591-a5a5-cb9e167b80f0/playlist.m3u8",
-      "embedUrl": "https://iframe.mediadelivery.net/embed/637364/7d0a3c1c-a36f-4591-a5a5-cb9e167b80f0?autoplay=true&muted=false&loop=false",
-      "duration": 38,
-      "width": 720,
-      "height": 1280,
-      "portrait": true,
-      "metric": null,
-      "href": null,
-      "featured": true
-    },
-    {
       "id": "8c0bba5b-5949-43f4-9e09-d5308ad27dce",
       "brand": "PARFEN",
       "logo": null,
@@ -89,24 +71,6 @@
       "width": 1280,
       "height": 720,
       "portrait": false,
-      "metric": null,
-      "href": null,
-      "featured": true
-    },
-    {
-      "id": "vekto-hf-spot",
-      "brand": "VEKTO LAB",
-      "logo": null,
-      "category": "Experimental",
-      "description": "AI-generated spot.",
-      "thumbnail": "/videos/thumbnails/vekto-hf-spot.webp",
-      "previewMp4": "/videos/vekto-hf-spot.mp4",
-      "hlsPlaylist": null,
-      "embedUrl": null,
-      "duration": 13,
-      "width": 720,
-      "height": 1280,
-      "portrait": true,
       "metric": null,
       "href": null,
       "featured": true
@@ -379,24 +343,6 @@
       "portrait": true,
       "metric": null,
       "href": null,
-      "featured": false
-    },
-    {
-      "id": "fac1abe2-96c5-4b91-a552-c45f7dad51f1",
-      "brand": "MEN'S CARE",
-      "logo": "/images/logo-menscare.png",
-      "category": "Experimental",
-      "description": "AI hook — exploding cones.",
-      "thumbnail": "https://vz-5279644d-ac4.b-cdn.net/fac1abe2-96c5-4b91-a552-c45f7dad51f1/thumbnail.jpg",
-      "previewMp4": "https://vz-5279644d-ac4.b-cdn.net/fac1abe2-96c5-4b91-a552-c45f7dad51f1/play_1080p.mp4",
-      "hlsPlaylist": "https://vz-5279644d-ac4.b-cdn.net/fac1abe2-96c5-4b91-a552-c45f7dad51f1/playlist.m3u8",
-      "embedUrl": "https://iframe.mediadelivery.net/embed/637364/fac1abe2-96c5-4b91-a552-c45f7dad51f1?autoplay=true&muted=false&loop=false",
-      "duration": 24,
-      "width": 2160,
-      "height": 3928,
-      "portrait": true,
-      "metric": null,
-      "href": "/work/menscare",
       "featured": false
     }
   ]
