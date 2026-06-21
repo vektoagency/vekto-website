@@ -188,7 +188,12 @@ export default function PortfolioOverlay({ open, onClose }: Props) {
         </section>
 
         <section className="px-6 md:px-12 pb-16 max-w-[1240px] mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
+          {/* grid-flow-dense: lets portrait tiles backfill the empty cells
+              that landscape (col-span-2) clips would otherwise leave when
+              they don't fit at the end of a row. Without dense, the grid
+              would punch visible holes anywhere a 2-col tile got bumped
+              to the next row. */}
+          <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
             {visible.map((c, i) => (
               <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
             ))}
@@ -237,16 +242,15 @@ function formatDuration(seconds: number | null | undefined): string | null {
 
 /* ---------- Tile — static thumbnail, description reveal on hover ---------- */
 function ClipTile({ clip, idx, onExpand }: { clip: Clip; idx: number; onExpand: () => void }) {
-  // Light staggered offset so the grid reads as a layout rather than
-  // a spreadsheet. Pattern repeats every 4 cols: 0, 12, 6, 18 px down.
-  const mod = idx % 4;
-  const staggerClass =
-    mod === 1 ? "lg:translate-y-3" : mod === 2 ? "lg:translate-y-6" : mod === 3 ? "lg:translate-y-9" : "";
+  // No per-tile translate-Y stagger — the parent grid uses grid-flow-dense
+  // which reorders tiles visually to backfill landscape gaps. A column-mod
+  // stagger built on idx no longer maps to visible columns after reflow,
+  // and produced an uneven bottom edge with mixed portrait/landscape.
   // Landscape clips span 2 grid columns and get a 16:9 frame so they
   // don't get squashed into the portrait cell shape.
   const isLandscape = clip.portrait === false;
   const aspectClass = isLandscape ? "aspect-video col-span-2" : "aspect-[9/16]";
-  const tileClass = `group relative ${aspectClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer ${staggerClass}`;
+  const tileClass = `group relative ${aspectClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer`;
   const bootDelay = Math.min(idx, 8) * 18;
   const durationLabel = formatDuration(clip.duration);
 
