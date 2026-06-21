@@ -11,7 +11,7 @@ export default function Footer() {
   const t = useT({
     bg: {
       tagline: "AI визия за бъдещето на бизнеса. От кинематографични филми до съдържание за социалните мрежи.",
-      based: "От България · Работим в цял свят",
+      based: "София · Глобално",
       explore: "Разгледай",
       exploreLinks: [
         { label: "Услуги", href: "#services" },
@@ -29,7 +29,7 @@ export default function Footer() {
     },
     en: {
       tagline: "AI vision for the future of business. From cinematic films to social media content.",
-      based: "Based in Bulgaria · Working worldwide",
+      based: "Sofia · Global",
       explore: "Explore",
       exploreLinks: [
         { label: "Services", href: "#services" },
@@ -55,7 +55,7 @@ export default function Footer() {
           <div>
             <Image src="/images/logo.webp" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />
             <p className="text-sm text-[#9a958e] leading-relaxed max-w-sm mb-5">{t.tagline}</p>
-            <div className="flex items-center gap-2 text-xs text-[#666]">
+            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#7a756e]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
               {t.based}
             </div>
