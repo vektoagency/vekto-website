@@ -32,9 +32,15 @@ type Clip = {
   metric?: string | null;
   href?: string | null;
   featured?: boolean;
+  // Hero-only flag — clip stays in bunny-clips.json so the homepage Hero
+  // (heroFeaturedClipIds in hero-featured-clips.ts) can keep referencing
+  // it, but it does NOT appear in the /portfolio grid. Used for the
+  // no-subtitles "atmospheric" version of vekto-showreel which is
+  // duplicated by the subtitled 06b550bb agency reel in the portfolio.
+  excludeFromPortfolio?: boolean;
 };
 
-const clips = bunnyData.clips as Clip[];
+const clips = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
 
 export default function PortfolioClient() {
   const [filter, setFilter] = useState<string>("ALL");

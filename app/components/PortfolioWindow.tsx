@@ -12,12 +12,17 @@ type Clip = {
   thumbnail: string;
   previewMp4: string | null;
   portrait?: boolean;
+  // Hero-only clips (e.g. the no-subs vekto-showreel) shouldn't show up
+  // in the portfolio preview card either — they're reserved for the
+  // full-bleed mobile hero rotation, and a portfolio preview already
+  // has the subtitled twin of the same content.
+  excludeFromPortfolio?: boolean;
 };
 
 // Desktop card preview budget — 9 clips in a 3x3 scrolling window, sized
 // small enough that 9 simultaneous mp4 decoders are fine on desktop.
 const cardClips = (bunnyData.clips as Clip[])
-  .filter((c) => c.thumbnail)
+  .filter((c) => c.thumbnail && !c.excludeFromPortfolio)
   .slice(0, 9);
 
 // Mobile fullBleed budget — clips hand-picked in hero-featured-clips.ts.
