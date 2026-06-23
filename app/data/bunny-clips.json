@@ -22,6 +22,24 @@
       "featured": true
     },
     {
+      "id": "beme-script-9",
+      "brand": "BEME",
+      "logo": null,
+      "category": "UGC",
+      "description": "AI UGC — script 9.",
+      "thumbnail": "/videos/thumbnails/beme-script-9.webp",
+      "previewMp4": "/videos/beme-script-9.mp4",
+      "hlsPlaylist": null,
+      "embedUrl": null,
+      "duration": 38,
+      "width": 720,
+      "height": 1280,
+      "portrait": true,
+      "metric": null,
+      "href": null,
+      "featured": true
+    },
+    {
       "id": "parfen-script-7",
       "brand": "PARFEN",
       "logo": null,
