@@ -183,18 +183,15 @@ export default function PortfolioClient() {
       <section className="px-6 md:px-12 pb-16 max-w-[1240px] mx-auto">
         {/* grid-flow-dense lets portrait tiles backfill the empty cells
             that landscape (col-span-2) clips would otherwise leave when
-            they don't fit at the end of a row. First clip after the
-            active filter becomes the featured "hero" cell: 2x2 on lg,
-            full-width row on mobile, autoplaying in-view preview. The
-            key={`${filter}-${c.id}`} forces a fresh boot animation on
-            every filter change so the grid restages with a stagger. */}
+            they don't fit at the end of a row. The key={`${filter}-${c.id}`}
+            forces a fresh boot animation on every filter change so the
+            grid restages with a stagger instead of a pop-replace. */}
         <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
           {visible.map((c, i) => (
             <ClipTile
               key={`${filter}-${c.id}`}
               clip={c}
               idx={i}
-              isFeatured={i === 0}
               onExpand={() => setExpanded(c)}
             />
           ))}
@@ -239,73 +236,50 @@ function formatDuration(seconds: number | null | undefined): string | null {
 }
 
 /**
- * ClipTile — interactive grid cell. Two motion modes:
+ * ClipTile — interactive grid cell. Hover-to-play preview:
  *
- * 1. FEATURED (isFeatured=true → first clip after current filter):
- *    occupies a 2x2 cell on lg / a full-width row on mobile, lazily mounts
- *    a muted -480p video and autoplays it whenever the tile is in the
- *    viewport. Always-on motion = strong visual anchor at the top of
- *    the page that survives filter changes.
+ * - DESKTOP (fine pointer): on first mouseenter, lazy-mounts the -480p
+ *   video and crossfades it in over the static thumbnail; mouseleave
+ *   pauses + rewinds + crossfades back to thumb. Click → lightbox plays
+ *   the full clip with audio.
  *
- * 2. NON-FEATURED + hover-capable pointer (desktop):
- *    on first mouseenter, lazy-mounts the -480p video and crossfades it
- *    in over the static thumbnail; mouseleave pauses + fades back to
- *    thumb. Click → lightbox plays the full clip with audio.
+ * - MOBILE (coarse pointer): stays as a static thumbnail. Tap opens the
+ *   lightbox where the full clip plays with audio.
  *
- * 3. NON-FEATURED on coarse pointer (mobile):
- *    stays as a static thumbnail (no autoplay → preserves battery and
- *    cellular bandwidth on a route that already has 20+ tiles). Tap
- *    opens the lightbox where the full clip plays with audio.
- *
- * Why no autoplay-everywhere on mobile: iOS Safari caps concurrent video
- * decoders, and even the -480p variants are 1-3 MB each — 23 of them
- * auto-fetching as the user scrolls would burn ~50 MB on a metered
- * connection for a single page view.
+ * Why no autoplay on mobile: iOS Safari caps concurrent video decoders,
+ * and even the -480p variants are 1-3 MB each — 20+ of them auto-fetching
+ * as the user scrolls would burn ~50 MB on a metered connection for a
+ * single page view.
  */
 function ClipTile({
   clip,
   idx,
-  isFeatured,
   onExpand,
 }: {
   clip: Clip;
   idx: number;
-  isFeatured: boolean;
   onExpand: () => void;
 }) {
-  const tileRef = useRef<HTMLButtonElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Hover state — desktop only (devices with a fine pointer / hover capability).
-  // Detected on first mouseenter so we never mount the <video> on touch screens.
+  // Hover state — desktop only (devices with a fine pointer). Detected on
+  // first mouseenter so we never mount the <video> on touch screens.
   const [isHovered, setIsHovered] = useState(false);
-  // First-paint gate: featured tile lazy-mounts its <video> once it has
-  // scrolled into view at least once (saves the initial decoder slot until
-  // it's actually visible). Non-featured mount on first hover.
+  // The <video> element only enters the DOM after the first hover.
   const [hasMountedVideo, setHasMountedVideo] = useState(false);
-  // Whether the tile is currently in the viewport — drives featured autoplay.
-  const [isInView, setIsInView] = useState(false);
-  // Pause our tile while a lightbox is playing on this page or the homepage
-  // (vekto:player-open event). Frees the watched clip's decoder + bandwidth.
+  // Pause our tile while a lightbox is playing (vekto:player-open event).
+  // Frees the watched clip's decoder + bandwidth.
   const [coveredByOverlay, setCoveredByOverlay] = useState(false);
-  // Visual: video painted over the thumbnail (crossfade opacity target).
+  // Video painted over the thumbnail (crossfade opacity target).
   const [videoVisible, setVideoVisible] = useState(false);
 
   const isLandscape = clip.portrait === false;
-  // Featured wins over landscape — first clip gets the hero cell regardless
-  // of orientation. Landscape clips get a wider non-featured cell.
-  const cellClass = isFeatured
-    ? "col-span-2 row-span-2 aspect-[9/16]"
-    : isLandscape
-      ? "aspect-video col-span-2"
-      : "aspect-[9/16]";
+  const cellClass = isLandscape ? "aspect-video col-span-2" : "aspect-[9/16]";
   const tileClass = `group relative ${cellClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer`;
   const bootDelay = Math.min(idx, 8) * 18;
   const durationLabel = formatDuration(clip.duration);
   const videoSrc = previewVideoUrl(clip.previewMp4);
 
-  // Listen for lightbox open/close so we can pause our preview while a
-  // clip is being watched in the lightbox (frees decoder + bandwidth).
   useEffect(() => {
     const onOpen = () => setCoveredByOverlay(true);
     const onClose = () => setCoveredByOverlay(false);
@@ -316,23 +290,6 @@ function ClipTile({
       window.removeEventListener("vekto:player-closed", onClose);
     };
   }, []);
-
-  // Featured tile uses IntersectionObserver to drive autoplay. Non-featured
-  // tiles skip this entirely — they only react to hover.
-  useEffect(() => {
-    if (!isFeatured) return;
-    const el = tileRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-        if (entry.isIntersecting) setHasMountedVideo(true);
-      },
-      { threshold: 0.15, rootMargin: "20% 0px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [isFeatured]);
 
   // Hover handlers — fine-pointer only. The first hover is what flips
   // hasMountedVideo, so the <video> element doesn't exist in the DOM
@@ -347,9 +304,7 @@ function ClipTile({
     setIsHovered(false);
   };
 
-  // Drive play/pause off the unified "should-be-playing" condition.
-  const shouldPlay =
-    !coveredByOverlay && ((isFeatured && isInView) || isHovered);
+  const shouldPlay = !coveredByOverlay && isHovered;
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -357,14 +312,12 @@ function ClipTile({
       v.play().catch(() => {});
     } else {
       v.pause();
-      // For hover preview, rewind on leave so the next hover starts fresh.
-      if (!isFeatured) v.currentTime = 0;
+      v.currentTime = 0;
     }
-  }, [shouldPlay, isFeatured]);
+  }, [shouldPlay]);
 
   return (
     <button
-      ref={tileRef}
       onClick={onExpand}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
@@ -374,7 +327,6 @@ function ClipTile({
         transformOrigin: "center",
       }}
     >
-      {/* Static thumbnail — base layer; always rendered, fades when video paints. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={clip.thumbnail}
@@ -382,12 +334,10 @@ function ClipTile({
         className={`absolute inset-0 w-full h-full object-cover transition-[transform,opacity] duration-700 ${
           videoVisible ? "opacity-0" : "opacity-100"
         } ${isHovered ? "scale-[1.04]" : "scale-100"}`}
-        loading={idx < 6 || isFeatured ? "eager" : "lazy"}
+        loading={idx < 6 ? "eager" : "lazy"}
         decoding="async"
       />
 
-      {/* Preview video — lazy-mounted on first viewport entry (featured) or
-          first hover (others). Crossfades in once it has enough data. */}
       {hasMountedVideo && videoSrc && (
         <video
           ref={videoRef}
@@ -410,38 +360,23 @@ function ClipTile({
         </div>
       )}
 
-      {isFeatured && (
-        <div className="absolute top-2 left-2 z-[2] font-mono text-[9px] tracking-[0.2em] text-black bg-[#c8ff00] px-2 py-0.5 rounded-sm pointer-events-none flex items-center gap-1.5">
-          <span className="w-1 h-1 rounded-full bg-black animate-pulse" />
-          FEATURED
-        </div>
-      )}
-
       <div
         className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
         style={{ background: "linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.3) 60%, transparent)" }}
       />
 
       <div className="absolute bottom-2 left-2.5 right-2.5 pointer-events-none">
-        <div className={`font-mono uppercase text-white font-bold leading-tight ${
-          isFeatured
-            ? "text-[14px] md:text-[16px] tracking-[0.18em] mb-0.5"
-            : "text-[10px] tracking-[0.2em]"
-        }`}>
+        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white font-bold leading-tight">
           {clip.brand}
         </div>
-        <div className={`font-mono uppercase text-[#c8ff00]/80 ${
-          isFeatured ? "text-[10px] md:text-[11px] tracking-[0.3em]" : "text-[9px] tracking-[0.25em]"
-        }`}>
+        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80">
           {clip.category}
         </div>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        <div className={`rounded-full border border-[#c8ff00] bg-black/50 backdrop-blur-sm flex items-center justify-center ${
-          isFeatured ? "w-16 h-16 md:w-20 md:h-20" : "w-12 h-12"
-        }`}>
-          <svg width={isFeatured ? "20" : "14"} height={isFeatured ? "20" : "14"} viewBox="0 0 12 12" fill="#c8ff00">
+        <div className="w-12 h-12 rounded-full border border-[#c8ff00] bg-black/50 backdrop-blur-sm flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="#c8ff00">
             <path d="M2 1l9 5-9 5V1z" />
           </svg>
         </div>
