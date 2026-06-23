@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import bunnyData from "../data/bunny-clips.json";
 import { heroFeaturedClipIds } from "../data/hero-featured-clips";
 
@@ -55,11 +56,10 @@ const CROSSFADE_MS = 1200; // slow, premium crossfade
  * now-invisible layer's source advances to the next clip, so it's fully
  * preloaded and playing silently by the time it becomes visible again.
  *
- * Tap anywhere on the background → fires "vekto:open-portfolio" which
- * the (hidden) desktop PortfolioWindow listener picks up to open the
- * shared overlay.
+ * Tap anywhere on the background → router.push("/portfolio").
  */
 export default function HeroCinematicBg() {
+  const router = useRouter();
   const [activeA, setActiveA] = useState(true);
   const [idxA, setIdxA] = useState(0);
   const [idxB, setIdxB] = useState(heroClips.length > 1 ? 1 : 0);
@@ -121,12 +121,13 @@ export default function HeroCinematicBg() {
     };
   }, []);
 
-  // Prewarm the PortfolioOverlay chunk during idle time after hero
-  // mounts. By the time the user taps the background or clicks "Виж
-  // работата ни", the JS + CSS for the overlay is already cached → it
-  // opens instantly instead of going through a chunk fetch + parse.
+  // Prefetch the /portfolio route during idle time after hero mounts.
+  // By the time the user taps the background or clicks "Виж работата ни",
+  // the route's JS chunk + CSS is already cached → navigation is instant.
+  // Replaces the old PortfolioOverlay dynamic-import prewarm now that
+  // portfolio is a real route instead of a portal-rendered modal.
   useEffect(() => {
-    const prewarm = () => import("./PortfolioOverlay");
+    const prewarm = () => router.prefetch("/portfolio");
     type WindowWithIdle = Window & {
       requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
     };
@@ -141,7 +142,7 @@ export default function HeroCinematicBg() {
     }
     const t = setTimeout(prewarm, 1500);
     return () => clearTimeout(t);
-  }, []);
+  }, [router]);
 
   // Crossfade rotation — only starts once layer B is ready to play.
   // Flips active layer every SLIDE_DURATION_MS; after the fade
@@ -184,7 +185,7 @@ export default function HeroCinematicBg() {
   }, [activeA, idxA, idxB, coveredByOverlay, inView]);
 
   const onTap = () => {
-    window.dispatchEvent(new Event("vekto:open-portfolio"));
+    router.push("/portfolio");
   };
 
   const clipA = heroClips[idxA];

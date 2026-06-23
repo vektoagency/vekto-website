@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useT } from "../i18n/LangProvider";
 import LangToggle from "./LangToggle";
 
@@ -16,7 +16,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const pathname = usePathname();
   const router = useRouter();
   const t = useT({
     bg: { services: "Услуги", why: "Защо VEKTO", portfolio: "Портфолио", contact: "Контакт", cta: "Започни", callAria: "Обади се" },
@@ -52,11 +51,7 @@ export default function Navbar() {
 
   const handlePortfolio = () => {
     setMenuOpen(false);
-    if (pathname === "/") {
-      window.dispatchEvent(new Event("vekto:open-portfolio"));
-    } else {
-      router.push("/work");
-    }
+    router.push("/portfolio");
   };
 
   return (

@@ -1,13 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import bunnyData from "../data/bunny-clips.json";
 import { heroFeaturedClipIds } from "../data/hero-featured-clips";
-
-// Lazy-load the heavy overlay — same pattern as before.
-const PortfolioOverlay = dynamic(() => import("./PortfolioOverlay"), { ssr: false });
 
 type Clip = {
   id: string;
@@ -39,14 +36,6 @@ const fullBleedClips: Clip[] = (() => {
   return (curated.length > 0 ? curated : allBunny).slice(0, 6);
 })();
 
-/**
- * Tile-scale video URL. Local clips have a "-480p.mp4" sibling that's
- * the same 720p H.264 CRF 28 encode we use for the mobile hero — much
- * lighter than the originals (~1 MB vs ~5 MB) and plenty sharp at the
- * ~150 px tile display width. Bunny clips swap 1080p → 480p variant.
- * The full-resolution originals are reserved for the portfolio
- * lightbox where users actually watch a clip at large size.
- */
 function previewVideoUrl(src: string | null): string | null {
   if (!src) return null;
   if (src.startsWith("/")) {
@@ -58,19 +47,16 @@ function previewVideoUrl(src: string | null): string | null {
 /**
  * Portfolio "window" — minimal lime-bordered card containing three
  * vertically-scrolling columns of clip thumbnails. Clicking the
- * window (or the "See our work" button via the global event) zooms
- * the card into the viewport and reveals the existing PortfolioOverlay.
+ * window navigates to the dedicated /portfolio page.
  *
  * Replaces the 3D Mac CRT as the hero's portfolio trigger — lighter,
- * shows actual brand work above the fold, and keeps the same overlay
- * behaviour downstream.
+ * shows actual brand work above the fold, and now uses real page
+ * routing instead of a portal-rendered modal overlay.
  */
 export default function PortfolioWindow({
   mobile = false,
   fullBleed = false,
 }: { mobile?: boolean; fullBleed?: boolean } = {}) {
-  const [zoomed, setZoomed] = useState(false);
-  const [overlayOpen, setOverlayOpen] = useState(false);
   const [inView, setInView] = useState(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -88,9 +74,6 @@ export default function PortfolioWindow({
     return () => obs.disconnect();
   }, []);
 
-  // Split clips into columns, duplicated for seamless loop. Mobile
-  // fullBleed uses 2 columns (tiles sized to fit inside viewport, not
-  // overflow). Desktop card uses 3 columns (classic dense grid).
   const columns = useMemo(() => {
     const source = fullBleed ? fullBleedClips : cardClips;
     const colCount = fullBleed ? 2 : 3;
@@ -99,39 +82,11 @@ export default function PortfolioWindow({
     return cols.map((col) => [...col, ...col]);
   }, [fullBleed]);
 
-  // Open / close flow — subtle "pull-in" feel: window scales slightly +
-  // fades, the overlay fades in over the top before the scale ever gets
-  // ugly. Keeps the transition cinematic without cropping the grid.
-  const startZoom = () => {
-    window.dispatchEvent(new Event("vekto:zoom-started"));
-    setZoomed(true);
-    // Overlay slides in midway through the scale → no awkward static frame
-    setTimeout(() => setOverlayOpen(true), 250);
-  };
-
-  const handleClose = () => {
-    setOverlayOpen(false);
-    setTimeout(() => {
-      setZoomed(false);
-      window.dispatchEvent(new Event("vekto:zoom-ended"));
-    }, 300);
-  };
-
-  // External trigger from "See our work" buttons elsewhere on the page.
-  useEffect(() => {
-    const onTrigger = () => {
-      if (!zoomed) startZoom();
-    };
-    window.addEventListener("vekto:open-portfolio", onTrigger);
-    return () => window.removeEventListener("vekto:open-portfolio", onTrigger);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [zoomed]);
-
   return (
     <>
       <div
         ref={wrapperRef}
-        className={`portfolio-window ${zoomed ? "is-zoomed" : ""} ${inView ? "" : "is-offscreen"}`}
+        className={`portfolio-window ${inView ? "" : "is-offscreen"}`}
         style={{
           width: "100%",
           height: "100%",
@@ -140,11 +95,10 @@ export default function PortfolioWindow({
           justifyContent: "center",
         }}
       >
-        <button
-          type="button"
-          onClick={startZoom}
+        <Link
+          href="/portfolio"
           aria-label="Open portfolio"
-          className={`group relative block overflow-hidden cursor-pointer transition-all duration-500 ease-out ${
+          className={`group relative block overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.01] ${
             fullBleed
               ? "w-full h-full"
               : mobile
@@ -156,18 +110,9 @@ export default function PortfolioWindow({
             border: fullBleed ? "none" : "1.5px solid rgba(200, 255, 0, 0.4)",
             boxShadow: fullBleed
               ? "none"
-              : zoomed
-                ? "0 0 80px rgba(200,255,0,0.45)"
-                : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
-            // Subtle pull-in: small scale-up + fade. The overlay covers
-            // the rest of the visual transition — no huge cropped frame.
-            transform: zoomed ? "scale(1.18)" : "scale(1)",
-            opacity: zoomed ? 0 : 1,
-            transformOrigin: "center",
+              : "0 0 40px -8px rgba(200,255,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.02)",
           }}
         >
-          {/* Inner grid — 2 cols on mobile fullBleed (in-viewport tiles,
-              alternating scroll), 3 cols everywhere else. */}
           <div className={`absolute grid overflow-hidden ${
             fullBleed
               ? "inset-0 gap-1.5 grid-cols-2"
@@ -183,7 +128,6 @@ export default function PortfolioWindow({
             ))}
           </div>
 
-          {/* Soft top/bottom fade for cinematic edge — only in card mode */}
           {!fullBleed && (
             <>
               <div
@@ -199,10 +143,6 @@ export default function PortfolioWindow({
             </>
           )}
 
-          {/* Hint pill — only in card mode; full-bleed uses external CTAs
-              instead. Always visible (no hover-gating) so visitors immediately
-              know the card is clickable. Subtle scale-up on hover gives the
-              feedback that the hover state used to communicate. */}
           {!fullBleed && (
             <div
               className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[4] flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/75 backdrop-blur-md border border-[#c8ff00]/55 transition-transform duration-300 group-hover:scale-105"
@@ -220,10 +160,8 @@ export default function PortfolioWindow({
               </span>
             </div>
           )}
-        </button>
+        </Link>
       </div>
-
-      <PortfolioOverlay open={overlayOpen} onClose={handleClose} />
 
       <style jsx global>{`
         @keyframes pwScrollUp {
@@ -243,10 +181,6 @@ export default function PortfolioWindow({
           animation-timing-function: linear;
           animation-iteration-count: infinite;
         }
-        /* Animation keeps running on hover — feels alive even when the
-           cursor lingers over the window. Only the zoom-in transition
-           AND offscreen state pause the columns. */
-        .portfolio-window.is-zoomed .pw-col,
         .portfolio-window.is-offscreen .pw-col {
           animation-play-state: paused;
         }
@@ -258,20 +192,6 @@ export default function PortfolioWindow({
   );
 }
 
-/**
- * Tile renders the static poster immediately. The <video> element is
- * lazy-mounted only after the tile has scrolled into view at least once
- * — that means initial pageload only fetches videos for the handful of
- * tiles actually visible above the fold, not the full 12-tile DOM set.
- * Once mounted, the video stays mounted, and an IntersectionObserver
- * pauses it the instant it leaves the viewport (freeing its decoder
- * slot) and resumes it on re-entry. Net effect: active decoder count
- * never exceeds what's actually on screen — usually 4-5, well under
- * the iOS Safari simultaneous-video ceiling.
- *
- * `mountDelay` is preserved as a small staggered play kickoff so the
- * 4-5 visible tiles don't all hit the decoder at the same millisecond.
- */
 function PreviewTile({
   clip,
   mountDelay,
@@ -284,34 +204,20 @@ function PreviewTile({
   const [hasBeenVisible, setHasBeenVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [staggerPassed, setStaggerPassed] = useState(false);
-  // True while the portfolio overlay is open OR a clip is actively
-  // playing in the lightbox. Tiles are covered/invisible to the user
-  // at that point, but their videos keep consuming decoder slots +
-  // network bandwidth → the watched clip in the lightbox stutters.
-  // Pausing here gives full decoder + bandwidth to the watched clip.
+  // True while a clip is actively playing in a lightbox on /portfolio.
+  // Frees decoder + bandwidth for the watched clip.
   const [coveredByOverlay, setCoveredByOverlay] = useState(false);
   useEffect(() => {
     const onOpen = () => setCoveredByOverlay(true);
     const onClose = () => setCoveredByOverlay(false);
-    window.addEventListener("vekto:zoom-started", onOpen);
-    window.addEventListener("vekto:zoom-ended", onClose);
     window.addEventListener("vekto:player-open", onOpen);
     window.addEventListener("vekto:player-closed", onClose);
     return () => {
-      window.removeEventListener("vekto:zoom-started", onOpen);
-      window.removeEventListener("vekto:zoom-ended", onClose);
       window.removeEventListener("vekto:player-open", onOpen);
       window.removeEventListener("vekto:player-closed", onClose);
     };
   }, []);
 
-  // Hold off video mounts until the browser hits an idle moment after
-  // first paint. Then apply the small per-tile stagger so the first
-  // wave of visible tiles spin up decoders ~220 ms apart rather than
-  // all at once. Result: initial paint isn't blocked by video network
-  // fetches + decoder spin-up; poster images carry the hero card
-  // visually for ~1 s while the page finishes hydrating, then videos
-  // pop in smoothly.
   useEffect(() => {
     let stopped = false;
     const apply = () => {
@@ -334,9 +240,6 @@ function PreviewTile({
     };
   }, [mountDelay]);
 
-  // Track this tile's intersection with the viewport. rootMargin of
-  // 30% pre-mounts the video slightly before the tile is on screen so
-  // there's no visible "poster → first frame" flash on scroll-in.
   useEffect(() => {
     const el = tileRef.current;
     if (!el) return;
@@ -351,9 +254,6 @@ function PreviewTile({
     return () => obs.disconnect();
   }, []);
 
-  // Drive play/pause off visibility AND overlay state. Paused videos
-  // release their decoder, so total decoder pressure tracks on-screen
-  // tile count + frees up completely while the lightbox is playing.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -371,7 +271,6 @@ function PreviewTile({
       ref={tileRef}
       className="relative w-full aspect-[9/16] overflow-hidden rounded-md bg-[#0a0a0a] flex-shrink-0"
     >
-      {/* Poster — always visible underneath, fades when video paints over */}
       {clip.thumbnail.startsWith("/") ? (
         <Image
           src={clip.thumbnail}
@@ -391,9 +290,6 @@ function PreviewTile({
         />
       )}
 
-      {/* Video — lazy-mounted on first visibility, IO controls play/pause.
-          Unmounted entirely when overlay/lightbox active — frees network
-          completely so the watched iframe gets full bandwidth. */}
       {hasBeenVisible && videoSrc && !coveredByOverlay && (
         <video
           ref={videoRef}
