@@ -33,7 +33,7 @@ export default function PortfolioClient() {
   const t = useT({
     bg: {
       header: "ИЗБРАНА РАБОТА",
-      clipsSuffix: "ФИЛМА",
+      clipsSuffix: "ВИДЕА",
       back: "Назад",
       filter: "> ФИЛТЪР",
       categories: [
@@ -52,7 +52,7 @@ export default function PortfolioClient() {
     },
     en: {
       header: "SELECTED WORK",
-      clipsSuffix: "FILMS",
+      clipsSuffix: "VIDEOS",
       back: "Back",
       filter: "> FILTER",
       categories: [
