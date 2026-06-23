@@ -274,7 +274,14 @@ function ClipTile({
   const [videoVisible, setVideoVisible] = useState(false);
 
   const isLandscape = clip.portrait === false;
-  const cellClass = isLandscape ? "aspect-video col-span-2" : "aspect-[9/16]";
+  // Landscape tiles are centered on the wider grids — looks more deliberate
+  // than the dense-flow default which parks them at whichever edge has a
+  // 2-wide gap. lg:col-start-2 puts a col-span-2 tile in the middle 2 of
+  // 4 cols (cols 2-3). sm has 3 cols so col-span-3 takes the whole row.
+  // Mobile (2 cols) is already full-width via col-span-2 alone.
+  const cellClass = isLandscape
+    ? "aspect-video col-span-2 sm:col-span-3 lg:col-start-2 lg:col-span-2"
+    : "aspect-[9/16]";
   const tileClass = `group relative ${cellClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer`;
   const bootDelay = Math.min(idx, 8) * 18;
   const durationLabel = formatDuration(clip.duration);
