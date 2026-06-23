@@ -32,9 +32,9 @@ export default function PortfolioClient() {
   const [expanded, setExpanded] = useState<Clip | null>(null);
   const t = useT({
     bg: {
-      header: "VEKTO/РИЙЛ.БД",
-      clipsSuffix: "КЛИПА",
-      back: "Към сайта",
+      header: "ИЗБРАНА РАБОТА",
+      clipsSuffix: "ФИЛМА",
+      back: "Назад",
       filter: "> ФИЛТЪР",
       categories: [
         { id: "ALL", label: "ВСИЧКИ" },
@@ -51,9 +51,9 @@ export default function PortfolioClient() {
       backToHome: "← Обратно към сайта",
     },
     en: {
-      header: "VEKTO/REEL.DB",
-      clipsSuffix: "CLIPS",
-      back: "Back to site",
+      header: "SELECTED WORK",
+      clipsSuffix: "FILMS",
+      back: "Back",
       filter: "> FILTER",
       categories: [
         { id: "ALL", label: "ALL" },
