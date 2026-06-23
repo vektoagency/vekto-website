@@ -22,6 +22,24 @@
       "featured": true
     },
     {
+      "id": "isosport-script-2",
+      "brand": "ISOSPORT",
+      "logo": "/images/logo-isosport.png",
+      "category": "UGC",
+      "description": "AI UGC — script 2.",
+      "thumbnail": "/videos/thumbnails/isosport-script-2.webp",
+      "previewMp4": "/videos/isosport-script-2.mp4",
+      "hlsPlaylist": null,
+      "embedUrl": null,
+      "duration": 33,
+      "width": 720,
+      "height": 1280,
+      "portrait": true,
+      "metric": null,
+      "href": null,
+      "featured": true
+    },
+    {
       "id": "beme-script-9",
       "brand": "BEME",
       "logo": null,
