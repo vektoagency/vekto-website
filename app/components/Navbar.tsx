@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useT } from "../i18n/LangProvider";
 import LangToggle from "./LangToggle";
@@ -61,10 +62,12 @@ export default function Navbar() {
       } ${hidden ? "opacity-0 pointer-events-none -translate-y-2" : "opacity-100"}`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center h-10 w-[120px]">
+        {/* Logo — always routes to home. Used to be href="#" which on the
+            home page jumped to top, but on /portfolio (and other routes)
+            it was a no-op since there's no fragment to scroll to. */}
+        <Link href="/" className="flex items-center h-10 w-[120px]" aria-label="VEKTO — home">
           <Image src="/images/logo.webp" alt="VEKTO" width={120} height={40} className="object-contain" priority />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
