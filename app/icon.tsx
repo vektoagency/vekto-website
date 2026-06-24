@@ -1,20 +1,24 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
-// Next.js auto-routes app/icon.{tsx,png,svg,...} as /icon and uses the
-// largest match as the favicon. The dynamic .tsx variant takes precedence
-// over the old static app/icon.png (kept around just in case some build
-// step still picks it up — safe to delete later).
-//
-// 512×512 PNG. Black bg + lime "V" lockup. Designed to read cleanly at
-// every fallback size where the previous landscape wordmark was getting
-// cropped into a "K"-shaped fragment (email preview cards, browser tabs,
-// app-switcher tiles, etc.). The padding + letter weight is tuned to
-// stay legible down to a 16×16 favicon.
+// Square favicon (512×512) using the real VEKTO wordmark — read from
+// public/images/logo.webp and rendered centred on a black square with
+// generous side padding so the wordmark NEVER gets edge-cropped by
+// downstream renderers (email preview cards, browser tabs, app tiles).
+// The old static app/icon.png was a landscape wordmark stretched into
+// a square — small clients cropped to the centre and only the 'K'
+// survived. This version preserves the wordmark intact at every size.
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-export default function Icon() {
+export default async function Icon() {
+  const logoData = await readFile(
+    join(process.cwd(), "public/images/logo.webp")
+  );
+  const logoSrc = `data:image/webp;base64,${logoData.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -26,7 +30,6 @@ export default function Icon() {
           justifyContent: "center",
           background: "#080808",
           position: "relative",
-          fontFamily: "sans-serif",
         }}
       >
         {/* Ambient lime glow — soft radial wash so the icon reads as a
@@ -40,7 +43,7 @@ export default function Icon() {
             height: 360,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.28) 0%, rgba(200,255,0,0) 65%)",
+              "radial-gradient(circle, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0) 65%)",
           }}
         />
         <div
@@ -52,24 +55,20 @@ export default function Icon() {
             height: 360,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.12) 0%, rgba(200,255,0,0) 65%)",
+              "radial-gradient(circle, rgba(200,255,0,0.10) 0%, rgba(200,255,0,0) 65%)",
           }}
         />
-        {/* The "V" mark. Heavy weight + tight tracking so it doesn't
-            visually collapse at 32×32. */}
-        <div
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoSrc}
+          alt="VEKTO"
+          width={400}
+          height={130}
           style={{
-            fontSize: 380,
-            fontWeight: 900,
-            color: "#c8ff00",
-            letterSpacing: -16,
-            lineHeight: 1,
+            objectFit: "contain",
             zIndex: 1,
-            marginTop: -10,
           }}
-        >
-          V
-        </div>
+        />
       </div>
     ),
     { ...size }
