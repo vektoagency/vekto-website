@@ -114,7 +114,9 @@ export const flashkaCopy = {
       email: "Email",
       emailPh: "ivan@biznes.bg",
       brand: "Бизнес / уебсайт",
-      brandPh: "https://...",
+      brandPh: "Името на бизнеса или линк",
+      phone: "Телефон / WhatsApp",
+      phonePh: "+359 ...",
     },
 
     cta: {
@@ -180,6 +182,9 @@ export const flashkaCopy = {
     error: {
       generic: "Нещо се обърка. Опитай пак или ни пиши на vekto.agency.bg@gmail.com",
       requiredEmail: "Имейлът е задължителен.",
+      requiredName: "Името е задължително.",
+      requiredBrand: "Бизнесът е задължителен.",
+      requiredPhone: "Телефонът е задължителен.",
     },
   },
 
@@ -284,7 +289,9 @@ export const flashkaCopy = {
       email: "Email",
       emailPh: "john@business.com",
       brand: "Business / website",
-      brandPh: "https://...",
+      brandPh: "Business name or link",
+      phone: "Phone / WhatsApp",
+      phonePh: "+1 ...",
     },
 
     cta: {
@@ -350,6 +357,9 @@ export const flashkaCopy = {
     error: {
       generic: "Something went wrong. Try again or email vekto.agency.bg@gmail.com",
       requiredEmail: "Email is required.",
+      requiredName: "Name is required.",
+      requiredBrand: "Business name is required.",
+      requiredPhone: "Phone is required.",
     },
   },
 } as const;

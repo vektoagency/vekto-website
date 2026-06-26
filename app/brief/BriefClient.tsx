@@ -217,7 +217,7 @@ export default function BriefClient() {
         {step === 1 && (
           <StepWrapper title={t.step1.title} stepLabel={t.meta.stepOf(1, TOTAL_STEPS)}>
             <Field label={t.step1.brand}>
-              <Input value={form.brand} onChange={(v) => update("brand", v)} placeholder={t.step1.brandPh} />
+              <Input value={form.brand} onChange={(v) => update("brand", v)} placeholder={t.step1.brandPh} required />
             </Field>
             <Field label={t.step1.website}>
               <Input value={form.website} onChange={(v) => update("website", v)} placeholder={t.step1.websitePh} type="url" />
@@ -391,7 +391,7 @@ export default function BriefClient() {
                 <Input value={form.email} onChange={(v) => update("email", v)} placeholder={t.step7.emailPh} type="email" required />
               </Field>
               <Field label={t.step7.phone}>
-                <Input value={form.phone} onChange={(v) => update("phone", v)} placeholder={t.step7.phonePh} type="tel" />
+                <Input value={form.phone} onChange={(v) => update("phone", v)} placeholder={t.step7.phonePh} type="tel" required />
               </Field>
             </div>
             <Field label={t.step7.preferredChannel}>
@@ -458,7 +458,7 @@ export default function BriefClient() {
             ) : (
               <button
                 onClick={handleSubmit}
-                disabled={submitting || !form.email}
+                disabled={submitting || !form.brand.trim() || !form.name.trim() || !form.email.trim() || !form.phone.trim()}
                 className="bg-[#c8ff00] text-black font-semibold px-8 py-3 rounded-full hover:bg-[#d4ff33] transition-colors text-[14px] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ boxShadow: "0 10px 30px -10px rgba(200,255,0,0.55)" }}
               >

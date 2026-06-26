@@ -37,8 +37,8 @@ export const startCopy = {
       email: "Email",
       emailPh: "ivan@biznes.bg",
       brand: "Бизнес / уебсайт",
-      brandPh: "https://...",
-      phone: "Телефон / WhatsApp (по избор)",
+      brandPh: "Името на бизнеса или линк",
+      phone: "Телефон / WhatsApp",
       phonePh: "+359 ...",
       message: "Какво искаш да постигнем заедно? (по избор)",
       messagePh: "Опиши накратко бизнеса си + целите. Колкото повече детайли — толкова по-точна офертата.",
@@ -161,6 +161,9 @@ export const startCopy = {
     error: {
       generic: "Нещо се обърка. Опитай пак или ни пиши на vekto.agency.bg@gmail.com",
       requiredEmail: "Имейлът е задължителен.",
+      requiredName: "Името е задължително.",
+      requiredBrand: "Бизнесът е задължителен.",
+      requiredPhone: "Телефонът е задължителен.",
     },
   },
   en: {
@@ -194,8 +197,8 @@ export const startCopy = {
       email: "Email",
       emailPh: "you@brand.com",
       brand: "Business / website",
-      brandPh: "https://...",
-      phone: "Phone / WhatsApp (optional)",
+      brandPh: "Business name or link",
+      phone: "Phone / WhatsApp",
       phonePh: "+1 ...",
       message: "What do you want to achieve? (optional)",
       messagePh: "Briefly describe your business + goals. The more details — the more accurate the proposal.",
@@ -318,6 +321,9 @@ export const startCopy = {
     error: {
       generic: "Something went wrong. Try again or email vekto.agency.bg@gmail.com",
       requiredEmail: "Email is required.",
+      requiredName: "Name is required.",
+      requiredBrand: "Business name is required.",
+      requiredPhone: "Phone is required.",
     },
   },
 } as const;

@@ -30,7 +30,7 @@ function CloseIcon() {
 
 export default function ContactModal() {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", message: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -43,8 +43,10 @@ export default function ContactModal() {
       namePh: "Иван Иванов",
       email: "Имейл",
       emailPh: "ти@company.com",
-      company: "Фирма",
-      companyPh: "Твоят бизнес",
+      phone: "Телефон / WhatsApp",
+      phonePh: "+359 ...",
+      company: "Бизнес / уебсайт",
+      companyPh: "Името на бизнеса или линк",
       messageLabel: "Разкажи ни за проекта си",
       messagePh: "Искаме да направим серия от кратки видеа за бизнеса си...",
       submit: "Прати →",
@@ -61,7 +63,9 @@ export default function ContactModal() {
       namePh: "Luca Rossi",
       email: "Email",
       emailPh: "luca@company.com",
-      company: "Company",
+      phone: "Phone / WhatsApp",
+      phonePh: "+1 ...",
+      company: "Business / website",
       companyPh: "Acme Studio",
       messageLabel: "Tell us about your project",
       messagePh: "We want to create a short-form video series for our brand...",
@@ -167,14 +171,26 @@ export default function ContactModal() {
                   />
                 </div>
               </div>
-              <div>
-                <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.company}</label>
-                <input
-                  type="text" placeholder={t.companyPh} name="company"
-                  value={form.company}
-                  onChange={(e) => setForm({ ...form, company: e.target.value })}
-                  className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
-                />
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.phone}</label>
+                  <input
+                    required type="tel" placeholder={t.phonePh} name="phone"
+                    inputMode="tel" autoComplete="tel"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.company}</label>
+                  <input
+                    required type="text" placeholder={t.companyPh} name="company"
+                    value={form.company}
+                    onChange={(e) => setForm({ ...form, company: e.target.value })}
+                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
+                  />
+                </div>
               </div>
               <div>
                 <label className="block text-xs text-[#666] mb-2 uppercase tracking-wider">{t.messageLabel}</label>

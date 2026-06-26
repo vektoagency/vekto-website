@@ -31,6 +31,7 @@ export default function FlashkaClient() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [brand, setBrand] = useState("");
+  const [phone, setPhone] = useState("");
   const [utm, setUtm] = useState<{
     source?: string; medium?: string; campaign?: string;
     content?: string; term?: string; referrer?: string;
@@ -94,10 +95,12 @@ export default function FlashkaClient() {
 
   const handleSubmit = async () => {
     setErrorMsg(null);
-    if (!email.trim()) {
-      setErrorMsg(t.error.requiredEmail);
-      return;
-    }
+    // All four fields are required for follow-up. Validate in the order
+    // shown so the first empty field gets a specific error message.
+    if (!name.trim()) { setErrorMsg(t.error.requiredName); return; }
+    if (!email.trim()) { setErrorMsg(t.error.requiredEmail); return; }
+    if (!phone.trim()) { setErrorMsg(t.error.requiredPhone); return; }
+    if (!brand.trim()) { setErrorMsg(t.error.requiredBrand); return; }
     setSubmitting(true);
     const eventId =
       typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -107,7 +110,7 @@ export default function FlashkaClient() {
       lang,
       source: "flashka",
       name, email, brand,
-      phone: "",
+      phone,
       contentType: "",
       contentTypeLabel: "",
       budget: "",
@@ -312,21 +315,29 @@ export default function FlashkaClient() {
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                     <Field label={t.fields.name}>
-                      <Input value={name} onChange={setName} placeholder={t.fields.namePh} />
+                      <Input value={name} onChange={setName} placeholder={t.fields.namePh} required />
                     </Field>
                     <Field label={t.fields.email}>
                       <Input value={email} onChange={setEmail} placeholder={t.fields.emailPh} type="email" required />
                     </Field>
                   </div>
 
-                  <Field label={t.fields.brand}>
-                    <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} type="url" />
-                  </Field>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                    <Field label={t.fields.phone}>
+                      <Input value={phone} onChange={setPhone} placeholder={t.fields.phonePh} type="tel" required />
+                    </Field>
+                    <Field label={t.fields.brand}>
+                      {/* No type="url" — the field accepts a business name
+                          OR a URL, and strict URL validation rejects plain
+                          names like 'Acme Studio'. */}
+                      <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} required />
+                    </Field>
+                  </div>
 
                   <div className="pt-2">
                     <button
                       onClick={handleSubmit}
-                      disabled={submitting || !email.trim()}
+                      disabled={submitting || !name.trim() || !email.trim() || !phone.trim() || !brand.trim()}
                       className="group w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 min-h-[56px] rounded-full hover:bg-[#d4ff33] active:scale-[0.97] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                       style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                     >
