@@ -87,7 +87,7 @@ export const startCopy = {
     stats: {
       eyebrow: "ЦИФРИТЕ ГОВОРЯТ",
       h2: "Защо",
-      h2Highlight: "30+ бранда избраха VEKTO",
+      h2Highlight: "30+ бранда избраха",
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Доволни бранда в портфолиото" },
         { value: 1000, suffix: "+", decimals: 0, label: "Доставени проекта в портфолиото" },
@@ -247,7 +247,7 @@ export const startCopy = {
     stats: {
       eyebrow: "THE NUMBERS",
       h2: "Why",
-      h2Highlight: "30+ brands chose VEKTO",
+      h2Highlight: "30+ brands chose",
       items: [
         { value: 30, suffix: "+", decimals: 0, label: "Happy brands in our portfolio" },
         { value: 1000, suffix: "+", decimals: 0, label: "Delivered projects in our portfolio" },

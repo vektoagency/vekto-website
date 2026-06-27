@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { startCopy, type Lang } from "./translations";
 
@@ -97,7 +98,19 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
                 style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
               >
                 {t.stats.h2Highlight}
-              </span>
+              </span>{" "}
+              {/* VEKTO wordmark instead of literal 'VEKTO' text — same
+                  optical weight as the h2 cap height, drop-shadow gives
+                  it the lime glow the rest of the highlight has. */}
+              <Image
+                src="/images/logo.webp"
+                alt="VEKTO"
+                width={220}
+                height={70}
+                priority={false}
+                className="inline-block align-baseline h-[26px] sm:h-[34px] md:h-[44px] w-auto translate-y-[3px] md:translate-y-[6px]"
+                style={{ filter: "drop-shadow(0 0 22px rgba(200,255,0,0.35))" }}
+              />
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
