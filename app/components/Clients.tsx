@@ -14,6 +14,11 @@ type Client = {
   // Multi-row / stacked marks (logo above word, etc.) — render taller so
   // each glyph stays legible at the marquee scale.
   stacked?: boolean;
+  // Give the tile a light background so a dark-ink brand mark reads in
+  // its natural colour. Prefer this over `invert` when we want to keep
+  // the exact brand colours (invert forces white monochrome, which
+  // loses two-colour or lime/red/blue accents in the logo).
+  lightBg?: boolean;
 };
 
 const bgClients: Client[] = [
@@ -25,15 +30,17 @@ const bgClients: Client[] = [
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: { bg: "Натурална козметика", en: "Natural cosmetics" } },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: { bg: "Подаръчни ваучери за преживявания", en: "Experience voucher platform" } },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: { bg: "Приключенски туризъм", en: "Adventure tourism" } },
-  // Added 2026-07-02 — 7 new BG partners. `invert` flag on tiles whose
-  // source logo is dark-ink so they read on the dark marquee tile.
-  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", url: "https://alpenpharma.bg", desc: { bg: "Фармацевтичен дистрибутор", en: "Pharma & health distributor" }, invert: true },
+  // Added 2026-07-02 — 7 new BG partners. Dark-ink marks get `lightBg`
+  // so they display in the brand's real colours on a white tile rather
+  // than being force-inverted to monochrome white. NIDO / ARTE / CARTEL
+  // ship white variants already so they land straight on the dark tile.
+  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", url: "https://alpenpharma.bg", desc: { bg: "Фармацевтичен дистрибутор", en: "Pharma & health distributor" }, lightBg: true },
   { name: "NIDO", logo: "/images/logo-nido.png", url: "https://nido.bg", desc: { bg: "Търговски партньор", en: "Trusted partner" } },
   { name: "ARTE HOTEL", logo: "/images/logo-artehotel.png", url: "https://artehotel.bg", desc: { bg: "Бутиков хотел", en: "Boutique hotel" } },
-  { name: "KASHMIR HOTEL", logo: "/images/logo-kashmirhotel.png", url: "https://kashmirhotel.bg", desc: { bg: "Луксозен хотел", en: "Luxury hotel" }, invert: true },
+  { name: "KASHMIR HOTEL", logo: "/images/logo-kashmirhotel.png", url: "https://kashmirhotel.bg", desc: { bg: "Луксозен хотел", en: "Luxury hotel" }, lightBg: true },
   { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg", url: "https://www.cartelcaffe.com", desc: { bg: "Кафе бранд", en: "Coffee brand" } },
-  { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", url: "https://phytolife.bg", desc: { bg: "Натурални добавки", en: "Natural wellness" }, invert: true },
-  { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", url: "https://gourmethouse.bg", desc: { bg: "Гурме продукти", en: "Gourmet food" }, invert: true },
+  { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", url: "https://phytolife.bg", desc: { bg: "Натурални добавки", en: "Natural wellness" }, lightBg: true },
+  { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", url: "https://gourmethouse.bg", desc: { bg: "Гурме продукти", en: "Gourmet food" }, lightBg: true },
 ];
 
 const usClients: Client[] = [
@@ -55,12 +62,19 @@ const usClients: Client[] = [
 function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
   const invert = c.invert ? "brightness(0) invert(1)" : undefined;
   const desc = c.desc[lang];
+  // Light-background tiles: dark-ink logos need a light surface so
+  // their natural colour reads. Border + hover glow tuned to match
+  // the dark tile's visual weight so a mixed marquee doesn't feel
+  // like two different systems.
+  const tileBgClass = c.lightBg
+    ? "bg-[#f5f5f2] border border-[#e5e5e0]"
+    : "bg-[#0a0a0a] border border-[#161616]";
   return (
     <a
       href={c.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      className={`group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden ${tileBgClass} hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]`}
       aria-label={`${c.name} — open website`}
     >
       {/* Phosphor glow on hover — bottom-up sweep */}
@@ -93,12 +107,24 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
         />
       </div>
 
-      {/* Brand name + description — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-2 md:px-3 py-1.5 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
-        <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-[#c8ff00]/85 group-hover:text-[#c8ff00] transition-colors duration-500 truncate w-full">
+      {/* Brand name + description — bottom strip. Light-bg tiles get
+          darker text so the lime name + grey desc stay legible against
+          the near-white surface. */}
+      <div className={`absolute inset-x-0 bottom-0 px-2 md:px-3 py-1.5 md:py-2.5 flex flex-col items-center text-center border-t transition-colors duration-500 group-hover:border-[#c8ff00]/30 ${
+        c.lightBg ? "border-[#e0e0da]" : "border-[#161616]"
+      }`}>
+        <span className={`font-mono text-[8px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.2em] transition-colors duration-500 truncate w-full ${
+          c.lightBg
+            ? "text-[#3a3a35] group-hover:text-[#0a0a0a]"
+            : "text-[#c8ff00]/85 group-hover:text-[#c8ff00]"
+        }`}>
           {c.name}
         </span>
-        <span className="text-[8px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
+        <span className={`text-[8px] md:text-[10px] transition-colors duration-500 truncate w-full leading-tight mt-0.5 ${
+          c.lightBg
+            ? "text-[#8a857e] group-hover:text-[#5a5550]"
+            : "text-[#7a7a7a] group-hover:text-[#a0a0a0]"
+        }`}>
           {desc}
         </span>
       </div>
