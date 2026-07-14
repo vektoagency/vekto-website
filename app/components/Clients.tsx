@@ -56,7 +56,15 @@ const usClients: Client[] = [
 // shorter axis — but the *container* size is identical for all tiles, so
 // the visual rhythm stays consistent across the whole feed.
 function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
-  const invert = c.invert ? "brightness(0) invert(1)" : undefined;
+  // Hue-preserving lightness invert. Old filter was `brightness(0) invert(1)`
+  // which collapsed every logo to pure white silhouette (killing any
+  // brand-red/green/blue in two-colour marks). `invert(1) hue-rotate(180)`
+  // inverts only the LIGHTNESS channel — dark hues become their light
+  // counterpart (dark green → light green, deep red → soft red) while
+  // pure black/white logos still render as white on the black tile.
+  // Extra saturate(1.15) gives the recovered hue a bit more presence
+  // against the black surface so it doesn't wash out.
+  const invert = c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined;
   const desc = c.desc[lang];
   return (
     <a
