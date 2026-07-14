@@ -18,7 +18,6 @@ type Client = {
 
 const bgClients: Client[] = [
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: { bg: "Енергийни и функционални напитки", en: "Energy & functional beverages" } },
-  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", url: "https://menscarebulgaria.com", desc: { bg: "Растеж на брада и коса", en: "Beard & hair growth" }, circular: true },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: { bg: "Дизайнерски инспирирани парфюми", en: "Designer-inspired perfumes" }, invert: true },
   { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: { bg: "Натурални хранителни добавки", en: "Natural supplements" }, circular: true, invert: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: { bg: "Грижа за кожа срещу акне", en: "Acne skincare brand" } },
@@ -93,12 +92,12 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
           src={c.logo}
           alt={c.name}
           draggable={false}
-          className={`opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105 w-auto max-w-[100px] md:max-w-[160px] ${
+          className={`opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105 w-auto max-w-[115px] md:max-w-[185px] ${
             c.circular
-              ? "h-[34px] md:h-[52px]"
+              ? "h-[44px] md:h-[68px]"
               : c.stacked
-                ? "h-[32px] md:h-[46px]"
-                : "h-[24px] md:h-[36px]"
+                ? "h-[42px] md:h-[60px]"
+                : "h-[32px] md:h-[48px]"
           }`}
           style={{ objectFit: "contain", filter: invert }}
         />
