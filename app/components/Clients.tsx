@@ -29,8 +29,13 @@ const bgClients: Client[] = [
   // black surface. If we ever want the real brand colours preserved, the
   // move is to source a light/white variant of each logo from the brand
   // — not to switch the whole marquee to a mixed light+dark aesthetic.
-  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", url: "https://alpenpharma.bg", desc: { bg: "Фармацевтичен дистрибутор", en: "Pharma & health distributor" }, invert: true },
-  { name: "NIDO", logo: "/images/logo-nido.png", url: "https://nido.bg", desc: { bg: "Търговски партньор", en: "Trusted partner" } },
+  // ALPEN + NIDO source PNGs have more whitespace padding around the
+  // wordmark than PARFEN/BIOTICA etc., so at the standard 32/48 px
+  // height tier they read visually smaller than neighbours. `stacked`
+  // flag bumps them to the 42/60 px tier — same tier NUTRIFITT/LUCKY
+  // use — which optically evens them out.
+  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", url: "https://alpenpharma.bg", desc: { bg: "Фармацевтичен дистрибутор", en: "Pharma & health distributor" }, invert: true, stacked: true },
+  { name: "NIDO", logo: "/images/logo-nido.png", url: "https://nido.bg", desc: { bg: "Търговски партньор", en: "Trusted partner" }, stacked: true },
   { name: "ARTE HOTEL", logo: "/images/logo-artehotel.png", url: "https://artehotel.bg", desc: { bg: "Бутиков хотел", en: "Boutique hotel" } },
   { name: "KASHMIR HOTEL", logo: "/images/logo-kashmirhotel.png", url: "https://kashmirhotel.bg", desc: { bg: "Луксозен хотел", en: "Luxury hotel" }, invert: true },
   { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg", url: "https://www.cartelcaffe.com", desc: { bg: "Кафе бранд", en: "Coffee brand" } },
