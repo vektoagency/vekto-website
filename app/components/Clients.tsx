@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import AnimateIn from "./AnimateIn";
 import { useT, useLang } from "../i18n/LangProvider";
 
@@ -25,11 +24,7 @@ const bgClients: Client[] = [
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: { bg: "Натурална козметика", en: "Natural cosmetics" } },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: { bg: "Подаръчни ваучери за преживявания", en: "Experience voucher platform" } },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: { bg: "Приключенски туризъм", en: "Adventure tourism" } },
-  // Added 2026-07-02 — 7 new BG partners. Everything runs on the standard
-  // dark tile; dark-ink marks get `invert` so they read in white on the
-  // black surface. If we ever want the real brand colours preserved, the
-  // move is to source a light/white variant of each logo from the brand
-  // — not to switch the whole marquee to a mixed light+dark aesthetic.
+  // Added 2026-07-02 — 7 new BG partners.
   { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", url: "https://alpenpharma.bg", desc: { bg: "Фармацевтичен дистрибутор", en: "Pharma & health distributor" }, invert: true },
   { name: "NIDO", logo: "/images/logo-nido.png", url: "https://nido.bg", desc: { bg: "Търговски партньор", en: "Trusted partner" } },
   { name: "ARTE HOTEL", logo: "/images/logo-artehotel.png", url: "https://artehotel.bg", desc: { bg: "Бутиков хотел", en: "Boutique hotel" } },
@@ -42,28 +37,24 @@ const bgClients: Client[] = [
 const usClients: Client[] = [
   { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: { bg: "Уред за по-добър сън", en: "Sleep wearable device" }, invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: { bg: "Добавки за фитнес", en: "Fitness supplements" }, stacked: true },
-  // Dark wordmarks — invert to white so they're visible on the dark tile.
-  // Mirrors the BG row pattern (PARFEN, BIOTICA use the same trick).
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: { bg: "Имунитет и чревно здраве за цялото семейство", en: "Family immune & gut supplements" }, invert: true },
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: { bg: "Енергийни напитки без захар", en: "Zero-sugar energy drinks" }, invert: true, stacked: true },
-  // Orange wordmark — visible on dark, no invert.
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: { bg: "Гурме сосове с нисък калориен прием", en: "Low-calorie gourmet sauces" }, stacked: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: { bg: "Растителни енергийни напитки", en: "Plant-based energy drinks" }, invert: true },
 ];
 
-// Single fixed-size logo frame ensures every logo lands in the same slot,
-// scaled to fit. Wide logos fill horizontally, circular ones fill the
-// shorter axis — but the *container* size is identical for all tiles, so
-// the visual rhythm stays consistent across the whole feed.
+const TOTAL_BRANDS = bgClients.length + usClients.length;
+
+/**
+ * BrandTile — grid cell that shows the logo prominently by default and
+ * slides up a name + description overlay on hover. Sized for a dense
+ * 3/4/5-column grid layout (was previously a marquee tile). All the
+ * old flags (circular / stacked / invert) still apply the same way.
+ */
 function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
-  // Hue-preserving lightness invert. Old filter was `brightness(0) invert(1)`
-  // which collapsed every logo to pure white silhouette (killing any
-  // brand-red/green/blue in two-colour marks). `invert(1) hue-rotate(180)`
-  // inverts only the LIGHTNESS channel — dark hues become their light
-  // counterpart (dark green → light green, deep red → soft red) while
-  // pure black/white logos still render as white on the black tile.
-  // Extra saturate(1.15) gives the recovered hue a bit more presence
-  // against the black surface so it doesn't wash out.
+  // Hue-preserving lightness invert — same trick as before. Dark hues
+  // become their light counterpart (dark-green → light-green, deep-red
+  // → soft-red) while pure-black logos still render as white.
   const invert = c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined;
   const desc = c.desc[lang];
   return (
@@ -71,191 +62,140 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
       href={c.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      className="group relative aspect-[4/3] rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-14px_rgba(200,255,0,0.45)]"
       aria-label={`${c.name} — open website`}
     >
-      {/* Phosphor glow on hover — bottom-up sweep */}
+      {/* Phosphor glow — bottom-up sweep on hover */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "radial-gradient(ellipse 70% 100% at 50% 100%, rgba(200,255,0,0.22) 0%, transparent 75%)",
+            "radial-gradient(ellipse 80% 100% at 50% 100%, rgba(200,255,0,0.20) 0%, transparent 70%)",
         }}
       />
 
-      {/* Logo — fixed visual HEIGHT for ALL marks so wide and square
-          logos read at equal weight across the marquee. Width is auto
-          (capped via max-w-*) so wide marks don't push past the tile. */}
-      <div className="absolute inset-x-0 top-0 bottom-[36px] md:bottom-[56px] flex items-center justify-center px-4">
+      {/* Logo — fills the cell, centred. Fades slightly on hover so the
+          overlay copy stays legible over it. */}
+      <div className="absolute inset-0 flex items-center justify-center px-3 md:px-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={c.logo}
           alt={c.name}
           draggable={false}
-          className={`opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105 w-auto max-w-[100px] md:max-w-[160px] ${
+          loading="lazy"
+          decoding="async"
+          className={`w-auto object-contain opacity-95 transition-all duration-500 group-hover:opacity-40 group-hover:scale-95 ${
             c.circular
-              ? "h-[34px] md:h-[52px]"
+              ? "h-[42px] md:h-[54px] max-w-[60%]"
               : c.stacked
-                ? "h-[32px] md:h-[46px]"
-                : "h-[24px] md:h-[36px]"
+                ? "h-[36px] md:h-[48px] max-w-[80%]"
+                : "h-[28px] md:h-[36px] max-w-[85%]"
           }`}
-          style={{ objectFit: "contain", filter: invert }}
+          style={{ filter: invert }}
         />
       </div>
 
-      {/* Brand name + description — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-2 md:px-3 py-1.5 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
-        <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-[#c8ff00]/85 group-hover:text-[#c8ff00] transition-colors duration-500 truncate w-full">
+      {/* Hover overlay — slides up from bottom, name + description */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out px-3 md:px-4 py-3 md:py-3.5 text-center bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/95 to-transparent"
+      >
+        <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.22em] text-[#c8ff00] font-semibold mb-1 truncate">
           {c.name}
-        </span>
-        <span className="text-[8px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
+        </div>
+        <div className="text-[10px] md:text-[11px] text-[#cfcbc4] leading-tight line-clamp-2">
           {desc}
-        </span>
+        </div>
       </div>
     </a>
   );
 }
 
+function RegionHeader({ label, count }: { label: string; count: number }) {
+  return (
+    <div className="max-w-6xl mx-auto px-4 md:px-6 mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
+      <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
+        {label}
+      </span>
+      <span className="font-mono text-[9px] md:text-[10px] tabular-nums text-[#c8ff00]/45 whitespace-nowrap">
+        {count.toString().padStart(2, "0")}
+      </span>
+      <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
+    </div>
+  );
+}
+
+/**
+ * Clients section — dense static grid. All 21 partners visible at once
+ * instead of scrolling through a marquee, so visitors see the full
+ * roster in a single glance without waiting for a full loop.
+ *
+ * Layout:
+ *   mobile   → 3 cols  (BG: 5 rows, US: 2 rows)
+ *   sm  ≥640 → 4 cols  (BG: 4 rows, US: 2 rows)
+ *   md  ≥768 → 5 cols  (BG: 3 rows, US: 2 rows — exact fit)
+ *
+ * Each tile is aspect-4:3 so the wall reads as a proper grid regardless
+ * of viewport. Hover triggers a bottom-up overlay with the brand name +
+ * description (no permanent text strip like the old marquee had, so
+ * more logos fit per row without cropping).
+ */
 export default function Clients() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
   const { lang } = useLang();
   const t = useT({
     bg: {
       title: "Бизнес партньори, които ни се довериха",
+      subtitle: `${TOTAL_BRANDS} бранда · България и САЩ`,
       regionBg: "◆ България",
       regionUs: "◆ САЩ / Свят",
     },
     en: {
       title: "Trusted by forward-thinking brands",
+      subtitle: `${TOTAL_BRANDS} brands · Bulgaria & USA`,
       regionBg: "◆ Bulgaria",
       regionUs: "◆ USA / Worldwide",
     },
   });
 
-  // Pause the marquee whenever the section is offscreen — saves GPU work
-  // and prevents the animation from drifting/desyncing while invisible.
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
-      className="py-6 md:py-14 border-y border-[#1e1e1c] relative overflow-hidden"
+      className="py-10 md:py-16 border-y border-[#1e1e1c] relative"
       style={{ background: "linear-gradient(to bottom, #070707 0%, #0a0a0a 50%, #070707 100%)" }}
     >
       <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/30 to-transparent" />
       <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/20 to-transparent" />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-4 md:mb-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-6 md:mb-10 text-center">
         <AnimateIn>
-          <p className="text-center text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest">
+          <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-1.5 md:mb-2">
             {t.title}
+          </p>
+          <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#7a7a7a]">
+            {t.subtitle}
           </p>
         </AnimateIn>
       </div>
 
-      {/* Region label — Bulgaria */}
-      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
-        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
-          {t.regionBg}
-        </span>
-        <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
-      </div>
-
-      {/* Marquee track — Bulgaria — left-scrolling, edges masked */}
-      <div
-        className="relative overflow-hidden"
-        style={{
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-          maskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-        }}
-      >
-        <div
-          className={`flex feed-track py-3 ${inView ? "" : "feed-paused"}`}
-          style={{
-            width: "max-content",
-            willChange: "transform",
-          }}
-        >
-          {[...bgClients, ...bgClients, ...bgClients].map((c, i) => (
-            <BrandTile key={`bg-${c.name}-${i}`} c={c} lang={lang} />
+      {/* Region — Bulgaria */}
+      <RegionHeader label={t.regionBg} count={bgClients.length} />
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-8 md:mb-10">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 md:gap-3">
+          {bgClients.map((c) => (
+            <BrandTile key={`bg-${c.name}`} c={c} lang={lang} />
           ))}
         </div>
       </div>
 
-      {/* Region label — USA / Worldwide */}
-      <div className="max-w-6xl mx-auto px-4 md:px-6 mt-4 md:mt-5 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
-        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
-          {t.regionUs}
-        </span>
-        <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
-      </div>
-
-      {/* Marquee track — USA — right-scrolling (opposite direction), edges masked */}
-      <div
-        className="relative overflow-hidden"
-        style={{
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-          maskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-        }}
-      >
-        <div
-          className={`flex feed-track-reverse py-3 ${inView ? "" : "feed-paused"}`}
-          style={{
-            width: "max-content",
-            willChange: "transform",
-          }}
-        >
-          {[...usClients, ...usClients, ...usClients].map((c, i) => (
-            <BrandTile key={`us-${c.name}-${i}`} c={c} lang={lang} />
+      {/* Region — USA / Worldwide */}
+      <RegionHeader label={t.regionUs} count={usClients.length} />
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 md:gap-3">
+          {usClients.map((c) => (
+            <BrandTile key={`us-${c.name}`} c={c} lang={lang} />
           ))}
         </div>
       </div>
-
-      <style>{`
-        @keyframes feedScroll {
-          from { transform: translate3d(0, 0, 0); }
-          to   { transform: translate3d(-33.3333%, 0, 0); }
-        }
-        @keyframes feedScrollReverse {
-          from { transform: translate3d(-33.3333%, 0, 0); }
-          to   { transform: translate3d(0, 0, 0); }
-        }
-        .feed-track,
-        .feed-track-reverse {
-          /* Slower duration smooths perceived motion — eye reads it as
-             premium glide rather than busy scroll. Mobile gets a faster
-             cycle because tiles are narrower → otherwise the same brand
-             takes too long to come back into view. */
-          animation: feedScroll 35s linear infinite;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-        }
-        .feed-track-reverse {
-          animation-name: feedScrollReverse;
-        }
-        @media (min-width: 768px) {
-          .feed-track,
-          .feed-track-reverse { animation-duration: 50s; }
-        }
-        .feed-paused {
-          animation-play-state: paused;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .feed-track,
-          .feed-track-reverse { animation: none; }
-        }
-      `}</style>
     </section>
   );
 }
