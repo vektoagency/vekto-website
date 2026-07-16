@@ -15,25 +15,32 @@ const geist = Geist({
   preload: true,
 });
 
+// Chat-preview copy: BG-first (site defaults to BG on cookie miss) +
+// punchy one-line description in the style of ROIimpact / Noble
+// Graphics. Twitter card downgraded to `summary` (compact square)
+// instead of `summary_large_image`, and the opengraph-image.tsx below
+// serves at 800×800 → Messenger / iMessage / iOS Share Sheet all read
+// this as 'compact card' rather than the tall landscape hero card.
 export const metadata: Metadata = {
   metadataBase: new URL("https://vektoagency.com"),
-  title: "VEKTO — AI-Driven Vision for the Future of Companies",
+  title: "VEKTO — AI маркетинг агенция",
   description:
-    "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+    "Създаваме видеа и реклами, които продават. AI-задвижена маркетинг агенция за 30+ бранда в България и САЩ.",
   openGraph: {
-    title: "VEKTO — AI-Driven Vision for the Future of Companies",
+    title: "VEKTO — AI маркетинг агенция",
     description:
-      "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+      "Създаваме видеа и реклами, които продават. AI-задвижена маркетинг агенция за 30+ бранда в България и САЩ.",
     url: "https://vektoagency.com",
     siteName: "VEKTO",
-    locale: "en_US",
+    locale: "bg_BG",
+    alternateLocale: ["en_US"],
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "VEKTO — AI-Driven Vision for the Future of Companies",
+    card: "summary",
+    title: "VEKTO — AI маркетинг агенция",
     description:
-      "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
+      "Създаваме видеа и реклами, които продават. AI-задвижена агенция за 30+ бранда.",
   },
 };
 

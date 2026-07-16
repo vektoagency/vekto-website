@@ -2,8 +2,18 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "VEKTO — AI-Driven Vision for the Future of Companies";
-export const size = { width: 1200, height: 630 };
+// Square 800×800 OG image → Facebook Messenger / iMessage / iOS Share
+// Sheet render this as a COMPACT link card (icon on left + copy on
+// right) rather than the tall landscape hero card. Matches the look
+// the user asked for (ROIimpact-style compact preview).
+//
+// Design: centred VEKTO wordmark, lime tagline pill, headline +
+// sub-copy, domain footer. Every message client crops slightly
+// differently, so the important stuff stays inside the middle 60%
+// safe area.
+
+export const alt = "VEKTO — AI маркетинг агенция";
+export const size = { width: 800, height: 800 };
 export const contentType = "image/png";
 
 export default async function Image() {
@@ -18,113 +28,131 @@ export default async function Image() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           background: "#080808",
-          padding: 80,
+          padding: 72,
           position: "relative",
           fontFamily: "sans-serif",
           color: "white",
         }}
       >
-        {/* Ambient lime glow top-right */}
+        {/* Ambient lime glow — top-right */}
         <div
           style={{
             position: "absolute",
-            top: -200,
-            right: -200,
-            width: 800,
-            height: 800,
+            top: -180,
+            right: -180,
+            width: 520,
+            height: 520,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(200,255,0,0.22) 0%, rgba(200,255,0,0) 65%)",
+            background:
+              "radial-gradient(circle, rgba(200,255,0,0.24) 0%, rgba(200,255,0,0) 65%)",
           }}
         />
-        {/* Ambient lime glow bottom-left */}
+        {/* Ambient lime glow — bottom-left */}
         <div
           style={{
             position: "absolute",
-            bottom: -260,
+            bottom: -200,
             left: -200,
-            width: 700,
-            height: 700,
+            width: 520,
+            height: 520,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(200,255,0,0.12) 0%, rgba(200,255,0,0) 65%)",
+            background:
+              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 65%)",
           }}
         />
 
-        {/* Top: logo + status pill */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 1 }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logoSrc} alt="VEKTO" width={180} height={60} style={{ objectFit: "contain" }} />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              border: "1px solid rgba(200,255,0,0.35)",
-              borderRadius: 999,
-              padding: "10px 22px",
-              fontSize: 18,
-              color: "#c8ff00",
-              letterSpacing: 3,
-              textTransform: "uppercase",
-              fontWeight: 600,
-            }}
-          >
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#c8ff00", display: "block" }} />
-            AI-Powered Creative Agency
-          </div>
-        </div>
-
-        {/* Middle: headline */}
+        {/* Top eyebrow — status pill */}
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            flex: 1,
+            alignItems: "center",
+            gap: 12,
+            border: "1px solid rgba(200,255,0,0.4)",
+            borderRadius: 999,
+            padding: "10px 22px",
+            fontSize: 20,
+            color: "#c8ff00",
+            letterSpacing: 3,
+            textTransform: "uppercase",
+            fontWeight: 600,
+            zIndex: 1,
+            marginBottom: 42,
+          }}
+        >
+          <span
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              background: "#c8ff00",
+              display: "block",
+            }}
+          />
+          AI Marketing Agency
+        </div>
+
+        {/* Logo — centred, dominant */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoSrc}
+          alt="VEKTO"
+          width={360}
+          height={120}
+          style={{ objectFit: "contain", zIndex: 1, marginBottom: 46 }}
+        />
+
+        {/* Headline */}
+        <div
+          style={{
+            fontSize: 50,
+            fontWeight: 800,
+            lineHeight: 1.1,
+            letterSpacing: -1,
+            textAlign: "center",
+            color: "#f5f5f5",
+            zIndex: 1,
+            maxWidth: 640,
+            marginBottom: 24,
+          }}
+        >
+          Създаваме видеа и реклами,
+          <br />
+          <span style={{ color: "#c8ff00" }}>които продават.</span>
+        </div>
+
+        {/* Sub-copy */}
+        <div
+          style={{
+            fontSize: 22,
+            color: "#a0a0a0",
+            textAlign: "center",
+            maxWidth: 560,
+            lineHeight: 1.45,
             zIndex: 1,
           }}
         >
-          <div
-            style={{
-              fontSize: 104,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: -2,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <span style={{ color: "#c8ff00" }}>AI-Driven Vision</span>
-            <span style={{ color: "#f5f5f5" }}>for the Future</span>
-            <span style={{ color: "#f5f5f5" }}>of Companies.</span>
-          </div>
-          <div
-            style={{
-              marginTop: 32,
-              fontSize: 26,
-              color: "#a0a0a0",
-              maxWidth: 820,
-              lineHeight: 1.4,
-            }}
-          >
-            From cinematic storytelling to AI-powered short-form systems — we
-            create visual ecosystems built to scale.
-          </div>
+          AI-задвижена маркетинг агенция за 30+ бранда в България и САЩ.
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom domain */}
         <div
           style={{
+            position: "absolute",
+            bottom: 46,
             display: "flex",
-            justifyContent: "space-between",
+            gap: 14,
             alignItems: "center",
             zIndex: 1,
-            fontSize: 22,
-            color: "#6a6560",
+            fontSize: 20,
+            color: "#c8ff00",
+            fontWeight: 700,
+            letterSpacing: 3,
           }}
         >
-          <span style={{ color: "#c8ff00", fontWeight: 700, letterSpacing: 2 }}>vektoagency.com</span>
-          <span>Based in Bulgaria · Working worldwide</span>
+          vektoagency.com
         </div>
       </div>
     ),
