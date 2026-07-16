@@ -1,14 +1,13 @@
 import { ImageResponse } from "next/og";
 
-// Apple touch icon — 180×180 PNG. iOS home-screen and many chat / link
-// preview clients (Messenger, iMessage, Discord) prefer apple-touch-icon
-// over the favicon for the small avatar tile. The square wordmark version
-// shrinks the 'VEKTO' letters to the point of illegibility at 32-48 px
-// avatar sizes those clients render at, so this lockup uses a single
-// heavy 'V' letterform that stays sharp all the way down.
+// Apple touch icon — 180×180 PNG. Shown as the compact-card avatar tile
+// in Messenger / iMessage / iOS Share Sheet / Discord etc.
 //
-// The browser-tab favicon stays as the original wordmark app/icon.png —
-// that's a different surface where the wordmark crop is acceptable.
+// Design flip from earlier version: full-bleed LIME background with a
+// bold BLACK V that fills the tile edge-to-edge. The previous
+// black-bg / lime-V design read as a small letterform floating in dark
+// space at compact-card sizes (32–64 px); this inverse reads as a
+// proper branded app icon — the whole tile IS the mark.
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -23,47 +22,28 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#080808",
           position: "relative",
           fontFamily: "sans-serif",
+          // Full-bleed lime with a very subtle top-lit gradient so the
+          // tile has a tiny bit of depth instead of reading as a flat
+          // colour swatch at large sizes.
+          background:
+            "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
+          overflow: "hidden",
         }}
       >
-        {/* Ambient lime glow — reads as a branded mark instead of a
-            flat letterform when the icon is shown on a light surface
-            (e.g. Messenger preview cards). */}
+        {/* Bold black V — sized to fill nearly the full tile height.
+            fontSize is tuned so the cap height lands at ~90% of the
+            canvas, no glyph padding. Negative letterSpacing tightens
+            the mark against the tile edges. */}
         <div
           style={{
-            position: "absolute",
-            top: -42,
-            right: -42,
-            width: 126,
-            height: 126,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.28) 0%, rgba(200,255,0,0) 65%)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: -42,
-            left: -42,
-            width: 126,
-            height: 126,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.12) 0%, rgba(200,255,0,0) 65%)",
-          }}
-        />
-        <div
-          style={{
-            fontSize: 134,
+            fontSize: 180,
             fontWeight: 900,
-            color: "#c8ff00",
-            letterSpacing: -6,
+            color: "#0a0a0a",
+            letterSpacing: -10,
             lineHeight: 1,
-            zIndex: 1,
-            marginTop: -4,
+            marginTop: 8,
           }}
         >
           V
