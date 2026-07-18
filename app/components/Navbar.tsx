@@ -3,21 +3,17 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useT } from "../i18n/LangProvider";
 import LangToggle from "./LangToggle";
 
 // Phone moved out of Navbar — still surfaced in Footer + Contact section.
 
-type NavLink =
-  | { label: string; href: string; action?: undefined }
-  | { label: string; action: "portfolio"; href?: undefined };
+type NavLink = { label: string; href: string };
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const router = useRouter();
   const t = useT({
     bg: { services: "Услуги", why: "Защо VEKTO", portfolio: "Портфолио", contact: "Контакт", cta: "Започни", callAria: "Обади се" },
     en: { services: "Services", why: "Why VEKTO", portfolio: "Portfolio", contact: "Contact", cta: "Get Started", callAria: "Call us" },
@@ -43,17 +39,17 @@ export default function Navbar() {
     };
   }, []);
 
+  // Portfolio is a real route (/portfolio) so it's a plain Link — the
+  // rest are in-page anchors. Using a mix of Link + <a> was breaking
+  // Portfolio silently: the old <button onClick={router.push}> version
+  // depended on client hydration and did nothing on the frame between
+  // paint and hydrate. As a Link it works even before hydration.
   const links: NavLink[] = [
     { label: t.services, href: "#services" },
     { label: t.why, href: "#why" },
-    { label: t.portfolio, action: "portfolio" },
+    { label: t.portfolio, href: "/portfolio" },
     { label: t.contact, href: "#contact" },
   ];
-
-  const handlePortfolio = () => {
-    setMenuOpen(false);
-    router.push("/portfolio");
-  };
 
   return (
     <header
@@ -69,17 +65,18 @@ export default function Navbar() {
           <Image src="/images/logo.webp" alt="VEKTO" width={120} height={40} className="object-contain" priority />
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop nav — route hrefs use <Link>, in-page anchors use <a>
+            so the browser handles the smooth-scroll natively. */}
         <nav className="hidden md:flex items-center gap-8">
           {links.map((l) =>
-            l.action === "portfolio" ? (
-              <button
-                key="portfolio"
-                onClick={handlePortfolio}
-                className="text-sm text-white/85 hover:text-white transition-colors cursor-pointer"
+            l.href.startsWith("/") ? (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="text-sm text-white/85 hover:text-white transition-colors"
               >
                 {l.label}
-              </button>
+              </Link>
             ) : (
               <a
                 key={l.href}
@@ -127,14 +124,15 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-[#111110] border-t border-[#1e1e1c] px-6 py-4 flex flex-col gap-4">
           {links.map((l) =>
-            l.action === "portfolio" ? (
-              <button
-                key="portfolio"
-                onClick={handlePortfolio}
-                className="text-left text-white/85 hover:text-white transition-colors cursor-pointer"
+            l.href.startsWith("/") ? (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-white/85 hover:text-white transition-colors"
               >
                 {l.label}
-              </button>
+              </Link>
             ) : (
               <a
                 key={l.href}
