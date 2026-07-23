@@ -200,9 +200,14 @@ export default function PortfolioWindow({
 function PreviewTile({
   clip,
   mountDelay,
+  priority,
 }: {
   clip: Clip;
   mountDelay: number;
+  // First few tiles paint above-the-fold — give their thumbnails
+  // fetchpriority/priority hints so the browser races those images
+  // ahead of the ~4-5 MB of video metadata the other tiles want.
+  priority?: boolean;
 }) {
   const tileRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -282,6 +287,7 @@ function PreviewTile({
           alt={clip.brand}
           fill
           sizes="(max-width: 768px) 50vw, 200px"
+          priority={priority}
           className="object-cover"
         />
       ) : (
@@ -290,19 +296,24 @@ function PreviewTile({
           src={clip.thumbnail}
           alt={clip.brand}
           loading="eager"
+          fetchPriority={priority ? "high" : "auto"}
           draggable={false}
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
 
-      {hasBeenVisible && videoSrc && !coveredByOverlay && (
+      {/* Video mount gated on staggerPassed — thumbnails paint first
+          without ~4-5 MB of concurrent video metadata competing for
+          bandwidth. preload='none' means the video element exists in
+          the DOM but only starts fetching when play() is called. */}
+      {hasBeenVisible && staggerPassed && videoSrc && !coveredByOverlay && (
         <video
           ref={videoRef}
           src={videoSrc}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
@@ -330,6 +341,11 @@ function ScrollColumn({
             key={`${c.id}-${i}`}
             clip={c}
             mountDelay={i * 220}
+            // First two tiles per column are above-the-fold at t=0 —
+            // priority their thumbnails so the card paints populated
+            // immediately instead of a dark rectangle waiting for
+            // background image fetches.
+            priority={i < 2}
           />
         ))}
       </div>
