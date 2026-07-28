@@ -1,22 +1,28 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
-// Apple touch icon — bumped 180×180 → 512×512.
+// Apple touch icon — 512×512.
 //
-// Facebook Messenger, iMessage, and iOS Share Sheet all cache and
-// UPSCALE the apple-touch-icon for their compact link cards. At the
-// old 180×180 resolution, the letter edges pixelated visibly when
-// the client stretched to 256×256 or 300×300 display sizes. 512×512
-// is the largest apple-touch-icon size iOS/PWAs consume, so serving
-// that gives the browser + messenger clients plenty of downscale
-// headroom — no upscale = no jagged edges.
+// Uses the real VEKTO wordmark (public/images/logo.webp) centred on a
+// black tile with a lime ambient glow. User rejected the invented V
+// letterform ('нека излиза логото на векто, не това v').
 //
-// Design stays the same: full-bleed lime tile with a heavy black V
-// that fills the canvas edge-to-edge, subtle gradient for depth.
+// The wordmark ships as a WHITE wordmark on transparent (that's why it
+// reads on the Navbar's dark backdrop), so the tile has to stay dark
+// for it to be visible — a lime tile would wash the wordmark out.
+// Corner glows keep the tile from reading as a flat black square when
+// the messenger clients downscale it into a small compact-card avatar.
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-export default function AppleIcon() {
+export default async function AppleIcon() {
+  const logoData = await readFile(
+    join(process.cwd(), "public/images/logo.webp")
+  );
+  const logoSrc = `data:image/webp;base64,${logoData.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -27,27 +33,47 @@ export default function AppleIcon() {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          fontFamily: "sans-serif",
-          background:
-            "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
+          background: "#080808",
           overflow: "hidden",
         }}
       >
-        {/* Bold black V — proportions scale with the canvas: fontSize
-            = 90% of side, letterSpacing negative to hug the tile
-            edges. At 512 that's fontSize:512 letterSpacing:-28. */}
+        {/* Ambient lime glow — top-right corner */}
         <div
           style={{
-            fontSize: 512,
-            fontWeight: 900,
-            color: "#0a0a0a",
-            letterSpacing: -28,
-            lineHeight: 1,
-            marginTop: 22,
+            position: "absolute",
+            top: -120,
+            right: -120,
+            width: 360,
+            height: 360,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(200,255,0,0.30) 0%, rgba(200,255,0,0) 65%)",
           }}
-        >
-          V
-        </div>
+        />
+        {/* Ambient lime glow — bottom-left corner */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -120,
+            left: -120,
+            width: 360,
+            height: 360,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 65%)",
+          }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoSrc}
+          alt="VEKTO"
+          width={400}
+          height={130}
+          style={{
+            objectFit: "contain",
+            zIndex: 1,
+          }}
+        />
       </div>
     ),
     { ...size }
