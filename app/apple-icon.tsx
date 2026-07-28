@@ -1,15 +1,19 @@
 import { ImageResponse } from "next/og";
 
-// Apple touch icon — 180×180 PNG. Shown as the compact-card avatar tile
-// in Messenger / iMessage / iOS Share Sheet / Discord etc.
+// Apple touch icon — bumped 180×180 → 512×512.
 //
-// Design flip from earlier version: full-bleed LIME background with a
-// bold BLACK V that fills the tile edge-to-edge. The previous
-// black-bg / lime-V design read as a small letterform floating in dark
-// space at compact-card sizes (32–64 px); this inverse reads as a
-// proper branded app icon — the whole tile IS the mark.
+// Facebook Messenger, iMessage, and iOS Share Sheet all cache and
+// UPSCALE the apple-touch-icon for their compact link cards. At the
+// old 180×180 resolution, the letter edges pixelated visibly when
+// the client stretched to 256×256 or 300×300 display sizes. 512×512
+// is the largest apple-touch-icon size iOS/PWAs consume, so serving
+// that gives the browser + messenger clients plenty of downscale
+// headroom — no upscale = no jagged edges.
+//
+// Design stays the same: full-bleed lime tile with a heavy black V
+// that fills the canvas edge-to-edge, subtle gradient for depth.
 
-export const size = { width: 180, height: 180 };
+export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
 export default function AppleIcon() {
@@ -24,26 +28,22 @@ export default function AppleIcon() {
           justifyContent: "center",
           position: "relative",
           fontFamily: "sans-serif",
-          // Full-bleed lime with a very subtle top-lit gradient so the
-          // tile has a tiny bit of depth instead of reading as a flat
-          // colour swatch at large sizes.
           background:
             "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
           overflow: "hidden",
         }}
       >
-        {/* Bold black V — sized to fill nearly the full tile height.
-            fontSize is tuned so the cap height lands at ~90% of the
-            canvas, no glyph padding. Negative letterSpacing tightens
-            the mark against the tile edges. */}
+        {/* Bold black V — proportions scale with the canvas: fontSize
+            = 90% of side, letterSpacing negative to hug the tile
+            edges. At 512 that's fontSize:512 letterSpacing:-28. */}
         <div
           style={{
-            fontSize: 180,
+            fontSize: 512,
             fontWeight: 900,
             color: "#0a0a0a",
-            letterSpacing: -10,
+            letterSpacing: -28,
             lineHeight: 1,
-            marginTop: 8,
+            marginTop: 22,
           }}
         >
           V
