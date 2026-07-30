@@ -1,10 +1,17 @@
 import { ImageResponse } from "next/og";
 
-// Apple touch icon — 512×512, full-bleed lime tile with a heavy black
-// chevron 'V' drawn as an SVG path. Uses SVG stroke instead of a text
-// glyph so the letter thickness, endpoints, and proportions are pixel-
-// exact and don't depend on whatever fallback font Satori picks.
-// Result: much more solid + chunky than the text version.
+// Apple touch icon — bumped 180×180 → 512×512.
+//
+// Facebook Messenger, iMessage, and iOS Share Sheet all cache and
+// UPSCALE the apple-touch-icon for their compact link cards. At the
+// old 180×180 resolution, the letter edges pixelated visibly when
+// the client stretched to 256×256 or 300×300 display sizes. 512×512
+// is the largest apple-touch-icon size iOS/PWAs consume, so serving
+// that gives the browser + messenger clients plenty of downscale
+// headroom — no upscale = no jagged edges.
+//
+// Design stays the same: full-bleed lime tile with a heavy black V
+// that fills the canvas edge-to-edge, subtle gradient for depth.
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
@@ -19,28 +26,28 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          position: "relative",
+          fontFamily: "sans-serif",
           background:
             "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
           overflow: "hidden",
         }}
       >
-        <svg width="512" height="512" viewBox="0 0 512 512">
-          {/* Two diagonal bars meeting at the bottom centre.
-              strokeWidth 160 gives ~31% of the canvas as letter
-              thickness — reads as a solid mark, not a delicate glyph.
-              strokeLinejoin='miter' keeps the bottom tip razor sharp;
-              strokeLinecap='butt' keeps the top ends flat so the V
-              hugs the top edge of the tile. */}
-          <path
-            d="M 92 88 L 256 448 L 420 88"
-            stroke="#0a0a0a"
-            strokeWidth="160"
-            strokeLinecap="butt"
-            strokeLinejoin="miter"
-            strokeMiterlimit="10"
-            fill="none"
-          />
-        </svg>
+        {/* Bold black V — proportions scale with the canvas: fontSize
+            = 90% of side, letterSpacing negative to hug the tile
+            edges. At 512 that's fontSize:512 letterSpacing:-28. */}
+        <div
+          style={{
+            fontSize: 512,
+            fontWeight: 900,
+            color: "#0a0a0a",
+            letterSpacing: -28,
+            lineHeight: 1,
+            marginTop: 22,
+          }}
+        >
+          V
+        </div>
       </div>
     ),
     { ...size }
