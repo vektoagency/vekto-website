@@ -41,6 +41,11 @@ const bgClients: Client[] = [
   { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg", url: "https://www.cartelcaffe.com", desc: { bg: "Кафе бранд", en: "Coffee brand" } },
   { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", url: "https://phytolife.bg", desc: { bg: "Натурални добавки", en: "Natural wellness" }, invert: true },
   { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", url: "https://gourmethouse.bg", desc: { bg: "Гурме продукти", en: "Gourmet food" }, invert: true },
+  // Added later — 2 more BG partners. Both are coloured wordmarks
+  // (bultex blue, nedelya orange) on transparent — no invert needed;
+  // the brand hues read cleanly on the dark tile.
+  { name: "BULTEX", logo: "/images/logo-bultex.png", url: "https://bultex99.com", desc: { bg: "Матраци и мебели за спалня", en: "Mattresses & bedroom furniture" } },
+  { name: "NEDELYA", logo: "/images/logo-nedelya.svg", url: "https://nedelya.com", desc: { bg: "Верига хлебарници и сладкарници", en: "Bakery & pastry chain" } },
 ];
 
 const usClients: Client[] = [
