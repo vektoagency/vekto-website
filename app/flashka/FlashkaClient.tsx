@@ -98,7 +98,10 @@ export default function FlashkaClient() {
     // All four fields are required for follow-up. Validate in the order
     // shown so the first empty field gets a specific error message.
     if (!name.trim()) { setErrorMsg(t.error.requiredName); return; }
-    if (!email.trim()) { setErrorMsg(t.error.requiredEmail); return; }
+    // Explicit email format check — see StartClient for the rationale.
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setErrorMsg(t.error.requiredEmail); return;
+    }
     if (!phone.trim()) { setErrorMsg(t.error.requiredPhone); return; }
     if (!brand.trim()) { setErrorMsg(t.error.requiredBrand); return; }
     setSubmitting(true);

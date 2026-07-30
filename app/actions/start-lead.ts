@@ -98,12 +98,17 @@ export async function submitStartLead(data: StartLead) {
   try {
     const sourceTag = source === "flashka" ? " [FLASHKA]" : data.utmSource ? ` [${data.utmSource.toUpperCase()}]` : "";
     const subjectLabel = source === "flashka" ? "APPLY" : "LEAD";
+    // Only pass replyTo if the value looks like an actual email. Resend
+    // rejects the whole send with 422 'invalid reply_to' when the value
+    // is garbage (bots, typos, honeypot fills). The lead's email still
+    // shows in the body of the message either way.
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email?.trim() || "");
     const result = await resend.emails.send({
       from: "VEKTO Lead <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
       subject: `[${subjectLabel}]${sourceTag} ${brandLabel} — ${data.contentTypeLabel || "?"} · ${data.budgetLabel || "?"}`,
       html,
-      replyTo: data.email,
+      ...(validEmail ? { replyTo: data.email } : {}),
     });
     // Resend SDK returns { data, error } shape — a rejected send still
     // resolves the promise. Explicitly check + log so a bad API key,

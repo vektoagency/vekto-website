@@ -19,6 +19,9 @@ export async function sendContactEmail(formData: FormData) {
   }
 
   try {
+    // Guard replyTo — Resend 422s the whole send if the value doesn't
+    // parse as an email. See start-lead for details.
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email?.trim() || "");
     const result = await resend.emails.send({
       from: "VEKTO Contact <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
@@ -32,7 +35,7 @@ export async function sendContactEmail(formData: FormData) {
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, "<br>")}</p>
       `,
-      replyTo: email,
+      ...(validEmail ? { replyTo: email } : {}),
     });
     // Log Resend's response so failed sends aren't silent. Resend
     // resolves the promise even on API-level errors — the { error }

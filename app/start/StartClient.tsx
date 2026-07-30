@@ -129,7 +129,14 @@ export default function StartClient() {
     // email + phone + business name. Validate in the order shown so the
     // first empty field gets the error message instead of a generic one.
     if (!name.trim()) { setErrorMsg(t.error.requiredName); return; }
-    if (!email.trim()) { setErrorMsg(t.error.requiredEmail); return; }
+    // Explicit email format check — HTML5 required only covers emptiness,
+    // and this form uses a button onClick handler (not <form> onSubmit) so
+    // the browser's built-in type='email' validator never fires. Without
+    // this, Resend rejects the send with a 422 'invalid reply_to' because
+    // we pass data.email straight through to replyTo.
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setErrorMsg(t.error.requiredEmail); return;
+    }
     if (!phone.trim()) { setErrorMsg(t.error.requiredPhone); return; }
     if (!brand.trim()) { setErrorMsg(t.error.requiredBrand); return; }
     setSubmitting(true);

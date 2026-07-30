@@ -162,12 +162,15 @@ export async function submitBrief(data: BriefSubmission) {
   `;
 
   try {
+    // Guard replyTo — Resend 422s the whole send if the value doesn't
+    // parse as an email. See start-lead for details.
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email?.trim() || "");
     const result = await resend.emails.send({
       from: "VEKTO Brief <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
       subject: `[BRIEF] ${brandLabel} — ${nameLabel}`,
       html,
-      replyTo: data.email,
+      ...(validEmail ? { replyTo: data.email } : {}),
     });
     if (result.error) {
       console.error("[brief] Resend send returned error", {
