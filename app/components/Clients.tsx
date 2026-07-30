@@ -17,13 +17,15 @@ type Client = {
 };
 
 const bgClients: Client[] = [
-  // BULTEX + NEDELYA promoted to the top of the marquee per user
-  // preference — they lead the loop instead of trailing at the end.
-  { name: "BULTEX", logo: "/images/logo-bultex.png", url: "https://bultex99.com", desc: { bg: "Работно облекло и предпазни средства", en: "Workwear & personal safety equipment" } },
-  { name: "NEDELYA", logo: "/images/logo-nedelya.svg", url: "https://nedelya.com", desc: { bg: "Торти и сладкарски продукти", en: "Cakes & bakery products" } },
+  // BULTEX at slot 3, NEDELYA at slot 5 — interleaved with the older
+  // heavyweights (ISOSPORT, PARFEN, BIOTICA) so the two new entries
+  // land in prominent early positions of the marquee loop without
+  // stealing the leading slot from the established brands.
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: { bg: "Енергийни и функционални напитки", en: "Energy & functional beverages" } },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: { bg: "Дизайнерски инспирирани парфюми", en: "Designer-inspired perfumes" }, invert: true },
+  { name: "BULTEX", logo: "/images/logo-bultex.png", url: "https://bultex99.com", desc: { bg: "Работно облекло и предпазни средства", en: "Workwear & personal safety equipment" } },
   { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: { bg: "Натурални хранителни добавки", en: "Natural supplements" }, circular: true, invert: true },
+  { name: "NEDELYA", logo: "/images/logo-nedelya.svg", url: "https://nedelya.com", desc: { bg: "Торти и сладкарски продукти", en: "Cakes & bakery products" } },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: { bg: "Грижа за кожа срещу акне", en: "Acne skincare brand" } },
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: { bg: "Натурална козметика", en: "Natural cosmetics" } },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: { bg: "Подаръчни ваучери за преживявания", en: "Experience voucher platform" } },
