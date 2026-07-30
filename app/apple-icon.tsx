@@ -29,18 +29,19 @@ export default function AppleIcon() {
           position: "relative",
           fontFamily: "sans-serif",
           background:
-            "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
+            "linear-gradient(160deg, #101010 0%, #0a0a0a 45%, #050505 100%)",
           overflow: "hidden",
         }}
       >
-        {/* Bold black V — proportions scale with the canvas: fontSize
-            = 90% of side, letterSpacing negative to hug the tile
-            edges. At 512 that's fontSize:512 letterSpacing:-28. */}
+        {/* Bold lime V on a near-black tile — proportions scale with
+            the canvas: fontSize = 90% of side, letterSpacing negative
+            to hug the tile edges. At 512 that's fontSize:512
+            letterSpacing:-28. */}
         <div
           style={{
             fontSize: 512,
             fontWeight: 900,
-            color: "#0a0a0a",
+            color: "#c8ff00",
             letterSpacing: -28,
             lineHeight: 1,
             marginTop: 22,
