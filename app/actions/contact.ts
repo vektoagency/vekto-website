@@ -20,7 +20,7 @@ export async function sendContactEmail(formData: FormData) {
 
   try {
     const result = await resend.emails.send({
-      from: "VEKTO Contact <onboarding@resend.dev>",
+      from: "VEKTO Contact <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
       subject: `New inquiry from ${name} (${company})`,
       html: `
@@ -41,7 +41,7 @@ export async function sendContactEmail(formData: FormData) {
       console.error("[contact] Resend send returned error", {
         error: result.error,
         to: process.env.CONTACT_EMAIL,
-        from: "onboarding@resend.dev",
+        from: "no-reply@vektoagency.com",
       });
       return { success: false, error: "Failed to send email" };
     }

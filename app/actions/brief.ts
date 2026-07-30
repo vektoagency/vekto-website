@@ -163,7 +163,7 @@ export async function submitBrief(data: BriefSubmission) {
 
   try {
     const result = await resend.emails.send({
-      from: "VEKTO Brief <onboarding@resend.dev>",
+      from: "VEKTO Brief <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
       subject: `[BRIEF] ${brandLabel} — ${nameLabel}`,
       html,
@@ -173,7 +173,7 @@ export async function submitBrief(data: BriefSubmission) {
       console.error("[brief] Resend send returned error", {
         error: result.error,
         to: process.env.CONTACT_EMAIL,
-        from: "onboarding@resend.dev",
+        from: "no-reply@vektoagency.com",
       });
       return { success: false, error: "Failed to send" };
     }

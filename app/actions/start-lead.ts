@@ -99,7 +99,7 @@ export async function submitStartLead(data: StartLead) {
     const sourceTag = source === "flashka" ? " [FLASHKA]" : data.utmSource ? ` [${data.utmSource.toUpperCase()}]` : "";
     const subjectLabel = source === "flashka" ? "APPLY" : "LEAD";
     const result = await resend.emails.send({
-      from: "VEKTO Lead <onboarding@resend.dev>",
+      from: "VEKTO Lead <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
       subject: `[${subjectLabel}]${sourceTag} ${brandLabel} — ${data.contentTypeLabel || "?"} · ${data.budgetLabel || "?"}`,
       html,
@@ -113,7 +113,7 @@ export async function submitStartLead(data: StartLead) {
       console.error("[start-lead] Resend send returned error", {
         error: result.error,
         to: process.env.CONTACT_EMAIL,
-        from: "onboarding@resend.dev",
+        from: "no-reply@vektoagency.com",
         subject: `[${subjectLabel}] ${brandLabel}`,
       });
       return { success: false, error: "Failed to send" };
