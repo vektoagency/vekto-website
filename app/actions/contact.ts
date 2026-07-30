@@ -19,7 +19,7 @@ export async function sendContactEmail(formData: FormData) {
   }
 
   try {
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "VEKTO Contact <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL!,
       subject: `New inquiry from ${name} (${company})`,
@@ -34,9 +34,21 @@ export async function sendContactEmail(formData: FormData) {
       `,
       replyTo: email,
     });
-
+    // Log Resend's response so failed sends aren't silent. Resend
+    // resolves the promise even on API-level errors — the { error }
+    // field is where the real cause lives.
+    if (result.error) {
+      console.error("[contact] Resend send returned error", {
+        error: result.error,
+        to: process.env.CONTACT_EMAIL,
+        from: "onboarding@resend.dev",
+      });
+      return { success: false, error: "Failed to send email" };
+    }
+    console.log("[contact] Resend send OK", { id: result.data?.id, to: process.env.CONTACT_EMAIL });
     return { success: true };
-  } catch {
+  } catch (err) {
+    console.error("[contact] Resend send threw", err);
     return { success: false, error: "Failed to send email" };
   }
 }

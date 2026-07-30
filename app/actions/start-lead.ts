@@ -98,14 +98,29 @@ export async function submitStartLead(data: StartLead) {
   try {
     const sourceTag = source === "flashka" ? " [FLASHKA]" : data.utmSource ? ` [${data.utmSource.toUpperCase()}]` : "";
     const subjectLabel = source === "flashka" ? "APPLY" : "LEAD";
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "VEKTO Lead <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL!,
       subject: `[${subjectLabel}]${sourceTag} ${brandLabel} — ${data.contentTypeLabel || "?"} · ${data.budgetLabel || "?"}`,
       html,
       replyTo: data.email,
     });
-  } catch {
+    // Resend SDK returns { data, error } shape — a rejected send still
+    // resolves the promise. Explicitly check + log so a bad API key,
+    // spam-block, or missing CONTACT_EMAIL doesn't fail silently the
+    // way it did before. Vercel logs will show the real reason.
+    if (result.error) {
+      console.error("[start-lead] Resend send returned error", {
+        error: result.error,
+        to: process.env.CONTACT_EMAIL,
+        from: "onboarding@resend.dev",
+        subject: `[${subjectLabel}] ${brandLabel}`,
+      });
+      return { success: false, error: "Failed to send" };
+    }
+    console.log("[start-lead] Resend send OK", { id: result.data?.id, to: process.env.CONTACT_EMAIL });
+  } catch (err) {
+    console.error("[start-lead] Resend send threw", err);
     return { success: false, error: "Failed to send" };
   }
 
