@@ -180,7 +180,7 @@ export const flashkaCopy = {
     },
 
     error: {
-      generic: "Нещо се обърка. Опитай пак или ни пиши на vekto.agency.bg@gmail.com",
+      generic: "Нещо се обърка. Опитай пак или ни пиши на vektoagency@gmail.com",
       requiredEmail: "Имейлът е задължителен.",
       requiredName: "Името е задължително.",
       requiredBrand: "Бизнесът е задължителен.",
@@ -355,7 +355,7 @@ export const flashkaCopy = {
     },
 
     error: {
-      generic: "Something went wrong. Try again or email vekto.agency.bg@gmail.com",
+      generic: "Something went wrong. Try again or email vektoagency@gmail.com",
       requiredEmail: "Email is required.",
       requiredName: "Name is required.",
       requiredBrand: "Business name is required.",

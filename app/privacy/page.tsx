@@ -20,7 +20,7 @@ const copy = {
         title: "1. Кои сме",
         body: [
           "VEKTO е творческа агенция, базирана в България.",
-          "Имейл за връзка: vekto.agency.bg@gmail.com",
+          "Имейл за връзка: vektoagency@gmail.com",
           "Телефон: +359 88 225 1474",
           "За въпроси относно поверителността, използвай същия имейл с тема „GDPR\".",
         ],
@@ -93,7 +93,7 @@ const copy = {
           "• Възразиш срещу маркетингова обработка",
           "• Преносимост на данните",
           "• Жалба до КЗЛД (Комисия за защита на личните данни)",
-          "За тези права пиши на vekto.agency.bg@gmail.com с тема „GDPR\". Отговаряме в 30 дни.",
+          "За тези права пиши на vektoagency@gmail.com с тема „GDPR\". Отговаряме в 30 дни.",
         ],
       },
       {
@@ -122,7 +122,7 @@ const copy = {
         title: "1. Who we are",
         body: [
           "VEKTO is a creative agency based in Bulgaria.",
-          "Contact email: vekto.agency.bg@gmail.com",
+          "Contact email: vektoagency@gmail.com",
           "Phone: +359 88 225 1474",
           "For privacy questions, email us with the subject \"GDPR\".",
         ],
@@ -195,7 +195,7 @@ const copy = {
           "• Object to marketing processing",
           "• Data portability",
           "• File a complaint with the supervisory authority",
-          "For these rights, email vekto.agency.bg@gmail.com with subject \"GDPR\". We respond within 30 days.",
+          "For these rights, email vektoagency@gmail.com with subject \"GDPR\". We respond within 30 days.",
         ],
       },
       {
