@@ -1,6 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
+import { mirrorLeadToWebhook } from "../lib/lead-mirror";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -161,10 +162,13 @@ export async function submitBrief(data: BriefSubmission) {
     </div>
   `;
 
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email?.trim() || "");
+
+  let resendStatus: "ok" | "failed" | "skipped" = "skipped";
+  let resendId: string | undefined;
+  let resendError: string | undefined;
+
   try {
-    // Guard replyTo — Resend 422s the whole send if the value doesn't
-    // parse as an email. See start-lead for details.
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email?.trim() || "");
     const result = await resend.emails.send({
       from: "VEKTO Brief <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
@@ -178,12 +182,39 @@ export async function submitBrief(data: BriefSubmission) {
         to: process.env.CONTACT_EMAIL,
         from: "no-reply@vektoagency.com",
       });
-      return { success: false, error: "Failed to send" };
+      resendStatus = "failed";
+      resendError = result.error.message || String(result.error);
+    } else {
+      resendStatus = "ok";
+      resendId = result.data?.id;
+      console.log("[brief] Resend send OK", { id: resendId, to: process.env.CONTACT_EMAIL });
     }
-    console.log("[brief] Resend send OK", { id: result.data?.id, to: process.env.CONTACT_EMAIL });
-    return { success: true };
   } catch (err) {
     console.error("[brief] Resend send threw", err);
+    resendStatus = "failed";
+    resendError = err instanceof Error ? err.message : String(err);
+  }
+
+  await mirrorLeadToWebhook({
+    source: "brief",
+    brand: data.brand || "",
+    name: data.name || "",
+    email: data.email || "",
+    phone: data.phone || "",
+    extra: {
+      Timeline: data.timeline,
+      "Monthly budget": data.budget,
+      "Main goal": data.mainGoal,
+      Services: Array.isArray(data.services) ? data.services.join(", ") : data.services,
+      Additional: data.additional,
+    },
+    resendStatus,
+    resendId,
+    resendError,
+  });
+
+  if (resendStatus === "failed" && !process.env.LEAD_WEBHOOK_URL) {
     return { success: false, error: "Failed to send" };
   }
+  return { success: true };
 }

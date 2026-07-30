@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import { headers, cookies } from "next/headers";
 import { fireMetaCapiEvent } from "../lib/meta-capi";
+import { mirrorLeadToWebhook } from "../lib/lead-mirror";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -95,14 +96,22 @@ export async function submitStartLead(data: StartLead) {
     </div>
   `;
 
+  const sourceTag = source === "flashka" ? " [FLASHKA]" : data.utmSource ? ` [${data.utmSource.toUpperCase()}]` : "";
+  const subjectLabel = source === "flashka" ? "APPLY" : "LEAD";
+  // Only pass replyTo if the value looks like an actual email. Resend
+  // rejects the whole send with 422 'invalid reply_to' when the value
+  // is garbage (bots, typos, honeypot fills).
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email?.trim() || "");
+
+  // Track the Resend attempt so we can mirror the outcome (ok/failed/
+  // skipped) to the webhook. The mirror always fires — Resend success
+  // doesn't skip it — so the owner has two independent notification
+  // channels for every lead. See app/lib/lead-mirror.ts for rationale.
+  let resendStatus: "ok" | "failed" | "skipped" = "skipped";
+  let resendId: string | undefined;
+  let resendError: string | undefined;
+
   try {
-    const sourceTag = source === "flashka" ? " [FLASHKA]" : data.utmSource ? ` [${data.utmSource.toUpperCase()}]` : "";
-    const subjectLabel = source === "flashka" ? "APPLY" : "LEAD";
-    // Only pass replyTo if the value looks like an actual email. Resend
-    // rejects the whole send with 422 'invalid reply_to' when the value
-    // is garbage (bots, typos, honeypot fills). The lead's email still
-    // shows in the body of the message either way.
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email?.trim() || "");
     const result = await resend.emails.send({
       from: "VEKTO Lead <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
@@ -110,10 +119,6 @@ export async function submitStartLead(data: StartLead) {
       html,
       ...(validEmail ? { replyTo: data.email } : {}),
     });
-    // Resend SDK returns { data, error } shape — a rejected send still
-    // resolves the promise. Explicitly check + log so a bad API key,
-    // spam-block, or missing CONTACT_EMAIL doesn't fail silently the
-    // way it did before. Vercel logs will show the real reason.
     if (result.error) {
       console.error("[start-lead] Resend send returned error", {
         error: result.error,
@@ -121,11 +126,45 @@ export async function submitStartLead(data: StartLead) {
         from: "no-reply@vektoagency.com",
         subject: `[${subjectLabel}] ${brandLabel}`,
       });
-      return { success: false, error: "Failed to send" };
+      resendStatus = "failed";
+      resendError = result.error.message || String(result.error);
+    } else {
+      resendStatus = "ok";
+      resendId = result.data?.id;
+      console.log("[start-lead] Resend send OK", { id: resendId, to: process.env.CONTACT_EMAIL });
     }
-    console.log("[start-lead] Resend send OK", { id: result.data?.id, to: process.env.CONTACT_EMAIL });
   } catch (err) {
     console.error("[start-lead] Resend send threw", err);
+    resendStatus = "failed";
+    resendError = err instanceof Error ? err.message : String(err);
+  }
+
+  // Fire-and-forget mirror to the webhook. Never awaited on the same
+  // path that returns to the client, so a slow Discord/Slack doesn't
+  // block the form success response. But we DO await it inside a
+  // catch-safe block so Vercel logs still capture the outcome.
+  await mirrorLeadToWebhook({
+    source: source === "flashka" ? "flashka" : "start",
+    brand: data.brand || "",
+    name: data.name || "",
+    email: data.email || "",
+    phone: data.phone || "",
+    extra: {
+      "Content type": data.contentTypeLabel || data.contentType,
+      "Monthly budget": data.budgetLabel || data.budget,
+      Message: data.message,
+      UTM: [data.utmSource, data.utmMedium, data.utmCampaign].filter(Boolean).join(" · ") || undefined,
+      Referrer: data.referrer,
+    },
+    resendStatus,
+    resendId,
+    resendError,
+  });
+
+  // The lead is captured either way (webhook mirror), so we tell the
+  // client success as long as ONE of the two channels landed. Only
+  // both-failed is a real failure the user needs to see + retry.
+  if (resendStatus === "failed" && !process.env.LEAD_WEBHOOK_URL) {
     return { success: false, error: "Failed to send" };
   }
 

@@ -1,6 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
+import { mirrorLeadToWebhook } from "../lib/lead-mirror";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -18,10 +19,13 @@ export async function sendContactEmail(formData: FormData) {
     return { success: false, error: "Missing required fields" };
   }
 
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email?.trim() || "");
+
+  let resendStatus: "ok" | "failed" | "skipped" = "skipped";
+  let resendId: string | undefined;
+  let resendError: string | undefined;
+
   try {
-    // Guard replyTo — Resend 422s the whole send if the value doesn't
-    // parse as an email. See start-lead for details.
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email?.trim() || "");
     const result = await resend.emails.send({
       from: "VEKTO Contact <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
@@ -37,21 +41,39 @@ export async function sendContactEmail(formData: FormData) {
       `,
       ...(validEmail ? { replyTo: email } : {}),
     });
-    // Log Resend's response so failed sends aren't silent. Resend
-    // resolves the promise even on API-level errors — the { error }
-    // field is where the real cause lives.
     if (result.error) {
       console.error("[contact] Resend send returned error", {
         error: result.error,
         to: process.env.CONTACT_EMAIL,
         from: "no-reply@vektoagency.com",
       });
-      return { success: false, error: "Failed to send email" };
+      resendStatus = "failed";
+      resendError = result.error.message || String(result.error);
+    } else {
+      resendStatus = "ok";
+      resendId = result.data?.id;
+      console.log("[contact] Resend send OK", { id: resendId, to: process.env.CONTACT_EMAIL });
     }
-    console.log("[contact] Resend send OK", { id: result.data?.id, to: process.env.CONTACT_EMAIL });
-    return { success: true };
   } catch (err) {
     console.error("[contact] Resend send threw", err);
+    resendStatus = "failed";
+    resendError = err instanceof Error ? err.message : String(err);
+  }
+
+  await mirrorLeadToWebhook({
+    source: "contact",
+    brand: company || "",
+    name: name || "",
+    email: email || "",
+    phone: phone || "",
+    extra: { Message: message },
+    resendStatus,
+    resendId,
+    resendError,
+  });
+
+  if (resendStatus === "failed" && !process.env.LEAD_WEBHOOK_URL) {
     return { success: false, error: "Failed to send email" };
   }
+  return { success: true };
 }
