@@ -1,23 +1,14 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
-// Favicon — 512×512, dynamic route overriding any static app/icon.png.
-//
-// Same wordmark-on-dark design as apple-icon so Viber / Slack / any
-// favicon-based preview client shows the same lockup as the Messenger /
-// iMessage compact card. Satori can't decode WebP, so we read the PNG
-// mirror at public/images/logo.png.
+// Favicon — 512×512, matches apple-icon so browser-tab, Viber, Slack,
+// and iMessage all pull the same lockup: full-bleed lime tile with a
+// heavy black 'V' filling the canvas. User asked to revert to the V
+// letterform ('върни favicon-а с V буквата').
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-export default async function Icon() {
-  const logoData = await readFile(
-    join(process.cwd(), "public/images/logo.png")
-  );
-  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
-
+export default function Icon() {
   return new ImageResponse(
     (
       <div
@@ -28,42 +19,24 @@ export default async function Icon() {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          background: "#080808",
+          fontFamily: "sans-serif",
+          background:
+            "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
           overflow: "hidden",
         }}
       >
         <div
           style={{
-            position: "absolute",
-            top: -120,
-            right: -120,
-            width: 360,
-            height: 360,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.30) 0%, rgba(200,255,0,0) 65%)",
+            fontSize: 512,
+            fontWeight: 900,
+            color: "#0a0a0a",
+            letterSpacing: -28,
+            lineHeight: 1,
+            marginTop: 22,
           }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: -120,
-            left: -120,
-            width: 360,
-            height: 360,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 65%)",
-          }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={logoSrc}
-          alt="VEKTO"
-          width={400}
-          height={130}
-          style={{ objectFit: "contain", zIndex: 1 }}
-        />
+        >
+          V
+        </div>
       </div>
     ),
     { ...size }

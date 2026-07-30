@@ -1,22 +1,15 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
-// Apple touch icon — 512×512.
-//
-// Real VEKTO wordmark on a dark tile with corner ambient lime glows.
-// See opengraph-image.tsx for why we load public/images/logo.png
-// (Satori's image loader doesn't decode WebP).
+// Apple touch icon — 512×512, full-bleed lime tile with a heavy black
+// 'V' filling the canvas edge to edge. User asked to revert to the V
+// letterform after trying the wordmark variant ('върни favicon-а с V
+// буквата'). Single letter reads sharp at every compact-card avatar
+// size (32-96 px) where the wordmark shrinks past legibility.
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-export default async function AppleIcon() {
-  const logoData = await readFile(
-    join(process.cwd(), "public/images/logo.png")
-  );
-  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
-
+export default function AppleIcon() {
   return new ImageResponse(
     (
       <div
@@ -27,42 +20,24 @@ export default async function AppleIcon() {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          background: "#080808",
+          fontFamily: "sans-serif",
+          background:
+            "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
           overflow: "hidden",
         }}
       >
         <div
           style={{
-            position: "absolute",
-            top: -120,
-            right: -120,
-            width: 360,
-            height: 360,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.30) 0%, rgba(200,255,0,0) 65%)",
+            fontSize: 512,
+            fontWeight: 900,
+            color: "#0a0a0a",
+            letterSpacing: -28,
+            lineHeight: 1,
+            marginTop: 22,
           }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: -120,
-            left: -120,
-            width: 360,
-            height: 360,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 65%)",
-          }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={logoSrc}
-          alt="VEKTO"
-          width={400}
-          height={130}
-          style={{ objectFit: "contain", zIndex: 1 }}
-        />
+        >
+          V
+        </div>
       </div>
     ),
     { ...size }

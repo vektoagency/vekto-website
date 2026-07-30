@@ -105,8 +105,8 @@ export default async function Image() {
           <img
             src={logoSrc}
             alt="VEKTO"
-            width={150}
-            height={50}
+            width={230}
+            height={76}
             style={{ objectFit: "contain" }}
           />
           <div
