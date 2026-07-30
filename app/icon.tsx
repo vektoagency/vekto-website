@@ -1,9 +1,8 @@
 import { ImageResponse } from "next/og";
 
-// Favicon — 512×512, matches apple-icon so browser-tab, Viber, Slack,
-// and iMessage all pull the same lockup: full-bleed lime tile with a
-// heavy black 'V' filling the canvas. User asked to revert to the V
-// letterform ('върни favicon-а с V буквата').
+// Favicon — 512×512, matches apple-icon. Full-bleed lime tile with a
+// heavy black chevron 'V' drawn as an SVG stroke path (see apple-icon
+// for why SVG instead of text).
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
@@ -18,25 +17,22 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          position: "relative",
-          fontFamily: "sans-serif",
           background:
             "linear-gradient(160deg, #d4ff33 0%, #c8ff00 45%, #b0e600 100%)",
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            fontSize: 512,
-            fontWeight: 900,
-            color: "#0a0a0a",
-            letterSpacing: -28,
-            lineHeight: 1,
-            marginTop: 22,
-          }}
-        >
-          V
-        </div>
+        <svg width="512" height="512" viewBox="0 0 512 512">
+          <path
+            d="M 92 88 L 256 448 L 420 88"
+            stroke="#0a0a0a"
+            strokeWidth="160"
+            strokeLinecap="butt"
+            strokeLinejoin="miter"
+            strokeMiterlimit="10"
+            fill="none"
+          />
+        </svg>
       </div>
     ),
     { ...size }
