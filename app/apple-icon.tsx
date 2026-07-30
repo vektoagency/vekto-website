@@ -4,24 +4,18 @@ import { join } from "node:path";
 
 // Apple touch icon — 512×512.
 //
-// Uses the real VEKTO wordmark (public/images/logo.webp) centred on a
-// black tile with a lime ambient glow. User rejected the invented V
-// letterform ('нека излиза логото на векто, не това v').
-//
-// The wordmark ships as a WHITE wordmark on transparent (that's why it
-// reads on the Navbar's dark backdrop), so the tile has to stay dark
-// for it to be visible — a lime tile would wash the wordmark out.
-// Corner glows keep the tile from reading as a flat black square when
-// the messenger clients downscale it into a small compact-card avatar.
+// Real VEKTO wordmark on a dark tile with corner ambient lime glows.
+// See opengraph-image.tsx for why we load public/images/logo.png
+// (Satori's image loader doesn't decode WebP).
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
 export default async function AppleIcon() {
   const logoData = await readFile(
-    join(process.cwd(), "public/images/logo.webp")
+    join(process.cwd(), "public/images/logo.png")
   );
-  const logoSrc = `data:image/webp;base64,${logoData.toString("base64")}`;
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -37,7 +31,6 @@ export default async function AppleIcon() {
           overflow: "hidden",
         }}
       >
-        {/* Ambient lime glow — top-right corner */}
         <div
           style={{
             position: "absolute",
@@ -50,7 +43,6 @@ export default async function AppleIcon() {
               "radial-gradient(circle, rgba(200,255,0,0.30) 0%, rgba(200,255,0,0) 65%)",
           }}
         />
-        {/* Ambient lime glow — bottom-left corner */}
         <div
           style={{
             position: "absolute",
@@ -69,10 +61,7 @@ export default async function AppleIcon() {
           alt="VEKTO"
           width={400}
           height={130}
-          style={{
-            objectFit: "contain",
-            zIndex: 1,
-          }}
+          style={{ objectFit: "contain", zIndex: 1 }}
         />
       </div>
     ),

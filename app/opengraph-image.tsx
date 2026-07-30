@@ -3,12 +3,13 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 // Square 800×800 OG image — designed to feel like a snapshot of the
-// homepage hero (dark bg + lime accents + big multi-line headline +
-// trust-badge row + vector-arrow field in the background). User
-// specifically asked for this vibe: 'като истинския сайт heroто'.
+// homepage hero. Renders on Vercel via next/og (Satori).
 //
-// Every messenger crops slightly differently, so all copy stays inside
-// the middle 70% safe area.
+// IMPORTANT: Satori's built-in image loader supports PNG / JPEG / SVG
+// but not WebP. We read a PNG copy of the wordmark (public/images/
+// logo.png) instead of the WebP variant the rest of the site uses.
+// Loading a WebP data URI inside ImageResponse fails at build time
+// with a cryptic 'u2 is not iterable' from Satori's decode step.
 
 export const alt = "VEKTO — AI маркетинг агенция";
 export const size = { width: 800, height: 800 };
@@ -16,9 +17,9 @@ export const contentType = "image/png";
 
 export default async function Image() {
   const logoData = await readFile(
-    join(process.cwd(), "public/images/logo.webp")
+    join(process.cwd(), "public/images/logo.png")
   );
-  const logoSrc = `data:image/webp;base64,${logoData.toString("base64")}`;
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -35,8 +36,7 @@ export default async function Image() {
           color: "white",
         }}
       >
-        {/* Ambient lime glows — top-right + bottom-left, same treatment
-            as the actual hero mesh background */}
+        {/* Ambient lime glows — same treatment as the actual hero mesh */}
         <div
           style={{
             position: "absolute",
@@ -62,9 +62,8 @@ export default async function Image() {
           }}
         />
 
-        {/* Vector-arrow field — 5 diagonal lime lines in the background,
-            same visual motif as the hero SVG. Kept subtle so headline
-            stays dominant. */}
+        {/* Vector-arrow field — 5 diagonal lime lines, same motif as
+            the hero SVG. Kept subtle so the headline stays dominant. */}
         <svg
           width="800"
           height="800"
@@ -81,16 +80,10 @@ export default async function Image() {
               markerHeight="5"
               orient="auto"
             >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" opacity="0.55" />
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" />
             </marker>
           </defs>
-          <g
-            stroke="#c8ff00"
-            strokeWidth="1.6"
-            fill="none"
-            strokeLinecap="round"
-            markerEnd="url(#og-arrow)"
-          >
+          <g stroke="#c8ff00" strokeWidth="1.6" fill="none" markerEnd="url(#og-arrow)">
             <line x1="60" y1="720" x2="220" y2="540" />
             <line x1="180" y1="800" x2="340" y2="620" />
             <line x1="500" y1="800" x2="660" y2="620" />
@@ -144,8 +137,7 @@ export default async function Image() {
           </div>
         </div>
 
-        {/* Middle: dominant headline with lime accent — same 'lime
-            highlight word' treatment the hero uses */}
+        {/* Middle: dominant headline with lime accent */}
         <div
           style={{
             display: "flex",
@@ -169,14 +161,7 @@ export default async function Image() {
             }}
           >
             <span>AI видеа и реклами,</span>
-            <span
-              style={{
-                color: "#c8ff00",
-                filter: "drop-shadow(0 0 26px rgba(200,255,0,0.5))",
-              }}
-            >
-              които продават.
-            </span>
+            <span style={{ color: "#c8ff00" }}>които продават.</span>
           </div>
           <div
             style={{
@@ -189,33 +174,6 @@ export default async function Image() {
             Кинематографични спотове, UGC и AI-задвижени кампании — за
             30+ бранда в България и САЩ.
           </div>
-        </div>
-
-        {/* Trust badges row — same three the hero uses */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 26,
-            zIndex: 1,
-            marginBottom: 20,
-            fontSize: 15,
-            color: "#cfcbc4",
-            fontWeight: 500,
-          }}
-        >
-          {[
-            "30+ доволни бранда",
-            "4.8× среден ROAS",
-            "Без ангажимент",
-          ].map((b) => (
-            <div key={b} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>{b}</span>
-            </div>
-          ))}
         </div>
 
         {/* Bottom bar: domain + placement */}
