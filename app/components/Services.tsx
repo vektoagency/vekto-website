@@ -5,74 +5,80 @@ import { useState } from "react";
 import AnimateIn from "./AnimateIn";
 import { useT } from "../i18n/LangProvider";
 
+// Reframed from 4 AI-focused deliverables to the 4-pillar full-stack
+// growth system (CTC / NoGood pattern). PPC + creative + web +
+// strategy — all four under one roof. AI moves to Pillar 2 as a
+// production advantage (3× faster, 60% cheaper), not a headline
+// product. Reads as one integrated system, not a menu of vendor
+// services.
 const dict = {
   bg: {
-    eyebrow: "Какво правим",
-    h2: ["Услуги, които", "издигат бизнеса ти"],
-    sub: "Всяка услуга използва AI и носи резултати, които традиционните агенции просто не могат да предложат.",
+    eyebrow: "СИСТЕМАТА",
+    h2: ["Един partner за", "целия ти marketing"],
+    sub: "PPC, creative, funnels и strategy — четирите pillar-а на растежа под един покрив. Никакви vendor chains, един екип с единна цел: приходи.",
     services: [
       {
         number: "01",
-        title: "Кратки видеа за социалните мрежи",
-        image: "/images/service-1.webp",
-        description: "Кратки силни видеа, които правят бизнеса ти експерт в твоята сфера. Стигат до повече хора и държат вниманието им.",
-        tags: ["Социални мрежи", "Кратки формати", "Стратегия"],
+        title: "Performance / PPC",
+        image: "/images/service-4.webp",
+        description: "Meta, Google, TikTok ads — от setup до scaling. Full-funnel attribution, ROAS оптимизация, готови за 6+ фигурни месечни бюджети. Средно 4.8× ROAS.",
+        tags: ["Meta Ads", "Google Ads", "TikTok", "Attribution", "Scaling"],
       },
       {
         number: "02",
-        title: "AI аватари и говорители",
-        image: "/images/service-2.webp",
-        description: "Персонални AI аватари за бизнеса ти. Правим съдържание на много езици с еднакво качество — без студио и снимачен ден.",
-        tags: ["AI аватар", "Многоезичен", "Автоматизация"],
+        title: "Creative Engine",
+        image: "/images/service-3.webp",
+        description: "AI-задвижена production система + live-action екип. Видео, UGC, cinematic филми, продуктови визуализации. 3× по-бързо и 60% по-евтино от традиционни студия — без компромис в качеството.",
+        tags: ["AI Video", "UGC", "Live-action", "Product Visuals"],
       },
       {
         number: "03",
-        title: "Кинематографични филми за бизнеса",
-        image: "/images/service-3.webp",
-        description: "Премиум филми с пълен процес — от идея до финален монтаж. AI добавя кинематографично качество от висок клас.",
-        tags: ["Кинематографичен", "Корпоративен филм", "Продукция"],
+        title: "Infrastructure",
+        image: "/images/service-1.webp",
+        description: "Уебсайтове, лендинги, фунии, email автоматизация, CRM setup, tracking + pixels. Целият tech stack който превръща трафика в приходи и приходите в LTV.",
+        tags: ["Web", "Funnels", "Email", "CRM", "Tracking"],
       },
       {
         number: "04",
-        title: "AI визуализации на продукти",
-        image: "/images/service-4.webp",
-        description: "Реалистични AI визуализации за продукти — готови за онлайн магазини и реклами. Премиум визия, която продава.",
-        tags: ["Продуктови визуализации", "Електронна търговия", "AI"],
+        title: "Strategy",
+        image: "/images/service-2.webp",
+        description: "Позициониране, offer design, quarterly growth planning, fractional CMO. Layer-ът който свързва всичко в система, а не в шопинг лист.",
+        tags: ["Positioning", "Offer Design", "Fractional CMO"],
       },
     ],
   },
   en: {
-    eyebrow: "What We Do",
-    h2: ["Services built", "to scale your brand"],
-    sub: "Every service is powered by AI and designed to deliver results that traditional agencies can't match.",
+    eyebrow: "THE SYSTEM",
+    h2: ["One partner for", "your entire marketing"],
+    sub: "PPC, creative, funnels, and strategy — the four pillars of growth under one roof. No vendor chains, one team with one goal: revenue.",
     services: [
       {
         number: "01",
-        title: "Short-Form Authority Series",
-        image: "/images/service-1.webp",
-        description: "Engaging, high-impact short-form videos for social media that position your brand as an authority in your space — optimized for maximum reach and engagement.",
-        tags: ["Social Media", "Short-Form", "Strategy"],
+        title: "Performance / PPC",
+        image: "/images/service-4.webp",
+        description: "Meta, Google, TikTok ads — from setup to scaling. Full-funnel attribution, ROAS optimization, ready for 6+ figure monthly budgets. 4.8× average ROAS.",
+        tags: ["Meta Ads", "Google Ads", "TikTok", "Attribution", "Scaling"],
       },
       {
         number: "02",
-        title: "AI Digital Avatars & Virtual Spokespersons",
-        image: "/images/service-2.webp",
-        description: "Custom AI-powered avatars for brand representation. Deliver multilingual content at scale with consistent, high-quality presentations — no studio needed.",
-        tags: ["AI Avatar", "Multilingual", "Automation"],
+        title: "Creative Engine",
+        image: "/images/service-3.webp",
+        description: "AI-native production system + live-action team. Video, UGC, cinematic films, product visualization. 3× faster and 60% cheaper than traditional studios — no quality compromise.",
+        tags: ["AI Video", "UGC", "Live-action", "Product Visuals"],
       },
       {
         number: "03",
-        title: "Cinematic Brand Films",
-        image: "/images/service-3.webp",
-        description: "High-end immersive storytelling with full production pipeline from concept to post-processing. AI-enhanced for a premium cinematic finish.",
-        tags: ["Cinematic", "Brand Film", "Production"],
+        title: "Infrastructure",
+        image: "/images/service-1.webp",
+        description: "Websites, landing pages, funnels, email automation, CRM setup, tracking + pixels. The full tech stack that turns traffic into revenue and revenue into LTV.",
+        tags: ["Web", "Funnels", "Email", "CRM", "Tracking"],
       },
       {
         number: "04",
-        title: "AI Product Visual Engineering",
-        image: "/images/service-4.webp",
-        description: "Hyper-realistic AI-enhanced product visuals optimized for eCommerce and marketing assets. Premium presentation that converts.",
-        tags: ["Product Visuals", "eCommerce", "AI"],
+        title: "Strategy",
+        image: "/images/service-2.webp",
+        description: "Positioning, offer design, quarterly growth planning, fractional CMO. The layer that ties everything into a system — not a shopping list.",
+        tags: ["Positioning", "Offer Design", "Fractional CMO"],
       },
     ],
   },

@@ -152,7 +152,7 @@ export default async function Image() {
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: 74,
+              fontSize: 68,
               fontWeight: 800,
               lineHeight: 1.06,
               letterSpacing: -2,
@@ -160,19 +160,19 @@ export default async function Image() {
               marginBottom: 28,
             }}
           >
-            <span>AI видеа и реклами,</span>
-            <span style={{ color: "#c8ff00" }}>които продават.</span>
+            <span>Един partner за</span>
+            <span style={{ color: "#c8ff00" }}>целия ти marketing.</span>
           </div>
           <div
             style={{
               fontSize: 22,
               color: "#a0a0a0",
-              maxWidth: 640,
+              maxWidth: 660,
               lineHeight: 1.45,
             }}
           >
-            Кинематографични спотове, UGC и AI-задвижени кампании — за
-            50+ бранда в България и САЩ.
+            PPC + Creative + Funnels + Strategy под един покрив.
+            50+ бранда в България и САЩ. 4.8× среден ROAS.
           </div>
         </div>
 

@@ -18,26 +18,31 @@ function Stagger({ children, delay, className = "" }: { children: React.ReactNod
 }
 
 export default function Hero() {
+  // Repositioned: from 'AI creative agency' (a WHAT) to 'growth
+  // partner' (an OUTCOME + relational tier). AI stays as HOW (in the
+  // Services / Creative Engine pillar), not the front-page pitch.
+  // Model: Common Thread Collective's 'ecommerce profit partner'
+  // framing + NoGood's anti-vendor premium tone.
   const t = useT({
     bg: {
-      badge: "Креативна агенция с AI",
-      h1Em: "AI визия",
-      h1RestDesktop: ["за бъдещето", "на бизнеса ти"],
-      h1RestMobile: "за бизнеса ти",
-      sub: "От кинематографични филми до видеа за социалните мрежи — съдържание, което продава.",
-      subMobile: "От кинематографични филми до видеа за социалните мрежи.",
-      ctaPrimary: "Свържи се с нас",
-      ctaSecondary: "Виж работата ни",
+      badge: "GROWTH STUDIO · СОФИЯ + СВЯТ",
+      h1Em: "Един partner за",
+      h1RestDesktop: ["целия ти", "marketing stack."],
+      h1RestMobile: "целия ти marketing.",
+      sub: "PPC + Creative + Funnels + Strategy — цялата ти растежна система под един покрив. 50+ бранда. 4.8× среден ROAS.",
+      subMobile: "PPC + Creative + Funnels + Strategy — под един покрив.",
+      ctaPrimary: "Резервирай стратегически разговор",
+      ctaSecondary: "Виж резултатите",
     },
     en: {
-      badge: "AI-Powered Creative Agency",
-      h1Em: "AI-Driven Vision",
-      h1RestDesktop: ["for the Future", "of Companies"],
-      h1RestMobile: "for your business",
-      sub: "From cinematic storytelling to AI-powered short-form systems, we create visual ecosystems built to scale.",
-      subMobile: "From cinematic films to social media content.",
-      ctaPrimary: "Get in Touch",
-      ctaSecondary: "See Our Work",
+      badge: "GROWTH STUDIO · SOFIA + WORLDWIDE",
+      h1Em: "One partner for",
+      h1RestDesktop: ["your entire", "marketing stack."],
+      h1RestMobile: "your entire marketing.",
+      sub: "PPC + Creative + Funnels + Strategy — your full growth system under one roof. 50+ brands. 4.8× average ROAS.",
+      subMobile: "PPC + Creative + Funnels + Strategy — under one roof.",
+      ctaPrimary: "Book a strategy call",
+      ctaSecondary: "See results",
     },
   });
   return (
