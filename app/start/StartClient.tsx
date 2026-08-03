@@ -20,11 +20,20 @@ const LANG_KEY = "vekto-start-lang";
 
 // Brand logos used in the social-proof marquee. Mirrors the Clients
 // component's roster so the landing page reads as the same brand world.
+// Kept in-sync manually — if a brand joins Clients.tsx it should also
+// appear here (and vice-versa).
 const SOCIAL_PROOF_LOGOS = [
+  // MEN'S CARE — new horizontal black-wordmark logo (Aug 2026).
+  // Removed the old `circular: true` flag (was a square-crop tile
+  // for the square avatar version); added `invert: true` since the
+  // wordmark ships as black ink and needs to render white on the
+  // dark marquee surface.
+  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", invert: true },
   { name: "DUSQ", logo: "/images/logo-dusq.webp", invert: true },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", invert: true },
-  { name: "MEN'S CARE", logo: "/images/logo-menscare.png", circular: true },
-  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true, circular: true },
+  { name: "BULTEX", logo: "/images/logo-bultex.png" },
+  { name: "NEDELYA", logo: "/images/logo-nedelya.svg" },
+  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true },
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", invert: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp" },
@@ -33,6 +42,15 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp" },
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp" },
+  { name: "GIFTO", logo: "/images/logo-adventuresbg.webp" },
+  { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp" },
+  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", invert: true },
+  { name: "NIDO", logo: "/images/logo-nido.png" },
+  { name: "ARTE HOTEL", logo: "/images/logo-artehotel.png" },
+  { name: "KASHMIR HOTEL", logo: "/images/logo-kashmirhotel.png", invert: true },
+  { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg" },
+  { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", invert: true },
+  { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", invert: true },
 ];
 
 export default function StartClient() {
@@ -329,7 +347,14 @@ export default function StartClient() {
                         loading="lazy"
                         decoding="async"
                         className="h-7 md:h-9 w-auto object-contain"
-                        style={{ filter: c.invert ? "brightness(0) invert(1)" : undefined }}
+                        // Hue-preserving invert — same filter Clients.tsx
+                        // uses. `brightness(0) invert(1)` collapsed every
+                        // dark-ink logo to a pure white silhouette, killing
+                        // brand colour. `invert(1) hue-rotate(180deg)`
+                        // inverts only lightness so hues survive; the
+                        // saturate(1.15) top-up keeps the recovered hue
+                        // visible against the near-black tile.
+                        style={{ filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
                       />
                     </div>
                   ))}
