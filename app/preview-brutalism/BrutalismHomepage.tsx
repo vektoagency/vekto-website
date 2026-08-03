@@ -108,22 +108,23 @@ export default function BrutalismHomepage() {
                   >
                     V
                   </div>
-                  <div className="leading-none">
-                    <div
-                      className="text-2xl md:text-4xl font-black tracking-tight"
-                      style={{
-                        background: SILVER_GRADIENT,
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                    >
-                      VEKTO<span className="text-white">.STUDIO</span>
-                    </div>
-                    <div className="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase mt-1 text-white/70">
-                      GROWTH · MADE · IN · BULGARIA
-                    </div>
-                  </div>
+                  {/* Real VEKTO wordmark, masked with brushed-silver gradient
+                      so it reads as one continuous chrome plate with the V. */}
+                  <div
+                    aria-label="VEKTO"
+                    className="h-8 md:h-12 w-[128px] md:w-[196px]"
+                    style={{
+                      background: SILVER_GRADIENT,
+                      WebkitMaskImage: "url(/images/logo.png)",
+                      maskImage: "url(/images/logo.png)",
+                      WebkitMaskRepeat: "no-repeat",
+                      maskRepeat: "no-repeat",
+                      WebkitMaskPosition: "left center",
+                      maskPosition: "left center",
+                      WebkitMaskSize: "contain",
+                      maskSize: "contain",
+                    }}
+                  />
                 </div>
                 <a
                   href="mailto:vektoagency@gmail.com"
