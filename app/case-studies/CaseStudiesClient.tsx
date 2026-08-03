@@ -38,7 +38,7 @@ const CASE_STUDIES: CaseStudy[] = [
     metric: { value: "5.2×", label: { bg: "Ръст на месечния оборот", en: "Monthly revenue lift" } },
     cover: "/images/work-menscare.webp",
     services: ["Video", "Meta Ads", "Landing pages"],
-    live: true,
+    live: false,
   },
   {
     slug: "isosport",
