@@ -44,6 +44,8 @@ menscare-blog/*.toml
 menscare-blog/*.txt
 menscare-blog/covers*/
 menscare-blog/html*/
+# menscare-blog subprojects (ro/ Romanian localisation etc.) — not part of this website repo
+menscare-blog/ro/
 
 # claude settings (may contain tokens)
 .claude/settings.local.json
