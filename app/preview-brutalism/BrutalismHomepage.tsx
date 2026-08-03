@@ -18,16 +18,25 @@
 // Also: added BG/EN language toggle (persisted in localStorage), and
 // rewrote the copy to be premium-agency direct instead of hype.
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 // ============================================================================
 // PALETTE
 // ============================================================================
+// SILVER — bright brushed chrome. Use ONLY as text-fill on DARK grounds
+// or as physical panel backing. Contains highlights near #f4f4f4 which
+// vanish on our bone-paper bg.
 const SILVER =
   "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)";
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
+// GRAPHITE — dark chrome. Same shine variation but every tone dark
+// enough to stay readable on bone / concrete backgrounds. Use as
+// text-fill on LIGHT grounds where you want the chrome feel.
+const GRAPHITE_H =
+  "linear-gradient(90deg, #3a3a3a 0%, #6d6d6d 22%, #2a2a2a 50%, #6d6d6d 78%, #3a3a3a 100%)";
 
 // ============================================================================
 // COPY (bg + en). Brand names stay Latin in both languages.
@@ -85,6 +94,7 @@ const COPY = {
       headline2Prefix: "ИЗБРАН СЕГМЕНТ",
       headline2Highlight: "ТУК.",
       region: { BG: "БГ", US: "САЩ" },
+      coda: "12 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
     },
     stage5: {
       eyebrow: "05 · СТАНДАРТЪТ",
@@ -186,6 +196,7 @@ const COPY = {
       headline2Prefix: "SELECTED CUT",
       headline2Highlight: "SHOWN.",
       region: { BG: "BG", US: "US" },
+      coda: "12 / 50+ · REST ON REQUEST",
     },
     stage5: {
       eyebrow: "05 · THE STANDARD",
@@ -239,20 +250,21 @@ const COPY = {
   },
 };
 
-// Brand roster with region only (no fabricated per-client ROAS).
-const ROSTER: Array<{ name: string; region: "BG" | "US" }> = [
-  { name: "MEN'S CARE",    region: "BG" },
-  { name: "DUSQ",          region: "US" },
-  { name: "PARFEN",        region: "BG" },
-  { name: "ISOSPORT",      region: "BG" },
-  { name: "BIOTICA",       region: "BG" },
-  { name: "BULTEX",        region: "BG" },
-  { name: "НЕДЕЛЯ",        region: "BG" },
-  { name: "ANOMALY",       region: "US" },
-  { name: "GOURMET HOUSE", region: "BG" },
-  { name: "ETHAN'S",       region: "US" },
-  { name: "LUCKY ENERGY",  region: "US" },
-  { name: "NUTRIFITT",     region: "US" },
+// Brand roster with real logo files from /public/images/logo-*.
+type Client = { name: string; region: "BG" | "US"; logo: string };
+const ROSTER: Client[] = [
+  { name: "MEN'S CARE",    region: "BG", logo: "/images/logo-menscare.png"     },
+  { name: "DUSQ",          region: "US", logo: "/images/logo-dusq.webp"        },
+  { name: "PARFEN",        region: "BG", logo: "/images/logo-parfen.webp"      },
+  { name: "ISOSPORT",      region: "BG", logo: "/images/logo-isosport.webp"    },
+  { name: "BIOTICA",       region: "BG", logo: "/images/logo-biotica.webp"     },
+  { name: "BULTEX",        region: "BG", logo: "/images/logo-bultex.png"       },
+  { name: "НЕДЕЛЯ",        region: "BG", logo: "/images/logo-nedelya.svg"      },
+  { name: "ANOMALY",       region: "US", logo: "/images/logo-anomaly.webp"     },
+  { name: "GOURMET HOUSE", region: "BG", logo: "/images/logo-gourmethouse.png" },
+  { name: "ETHAN'S",       region: "US", logo: "/images/logo-ethans.webp"      },
+  { name: "LUCKY ENERGY",  region: "US", logo: "/images/logo-lucky.webp"       },
+  { name: "NUTRIFITT",     region: "US", logo: "/images/logo-nutrifitt.webp"   },
 ];
 
 // ============================================================================
@@ -631,7 +643,7 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           <span
             className="italic"
             style={{
-              background: SILVER_H,
+              background: GRAPHITE_H,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -650,7 +662,7 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           <span>{typed}</span>
           <span
             className="inline-block h-[1em] w-[10px] animate-pulse"
-            style={{ background: SILVER_H }}
+            style={{ background: "#0d0d0d" }}
           />
         </div>
 
@@ -798,14 +810,15 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           {t.rooms.map((r) => (
             <div
               key={r.id}
-              className="w-screen h-full flex-shrink-0 flex items-center justify-center px-6 md:px-20"
+              className="w-screen h-full flex-shrink-0 flex items-center justify-center px-6 md:px-16"
             >
-              <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full items-center">
+              <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 w-full items-center">
                 <div
-                  className="border-2 border-black p-6 md:p-10"
+                  className="border-2 border-black p-6 md:p-8"
                   style={{
                     background: "#ebe8e0",
                     boxShadow: "8px 8px 0 0 #0d0d0d",
+                    overflow: "hidden",
                   }}
                 >
                   <div
@@ -816,7 +829,10 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   </div>
                   <h3
                     className="font-black leading-[0.9] tracking-[-0.03em] mb-6"
-                    style={{ fontSize: "clamp(48px, 9vw, 128px)" }}
+                    style={{
+                      fontSize: "clamp(32px, 5vw, 72px)",
+                      wordBreak: "break-word",
+                    }}
                   >
                     {r.title}
                   </h3>
@@ -903,41 +919,56 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           </span>
         </h2>
 
-        <div className="border-t-2 border-white/25">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
           {ROSTER.map((c, i) => (
             <div
               key={c.name}
-              className="grid grid-cols-12 gap-x-4 py-4 md:py-5 border-b-2 border-white/25 items-baseline transition-all duration-700"
+              className="border-2 border-white bg-white flex flex-col relative transition-all duration-700"
               style={{
+                aspectRatio: "5/4",
+                boxShadow: "5px 5px 0 0 #8a8a8a",
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(18px)",
-                transitionDelay: `${i * 70}ms`,
+                transitionDelay: `${i * 60}ms`,
               }}
             >
-              <div
-                className="col-span-1 text-[11px] opacity-50 tabular-nums font-bold"
-                style={{ fontFamily: "var(--font-brutal-pixel)" }}
+              {/* Region badge in top-right corner */}
+              <span
+                className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] leading-none z-10"
+                style={{ fontFamily: "var(--font-brutal-pixel)", color: "#0d0d0d" }}
               >
-                {String(i + 1).padStart(2, "0")}
+                {t.region[c.region]}
+              </span>
+
+              {/* Logo panel */}
+              <div className="flex-1 flex items-center justify-center p-4 md:p-6 min-h-0">
+                <Image
+                  src={c.logo}
+                  alt={c.name}
+                  width={220}
+                  height={110}
+                  className="max-h-full max-w-full w-auto h-auto object-contain"
+                  unoptimized
+                />
               </div>
-              <div className="col-span-8 md:col-span-9 font-black text-lg md:text-3xl tracking-tight uppercase">
+
+              {/* Name plate at bottom */}
+              <div
+                className="border-t-2 border-black px-2 py-2 text-center text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none"
+                style={{ color: "#0d0d0d" }}
+              >
                 {c.name}
-              </div>
-              <div
-                className="col-span-3 md:col-span-2 text-right"
-              >
-                <span
-                  className="inline-block px-2 py-0.5 border text-[10px] font-bold uppercase tracking-[0.2em]"
-                  style={{
-                    borderColor: "rgba(244,244,244,0.5)",
-                    fontFamily: "var(--font-brutal-pixel)",
-                  }}
-                >
-                  {t.region[c.region]}
-                </span>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Coda under the grid */}
+        <div
+          className="mt-10 text-xs uppercase tracking-[0.25em] opacity-60"
+          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        >
+          {t.coda}
         </div>
       </div>
     </section>
@@ -978,7 +1009,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
               <br />
               <span
                 style={{
-                  background: SILVER_H,
+                  background: GRAPHITE_H,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -1000,7 +1031,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
                   className="h-[3px] border-2 border-black transition-all"
                   style={{
                     width: i < revealed ? 40 : 14,
-                    background: i < revealed ? SILVER_H : "transparent",
+                    background: i < revealed ? GRAPHITE_H : "transparent",
                   }}
                 />
               ))}
@@ -1026,7 +1057,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
                     <div
                       className="text-3xl md:text-5xl font-black tabular-nums flex-shrink-0"
                       style={{
-                        background: done ? SILVER_H : "transparent",
+                        background: done ? GRAPHITE_H : "transparent",
                         color: done ? "transparent" : "#0d0d0d",
                         WebkitBackgroundClip: done ? "text" : "initial",
                         WebkitTextFillColor: done ? "transparent" : "initial",
@@ -1084,7 +1115,7 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
           {t.headlinePrefix}{" "}
           <span
             style={{
-              background: SILVER_H,
+              background: GRAPHITE_H,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
