@@ -15,8 +15,26 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const t = useT({
-    bg: { services: "Услуги", why: "Защо VEKTO", portfolio: "Портфолио", contact: "Контакт", cta: "Започни", callAria: "Обади се" },
-    en: { services: "Services", why: "Why VEKTO", portfolio: "Portfolio", contact: "Contact", cta: "Get Started", callAria: "Call us" },
+    bg: {
+      services: "Услуги",
+      aiCreative: "AI Creative",
+      websites: "Уебсайтове",
+      caseStudies: "Кейс стъдита",
+      portfolio: "Портфолио",
+      contact: "Контакт",
+      cta: "Започни",
+      callAria: "Обади се",
+    },
+    en: {
+      services: "Services",
+      aiCreative: "AI Creative",
+      websites: "Websites",
+      caseStudies: "Case Studies",
+      portfolio: "Portfolio",
+      contact: "Contact",
+      cta: "Get Started",
+      callAria: "Call us",
+    },
   });
 
   useEffect(() => {
@@ -44,9 +62,15 @@ export default function Navbar() {
   // Portfolio silently: the old <button onClick={router.push}> version
   // depended on client hydration and did nothing on the frame between
   // paint and hydrate. As a Link it works even before hydration.
+  // Nav now surfaces the 4-page service architecture (AI Creative +
+  // Websites + Case Studies) alongside Contact. Older '#services' +
+  // '#why' anchors dropped from the top nav — they still exist as
+  // sections on the homepage but the top slots are more valuable
+  // pointing to the new dedicated pages.
   const links: NavLink[] = [
-    { label: t.services, href: "#services" },
-    { label: t.why, href: "#why" },
+    { label: t.aiCreative, href: "/ai-creative" },
+    { label: t.websites, href: "/websites" },
+    { label: t.caseStudies, href: "/case-studies" },
     { label: t.portfolio, href: "/portfolio" },
     { label: t.contact, href: "#contact" },
   ];
