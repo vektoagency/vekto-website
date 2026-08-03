@@ -18,31 +18,35 @@ function Stagger({ children, delay, className = "" }: { children: React.ReactNod
 }
 
 export default function Hero() {
-  // Repositioned: from 'AI creative agency' (a WHAT) to 'growth
-  // partner' (an OUTCOME + relational tier). AI stays as HOW (in the
-  // Services / Creative Engine pillar), not the front-page pitch.
-  // Model: Common Thread Collective's 'ecommerce profit partner'
-  // framing + NoGood's anti-vendor premium tone.
+  // Premium repositioning — restraint + confidence pattern that
+  // Wieden+Kennedy, Mother, Droga5, Anomaly all use. Instead of
+  // enumerating services (which every agency does — that's table
+  // stakes, not premium), the hero states ONE claim and lets the
+  // work + client roster do the selling below the fold.
+  //
+  // The claim itself is a selectivity signal: 'we choose 12 new
+  // brands per year' (scarcity + curation) paired with the real
+  // proof numbers (50+ brands total, 4.8× ROAS, BG + US markets).
   const t = useT({
     bg: {
-      badge: "GROWTH STUDIO · СОФИЯ + СВЯТ",
-      h1Em: "Един partner за",
-      h1RestDesktop: ["целия ти", "marketing stack."],
-      h1RestMobile: "целия ти marketing.",
-      sub: "PPC + Creative + Funnels + Strategy — цялата ти растежна система под един покрив. 50+ бранда. 4.8× среден ROAS.",
-      subMobile: "PPC + Creative + Funnels + Strategy — под един покрив.",
-      ctaPrimary: "Резервирай стратегически разговор",
-      ctaSecondary: "Виж резултатите",
+      badge: "НЕЗАВИСИМО СТУДИО ЗА РАСТЕЖ",
+      h1Em: "12 нови бранда",
+      h1RestDesktop: ["на година.", "Твоят следващ."],
+      h1RestMobile: "на година.",
+      sub: "50+ бранда в България и САЩ. 4.8× среден ROAS. Един екип, един стандарт — от стратегия до резултат.",
+      subMobile: "50+ бранда · България и САЩ · 4.8× ROAS",
+      ctaPrimary: "Резервирай разговор",
+      ctaSecondary: "Виж работата",
     },
     en: {
-      badge: "GROWTH STUDIO · SOFIA + WORLDWIDE",
-      h1Em: "One partner for",
-      h1RestDesktop: ["your entire", "marketing stack."],
-      h1RestMobile: "your entire marketing.",
-      sub: "PPC + Creative + Funnels + Strategy — your full growth system under one roof. 50+ brands. 4.8× average ROAS.",
-      subMobile: "PPC + Creative + Funnels + Strategy — under one roof.",
-      ctaPrimary: "Book a strategy call",
-      ctaSecondary: "See results",
+      badge: "INDEPENDENT GROWTH STUDIO",
+      h1Em: "12 new brands",
+      h1RestDesktop: ["a year.", "Yours next."],
+      h1RestMobile: "a year.",
+      sub: "50+ brands across Bulgaria and the US. 4.8× average ROAS. One team, one standard — from strategy through scale.",
+      subMobile: "50+ brands · BG + US · 4.8× ROAS",
+      ctaPrimary: "Book a call",
+      ctaSecondary: "See the work",
     },
   });
   return (

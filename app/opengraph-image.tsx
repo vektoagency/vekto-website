@@ -152,7 +152,7 @@ export default async function Image() {
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: 68,
+              fontSize: 66,
               fontWeight: 800,
               lineHeight: 1.06,
               letterSpacing: -2,
@@ -160,8 +160,8 @@ export default async function Image() {
               marginBottom: 28,
             }}
           >
-            <span>Един partner за</span>
-            <span style={{ color: "#c8ff00" }}>целия ти marketing.</span>
+            <span>12 нови бранда на година.</span>
+            <span style={{ color: "#c8ff00" }}>Твоят следващ.</span>
           </div>
           <div
             style={{
@@ -171,8 +171,8 @@ export default async function Image() {
               lineHeight: 1.45,
             }}
           >
-            PPC + Creative + Funnels + Strategy под един покрив.
             50+ бранда в България и САЩ. 4.8× среден ROAS.
+            Един екип, един стандарт — от стратегия до резултат.
           </div>
         </div>
 
