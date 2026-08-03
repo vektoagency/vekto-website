@@ -3,54 +3,65 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-// Neutral-brutalism / restrained 90s revival. We keep every brutalism
-// DNA move — table layout, hard borders, offset shadows, marquee,
-// pixel captions, retro visitor counter, hard-edged services grid —
-// but strip the palette down to bone-white + jet black + a single
-// metallic-silver accent (rendered as a chrome gradient on the
-// wordmark and on the hero emphasis). Feels expensive rather than
-// carnival.
+// Neutral-brutalism / restrained 90s revival. Every brutalism DNA move —
+// table layout, hard borders, offset shadows, marquee, pixel captions,
+// hard-edged services grid — kept intact. Palette stripped down to bone
+// paper + jet black + a single brushed-silver accent. Feels expensive
+// rather than carnival.
+//
+// Readability rule: silver is used ONLY as a text-fill on dark grounds
+// (wordmark, hero highlight, service icons, big numbers), or as a
+// thin bezel/border. Plates and buttons that carry small text sit on
+// jet-black or bone-white — never on shiny silver, which washes labels.
 //
 // Palette:
 //   #ebe8e0  bone paper background
 //   #0d0d0d  jet black ink and borders
 //   #8a8a8a → #eaeaea → #6d6d6d  brushed-silver gradient (accent)
 //   #d6d3ca  muted concrete tint (secondary panels)
+//
+// Language rule: entire preview is Bulgarian. Brand names (VEKTO, DUSQ,
+// ISOSPORT, Meta, TikTok, etc.) stay Latin because that's how they're
+// registered. No mixed marketing copy.
 
 const CLIENTS = [
   "MEN'S CARE", "DUSQ", "PARFEN", "ISOSPORT", "BIOTICA",
-  "BULTEX", "NEDELYA", "ANOMALY", "GOURMET HOUSE",
+  "BULTEX", "НЕДЕЛЯ", "ANOMALY", "GOURMET HOUSE",
   "ETHAN'S", "LUCKY ENERGY", "NUTRIFITT",
 ];
 
 const SERVICES = [
-  { icon: "★", name: "PPC ADS",    detail: "Meta · Google · TikTok"    },
-  { icon: "◉", name: "CREATIVE",   detail: "Video · UGC · AI"          },
-  { icon: "▲", name: "WEBSITES",   detail: "Ecom · Landing · Portals"  },
-  { icon: "◆", name: "STRATEGY",   detail: "Growth · Offer · Brand"    },
+  { icon: "★", name: "РЕКЛАМИ",    detail: "Meta · Google · TikTok"      },
+  { icon: "◉", name: "СЪДЪРЖАНИЕ", detail: "Видео · UGC · AI"            },
+  { icon: "▲", name: "САЙТОВЕ",    detail: "Е-ком · Landing · Портали"   },
+  { icon: "◆", name: "СТРАТЕГИЯ",  detail: "Растеж · Оферта · Бранд"     },
 ];
 
 const NEWS = [
-  { d: "04.08.26", n: "★ NOW ACCEPTING 12 NEW BRANDS FOR 2026" },
-  { d: "01.08.26", n: "★ NEW CASE: MEN'S CARE — 5.2× REVENUE LIFT" },
-  { d: "24.07.26", n: "★ VEKTO x DUSQ — US LAUNCH CAMPAIGN LIVE" },
-  { d: "10.07.26", n: "★ BULTEX + NEDELYA JOIN THE ROSTER" },
+  { d: "04.08.26", n: "★ ПРИЕМАМЕ 12 НОВИ БРАНДА ЗА 2026" },
+  { d: "01.08.26", n: "★ НОВ КЕЙС: MEN'S CARE — 5.2× ПРИХОД" },
+  { d: "24.07.26", n: "★ VEKTO x DUSQ — САЩ КАМПАНИЯ АКТИВНА" },
+  { d: "10.07.26", n: "★ BULTEX + НЕДЕЛЯ СЕ ВЛИВАТ" },
 ];
 
-// Brushed-silver gradient — used everywhere silver appears.
-// Applied via CSS backgroundImage + text-fill for the wordmark, and
-// as a solid panel background for chrome plates.
 const SILVER_GRADIENT =
   "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)";
 const SILVER_GRADIENT_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
 
 export default function BrutalismHomepage() {
-  const [visitors, setVisitors] = useState(0);
+  // Live Sofia studio clock — replaces the old visitor counter.
+  // Reads as "СТУДИО · 15:42:03", ticks every second. Feels alive
+  // like a broadcast slate, without the goofy visitor-counter energy.
+  const [clock, setClock] = useState<string>("--:--:--");
   useEffect(() => {
-    const start = 42_000 + Math.floor(Math.random() * 8000);
-    setVisitors(start);
-    const t = setInterval(() => setVisitors((v) => v + 1), 4000);
+    const tick = () => {
+      const d = new Date();
+      const p = (n: number) => String(n).padStart(2, "0");
+      setClock(`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`);
+    };
+    tick();
+    const t = setInterval(tick, 1000);
     return () => clearInterval(t);
   }, []);
 
@@ -63,7 +74,7 @@ export default function BrutalismHomepage() {
         color: "#0d0d0d",
       }}
     >
-      {/* ===== TOP MARQUEE — silver bar on black ===== */}
+      {/* ===== TOP MARQUEE — silver text on black ===== */}
       <div
         className="border-y-2 border-black overflow-hidden py-1.5"
         style={{ background: "#0d0d0d" }}
@@ -80,7 +91,7 @@ export default function BrutalismHomepage() {
                 backgroundClip: "text",
               }}
             >
-              ✦ VEKTO GROWTH STUDIO ✦ EST. MMXXIV ✦ SOFIA · BG ✦ 50+ BRANDS ✦ 4.8× ROAS ✦ 12 SLOTS LEFT ✦ AI · CREATIVE · GROWTH ✦
+              ✦ VEKTO GROWTH STUDIO ✦ EST. MMXXIV ✦ СОФИЯ · БГ ✦ 50+ БРАНДА ✦ 4.8× ROAS ✦ 3/12 СВОБОДНИ МЕСТА ✦ AI · СЪДЪРЖАНИЕ · РАСТЕЖ ✦
             </span>
           ))}
         </div>
@@ -89,82 +100,80 @@ export default function BrutalismHomepage() {
       {/* ===== TABLE LAYOUT (deliberately deprecated) ===== */}
       <table className="w-full border-separate border-spacing-0" cellPadding={0} cellSpacing={0}>
         <tbody>
-          {/* ROW 1 — MASTHEAD */}
+          {/* ROW 1 — MASTHEAD ===================================================== */}
           <tr>
             <td colSpan={3} className="border-b-4 border-black">
               <div
                 className="p-4 md:p-6 flex items-center justify-between gap-3"
                 style={{ background: "#0d0d0d" }}
               >
-                <div className="flex items-center gap-3">
-                  {/* Chrome V plate */}
-                  <div
-                    className="w-11 h-11 md:w-14 md:h-14 border-2 border-black flex items-center justify-center font-black text-2xl md:text-3xl text-black"
-                    style={{
-                      background: SILVER_GRADIENT,
-                      boxShadow: "2px 2px 0 0 #000, inset 0 0 0 1px rgba(255,255,255,0.4)",
-                      fontFamily: "var(--font-brutal-grotesk)",
-                    }}
-                  >
-                    V
-                  </div>
-                  {/* Real VEKTO wordmark, masked with brushed-silver gradient
-                      so it reads as one continuous chrome plate with the V. */}
-                  <div
-                    aria-label="VEKTO"
-                    className="h-8 md:h-12 w-[128px] md:w-[196px]"
-                    style={{
-                      background: SILVER_GRADIENT,
-                      WebkitMaskImage: "url(/images/logo.png)",
-                      maskImage: "url(/images/logo.png)",
-                      WebkitMaskRepeat: "no-repeat",
-                      maskRepeat: "no-repeat",
-                      WebkitMaskPosition: "left center",
-                      maskPosition: "left center",
-                      WebkitMaskSize: "contain",
-                      maskSize: "contain",
-                    }}
-                  />
-                </div>
+                {/* Real VEKTO wordmark, chrome-filled via CSS mask */}
+                <div
+                  aria-label="VEKTO"
+                  className="h-9 md:h-14 w-[150px] md:w-[230px]"
+                  style={{
+                    background: SILVER_GRADIENT,
+                    WebkitMaskImage: "url(/images/logo.png)",
+                    maskImage: "url(/images/logo.png)",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskPosition: "left center",
+                    maskPosition: "left center",
+                    WebkitMaskSize: "contain",
+                    maskSize: "contain",
+                  }}
+                />
+
+                {/* CTA — dark plate, silver rim, silver text (readable) */}
                 <a
                   href="mailto:vektoagency@gmail.com"
-                  className="hidden md:inline-block px-5 py-2 border-2 border-white font-bold uppercase text-sm tracking-wide text-black hover:invert transition-all"
-                  style={{ background: SILVER_GRADIENT }}
+                  className="hidden md:inline-block px-5 py-2 font-bold uppercase text-sm tracking-[0.2em] transition-colors hover:bg-white hover:text-black"
+                  style={{
+                    background: "#0d0d0d",
+                    color: "#f4f4f4",
+                    border: "1.5px solid",
+                    borderImage: `${SILVER_GRADIENT_H} 1`,
+                  }}
                 >
-                  ✉ EMAIL US
+                  ✉ ПИШИ НИ
                 </a>
               </div>
             </td>
           </tr>
 
-          {/* ROW 2 — NAV */}
+          {/* ROW 2 — NAV ========================================================== */}
           <tr>
             <td colSpan={3} className="border-b-2 border-black" style={{ background: "#ffffff" }}>
               <div className="flex flex-wrap items-center justify-between px-4 py-2 gap-2 text-[13px] md:text-sm font-bold uppercase tracking-[0.15em]">
                 <div className="flex flex-wrap gap-x-6 gap-y-1">
-                  <a href="#services" className="hover:underline decoration-2 underline-offset-4">★ Services</a>
-                  <Link href="/case-studies" className="hover:underline decoration-2 underline-offset-4">★ Work</Link>
-                  <Link href="/portfolio" className="hover:underline decoration-2 underline-offset-4">★ Portfolio</Link>
-                  <a href="#contact" className="hover:underline decoration-2 underline-offset-4">★ Contact</a>
+                  <a href="#services" className="hover:underline decoration-2 underline-offset-4">★ Услуги</a>
+                  <Link href="/case-studies" className="hover:underline decoration-2 underline-offset-4">★ Работа</Link>
+                  <Link href="/portfolio" className="hover:underline decoration-2 underline-offset-4">★ Портфолио</Link>
+                  <a href="#contact" className="hover:underline decoration-2 underline-offset-4">★ Контакт</a>
                 </div>
+                {/* Live studio clock */}
                 <div
-                  className="text-[11px]"
+                  className="text-[11px] flex items-center gap-2"
                   style={{ fontFamily: "var(--font-brutal-pixel)" }}
                 >
-                  VISITORS:{" "}
-                  <span className="bg-black px-2 py-0.5 text-white">
-                    {visitors.toLocaleString()}
+                  <span
+                    aria-hidden
+                    className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"
+                  />
+                  СТУДИО ·
+                  <span className="bg-black px-2 py-0.5 text-white tabular-nums">
+                    {clock}
                   </span>
                 </div>
               </div>
             </td>
           </tr>
 
-          {/* ROW 3 — HERO ROW (main + sidebar) */}
+          {/* ROW 3 — HERO ROW (main + sidebar) ==================================== */}
           <tr>
             <td colSpan={2} className="border-r-2 border-black border-b-2 align-top">
               <div className="p-6 md:p-12 relative overflow-hidden" style={{ background: "#ebe8e0" }}>
-                {/* Subtle silver halo instead of rainbow blob */}
+                {/* Subtle silver halo */}
                 <div
                   aria-hidden
                   className="absolute -top-24 -right-24 w-[420px] h-[420px] -z-0 rounded-full"
@@ -175,21 +184,29 @@ export default function BrutalismHomepage() {
                   }}
                 />
                 <div className="relative">
+                  {/* Availability pill — dark plate + silver rim (readable) */}
                   <div
-                    className="inline-block border-2 border-black px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] mb-6"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] mb-6"
                     style={{
-                      background: SILVER_GRADIENT_H,
-                      boxShadow: "4px 4px 0 0 #000",
-                      color: "#0d0d0d",
+                      background: "#0d0d0d",
+                      color: "#f4f4f4",
+                      border: "1.5px solid",
+                      borderImage: `${SILVER_GRADIENT_H} 1`,
+                      boxShadow: "4px 4px 0 0 #0d0d0d",
                     }}
                   >
-                    ⚡ CURRENTLY ACCEPTING BRANDS
+                    <span
+                      className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"
+                      aria-hidden
+                    />
+                    ПРИЕМАМЕ БРАНДОВЕ · 3/12 СВОБОДНИ
                   </div>
+
                   <h1
                     className="text-[52px] md:text-[104px] lg:text-[128px] font-black leading-[0.88] tracking-[-0.04em] mb-8"
                     style={{ WebkitTextStroke: "1px black" }}
                   >
-                    WE BUILD{" "}
+                    СТРОИМ{" "}
                     <span
                       className="italic"
                       style={{
@@ -200,10 +217,10 @@ export default function BrutalismHomepage() {
                         WebkitTextStroke: "0",
                       }}
                     >
-                      GROWTH.
+                      РАСТЕЖ.
                     </span>
                     <br />
-                    NOT PROJECTS.
+                    НЕ ПРОЕКТИ.
                   </h1>
 
                   <p
@@ -220,17 +237,17 @@ export default function BrutalismHomepage() {
                       className="bg-black text-white px-6 py-3 border-2 border-black font-bold uppercase tracking-wide hover:translate-x-1 hover:translate-y-1 transition-transform"
                       style={{ boxShadow: "6px 6px 0 0 #8a8a8a" }}
                     >
-                      → BOOK A CALL
+                      → ЗАПАЗИ РАЗГОВОР
                     </a>
                     <Link
                       href="/case-studies"
-                      className="text-black px-6 py-3 border-2 border-black font-bold uppercase tracking-wide hover:translate-x-1 hover:translate-y-1 transition-transform"
+                      className="px-6 py-3 border-2 border-black font-bold uppercase tracking-wide hover:translate-x-1 hover:translate-y-1 transition-transform text-white"
                       style={{
-                        background: SILVER_GRADIENT_H,
-                        boxShadow: "6px 6px 0 0 #0d0d0d",
+                        background: "#0d0d0d",
+                        boxShadow: "6px 6px 0 0 #8a8a8a",
                       }}
                     >
-                      ▶ SEE WORK
+                      ▶ ВИЖ РАБОТА
                     </Link>
                   </div>
                 </div>
@@ -247,7 +264,7 @@ export default function BrutalismHomepage() {
                   className="text-lg font-black uppercase mb-2 tracking-[0.1em]"
                   style={{ fontFamily: "var(--font-brutal-pixel)" }}
                 >
-                  ✦ LATEST NEWS ✦
+                  ✦ НОВИНИ ✦
                 </div>
                 <div className="space-y-2 text-[13px]">
                   {NEWS.map((n) => (
@@ -264,44 +281,63 @@ export default function BrutalismHomepage() {
                 </div>
               </div>
 
-              {/* CTA CARD — chrome plate */}
+              {/* Newsletter card */}
               <div className="p-4 border-b-2 border-black" style={{ background: "#ebe8e0" }}>
                 <div className="text-xs font-black uppercase tracking-[0.2em] mb-2">
-                  ✉ MAILING LIST
+                  ✉ БЮЛЕТИН
                 </div>
                 <div
                   className="text-[13px] mb-3"
                   style={{ fontFamily: "var(--font-brutal-comic)" }}
                 >
-                  Growth случаи всеки петък. Спам-free от 2024.
+                  Growth случаи всеки петък. Без спам от 2024.
                 </div>
                 <div
                   className="border-2 border-black bg-white px-2 py-1.5 text-sm"
                   style={{ fontFamily: "var(--font-brutal-pixel)" }}
                 >
-                  YOUR@EMAIL.COM
+                  ТВОЯТ@ИМЕЙЛ.БГ
                 </div>
                 <button
                   className="mt-2 w-full bg-black text-white font-bold uppercase text-xs py-2 hover:bg-white hover:text-black border-2 border-black transition-colors"
                 >
-                  ▶ SUBSCRIBE
+                  ▶ АБОНИРАЙ СЕ
                 </button>
               </div>
 
-              {/* STATS — chrome plates */}
+              {/* STATS — dark plates with silver-gradient numbers (readable) */}
               <div className="p-4">
                 <div className="grid grid-cols-2 gap-2 text-center">
-                  {[["50+", "BRANDS"], ["4.8×", "ROAS"], ["12", "SLOTS"], ["100%", "IN-HOUSE"]].map(([v, l]) => (
+                  {[
+                    ["50+", "БРАНДА"],
+                    ["4.8×", "ROAS"],
+                    ["12", "МЕСТА"],
+                    ["100%", "ВЪТРЕ"],
+                  ].map(([v, l]) => (
                     <div
                       key={l}
-                      className="border-2 border-black p-3 text-black"
+                      className="border-2 border-black p-3 relative"
                       style={{
-                        background: SILVER_GRADIENT,
-                        boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.4)",
+                        background: "#0d0d0d",
+                        boxShadow: "inset 0 0 0 1px rgba(180,180,180,0.35)",
                       }}
                     >
-                      <div className="text-2xl font-black leading-none">{v}</div>
-                      <div className="text-[9px] font-bold tracking-[0.2em] mt-1">{l}</div>
+                      <div
+                        className="text-2xl font-black leading-none"
+                        style={{
+                          background: SILVER_GRADIENT_H,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
+                      >
+                        {v}
+                      </div>
+                      <div
+                        className="text-[9px] font-bold tracking-[0.2em] mt-1.5 text-white/80"
+                      >
+                        {l}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -309,12 +345,11 @@ export default function BrutalismHomepage() {
             </td>
           </tr>
 
-          {/* ROW 4 — SERVICES GRID */}
+          {/* ROW 4 — SERVICES GRID ================================================ */}
           <tr>
             <td colSpan={2} className="border-b-2 border-black" id="services">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border-t-0">
                 {SERVICES.map((s, i) => {
-                  // Alternate two neutral tones for grid rhythm.
                   const bg = i % 2 === 0 ? "#ebe8e0" : "#d6d3ca";
                   return (
                     <div
@@ -349,7 +384,7 @@ export default function BrutalismHomepage() {
             </td>
           </tr>
 
-          {/* ROW 5 — ROSTER */}
+          {/* ROW 5 — ROSTER ======================================================= */}
           <tr>
             <td colSpan={3} className="border-b-2 border-black text-white" style={{ background: "#0d0d0d" }}>
               <div className="p-6 md:p-10">
@@ -361,7 +396,7 @@ export default function BrutalismHomepage() {
                     ★
                   </div>
                   <h2 className="text-2xl md:text-4xl font-black uppercase">
-                    OUR CAST
+                    СЪСТАВЪТ
                   </h2>
                   <div
                     className="flex-1 h-[3px]"
@@ -373,9 +408,6 @@ export default function BrutalismHomepage() {
                     <div
                       key={c}
                       className="border-2 border-white bg-black px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-bold uppercase tracking-[0.15em] hover:text-black cursor-default transition-all"
-                      style={{
-                        // hover flips to silver chrome via a CSS var
-                      }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.background = SILVER_GRADIENT;
                       }}
@@ -391,16 +423,16 @@ export default function BrutalismHomepage() {
             </td>
           </tr>
 
-          {/* ROW 6 — CONTACT + FOOTER */}
+          {/* ROW 6 — CONTACT + FOOTER ============================================= */}
           <tr>
             <td colSpan={3} id="contact">
               <div className="p-6 md:p-14 relative overflow-hidden" style={{ background: "#ebe8e0" }}>
                 <div className="max-w-4xl">
                   <div className="text-xs font-bold uppercase tracking-[0.25em] mb-4">
-                    // CONTACT.INFO
+                    // КОНТАКТ
                   </div>
                   <h2 className="text-[44px] md:text-[88px] lg:text-[112px] font-black leading-[0.9] tracking-[-0.04em] mb-10">
-                    YOUR BRAND{" "}
+                    ТВОЯТ БРАНД{" "}
                     <span
                       className="italic"
                       style={{
@@ -410,10 +442,10 @@ export default function BrutalismHomepage() {
                         backgroundClip: "text",
                       }}
                     >
-                      DESERVES
+                      ЗАСЛУЖАВА
                     </span>
                     <br />
-                    A GROWTH SYSTEM.
+                    СИСТЕМА ЗА РАСТЕЖ.
                   </h2>
                   <div className="grid md:grid-cols-2 gap-6 max-w-2xl mb-8">
                     <a
@@ -422,7 +454,7 @@ export default function BrutalismHomepage() {
                       style={{ boxShadow: "8px 8px 0 0 #8a8a8a" }}
                     >
                       <div className="text-xs font-bold uppercase tracking-[0.2em] mb-1 opacity-60">
-                        ✉ Email
+                        ✉ Имейл
                       </div>
                       <div className="text-lg md:text-xl font-black break-all">
                         vektoagency@gmail.com
@@ -430,14 +462,22 @@ export default function BrutalismHomepage() {
                     </a>
                     <a
                       href="tel:+359882251474"
-                      className="border-4 border-black p-5 text-black hover:bg-black hover:text-white transition-colors"
+                      className="border-4 border-black p-5 text-white hover:bg-white hover:text-black transition-colors"
                       style={{
-                        background: SILVER_GRADIENT,
-                        boxShadow: "8px 8px 0 0 #0d0d0d",
+                        background: "#0d0d0d",
+                        boxShadow: "8px 8px 0 0 #8a8a8a",
                       }}
                     >
-                      <div className="text-xs font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
-                        ☎ Phone
+                      <div
+                        className="text-xs font-bold uppercase tracking-[0.2em] mb-1"
+                        style={{
+                          background: SILVER_GRADIENT_H,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
+                      >
+                        ☎ Телефон
                       </div>
                       <div className="text-lg md:text-xl font-black">
                         +359 88 225 1474
@@ -450,7 +490,7 @@ export default function BrutalismHomepage() {
                     className="mt-14 text-xs tracking-[0.15em] opacity-60 border-t-2 border-dashed border-black pt-4"
                     style={{ fontFamily: "var(--font-brutal-pixel)" }}
                   >
-                    // GUESTBOOK · SITE LAST UPDATED 04.08.2026 · BEST VIEWED IN ANY BROWSER · MADE WITH ♥ IN SOFIA
+                    // ГОСТ-КНИГА · ПОСЛЕДНО ОБНОВЕНО 04.08.2026 · ПРАВЕН СЪС ♥ В СОФИЯ
                   </div>
                 </div>
               </div>
