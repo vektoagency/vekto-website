@@ -61,3 +61,5 @@ next-env.d.ts
 # Local video source for Bunny Stream upload (never commit — too large)
 /clips-source/
 /clips-source/**
+
+.vercel
