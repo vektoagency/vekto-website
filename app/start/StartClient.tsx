@@ -22,30 +22,33 @@ const LANG_KEY = "vekto-start-lang";
 // component's roster so the landing page reads as the same brand world.
 // Kept in-sync manually — if a brand joins Clients.tsx it should also
 // appear here (and vice-versa).
+// Two per-logo flags for optical evening-out:
+//   `invert`  — dark-ink source, needs hue-preserving invert to read
+//               on the dark tile
+//   `stacked` — multi-line logos (icon-above-word, wordmark + tagline)
+//               and single-line logos with lots of whitespace baked
+//               into the source PNG that would otherwise render
+//               smaller than neighbours. Bumps them to a taller
+//               height tier so they optically match.
 const SOCIAL_PROOF_LOGOS = [
-  // MEN'S CARE — new horizontal black-wordmark logo (Aug 2026).
-  // Removed the old `circular: true` flag (was a square-crop tile
-  // for the square avatar version); added `invert: true` since the
-  // wordmark ships as black ink and needs to render white on the
-  // dark marquee surface.
   { name: "MEN'S CARE", logo: "/images/logo-menscare.png", invert: true },
   { name: "DUSQ", logo: "/images/logo-dusq.webp", invert: true },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", invert: true },
   { name: "BULTEX", logo: "/images/logo-bultex.png" },
   { name: "NEDELYA", logo: "/images/logo-nedelya.svg" },
-  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true },
+  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true, stacked: true },
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", invert: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", invert: true },
-  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp" },
+  { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", stacked: true },
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp" },
-  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true },
+  { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true, stacked: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
   { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp" },
-  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp" },
+  { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", stacked: true },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp" },
-  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", invert: true },
-  { name: "NIDO", logo: "/images/logo-nido.png" },
+  { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", invert: true, stacked: true },
+  { name: "NIDO", logo: "/images/logo-nido.png", stacked: true },
   { name: "ARTE HOTEL", logo: "/images/logo-artehotel.png" },
   { name: "KASHMIR HOTEL", logo: "/images/logo-kashmirhotel.png", invert: true },
   { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg" },
@@ -333,11 +336,18 @@ export default function StartClient() {
                   maskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
                 }}
               >
+                {/* Each brand sits inside a fixed-size flexbox 'cell'
+                    — 128px×64px on mobile, 176px×80px on desktop.
+                    The <img> inside is constrained by max-height +
+                    max-width (via the tier classes) so wide wordmarks
+                    and taller stacked logos both scale to fit the same
+                    optical footprint. Result: no logo dominates the
+                    others regardless of its native aspect ratio. */}
                 <div className="flex sp-marquee gap-6 md:gap-10 w-max">
                   {[...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS].map((c, i) => (
                     <div
                       key={`${c.name}-${i}`}
-                      className="shrink-0 h-12 md:h-14 flex items-center justify-center px-3 md:px-4 opacity-75 hover:opacity-100 transition-opacity"
+                      className="shrink-0 w-32 md:w-44 h-16 md:h-20 flex items-center justify-center px-2 md:px-3 opacity-80 hover:opacity-100 transition-opacity"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -346,14 +356,13 @@ export default function StartClient() {
                         draggable={false}
                         loading="lazy"
                         decoding="async"
-                        className="h-7 md:h-9 w-auto object-contain"
+                        className={`w-auto object-contain max-w-full ${
+                          c.stacked
+                            ? "max-h-11 md:max-h-14"
+                            : "max-h-8 md:max-h-10"
+                        }`}
                         // Hue-preserving invert — same filter Clients.tsx
-                        // uses. `brightness(0) invert(1)` collapsed every
-                        // dark-ink logo to a pure white silhouette, killing
-                        // brand colour. `invert(1) hue-rotate(180deg)`
-                        // inverts only lightness so hues survive; the
-                        // saturate(1.15) top-up keeps the recovered hue
-                        // visible against the near-black tile.
+                        // uses. See there for the rationale.
                         style={{ filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
                       />
                     </div>
