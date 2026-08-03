@@ -17,8 +17,8 @@ export const flashkaCopy = {
     meta: {
       eyebrow: "VEKTO · BG · 2026",
       h1Top: "Кодът е в",
-      h1Bottom: "30+ успешни бранда.",
-      sub: "Цялата ни оперативна система — на тази флашка. Прилагаме я с 30+ бранда в БГ и САЩ. Сега я отваряме за нови 5 бизнеса.",
+      h1Bottom: "50+ успешни бранда.",
+      sub: "Цялата ни оперативна система — на тази флашка. Прилагаме я с 50+ бранда в БГ и САЩ. Сега я отваряме за нови 5 бизнеса.",
       ctaPrimary: "Кандидатствай",
       ctaMicroItems: ["60 секунди", "безплатно", "отговор до 24ч"] as const,
       home: "← Към сайта",
@@ -35,7 +35,7 @@ export const flashkaCopy = {
       h2: "За VEKTO.",
       h2Highlight: "За флашката.",
       vektoLabel: "АГЕНЦИЯТА",
-      vektoBody: "VEKTO е маркетинг агенция от ново поколение. Работим с 30+ бранда в БГ и САЩ — стартъпи, e-commerce, услуги. Видео, реклами, scaling, цяла маркетинг система под един покрив.",
+      vektoBody: "VEKTO е маркетинг агенция от ново поколение. Работим с 50+ бранда в БГ и САЩ — стартъпи, e-commerce, услуги. Видео, реклами, scaling, цяла маркетинг система под един покрив.",
       driveLabel: "ФЛАШКАТА",
       driveBody: "Метафора за нашата вътрешна оперативна система. Конкретна структура от framework-и, AI инструменти, ad templates и scaling протоколи. Прилагаме я с всеки клиент. Сега я отваряме за нови 5.",
     },
@@ -70,10 +70,10 @@ export const flashkaCopy = {
 
     proof: {
       eyebrow: "ДОКАЗАНО",
-      h2: "30+ бранда я ползват.",
+      h2: "50+ бранда я ползват.",
       h2Highlight: "БГ и САЩ. Реални числа.",
       items: [
-        { value: 30, suffix: "+", decimals: 0, label: "Бранда я ползват в БГ и САЩ" },
+        { value: 50, suffix: "+", decimals: 0, label: "Бранда я ползват в БГ и САЩ" },
         { value: 3, suffix: "M+", decimals: 0, label: "$ генериран оборот за различни брандове" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Среден ROAS от наши кампании" },
         { value: 5, suffix: "", decimals: 0, label: "Свободни спота за нови бизнеси" },
@@ -105,7 +105,7 @@ export const flashkaCopy = {
       h2: "Отговор",
       h2Highlight: "до 24 часа.",
       sub: "Преглеждаме всяка кандидатура лично. Пишем ти само ако има match.",
-      submitMicro: "✓ Безплатна кандидатура   ✓ Отговор до 24ч   ✓ Без ангажимент",
+      submitMicro: "✓ Безплатна кандидатура   ✓ Отговор до 24ч   ✓ Партньор за растеж",
     },
 
     fields: {
@@ -192,8 +192,8 @@ export const flashkaCopy = {
     meta: {
       eyebrow: "VEKTO · BG · 2026",
       h1Top: "The code is in",
-      h1Bottom: "30+ successful brands.",
-      sub: "Our entire operating system — on this flash drive. We apply it with 30+ brands in BG and US. Now opening it for 5 new businesses.",
+      h1Bottom: "50+ successful brands.",
+      sub: "Our entire operating system — on this flash drive. We apply it with 50+ brands in BG and US. Now opening it for 5 new businesses.",
       ctaPrimary: "Apply",
       ctaMicroItems: ["60 seconds", "free", "reply within 24h"] as const,
       home: "← Back to site",
@@ -210,7 +210,7 @@ export const flashkaCopy = {
       h2: "About VEKTO.",
       h2Highlight: "About the drive.",
       vektoLabel: "THE AGENCY",
-      vektoBody: "VEKTO is a next-gen marketing agency. We work with 30+ brands in BG and US — startups, e-commerce, services. Video, ads, scaling, the full marketing system under one roof.",
+      vektoBody: "VEKTO is a next-gen marketing agency. We work with 50+ brands in BG and US — startups, e-commerce, services. Video, ads, scaling, the full marketing system under one roof.",
       driveLabel: "THE DRIVE",
       driveBody: "The metaphor for our internal operating system. A concrete structure of frameworks, AI tools, ad templates, and scaling protocols. We apply it with every client. Opening it for 5 new ones now.",
     },
@@ -245,10 +245,10 @@ export const flashkaCopy = {
 
     proof: {
       eyebrow: "PROVEN",
-      h2: "30+ brands use it.",
+      h2: "50+ brands use it.",
       h2Highlight: "BG and US. Real numbers.",
       items: [
-        { value: 30, suffix: "+", decimals: 0, label: "Brands using it in BG and US" },
+        { value: 50, suffix: "+", decimals: 0, label: "Brands using it in BG and US" },
         { value: 3, suffix: "M+", decimals: 0, label: "$ revenue generated across brands" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS on our campaigns" },
         { value: 5, suffix: "", decimals: 0, label: "Spots open for new businesses" },
@@ -280,7 +280,7 @@ export const flashkaCopy = {
       h2: "Reply",
       h2Highlight: "within 24 hours.",
       sub: "We review every application personally. We only write back if there's a fit.",
-      submitMicro: "✓ Free application   ✓ Reply within 24h   ✓ No commitment",
+      submitMicro: "✓ Free application   ✓ Reply within 24h   ✓ Growth partner",
     },
 
     fields: {

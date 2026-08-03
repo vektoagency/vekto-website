@@ -48,7 +48,7 @@ export default function Contact() {
       startForm: "Describe your project",
       startFormSuffix: "≈ 1 minute",
       callBtn: "Call now",
-      perks: ["Proposal within 24h", "No commitments"],
+      perks: ["Proposal within 24h", "Growth partner"],
     },
   });
 

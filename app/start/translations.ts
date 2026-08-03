@@ -13,9 +13,9 @@ export const startCopy = {
       h1Bottom: "Но с посока всеки може.",
       sub: "Маркетинг агенция за бранда, който иска повече от пазара.",
       trustBadges: [
-        "30+ доволни бранда",
+        "50+ доволни бранда",
         "4.8× средно ROAS",
-        "Без ангажимент",
+        "Партньор за растеж",
       ],
       ctaMicro: "60 секунди · безплатно · лична оферта до 24ч",
       langToggle: "EN",
@@ -29,7 +29,7 @@ export const startCopy = {
       h2: "Получи оферта",
       h2Highlight: "до 24 часа",
       sub: "60 секунди да попълниш. 24 часа до отговор.",
-      submitMicro: "✓ Отговор до 24ч    ✓ Без ангажимент    ✓ 100% безплатно",
+      submitMicro: "✓ Отговор до 24ч    ✓ Партньор за растеж    ✓ 100% безплатно",
     },
     fields: {
       name: "Име",
@@ -87,9 +87,9 @@ export const startCopy = {
     stats: {
       eyebrow: "ЦИФРИТЕ ГОВОРЯТ",
       h2: "Защо",
-      h2Highlight: "30+ бранда избраха",
+      h2Highlight: "50+ бранда избраха",
       items: [
-        { value: 30, suffix: "+", decimals: 0, label: "Доволни бранда в портфолиото" },
+        { value: 50, suffix: "+", decimals: 0, label: "Доволни бранда в портфолиото" },
         { value: 1000, suffix: "+", decimals: 0, label: "Доставени проекта в портфолиото" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Средно ROAS от наши проекти" },
         { value: 6, suffix: "×", decimals: 0, label: "По-бързо от традиционните агенции" },
@@ -173,9 +173,9 @@ export const startCopy = {
       h1Bottom: "The ones with direction do.",
       sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
-        "30+ happy brands",
+        "50+ happy brands",
         "4.8× average ROAS",
-        "No commitment",
+        "Growth partner",
       ],
       ctaMicro: "60 seconds · free · personal proposal within 24h",
       langToggle: "БГ",
@@ -189,7 +189,7 @@ export const startCopy = {
       h2: "Get a proposal",
       h2Highlight: "within 24h",
       sub: "60 seconds to fill. 24 hours for a reply.",
-      submitMicro: "✓ Reply within 24h    ✓ No commitment    ✓ 100% free",
+      submitMicro: "✓ Reply within 24h    ✓ Growth partner    ✓ 100% free",
     },
     fields: {
       name: "Name",
@@ -247,9 +247,9 @@ export const startCopy = {
     stats: {
       eyebrow: "THE NUMBERS",
       h2: "Why",
-      h2Highlight: "30+ brands chose",
+      h2Highlight: "50+ brands chose",
       items: [
-        { value: 30, suffix: "+", decimals: 0, label: "Happy brands in our portfolio" },
+        { value: 50, suffix: "+", decimals: 0, label: "Happy brands in our portfolio" },
         { value: 1000, suffix: "+", decimals: 0, label: "Delivered projects in our portfolio" },
         { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS across our projects" },
         { value: 6, suffix: "×", decimals: 0, label: "Faster than traditional agencies" },
