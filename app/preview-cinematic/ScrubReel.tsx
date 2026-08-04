@@ -164,7 +164,17 @@ export default function ScrubReel({
     <div
       ref={hostRef}
       className={className}
-      style={{ position: "relative", background: "#0d0d0d", overflow: "hidden" }}
+      // No hardcoded position here: in cover mode the CALLER positions the
+      // host (absolute inset-0 over the film area), and an inline
+      // position:relative would override that class and collapse the host to
+      // zero height — a black page with a working HUD. Outside cover mode the
+      // host still needs to anchor the loader overlay, so relative applies
+      // only then.
+      style={{
+        background: "#0d0d0d",
+        overflow: "hidden",
+        ...(cover ? {} : { position: "relative" as const }),
+      }}
     >
       <canvas
         ref={canvasRef}
