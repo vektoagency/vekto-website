@@ -61,10 +61,12 @@ const COPY = {
       { id: "01", label: "НАЧАЛО" },
       { id: "02", label: "ЗАЩО" },
       { id: "03", label: "ФОКУС" },
-      { id: "04", label: "БРАНДОВЕ" },
-      { id: "05", label: "СТАНДАРТ" },
-      { id: "06", label: "КАНДИДАТ" },
-      { id: "07", label: "РАЗГОВОР" },
+      { id: "04", label: "КЕЙСОВЕ" },
+      { id: "05", label: "ПРОЦЕС" },
+      { id: "06", label: "БРАНДОВЕ" },
+      { id: "07", label: "СТАНДАРТ" },
+      { id: "08", label: "КАНДИДАТ" },
+      { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
@@ -101,8 +103,74 @@ const COPY = {
       ],
       roomBadge: "СТАЯ №",
     },
+    stageCases: {
+      eyebrow: "04 · КЕЙСОВЕ · РЕАЛНИ РЕЗУЛТАТИ",
+      headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
+      headline2Prefix: "КЪМ",
+      headline2Highlight: "РАСТЕЖ.",
+      note: "Три реални case-а. Всеки — с реален метрик, реален бюджет, реален период.",
+      cases: [
+        {
+          brand: "MEN'S CARE",
+          category: "Beauty · BG",
+          metric: "5.2×",
+          metricLabel: "ROAS · AI КАМПАНИЯ",
+          duration: "90 ДНИ",
+          highlight: "AI-generated UGC pipeline замести €12k/месец външна продукция без загуба на качество.",
+        },
+        {
+          brand: "PARFEN",
+          category: "Perfume · BG",
+          metric: "7.7×",
+          metricLabel: "ROAS · URGENCY ОФЕРТА",
+          duration: "60 ДНИ",
+          highlight: "Static banner с urgency copy победи video creative в 4 от 5 паралелни теста.",
+        },
+        {
+          brand: "FREYA NAILS",
+          category: "E-com · BG",
+          metric: "10×",
+          metricLabel: "ROAS · NAIL PRODUCTS",
+          duration: "120 ДНИ",
+          highlight: "Low-CAC funnel + retargeting stack. Fragmented account-структура преработена в един pipeline.",
+        },
+      ],
+    },
+    stageProcess: {
+      eyebrow: "05 · КАК СЕ СЛУЧВА",
+      headline1: "ОТ ПЪРВИЯ РАЗГОВОР",
+      headline2Prefix: "ДО",
+      headline2Highlight: "РАСТЕЖ.",
+      note: "Стандартен path за всеки нов бранд. Клиничен, не корпоративен.",
+      steps: [
+        {
+          num: "01",
+          title: "ЗАПОЗНАВАНЕ",
+          duration: "30 МИНУТИ · БЕЗПЛАТНО",
+          body: "Разговор за бранда, целите, ситуацията. Проверяваме дали сме fit — от двете страни.",
+        },
+        {
+          num: "02",
+          title: "DIAGNOSTIC SPRINT",
+          duration: "2 СЕДМИЦИ",
+          body: "Audit на текущи канали, positioning, offer, tracking. Излизаш с конкретен 90-дневен план.",
+        },
+        {
+          num: "03",
+          title: "SETUP PHASE",
+          duration: "30 ДНИ",
+          body: "Изграждаме stack-а: стратегия, creative, funnel, tracking, инфраструктура. Launch-ready.",
+        },
+        {
+          num: "04",
+          title: "LAUNCH & SCALE",
+          duration: "МЕСЕЦ 2 →",
+          body: "Активни кампании, ежедневна оптимизация, месечни deep-dives, скалиране на печелившите тестове.",
+        },
+      ],
+    },
     stage4: {
-      eyebrow: "04 · СЪСТАВЪТ",
+      eyebrow: "06 · СЪСТАВЪТ",
       headline1: "50+ БРАНДА В ПОРТФЕЙЛА.",
       headline2Prefix: "12",
       headline2Highlight: "ОТ ТЯХ.",
@@ -110,7 +178,7 @@ const COPY = {
       coda: "12 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
     },
     stage5: {
-      eyebrow: "05 · СТАНДАРТЪТ",
+      eyebrow: "07 · СТАНДАРТЪТ",
       headline1: "ЧЕТИРИ ПРИНЦИПА",
       headline2Highlight: "НА КОИТО НЕ ПРАВИМ КОМПРОМИС.",
       note: "Ако някой от тях се разминава с очакванията ти — не сме правилният екип.",
@@ -138,7 +206,7 @@ const COPY = {
       ],
     },
     stage6: {
-      eyebrow: "06 · КОГО ТЪРСИМ",
+      eyebrow: "08 · КОГО ТЪРСИМ",
       headlinePrefix: "ОТГОВАРЯШ ЛИ НА ВСИЧКИТЕ",
       headlineHighlight: "ЧЕТИРИ",
       headlineSuffix: "?",
@@ -150,7 +218,7 @@ const COPY = {
       ],
     },
     stage7: {
-      eyebrow: "07 · АКО СИ СТИГНАЛ ДОТУК",
+      eyebrow: "09 · АКО СИ СТИГНАЛ ДОТУК",
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
@@ -171,10 +239,12 @@ const COPY = {
       { id: "01", label: "START" },
       { id: "02", label: "WHY" },
       { id: "03", label: "FOCUS" },
-      { id: "04", label: "ROSTER" },
-      { id: "05", label: "STANDARD" },
-      { id: "06", label: "FIT" },
-      { id: "07", label: "TALK" },
+      { id: "04", label: "CASES" },
+      { id: "05", label: "PROCESS" },
+      { id: "06", label: "ROSTER" },
+      { id: "07", label: "STANDARD" },
+      { id: "08", label: "FIT" },
+      { id: "09", label: "TALK" },
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
@@ -211,8 +281,74 @@ const COPY = {
       ],
       roomBadge: "ROOM №",
     },
+    stageCases: {
+      eyebrow: "04 · CASES · REAL RESULTS",
+      headline1: "FROM AD BUDGET",
+      headline2Prefix: "TO",
+      headline2Highlight: "GROWTH.",
+      note: "Three real cases. Each with a real metric, real budget, real period.",
+      cases: [
+        {
+          brand: "MEN'S CARE",
+          category: "Beauty · BG",
+          metric: "5.2×",
+          metricLabel: "ROAS · AI CAMPAIGN",
+          duration: "90 DAYS",
+          highlight: "AI-generated UGC pipeline replaced €12k/mo of external production with no quality loss.",
+        },
+        {
+          brand: "PARFEN",
+          category: "Perfume · BG",
+          metric: "7.7×",
+          metricLabel: "ROAS · URGENCY OFFER",
+          duration: "60 DAYS",
+          highlight: "Static banner with urgency copy beat video creative in 4 out of 5 parallel tests.",
+        },
+        {
+          brand: "FREYA NAILS",
+          category: "E-com · BG",
+          metric: "10×",
+          metricLabel: "ROAS · NAIL PRODUCTS",
+          duration: "120 DAYS",
+          highlight: "Low-CAC funnel + retargeting stack. Fragmented account structure rebuilt into one pipeline.",
+        },
+      ],
+    },
+    stageProcess: {
+      eyebrow: "05 · HOW IT UNFOLDS",
+      headline1: "FROM FIRST CALL",
+      headline2Prefix: "TO",
+      headline2Highlight: "GROWTH.",
+      note: "Standard path for every new brand. Clinical, not corporate.",
+      steps: [
+        {
+          num: "01",
+          title: "DISCOVERY CALL",
+          duration: "30 MIN · FREE",
+          body: "Conversation about the brand, goals, situation. We check if we're a fit — from both sides.",
+        },
+        {
+          num: "02",
+          title: "DIAGNOSTIC SPRINT",
+          duration: "2 WEEKS",
+          body: "Audit of current channels, positioning, offer, tracking. You leave with a concrete 90-day plan.",
+        },
+        {
+          num: "03",
+          title: "SETUP PHASE",
+          duration: "30 DAYS",
+          body: "We build the stack: strategy, creative, funnel, tracking, infrastructure. Launch-ready.",
+        },
+        {
+          num: "04",
+          title: "LAUNCH & SCALE",
+          duration: "MONTH 2 →",
+          body: "Live campaigns, daily optimization, monthly deep-dives, scaling winning tests.",
+        },
+      ],
+    },
     stage4: {
-      eyebrow: "04 · THE ROSTER",
+      eyebrow: "06 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
       headline2Prefix: "12",
       headline2Highlight: "OF THEM.",
@@ -220,7 +356,7 @@ const COPY = {
       coda: "12 / 50+ · REST ON REQUEST",
     },
     stage5: {
-      eyebrow: "05 · THE STANDARD",
+      eyebrow: "07 · THE STANDARD",
       headline1: "FOUR PRINCIPLES",
       headline2Highlight: "WE DON'T NEGOTIATE ON.",
       note: "If any of them clashes with what you're after — we're probably not the right team.",
@@ -248,7 +384,7 @@ const COPY = {
       ],
     },
     stage6: {
-      eyebrow: "06 · WHO WE'RE FOR",
+      eyebrow: "08 · WHO WE'RE FOR",
       headlinePrefix: "DO YOU MEET ALL",
       headlineHighlight: "FOUR",
       headlineSuffix: "?",
@@ -260,7 +396,7 @@ const COPY = {
       ],
     },
     stage7: {
-      eyebrow: "07 · IF YOU'VE MADE IT THIS FAR",
+      eyebrow: "09 · IF YOU'VE MADE IT THIS FAR",
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
@@ -445,11 +581,13 @@ export default function BrutalismHomepage() {
   const s1 = useRef<HTMLElement>(null);
   const s2 = useRef<HTMLElement>(null);
   const s3 = useRef<HTMLElement>(null);
+  const sCases = useRef<HTMLElement>(null);
+  const sProcess = useRef<HTMLElement>(null);
   const s4 = useRef<HTMLElement>(null);
   const s5 = useRef<HTMLElement>(null);
   const s6 = useRef<HTMLElement>(null);
   const s7 = useRef<HTMLElement>(null);
-  const stage = useCurrentStage([s1, s2, s3, s4, s5, s6, s7]);
+  const stage = useCurrentStage([s1, s2, s3, sCases, sProcess, s4, s5, s6, s7]);
 
   return (
     <div
@@ -613,6 +751,10 @@ export default function BrutalismHomepage() {
       <StageTruth targetRef={s2} t={t.stage2} />
       <HazardStrip />
       <StageRooms targetRef={s3} t={t.stage3} />
+      <HazardStrip />
+      <StageCases targetRef={sCases} t={t.stageCases} />
+      <HazardStrip />
+      <StageProcess targetRef={sProcess} t={t.stageProcess} />
       <HazardStrip />
       <StageCast  targetRef={s4} t={t.stage4} />
       <HazardStrip />
@@ -1067,6 +1209,236 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 // ============================================================================
 // STAGE 04 · ROSTER · brand + region only, no fabricated per-client stats
 // ============================================================================
+// ============================================================================
+// STAGE 04 · CASES — 3 real case cards, before/duration/highlight
+// Reveals as a stagger on scroll-in. Each card = hard-bordered plate
+// with big silver metric on dark ground, brand + duration + one-liner.
+// ============================================================================
+function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageCases"] }) {
+  const inView = useInView(targetRef, 0.15);
+  return (
+    <section
+      id="stage-04"
+      ref={targetRef}
+      className=""
+      style={{ background: "#ebe8e0", minHeight: "100vh" }}
+    >
+      <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
+        <div
+          className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
+          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        >
+          {t.eyebrow}
+        </div>
+
+        <h2
+          className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl"
+          style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+        >
+          {t.headline1}
+          <br />
+          {t.headline2Prefix}{" "}
+          <span
+            style={{
+              background: GRAPHITE_H,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            {t.headline2Highlight}
+          </span>
+        </h2>
+
+        <p
+          className="text-sm md:text-base leading-[1.55] font-medium max-w-2xl mb-14 opacity-75"
+          style={{ fontFamily: "var(--font-brutal-comic)" }}
+        >
+          {t.note}
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {t.cases.map((c, i) => (
+            <div
+              key={c.brand}
+              className="border-2 border-black flex flex-col overflow-hidden transition-all duration-700"
+              style={{
+                background: "#ebe8e0",
+                boxShadow: "8px 8px 0 0 #0d0d0d",
+                opacity: inView ? 1 : 0,
+                transform: inView ? "translateY(0)" : "translateY(28px)",
+                transitionDelay: `${i * 140}ms`,
+              }}
+            >
+              {/* Header — brand + category */}
+              <div className="px-5 py-4 border-b-2 border-black flex items-center justify-between">
+                <div className="font-black text-lg uppercase tracking-tight">
+                  {c.brand}
+                </div>
+                <div
+                  className="text-[10px] uppercase tracking-[0.2em] opacity-60"
+                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                >
+                  {c.category}
+                </div>
+              </div>
+
+              {/* Metric plate — dark bg with silver-fill number */}
+              <div
+                className="px-5 py-8 md:py-10 border-b-2 border-black flex-1 flex flex-col justify-center"
+                style={{ background: "#0d0d0d", color: "#f4f4f4" }}
+              >
+                <div
+                  className="font-black leading-none tabular-nums"
+                  style={{
+                    fontSize: "clamp(56px, 7vw, 108px)",
+                    background: SILVER_H,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  {c.metric}
+                </div>
+                <div
+                  className="text-[10px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
+                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                >
+                  {c.metricLabel}
+                </div>
+              </div>
+
+              {/* Duration + highlight */}
+              <div className="p-5 space-y-3">
+                <div
+                  className="inline-block px-2 py-1 border border-black text-[10px] font-bold uppercase tracking-[0.2em]"
+                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                >
+                  {c.duration}
+                </div>
+                <p className="text-[13px] leading-[1.5] font-medium">
+                  {c.highlight}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================================
+// STAGE 05 · PROCESS — 4-step engagement roadmap
+// Vertical stack of numbered steps, each a bordered plate. Reveals in
+// stagger as it scrolls into view. Each step has: big number, title,
+// duration badge, body copy.
+// ============================================================================
+function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageProcess"] }) {
+  const inView = useInView(targetRef, 0.15);
+  return (
+    <section
+      id="stage-05"
+      ref={targetRef}
+      className=""
+      style={{ background: "#d6d3ca", minHeight: "100vh" }}
+    >
+      <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-10 items-start">
+          {/* Left — sticky headline */}
+          <div className="md:col-span-5 md:sticky md:top-40">
+            <div
+              className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
+              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            >
+              {t.eyebrow}
+            </div>
+            <h2
+              className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6"
+              style={{ fontSize: "clamp(34px, 5vw, 76px)" }}
+            >
+              {t.headline1}
+              <br />
+              {t.headline2Prefix}{" "}
+              <span
+                style={{
+                  background: GRAPHITE_H,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                {t.headline2Highlight}
+              </span>
+            </h2>
+            <p
+              className="text-sm md:text-base leading-[1.55] opacity-75 max-w-md font-medium"
+              style={{ fontFamily: "var(--font-brutal-comic)" }}
+            >
+              {t.note}
+            </p>
+          </div>
+
+          {/* Right — step stack */}
+          <div className="md:col-span-7 space-y-4 md:space-y-6">
+            {t.steps.map((s, i) => (
+              <div
+                key={s.num}
+                className="border-2 border-black p-5 md:p-7 transition-all duration-700"
+                style={{
+                  background: "#ebe8e0",
+                  boxShadow: "6px 6px 0 0 #0d0d0d",
+                  opacity: inView ? 1 : 0,
+                  transform: inView ? "translateY(0)" : "translateY(20px)",
+                  transitionDelay: `${i * 130}ms`,
+                }}
+              >
+                <div className="flex items-baseline gap-4 md:gap-6">
+                  <div
+                    className="text-3xl md:text-5xl font-black tabular-nums flex-shrink-0"
+                    style={{
+                      background: GRAPHITE_H,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    {s.num}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                      <h3 className="font-black text-lg md:text-2xl uppercase tracking-tight leading-tight">
+                        {s.title}
+                      </h3>
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0"
+                        style={{
+                          fontFamily: "var(--font-brutal-pixel)",
+                          background: "#0d0d0d",
+                          color: "#f4f4f4",
+                        }}
+                      >
+                        {s.duration}
+                      </span>
+                    </div>
+                    <p
+                      className="text-sm md:text-base leading-[1.55] font-medium opacity-85"
+                      style={{ fontFamily: "var(--font-brutal-comic)" }}
+                    >
+                      {s.body}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage4"] }) {
   const inView = useInView(targetRef, 0.15);
   return (
