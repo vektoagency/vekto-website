@@ -661,8 +661,34 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
   const p = useScrollProgress(targetRef);
   const inView = useInView(targetRef, 0.2);
 
+  // Typewriter: types character-by-character once the section is in view.
+  // The old approach was tied to useScrollProgress, but the hero starts
+  // at the top of the page so p immediately jumps to ~0.5 on first paint,
+  // which meant ~70% of the text was already 'typed' before the user did
+  // anything — no visible animation. Time-based reveal fixes it.
   const graphemes = Array.from(t.typed);
-  const typedCount = Math.floor(Math.max(0, Math.min(1, (p - 0.15) / 0.5)) * graphemes.length);
+  const [typedCount, setTypedCount] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    setTypedCount(0);
+    let i = 0;
+    // Small pre-delay so the first character appears just after the CTAs
+    // finish their entry-fade, then ~55ms per character.
+    const startAfter = setTimeout(() => {
+      const tick = setInterval(() => {
+        i += 1;
+        setTypedCount(i);
+        if (i >= graphemes.length) clearInterval(tick);
+      }, 55);
+      // Cleanup for the interval when the effect re-runs / unmounts.
+      cleanup = () => clearInterval(tick);
+    }, 600);
+    let cleanup: (() => void) | undefined;
+    return () => {
+      clearTimeout(startAfter);
+      cleanup?.();
+    };
+  }, [inView, graphemes.length]);
   const typed = graphemes.slice(0, typedCount).join("");
 
   return (
