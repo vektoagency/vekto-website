@@ -32,6 +32,11 @@ const SILVER =
   "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)";
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
+// WORDMARK_METAL — cleaner brushed-titanium look for the VEKTO wordmark
+// specifically. No mirror-shine highlights, so it reads like a real
+// metallic-vinyl brand logo rather than a chrome-plated ornament.
+const WORDMARK_METAL =
+  "linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 40%, #7a7a7a 70%, #969696 100%)";
 // GRAPHITE — dark chrome. Same shine variation but every tone dark
 // enough to stay readable on bone / concrete backgrounds. Use as
 // text-fill on LIGHT grounds where you want the chrome feel.
@@ -463,7 +468,7 @@ export default function BrutalismHomepage() {
             aria-label="VEKTO"
             className="h-9 md:h-12 w-[150px] md:w-[200px]"
             style={{
-              background: SILVER,
+              background: WORDMARK_METAL,
               WebkitMaskImage: "url(/images/logo.png)",
               maskImage: "url(/images/logo.png)",
               WebkitMaskRepeat: "no-repeat",
