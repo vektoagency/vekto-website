@@ -68,7 +68,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
-      pill: "ПРИЕМАМЕ БРАНДОВЕ · ЕДИН НА НИША",
+      pill: "НА ЖИВО",
       headline1: "СТРОИМ РАСТЕЖ.",
       headline2Prefix: "НЕ",
       headline2Highlight: "ПРЕЗЕНТАЦИИ.",
@@ -178,7 +178,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
-      pill: "ACCEPTING BRANDS · ONE PER NICHE",
+      pill: "LIVE",
       headline1: "WE BUILD GROWTH.",
       headline2Prefix: "NOT",
       headline2Highlight: "DECKS.",
@@ -426,10 +426,16 @@ export default function BrutalismHomepage() {
 
   const [clock, setClock] = useState("--:--:--");
   useEffect(() => {
+    // Format the clock as HH:MM:SS in Bulgaria's timezone (EET/EEST) so
+    // it reads correctly regardless of where the visitor is browsing from.
+    // Broadcast-style live clock is a signature 90s / retro-terminal move.
     const tick = () => {
-      const d = new Date();
-      const p = (n: number) => String(n).padStart(2, "0");
-      setClock(`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`);
+      setClock(
+        new Date().toLocaleTimeString("en-GB", {
+          timeZone: "Europe/Sofia",
+          hour12: false,
+        })
+      );
     };
     tick();
     const t = setInterval(tick, 1000);
@@ -454,6 +460,20 @@ export default function BrutalismHomepage() {
         color: "#0d0d0d",
       }}
     >
+      {/* ============= CRT SCANLINES OVERLAY =============
+          90s CRT-monitor texture — thin horizontal lines every 3px.
+          Set to fixed so it stays anchored to the viewport as you
+          scroll (the effect would break if it tracked the page).
+          Pointer-events-none = never intercepts clicks. */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[2]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(0,0,0,0.055) 0px, rgba(0,0,0,0.055) 1px, transparent 1px, transparent 3px)",
+        }}
+      />
+
       {/* ============= MARQUEE ============= */}
       <div
         className="border-y-2 border-black overflow-hidden py-1.5"
@@ -588,12 +608,18 @@ export default function BrutalismHomepage() {
         })}
       </div>
 
-      <StageHook  targetRef={s1} t={t.stage1} />
+      <StageHook  targetRef={s1} t={t.stage1} clock={clock} />
+      <HazardStrip />
       <StageTruth targetRef={s2} t={t.stage2} />
+      <HazardStrip />
       <StageRooms targetRef={s3} t={t.stage3} />
+      <HazardStrip />
       <StageCast  targetRef={s4} t={t.stage4} />
+      <HazardStrip />
       <StageStandard targetRef={s5} t={t.stage5} />
+      <HazardStrip />
       <StageQualify targetRef={s6} t={t.stage6} />
+      <HazardStrip />
       <StageAsk   targetRef={s7} t={t.stage7} />
 
       <style jsx global>{`
@@ -611,9 +637,27 @@ export default function BrutalismHomepage() {
 }
 
 // ============================================================================
+// HAZARD STRIP — 6px diagonal safety-tape (silver + jet-black) used
+// between stages. Very 90s / industrial / brutalist. Replaces the
+// plain black border-b that was between each stage before.
+// ============================================================================
+function HazardStrip() {
+  return (
+    <div
+      aria-hidden
+      className="h-2 w-full relative z-[3]"
+      style={{
+        background:
+          "repeating-linear-gradient(-45deg, #0d0d0d, #0d0d0d 10px, #b0b0b0 10px, #b0b0b0 20px)",
+      }}
+    />
+  );
+}
+
+// ============================================================================
 // STAGE 01 · HOOK
 // ============================================================================
-function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"] }) {
+function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"]; clock: string }) {
   const p = useScrollProgress(targetRef);
   const inView = useInView(targetRef, 0.2);
 
@@ -625,7 +669,7 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
     <section
       id="stage-01"
       ref={targetRef}
-      className="border-b-2 border-black relative flex flex-col"
+      className="relative flex flex-col"
       style={{
         height: "100dvh",
         minHeight: "100vh",
@@ -645,17 +689,21 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           </div>
 
           <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-5 md:mb-6 self-start"
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] mb-5 md:mb-6 self-start"
             style={{
               background: "#0d0d0d",
               color: "#f4f4f4",
               border: "1.5px solid",
               borderImage: `${SILVER_H} 1`,
               boxShadow: "4px 4px 0 0 #0d0d0d",
+              fontFamily: "var(--font-brutal-pixel)",
             }}
           >
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
             {t.pill}
+            <span className="opacity-40">·</span>
+            <span className="opacity-70">EET</span>
+            <span className="tabular-nums">{clock}</span>
           </div>
 
           <h1
@@ -796,7 +844,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
     <section
       id="stage-02"
       ref={targetRef}
-      className="border-b-2 border-black flex items-center"
+      className="flex items-center"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
     >
       <div className="px-6 md:px-14 py-24 md:py-40 max-w-[1400px] mx-auto w-full">
@@ -868,7 +916,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
     <section
       id="stage-03"
       ref={targetRef}
-      className="border-b-2 border-black relative"
+      className="relative"
       style={{ height: "400vh", background: "#d6d3ca" }}
     >
       <div className="sticky top-0 h-screen" style={{ overflowX: "clip" }}>
@@ -991,7 +1039,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
     <section
       id="stage-04"
       ref={targetRef}
-      className="border-b-2 border-black"
+      className=""
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
     >
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
@@ -1089,7 +1137,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
     <section
       id="stage-05"
       ref={targetRef}
-      className="border-b-2 border-black relative"
+      className="relative"
       style={{ height: "280vh", background: "#ebe8e0" }}
     >
       <div className="sticky top-0 h-screen flex items-center px-6 md:px-14">
@@ -1199,7 +1247,7 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
     <section
       id="stage-06"
       ref={targetRef}
-      className="border-b-2 border-black"
+      className=""
       style={{ background: "#d6d3ca", minHeight: "100vh" }}
     >
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
