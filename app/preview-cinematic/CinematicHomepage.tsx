@@ -632,63 +632,77 @@ function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang
     ? [["Портфолио", "/portfolio"], ["Кейсове", "/case-studies"], ["Анкета", "/brief"]]
     : [["Portfolio", "/portfolio"], ["Case Studies", "/case-studies"], ["Brief", "/brief"]];
   const cta = lang === "bg" ? "Запази разговор" : "Book a call";
-  // Fixed and transparent: the film runs edge to edge underneath, and the
-  // nav + CTA stay reachable through the whole funnel instead of scrolling
-  // away after the first viewport. The gradient scrim keeps the light text
-  // legible over the bone-white zones without reading as a solid bar.
+  // Fixed and FULLY transparent — no bar, no scrim, no blur: the film runs
+  // uninterrupted to the top edge. Legibility over the bone-white zones
+  // comes from a dark drop-shadow halo around every element instead of a
+  // background. Layout: wordmark alone on the left; everything else — nav,
+  // language, CTA — grouped on the right.
   return (
-    <div
-      className="fixed inset-x-0 top-0 z-50"
-      style={{
-        background: "linear-gradient(180deg, rgba(13,13,13,0.78) 0%, rgba(13,13,13,0.38) 62%, rgba(13,13,13,0) 100%)",
-        backdropFilter: "blur(5px)",
-        WebkitBackdropFilter: "blur(5px)",
-        color: "#f4f4f4",
-      }}
-    >
-      <div className="px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-x-6 md:gap-x-10 min-w-0">
-          <Link
-            href="/preview-cinematic"
-            aria-label="VEKTO"
-            className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0"
-            style={{
-              background: WORDMARK_METAL,
-              WebkitMaskImage: "url(/images/logo.png)",
-              maskImage: "url(/images/logo.png)",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskPosition: "left center",
-              maskPosition: "left center",
-              WebkitMaskSize: "contain",
-              maskSize: "contain",
-            }}
-          />
-          <nav aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"} className="hidden md:flex items-center gap-x-7 text-sm font-bold uppercase tracking-[0.2em]">
-            {links.map(([label, href]) => (
-              <Link key={href} href={href} className="opacity-70 hover:opacity-100 transition-opacity">{label}</Link>
-            ))}
-          </nav>
-        </div>
-        <div className="flex items-center gap-2 md:gap-3 shrink-0">
-          <button
-            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] transition-colors hover:bg-white hover:text-black"
-            style={{ background: "transparent", color: "#f4f4f4", border: "1.5px solid rgba(244,244,244,0.4)" }}
-            aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
-          >
-            {lang === "bg" ? "EN" : "БГ"}
-          </button>
-          <Link
-            href="/brief"
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-            style={{ background: JET, color: "#f4f4f4", boxShadow: "3px 3px 0 0 #8a8a8a", borderColor: "#f4f4f4" }}
-          >
-            <span aria-hidden>→</span>
-            <span className="hidden sm:inline">{cta}</span>
-            <span className="sm:hidden">{lang === "bg" ? "Разговор" : "Call"}</span>
-          </Link>
-        </div>
+    <div className="fixed inset-x-0 top-0 z-50" style={{ background: "transparent" }}>
+      {/* Fully transparent strip — no bar, no scrim. Legibility over the
+          bone-white zones comes from a tight near-opaque dark outline plus
+          a soft halo on every element (text-shadow on text, drop-shadow on
+          the masked logo). mix-blend difference was tried first and looked
+          right on paper, but Chromium flattens the blend over the
+          GPU-composited canvas film, so glyphs stayed white-on-white. The
+          nav landmark uses display:contents so links sit as direct row
+          children without losing the <nav> semantics. */}
+      <div className="px-4 md:px-6 py-3 md:py-4 flex items-center gap-x-5 md:gap-x-7">
+        <Link
+          href="/preview-cinematic"
+          aria-label="VEKTO"
+          className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0 mr-auto"
+          style={{
+            background: "#f4f4f4",
+            filter: "drop-shadow(0 0 1px rgba(13,13,13,0.95)) drop-shadow(0 1px 5px rgba(13,13,13,0.75))",
+            WebkitMaskImage: "url(/images/logo.png)",
+            maskImage: "url(/images/logo.png)",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "left center",
+            maskPosition: "left center",
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+          }}
+        />
+        <nav
+          aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"}
+          className="hidden md:contents"
+        >
+          {links.map(([label, href]) => (
+            <Link
+              key={href}
+              href={href}
+              className="hidden md:inline text-sm font-bold uppercase tracking-[0.2em] opacity-95 hover:opacity-100 transition-opacity"
+              style={{ color: "#f4f4f4", textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9), 0 1px 6px rgba(13,13,13,0.55)" }}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <button
+          onClick={() => setLang(lang === "bg" ? "en" : "bg")}
+          className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0"
+          style={{
+            background: "transparent",
+            color: "#f4f4f4",
+            border: "1.5px solid rgba(244,244,244,0.75)",
+            textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9)",
+            filter: "drop-shadow(0 0 1px rgba(13,13,13,0.7))",
+          }}
+          aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
+        >
+          {lang === "bg" ? "EN" : "БГ"}
+        </button>
+        <Link
+          href="/brief"
+          className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
+          style={{ background: JET, color: "#f4f4f4", boxShadow: "3px 3px 0 0 #8a8a8a", borderColor: "#f4f4f4" }}
+        >
+          <span aria-hidden>→</span>
+          <span className="hidden sm:inline">{cta}</span>
+          <span className="sm:hidden">{lang === "bg" ? "Разговор" : "Call"}</span>
+        </Link>
       </div>
     </div>
   );
