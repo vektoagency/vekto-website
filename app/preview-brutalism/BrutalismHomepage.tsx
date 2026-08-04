@@ -69,9 +69,9 @@ const COPY = {
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
       pill: "НА ЖИВО",
-      headline1: "СТРОИМ РАСТЕЖ.",
-      headline2Prefix: "НЕ",
-      headline2Highlight: "ПРЕЗЕНТАЦИИ.",
+      headline1: "ТВОЯТ ПАРТНЬОР",
+      headline2Prefix: "ЗА",
+      headline2Highlight: "БИЗНЕС РАСТЕЖ.",
       typed: "ВЛЕЗЕ ВЪВ ФУНИЯТА.",
       scrollCue: "▼ ПРОДЪЛЖИ",
       ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
@@ -179,9 +179,9 @@ const COPY = {
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
       pill: "LIVE",
-      headline1: "WE BUILD GROWTH.",
-      headline2Prefix: "NOT",
-      headline2Highlight: "DECKS.",
+      headline1: "YOUR PARTNER",
+      headline2Prefix: "IN",
+      headline2Highlight: "BUSINESS GROWTH.",
       typed: "YOU'RE IN THE FUNNEL.",
       scrollCue: "▼ CONTINUE",
       ctaPrimary: "BOOK A CALL",
@@ -709,7 +709,7 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
           <h1
             className="font-black tracking-[-0.03em] max-w-full"
             style={{
-              fontSize: "clamp(48px, 8vw, 132px)",
+              fontSize: "clamp(40px, 6.5vw, 108px)",
               lineHeight: 0.94,
               overflowWrap: "break-word",
             }}
