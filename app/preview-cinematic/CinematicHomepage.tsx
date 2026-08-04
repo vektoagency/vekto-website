@@ -133,7 +133,7 @@ export default function CinematicHomepage() {
   // Never installed under reduced motion.
   useEffect(() => {
     if (reduced) return;
-    const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.35, smoothWheel: true });
     let raf = 0;
     const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
     raf = requestAnimationFrame(loop);

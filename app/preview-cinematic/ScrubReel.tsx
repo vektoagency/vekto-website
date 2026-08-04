@@ -109,22 +109,8 @@ export default function ScrubReel({
     };
     size();
 
-    let shown = -1;
-    const draw = () => {
-      rafRef.current = 0;
-      const p = Math.max(0, Math.min(1, progressRef.current));
-      const want = Math.round(p * (frames.count - 1));
-      // Nearest decoded frame, so an in-flight sequence scrubs against what
-      // it has instead of blanking.
-      let idx = -1;
-      for (let d = 0; d < frames.count; d++) {
-        if (imgsRef.current[want - d]) { idx = want - d; break; }
-        if (imgsRef.current[want + d]) { idx = want + d; break; }
-      }
-      if (idx < 0 || idx === shown) return;
-      const img = imgsRef.current[idx];
-      if (!img) return;
-
+    const drawOne = (img: HTMLImageElement, alpha: number) => {
+      ctx.globalAlpha = alpha;
       if (!cover) {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       } else {
@@ -134,7 +120,45 @@ export default function ScrubReel({
         const dh = frames.h * s;
         ctx.drawImage(img, (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh);
       }
-      shown = idx;
+      ctx.globalAlpha = 1;
+    };
+
+    // Nearest decoded frame, so an in-flight sequence scrubs against what it
+    // has instead of blanking.
+    const nearest = (want: number) => {
+      for (let d = 0; d < frames.count; d++) {
+        if (imgsRef.current[want - d]) return want - d;
+        if (imgsRef.current[want + d]) return want + d;
+      }
+      return -1;
+    };
+
+    let shown = -1;
+    const draw = () => {
+      rafRef.current = 0;
+      const p = Math.max(0, Math.min(1, progressRef.current));
+      // Fractional playhead: i0 is the base frame, mix how far toward the
+      // next one the scroll sits. Drawing i0 opaque and i1 at `mix` alpha
+      // turns the residual inter-frame jump into a short dissolve — reads as
+      // motion blur instead of a step.
+      const f = p * (frames.count - 1);
+      const i0 = Math.floor(f);
+      const mix = f - i0;
+
+      const base = nearest(i0);
+      if (base < 0) return;
+      // Skip redraws below a per-mille change of playhead position.
+      const key = Math.round(f * 32);
+      if (key === shown) return;
+
+      const img0 = imgsRef.current[base];
+      if (!img0) return;
+      drawOne(img0, 1);
+
+      const next = base + 1 < frames.count ? imgsRef.current[base + 1] : null;
+      if (next && base === i0 && mix > 0.02) drawOne(next, mix);
+
+      shown = key;
     };
 
     scheduleRef.current = () => {

@@ -11,7 +11,12 @@
 // page component reads everything from here.
 // ============================================================================
 
-export const FRAME_COUNT = 288; // 6 clips × 8s × 6fps extraction
+// 6 clips × 8s × 12fps. Doubled from the first cut's 6fps: at 6fps adjacent
+// frames were 166ms of camera motion apart, and no amount of smooth scrolling
+// hides a jump that size — the scrub read as steppy. 12fps halves the delta;
+// the canvas additionally crossfades between neighbouring frames so the
+// remaining gap reads as motion blur rather than a step.
+export const FRAME_COUNT = 577;
 
 // Two extractions of the same 288 frames. The film runs full-bleed, so the
 // desktop set is sized for desktop viewports (1600w, q82 ≈ 6MB total) — the
