@@ -633,172 +633,154 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         overflow: "hidden",
       }}
     >
-      {/* MAIN — 2 columns on desktop: content left + news sidebar right.
-          Content aligns to TOP of the flex-1 area (flex-1 grows to
-          fill the space between top of section and the pinned scroll
-          cue). Right padding is extra on lg+ so the sidebar doesn't
-          collide with the fixed right-rail funnel indicator (which
-          sits at right-3 with a text label that extends leftward). */}
+      {/* MAIN — single column, full width. No more sidebar competing
+          with the headline. Headline gets to be big and impactful. */}
       <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
-        <div className="grid grid-cols-12 gap-6 md:gap-10 w-full">
-          {/* LEFT — main content, 9/12 on xl (with sidebar), full width below */}
-          <div className="col-span-12 xl:col-span-9 flex flex-col min-w-0">
-            <div
-              className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
-              style={{ fontFamily: "var(--font-brutal-pixel)" }}
-            >
-              {t.eyebrow}
-            </div>
-
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-5 md:mb-6 self-start"
-              style={{
-                background: "#0d0d0d",
-                color: "#f4f4f4",
-                border: "1.5px solid",
-                borderImage: `${SILVER_H} 1`,
-                boxShadow: "4px 4px 0 0 #0d0d0d",
-              }}
-            >
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-              {t.pill}
-            </div>
-
-            <h1
-              className="font-black tracking-[-0.03em] max-w-full"
-              style={{
-                fontSize: "clamp(40px, 6vw, 92px)",
-                lineHeight: 0.94,
-                overflowWrap: "break-word",
-              }}
-            >
-              <span className="block whitespace-nowrap">{t.headline1}</span>
-              <span className="block whitespace-nowrap">
-                {t.headline2Prefix}{" "}
-                <span
-                  className="italic"
-                  style={{
-                    background: GRAPHITE_H,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  {t.headline2Highlight}
-                </span>
-              </span>
-            </h1>
-
-            {/* Dual CTAs directly under headline */}
-            <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
-              <a
-                href="#stage-07"
-                className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                style={{
-                  background: "#0d0d0d",
-                  color: "#f4f4f4",
-                  boxShadow: "5px 5px 0 0 #8a8a8a",
-                }}
-              >
-                <span>→</span>
-                {t.ctaPrimary}
-              </a>
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                style={{
-                  background: WORDMARK_METAL,
-                  color: "#0d0d0d",
-                  boxShadow: "5px 5px 0 0 #0d0d0d",
-                }}
-              >
-                <span>▶</span>
-                {t.ctaSecondary}
-              </Link>
-            </div>
-
-            {/* Typewriter caption */}
-            <div
-              className="mt-6 md:mt-8 flex items-center gap-3 font-bold uppercase text-xs md:text-sm tracking-[0.25em]"
-              style={{
-                opacity: inView ? 0.75 : 0,
-                transition: "opacity 400ms ease",
-                minHeight: "1.4em",
-              }}
-            >
-              <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#0d0d0d" }} />
-              <span>{typed}</span>
-              <span
-                className="inline-block h-[0.85em] w-[8px] animate-pulse"
-                style={{ background: "#0d0d0d" }}
-              />
-            </div>
+        <div className="flex flex-col w-full min-w-0">
+          <div
+            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
+            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          >
+            {t.eyebrow}
           </div>
 
-          {/* RIGHT SIDEBAR — visible ONLY on xl (1280+). Below that
-              the content column takes full width (col-span-12) so the
-              headline can breathe without competing with the sidebar. */}
-          <aside
-            className="hidden xl:flex xl:col-span-3 flex-col border-2 border-black self-start"
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-5 md:mb-6 self-start"
             style={{
               background: "#0d0d0d",
               color: "#f4f4f4",
-              boxShadow: "6px 6px 0 0 #8a8a8a",
+              border: "1.5px solid",
+              borderImage: `${SILVER_H} 1`,
+              boxShadow: "4px 4px 0 0 #0d0d0d",
             }}
           >
-            {/* Header — one line, subtle LIVE indicator */}
-            <div
-              className="px-5 py-3 flex items-center justify-between border-b"
-              style={{ borderColor: "rgba(244,244,244,0.15)" }}
-            >
-              <span
-                className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-80"
-                style={{ fontFamily: "var(--font-brutal-pixel)" }}
-              >
-                {t.newsTitle}
-              </span>
-              <span
-                className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.3em] opacity-60"
-                style={{ fontFamily: "var(--font-brutal-pixel)" }}
-              >
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                LIVE
-              </span>
-            </div>
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            {t.pill}
+          </div>
 
-            {/* Items — flat, generous space, no dividers */}
-            <div className="px-5 py-5 space-y-5">
-              {t.news.slice(0, 3).map((item) => (
-                <div key={item.d}>
-                  <div
-                    className="text-[10px] tabular-nums opacity-50 mb-1.5"
-                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                  >
-                    {item.d}
-                  </div>
-                  <div className="text-[13px] leading-[1.45] font-medium">
-                    {item.n}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </aside>
+          <h1
+            className="font-black tracking-[-0.03em] max-w-full"
+            style={{
+              fontSize: "clamp(48px, 8vw, 132px)",
+              lineHeight: 0.94,
+              overflowWrap: "break-word",
+            }}
+          >
+            <span className="block whitespace-nowrap">{t.headline1}</span>
+            <span className="block whitespace-nowrap">
+              {t.headline2Prefix}{" "}
+              <span
+                className="italic"
+                style={{
+                  background: GRAPHITE_H,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                {t.headline2Highlight}
+              </span>
+            </span>
+          </h1>
+
+          {/* Dual CTAs directly under headline */}
+          <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
+            <a
+              href="#stage-07"
+              className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              style={{
+                background: "#0d0d0d",
+                color: "#f4f4f4",
+                boxShadow: "5px 5px 0 0 #8a8a8a",
+              }}
+            >
+              <span>→</span>
+              {t.ctaPrimary}
+            </a>
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              style={{
+                background: WORDMARK_METAL,
+                color: "#0d0d0d",
+                boxShadow: "5px 5px 0 0 #0d0d0d",
+              }}
+            >
+              <span>▶</span>
+              {t.ctaSecondary}
+            </Link>
+          </div>
+
+          {/* Typewriter caption */}
+          <div
+            className="mt-6 md:mt-8 flex items-center gap-3 font-bold uppercase text-xs md:text-sm tracking-[0.25em]"
+            style={{
+              opacity: inView ? 0.75 : 0,
+              transition: "opacity 400ms ease",
+              minHeight: "1.4em",
+            }}
+          >
+            <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#0d0d0d" }} />
+            <span>{typed}</span>
+            <span
+              className="inline-block h-[0.85em] w-[8px] animate-pulse"
+              style={{ background: "#0d0d0d" }}
+            />
+          </div>
         </div>
       </div>
 
-      {/* BOTTOM — scroll cue pinned to viewport bottom */}
-      <div
-        className="px-6 md:px-14 pb-6 md:pb-8 max-w-[1500px] mx-auto w-full"
-        style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
-      >
-        <div className="flex items-center gap-4">
-          <div
-            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]"
+      {/* BOTTOM — news ticker + scroll cue.
+          News is a thin horizontal strip integrated with the hero
+          footer. Reads like a broadcast bottom-line, doesn't compete
+          with the headline. Hidden on small screens where space is
+          tight — only visible md and up. */}
+      <div className="max-w-[1500px] mx-auto w-full">
+        {/* News ticker strip */}
+        <div
+          className="hidden md:flex items-center gap-4 px-6 md:px-14 lg:pr-24 xl:pr-32 py-3 border-t border-black/20 text-[11px] uppercase tracking-[0.2em] overflow-hidden"
+          style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
+        >
+          <span
+            className="flex items-center gap-1.5 shrink-0 opacity-70"
             style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
-            {t.scrollCue}
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            {t.newsTitle}
+          </span>
+          <span className="opacity-30">/</span>
+          <div className="flex-1 flex items-center gap-6 min-w-0 overflow-hidden whitespace-nowrap">
+            {t.news.slice(0, 3).map((item, i) => (
+              <div key={item.d} className="flex items-center gap-3 shrink-0">
+                <span
+                  className="opacity-50 tabular-nums"
+                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                >
+                  {item.d}
+                </span>
+                <span className="font-bold normal-case tracking-normal text-[13px]">
+                  {item.n}
+                </span>
+                {i < 2 && <span className="opacity-25 ml-3">✦</span>}
+              </div>
+            ))}
           </div>
-          <div className="flex-1 h-[2px] max-w-32 border-t-2 border-dashed border-black" />
+        </div>
+
+        {/* Scroll cue pinned to viewport bottom */}
+        <div
+          className="px-6 md:px-14 pb-6 md:pb-8"
+          style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
+        >
+          <div className="flex items-center gap-4">
+            <div
+              className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]"
+              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            >
+              {t.scrollCue}
+            </div>
+            <div className="flex-1 h-[2px] max-w-32 border-t-2 border-dashed border-black" />
+          </div>
         </div>
       </div>
     </section>
