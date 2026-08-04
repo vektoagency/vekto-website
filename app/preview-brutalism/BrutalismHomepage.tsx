@@ -22,6 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { sendContactEmail } from "../actions/contact";
 
 // ============================================================================
 // PALETTE
@@ -619,25 +620,29 @@ export default function BrutalismHomepage() {
   const searchParams = useSearchParams();
   const bare = searchParams?.get("bare") === "1";
 
-  // Action-oriented nav — real destinations, not stage-anchors.
-  // Portfolio + Cases browse work, Brief captures a warmer lead than
-  // the raw email address, Book-a-call is the primary conversion.
-  // The 9-stage in-page funnel stays fully browsable via scroll +
-  // the right-rail funnel indicator.
+  // Action-oriented nav — real destinations. Case studies + Portfolio
+  // + Work show past output, Brief captures a warmer lead than raw
+  // email, Book-a-call is the primary conversion. The 9-stage in-page
+  // funnel stays fully browsable via scroll + right-rail indicator.
   const NAV_LINKS =
     lang === "bg"
       ? [
-          { label: "Портфолио", href: "/portfolio",     external: true  },
-          { label: "Кейсове",   href: "#stage-04",      external: false },
-          { label: "Анкета",    href: "/brief",         external: true  },
+          { label: "Работа",       href: "/work",           external: true  },
+          { label: "Портфолио",    href: "/portfolio",      external: true  },
+          { label: "Кейс стъдита", href: "/case-studies",   external: true  },
+          { label: "Анкета",       href: "/brief",          external: true  },
         ]
       : [
-          { label: "Portfolio", href: "/portfolio",     external: true  },
-          { label: "Cases",     href: "#stage-04",      external: false },
-          { label: "Brief",     href: "/brief",         external: true  },
+          { label: "Work",          href: "/work",          external: true  },
+          { label: "Portfolio",     href: "/portfolio",     external: true  },
+          { label: "Case Studies",  href: "/case-studies",  external: true  },
+          { label: "Brief",         href: "/brief",         external: true  },
         ];
 
   const primaryCtaLabel = lang === "bg" ? "Резервирай разговор" : "Book a call";
+  const [bookOpen, setBookOpen] = useState(false);
+  const openBook = useCallback(() => setBookOpen(true), []);
+  const closeBook = useCallback(() => setBookOpen(false), []);
 
   return (
     <div
@@ -768,9 +773,12 @@ export default function BrutalismHomepage() {
                 )
               ))}
             </div>
-            {/* Right: primary CTA button — jet-black plate, silver shadow */}
-            <Link
-              href="/start"
+            {/* Right: primary CTA button — jet-black plate, silver shadow.
+                Opens the brutalist contact modal (same behaviour as the
+                main site's CTAs: phone / WhatsApp / email / lead form). */}
+            <button
+              type="button"
+              onClick={openBook}
               className="inline-flex items-center gap-2 px-4 py-2 border-2 border-black uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{
                 background: "#0d0d0d",
@@ -779,7 +787,7 @@ export default function BrutalismHomepage() {
               }}
             >
               → {primaryCtaLabel}
-            </Link>
+            </button>
           </div>
         </div>
       )}
@@ -818,7 +826,7 @@ export default function BrutalismHomepage() {
         })}
       </div>
 
-      <StageHook  targetRef={s1} t={t.stage1} clock={clock} />
+      <StageHook  targetRef={s1} t={t.stage1} clock={clock} openBook={openBook} />
       <HazardStrip />
       <StageTruth targetRef={s2} t={t.stage2} />
       <HazardStrip />
@@ -834,7 +842,7 @@ export default function BrutalismHomepage() {
       <HazardStrip />
       <StageQualify targetRef={s6} t={t.stage6} />
       <HazardStrip />
-      <StageAsk   targetRef={s7} t={t.stage7} />
+      <StageAsk   targetRef={s7} t={t.stage7} openBook={openBook} />
 
       <style jsx global>{`
         @keyframes marquee-anim {
@@ -846,6 +854,310 @@ export default function BrutalismHomepage() {
         }
         html { scroll-behavior: smooth; }
       `}</style>
+
+      {/* Brutalist contact modal — same behaviour as the main site
+          (email/phone/WhatsApp/lead form), styled to match this page.
+          Opens when any 'Book a call' button fires openBook(). */}
+      <BookModal open={bookOpen} onClose={closeBook} lang={lang} />
+    </div>
+  );
+}
+
+// ============================================================================
+// BOOK MODAL — brutalist contact modal
+// Same shape as the main site's ContactModal (phone / WhatsApp / email /
+// lead form → sendContactEmail server action), but rendered in brutalist
+// language so it stays consistent with the rest of the preview.
+// ============================================================================
+function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void; lang: Lang }) {
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!open) return;
+    setSent(false);
+    setError("");
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open, onClose]);
+
+  const bg = lang === "bg";
+  const s = bg
+    ? {
+        title: "РЕЗЕРВИРАЙ РАЗГОВОР",
+        subtitle: "3 БЪРЗИ ОПЦИИ — ИЗБЕРИ КОЯ ТИ ПАСВА",
+        call: "ОБАДИ СЕ", callSub: "+359 88 225 1474",
+        wa: "WHATSAPP", waSub: "МОМЕНТАЛЕН ЧАТ",
+        email: "ИМЕЙЛ", emailSub: "vektoagency@gmail.com",
+        or: "ИЛИ ОСТАВИ ЗАЯВКА",
+        name: "Име", namePh: "Иван Иванов",
+        phone: "Телефон", phonePh: "+359 88 000 0000",
+        emailField: "Имейл", emailPh: "ти@brand.bg",
+        company: "Бранд", companyPh: "Име на бранда или сайт",
+        message: "Кратко за проекта", messagePh: "Правя e-com, искам да пусна кампания...",
+        submit: "→ ПРАТИ ЗАЯВКА",
+        submitting: "ПРАЩАМЕ...",
+        sent: "ПОЛУЧИХМЕ ЗАЯВКАТА",
+        sentSub: "Отговаряме до 24 часа.",
+        errorMsg: "Нещо се обърка. Опитай пак.",
+      }
+    : {
+        title: "BOOK A CALL",
+        subtitle: "3 QUICK OPTIONS — PICK WHAT WORKS",
+        call: "PHONE", callSub: "+359 88 225 1474",
+        wa: "WHATSAPP", waSub: "INSTANT CHAT",
+        email: "EMAIL", emailSub: "vektoagency@gmail.com",
+        or: "OR SEND A BRIEF",
+        name: "Name", namePh: "Jane Doe",
+        phone: "Phone", phonePh: "+1 000 000 0000",
+        emailField: "Email", emailPh: "you@brand.com",
+        company: "Brand", companyPh: "Brand name or website",
+        message: "Short project note", messagePh: "We run e-com, want to launch a campaign...",
+        submit: "→ SEND BRIEF",
+        submitting: "SENDING...",
+        sent: "GOT IT",
+        sentSub: "We reply within 24 hours.",
+        errorMsg: "Something went wrong. Try again.",
+      };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    const formData = new FormData(e.currentTarget);
+    const result = await sendContactEmail(formData);
+    setLoading(false);
+    if (result.success) setSent(true);
+    else setError(s.errorMsg);
+  };
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div aria-hidden className="absolute inset-0" style={{ background: "rgba(0,0,0,0.82)" }} />
+
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-hidden flex flex-col border-2 border-black"
+        style={{ background: "#ebe8e0", boxShadow: "10px 10px 0 0 #8a8a8a" }}
+      >
+        {/* Header — dark plate */}
+        <div
+          className="flex items-start justify-between border-b-2 border-black px-5 md:px-7 py-4"
+          style={{ background: "#0d0d0d", color: "#f4f4f4" }}
+        >
+          <div>
+            <div
+              className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-70 mb-1 flex items-center gap-1.5"
+              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            >
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              {s.subtitle}
+            </div>
+            <h2
+              className="font-black text-lg md:text-2xl uppercase tracking-tight"
+              style={{
+                background: SILVER_H,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {s.title}
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="w-9 h-9 md:w-10 md:h-10 border-2 border-white font-black text-lg leading-none flex items-center justify-center transition-colors hover:bg-white hover:text-black flex-shrink-0"
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto p-5 md:p-7">
+          {sent ? (
+            <div
+              className="text-center py-12 px-6 border-2 border-black"
+              style={{
+                background: SILVER,
+                color: "#0d0d0d",
+                boxShadow: "6px 6px 0 0 #0d0d0d",
+              }}
+            >
+              <div className="text-4xl mb-4">✓</div>
+              <div className="font-black text-xl md:text-2xl uppercase tracking-tight mb-2">
+                {s.sent}
+              </div>
+              <div
+                className="text-xs uppercase tracking-[0.25em] opacity-70"
+                style={{ fontFamily: "var(--font-brutal-pixel)" }}
+              >
+                {s.sentSub}
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* 3 quick action chips */}
+              <div className="grid grid-cols-3 gap-2 md:gap-3 mb-6">
+                <QuickAction href="tel:+359882251474" glyph="☎" label={s.call} sub={s.callSub} />
+                <QuickAction href="https://wa.me/359882251474" glyph="◉" label={s.wa} sub={s.waSub} target="_blank" />
+                <QuickAction href="mailto:vektoagency@gmail.com" glyph="✉" label={s.email} sub={s.emailSub} />
+              </div>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3 my-6">
+                <div className="flex-1 border-t-2 border-dashed border-black opacity-30" />
+                <div
+                  className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-60"
+                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                >
+                  {s.or}
+                </div>
+                <div className="flex-1 border-t-2 border-dashed border-black opacity-30" />
+              </div>
+
+              {/* Lead form */}
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <FormField name="name" label={s.name} ph={s.namePh} required />
+                  <FormField name="phone" label={s.phone} ph={s.phonePh} required type="tel" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <FormField name="email" label={s.emailField} ph={s.emailPh} required type="email" />
+                  <FormField name="company" label={s.company} ph={s.companyPh} required />
+                </div>
+                <FormField name="message" label={s.message} ph={s.messagePh} required textarea />
+
+                {error && (
+                  <div className="text-[12px] font-bold uppercase tracking-widest p-3 border-2 border-red-600 text-red-600 bg-red-50">
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full border-2 border-black py-4 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  style={{
+                    background: "#0d0d0d",
+                    color: "#f4f4f4",
+                    boxShadow: "5px 5px 0 0 #8a8a8a",
+                  }}
+                >
+                  {loading ? s.submitting : s.submit}
+                </button>
+              </form>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QuickAction({
+  href,
+  glyph,
+  label,
+  sub,
+  target,
+}: {
+  href: string;
+  glyph: string;
+  label: string;
+  sub: string;
+  target?: string;
+}) {
+  return (
+    <a
+      href={href}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
+      className="flex flex-col items-center gap-1 border-2 border-black py-3 md:py-4 px-2 text-center transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+      style={{
+        background: "#0d0d0d",
+        color: "#f4f4f4",
+        boxShadow: "3px 3px 0 0 #8a8a8a",
+      }}
+    >
+      <span className="text-xl md:text-2xl" style={{
+        background: SILVER_H,
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+      }}>{glyph}</span>
+      <span
+        className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em]"
+        style={{ fontFamily: "var(--font-brutal-pixel)" }}
+      >
+        {label}
+      </span>
+      <span
+        className="text-[8px] md:text-[9px] opacity-60 tabular-nums hidden md:block"
+        style={{ fontFamily: "var(--font-brutal-pixel)" }}
+      >
+        {sub}
+      </span>
+    </a>
+  );
+}
+
+function FormField({
+  name,
+  label,
+  ph,
+  type = "text",
+  required,
+  textarea,
+}: {
+  name: string;
+  label: string;
+  ph: string;
+  type?: string;
+  required?: boolean;
+  textarea?: boolean;
+}) {
+  return (
+    <div>
+      <label
+        className="block text-[10px] font-bold uppercase tracking-[0.25em] mb-1.5 opacity-70"
+        style={{ fontFamily: "var(--font-brutal-pixel)" }}
+      >
+        {label}
+      </label>
+      {textarea ? (
+        <textarea
+          name={name}
+          required={required}
+          placeholder={ph}
+          rows={3}
+          className="w-full border-2 border-black bg-white px-3 py-2 text-sm resize-none focus:outline-none focus:shadow-[3px_3px_0_0_#0d0d0d]"
+        />
+      ) : (
+        <input
+          type={type}
+          name={name}
+          required={required}
+          placeholder={ph}
+          className="w-full border-2 border-black bg-white px-3 py-2 text-sm focus:outline-none focus:shadow-[3px_3px_0_0_#0d0d0d]"
+        />
+      )}
     </div>
   );
 }
@@ -871,7 +1183,7 @@ function HazardStrip() {
 // ============================================================================
 // STAGE 01 · HOOK
 // ============================================================================
-function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"]; clock: string }) {
+function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"]; clock: string; openBook: () => void }) {
   const p = useScrollProgress(targetRef);
   const inView = useInView(targetRef, 0.2);
 
@@ -973,8 +1285,9 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
 
           {/* Dual CTAs directly under headline */}
           <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
-            <a
-              href="#stage-09"
+            <button
+              type="button"
+              onClick={openBook}
               className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{
                 background: "#0d0d0d",
@@ -984,7 +1297,7 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
             >
               <span>→</span>
               {t.ctaPrimary}
-            </a>
+            </button>
             <Link
               href="/portfolio"
               className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
@@ -1854,7 +2167,7 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
 // ============================================================================
 // STAGE 07 · ASK
 // ============================================================================
-function StageAsk({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage7"] }) {
+function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage7"]; openBook: () => void }) {
   const inView = useInView(targetRef, 0.35);
   return (
     <section
@@ -1903,8 +2216,9 @@ function StageAsk({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | n
             </span>
           </h2>
 
-          <a
-            href="mailto:vektoagency@gmail.com"
+          <button
+            type="button"
+            onClick={openBook}
             className="group inline-flex items-center gap-4 px-8 md:px-14 py-5 md:py-8 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
               background: SILVER,
@@ -1919,7 +2233,7 @@ function StageAsk({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | n
             <span className="font-black text-xl md:text-3xl transition-transform group-hover:translate-x-2">
               →
             </span>
-          </a>
+          </button>
 
           <div
             className="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.25em] opacity-70"
