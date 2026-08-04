@@ -72,7 +72,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
-      pill: "НА ЖИВО",
+      pill: "AI GROWTH AGENCY · EST. MMXXIV",
       headline1: "ТВОЯТ ПАРТНЬОР",
       headline2Prefix: "ЗА",
       headline2Highlight: "РАСТЕЖ ОНЛАЙН.",
@@ -250,7 +250,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
-      pill: "LIVE",
+      pill: "AI GROWTH AGENCY · EST. MMXXIV",
       headline1: "YOUR PARTNER",
       headline2Prefix: "FOR",
       headline2Highlight: "ONLINE GROWTH.",
@@ -1238,9 +1238,6 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
           >
             <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             {t.pill}
-            <span className="opacity-40">·</span>
-            <span className="opacity-70">EET</span>
-            <span className="tabular-nums">{clock}</span>
           </div>
 
           <h1
