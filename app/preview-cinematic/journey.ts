@@ -16,19 +16,21 @@
 // hides a jump that size — the scrub read as steppy. 12fps halves the delta;
 // the canvas additionally crossfades between neighbouring frames so the
 // remaining gap reads as motion blur rather than a step.
-export const FRAME_COUNT = 577;
+export const FRAME_COUNT = 576;
 
 // Two extractions of the same 288 frames. The film runs full-bleed, so the
 // desktop set is sized for desktop viewports (1600w, q82 ≈ 6MB total) — the
 // first cut shipped 960w/q55 everywhere and read visibly soft stretched
 // across a 1920px screen. Phones keep the light set: same journey, a third
 // of the bytes.
-// v2 paths: the chain was regenerated (identity refs + video-reference
-// continuity), and versioned directories guarantee no browser or CDN cache
-// can ever serve a frame from the previous chain.
+// v3 paths: the chain was regenerated on Gemini Omni with a FIRST_FRAME
+// anchor per segment (previous segment's exact last frame), so every zone
+// boundary is frame-identical instead of stitched in post. Versioned
+// directories guarantee no browser or CDN cache can ever serve a frame from
+// a previous chain.
 export const FRAME_SETS = {
-  hd: { dir: "/scrub/v2-hd", count: FRAME_COUNT, w: 1280, h: 720 },
-  sd: { dir: "/scrub/v2",    count: FRAME_COUNT, w: 960,  h: 540 },
+  hd: { dir: "/scrub/v3-hd", count: FRAME_COUNT, w: 1280, h: 720 },
+  sd: { dir: "/scrub/v3",    count: FRAME_COUNT, w: 960,  h: 540 },
 } as const;
 
 // Static fallback (reduced motion) draws stills from the light set.
