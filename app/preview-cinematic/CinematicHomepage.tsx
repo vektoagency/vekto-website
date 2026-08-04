@@ -37,6 +37,8 @@ const BONE = "#ebe8e0";
 const JET = "#0d0d0d";
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
+const GRAPHITE_IN =
+  "linear-gradient(90deg, #6d6d6d 0%, #2a2a2a 30%, #5a5a5a 58%, #232323 100%)";
 const WORDMARK_METAL =
   "linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 40%, #7a7a7a 70%, #969696 100%)";
 
@@ -54,6 +56,22 @@ const WORK = [
   { brand: "NUTRIFITT",     region: "US", src: "/videos/nutrifitt-carnage-480p.mp4",  poster: "/scrub/work/nutrifitt-carnage.webp" },
   { brand: "VEKTO",         region: "BG", src: "/videos/vekto-hf-spot-480p.mp4",      poster: "/scrub/work/vekto-hf-spot.webp" },
 ] as const;
+
+// The 12 named brands from the brutalism roster — same logos, same regions.
+const ROSTER = [
+  { name: "MEN'S CARE",    region: "BG" as const, logo: "/images/logo-menscare.png" },
+  { name: "DUSQ",          region: "US" as const, logo: "/images/logo-dusq.webp" },
+  { name: "PARFEN",        region: "BG" as const, logo: "/images/logo-parfen.webp" },
+  { name: "ISOSPORT",      region: "BG" as const, logo: "/images/logo-isosport.webp" },
+  { name: "BIOTICA",       region: "BG" as const, logo: "/images/logo-biotica.webp" },
+  { name: "BULTEX",        region: "BG" as const, logo: "/images/logo-bultex.png" },
+  { name: "НЕДЕЛЯ",        region: "BG" as const, logo: "/images/logo-nedelya.svg" },
+  { name: "ANOMALY",       region: "US" as const, logo: "/images/logo-anomaly.webp" },
+  { name: "GOURMET HOUSE", region: "BG" as const, logo: "/images/logo-gourmethouse.png" },
+  { name: "ETHAN'S",       region: "US" as const, logo: "/images/logo-ethans.webp" },
+  { name: "LUCKY ENERGY",  region: "US" as const, logo: "/images/logo-lucky.webp" },
+  { name: "NUTRIFITT",     region: "US" as const, logo: "/images/logo-nutrifitt.webp" },
+];
 
 // ---------------------------------------------------------------------------
 // HOOKS
@@ -171,6 +189,12 @@ export default function CinematicHomepage() {
       )}
 
       <HazardStrip />
+      <Roster t={t} />
+      <HazardStrip />
+      <Process t={t} />
+      <HazardStrip />
+      <Fit t={t} />
+      <HazardStrip />
       <Work t={t} />
       <HazardStrip />
       <EndCard t={t} />
@@ -281,54 +305,56 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           </span>
         </div>
 
-        {/* ZONE 1 · VAULT — the hero. Left-anchored over the dark studio. */}
-        <ZoneOverlay p={p} z={Z.vault} className="items-start justify-center text-left">
+        {/* ZONE 1 · HOOK — hero on a bone plate over the dark vault. */}
+        <ZoneOverlay p={p} z={Z.vault} className="items-start justify-center">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-            <div className="max-w-3xl">
-              <div className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
-                {t.zones.vault.kicker}
-              </div>
-              <h1 className="font-black tracking-[-0.03em]" style={{ fontSize: "clamp(34px, 5vw, 88px)", lineHeight: 0.94, color: "#f4f4f4" }}>
+            <Plate tone="bone" className="max-w-3xl p-6 md:p-9">
+              <KickerChip text={t.zones.vault.kicker} />
+              <h1 className="font-black tracking-[-0.03em] mt-4" style={{ fontSize: "clamp(32px, 4.6vw, 78px)", lineHeight: 0.94, color: JET }}>
                 <span className="block">{t.zones.vault.h1a}</span>
                 <span className="block">
                   {t.zones.vault.h1b}{" "}
-                  <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  <span className="italic" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                     {t.zones.vault.h1hi}
                   </span>
                 </span>
               </h1>
-              <p className="mt-5 text-sm md:text-base uppercase tracking-[0.25em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
-                {t.zones.vault.sub}
-              </p>
-              <div className="flex flex-wrap gap-3 mt-8 pointer-events-auto">
+              <div className="flex flex-wrap gap-3 mt-7 pointer-events-auto">
                 <Link
                   href="/brief"
-                  className="inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-4 border-2 font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                  style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4", boxShadow: "5px 5px 0 0 rgba(138,138,138,0.9)" }}
+                  className="inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                  style={{ background: JET, color: "#f4f4f4", boxShadow: "5px 5px 0 0 #8a8a8a" }}
                 >
                   <span aria-hidden>→</span>
                   {t.zones.vault.ctaPrimary}
                 </Link>
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 font-black uppercase text-sm md:text-base tracking-[0.15em] transition-colors hover:bg-white hover:text-black"
-                  style={{ background: "transparent", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.7)" }}
+                  className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-colors hover:bg-black hover:text-[#ebe8e0]"
+                  style={{ background: "transparent", color: JET }}
                 >
                   <span aria-hidden>▶</span>
                   {t.zones.vault.ctaSecondary}
                 </Link>
               </div>
-            </div>
+              <div className="flex items-stretch flex-wrap gap-2 mt-6">
+                <span className="inline-flex items-center shrink-0 text-[11px] font-bold uppercase tracking-[0.3em] px-2.5 py-2 border-2 border-black" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
+                  {t.zones.vault.proofTitle}
+                </span>
+                {t.zones.vault.proof.map((item) => (
+                  <span key={item.brand} className="inline-flex items-baseline gap-2 shrink-0 px-3 py-1.5 border-2 border-black" style={{ background: "#ebe8e0" }}>
+                    <span className="font-black text-base tabular-nums leading-none" style={{ color: JET }}>{item.metric}</span>
+                    <span className="text-[11px] uppercase tracking-[0.15em] opacity-70 leading-none" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>{item.brand}</span>
+                  </span>
+                ))}
+              </div>
+            </Plate>
           </div>
-          {/* Scroll cue — pinned to the bottom of the first zone so the
-              runway reads as an invitation, not a stuck page. */}
+          {/* Scroll cue — the runway reads as an invitation, not a stuck page. */}
           <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-            <div
-              className="flex items-center gap-3 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.35em]"
-              style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4", textShadow: "0 0 6px rgba(13,13,13,0.9)" }}
-            >
+            <div className="flex items-center gap-3 px-3 py-2 border-2 text-[11px] font-bold uppercase tracking-[0.35em]" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4", background: "rgba(13,13,13,0.72)", borderColor: "rgba(244,244,244,0.5)" }}>
               <span aria-hidden>▼</span>
-              <span>{lang === "bg" ? "СКРОЛНИ" : "SCROLL"}</span>
+              <span>{t.scrollCue}</span>
               <span className="relative w-24 h-[2px]" style={{ background: "rgba(244,244,244,0.3)" }}>
                 <span className="absolute left-0 top-0 h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />
               </span>
@@ -336,103 +362,130 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           </div>
         </ZoneOverlay>
 
-        {/* ZONE 2 · IGNITION */}
+        {/* ZONE 2 · WHY — the agitation quote, brutalism stage 02. */}
         <ZoneOverlay p={p} z={Z.ignition} className="items-start justify-center">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-            <div className="max-w-2xl">
-              <Kicker text={t.zones.ignition.kicker} />
-              <div className="font-black uppercase tracking-[-0.02em]" style={{ fontSize: "clamp(28px, 3.8vw, 64px)", lineHeight: 1, color: "#f4f4f4" }}>
-                {t.zones.ignition.line1}
+            <Plate tone="bone" className="max-w-3xl p-6 md:p-9">
+              <KickerChip text={t.zones.why.kicker} />
+              <blockquote className="font-black tracking-[-0.02em] mt-4" style={{ fontSize: "clamp(24px, 3vw, 48px)", lineHeight: 1.06, color: JET }}>
+                {t.zones.why.quote}
+              </blockquote>
+              <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.25em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
+                {t.zones.why.attribution}
               </div>
-              <p className="mt-4 text-base md:text-xl font-medium opacity-85" style={{ fontFamily: "var(--cine-comic)", color: "#f4f4f4" }}>
-                {t.zones.ignition.line2}
-              </p>
-            </div>
+              <div className="mt-6 font-black uppercase tracking-tight" style={{ fontSize: "clamp(20px, 2.4vw, 36px)", color: JET }}>
+                {t.zones.why.response}{" "}
+                <span className="italic" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  {t.zones.why.responseHi}
+                </span>
+              </div>
+            </Plate>
           </div>
         </ZoneOverlay>
 
-        {/* ZONE 3 · SCREEN */}
-        <ZoneOverlay p={p} z={Z.screen} className="items-end justify-center pb-24">
+        {/* ZONE 3 · FOCUS — the four rooms, brutalism stage 03, staggered. */}
+        <ZoneOverlay p={p} z={Z.screen} className="items-start justify-center">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-            <div className="max-w-2xl ml-auto text-right">
-              <Kicker text={t.zones.screen.kicker} align="right" />
-              <div className="font-black uppercase tracking-[-0.02em]" style={{ fontSize: "clamp(26px, 3.4vw, 56px)", lineHeight: 1.02, color: "#f4f4f4" }}>
-                {t.zones.screen.line1}
-              </div>
-              <p className="mt-4 text-base md:text-lg font-medium opacity-85" style={{ fontFamily: "var(--cine-comic)", color: "#f4f4f4" }}>
-                {t.zones.screen.line2} <span aria-hidden>↓</span>
-              </p>
-            </div>
-          </div>
-        </ZoneOverlay>
-
-        {/* ZONE 4 · FEED — kinetic words, one per third of the zone. */}
-        <FeedOverlay p={p} z={Z.feed} kicker={t.zones.feed.kicker} words={t.zones.feed.words} />
-
-        {/* ZONE 5 · CURVE — the numbers ride the rising trail. */}
-        <ZoneOverlay p={p} z={Z.curve} className="items-start justify-center">
-          <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-            <Kicker text={t.zones.curve.kicker} dark />
-            <div className="flex flex-wrap gap-4 md:gap-6 mt-2">
-              {t.zones.curve.proof.map((item, i) => {
-                const local = zoneLocal(p, Z.curve);
-                const on = local > 0.2 + i * 0.18;
+            <KickerChip text={t.zones.focus.kicker} standalone />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-4 max-w-5xl">
+              {t.zones.focus.rooms.map((r, i) => {
+                const local = zoneLocal(p, Z.screen);
+                const on = local > 0.12 + i * 0.14;
                 return (
-                  <div
-                    key={item.brand}
-                    className="border-2 border-black px-5 py-4"
+                  <Plate
+                    key={r.title}
+                    tone="bone"
+                    className="p-4 md:p-5"
                     style={{
-                      background: "rgba(235,232,224,0.92)",
-                      boxShadow: "6px 6px 0 0 #0d0d0d",
                       opacity: on ? 1 : 0,
                       transform: on ? "translateY(0)" : "translateY(16px)",
                       transition: "opacity 300ms ease, transform 380ms cubic-bezier(0.16,1,0.3,1)",
                     }}
                   >
-                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(34px, 4.5vw, 72px)", color: JET }}>
-                      {item.metric}
-                    </div>
-                    <div className="text-[11px] uppercase tracking-[0.25em] font-bold mt-2 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
-                      {item.brand}
-                    </div>
-                  </div>
+                    <div className="font-black uppercase tracking-tight text-lg md:text-2xl" style={{ color: JET }}>{r.title}</div>
+                    <div className="text-[11px] uppercase tracking-[0.15em] opacity-70 mt-1" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>{r.detail}</div>
+                    <div className="font-black tabular-nums mt-3" style={{ fontSize: "clamp(26px, 3vw, 44px)", lineHeight: 1, color: JET }}>{r.num}</div>
+                    <div className="text-[11px] uppercase tracking-[0.2em] opacity-70 mt-1" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>{r.label}</div>
+                  </Plate>
                 );
               })}
-            </div>
-            <div className="mt-5 text-[11px] uppercase tracking-[0.3em] opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
-              {t.zones.curve.note}
             </div>
           </div>
         </ZoneOverlay>
 
-        {/* ZONE 6 · LANDING — the monument + the ask. */}
-        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-center text-center">
-          <div className="px-6">
-            <Kicker text={t.zones.landing.kicker} dark center />
-            <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(38px, 6vw, 104px)", lineHeight: 0.92, color: JET }}>
-              {t.zones.landing.h2a}
-              <br />
-              <span className="italic" style={{ background: "linear-gradient(90deg, #6d6d6d 0%, #2a2a2a 30%, #5a5a5a 58%, #232323 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                {t.zones.landing.h2hi}
-              </span>
-            </h2>
-            <div className="mt-10 pointer-events-auto inline-block">
-              <Link
-                href="/brief"
-                className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 md:py-7 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                style={{
-                  background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)",
-                  color: JET,
-                  boxShadow: "0 0 0 1px rgba(255,255,255,0.4) inset, 8px 8px 0 0 #0d0d0d",
-                }}
-              >
-                <span className="font-black text-lg md:text-2xl uppercase tracking-tight">{t.zones.landing.cta}</span>
-                <span className="font-black text-lg md:text-2xl transition-transform group-hover:translate-x-2" aria-hidden>→</span>
-              </Link>
+        {/* ZONE 4 · STANDARD — kinetic principle plates, brutalism stage 07. */}
+        <StandardOverlay p={p} z={Z.feed} kicker={t.zones.standard.kicker} words={t.zones.standard.principles} />
+
+        {/* ZONE 5 · CASES — jet plates over the bone-white curve, stage 04. */}
+        <ZoneOverlay p={p} z={Z.curve} className="items-start justify-center">
+          <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
+            <KickerChip text={t.zones.cases.kicker} standalone />
+            <div className="flex flex-wrap gap-4 md:gap-5 mt-4">
+              {t.zones.cases.cases.map((c, i) => {
+                const local = zoneLocal(p, Z.curve);
+                const on = local > 0.18 + i * 0.16;
+                return (
+                  <Plate
+                    key={c.brand}
+                    tone="jet"
+                    className="p-5 md:p-6"
+                    style={{
+                      opacity: on ? 1 : 0,
+                      transform: on ? "translateY(0)" : "translateY(16px)",
+                      transition: "opacity 300ms ease, transform 380ms cubic-bezier(0.16,1,0.3,1)",
+                    }}
+                  >
+                    <div className="text-[11px] uppercase tracking-[0.25em] opacity-70 mb-2" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
+                      {c.brand} · {c.duration}
+                    </div>
+                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(38px, 5vw, 80px)", background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                      {c.metric}
+                    </div>
+                    <div className="text-[11px] uppercase tracking-[0.2em] opacity-80 mt-2" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
+                      {c.label}
+                    </div>
+                  </Plate>
+                );
+              })}
             </div>
-            <div className="mt-8 text-[11px] uppercase tracking-[0.3em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
-              {t.zones.landing.meta}
+            <div className="inline-block mt-5 px-2.5 py-1.5 border-2 border-black text-[11px] uppercase tracking-[0.3em]" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
+              {t.zones.cases.note}
             </div>
+          </div>
+        </ZoneOverlay>
+
+        {/* ZONE 6 · CALL — the ask on a jet plate beside the monument. */}
+        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-center">
+          <div className="px-6 w-full flex justify-center">
+            <Plate tone="jet" className="p-7 md:p-10 text-center max-w-2xl">
+              <div className="text-[11px] md:text-xs font-bold uppercase tracking-[0.35em] opacity-70 mb-4" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
+                {t.zones.landing.kicker}
+              </div>
+              <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(30px, 4.4vw, 72px)", lineHeight: 0.94, color: "#f4f4f4" }}>
+                {t.zones.landing.h2a}
+                <br />
+                <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  {t.zones.landing.h2hi}
+                </span>
+              </h2>
+              <div className="mt-8 pointer-events-auto inline-block">
+                <Link
+                  href="/brief"
+                  className="group inline-flex items-center gap-4 px-7 md:px-11 py-4 md:py-6 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                  style={{
+                    background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)",
+                    color: JET,
+                    boxShadow: "0 0 0 1px rgba(255,255,255,0.4) inset, 8px 8px 0 0 #2a2a2a",
+                  }}
+                >
+                  <span className="font-black text-lg md:text-2xl uppercase tracking-tight">{t.zones.landing.cta}</span>
+                  <span className="font-black text-lg md:text-2xl transition-transform group-hover:translate-x-2" aria-hidden>→</span>
+                </Link>
+              </div>
+              <div className="mt-6 text-[11px] uppercase tracking-[0.3em] opacity-60" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
+                {t.zones.landing.meta}
+              </div>
+            </Plate>
           </div>
         </ZoneOverlay>
       </div>
@@ -461,8 +514,8 @@ function ZoneOverlay({
   );
 }
 
-/** Zone 4's kinetic text: each word slams in on its own third. */
-function FeedOverlay({
+/** Zone 4's kinetic principles: each slams in on its own slice, on a plate. */
+function StandardOverlay({
   p, z, kicker, words,
 }: {
   p: number;
@@ -478,26 +531,35 @@ function FeedOverlay({
       style={{ opacity: env, visibility: env <= 0.001 ? "hidden" : "visible" }}
     >
       <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-        <Kicker text={kicker} />
-        <div className="space-y-1 md:space-y-2">
+        <KickerChip text={kicker} standalone />
+        <div className="space-y-2 md:space-y-3 mt-4">
           {words.map((w, i) => {
             const slice = 0.8 / words.length;
-            const t = Math.max(0, Math.min(1, (local - i * slice) / (slice * 0.4)));
+            const tt = Math.max(0, Math.min(1, (local - i * slice) / (slice * 0.4)));
             return (
               <div
                 key={w}
-                className="font-black uppercase leading-[0.92] tracking-[-0.03em]"
+                className="inline-block border-2 border-black px-4 md:px-6 py-2 md:py-3"
                 style={{
-                  fontSize: "clamp(44px, 9vw, 140px)",
-                  opacity: t,
-                  transform: `translateX(${(1 - t) * -50}px)`,
-                  background: SILVER_H,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
+                  background: JET,
+                  boxShadow: "6px 6px 0 0 rgba(138,138,138,0.85)",
+                  opacity: tt,
+                  transform: `translateX(${(1 - tt) * -50}px)`,
+                  display: "table",
                 }}
               >
-                {w}
+                <span
+                  className="font-black uppercase leading-[0.95] tracking-[-0.02em]"
+                  style={{
+                    fontSize: "clamp(24px, 4.4vw, 64px)",
+                    background: SILVER_H,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {w}
+                </span>
               </div>
             );
           })}
@@ -507,11 +569,38 @@ function FeedOverlay({
   );
 }
 
-function Kicker({ text, dark, center, align }: { text: string; dark?: boolean; center?: boolean; align?: "right" }) {
+/** Hard-edged content plate: bone (jet text) for dark film zones, jet
+    (light text) for bone-white zones. Deterministic contrast either way —
+    no naked text ever sits on the video. */
+function Plate({
+  tone, className, style, children,
+}: {
+  tone: "bone" | "jet";
+  className?: string;
+  style?: React.CSSProperties;
+  children: React.ReactNode;
+}) {
   return (
     <div
-      className={`text-[11px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-75 ${center ? "text-center" : ""} ${align === "right" ? "text-right" : ""}`}
-      style={{ fontFamily: "var(--cine-pixel)", color: dark ? JET : "#f4f4f4" }}
+      className={`border-2 border-black ${className ?? ""}`}
+      style={{
+        background: tone === "bone" ? "rgba(235,232,224,0.97)" : "rgba(13,13,13,0.94)",
+        boxShadow: tone === "bone" ? "8px 8px 0 0 #0d0d0d" : "8px 8px 0 0 rgba(138,138,138,0.9)",
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** Zone label as a jet chip — readable over anything. `standalone` keeps it
+    an inline island when it is not inside a plate. */
+function KickerChip({ text, standalone }: { text: string; standalone?: boolean }) {
+  return (
+    <div
+      className={`${standalone ? "inline-block" : "inline-block"} px-2.5 py-1.5 border-2 border-black text-[11px] md:text-xs font-bold uppercase tracking-[0.3em]`}
+      style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4", boxShadow: standalone ? "4px 4px 0 0 rgba(138,138,138,0.85)" : undefined }}
     >
       {text}
     </div>
@@ -523,57 +612,29 @@ function Kicker({ text, dark, center, align }: { text: string; dark?: boolean; c
 // each on a still from its zone. No scrub, no Lenis, no pinning.
 // ---------------------------------------------------------------------------
 function StaticJourney({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
-  const stills = ZONES.map((z) => {
-    const mid = Math.round(((z.from + z.to) / 2) * (FRAME_COUNT - 1)) + 1;
-    return `${FRAME_DIR}/${String(mid).padStart(3, "0")}.webp`;
-  });
+  const still = `${FRAME_DIR}/001.webp`;
   return (
-    <div>
-      {/* Hero */}
-      <section className="relative flex items-center" style={{ minHeight: "92vh", background: JET }}>
-        <Image src={stills[0]} alt="" fill className="object-cover opacity-80" unoptimized />
-        <div className="relative z-10 max-w-[1500px] w-full mx-auto px-6 md:px-14 py-24">
-          <div className="text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
+    <section className="relative flex items-center" style={{ minHeight: "92vh", background: JET }}>
+      <Image src={still} alt="" fill className="object-cover opacity-80" unoptimized />
+      <div className="relative z-10 max-w-[1500px] w-full mx-auto px-6 md:px-14 py-24">
+        <div className="border-2 border-black p-6 md:p-9 max-w-3xl" style={{ background: "rgba(235,232,224,0.97)", boxShadow: "8px 8px 0 0 #0d0d0d" }}>
+          <div className="inline-block px-2.5 py-1.5 border-2 border-black text-[11px] font-bold uppercase tracking-[0.3em]" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
             {t.zones.vault.kicker}
           </div>
-          <h1 className="font-black tracking-[-0.03em] max-w-3xl" style={{ fontSize: "clamp(34px, 5vw, 88px)", lineHeight: 0.94, color: "#f4f4f4" }}>
+          <h1 className="font-black tracking-[-0.03em] mt-4" style={{ fontSize: "clamp(32px, 4.6vw, 78px)", lineHeight: 0.94, color: JET }}>
             {t.zones.vault.h1a} {t.zones.vault.h1b} {t.zones.vault.h1hi}
           </h1>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <Link href="/brief" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4" }}>
+          <div className="flex flex-wrap gap-3 mt-7">
+            <Link href="/brief" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-black font-black uppercase text-sm tracking-[0.15em]" style={{ background: JET, color: "#f4f4f4" }}>
               → {t.zones.vault.ctaPrimary}
             </Link>
-            <Link href="/portfolio" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.7)" }}>
+            <Link href="/portfolio" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-black font-black uppercase text-sm tracking-[0.15em]" style={{ color: JET }}>
               ▶ {t.zones.vault.ctaSecondary}
             </Link>
           </div>
         </div>
-      </section>
-      {/* Compact remaining zones */}
-      <section className="px-6 md:px-14 py-20" style={{ background: JET, color: "#f4f4f4" }}>
-        <div className="max-w-[1500px] mx-auto grid md:grid-cols-3 gap-10">
-          <div>
-            <Kicker text={t.zones.ignition.kicker} />
-            <div className="font-black uppercase text-2xl">{t.zones.ignition.line1}</div>
-          </div>
-          <div>
-            <Kicker text={t.zones.feed.kicker} />
-            <div className="font-black uppercase text-2xl">{t.zones.feed.words.join(" ")}</div>
-          </div>
-          <div>
-            <Kicker text={t.zones.curve.kicker} />
-            <div className="flex gap-6">
-              {t.zones.curve.proof.map((x) => (
-                <div key={x.brand}>
-                  <div className="font-black text-3xl tabular-nums">{x.metric}</div>
-                  <div className="text-[11px] uppercase tracking-[0.2em] opacity-70" style={{ fontFamily: "var(--cine-pixel)" }}>{x.brand}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
 
@@ -705,6 +766,156 @@ function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang
         </Link>
       </div>
     </div>
+  );
+}
+
+// 05 · THE ROSTER — the 12 named brands, jet ground like the brutalism stage.
+function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, 0.12);
+  return (
+    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28" style={{ background: JET, color: "#f4f4f4" }}>
+      <div className="max-w-[1500px] mx-auto">
+        <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
+          {t.roster.eyebrow}
+        </div>
+        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12" style={{ fontSize: "clamp(32px, 4.8vw, 72px)" }}>
+          {t.roster.headline1}
+          <br />
+          {t.roster.headline2Prefix}{" "}
+          <span style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            {t.roster.headline2Highlight}
+          </span>
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+          {ROSTER.map((c, i) => (
+            <div
+              key={c.name}
+              className="border-2 border-white bg-white flex flex-col relative"
+              style={{
+                aspectRatio: "5/4",
+                boxShadow: "5px 5px 0 0 #8a8a8a",
+                opacity: inView ? 1 : 0,
+                transform: inView ? "translateY(0)" : "translateY(24px)",
+                transition: `opacity 550ms cubic-bezier(0.16,1,0.3,1) ${i * 45}ms, transform 650ms cubic-bezier(0.16,1,0.3,1) ${i * 45}ms`,
+              }}
+            >
+              <span className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
+                {t.roster.region[c.region]}
+              </span>
+              <div className="flex-1 flex items-center justify-center p-4 md:p-6 min-h-0">
+                <Image src={c.logo} alt={c.name} width={220} height={110} className="max-h-full max-w-full w-auto h-auto object-contain" unoptimized />
+              </div>
+              <div className="border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none" style={{ color: JET }}>
+                {c.name}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 text-xs uppercase tracking-[0.25em] opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
+          {t.roster.coda}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 06 · PROCESS — four numbered steps, bone ground.
+function Process({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, 0.12);
+  return (
+    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28" style={{ background: "#d6d3ca" }}>
+      <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-10 items-start">
+        <div className="md:col-span-5">
+          <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
+            {t.process.eyebrow}
+          </div>
+          <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase" style={{ fontSize: "clamp(30px, 4.4vw, 64px)", color: JET }}>
+            {t.process.headline1}
+            <br />
+            {t.process.headline2Prefix}{" "}
+            <span style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              {t.process.headline2Highlight}
+            </span>
+          </h2>
+        </div>
+        <div className="md:col-span-7 space-y-4 md:space-y-5">
+          {t.process.steps.map((st, i) => (
+            <div
+              key={st.num}
+              className="border-2 border-black p-5 md:p-6"
+              style={{
+                background: "#ebe8e0",
+                boxShadow: "6px 6px 0 0 #0d0d0d",
+                opacity: inView ? 1 : 0,
+                transform: inView ? "translateX(0)" : `translateX(${i % 2 === 0 ? -30 : 30}px)`,
+                transition: `opacity 550ms cubic-bezier(0.16,1,0.3,1) ${i * 110}ms, transform 650ms cubic-bezier(0.16,1,0.3,1) ${i * 110}ms`,
+              }}
+            >
+              <div className="flex items-baseline gap-4 md:gap-5">
+                <div className="text-3xl md:text-4xl font-black tabular-nums flex-shrink-0" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  {st.num}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1.5">
+                    <h3 className="font-black text-base md:text-xl uppercase tracking-tight leading-tight" style={{ color: JET }}>{st.title}</h3>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
+                      {st.duration}
+                    </span>
+                  </div>
+                  <p className="text-sm md:text-base leading-[1.5] font-medium opacity-85" style={{ fontFamily: "var(--cine-comic)", color: JET }}>{st.body}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 08 · FIT — the four qualification checks, bone ground.
+function Fit({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, 0.15);
+  return (
+    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28" style={{ background: BONE }}>
+      <div className="max-w-[1400px] mx-auto">
+        <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
+          {t.fit.eyebrow}
+        </div>
+        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12 max-w-4xl" style={{ fontSize: "clamp(30px, 4.6vw, 68px)", color: JET }}>
+          {t.fit.headlinePrefix}{" "}
+          <span style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            {t.fit.headlineHighlight}
+          </span>
+          {t.fit.headlineSuffix}
+        </h2>
+        <ul className="space-y-4 md:space-y-5 max-w-4xl">
+          {t.fit.items.map((q, i) => (
+            <li
+              key={q}
+              className="flex items-start gap-4 md:gap-6 border-2 border-black p-4 md:p-6"
+              style={{
+                background: "#ebe8e0",
+                boxShadow: "6px 6px 0 0 #0d0d0d",
+                opacity: inView ? 1 : 0,
+                transform: inView ? "translateY(0)" : "translateY(18px)",
+                transition: `opacity 500ms cubic-bezier(0.16,1,0.3,1) ${i * 120}ms, transform 600ms cubic-bezier(0.16,1,0.3,1) ${i * 120}ms`,
+              }}
+            >
+              <span className="mt-1 w-8 h-8 md:w-10 md:h-10 flex-shrink-0 border-2 border-black flex items-center justify-center" style={{ background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)", color: JET }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+                  <path d="M3 8L7 12L13 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square" />
+                </svg>
+              </span>
+              <span className="text-base md:text-xl leading-[1.35] font-bold uppercase" style={{ color: JET }}>{q}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
