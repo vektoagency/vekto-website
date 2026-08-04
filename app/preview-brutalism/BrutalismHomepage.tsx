@@ -63,8 +63,8 @@ const COPY = {
       { id: "02", label: "ЗАЩО" },
       { id: "03", label: "ФОКУС" },
       { id: "04", label: "КЕЙСОВЕ" },
-      { id: "05", label: "ПРОЦЕС" },
-      { id: "06", label: "БРАНДОВЕ" },
+      { id: "05", label: "БРАНДОВЕ" },
+      { id: "06", label: "ПРОЦЕС" },
       { id: "07", label: "СТАНДАРТ" },
       { id: "08", label: "КАНДИДАТ" },
       { id: "09", label: "РАЗГОВОР" },
@@ -138,7 +138,7 @@ const COPY = {
       ],
     },
     stageProcess: {
-      eyebrow: "05 · КАК СЕ СЛУЧВА",
+      eyebrow: "06 · КАК СЕ СЛУЧВА",
       headline1: "ОТ ПЪРВИЯ РАЗГОВОР",
       headline2Prefix: "ДО",
       headline2Highlight: "РАСТЕЖ.",
@@ -171,7 +171,7 @@ const COPY = {
       ],
     },
     stage4: {
-      eyebrow: "06 · СЪСТАВЪТ",
+      eyebrow: "05 · СЪСТАВЪТ",
       headline1: "50+ БРАНДА В ПОРТФЕЙЛА.",
       headline2Prefix: "12",
       headline2Highlight: "ОТ ТЯХ.",
@@ -241,8 +241,8 @@ const COPY = {
       { id: "02", label: "WHY" },
       { id: "03", label: "FOCUS" },
       { id: "04", label: "CASES" },
-      { id: "05", label: "PROCESS" },
-      { id: "06", label: "ROSTER" },
+      { id: "05", label: "ROSTER" },
+      { id: "06", label: "PROCESS" },
       { id: "07", label: "STANDARD" },
       { id: "08", label: "FIT" },
       { id: "09", label: "TALK" },
@@ -316,7 +316,7 @@ const COPY = {
       ],
     },
     stageProcess: {
-      eyebrow: "05 · HOW IT UNFOLDS",
+      eyebrow: "06 · HOW IT UNFOLDS",
       headline1: "FROM FIRST CALL",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
@@ -349,7 +349,7 @@ const COPY = {
       ],
     },
     stage4: {
-      eyebrow: "06 · THE ROSTER",
+      eyebrow: "05 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
       headline2Prefix: "12",
       headline2Highlight: "OF THEM.",
@@ -611,7 +611,7 @@ export default function BrutalismHomepage() {
   const s5 = useRef<HTMLElement>(null);
   const s6 = useRef<HTMLElement>(null);
   const s7 = useRef<HTMLElement>(null);
-  const stage = useCurrentStage([s1, s2, s3, sCases, sProcess, s4, s5, s6, s7]);
+  const stage = useCurrentStage([s1, s2, s3, sCases, s4, sProcess, s5, s6, s7]);
 
   // Option A / B toggle. Default (Option A) shows a trimmed 4-item nav
   // strip. ?bare=1 (Option B) hides the whole nav strip, leaving just
@@ -619,26 +619,25 @@ export default function BrutalismHomepage() {
   const searchParams = useSearchParams();
   const bare = searchParams?.get("bare") === "1";
 
-  // Trimmed nav — 4 landing points only. The 9-stage progression stays
-  // reachable via scroll + the right-rail funnel indicator. stageIndex
-  // maps to the position in the useCurrentStage refs array above so we
-  // can highlight the active section as the user scrolls.
-  //   [s1, s2, s3, sCases, sProcess, s4, s5, s6, s7]
-  //    0   1   2      3         4     5   6   7   8
+  // Action-oriented nav — real destinations, not stage-anchors.
+  // Portfolio + Cases browse work, Brief captures a warmer lead than
+  // the raw email address, Book-a-call is the primary conversion.
+  // The 9-stage in-page funnel stays fully browsable via scroll +
+  // the right-rail funnel indicator.
   const NAV_LINKS =
     lang === "bg"
       ? [
-          { label: "Кейсове",  href: "#stage-04", stageIndex: 3 },
-          { label: "Процес",   href: "#stage-05", stageIndex: 4 },
-          { label: "Стандарт", href: "#stage-07", stageIndex: 6 },
-          { label: "Разговор", href: "#stage-09", stageIndex: 8 },
+          { label: "Портфолио", href: "/portfolio",     external: true  },
+          { label: "Кейсове",   href: "#stage-04",      external: false },
+          { label: "Анкета",    href: "/brief",         external: true  },
         ]
       : [
-          { label: "Cases",    href: "#stage-04", stageIndex: 3 },
-          { label: "Process",  href: "#stage-05", stageIndex: 4 },
-          { label: "Standard", href: "#stage-07", stageIndex: 6 },
-          { label: "Talk",     href: "#stage-09", stageIndex: 8 },
+          { label: "Portfolio", href: "/portfolio",     external: true  },
+          { label: "Cases",     href: "#stage-04",      external: false },
+          { label: "Brief",     href: "/brief",         external: true  },
         ];
+
+  const primaryCtaLabel = lang === "bg" ? "Резервирай разговор" : "Book a call";
 
   return (
     <div
@@ -744,27 +743,41 @@ export default function BrutalismHomepage() {
           only navigation. */}
       {!bare && (
         <div className="border-b-2 border-black bg-white">
-          <div className="flex flex-wrap items-center justify-center md:justify-start px-4 py-3 gap-x-8 gap-y-1 text-[13px] md:text-sm font-bold uppercase tracking-[0.2em]">
-            {NAV_LINKS.map((link) => {
-              const active = stage === link.stageIndex;
-              return (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="transition-opacity relative"
-                  style={{ opacity: active ? 1 : 0.55 }}
-                >
-                  {link.label}
-                  {active && (
-                    <span
-                      aria-hidden
-                      className="absolute -bottom-1 left-0 right-0 h-[2px]"
-                      style={{ background: "#0d0d0d" }}
-                    />
-                  )}
-                </a>
-              );
-            })}
+          <div className="flex flex-wrap items-center justify-between px-4 md:px-6 py-3 gap-x-6 gap-y-2 text-[13px] md:text-sm font-bold uppercase tracking-[0.2em]">
+            {/* Left: browse links */}
+            <div className="flex flex-wrap items-center gap-x-6 md:gap-x-8">
+              {NAV_LINKS.map((link) => (
+                link.external ? (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="opacity-70 hover:opacity-100 transition-opacity"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="opacity-70 hover:opacity-100 transition-opacity"
+                  >
+                    {link.label}
+                  </a>
+                )
+              ))}
+            </div>
+            {/* Right: primary CTA button — jet-black plate, silver shadow */}
+            <Link
+              href="/start"
+              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-black uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              style={{
+                background: "#0d0d0d",
+                color: "#f4f4f4",
+                boxShadow: "3px 3px 0 0 #8a8a8a",
+              }}
+            >
+              → {primaryCtaLabel}
+            </Link>
           </div>
         </div>
       )}
@@ -811,9 +824,9 @@ export default function BrutalismHomepage() {
       <HazardStrip />
       <StageCases targetRef={sCases} t={t.stageCases} />
       <HazardStrip />
-      <StageProcess targetRef={sProcess} t={t.stageProcess} />
-      <HazardStrip />
       <StageCast  targetRef={s4} t={t.stage4} />
+      <HazardStrip />
+      <StageProcess targetRef={sProcess} t={t.stageProcess} />
       <HazardStrip />
       <StageStandard targetRef={s5} t={t.stage5} />
       <HazardStrip />
@@ -1437,7 +1450,7 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
   const inView = useInView(targetRef, 0.15);
   return (
     <section
-      id="stage-05"
+      id="stage-06"
       ref={targetRef}
       className=""
       style={{ background: "#d6d3ca", minHeight: "100vh" }}
@@ -1545,7 +1558,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
   const inView = useInView(targetRef, 0.15);
   return (
     <section
-      id="stage-06"
+      id="stage-05"
       ref={targetRef}
       className=""
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
