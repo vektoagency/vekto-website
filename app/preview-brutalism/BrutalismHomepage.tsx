@@ -628,14 +628,20 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
       id="stage-01"
       ref={targetRef}
       className="border-b-2 border-black relative flex flex-col"
-      style={{ minHeight: "100vh", background: "#ebe8e0", overflow: "hidden" }}
+      style={{
+        height: "100dvh",
+        minHeight: "100vh",
+        background: "#ebe8e0",
+        overflow: "hidden",
+      }}
     >
       {/* MAIN — 2 columns on desktop: content left + news sidebar right.
-          Content aligns to TOP of the flex-1 area. Right padding is
-          extra on lg+ so the sidebar doesn't collide with the fixed
-          right-rail funnel indicator (which sits at right-3 with a
-          text label that extends leftward). */}
-      <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full">
+          Content aligns to TOP of the flex-1 area (flex-1 grows to
+          fill the space between top of section and the pinned scroll
+          cue). Right padding is extra on lg+ so the sidebar doesn't
+          collide with the fixed right-rail funnel indicator (which
+          sits at right-3 with a text label that extends leftward). */}
+      <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
         <div className="grid grid-cols-12 gap-6 md:gap-10 w-full">
           {/* LEFT — main content, ~2/3 on desktop */}
           <div className="col-span-12 lg:col-span-8 flex flex-col">
