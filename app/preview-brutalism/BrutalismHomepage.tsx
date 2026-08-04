@@ -662,7 +662,8 @@ export default function BrutalismHomepage() {
         }}
       />
 
-      {/* ============= MARQUEE ============= */}
+      {/* ============= MARQUEE (removed per user) ============= */}
+      {false && (
       <div
         className="border-y-2 border-black overflow-hidden py-1.5"
         style={{ background: "#0d0d0d" }}
@@ -684,6 +685,7 @@ export default function BrutalismHomepage() {
           ))}
         </div>
       </div>
+      )}
 
       {/* ============= MASTHEAD ============= */}
       <div className="border-b-4 border-black" style={{ background: "#0d0d0d" }}>
