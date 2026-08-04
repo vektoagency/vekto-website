@@ -51,7 +51,7 @@ type Lang = "bg" | "en";
 const COPY = {
   bg: {
     marquee:
-      "VEKTO GROWTH STUDIO ✦ EST. MMXXIV ✦ СОФИЯ · БЪЛГАРИЯ ✦ 50+ БРАНДА ✦ AI-FIRST · GROWTH-FIRST ✦",
+      "VEKTO GROWTH STUDIO ✦ ЕДИН БРАНД НА НИША ✦ AI-CREATIVE ПРОИЗВОДСТВО ✦ РЕКЛАМИ · СЪДЪРЖАНИЕ · САЙТОВЕ · СТРАТЕГИЯ ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ 4.8× СРЕДЕН ROAS ✦ ДАННИТЕ РЕШАВАТ, НЕ МНЕНИЯТА ✦ EST. MMXXIV · SOFIA ✦",
     cta: "ПИШИ НИ",
     nav: {
       studio: "СТУДИО",
@@ -153,7 +153,7 @@ const COPY = {
   },
   en: {
     marquee:
-      "VEKTO GROWTH STUDIO ✦ EST. MMXXIV ✦ SOFIA · BULGARIA ✦ 50+ BRANDS ✦ AI-FIRST · GROWTH-FIRST ✦",
+      "VEKTO GROWTH STUDIO ✦ ONE BRAND PER NICHE ✦ AI-CREATIVE PIPELINE ✦ ADS · CONTENT · SITES · STRATEGY ✦ 50+ PARTNERS IN BG + US ✦ 4.8× AVERAGE ROAS ✦ DATA DECIDES, OPINIONS DON'T ✦ EST. MMXXIV · SOFIA ✦",
     cta: "EMAIL US",
     nav: {
       studio: "STUDIO",
@@ -601,7 +601,6 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
   const p = useScrollProgress(targetRef);
   const inView = useInView(targetRef, 0.2);
 
-  // Cyrillic + emoji safe: split by grapheme units via Array.from
   const graphemes = Array.from(t.typed);
   const typedCount = Math.floor(Math.max(0, Math.min(1, (p - 0.15) / 0.5)) * graphemes.length);
   const typed = graphemes.slice(0, typedCount).join("");
@@ -610,19 +609,20 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
     <section
       id="stage-01"
       ref={targetRef}
-      className="border-b-2 border-black relative"
-      style={{ minHeight: "100vh", background: "#ebe8e0" }}
+      className="border-b-2 border-black relative flex flex-col"
+      style={{ minHeight: "100vh", background: "#ebe8e0", overflow: "hidden" }}
     >
-      <div className="px-6 md:px-14 py-16 md:py-24 max-w-[1400px] mx-auto">
+      {/* MAIN — centered vertically */}
+      <div className="flex-1 flex flex-col justify-center px-6 md:px-14 pt-10 md:pt-14 pb-6 max-w-[1400px] mx-auto w-full">
         <div
-          className="text-xs font-bold uppercase tracking-[0.35em] mb-10 opacity-60"
+          className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-5 md:mb-6 opacity-60"
           style={{ fontFamily: "var(--font-brutal-pixel)" }}
         >
           {t.eyebrow}
         </div>
 
         <div
-          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] mb-10"
+          className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-8 md:mb-12 self-start"
           style={{
             background: "#0d0d0d",
             color: "#f4f4f4",
@@ -635,48 +635,60 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           {t.pill}
         </div>
 
+        {/* Two lines, each guaranteed to fit on ONE row via calibrated clamp.
+            Max 88px so 'СТРОИМ РАСТЕЖ.' (14 char incl space + period) at
+            ~48px avg-char stays under ~700px — fits in every desktop width.
+            Bulgarian caps run slightly wider than Latin, so hard cap 88. */}
         <h1
-          className="font-black leading-[0.86] tracking-[-0.04em] mb-8"
+          className="font-black tracking-[-0.03em]"
           style={{
-            fontSize: "clamp(60px, 12vw, 172px)",
-            WebkitTextStroke: "1px black",
+            fontSize: "clamp(40px, 6.5vw, 88px)",
+            lineHeight: 0.96,
           }}
         >
-          {t.headline1}
-          <br />
-          {t.headline2Prefix}{" "}
-          <span
-            className="italic"
-            style={{
-              background: GRAPHITE_H,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              WebkitTextStroke: "0",
-            }}
-          >
-            {t.headline2Highlight}
+          <span className="block whitespace-nowrap">{t.headline1}</span>
+          <span className="block whitespace-nowrap">
+            {t.headline2Prefix}{" "}
+            <span
+              className="italic"
+              style={{
+                background: GRAPHITE_H,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {t.headline2Highlight}
+            </span>
           </span>
         </h1>
 
+        {/* Typewriter caption — sits close to the headline, small type */}
         <div
-          className="mt-14 md:mt-20 flex items-center gap-3 font-bold uppercase text-lg md:text-2xl tracking-[0.15em]"
-          style={{ opacity: inView ? 1 : 0, transition: "opacity 400ms ease" }}
+          className="mt-8 md:mt-12 flex items-center gap-3 font-bold uppercase text-sm md:text-base tracking-[0.2em]"
+          style={{
+            opacity: inView ? 0.85 : 0,
+            transition: "opacity 400ms ease",
+            minHeight: "1.4em",
+          }}
         >
-          <span className="inline-block h-[1em] w-[3px]" style={{ background: "#0d0d0d" }} />
+          <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#0d0d0d" }} />
           <span>{typed}</span>
           <span
-            className="inline-block h-[1em] w-[10px] animate-pulse"
+            className="inline-block h-[0.85em] w-[8px] animate-pulse"
             style={{ background: "#0d0d0d" }}
           />
         </div>
+      </div>
 
-        <div
-          className="mt-16 md:mt-24 flex items-center gap-4"
-          style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
-        >
+      {/* BOTTOM — scroll cue always pinned to viewport bottom */}
+      <div
+        className="px-6 md:px-14 pb-8 md:pb-12 max-w-[1400px] mx-auto w-full"
+        style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
+      >
+        <div className="flex items-center gap-4">
           <div
-            className="text-xs font-bold uppercase tracking-[0.35em]"
+            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]"
             style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
             {t.scrollCue}
