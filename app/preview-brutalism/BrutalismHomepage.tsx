@@ -74,6 +74,15 @@ const COPY = {
       headline2Highlight: "ОТЧЕТИ.",
       typed: "ВЛЕЗЕ ВЪВ ФУНИЯТА.",
       scrollCue: "▼ СКРОЛНИ ЗА ДА ПРОДЪЛЖИШ",
+      ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
+      ctaSecondary: "ВИЖ РАБОТА",
+      newsTitle: "НОВИНИ ОТ СТУДИОТО",
+      news: [
+        { d: "04.08.26", n: "MEN'S CARE — НОВА AI КАМПАНИЯ ЛАЙВ" },
+        { d: "01.08.26", n: "VEKTO x DUSQ — САЩ LAUNCH СТАРТИРА" },
+        { d: "24.07.26", n: "BULTEX + НЕДЕЛЯ СЕ ВЛИВАТ В СЪСТАВА" },
+        { d: "10.07.26", n: "50+ БРАНДА В ПОРТФЕЙЛА · MMXXVI" },
+      ],
     },
     stage2: {
       eyebrow: "02 · ЗАЩО СЪЩЕСТВУВАМЕ",
@@ -176,6 +185,15 @@ const COPY = {
       headline2Highlight: "REPORTS.",
       typed: "YOU'RE IN THE FUNNEL.",
       scrollCue: "▼ SCROLL TO CONTINUE",
+      ctaPrimary: "BOOK A CALL",
+      ctaSecondary: "SEE WORK",
+      newsTitle: "STUDIO WIRE",
+      news: [
+        { d: "04.08.26", n: "MEN'S CARE — NEW AI CAMPAIGN LIVE" },
+        { d: "01.08.26", n: "VEKTO x DUSQ — US LAUNCH STARTED" },
+        { d: "24.07.26", n: "BULTEX + NEDELYA JOIN THE ROSTER" },
+        { d: "10.07.26", n: "50+ BRANDS IN THE PORTFOLIO · MMXXVI" },
+      ],
     },
     stage2: {
       eyebrow: "02 · WHY WE EXIST",
@@ -612,78 +630,196 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
       className="border-b-2 border-black relative flex flex-col"
       style={{ minHeight: "100vh", background: "#ebe8e0", overflow: "hidden" }}
     >
-      {/* MAIN — centered vertically */}
-      <div className="flex-1 flex flex-col justify-center px-6 md:px-14 pt-10 md:pt-14 pb-6 max-w-[1400px] mx-auto w-full">
-        <div
-          className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-5 md:mb-6 opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
-        >
-          {t.eyebrow}
-        </div>
+      {/* MAIN — 2 columns on desktop: content left + news sidebar right */}
+      <div className="flex-1 flex items-stretch px-6 md:px-14 pt-8 md:pt-12 pb-4 max-w-[1500px] mx-auto w-full">
+        <div className="grid grid-cols-12 gap-6 md:gap-10 w-full">
+          {/* LEFT — main content, ~2/3 on desktop */}
+          <div className="col-span-12 lg:col-span-8 flex flex-col justify-center">
+            <div
+              className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 md:mb-5 opacity-60"
+              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            >
+              {t.eyebrow}
+            </div>
 
-        <div
-          className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-8 md:mb-12 self-start"
-          style={{
-            background: "#0d0d0d",
-            color: "#f4f4f4",
-            border: "1.5px solid",
-            borderImage: `${SILVER_H} 1`,
-            boxShadow: "4px 4px 0 0 #0d0d0d",
-          }}
-        >
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          {t.pill}
-        </div>
-
-        {/* Two lines, each guaranteed to fit on ONE row via calibrated clamp.
-            Max 88px so 'СТРОИМ РАСТЕЖ.' (14 char incl space + period) at
-            ~48px avg-char stays under ~700px — fits in every desktop width.
-            Bulgarian caps run slightly wider than Latin, so hard cap 88. */}
-        <h1
-          className="font-black tracking-[-0.03em]"
-          style={{
-            fontSize: "clamp(40px, 6.5vw, 88px)",
-            lineHeight: 0.96,
-          }}
-        >
-          <span className="block whitespace-nowrap">{t.headline1}</span>
-          <span className="block whitespace-nowrap">
-            {t.headline2Prefix}{" "}
-            <span
-              className="italic"
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-6 md:mb-8 self-start"
               style={{
-                background: GRAPHITE_H,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+                background: "#0d0d0d",
+                color: "#f4f4f4",
+                border: "1.5px solid",
+                borderImage: `${SILVER_H} 1`,
+                boxShadow: "4px 4px 0 0 #0d0d0d",
               }}
             >
-              {t.headline2Highlight}
-            </span>
-          </span>
-        </h1>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              {t.pill}
+            </div>
 
-        {/* Typewriter caption — sits close to the headline, small type */}
-        <div
-          className="mt-8 md:mt-12 flex items-center gap-3 font-bold uppercase text-sm md:text-base tracking-[0.2em]"
-          style={{
-            opacity: inView ? 0.85 : 0,
-            transition: "opacity 400ms ease",
-            minHeight: "1.4em",
-          }}
-        >
-          <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#0d0d0d" }} />
-          <span>{typed}</span>
-          <span
-            className="inline-block h-[0.85em] w-[8px] animate-pulse"
-            style={{ background: "#0d0d0d" }}
-          />
+            <h1
+              className="font-black tracking-[-0.03em]"
+              style={{
+                fontSize: "clamp(38px, 5.8vw, 80px)",
+                lineHeight: 0.96,
+              }}
+            >
+              <span className="block whitespace-nowrap">{t.headline1}</span>
+              <span className="block whitespace-nowrap">
+                {t.headline2Prefix}{" "}
+                <span
+                  className="italic"
+                  style={{
+                    background: GRAPHITE_H,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {t.headline2Highlight}
+                </span>
+              </span>
+            </h1>
+
+            {/* Dual CTAs directly under headline */}
+            <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
+              <a
+                href="#stage-07"
+                className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                style={{
+                  background: "#0d0d0d",
+                  color: "#f4f4f4",
+                  boxShadow: "5px 5px 0 0 #8a8a8a",
+                }}
+              >
+                <span>→</span>
+                {t.ctaPrimary}
+              </a>
+              <Link
+                href="/portfolio"
+                className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                style={{
+                  background: WORDMARK_METAL,
+                  color: "#0d0d0d",
+                  boxShadow: "5px 5px 0 0 #0d0d0d",
+                }}
+              >
+                <span>▶</span>
+                {t.ctaSecondary}
+              </Link>
+            </div>
+
+            {/* Typewriter caption */}
+            <div
+              className="mt-6 md:mt-8 flex items-center gap-3 font-bold uppercase text-xs md:text-sm tracking-[0.25em]"
+              style={{
+                opacity: inView ? 0.75 : 0,
+                transition: "opacity 400ms ease",
+                minHeight: "1.4em",
+              }}
+            >
+              <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#0d0d0d" }} />
+              <span>{typed}</span>
+              <span
+                className="inline-block h-[0.85em] w-[8px] animate-pulse"
+                style={{ background: "#0d0d0d" }}
+              />
+            </div>
+          </div>
+
+          {/* RIGHT SIDEBAR — news wire (desktop only) */}
+          <aside
+            className="hidden lg:flex col-span-4 flex-col self-stretch border-2 border-black"
+            style={{
+              background: "#d6d3ca",
+              boxShadow: "6px 6px 0 0 #0d0d0d",
+            }}
+          >
+            {/* Sidebar header — silver plate */}
+            <div
+              className="border-b-2 border-black px-4 py-3 flex items-center gap-2"
+              style={{ background: "#0d0d0d" }}
+            >
+              <span
+                className="text-[10px] font-black uppercase tracking-[0.3em]"
+                style={{
+                  fontFamily: "var(--font-brutal-pixel)",
+                  background: SILVER_H,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                ✦ {t.newsTitle} ✦
+              </span>
+            </div>
+
+            {/* News items */}
+            <div className="flex-1 p-4 space-y-3">
+              {t.news.map((item, i) => (
+                <div
+                  key={item.d}
+                  className={`pb-3 ${i < t.news.length - 1 ? "border-b border-dashed border-black/40" : ""}`}
+                >
+                  <div
+                    className="text-[10px] opacity-60 mb-1"
+                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                  >
+                    {item.d}
+                  </div>
+                  <div className="text-[13px] font-bold leading-tight uppercase tracking-[0.03em]">
+                    <span className="mr-1">★</span>
+                    {item.n}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Sidebar footer — 4 mini stat plates */}
+            <div className="grid grid-cols-2 border-t-2 border-black">
+              {[
+                ["50+", "БРАНДА"],
+                ["4.8×", "ROAS"],
+                ["24Ч", "ОТГОВОР"],
+                ["БГ+US", "ПАЗАРИ"],
+              ].map(([v, l], i) => (
+                <div
+                  key={l}
+                  className="border-black text-center py-3 px-2"
+                  style={{
+                    background: "#0d0d0d",
+                    color: "#f4f4f4",
+                    borderRightWidth: i % 2 === 0 ? "1.5px" : 0,
+                    borderTopWidth: i >= 2 ? "1.5px" : 0,
+                    borderStyle: "solid",
+                  }}
+                >
+                  <div
+                    className="text-lg font-black leading-none"
+                    style={{
+                      background: SILVER_H,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    {v}
+                  </div>
+                  <div
+                    className="text-[8px] tracking-[0.25em] opacity-70 mt-1 font-bold"
+                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                  >
+                    {l}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
       </div>
 
-      {/* BOTTOM — scroll cue always pinned to viewport bottom */}
+      {/* BOTTOM — scroll cue pinned to viewport bottom */}
       <div
-        className="px-6 md:px-14 pb-8 md:pb-12 max-w-[1400px] mx-auto w-full"
+        className="px-6 md:px-14 pb-6 md:pb-8 max-w-[1500px] mx-auto w-full"
         style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
       >
         <div className="flex items-center gap-4">
