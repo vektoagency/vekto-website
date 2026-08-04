@@ -23,9 +23,12 @@ export const FRAME_COUNT = 577;
 // first cut shipped 960w/q55 everywhere and read visibly soft stretched
 // across a 1920px screen. Phones keep the light set: same journey, a third
 // of the bytes.
+// v2 paths: the chain was regenerated (identity refs + video-reference
+// continuity), and versioned directories guarantee no browser or CDN cache
+// can ever serve a frame from the previous chain.
 export const FRAME_SETS = {
-  hd: { dir: "/scrub/vector-hd", count: FRAME_COUNT, w: 1280, h: 720 },
-  sd: { dir: "/scrub/vector",    count: FRAME_COUNT, w: 960,  h: 540 },
+  hd: { dir: "/scrub/v2-hd", count: FRAME_COUNT, w: 1280, h: 720 },
+  sd: { dir: "/scrub/v2",    count: FRAME_COUNT, w: 960,  h: 540 },
 } as const;
 
 // Static fallback (reduced motion) draws stills from the light set.
