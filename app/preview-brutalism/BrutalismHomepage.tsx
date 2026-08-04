@@ -20,6 +20,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 // ============================================================================
@@ -612,6 +613,33 @@ export default function BrutalismHomepage() {
   const s7 = useRef<HTMLElement>(null);
   const stage = useCurrentStage([s1, s2, s3, sCases, sProcess, s4, s5, s6, s7]);
 
+  // Option A / B toggle. Default (Option A) shows a trimmed 4-item nav
+  // strip. ?bare=1 (Option B) hides the whole nav strip, leaving just
+  // the marquee + masthead + the right-rail funnel indicator.
+  const searchParams = useSearchParams();
+  const bare = searchParams?.get("bare") === "1";
+
+  // Trimmed nav — 4 landing points only. The 9-stage progression stays
+  // reachable via scroll + the right-rail funnel indicator. stageIndex
+  // maps to the position in the useCurrentStage refs array above so we
+  // can highlight the active section as the user scrolls.
+  //   [s1, s2, s3, sCases, sProcess, s4, s5, s6, s7]
+  //    0   1   2      3         4     5   6   7   8
+  const NAV_LINKS =
+    lang === "bg"
+      ? [
+          { label: "Кейсове",  href: "#stage-04", stageIndex: 3 },
+          { label: "Процес",   href: "#stage-05", stageIndex: 4 },
+          { label: "Стандарт", href: "#stage-07", stageIndex: 6 },
+          { label: "Разговор", href: "#stage-09", stageIndex: 8 },
+        ]
+      : [
+          { label: "Cases",    href: "#stage-04", stageIndex: 3 },
+          { label: "Process",  href: "#stage-05", stageIndex: 4 },
+          { label: "Standard", href: "#stage-07", stageIndex: 6 },
+          { label: "Talk",     href: "#stage-09", stageIndex: 8 },
+        ];
+
   return (
     <div
       className="relative"
@@ -707,33 +735,39 @@ export default function BrutalismHomepage() {
         </div>
       </div>
 
-      {/* ============= NAV STRIP ============= */}
-      <div className="border-b-2 border-black bg-white">
-        <div className="flex flex-wrap items-center justify-between px-4 py-2 gap-2 text-[13px] md:text-sm font-bold uppercase tracking-[0.15em]">
-          <div className="flex flex-wrap gap-x-6 gap-y-1">
-            {t.stages.map((s, i) => (
-              <a
-                key={s.id}
-                href={`#stage-${s.id}`}
-                className="hover:underline decoration-2 underline-offset-4 transition-opacity"
-                style={{ opacity: stage === i ? 1 : 0.5 }}
-              >
-                ★ {s.id} {s.label}
-              </a>
-            ))}
-          </div>
-          <div
-            className="text-[11px] flex items-center gap-2"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
-          >
-            <span aria-hidden className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            {t.nav.studio} ·
-            <span className="bg-black px-2 py-0.5 text-white tabular-nums">
-              {clock}
-            </span>
+      {/* ============= NAV STRIP =============
+          OPTION A (default): trimmed to 4 essential landing points
+          — same syntax visitors expect on any agency site. The 9-stage
+          progression stays reachable via scroll + right-rail.
+          OPTION B: hide the nav strip entirely by visiting with
+          ?bare=1 in the URL. Cleaner masthead, right-rail is the
+          only navigation. */}
+      {!bare && (
+        <div className="border-b-2 border-black bg-white">
+          <div className="flex flex-wrap items-center justify-center md:justify-start px-4 py-3 gap-x-8 gap-y-1 text-[13px] md:text-sm font-bold uppercase tracking-[0.2em]">
+            {NAV_LINKS.map((link) => {
+              const active = stage === link.stageIndex;
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="transition-opacity relative"
+                  style={{ opacity: active ? 1 : 0.55 }}
+                >
+                  {link.label}
+                  {active && (
+                    <span
+                      aria-hidden
+                      className="absolute -bottom-1 left-0 right-0 h-[2px]"
+                      style={{ background: "#0d0d0d" }}
+                    />
+                  )}
+                </a>
+              );
+            })}
           </div>
         </div>
-      </div>
+      )}
 
       {/* ============= RIGHT-RAIL FUNNEL INDICATOR ============= */}
       <div
@@ -925,7 +959,7 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
           {/* Dual CTAs directly under headline */}
           <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
             <a
-              href="#stage-07"
+              href="#stage-09"
               className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{
                 background: "#0d0d0d",
@@ -1511,7 +1545,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
   const inView = useInView(targetRef, 0.15);
   return (
     <section
-      id="stage-04"
+      id="stage-06"
       ref={targetRef}
       className=""
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
@@ -1616,7 +1650,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
 
   return (
     <section
-      id="stage-05"
+      id="stage-07"
       ref={targetRef}
       className="relative"
       style={{ height: "280vh", background: "#ebe8e0" }}
@@ -1726,7 +1760,7 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
   const checked = Math.min(t.items.length, Math.floor(p * t.items.length * 1.7));
   return (
     <section
-      id="stage-06"
+      id="stage-08"
       ref={targetRef}
       className=""
       style={{ background: "#d6d3ca", minHeight: "100vh" }}
@@ -1809,7 +1843,7 @@ function StageAsk({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | n
   const inView = useInView(targetRef, 0.35);
   return (
     <section
-      id="stage-07"
+      id="stage-09"
       ref={targetRef}
       className="relative"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
