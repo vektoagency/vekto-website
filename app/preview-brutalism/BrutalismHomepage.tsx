@@ -20,8 +20,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { sendContactEmail } from "../actions/contact";
+
+// three.js is ~150KB gzipped — an order of magnitude more than the rest of
+// this page. Loading it dynamically with ssr:false keeps it out of the
+// initial bundle and off the server render entirely, so the headline and
+// CTAs paint without waiting on it. The globe simply appears when ready.
+const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
 // ============================================================================
 // PALETTE
@@ -101,6 +108,11 @@ const COPY = {
         { metric: "7.7×", brand: "PARFEN" },
         { metric: "10×",  brand: "FREYA" },
       ],
+      globeTitle: "ОБХВАТ",
+      globeBg: "БЪЛГАРИЯ",
+      globeUs: "САЩ",
+      globeNote: "БРАНДА В ПОРТФЕЙЛА",
+      globeLink: "ВИЖ ГИ",
       sheetTitle: "ОТ РОЛКАТА",
       sheetNote: "9:16 · ЗА REELS / TIKTOK",
       sheetCaptions: ["КРЕАТОР", "ПРОДУКТ", "ЛОКАЦИЯ"],
@@ -284,6 +296,11 @@ const COPY = {
         { metric: "7.7×", brand: "PARFEN" },
         { metric: "10×",  brand: "FREYA" },
       ],
+      globeTitle: "REACH",
+      globeBg: "BULGARIA",
+      globeUs: "USA",
+      globeNote: "BRANDS ON THE ROSTER",
+      globeLink: "SEE THEM",
       sheetTitle: "FROM THE REEL",
       sheetNote: "9:16 · FOR REELS / TIKTOK",
       sheetCaptions: ["CREATOR", "PRODUCT", "LOCATION"],
@@ -454,6 +471,11 @@ const ROSTER: Client[] = [
   { name: "NUTRIFITT",     region: "US", logo: "/images/logo-nutrifitt.webp"   },
 ];
 
+// Derived from ROSTER rather than typed out, so the globe readout can never
+// disagree with the logo grid on stage 05.
+const BG_COUNT = ROSTER.filter((c) => c.region === "BG").length;
+const US_COUNT = ROSTER.filter((c) => c.region === "US").length;
+
 // ============================================================================
 // HOOKS
 // ============================================================================
@@ -550,6 +572,29 @@ function useReducedMotion() {
     return () => mq.removeEventListener("change", apply);
   }, []);
   return reduced;
+}
+
+// Whether to run the WebGL hero at all. Three independent reasons not to:
+// a viewport too narrow for a two-column hero, a visitor who asked for
+// reduced motion, or a device with no WebGL. In every case the reel contact
+// sheet takes the slot and the hero stays a single screen tall.
+function useGlobeEnabled(reduced: boolean) {
+  const [capable, setCapable] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const hasWebGL = () => {
+      try {
+        return !!document.createElement("canvas").getContext("webgl2");
+      } catch {
+        return false;
+      }
+    };
+    const apply = () => setCapable(mq.matches && hasWebGL());
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+  return capable && !reduced;
 }
 
 function useInView(ref: React.RefObject<HTMLElement | null>, threshold = 0.35) {
@@ -1237,9 +1282,16 @@ function HazardStrip() {
 // STAGE 01 · HOOK
 // ============================================================================
 function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"]; lang: Lang; openBook: () => void }) {
-  const p = useScrollProgress(targetRef);
+  // The hero is now a sticky stage: the content column stays pinned for
+  // ~2.5 viewports while scroll drives the globe from 0 to 1. Same hook the
+  // Rooms and Standard stages already use, so the funnel behaves
+  // consistently. `p` is 0 the instant the stage latches and 1 when it
+  // releases — everything the globe does is a function of it, which means
+  // scrolling back up plays the whole sequence in reverse.
+  const p = useStickyProgress(targetRef);
   const inView = useInView(targetRef, 0.2);
   const reduced = useReducedMotion();
+  const showGlobe = useGlobeEnabled(reduced);
 
   // Typewriter: types character-by-character once the section is in view.
   // The old approach was tied to useScrollProgress, but the hero starts
@@ -1278,23 +1330,28 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
     <section
       id="stage-01"
       ref={targetRef}
-      className="relative flex flex-col"
+      className="relative"
       style={{
-        height: "100dvh",
-        minHeight: "100vh",
+        // Sticky runway. Only taken when the globe is actually mounted —
+        // without it there is nothing for the extra scroll to drive, and
+        // 2.5 screens of pinned static text is just a tax on the visitor.
+        height: showGlobe ? "260vh" : "100dvh",
+        minHeight: showGlobe ? undefined : "100vh",
         background: "#ebe8e0",
-        overflow: "hidden",
       }}
+    >
+    <div
+      className="sticky top-0 flex flex-col overflow-hidden"
+      style={{ height: "100dvh", minHeight: "100vh" }}
     >
       {/* MAIN — two columns from lg up.
           The single-column version left the entire right third of the
           viewport as bare paper: an agency that ships 200+ videos a
-          month was showing zero work above the fold, and the composition
-          had nothing holding its right edge. The contact sheet fills
-          both gaps with real frames from the reel. Vertically centred so
-          the column no longer hangs from the top with dead space under
-          it. */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_min(24vw,300px)] items-center gap-8 xl:gap-12 px-6 md:px-14 lg:pr-24 xl:pr-28 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
+          month was showing nothing above the fold, and the composition
+          had nothing holding its right edge. The globe fills both gaps;
+          on smaller screens, and under reduced motion, the reel contact
+          sheet stands in for it. */}
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_min(30vw,380px)] items-center gap-8 xl:gap-12 px-6 md:px-14 lg:pr-24 xl:pr-28 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
         <div className="flex flex-col w-full min-w-0">
           {/* Stage marker + positioning plate. These used to say
               "01 · GROWTH AGENCY" and "AI GROWTH AGENCY · EST. MMXXIV" —
@@ -1440,13 +1497,74 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           </div>
         </div>
 
-        {/* CONTACT SHEET — three real frames from the reel.
-            Captions stay factual (format + discipline); nothing here
-            claims a client or a result the frames don't prove. */}
+        {/* GLOBE — the scroll-driven hero.
+            Sits inside the same hard-bordered instrument housing the rest
+            of the page uses, with VT323 plates reading out what the
+            sequence is currently showing. Everything in the readout comes
+            from the real ROSTER array, so the counts cannot drift away
+            from the logos on stage 05. */}
+        {showGlobe && (
+          <div
+            className="hidden lg:flex flex-col self-center border-2 border-black"
+            style={{ background: "#0d0d0d", boxShadow: "7px 7px 0 0 #8a8a8a" }}
+          >
+            <div
+              className="flex items-center justify-between px-3 py-2 border-b-2 text-[12px] uppercase tracking-[0.25em]"
+              style={{ borderColor: "#8a8a8a", color: "#f4f4f4", fontFamily: "var(--brutal-pixel)" }}
+            >
+              <span>{t.globeTitle}</span>
+              <span className="tabular-nums opacity-60">
+                {String(Math.round(p * 100)).padStart(3, "0")}%
+              </span>
+            </div>
+
+            <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+              <Globe progress={p} className="absolute inset-0" />
+              {/* Marker labels are DOM, not WebGL: crisp VT323 at any DPI,
+                  selectable, and they cost nothing to render. They fade in
+                  on the same thresholds the 3D markers land on. */}
+              <div
+                className="absolute right-3 top-3 px-2 py-1 border text-[11px] uppercase tracking-[0.2em] transition-opacity duration-300"
+                style={{
+                  borderColor: "#8a8a8a", color: "#f4f4f4",
+                  fontFamily: "var(--brutal-pixel)",
+                  opacity: p > 0.24 ? 1 : 0,
+                }}
+              >
+                {t.globeBg} · {BG_COUNT}
+              </div>
+              <div
+                className="absolute left-3 bottom-3 px-2 py-1 border text-[11px] uppercase tracking-[0.2em] transition-opacity duration-300"
+                style={{
+                  borderColor: "#8a8a8a", color: "#f4f4f4",
+                  fontFamily: "var(--brutal-pixel)",
+                  opacity: p > 0.44 ? 1 : 0,
+                }}
+              >
+                {t.globeUs} · {US_COUNT}
+              </div>
+            </div>
+
+            <div
+              className="px-3 py-2 border-t-2 text-[12px] uppercase tracking-[0.2em] flex items-center justify-between gap-2"
+              style={{ borderColor: "#8a8a8a", color: "#f4f4f4", fontFamily: "var(--brutal-pixel)" }}
+            >
+              <span className="opacity-60">{t.globeNote}</span>
+              <Link href="/portfolio" className="opacity-80 hover:opacity-100 shrink-0">
+                {t.globeLink} →
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* CONTACT SHEET — stands in wherever the globe does not run:
+            below lg, and under prefers-reduced-motion. Three real frames
+            from the reel; captions stay factual (format + discipline) and
+            never attach a client or a result to a frame. */}
         <Link
           href="/portfolio"
           aria-label={lang === "bg" ? "Виж портфолиото" : "See the portfolio"}
-          className="hidden lg:block group border-2 border-black self-center"
+          className={`${showGlobe ? "hidden" : "hidden lg:block"} group border-2 border-black self-center`}
           style={{ background: "#0d0d0d", boxShadow: "7px 7px 0 0 #8a8a8a" }}
         >
           <div
@@ -1488,12 +1606,16 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
         </Link>
       </div>
 
-      {/* BOTTOM — just the scroll cue, pinned to viewport bottom.
-          News chips moved into the content column above so they
-          group with the CTAs, not with the scroll cue. */}
+      {/* BOTTOM — scroll cue plus, while the globe is running, a progress
+          rule that shows how much of the sticky sequence is left. Without
+          it a pinned viewport reads as a stuck page. */}
       <div
         className="max-w-[1500px] mx-auto w-full shrink-0 px-6 md:px-14 pb-6 md:pb-8"
-        style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
+        style={{
+          // Fades only at the very end of the sticky run, not immediately.
+          opacity: showGlobe ? Math.max(0, 1 - (p - 0.88) / 0.12) : Math.max(0, (1 - p) * 2),
+          transition: "opacity 200ms ease",
+        }}
       >
         <div className="flex items-center gap-4">
           <div
@@ -1502,9 +1624,17 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           >
             {t.scrollCue}
           </div>
-          <div className="flex-1 h-[2px] max-w-32 border-t-2 border-dashed border-black" />
+          <div className="flex-1 h-[2px] max-w-32 border-t-2 border-dashed border-black relative">
+            {showGlobe && (
+              <span
+                className="absolute left-0 -top-[2px] h-[2px]"
+                style={{ width: `${p * 100}%`, background: "#0d0d0d" }}
+              />
+            )}
+          </div>
         </div>
       </div>
+    </div>
     </section>
   );
 }
