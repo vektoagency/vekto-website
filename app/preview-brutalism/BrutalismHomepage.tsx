@@ -692,26 +692,62 @@ export default function BrutalismHomepage() {
       </div>
       )}
 
-      {/* ============= MASTHEAD ============= */}
-      <div className="border-b-4 border-black" style={{ background: "#0d0d0d" }}>
-        <div className="p-4 md:p-5 flex items-center justify-between gap-3">
-          <div
-            aria-label="VEKTO"
-            className="h-9 md:h-12 w-[150px] md:w-[200px]"
-            style={{
-              background: WORDMARK_METAL,
-              WebkitMaskImage: "url(/images/logo.png)",
-              maskImage: "url(/images/logo.png)",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskPosition: "left center",
-              maskPosition: "left center",
-              WebkitMaskSize: "contain",
-              maskSize: "contain",
-            }}
-          />
-          <div className="flex items-center gap-3">
-            {/* Language toggle */}
+      {/* ============= SINGLE-ROW HEADER =============
+          Merged masthead + nav into one horizontal strip on dark bg.
+          Removed the duplicate ✉ ПИШИ НИ button (was doing the same
+          job as the primary CTA). Order:
+            [LOGO] | [nav links] | [БГ|EN] [→ Резервирай разговор]
+          Bare mode (?bare=1) keeps everything except drops the nav
+          links so masthead is just logo + language + CTA. */}
+      <div
+        className="border-b-4 border-black"
+        style={{ background: "#0d0d0d", color: "#f4f4f4" }}
+      >
+        <div className="px-4 md:px-6 py-3 md:py-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+          {/* LEFT — wordmark + inline nav */}
+          <div className="flex flex-wrap items-center gap-x-6 md:gap-x-10 gap-y-3">
+            <div
+              aria-label="VEKTO"
+              className="h-8 md:h-11 w-[130px] md:w-[180px]"
+              style={{
+                background: WORDMARK_METAL,
+                WebkitMaskImage: "url(/images/logo.png)",
+                maskImage: "url(/images/logo.png)",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "left center",
+                maskPosition: "left center",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+              }}
+            />
+            {!bare && (
+              <div className="flex flex-wrap items-center gap-x-5 md:gap-x-7 text-[13px] md:text-sm font-bold uppercase tracking-[0.2em]">
+                {NAV_LINKS.map((link) =>
+                  link.external ? (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="opacity-70 hover:opacity-100 transition-opacity"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="opacity-70 hover:opacity-100 transition-opacity"
+                    >
+                      {link.label}
+                    </a>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* RIGHT — language + primary CTA */}
+          <div className="flex items-center gap-2 md:gap-3">
             <button
               onClick={() => setLang(lang === "bg" ? "en" : "bg")}
               className="px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] transition-colors hover:bg-white hover:text-black"
@@ -724,58 +760,6 @@ export default function BrutalismHomepage() {
             >
               {t.nav.langSwitch}
             </button>
-
-            <a
-              href="mailto:vektoagency@gmail.com"
-              className="hidden md:inline-block px-5 py-2 font-bold uppercase text-sm tracking-[0.2em] transition-colors hover:bg-white hover:text-black"
-              style={{
-                background: "#0d0d0d",
-                color: "#f4f4f4",
-                border: "1.5px solid",
-                borderImage: `${SILVER_H} 1`,
-              }}
-            >
-              ✉ {t.cta}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* ============= NAV STRIP =============
-          OPTION A (default): trimmed to 4 essential landing points
-          — same syntax visitors expect on any agency site. The 9-stage
-          progression stays reachable via scroll + right-rail.
-          OPTION B: hide the nav strip entirely by visiting with
-          ?bare=1 in the URL. Cleaner masthead, right-rail is the
-          only navigation. */}
-      {!bare && (
-        <div className="border-b-2 border-black bg-white">
-          <div className="flex flex-wrap items-center justify-between px-4 md:px-6 py-3 gap-x-6 gap-y-2 text-[13px] md:text-sm font-bold uppercase tracking-[0.2em]">
-            {/* Left: browse links */}
-            <div className="flex flex-wrap items-center gap-x-6 md:gap-x-8">
-              {NAV_LINKS.map((link) => (
-                link.external ? (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="opacity-70 hover:opacity-100 transition-opacity"
-                  >
-                    {link.label}
-                  </Link>
-                ) : (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    className="opacity-70 hover:opacity-100 transition-opacity"
-                  >
-                    {link.label}
-                  </a>
-                )
-              ))}
-            </div>
-            {/* Right: primary CTA button — jet-black plate, silver shadow.
-                Opens the brutalist contact modal (same behaviour as the
-                main site's CTAs: phone / WhatsApp / email / lead form). */}
             <button
               type="button"
               onClick={openBook}
@@ -784,13 +768,14 @@ export default function BrutalismHomepage() {
                 background: "#0d0d0d",
                 color: "#f4f4f4",
                 boxShadow: "3px 3px 0 0 #8a8a8a",
+                borderColor: "#f4f4f4",
               }}
             >
               → {primaryCtaLabel}
             </button>
           </div>
         </div>
-      )}
+      </div>
 
       {/* ============= RIGHT-RAIL FUNNEL INDICATOR ============= */}
       <div
