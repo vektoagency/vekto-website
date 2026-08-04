@@ -51,7 +51,7 @@ type Lang = "bg" | "en";
 const COPY = {
   bg: {
     marquee:
-      "VEKTO ✦ GROWTH AGENCY ✦ ЕДИН БРАНД НА НИША ✦ РЕКЛАМИ · КРЕАТИВ · САЙТОВЕ · СТРАТЕГИЯ ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ 4.8× СРЕДЕН ROAS ✦ ДАННИТЕ РЕШАВАТ ✦ EST. MMXXIV ✦",
+      "VEKTO ✦ GROWTH AGENCY ✦ РЕКЛАМИ · КРЕАТИВ · САЙТОВЕ · СТРАТЕГИЯ ✦ MEN'S CARE 5.2× · PARFEN 7.7× · FREYA 10× ROAS ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ ЕДИН БРАНД НА НИША ✦ ДАННИТЕ РЕШАВАТ ✦ EST. MMXXIV ✦",
     cta: "ПИШИ НИ",
     nav: {
       studio: "LIVE",
@@ -68,7 +68,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
-      pill: "АКТИВНО · ОТГОВОР ПОД 24 ЧАСА",
+      pill: "ПРИЕМАМЕ БРАНДОВЕ · ЕДИН НА НИША",
       headline1: "СТРОИМ РАСТЕЖ.",
       headline2Prefix: "НЕ",
       headline2Highlight: "ПРЕЗЕНТАЦИИ.",
@@ -78,9 +78,9 @@ const COPY = {
       ctaSecondary: "ПОРТФОЛИО",
       newsTitle: "НОВИНИ",
       news: [
-        { d: "04.08.26", n: "MEN'S CARE — нова AI кампания" },
-        { d: "01.08.26", n: "DUSQ — старт в САЩ" },
-        { d: "24.07.26", n: "BULTEX + Неделя — нови в екипа" },
+        { d: "04.08.26", n: "MEN'S CARE · 5.2× ROAS на новата AI кампания" },
+        { d: "01.08.26", n: "PARFEN · 7.7× ROAS на urgency офертата" },
+        { d: "24.07.26", n: "FREYA · 10× ROAS на nail-products кампанията" },
       ],
     },
     stage2: {
@@ -161,7 +161,7 @@ const COPY = {
   },
   en: {
     marquee:
-      "VEKTO ✦ GROWTH AGENCY ✦ ONE BRAND PER NICHE ✦ ADS · CREATIVE · SITES · STRATEGY ✦ 50+ PARTNERS IN BG + US ✦ 4.8× AVERAGE ROAS ✦ DATA DECIDES ✦ EST. MMXXIV ✦",
+      "VEKTO ✦ GROWTH AGENCY ✦ ADS · CREATIVE · SITES · STRATEGY ✦ MEN'S CARE 5.2× · PARFEN 7.7× · FREYA 10× ROAS ✦ 50+ PARTNERS IN BG + US ✦ ONE BRAND PER NICHE ✦ DATA DECIDES ✦ EST. MMXXIV ✦",
     cta: "EMAIL US",
     nav: {
       studio: "LIVE",
@@ -178,7 +178,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · GROWTH AGENCY",
-      pill: "ACTIVE · REPLY UNDER 24H",
+      pill: "ACCEPTING BRANDS · ONE PER NICHE",
       headline1: "WE BUILD GROWTH.",
       headline2Prefix: "NOT",
       headline2Highlight: "DECKS.",
@@ -188,9 +188,9 @@ const COPY = {
       ctaSecondary: "PORTFOLIO",
       newsTitle: "NEWS",
       news: [
-        { d: "04.08.26", n: "MEN'S CARE — new AI campaign" },
-        { d: "01.08.26", n: "DUSQ — US launch live" },
-        { d: "24.07.26", n: "BULTEX + Nedelya — new on the roster" },
+        { d: "04.08.26", n: "MEN'S CARE · 5.2× ROAS on the new AI campaign" },
+        { d: "01.08.26", n: "PARFEN · 7.7× ROAS on the urgency offer" },
+        { d: "24.07.26", n: "FREYA · 10× ROAS on the nail-products push" },
       ],
     },
     stage2: {
