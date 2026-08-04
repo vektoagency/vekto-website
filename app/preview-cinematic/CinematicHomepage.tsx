@@ -25,7 +25,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useCallback } from "react";
 import Lenis from "lenis";
-import { FRAME_DIR, FRAME_COUNT, FRAME_W, FRAME_H, ZONES, zoneEnvelope, zoneLocal } from "./journey";
+import { FRAME_DIR, FRAME_COUNT, FRAME_SETS, ZONES, zoneEnvelope, zoneLocal } from "./journey";
 import { JOURNEY_COPY, type JourneyLang } from "./journeyCopy";
 
 const ScrubReel = dynamic(() => import("./ScrubReel"), { ssr: false });
@@ -186,6 +186,17 @@ export default function CinematicHomepage() {
 function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: JourneyLang }) {
   const ref = useRef<HTMLElement>(null);
   const p = useStickyProgress(ref);
+  // Full-bleed film: desktop pulls the 1600px set, phones the 960px one.
+  // Decided once on mount from the media query; a mid-session resize across
+  // the boundary re-decodes, which is acceptable for how rare it is.
+  const [frameSet, setFrameSet] = useState<(typeof FRAME_SETS)[keyof typeof FRAME_SETS]>(FRAME_SETS.sd);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const apply = () => setFrameSet(mq.matches ? FRAME_SETS.hd : FRAME_SETS.sd);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
   const frame = Math.round(p * (FRAME_COUNT - 1)) + 1;
   const zoneIdx = Math.min(ZONES.length - 1, Math.floor(p * ZONES.length));
 
@@ -198,7 +209,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         <ScrubReel
           progress={p}
           cover
-          frames={{ dir: FRAME_DIR, count: FRAME_COUNT, w: FRAME_W, h: FRAME_H }}
+          frames={frameSet}
           className="absolute inset-0"
         />
 

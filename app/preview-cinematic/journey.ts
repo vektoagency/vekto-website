@@ -11,10 +11,20 @@
 // page component reads everything from here.
 // ============================================================================
 
-export const FRAME_DIR = "/scrub/vector";
 export const FRAME_COUNT = 288; // 6 clips × 8s × 6fps extraction
-export const FRAME_W = 960;
-export const FRAME_H = 540;
+
+// Two extractions of the same 288 frames. The film runs full-bleed, so the
+// desktop set is sized for desktop viewports (1600w, q82 ≈ 6MB total) — the
+// first cut shipped 960w/q55 everywhere and read visibly soft stretched
+// across a 1920px screen. Phones keep the light set: same journey, a third
+// of the bytes.
+export const FRAME_SETS = {
+  hd: { dir: "/scrub/vector-hd", count: FRAME_COUNT, w: 1600, h: 890 },
+  sd: { dir: "/scrub/vector",    count: FRAME_COUNT, w: 960,  h: 534 },
+} as const;
+
+// Static fallback (reduced motion) draws stills from the light set.
+export const FRAME_DIR = FRAME_SETS.sd.dir;
 
 export type Zone = {
   id: string;
