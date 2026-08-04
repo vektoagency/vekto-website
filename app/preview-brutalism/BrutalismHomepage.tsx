@@ -51,14 +51,14 @@ type Lang = "bg" | "en";
 const COPY = {
   bg: {
     marquee:
-      "VEKTO ✦ GROWTH STUDIO В СОФИЯ ✦ ЕДИН БРАНД НА НИША ✦ РЕКЛАМИ · КРЕАТИВ · САЙТОВЕ · СТРАТЕГИЯ ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ 4.8× СРЕДЕН ROAS ✦ ДАННИТЕ РЕШАВАТ ✦ EST. MMXXIV ✦",
+      "VEKTO ✦ GROWTH AGENCY ✦ ЕДИН БРАНД НА НИША ✦ РЕКЛАМИ · КРЕАТИВ · САЙТОВЕ · СТРАТЕГИЯ ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ 4.8× СРЕДЕН ROAS ✦ ДАННИТЕ РЕШАВАТ ✦ EST. MMXXIV ✦",
     cta: "ПИШИ НИ",
     nav: {
-      studio: "СТУДИО",
+      studio: "LIVE",
       langSwitch: "EN",
     },
     stages: [
-      { id: "01", label: "СТУДИО" },
+      { id: "01", label: "НАЧАЛО" },
       { id: "02", label: "ЗАЩО" },
       { id: "03", label: "ФОКУС" },
       { id: "04", label: "БРАНДОВЕ" },
@@ -67,8 +67,8 @@ const COPY = {
       { id: "07", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · GROWTH STUDIO",
-      pill: "СТУДИО В СОФИЯ · ОТГОВОР ПОД 24 ЧАСА",
+      eyebrow: "01 · GROWTH AGENCY",
+      pill: "АКТИВНО · ОТГОВОР ПОД 24 ЧАСА",
       headline1: "СТРОИМ РАСТЕЖ.",
       headline2Prefix: "НЕ",
       headline2Highlight: "ПРЕЗЕНТАЦИИ.",
@@ -154,21 +154,21 @@ const COPY = {
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
-      location: "СОФИЯ, БЪЛГАРИЯ",
-      guestbook: "// СОФИЯ · MMXXVI · VEKTO STUDIO",
+      location: "БЪЛГАРИЯ · САЩ",
+      guestbook: "// VEKTO · GROWTH AGENCY · MMXXVI",
       portfolioLink: "← ВИЖ ПЪЛНО ПОРТФОЛИО",
     },
   },
   en: {
     marquee:
-      "VEKTO ✦ GROWTH STUDIO IN SOFIA ✦ ONE BRAND PER NICHE ✦ ADS · CREATIVE · SITES · STRATEGY ✦ 50+ PARTNERS IN BG + US ✦ 4.8× AVERAGE ROAS ✦ DATA DECIDES ✦ EST. MMXXIV ✦",
+      "VEKTO ✦ GROWTH AGENCY ✦ ONE BRAND PER NICHE ✦ ADS · CREATIVE · SITES · STRATEGY ✦ 50+ PARTNERS IN BG + US ✦ 4.8× AVERAGE ROAS ✦ DATA DECIDES ✦ EST. MMXXIV ✦",
     cta: "EMAIL US",
     nav: {
-      studio: "STUDIO",
+      studio: "LIVE",
       langSwitch: "БГ",
     },
     stages: [
-      { id: "01", label: "STUDIO" },
+      { id: "01", label: "START" },
       { id: "02", label: "WHY" },
       { id: "03", label: "FOCUS" },
       { id: "04", label: "ROSTER" },
@@ -177,8 +177,8 @@ const COPY = {
       { id: "07", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · GROWTH STUDIO",
-      pill: "SOFIA STUDIO · REPLY UNDER 24H",
+      eyebrow: "01 · GROWTH AGENCY",
+      pill: "ACTIVE · REPLY UNDER 24H",
       headline1: "WE BUILD GROWTH.",
       headline2Prefix: "NOT",
       headline2Highlight: "DECKS.",
@@ -264,8 +264,8 @@ const COPY = {
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
-      location: "SOFIA, BULGARIA",
-      guestbook: "// SOFIA · MMXXVI · VEKTO STUDIO",
+      location: "BULGARIA · US",
+      guestbook: "// VEKTO · GROWTH AGENCY · MMXXVI",
       portfolioLink: "← SEE FULL PORTFOLIO",
     },
   },
@@ -641,8 +641,8 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           sits at right-3 with a text label that extends leftward). */}
       <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
         <div className="grid grid-cols-12 gap-6 md:gap-10 w-full">
-          {/* LEFT — main content, ~2/3 on desktop */}
-          <div className="col-span-12 lg:col-span-8 flex flex-col">
+          {/* LEFT — main content, 9/12 on xl (with sidebar), full width below */}
+          <div className="col-span-12 xl:col-span-9 flex flex-col min-w-0">
             <div
               className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
               style={{ fontFamily: "var(--font-brutal-pixel)" }}
@@ -665,10 +665,11 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             </div>
 
             <h1
-              className="font-black tracking-[-0.03em]"
+              className="font-black tracking-[-0.03em] max-w-full"
               style={{
-                fontSize: "clamp(44px, 7vw, 104px)",
+                fontSize: "clamp(40px, 6vw, 92px)",
                 lineHeight: 0.94,
+                overflowWrap: "break-word",
               }}
             >
               <span className="block whitespace-nowrap">{t.headline1}</span>
@@ -734,12 +735,11 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             </div>
           </div>
 
-          {/* RIGHT SIDEBAR — clean dark feed, no clutter.
-              Dark ground = feels premium (was concrete-tint = grey/heavy).
-              Mixed-case body text (was all uppercase = shouted). No
-              per-item borders, no NEW badge, no bottom footer strip. */}
+          {/* RIGHT SIDEBAR — visible ONLY on xl (1280+). Below that
+              the content column takes full width (col-span-12) so the
+              headline can breathe without competing with the sidebar. */}
           <aside
-            className="hidden lg:flex col-span-4 xl:col-span-3 flex-col border-2 border-black self-start"
+            className="hidden xl:flex xl:col-span-3 flex-col border-2 border-black self-start"
             style={{
               background: "#0d0d0d",
               color: "#f4f4f4",
