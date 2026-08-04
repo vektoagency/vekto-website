@@ -778,46 +778,63 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
         </div>
       </div>
 
-      {/* BOTTOM — news ticker + scroll cue.
-          News is a thin horizontal strip integrated with the hero
-          footer. Reads like a broadcast bottom-line, doesn't compete
-          with the headline. Hidden on small screens where space is
-          tight — only visible md and up. */}
-      <div className="max-w-[1500px] mx-auto w-full">
-        {/* News ticker strip */}
+      {/* BOTTOM — news chips + scroll cue.
+          Each news item now a hard-bordered chip with a 3px offset
+          shadow — same brutalist syntax as the CTA buttons in the
+          hero. Reads as a horizontal row of active-status badges.
+
+          flex-shrink-0 on this whole block is critical: without it
+          the flex-column parent squeezes this row into nothing under
+          the flex-1 content div when viewport height is short, and
+          the section's overflow:hidden clips it → invisible on load
+          bug. Guaranteed natural height now. */}
+      <div className="max-w-[1500px] mx-auto w-full shrink-0">
+        {/* News chip row */}
         <div
-          className="hidden md:flex items-center gap-4 px-6 md:px-14 lg:pr-24 xl:pr-32 py-3 border-t border-black/20 text-[11px] uppercase tracking-[0.2em] overflow-hidden"
+          className="hidden md:flex items-center gap-3 flex-wrap px-6 md:px-14 lg:pr-24 xl:pr-32 py-4 border-t-2 border-black"
           style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
         >
+          {/* LIVE label */}
           <span
-            className="flex items-center gap-1.5 shrink-0 opacity-70"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            className="inline-flex items-center gap-1.5 shrink-0 text-[10px] font-bold uppercase tracking-[0.3em] px-2.5 py-1.5 border-2 border-black"
+            style={{
+              fontFamily: "var(--font-brutal-pixel)",
+              background: "#0d0d0d",
+              color: "#f4f4f4",
+              boxShadow: "3px 3px 0 0 #8a8a8a",
+            }}
           >
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
             {t.newsTitle}
           </span>
-          <span className="opacity-30">/</span>
-          <div className="flex-1 flex items-center gap-6 min-w-0 overflow-hidden whitespace-nowrap">
-            {t.news.slice(0, 3).map((item, i) => (
-              <div key={item.d} className="flex items-center gap-3 shrink-0">
-                <span
-                  className="opacity-50 tabular-nums"
-                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                >
-                  {item.d}
-                </span>
-                <span className="font-bold normal-case tracking-normal text-[13px]">
-                  {item.n}
-                </span>
-                {i < 2 && <span className="opacity-25 ml-3">✦</span>}
-              </div>
-            ))}
-          </div>
+
+          {/* Individual news chips — brutalist bordered badges */}
+          {t.news.slice(0, 3).map((item) => (
+            <div
+              key={item.d}
+              className="inline-flex items-center gap-2.5 shrink-0 px-3 py-1.5 border-2 border-black text-[12px]"
+              style={{
+                background: "#ebe8e0",
+                boxShadow: "3px 3px 0 0 #0d0d0d",
+              }}
+            >
+              <span
+                className="text-[10px] tabular-nums opacity-60 uppercase tracking-[0.15em]"
+                style={{ fontFamily: "var(--font-brutal-pixel)" }}
+              >
+                {item.d}
+              </span>
+              <span className="opacity-30">·</span>
+              <span className="font-bold">
+                {item.n}
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* Scroll cue pinned to viewport bottom */}
         <div
-          className="px-6 md:px-14 pb-6 md:pb-8"
+          className="px-6 md:px-14 pb-6 md:pb-8 pt-4"
           style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
         >
           <div className="flex items-center gap-4">
