@@ -51,7 +51,7 @@ type Lang = "bg" | "en";
 const COPY = {
   bg: {
     marquee:
-      "VEKTO GROWTH STUDIO ✦ ЕДИН БРАНД НА НИША ✦ AI-CREATIVE ПРОИЗВОДСТВО ✦ РЕКЛАМИ · СЪДЪРЖАНИЕ · САЙТОВЕ · СТРАТЕГИЯ ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ 4.8× СРЕДЕН ROAS ✦ ДАННИТЕ РЕШАВАТ, НЕ МНЕНИЯТА ✦ EST. MMXXIV · SOFIA ✦",
+      "VEKTO ✦ GROWTH STUDIO В СОФИЯ ✦ ЕДИН БРАНД НА НИША ✦ РЕКЛАМИ · КРЕАТИВ · САЙТОВЕ · СТРАТЕГИЯ ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ 4.8× СРЕДЕН ROAS ✦ ДАННИТЕ РЕШАВАТ ✦ EST. MMXXIV ✦",
     cta: "ПИШИ НИ",
     nav: {
       studio: "СТУДИО",
@@ -59,54 +59,53 @@ const COPY = {
     },
     stages: [
       { id: "01", label: "СТУДИО" },
-      { id: "02", label: "ПРОБЛЕМ" },
+      { id: "02", label: "ЗАЩО" },
       { id: "03", label: "ФОКУС" },
       { id: "04", label: "БРАНДОВЕ" },
       { id: "05", label: "СТАНДАРТ" },
-      { id: "06", label: "QUALIFY" },
+      { id: "06", label: "КАНДИДАТ" },
       { id: "07", label: "РАЗГОВОР" },
     ],
     stage1: {
       eyebrow: "01 · GROWTH STUDIO",
-      pill: "СТУДИО В СОФИЯ · ОТГОВОР ПОД 24Ч",
+      pill: "СТУДИО В СОФИЯ · ОТГОВОР ПОД 24 ЧАСА",
       headline1: "СТРОИМ РАСТЕЖ.",
       headline2Prefix: "НЕ",
-      headline2Highlight: "ОТЧЕТИ.",
+      headline2Highlight: "ПРЕЗЕНТАЦИИ.",
       typed: "ВЛЕЗЕ ВЪВ ФУНИЯТА.",
-      scrollCue: "▼ СКРОЛНИ ЗА ДА ПРОДЪЛЖИШ",
+      scrollCue: "▼ ПРОДЪЛЖИ",
       ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
-      ctaSecondary: "ВИЖ РАБОТА",
-      newsTitle: "НОВИНИ ОТ СТУДИОТО",
+      ctaSecondary: "ПОРТФОЛИО",
+      newsTitle: "НОВИНИ",
       news: [
-        { d: "04.08.26", n: "MEN'S CARE — НОВА AI КАМПАНИЯ ЛАЙВ" },
-        { d: "01.08.26", n: "VEKTO x DUSQ — САЩ LAUNCH СТАРТИРА" },
-        { d: "24.07.26", n: "BULTEX + НЕДЕЛЯ СЕ ВЛИВАТ В СЪСТАВА" },
-        { d: "10.07.26", n: "50+ БРАНДА В ПОРТФЕЙЛА · MMXXVI" },
+        { d: "04.08.26", n: "MEN'S CARE — нова AI кампания" },
+        { d: "01.08.26", n: "DUSQ — старт в САЩ" },
+        { d: "24.07.26", n: "BULTEX + Неделя — нови в екипа" },
       ],
     },
     stage2: {
       eyebrow: "02 · ЗАЩО СЪЩЕСТВУВАМЕ",
       quoteMain:
-        "„Инвестираме сериозно в реклама. Но никой не може да ми каже точно колко се връща.\"",
-      quoteAttribution: "— повечето собственици, някога през първата година",
+        "„Инвестираме сериозно в реклама. Но никой не може да ми каже колко от това се връща.\"",
+      quoteAttribution: "— повечето собственици, в един момент през първата година",
       response: "Ако това ти звучи познато —",
-      responseHighlight: "приятели.",
+      responseHighlight: "разбираме се.",
     },
     stage3: {
       eyebrow: "03 · ЧЕТИРИ СТАИ · ЕДИН ПОКРИВ",
       rooms: [
         { id: "01", title: "РЕКЛАМИ",   detail: "Meta · Google · TikTok",       num: "4.8×",  label: "СРЕДЕН ROAS" },
-        { id: "02", title: "КРЕАТИВ",   detail: "UGC · AI · Live-action",       num: "200+",  label: "АСЕТА / МЕСЕЦ" },
-        { id: "03", title: "САЙТОВЕ",   detail: "Landing · E-com · Портали",    num: "12",    label: "LAUNCH / ГОДИНА" },
-        { id: "04", title: "СТРАТЕГИЯ", detail: "Позициониране · Оферта · План", num: "50+", label: "БРАНДА В ПОРТФЕЙЛА" },
+        { id: "02", title: "КРЕАТИВ",   detail: "UGC · AI · заснемане на живо", num: "200+",  label: "ВИДЕА НА МЕСЕЦ" },
+        { id: "03", title: "САЙТОВЕ",   detail: "Landing · е-ком · портали",    num: "12",    label: "САЙТА НА ГОДИНА" },
+        { id: "04", title: "СТРАТЕГИЯ", detail: "Позициониране · оферта · план", num: "50+", label: "БРАНДА В ПОРТФЕЙЛА" },
       ],
       roomBadge: "СТАЯ №",
     },
     stage4: {
       eyebrow: "04 · СЪСТАВЪТ",
       headline1: "50+ БРАНДА В ПОРТФЕЙЛА.",
-      headline2Prefix: "ИЗБРАН СЕГМЕНТ",
-      headline2Highlight: "ТУК.",
+      headline2Prefix: "12",
+      headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
       coda: "12 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
     },
@@ -114,40 +113,40 @@ const COPY = {
       eyebrow: "05 · СТАНДАРТЪТ",
       headline1: "ЧЕТИРИ ПРИНЦИПА",
       headline2Highlight: "НА КОИТО НЕ ПРАВИМ КОМПРОМИС.",
-      note: "Ако някой от тях се сблъска с това, което искаш — не сме правилният екип.",
+      note: "Ако някой от тях се разминава с очакванията ти — не сме правилният екип.",
       principles: [
         {
           num: "01",
           title: "ЕДИН БРАНД НА НИША",
-          body: "Не се състезаваме сами със себе си. Ако вече работим с бранд от твоята вертикала — препращаме.",
+          body: "Не се състезаваме сами със себе си. Ако вече работим с бранд от твоята ниша — насочваме те към друг екип.",
         },
         {
           num: "02",
           title: "ОТ РЕЗУЛТАТА, НАЗАД",
-          body: "Първо: какво ще проследим. После: какво ще пуснем. Ако не можем да го измерим, не го правим.",
+          body: "Първо решаваме какво ще измерим. После — какво ще пуснем. Ако не можем да го проследим, не го правим.",
         },
         {
           num: "03",
-          title: "AI-FIRST. HUMAN-FINAL.",
-          body: "AI ускорява производството. Хората филтрират, обучават и защитават бранда.",
+          title: "AI ЗАПОЧВА. ХОРАТА ЗАВЪРШВАТ.",
+          body: "AI ускорява производството. Хората решават, коригират и защитават бранда.",
         },
         {
           num: "04",
           title: "ДАННИТЕ РЕШАВАТ. МНЕНИЯТА — НЕ.",
-          body: "Приемаме тестове. Отхвърляме субективни спорове. Пазарът е арбитърът.",
+          body: "Всичко минава през тест. Субективните спорове — не. Пазарът решава.",
         },
       ],
     },
     stage6: {
-      eyebrow: "06 · QUALIFY · ТИ ЛИ СИ?",
+      eyebrow: "06 · КОГО ТЪРСИМ",
       headlinePrefix: "ОТГОВАРЯШ ЛИ НА ВСИЧКИТЕ",
       headlineHighlight: "ЧЕТИРИ",
       headlineSuffix: "?",
       items: [
         "Правиш €100k+ годишен приход",
-        "Готов си да инвестираш в система, не в единични асета",
+        "Готов си да инвестираш в система, не в единични материали",
         "Искаш партньор, не изпълнител",
-        "Цениш занаята повече от gimmicks",
+        "Цениш занаята повече от трикове",
       ],
     },
     stage7: {
@@ -156,13 +155,13 @@ const COPY = {
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
       location: "СОФИЯ, БЪЛГАРИЯ",
-      guestbook: "// ГОСТ-КНИГА · ПРАВЕН СЪС ♥ В СОФИЯ · MMXXVI",
+      guestbook: "// СОФИЯ · MMXXVI · VEKTO STUDIO",
       portfolioLink: "← ВИЖ ПЪЛНО ПОРТФОЛИО",
     },
   },
   en: {
     marquee:
-      "VEKTO GROWTH STUDIO ✦ ONE BRAND PER NICHE ✦ AI-CREATIVE PIPELINE ✦ ADS · CONTENT · SITES · STRATEGY ✦ 50+ PARTNERS IN BG + US ✦ 4.8× AVERAGE ROAS ✦ DATA DECIDES, OPINIONS DON'T ✦ EST. MMXXIV · SOFIA ✦",
+      "VEKTO ✦ GROWTH STUDIO IN SOFIA ✦ ONE BRAND PER NICHE ✦ ADS · CREATIVE · SITES · STRATEGY ✦ 50+ PARTNERS IN BG + US ✦ 4.8× AVERAGE ROAS ✦ DATA DECIDES ✦ EST. MMXXIV ✦",
     cta: "EMAIL US",
     nav: {
       studio: "STUDIO",
@@ -170,11 +169,11 @@ const COPY = {
     },
     stages: [
       { id: "01", label: "STUDIO" },
-      { id: "02", label: "PROBLEM" },
+      { id: "02", label: "WHY" },
       { id: "03", label: "FOCUS" },
       { id: "04", label: "ROSTER" },
       { id: "05", label: "STANDARD" },
-      { id: "06", label: "QUALIFY" },
+      { id: "06", label: "FIT" },
       { id: "07", label: "TALK" },
     ],
     stage1: {
@@ -182,42 +181,41 @@ const COPY = {
       pill: "SOFIA STUDIO · REPLY UNDER 24H",
       headline1: "WE BUILD GROWTH.",
       headline2Prefix: "NOT",
-      headline2Highlight: "REPORTS.",
+      headline2Highlight: "DECKS.",
       typed: "YOU'RE IN THE FUNNEL.",
-      scrollCue: "▼ SCROLL TO CONTINUE",
+      scrollCue: "▼ CONTINUE",
       ctaPrimary: "BOOK A CALL",
-      ctaSecondary: "SEE WORK",
-      newsTitle: "STUDIO WIRE",
+      ctaSecondary: "PORTFOLIO",
+      newsTitle: "NEWS",
       news: [
-        { d: "04.08.26", n: "MEN'S CARE — NEW AI CAMPAIGN LIVE" },
-        { d: "01.08.26", n: "VEKTO x DUSQ — US LAUNCH STARTED" },
-        { d: "24.07.26", n: "BULTEX + NEDELYA JOIN THE ROSTER" },
-        { d: "10.07.26", n: "50+ BRANDS IN THE PORTFOLIO · MMXXVI" },
+        { d: "04.08.26", n: "MEN'S CARE — new AI campaign" },
+        { d: "01.08.26", n: "DUSQ — US launch live" },
+        { d: "24.07.26", n: "BULTEX + Nedelya — new on the roster" },
       ],
     },
     stage2: {
       eyebrow: "02 · WHY WE EXIST",
       quoteMain:
-        "\"We invest seriously in advertising. But nobody can tell me exactly what comes back.\"",
-      quoteAttribution: "— most brand owners, some point in year one",
+        "\"We invest seriously in advertising. But nobody can tell me how much of that actually comes back.\"",
+      quoteAttribution: "— most brand owners, at some point in year one",
       response: "If that sounds familiar —",
-      responseHighlight: "friends.",
+      responseHighlight: "we speak the same language.",
     },
     stage3: {
       eyebrow: "03 · FOUR ROOMS · ONE ROOF",
       rooms: [
-        { id: "01", title: "ADS",        detail: "Meta · Google · TikTok",        num: "4.8×",  label: "AVERAGE ROAS" },
-        { id: "02", title: "CONTENT",    detail: "UGC · AI · Live-action",        num: "200+",  label: "ASSETS / MONTH" },
-        { id: "03", title: "WEBSITES",   detail: "Landing · E-com · Portals",     num: "12",    label: "LAUNCHES / YEAR" },
-        { id: "04", title: "STRATEGY",   detail: "Positioning · Offer · Plan",    num: "50+",   label: "BRANDS IN PORTFOLIO" },
+        { id: "01", title: "ADS",       detail: "Meta · Google · TikTok",       num: "4.8×",  label: "AVERAGE ROAS" },
+        { id: "02", title: "CREATIVE",  detail: "UGC · AI · live-action",       num: "200+",  label: "VIDEOS / MONTH" },
+        { id: "03", title: "WEBSITES",  detail: "Landing · e-com · portals",    num: "12",    label: "SITES / YEAR" },
+        { id: "04", title: "STRATEGY",  detail: "Positioning · offer · plan",   num: "50+",   label: "BRANDS IN PORTFOLIO" },
       ],
       roomBadge: "ROOM №",
     },
     stage4: {
       eyebrow: "04 · THE ROSTER",
-      headline1: "50+ BRANDS ON OUR ROSTER.",
-      headline2Prefix: "SELECTED CUT",
-      headline2Highlight: "SHOWN.",
+      headline1: "50+ BRANDS IN THE PORTFOLIO.",
+      headline2Prefix: "12",
+      headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },
       coda: "12 / 50+ · REST ON REQUEST",
     },
@@ -225,37 +223,37 @@ const COPY = {
       eyebrow: "05 · THE STANDARD",
       headline1: "FOUR PRINCIPLES",
       headline2Highlight: "WE DON'T NEGOTIATE ON.",
-      note: "If any of them collide with what you're after — we're probably not the right team.",
+      note: "If any of them clashes with what you're after — we're probably not the right team.",
       principles: [
         {
           num: "01",
           title: "ONE BRAND PER NICHE",
-          body: "We don't compete with ourselves. If we already work with a brand in your vertical — we refer.",
+          body: "We don't compete with ourselves. If we already work with a brand in your niche — we refer you elsewhere.",
         },
         {
           num: "02",
           title: "FROM THE OUTCOME, BACKWARDS",
-          body: "First: what will we measure. Then: what will we run. If we can't measure it, we don't do it.",
+          body: "First we decide what to measure. Then what to run. If we can't track it, we don't do it.",
         },
         {
           num: "03",
-          title: "AI-FIRST. HUMAN-FINAL.",
-          body: "AI speeds production. Humans filter, coach and protect the brand.",
+          title: "AI STARTS. HUMANS FINISH.",
+          body: "AI speeds production. Humans decide, correct and protect the brand.",
         },
         {
           num: "04",
           title: "DATA DECIDES. OPINIONS — DON'T.",
-          body: "We accept tests. We reject subjective debate. The market is the arbiter.",
+          body: "Every choice runs a test. Subjective debate doesn't ship. The market is the judge.",
         },
       ],
     },
     stage6: {
-      eyebrow: "06 · QUALIFY · IS THIS YOU?",
+      eyebrow: "06 · WHO WE'RE FOR",
       headlinePrefix: "DO YOU MEET ALL",
       headlineHighlight: "FOUR",
       headlineSuffix: "?",
       items: [
-        "You do €100k+ annual revenue",
+        "You do €100k+ in annual revenue",
         "You're ready to invest in a system, not one-off assets",
         "You want a partner, not a vendor",
         "You value craft over gimmicks",
@@ -267,7 +265,7 @@ const COPY = {
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
       location: "SOFIA, BULGARIA",
-      guestbook: "// GUESTBOOK · MADE WITH ♥ IN SOFIA · MMXXVI",
+      guestbook: "// SOFIA · MMXXVI · VEKTO STUDIO",
       portfolioLink: "← SEE FULL PORTFOLIO",
     },
   },
@@ -736,84 +734,53 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             </div>
           </div>
 
-          {/* RIGHT SIDEBAR — clean recent-activity feed (desktop only).
-              Only 3 items so it stays airy. First item marked LIVE.
-              No stats footer — that was clutter. Narrower footprint
-              (col-span-3) so it doesn't crowd the right-rail indicator. */}
+          {/* RIGHT SIDEBAR — clean dark feed, no clutter.
+              Dark ground = feels premium (was concrete-tint = grey/heavy).
+              Mixed-case body text (was all uppercase = shouted). No
+              per-item borders, no NEW badge, no bottom footer strip. */}
           <aside
             className="hidden lg:flex col-span-4 xl:col-span-3 flex-col border-2 border-black self-start"
             style={{
-              background: "#ebe8e0",
-              boxShadow: "6px 6px 0 0 #0d0d0d",
+              background: "#0d0d0d",
+              color: "#f4f4f4",
+              boxShadow: "6px 6px 0 0 #8a8a8a",
             }}
           >
-            {/* Header — simple, single accent */}
+            {/* Header — one line, subtle LIVE indicator */}
             <div
-              className="border-b-2 border-black px-4 py-3 flex items-center justify-between"
-              style={{ background: "#0d0d0d" }}
+              className="px-5 py-3 flex items-center justify-between border-b"
+              style={{ borderColor: "rgba(244,244,244,0.15)" }}
             >
               <span
-                className="text-[10px] font-bold uppercase tracking-[0.3em] text-white"
+                className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-80"
                 style={{ fontFamily: "var(--font-brutal-pixel)" }}
               >
                 {t.newsTitle}
               </span>
               <span
-                className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.3em]"
-                style={{ fontFamily: "var(--font-brutal-pixel)", color: "#a8a8a8" }}
+                className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.3em] opacity-60"
+                style={{ fontFamily: "var(--font-brutal-pixel)" }}
               >
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                 LIVE
               </span>
             </div>
 
-            {/* Feed items — first one has LIVE badge, others muted */}
-            <div className="divide-y divide-black/15">
-              {t.news.slice(0, 3).map((item, i) => (
-                <div
-                  key={item.d}
-                  className="px-4 py-4"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span
-                      className="text-[10px] tracking-[0.25em] opacity-60"
-                      style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                    >
-                      {item.d}
-                    </span>
-                    {i === 0 && (
-                      <span
-                        className="text-[8px] px-1.5 py-0.5 border border-black font-bold uppercase tracking-[0.25em]"
-                        style={{
-                          fontFamily: "var(--font-brutal-pixel)",
-                          background: "#0d0d0d",
-                          color: "#f4f4f4",
-                        }}
-                      >
-                        NEW
-                      </span>
-                    )}
-                  </div>
+            {/* Items — flat, generous space, no dividers */}
+            <div className="px-5 py-5 space-y-5">
+              {t.news.slice(0, 3).map((item) => (
+                <div key={item.d}>
                   <div
-                    className="text-[13px] font-bold leading-[1.35] uppercase tracking-[0.02em]"
-                    style={{ color: "#0d0d0d" }}
+                    className="text-[10px] tabular-nums opacity-50 mb-1.5"
+                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
                   >
+                    {item.d}
+                  </div>
+                  <div className="text-[13px] leading-[1.45] font-medium">
                     {item.n}
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Footer — single link, not stats */}
-            <div
-              className="border-t-2 border-black px-4 py-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em]"
-              style={{
-                fontFamily: "var(--font-brutal-pixel)",
-                background: "#d6d3ca",
-              }}
-            >
-              <span className="opacity-70">САМО ЗАДАДЕНИ · MMXXVI</span>
-              <span>✦</span>
             </div>
           </aside>
         </div>
