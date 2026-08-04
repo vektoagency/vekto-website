@@ -58,10 +58,14 @@ export const ZONES: Zone[] = [
 export const zoneLocal = (p: number, z: Zone) =>
   Math.max(0, Math.min(1, (p - z.from) / (z.to - z.from)));
 
-/** Overlay opacity envelope: in over the first 18%, out over the last 15%. */
+/** Overlay opacity envelope: in over the first 18%, out over the last 15%.
+    The FIRST zone skips the in-ramp — the hero must be fully present at
+    page load (progress 0), not appear only after the visitor scrolls. The
+    LAST zone skips the out-ramp so the closing CTA never fades away while
+    the visitor rests at the bottom of the runway. */
 export const zoneEnvelope = (p: number, z: Zone) => {
   const t = zoneLocal(p, z);
-  const inn = Math.min(1, t / 0.18);
-  const out = Math.min(1, (1 - t) / 0.15);
+  const inn = z.from <= 0 ? 1 : Math.min(1, t / 0.18);
+  const out = z.to >= 1 ? 1 : Math.min(1, (1 - t) / 0.15);
   return Math.max(0, Math.min(inn, out));
 };
