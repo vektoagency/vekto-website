@@ -309,11 +309,13 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
             design: no plate, white display type with the silver highlight. */}
         <ZoneOverlay p={p} z={Z.vault} className="items-start justify-center text-left">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-            <div className="max-w-3xl">
+            {/* The dart owns the centre-right of this shot; the column stops
+                at ~40% width so type never crosses the object. */}
+            <div className="max-w-xl">
               <div className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
                 {t.zones.vault.kicker}
               </div>
-              <h1 className="font-black tracking-[-0.03em]" style={{ fontSize: "clamp(34px, 5vw, 88px)", lineHeight: 0.94, color: "#f4f4f4" }}>
+              <h1 className="font-black tracking-[-0.03em]" style={{ fontSize: "clamp(28px, 3.1vw, 56px)", lineHeight: 0.96, color: "#f4f4f4" }}>
                 <span className="block">{t.zones.vault.h1a}</span>
                 <span className="block">
                   {t.zones.vault.h1b}{" "}
@@ -367,15 +369,15 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         {/* ZONE 2 · WHY — the quote as naked white type. */}
         <ZoneOverlay p={p} z={Z.ignition} className="items-start justify-center">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
-            <div className="max-w-3xl">
+            <div className="max-w-xl">
               <Kicker text={t.zones.why.kicker} />
-              <blockquote className="font-black tracking-[-0.02em]" style={{ fontSize: "clamp(26px, 3.4vw, 56px)", lineHeight: 1.06, color: "#f4f4f4" }}>
+              <blockquote className="font-black tracking-[-0.02em]" style={{ fontSize: "clamp(22px, 2.6vw, 42px)", lineHeight: 1.08, color: "#f4f4f4" }}>
                 {t.zones.why.quote}
               </blockquote>
               <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.25em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
                 {t.zones.why.attribution}
               </div>
-              <div className="mt-6 font-black uppercase tracking-tight" style={{ fontSize: "clamp(22px, 2.6vw, 40px)", color: "#f4f4f4" }}>
+              <div className="mt-6 font-black uppercase tracking-tight" style={{ fontSize: "clamp(18px, 2vw, 32px)", color: "#f4f4f4" }}>
                 {t.zones.why.response}{" "}
                 <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                   {t.zones.why.responseHi}
@@ -386,10 +388,12 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         </ZoneOverlay>
 
         {/* ZONE 3 · FOCUS — four rooms as open columns, silver numerals. */}
-        <ZoneOverlay p={p} z={Z.screen} className="items-start justify-center">
+        <ZoneOverlay p={p} z={Z.screen} className="items-end justify-center pb-16 md:pb-20">
+          {/* The screen pass fills the centre of the frame — the rooms sit in
+              the lower band where the shot is floor and darkness. */}
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             <Kicker text={t.zones.focus.kicker} />
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8 mt-4 max-w-5xl">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 mt-3">
               {t.zones.focus.rooms.map((r, i) => {
                 const local = zoneLocal(p, Z.screen);
                 const on = local > 0.12 + i * 0.14;
@@ -404,7 +408,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                   >
                     <div className="font-black uppercase tracking-tight text-lg md:text-2xl" style={{ color: "#f4f4f4" }}>{r.title}</div>
                     <div className="text-[11px] uppercase tracking-[0.15em] opacity-70 mt-1" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>{r.detail}</div>
-                    <div className="font-black tabular-nums mt-3" style={{ fontSize: "clamp(34px, 4vw, 64px)", lineHeight: 1, background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{r.num}</div>
+                    <div className="font-black tabular-nums mt-2" style={{ fontSize: "clamp(28px, 3vw, 48px)", lineHeight: 1, background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{r.num}</div>
                     <div className="text-[11px] uppercase tracking-[0.2em] opacity-70 mt-1" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>{r.label}</div>
                   </div>
                 );
@@ -456,10 +460,13 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         </ZoneOverlay>
 
         {/* ZONE 6 · CALL — dark type straight on the white film, chrome CTA. */}
-        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-center text-center">
-          <div className="px-6">
-            <Kicker text={t.zones.landing.kicker} dark center />
-            <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(38px, 6vw, 104px)", lineHeight: 0.92, color: JET }}>
+        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-start">
+          {/* The monument stands dead centre; the ask lives in the empty
+              left half of the bone-white frame. */}
+          <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
+          <div className="max-w-xl text-left">
+            <Kicker text={t.zones.landing.kicker} dark />
+            <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(32px, 4.2vw, 72px)", lineHeight: 0.94, color: JET }}>
               {t.zones.landing.h2a}
               <br />
               <span className="italic" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
@@ -483,6 +490,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
             <div className="mt-8 text-[11px] uppercase tracking-[0.3em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
               {t.zones.landing.meta}
             </div>
+          </div>
           </div>
         </ZoneOverlay>
       </div>
@@ -529,17 +537,19 @@ function StandardOverlay({
       style={{ opacity: env, visibility: env <= 0.001 ? "hidden" : "visible" }}
     >
       <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
+        {/* Confined to the left half: the corridor's vanishing point and the
+            dart hold the centre of the frame. */}
         <Kicker text={kicker} />
-        <div className="space-y-1 md:space-y-2">
+        <div className="space-y-1 md:space-y-2 max-w-xl xl:max-w-2xl">
           {words.map((w, i) => {
             const slice = 0.8 / words.length;
             const tt = Math.max(0, Math.min(1, (local - i * slice) / (slice * 0.4)));
             return (
               <div
                 key={w}
-                className="font-black uppercase leading-[0.95] tracking-[-0.03em]"
+                className="font-black uppercase leading-[1.0] tracking-[-0.02em]"
                 style={{
-                  fontSize: "clamp(30px, 5.6vw, 92px)",
+                  fontSize: "clamp(22px, 2.9vw, 46px)",
                   opacity: tt,
                   transform: `translateX(${(1 - tt) * -50}px)`,
                   background: SILVER_H,
