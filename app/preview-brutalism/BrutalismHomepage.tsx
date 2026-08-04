@@ -630,20 +630,23 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
       className="border-b-2 border-black relative flex flex-col"
       style={{ minHeight: "100vh", background: "#ebe8e0", overflow: "hidden" }}
     >
-      {/* MAIN — 2 columns on desktop: content left + news sidebar right */}
-      <div className="flex-1 flex items-stretch px-6 md:px-14 pt-8 md:pt-12 pb-4 max-w-[1500px] mx-auto w-full">
+      {/* MAIN — 2 columns on desktop: content left + news sidebar right.
+          Content aligns to TOP of the flex-1 area — using justify-center
+          here left huge empty space above the eyebrow because the hero
+          content is shorter than a full viewport. */}
+      <div className="flex-1 flex items-start px-6 md:px-14 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full">
         <div className="grid grid-cols-12 gap-6 md:gap-10 w-full">
           {/* LEFT — main content, ~2/3 on desktop */}
-          <div className="col-span-12 lg:col-span-8 flex flex-col justify-center">
+          <div className="col-span-12 lg:col-span-8 flex flex-col">
             <div
-              className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 md:mb-5 opacity-60"
+              className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
               style={{ fontFamily: "var(--font-brutal-pixel)" }}
             >
               {t.eyebrow}
             </div>
 
             <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-6 md:mb-8 self-start"
+              className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-5 md:mb-6 self-start"
               style={{
                 background: "#0d0d0d",
                 color: "#f4f4f4",
@@ -659,8 +662,8 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             <h1
               className="font-black tracking-[-0.03em]"
               style={{
-                fontSize: "clamp(38px, 5.8vw, 80px)",
-                lineHeight: 0.96,
+                fontSize: "clamp(44px, 7vw, 104px)",
+                lineHeight: 0.94,
               }}
             >
               <span className="block whitespace-nowrap">{t.headline1}</span>
