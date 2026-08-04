@@ -20,8 +20,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { sendContactEmail } from "../actions/contact";
 
 // ============================================================================
@@ -44,6 +43,25 @@ const WORDMARK_METAL =
 // text-fill on LIGHT grounds where you want the chrome feel.
 const GRAPHITE_H =
   "linear-gradient(90deg, #3a3a3a 0%, #6d6d6d 22%, #2a2a2a 50%, #6d6d6d 78%, #3a3a3a 100%)";
+// GRAPHITE_H_IN — same chrome, but the sweep resolves DARK instead of
+// mid-grey. Used on terminal words: the symmetric ramp above puts a
+// #6d6d6d highlight under the closing syllables, which on the hero
+// headline meant the payoff word was the faintest thing on the page.
+const GRAPHITE_H_IN =
+  "linear-gradient(90deg, #6d6d6d 0%, #2a2a2a 30%, #5a5a5a 58%, #232323 100%)";
+
+// ============================================================================
+// REEL FRAMES — hero contact sheet.
+// Real posters already shipped for the site's showreel, so the hero shows
+// actual delivered work rather than another typographic slab. Captions live
+// in COPY per-language and describe only what the frame demonstrably is;
+// they never attach a client name or a metric to a frame.
+// ============================================================================
+const REEL_FRAMES = [
+  { src: "/images/posters/hero/video-5s.webp" }, // creator / talking head
+  { src: "/images/posters/hero/video-2s.webp" }, // product macro
+  { src: "/images/posters/hero/video-7s.webp" }, // aerial / location
+] as const;
 
 // ============================================================================
 // COPY (bg + en). Brand names stay Latin in both languages.
@@ -52,11 +70,8 @@ type Lang = "bg" | "en";
 
 const COPY = {
   bg: {
-    marquee:
-      "VEKTO ✦ GROWTH AGENCY ✦ РЕКЛАМИ · КРЕАТИВ · САЙТОВЕ · СТРАТЕГИЯ ✦ MEN'S CARE 5.2× · PARFEN 7.7× · FREYA 10× ROAS ✦ 50+ ПАРТНЬОРА В БГ + САЩ ✦ ЕДИН БРАНД НА НИША ✦ ДАННИТЕ РЕШАВАТ ✦ EST. MMXXIV ✦",
     cta: "ПИШИ НИ",
     nav: {
-      studio: "LIVE",
       langSwitch: "EN",
     },
     stages: [
@@ -71,20 +86,28 @@ const COPY = {
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · GROWTH AGENCY",
-      pill: "AI GROWTH AGENCY · EST. MMXXIV",
+      eyebrow: "01 · VEKTO · EST. MMXXIV",
+      pill: "AI GROWTH AGENCY · БЪЛГАРИЯ · САЩ",
       headline1: "ТВОЯТ ПАРТНЬОР",
       headline2Prefix: "ЗА",
       headline2Highlight: "РАСТЕЖ ОНЛАЙН.",
-      typed: "ВЛЕЗЕ ВЪВ ФУНИЯТА.",
+      typed: "ЕДИН ЕКИП. РЕКЛАМИ, КРЕАТИВ, САЙТ.",
       scrollCue: "▼ ПРОДЪЛЖИ",
       ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
       ctaSecondary: "ПОРТФОЛИО",
-      newsTitle: "НОВИНИ",
-      news: [
-        { d: "04.08.26", n: "MEN'S CARE · 5.2× ROAS на новата AI кампания" },
-        { d: "01.08.26", n: "PARFEN · 7.7× ROAS на urgency офертата" },
-        { d: "24.07.26", n: "FREYA · 10× ROAS на nail-products кампанията" },
+      proofTitle: "ROAS",
+      proof: [
+        { metric: "5.2×", brand: "MEN'S CARE" },
+        { metric: "7.7×", brand: "PARFEN" },
+        { metric: "10×",  brand: "FREYA" },
+      ],
+      sheetTitle: "ОТ РОЛКАТА",
+      sheetNote: "9:16 · ЗА REELS / TIKTOK",
+      sheetCaptions: ["КРЕАТОР", "ПРОДУКТ", "ЛОКАЦИЯ"],
+      sheetAlt: [
+        "Кадър от рекламно видео — креатор говори пред камера",
+        "Кадър от рекламно видео — макро план на продукт",
+        "Кадър от рекламно видео — въздушна снимка на локация",
       ],
     },
     stage2: {
@@ -230,11 +253,8 @@ const COPY = {
     },
   },
   en: {
-    marquee:
-      "VEKTO ✦ GROWTH AGENCY ✦ ADS · CREATIVE · SITES · STRATEGY ✦ MEN'S CARE 5.2× · PARFEN 7.7× · FREYA 10× ROAS ✦ 50+ PARTNERS IN BG + US ✦ ONE BRAND PER NICHE ✦ DATA DECIDES ✦ EST. MMXXIV ✦",
     cta: "EMAIL US",
     nav: {
-      studio: "LIVE",
       langSwitch: "БГ",
     },
     stages: [
@@ -249,20 +269,28 @@ const COPY = {
       { id: "09", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · GROWTH AGENCY",
-      pill: "AI GROWTH AGENCY · EST. MMXXIV",
+      eyebrow: "01 · VEKTO · EST. MMXXIV",
+      pill: "AI GROWTH AGENCY · BULGARIA · USA",
       headline1: "YOUR PARTNER",
       headline2Prefix: "FOR",
       headline2Highlight: "ONLINE GROWTH.",
-      typed: "YOU'RE IN THE FUNNEL.",
+      typed: "ONE TEAM. ADS, CREATIVE, SITE.",
       scrollCue: "▼ CONTINUE",
       ctaPrimary: "BOOK A CALL",
       ctaSecondary: "PORTFOLIO",
-      newsTitle: "NEWS",
-      news: [
-        { d: "04.08.26", n: "MEN'S CARE · 5.2× ROAS on the new AI campaign" },
-        { d: "01.08.26", n: "PARFEN · 7.7× ROAS on the urgency offer" },
-        { d: "24.07.26", n: "FREYA · 10× ROAS on the nail-products push" },
+      proofTitle: "ROAS",
+      proof: [
+        { metric: "5.2×", brand: "MEN'S CARE" },
+        { metric: "7.7×", brand: "PARFEN" },
+        { metric: "10×",  brand: "FREYA" },
+      ],
+      sheetTitle: "FROM THE REEL",
+      sheetNote: "9:16 · FOR REELS / TIKTOK",
+      sheetCaptions: ["CREATOR", "PRODUCT", "LOCATION"],
+      sheetAlt: [
+        "Frame from an ad video — creator speaking to camera",
+        "Frame from an ad video — macro shot of a product",
+        "Frame from an ad video — aerial shot of a location",
       ],
     },
     stage2: {
@@ -508,6 +536,22 @@ function useStickyProgress(ref: React.RefObject<HTMLElement | null>) {
   return p;
 }
 
+// True when the visitor has asked the OS to reduce motion. Every timed
+// reveal on this page checks it: the page is animation-heavy (sticky pans,
+// counters, typewriter, staggered card entries) and none of it carries
+// meaning that is lost when it snaps into place instead.
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setReduced(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+  return reduced;
+}
+
 function useInView(ref: React.RefObject<HTMLElement | null>, threshold = 0.35) {
   const [v, setV] = useState(false);
   useEffect(() => {
@@ -585,24 +629,6 @@ export default function BrutalismHomepage() {
   const [lang, setLang] = useLanguage();
   const t = COPY[lang];
 
-  const [clock, setClock] = useState("--:--:--");
-  useEffect(() => {
-    // Format the clock as HH:MM:SS in Bulgaria's timezone (EET/EEST) so
-    // it reads correctly regardless of where the visitor is browsing from.
-    // Broadcast-style live clock is a signature 90s / retro-terminal move.
-    const tick = () => {
-      setClock(
-        new Date().toLocaleTimeString("en-GB", {
-          timeZone: "Europe/Sofia",
-          hour12: false,
-        })
-      );
-    };
-    tick();
-    const t = setInterval(tick, 1000);
-    return () => clearInterval(t);
-  }, []);
-
   const s1 = useRef<HTMLElement>(null);
   const s2 = useRef<HTMLElement>(null);
   const s3 = useRef<HTMLElement>(null);
@@ -612,31 +638,33 @@ export default function BrutalismHomepage() {
   const s5 = useRef<HTMLElement>(null);
   const s6 = useRef<HTMLElement>(null);
   const s7 = useRef<HTMLElement>(null);
-  const stage = useCurrentStage([s1, s2, s3, sCases, s4, sProcess, s5, s6, s7]);
+  // Memoised: useCurrentStage takes the array as an effect dependency, so a
+  // fresh literal on every render tore down and re-attached the scroll
+  // listener continuously.
+  const stageRefs = useMemo(
+    () => [s1, s2, s3, sCases, s4, sProcess, s5, s6, s7],
+    [],
+  );
+  const stage = useCurrentStage(stageRefs);
 
-  // Option A / B toggle. Default (Option A) shows a trimmed 4-item nav
-  // strip. ?bare=1 (Option B) hides the whole nav strip, leaving just
-  // the marquee + masthead + the right-rail funnel indicator.
-  const searchParams = useSearchParams();
-  const bare = searchParams?.get("bare") === "1";
-
-  // Action-oriented nav — real destinations. Case studies + Portfolio
-  // + Work show past output, Brief captures a warmer lead than raw
-  // email, Book-a-call is the primary conversion. The 9-stage in-page
-  // funnel stays fully browsable via scroll + right-rail indicator.
+  // Action-oriented nav — real destinations only.
+  //
+  // "Работа"/"Work" was dropped: /work is nothing but a redirect to
+  // /portfolio, so the nav carried a link pointing at another link in the
+  // same nav. Three near-synonyms (Work / Portfolio / Case Studies) also
+  // gave a visitor no way to tell them apart. Two distinct destinations
+  // remain — the reel and the written cases — plus the brief form.
   const NAV_LINKS =
     lang === "bg"
       ? [
-          { label: "Работа",       href: "/work",           external: true  },
-          { label: "Портфолио",    href: "/portfolio",      external: true  },
-          { label: "Кейс стъдита", href: "/case-studies",   external: true  },
-          { label: "Анкета",       href: "/brief",          external: true  },
+          { label: "Портфолио", href: "/portfolio"    },
+          { label: "Кейсове",   href: "/case-studies" },
+          { label: "Анкета",    href: "/brief"        },
         ]
       : [
-          { label: "Work",          href: "/work",          external: true  },
-          { label: "Portfolio",     href: "/portfolio",     external: true  },
-          { label: "Case Studies",  href: "/case-studies",  external: true  },
-          { label: "Brief",         href: "/brief",         external: true  },
+          { label: "Portfolio",    href: "/portfolio"    },
+          { label: "Case Studies", href: "/case-studies" },
+          { label: "Brief",        href: "/brief"        },
         ];
 
   const primaryCtaLabel = lang === "bg" ? "Резервирай разговор" : "Book a call";
@@ -649,8 +677,16 @@ export default function BrutalismHomepage() {
       className="relative"
       style={{
         background: "#ebe8e0",
-        fontFamily: "var(--font-brutal-grotesk), system-ui, sans-serif",
+        fontFamily: "var(--brutal-display), system-ui, sans-serif",
         color: "#0d0d0d",
+        // Several stages enter by sliding in from off-axis
+        // (translateX(±50px) in Process, rotate in Roster, translateX(-30px)
+        // in Why). Those pre-entry transforms widened the document, which
+        // gave the whole page a horizontal scroll on phones — 403px of
+        // scrollable width in a 390px viewport. `clip` rather than `hidden`
+        // because `hidden` would make this a scroll container and break
+        // every position:sticky stage inside it.
+        overflowX: "clip",
       }}
     >
       {/* ============= CRT SCANLINES OVERLAY =============
@@ -667,48 +703,25 @@ export default function BrutalismHomepage() {
         }}
       />
 
-      {/* ============= MARQUEE (removed per user) ============= */}
-      {false && (
-      <div
-        className="border-y-2 border-black overflow-hidden py-1.5"
-        style={{ background: "#0d0d0d" }}
-      >
-        <div className="whitespace-nowrap flex marquee-anim">
-          {[...Array(3)].map((_, i) => (
-            <span
-              key={i}
-              className="text-sm md:text-base tracking-[0.15em] font-black px-8"
-              style={{
-                background: SILVER_H,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              ✦ {t.marquee}
-            </span>
-          ))}
-        </div>
-      </div>
-      )}
-
       {/* ============= SINGLE-ROW HEADER =============
-          Merged masthead + nav into one horizontal strip on dark bg.
-          Removed the duplicate ✉ ПИШИ НИ button (was doing the same
-          job as the primary CTA). Order:
+          Masthead + nav in one strip on dark bg:
             [LOGO] | [nav links] | [БГ|EN] [→ Резервирай разговор]
-          Bare mode (?bare=1) keeps everything except drops the nav
-          links so masthead is just logo + language + CTA. */}
+          Nav links are md+ only. Below that the header used flex-wrap,
+          which stacked logo / four links / language / CTA into a
+          three-row block that ate a third of a phone viewport. On mobile
+          the header is now one non-wrapping row and the same
+          destinations stay reachable from the footer CTA block. */}
       <div
         className="border-b-4 border-black"
         style={{ background: "#0d0d0d", color: "#f4f4f4" }}
       >
-        <div className="px-4 md:px-6 py-3 md:py-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+        <div className="px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4">
           {/* LEFT — wordmark + inline nav */}
-          <div className="flex flex-wrap items-center gap-x-6 md:gap-x-10 gap-y-3">
-            <div
+          <div className="flex items-center gap-x-6 md:gap-x-10 min-w-0">
+            <Link
+              href="/preview-brutalism"
               aria-label="VEKTO"
-              className="h-8 md:h-11 w-[130px] md:w-[180px]"
+              className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0"
               style={{
                 background: WORDMARK_METAL,
                 WebkitMaskImage: "url(/images/logo.png)",
@@ -721,49 +734,40 @@ export default function BrutalismHomepage() {
                 maskSize: "contain",
               }}
             />
-            {!bare && (
-              <div className="flex flex-wrap items-center gap-x-5 md:gap-x-7 text-[13px] md:text-sm font-bold uppercase tracking-[0.2em]">
-                {NAV_LINKS.map((link) =>
-                  link.external ? (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      className="opacity-70 hover:opacity-100 transition-opacity"
-                    >
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      className="opacity-70 hover:opacity-100 transition-opacity"
-                    >
-                      {link.label}
-                    </a>
-                  )
-                )}
-              </div>
-            )}
+            <nav
+              aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"}
+              className="hidden md:flex items-center gap-x-7 text-sm font-bold uppercase tracking-[0.2em]"
+            >
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="opacity-70 hover:opacity-100 transition-opacity"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
           </div>
 
           {/* RIGHT — language + primary CTA */}
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <button
               onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-              className="px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] transition-colors hover:bg-white hover:text-black"
+              className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] transition-colors hover:bg-white hover:text-black"
               style={{
                 background: "transparent",
                 color: "#f4f4f4",
                 border: "1.5px solid rgba(244,244,244,0.4)",
               }}
-              aria-label="Switch language"
+              aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
             >
               {t.nav.langSwitch}
             </button>
             <button
               type="button"
               onClick={openBook}
-              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-black uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{
                 background: "#0d0d0d",
                 color: "#f4f4f4",
@@ -771,25 +775,37 @@ export default function BrutalismHomepage() {
                 borderColor: "#f4f4f4",
               }}
             >
-              → {primaryCtaLabel}
+              <span aria-hidden>→</span>
+              <span className="hidden sm:inline">{primaryCtaLabel}</span>
+              <span className="sm:hidden">{lang === "bg" ? "Разговор" : "Call"}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* ============= RIGHT-RAIL FUNNEL INDICATOR ============= */}
-      <div
-        aria-hidden
-        className="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-1.5 pointer-events-none"
+      {/* ============= RIGHT-RAIL FUNNEL INDICATOR =============
+          Was aria-hidden + pointer-events-none: it looks exactly like a
+          section index, so visitors tried to click it and nothing
+          happened. Every stage already has an id, so the rail is now a
+          real jump nav. */}
+      <nav
+        aria-label={lang === "bg" ? "Секции" : "Sections"}
+        className="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-1.5"
       >
         {t.stages.map((s, i) => {
           const active = i === stage;
           return (
-            <div key={s.id} className="flex items-center gap-2 justify-end">
+            <a
+              key={s.id}
+              href={`#stage-${s.id}`}
+              aria-current={active ? "true" : undefined}
+              aria-label={`${s.id} — ${s.label}`}
+              className="flex items-center gap-2 justify-end group"
+            >
               <span
-                className="text-[12px] font-bold tracking-[0.2em]"
+                className="text-[12px] font-bold tracking-[0.2em] group-hover:opacity-100"
                 style={{
-                  fontFamily: "var(--font-brutal-pixel)",
+                  fontFamily: "var(--brutal-pixel)",
                   opacity: active ? 1 : 0,
                   transition: "opacity 180ms ease",
                 }}
@@ -800,18 +816,19 @@ export default function BrutalismHomepage() {
                 className="w-6 h-6 border-2 border-black flex items-center justify-center text-[12px] font-black transition-all"
                 style={{
                   background: active ? SILVER : "#ebe8e0",
+                  color: "#0d0d0d",
                   boxShadow: active ? "3px 3px 0 0 #0d0d0d" : "1px 1px 0 0 #0d0d0d",
                   transform: active ? "translate(-2px,-2px)" : "translate(0,0)",
                 }}
               >
                 {s.id}
               </span>
-            </div>
+            </a>
           );
         })}
-      </div>
+      </nav>
 
-      <StageHook  targetRef={s1} t={t.stage1} clock={clock} openBook={openBook} />
+      <StageHook  targetRef={s1} t={t.stage1} lang={lang} openBook={openBook} />
       <HazardStrip />
       <StageTruth targetRef={s2} t={t.stage2} />
       <HazardStrip />
@@ -830,14 +847,23 @@ export default function BrutalismHomepage() {
       <StageAsk   targetRef={s7} t={t.stage7} openBook={openBook} />
 
       <style jsx global>{`
-        @keyframes marquee-anim {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-33.33%); }
+        /* Smooth scrolling is a preference, not a given — the right-rail
+           jump nav would otherwise fling a motion-sensitive visitor
+           across nine full-height stages. */
+        @media (prefers-reduced-motion: no-preference) {
+          html { scroll-behavior: smooth; }
         }
-        .marquee-anim {
-          animation: marquee-anim 40s linear infinite;
+        /* This page is animation-dense (sticky pans, counters, staggered
+           card entries, pulsing carets). None of it encodes meaning, so
+           under reduce it all resolves to its end state immediately. */
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.001ms !important;
+            scroll-behavior: auto !important;
+          }
         }
-        html { scroll-behavior: smooth; }
       `}</style>
 
       {/* Brutalist contact modal — same behaviour as the main site
@@ -859,17 +885,50 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const panelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     setSent(false);
     setError("");
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+
+    // Remember who opened the modal so focus can be handed back on close —
+    // otherwise a keyboard user is dropped at the top of the document.
+    const opener = document.activeElement as HTMLElement | null;
+
+    const FOCUSABLE =
+      'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { onClose(); return; }
+      // Trap Tab inside the panel. Without this, tabbing walks straight
+      // out of an aria-modal dialog and into the page behind the backdrop.
+      if (e.key !== "Tab") return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE))
+        .filter((el) => el.offsetParent !== null);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    panelRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
+      opener?.focus?.();
     };
   }, [open, onClose]);
 
@@ -926,16 +985,25 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   if (!open) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div aria-hidden className="absolute inset-0" style={{ background: "rgba(0,0,0,0.82)" }} />
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8">
+      {/* Backdrop owns the click-to-close, so the dialog element itself is
+          not also the dismiss target. role/aria-modal moved onto the panel
+          where assistive tech expects them, and the panel is labelled by
+          its own heading rather than announcing as an unnamed dialog. */}
+      <button
+        type="button"
+        aria-label={bg ? "Затвори" : "Close"}
+        tabIndex={-1}
+        onClick={onClose}
+        className="absolute inset-0 cursor-default"
+        style={{ background: "rgba(0,0,0,0.82)" }}
+      />
 
       <div
-        onClick={(e) => e.stopPropagation()}
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="book-modal-title"
         className="relative w-full max-w-2xl max-h-[92vh] overflow-hidden flex flex-col border-2 border-black"
         style={{ background: "#ebe8e0", boxShadow: "10px 10px 0 0 #8a8a8a" }}
       >
@@ -946,13 +1014,13 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         >
           <div>
             <div
-              className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-70 mb-1 flex items-center gap-1.5"
-              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+              className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-70 mb-1"
+              style={{ fontFamily: "var(--brutal-pixel)" }}
             >
-              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
               {s.subtitle}
             </div>
             <h2
+              id="book-modal-title"
               className="font-black text-lg md:text-2xl uppercase tracking-tight"
               style={{
                 background: SILVER_H,
@@ -991,7 +1059,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               </div>
               <div
                 className="text-xs uppercase tracking-[0.25em] opacity-70"
-                style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                style={{ fontFamily: "var(--brutal-pixel)" }}
               >
                 {s.sentSub}
               </div>
@@ -1010,7 +1078,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 <div className="flex-1 border-t-2 border-dashed border-black opacity-30" />
                 <div
                   className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-60"
-                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
                 >
                   {s.or}
                 </div>
@@ -1089,13 +1157,13 @@ function QuickAction({
       }}>{glyph}</span>
       <span
         className="text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em]"
-        style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        style={{ fontFamily: "var(--brutal-pixel)" }}
       >
         {label}
       </span>
       <span
         className="text-[12px] md:text-[11px] opacity-60 tabular-nums hidden md:block"
-        style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        style={{ fontFamily: "var(--brutal-pixel)" }}
       >
         {sub}
       </span>
@@ -1122,7 +1190,7 @@ function FormField({
     <div>
       <label
         className="block text-[12px] font-bold uppercase tracking-[0.25em] mb-1.5 opacity-70"
-        style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        style={{ fontFamily: "var(--brutal-pixel)" }}
       >
         {label}
       </label>
@@ -1168,9 +1236,10 @@ function HazardStrip() {
 // ============================================================================
 // STAGE 01 · HOOK
 // ============================================================================
-function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"]; clock: string; openBook: () => void }) {
+function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage1"]; lang: Lang; openBook: () => void }) {
   const p = useScrollProgress(targetRef);
   const inView = useInView(targetRef, 0.2);
+  const reduced = useReducedMotion();
 
   // Typewriter: types character-by-character once the section is in view.
   // The old approach was tied to useScrollProgress, but the hero starts
@@ -1181,6 +1250,9 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
   const [typedCount, setTypedCount] = useState(0);
   useEffect(() => {
     if (!inView) return;
+    // Reduced motion: the line is content, so it still appears — it just
+    // appears whole instead of being animated in.
+    if (reduced) { setTypedCount(graphemes.length); return; }
     setTypedCount(0);
     let i = 0;
     // Small pre-delay so the first character appears just after the CTAs
@@ -1199,7 +1271,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
       clearTimeout(startAfter);
       cleanup?.();
     };
-  }, [inView, graphemes.length]);
+  }, [inView, reduced, graphemes.length]);
   const typed = graphemes.slice(0, typedCount).join("");
 
   return (
@@ -1214,13 +1286,23 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
         overflow: "hidden",
       }}
     >
-      {/* MAIN — single column, full width. No more sidebar competing
-          with the headline. Headline gets to be big and impactful. */}
-      <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
+      {/* MAIN — two columns from lg up.
+          The single-column version left the entire right third of the
+          viewport as bare paper: an agency that ships 200+ videos a
+          month was showing zero work above the fold, and the composition
+          had nothing holding its right edge. The contact sheet fills
+          both gaps with real frames from the reel. Vertically centred so
+          the column no longer hangs from the top with dead space under
+          it. */}
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_min(24vw,300px)] items-center gap-8 xl:gap-12 px-6 md:px-14 lg:pr-24 xl:pr-28 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
         <div className="flex flex-col w-full min-w-0">
+          {/* Stage marker + positioning plate. These used to say
+              "01 · GROWTH AGENCY" and "AI GROWTH AGENCY · EST. MMXXIV" —
+              the same three words twice, 40px apart. The marker now does
+              indexing, the plate does positioning + geography. */}
           <div
             className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
           </div>
@@ -1233,28 +1315,40 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
               border: "1.5px solid",
               borderImage: `${SILVER_H} 1`,
               boxShadow: "4px 4px 0 0 #0d0d0d",
-              fontFamily: "var(--font-brutal-pixel)",
+              fontFamily: "var(--brutal-pixel)",
             }}
           >
-            <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             {t.pill}
           </div>
 
+          {/* whitespace-nowrap used to be pinned on both lines while the
+              section clipped overflow, so any width where the line did
+              not fit silently cut the headline off. That was already a
+              risk in English and is a certainty in Bulgarian: Cyrillic
+              runs materially wider here (longer strings, and Onest sets
+              wider than Space Grotesk). The lines now wrap, and the type
+              scale is sized against the Bulgarian string, not the
+              English one. */}
           <h1
             className="font-black tracking-[-0.03em] max-w-full"
             style={{
-              fontSize: "clamp(40px, 6.5vw, 108px)",
+              fontSize: "clamp(34px, 4.9vw, 84px)",
               lineHeight: 0.94,
               overflowWrap: "break-word",
+              hyphens: "none",
             }}
           >
-            <span className="block whitespace-nowrap">{t.headline1}</span>
-            <span className="block whitespace-nowrap">
+            <span className="block">{t.headline1}</span>
+            <span className="block">
               {t.headline2Prefix}{" "}
               <span
                 className="italic"
                 style={{
-                  background: GRAPHITE_H,
+                  // Reversed relative to GRAPHITE_H: the old direction
+                  // bottomed out light exactly on the last word, so the
+                  // single most important word in the headline was also
+                  // the lowest-contrast thing on the screen.
+                  background: GRAPHITE_H_IN,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -1265,80 +1359,70 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
             </span>
           </h1>
 
-          {/* Dual CTAs directly under headline */}
-          <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
+          {/* CTAs. The secondary used to be a full chrome slab that
+              out-shouted the black primary sitting next to it; it is now
+              a quiet outline so the hierarchy reads in one glance. */}
+          <div className="flex flex-wrap gap-3 mt-7 md:mt-9">
             <button
               type="button"
               onClick={openBook}
-              className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{
                 background: "#0d0d0d",
                 color: "#f4f4f4",
                 boxShadow: "5px 5px 0 0 #8a8a8a",
               }}
             >
-              <span>→</span>
+              <span aria-hidden>→</span>
               {t.ctaPrimary}
             </button>
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-              style={{
-                background: WORDMARK_METAL,
-                color: "#0d0d0d",
-                boxShadow: "5px 5px 0 0 #0d0d0d",
-              }}
+              className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 border-black font-black uppercase text-sm md:text-base tracking-[0.15em] transition-colors hover:bg-black hover:text-[#ebe8e0]"
+              style={{ background: "transparent", color: "#0d0d0d" }}
             >
-              <span>▶</span>
+              <span aria-hidden>▶</span>
               {t.ctaSecondary}
             </Link>
           </div>
 
-          {/* News chip row — sits DIRECTLY under the CTAs so it stays
-              grouped with the action area of the hero instead of
-              drifting down to the fold. */}
-          <div
-            className="hidden md:flex items-center gap-3 flex-wrap mt-6"
-          >
-            {/* LIVE label */}
+          {/* Proof strip. Replaces three dated news chips that repeated
+              the same three ROAS figures already carried by stage 04 —
+              and that would have read as a stale newsfeed within a
+              month. No dates, no maintenance, works on mobile. */}
+          <div className="flex items-stretch flex-wrap gap-2 md:gap-3 mt-6 md:mt-8">
             <span
-              className="inline-flex items-center gap-1.5 shrink-0 text-[12px] font-bold uppercase tracking-[0.3em] px-2.5 py-1.5 border-2 border-black"
+              className="inline-flex items-center shrink-0 text-[12px] font-bold uppercase tracking-[0.3em] px-2.5 py-2 border-2 border-black"
               style={{
-                fontFamily: "var(--font-brutal-pixel)",
+                fontFamily: "var(--brutal-pixel)",
                 background: "#0d0d0d",
                 color: "#f4f4f4",
                 boxShadow: "3px 3px 0 0 #8a8a8a",
               }}
             >
-              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              {t.newsTitle}
+              {t.proofTitle}
             </span>
-
-            {/* Individual news chips — brutalist bordered badges */}
-            {t.news.slice(0, 3).map((item) => (
+            {t.proof.map((item) => (
               <div
-                key={item.d}
-                className="inline-flex items-center gap-2.5 shrink-0 px-3 py-1.5 border-2 border-black text-[12px]"
-                style={{
-                  background: "#ebe8e0",
-                  boxShadow: "3px 3px 0 0 #0d0d0d",
-                }}
+                key={item.brand}
+                className="inline-flex items-baseline gap-2 shrink-0 px-3 py-1.5 border-2 border-black"
+                style={{ background: "#ebe8e0", boxShadow: "3px 3px 0 0 #0d0d0d" }}
               >
-                <span
-                  className="text-[12px] tabular-nums opacity-60 uppercase tracking-[0.15em]"
-                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                >
-                  {item.d}
+                <span className="font-black text-base md:text-lg tabular-nums leading-none">
+                  {item.metric}
                 </span>
-                <span className="opacity-30">·</span>
-                <span className="font-bold">
-                  {item.n}
+                <span
+                  className="text-[12px] uppercase tracking-[0.15em] opacity-70 leading-none"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
+                  {item.brand}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Typewriter caption */}
+          {/* Typewriter caption. Was "YOU'RE IN THE FUNNEL." — a joke
+              about the page rather than anything said to the buyer. */}
           <div
             className="mt-6 md:mt-8 flex items-center gap-3 font-bold uppercase text-xs md:text-sm tracking-[0.25em]"
             style={{
@@ -1355,6 +1439,53 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
             />
           </div>
         </div>
+
+        {/* CONTACT SHEET — three real frames from the reel.
+            Captions stay factual (format + discipline); nothing here
+            claims a client or a result the frames don't prove. */}
+        <Link
+          href="/portfolio"
+          aria-label={lang === "bg" ? "Виж портфолиото" : "See the portfolio"}
+          className="hidden lg:block group border-2 border-black self-center"
+          style={{ background: "#0d0d0d", boxShadow: "7px 7px 0 0 #8a8a8a" }}
+        >
+          <div
+            className="flex items-center justify-between px-3 py-2 border-b-2 text-[12px] uppercase tracking-[0.25em]"
+            style={{ borderColor: "#8a8a8a", color: "#f4f4f4", fontFamily: "var(--brutal-pixel)" }}
+          >
+            <span>{t.sheetTitle}</span>
+            <span className="opacity-60 transition-transform group-hover:translate-x-1">→</span>
+          </div>
+          <div className="grid grid-cols-3 gap-[2px] p-[2px]" style={{ background: "#8a8a8a" }}>
+            {REEL_FRAMES.map((f, i) => (
+              <figure key={f.src} className="relative" style={{ background: "#0d0d0d" }}>
+                <div className="relative w-full" style={{ aspectRatio: "9 / 16" }}>
+                  <Image
+                    src={f.src}
+                    alt={t.sheetAlt[i]}
+                    fill
+                    sizes="140px"
+                    className="object-cover"
+                    priority={i === 0}
+                    unoptimized
+                  />
+                </div>
+                <figcaption
+                  className="px-1.5 py-1 text-[11px] uppercase tracking-[0.1em] truncate"
+                  style={{ fontFamily: "var(--brutal-pixel)", color: "#f4f4f4" }}
+                >
+                  {t.sheetCaptions[i]}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div
+            className="px-3 py-2 border-t-2 text-[12px] uppercase tracking-[0.2em] opacity-60"
+            style={{ borderColor: "#8a8a8a", color: "#f4f4f4", fontFamily: "var(--brutal-pixel)" }}
+          >
+            {t.sheetNote}
+          </div>
+        </Link>
       </div>
 
       {/* BOTTOM — just the scroll cue, pinned to viewport bottom.
@@ -1367,7 +1498,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
         <div className="flex items-center gap-4">
           <div
             className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em]"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.scrollCue}
           </div>
@@ -1393,13 +1524,16 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       <div className="px-6 md:px-14 py-24 md:py-40 max-w-[1400px] mx-auto w-full">
         <div
           className="text-xs font-bold uppercase tracking-[0.35em] mb-14 opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {t.eyebrow}
         </div>
 
-        {/* Pull quote — the honest agitation */}
-        <div
+        {/* Pull quote — the honest agitation. This is a real quotation,
+            so it is marked up as one; the section's own heading is the
+            response below it. Stage 02 was previously the only stage on
+            the page with no heading element at all. */}
+        <figure
           className="border-l-4 pl-6 md:pl-14 max-w-5xl transition-all duration-700"
           style={{
             borderColor: "#8a8a8a",
@@ -1407,21 +1541,21 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
             transform: inView ? "translateX(0)" : "translateX(-30px)",
           }}
         >
-          <p
+          <blockquote
             className="font-black leading-[1.05] tracking-[-0.02em] mb-10"
             style={{ fontSize: "clamp(30px, 4.8vw, 72px)" }}
           >
             {t.quoteMain}
-          </p>
-          <p
+          </blockquote>
+          <figcaption
             className="text-sm md:text-base uppercase tracking-[0.25em] opacity-70"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.quoteAttribution}
-          </p>
-        </div>
+          </figcaption>
+        </figure>
 
-        <div
+        <h2
           className="mt-16 md:mt-24 font-black uppercase tracking-tight leading-tight max-w-4xl transition-all duration-700 delay-300"
           style={{
             fontSize: "clamp(32px, 5vw, 68px)",
@@ -1441,7 +1575,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           >
             {t.responseHighlight}
           </span>
-        </div>
+        </h2>
       </div>
     </section>
   );
@@ -1466,7 +1600,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
         <div className="absolute top-6 md:top-10 left-6 md:left-14 z-10">
           <div
             className="text-xs font-bold uppercase tracking-[0.35em] mb-2"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
           </div>
@@ -1505,7 +1639,10 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           {t.rooms.map((r) => (
             <div
               key={r.id}
-              className="w-screen h-full flex-shrink-0 flex items-center justify-center px-6 md:px-16"
+              // Extra right padding from lg up so a room panel never slides
+              // under the fixed stage rail — which now takes clicks, so
+              // overlapping it would swallow them.
+              className="w-screen h-full flex-shrink-0 flex items-center justify-center px-6 md:px-16 lg:pr-28"
             >
               <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 w-full items-center">
                 <div
@@ -1530,7 +1667,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   </h3>
                   <div
                     className="text-xs font-bold uppercase tracking-[0.2em]"
-                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                    style={{ fontFamily: "var(--brutal-pixel)" }}
                   >
                     {r.detail}
                   </div>
@@ -1546,7 +1683,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                 >
                   <div
                     className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-70 mb-4"
-                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                    style={{ fontFamily: "var(--brutal-pixel)" }}
                   >
                     {r.label}
                   </div>
@@ -1593,7 +1730,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
         <div
           className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {t.eyebrow}
         </div>
@@ -1619,7 +1756,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 
         <p
           className="text-sm md:text-base leading-[1.55] font-medium max-w-2xl mb-14 opacity-75"
-          style={{ fontFamily: "var(--font-brutal-comic)" }}
+          style={{ fontFamily: "var(--brutal-comic)" }}
         >
           {t.note}
         </p>
@@ -1689,7 +1826,7 @@ function CaseCard({
         </div>
         <div
           className="text-[12px] uppercase tracking-[0.2em] opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {c.category}
         </div>
@@ -1715,7 +1852,7 @@ function CaseCard({
         </div>
         <div
           className="text-[12px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {c.metricLabel}
         </div>
@@ -1725,7 +1862,7 @@ function CaseCard({
       <div className="p-5 space-y-3">
         <div
           className="inline-block px-2 py-1 border border-black text-[12px] font-bold uppercase tracking-[0.2em]"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {c.duration}
         </div>
@@ -1758,7 +1895,7 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
           <div className="md:col-span-5 md:sticky md:top-40">
             <div
               className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+              style={{ fontFamily: "var(--brutal-pixel)" }}
             >
               {t.eyebrow}
             </div>
@@ -1782,7 +1919,7 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
             </h2>
             <p
               className="text-sm md:text-base leading-[1.55] opacity-75 max-w-md font-medium"
-              style={{ fontFamily: "var(--font-brutal-comic)" }}
+              style={{ fontFamily: "var(--brutal-comic)" }}
             >
               {t.note}
             </p>
@@ -1826,7 +1963,7 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
                       <span
                         className="text-[12px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0"
                         style={{
-                          fontFamily: "var(--font-brutal-pixel)",
+                          fontFamily: "var(--brutal-pixel)",
                           background: "#0d0d0d",
                           color: "#f4f4f4",
                         }}
@@ -1836,7 +1973,7 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
                     </div>
                     <p
                       className="text-sm md:text-base leading-[1.55] font-medium opacity-85"
-                      style={{ fontFamily: "var(--font-brutal-comic)" }}
+                      style={{ fontFamily: "var(--brutal-comic)" }}
                     >
                       {s.body}
                     </p>
@@ -1863,7 +2000,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
         <div
           className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {t.eyebrow}
         </div>
@@ -1908,7 +2045,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
               {/* Region badge in top-right corner */}
               <span
                 className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10"
-                style={{ fontFamily: "var(--font-brutal-pixel)", color: "#0d0d0d" }}
+                style={{ fontFamily: "var(--brutal-pixel)", color: "#0d0d0d" }}
               >
                 {t.region[c.region]}
               </span>
@@ -1940,7 +2077,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         {/* Coda under the grid */}
         <div
           className="mt-10 text-xs uppercase tracking-[0.25em] opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {t.coda}
         </div>
@@ -1971,7 +2108,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
           <div className="md:col-span-5 md:sticky md:top-40">
             <div
               className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-              style={{ fontFamily: "var(--font-brutal-pixel)" }}
+              style={{ fontFamily: "var(--brutal-pixel)" }}
             >
               {t.eyebrow}
             </div>
@@ -1994,7 +2131,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
             </h2>
             <p
               className="text-sm md:text-base leading-[1.55] max-w-md opacity-75 font-medium"
-              style={{ fontFamily: "var(--font-brutal-comic)" }}
+              style={{ fontFamily: "var(--brutal-comic)" }}
             >
               {t.note}
             </p>
@@ -2046,7 +2183,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
                       </h3>
                       <p
                         className="text-sm md:text-base leading-[1.55] font-medium opacity-85"
-                        style={{ fontFamily: "var(--font-brutal-comic)" }}
+                        style={{ fontFamily: "var(--brutal-comic)" }}
                       >
                         {pr.body}
                       </p>
@@ -2078,7 +2215,7 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
         <div
           className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+          style={{ fontFamily: "var(--brutal-pixel)" }}
         >
           {t.eyebrow}
         </div>
@@ -2159,24 +2296,21 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
     >
       <div className="px-6 md:px-14 py-24 md:py-40 max-w-[1400px] mx-auto text-center relative">
+        {/* A soft radial bloom used to sit behind this block and an 80px
+            glow around the CTA. Both are the generic dark-page-with-a-glow
+            look this design is explicitly built against, and neither
+            survives the "no gradients on physical elements" rule. The
+            hazard rules below do the same framing job with hard edges. */}
         <div
           aria-hidden
-          className="absolute inset-0 pointer-events-none flex items-center justify-center"
-        >
-          <div
-            className="w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-full transition-opacity duration-1000"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(180,180,180,0.18) 0%, rgba(180,180,180,0) 60%)",
-              opacity: inView ? 1 : 0,
-            }}
-          />
-        </div>
+          className="absolute inset-x-6 md:inset-x-14 top-10 bottom-10 pointer-events-none border-y-2 border-dashed transition-opacity duration-700"
+          style={{ borderColor: "rgba(244,244,244,0.14)", opacity: inView ? 1 : 0 }}
+        />
 
         <div className="relative">
           <div
             className="text-xs font-bold uppercase tracking-[0.35em] mb-10 opacity-60"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
           </div>
@@ -2206,7 +2340,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
               background: SILVER,
               color: "#0d0d0d",
               boxShadow:
-                "0 0 0 1px rgba(255,255,255,0.4) inset, 10px 10px 0 0 #ebe8e0, 0 0 80px rgba(180,180,180,0.2)",
+                "0 0 0 1px rgba(255,255,255,0.4) inset, 10px 10px 0 0 #ebe8e0",
             }}
           >
             <span className="font-black text-xl md:text-3xl uppercase tracking-tight">
@@ -2219,7 +2353,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
 
           <div
             className="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.25em] opacity-70"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             <a href="mailto:vektoagency@gmail.com" className="hover:opacity-100">
               vektoagency@gmail.com
@@ -2234,7 +2368,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
 
           <div
             className="mt-24 text-[12px] tracking-[0.2em] opacity-40 border-t-2 border-dashed border-white/40 pt-4 max-w-3xl mx-auto uppercase"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.guestbook}
           </div>
@@ -2242,7 +2376,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
           <Link
             href="/portfolio"
             className="mt-6 inline-block text-[12px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 underline decoration-2 underline-offset-4"
-            style={{ fontFamily: "var(--font-brutal-pixel)" }}
+            style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.portfolioLink}
           </Link>
