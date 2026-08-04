@@ -49,12 +49,20 @@ export const JOURNEY_COPY = {
       },
     },
     hud: { zone: "ЗОНА", frame: "КАДЪР" },
+    rail: ["НАЧАЛО", "КАКВО", "РАБОТА", "КАК", "ЧИСЛА", "РАЗГОВОР"],
+    endCard: {
+      eyebrow: "СЛЕДВАЩАТА СТЪПКА",
+      h1: "ИМАШ БРАНД",
+      h2: "ЗА РАСТЕЖ?",
+      cta: "ЗАПАЗИ РАЗГОВОР",
+      meta: "БЪЛГАРИЯ · САЩ",
+    },
     after: {
       workEyebrow: "РАБОТАТА · РЕАЛНИ КЛИПОВЕ",
       workHeadline1: "РЕАЛНИ БРАНДОВЕ.",
       workHeadline2: "РЕАЛНИ ВИДЕА.",
       workNote: "Всяко видео долу е пускано като реклама. Мини с мишката, за да го гледаш.",
-      workAll: "ВИЖ ЦЯЛОТО ПОРТФОЛИО",
+      workAll: "Цялото портфолио",
     },
   },
   en: {
@@ -100,12 +108,20 @@ export const JOURNEY_COPY = {
       },
     },
     hud: { zone: "ZONE", frame: "FRAME" },
+    rail: ["START", "WHAT", "WORK", "HOW", "PROOF", "TALK"],
+    endCard: {
+      eyebrow: "THE NEXT STEP",
+      h1: "GOT A BRAND",
+      h2: "WORTH GROWING?",
+      cta: "BOOK A CALL",
+      meta: "BULGARIA · USA",
+    },
     after: {
       workEyebrow: "THE WORK · REAL SPOTS",
       workHeadline1: "REAL BRANDS.",
       workHeadline2: "REAL VIDEO.",
       workNote: "Every spot below has run as an ad. Hover to play.",
-      workAll: "SEE THE FULL PORTFOLIO",
+      workAll: "Full portfolio",
     },
   },
 } as const;

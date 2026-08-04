@@ -173,6 +173,7 @@ export default function CinematicHomepage() {
       <HazardStrip />
       <Work t={t} />
       <HazardStrip />
+      <EndCard t={t} />
       <Footer lang={lang} />
     </div>
   );
@@ -212,6 +213,56 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           frames={frameSet}
           className="absolute inset-0"
         />
+
+        {/* ZONE RAIL — the funnel's own navigation. Numbered stops on the
+            right edge; clicking one scrolls the runway to that zone. Lives
+            inside the sticky viewport so it exists exactly while the
+            journey does. */}
+        <nav
+          aria-label={lang === "bg" ? "Зони" : "Zones"}
+          className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 z-30 hidden sm:flex flex-col gap-1.5"
+        >
+          {ZONES.map((z, i) => {
+            const active = i === zoneIdx;
+            return (
+              <button
+                key={z.id}
+                type="button"
+                onClick={() => {
+                  const el = ref.current;
+                  if (!el) return;
+                  const runway = el.offsetHeight - window.innerHeight;
+                  // Land a hair inside the zone so its overlay is already up.
+                  window.scrollTo(0, el.offsetTop + runway * (z.from + 0.02));
+                }}
+                className="flex items-center gap-2 justify-end group"
+                aria-current={active ? "true" : undefined}
+              >
+                <span
+                  className="text-[11px] font-bold tracking-[0.2em] transition-opacity duration-150 group-hover:opacity-100"
+                  style={{
+                    fontFamily: "var(--cine-pixel)",
+                    color: "#f4f4f4",
+                    textShadow: "0 0 6px rgba(13,13,13,0.9)",
+                    opacity: active ? 1 : 0,
+                  }}
+                >
+                  {t.rail[i]}
+                </span>
+                <span
+                  className="w-6 h-6 border-2 flex items-center justify-center text-[11px] font-black transition-all"
+                  style={{
+                    borderColor: "#f4f4f4",
+                    background: active ? "#f4f4f4" : "rgba(13,13,13,0.45)",
+                    color: active ? JET : "#f4f4f4",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
 
         {/* HUD — instrument readout, bottom left. */}
         <div
@@ -267,6 +318,20 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                   {t.zones.vault.ctaSecondary}
                 </Link>
               </div>
+            </div>
+          </div>
+          {/* Scroll cue — pinned to the bottom of the first zone so the
+              runway reads as an invitation, not a stuck page. */}
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+            <div
+              className="flex items-center gap-3 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.35em]"
+              style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4", textShadow: "0 0 6px rgba(13,13,13,0.9)" }}
+            >
+              <span aria-hidden>▼</span>
+              <span>{lang === "bg" ? "СКРОЛНИ" : "SCROLL"}</span>
+              <span className="relative w-24 h-[2px]" style={{ background: "rgba(244,244,244,0.3)" }}>
+                <span className="absolute left-0 top-0 h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />
+              </span>
             </div>
           </div>
         </ZoneOverlay>
@@ -567,8 +632,20 @@ function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang
     ? [["Портфолио", "/portfolio"], ["Кейсове", "/case-studies"], ["Анкета", "/brief"]]
     : [["Portfolio", "/portfolio"], ["Case Studies", "/case-studies"], ["Brief", "/brief"]];
   const cta = lang === "bg" ? "Запази разговор" : "Book a call";
+  // Fixed and transparent: the film runs edge to edge underneath, and the
+  // nav + CTA stay reachable through the whole funnel instead of scrolling
+  // away after the first viewport. The gradient scrim keeps the light text
+  // legible over the bone-white zones without reading as a solid bar.
   return (
-    <div className="border-b-4 border-black relative z-40" style={{ background: JET, color: "#f4f4f4" }}>
+    <div
+      className="fixed inset-x-0 top-0 z-50"
+      style={{
+        background: "linear-gradient(180deg, rgba(13,13,13,0.78) 0%, rgba(13,13,13,0.38) 62%, rgba(13,13,13,0) 100%)",
+        backdropFilter: "blur(5px)",
+        WebkitBackdropFilter: "blur(5px)",
+        color: "#f4f4f4",
+      }}
+    >
       <div className="px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4">
         <div className="flex items-center gap-x-6 md:gap-x-10 min-w-0">
           <Link
@@ -640,7 +717,10 @@ function Work({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
           <WorkCard key={w.src} w={w} i={i} inView={inView} />
         ))}
       </div>
-      <Link href="/portfolio" className="inline-flex items-center gap-3 mt-12 px-6 py-4 border-2 border-black font-black uppercase text-sm tracking-[0.2em] transition-colors hover:bg-black hover:text-[#ebe8e0]">
+      <Link
+        href="/portfolio"
+        className="inline-flex items-center gap-2 mt-10 text-sm font-bold uppercase tracking-[0.2em] underline decoration-2 underline-offset-4 opacity-70 hover:opacity-100"
+      >
         {t.after.workAll} <span aria-hidden>→</span>
       </Link>
     </section>
@@ -707,6 +787,61 @@ function WorkCard({ w, i, inView }: { w: (typeof WORK)[number]; i: number; inVie
         <span className="opacity-60 shrink-0" aria-hidden>{playing ? "■" : "▶"}</span>
       </figcaption>
     </figure>
+  );
+}
+
+// The funnel's last word is the ask, not the archive: the page used to end
+// on a "see the full portfolio" button, which walks the visitor OUT of the
+// funnel right at its bottom. Portfolio is a text link above; this is the
+// close.
+function EndCard({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, 0.3);
+  return (
+    <section ref={ref} className="px-6 md:px-14 py-24 md:py-36 text-center" style={{ background: JET, color: "#f4f4f4" }}>
+      <div
+        className="text-xs font-bold uppercase tracking-[0.35em] mb-8 opacity-60"
+        style={{ fontFamily: "var(--cine-pixel)" }}
+      >
+        {t.endCard.eyebrow}
+      </div>
+      <h2
+        className="font-black leading-[0.9] tracking-[-0.03em] uppercase mb-12"
+        style={{
+          fontSize: "clamp(40px, 6.5vw, 110px)",
+          opacity: inView ? 1 : 0,
+          transform: inView ? "translateY(0)" : "translateY(24px)",
+          transition: "opacity 600ms ease, transform 700ms cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
+        {t.endCard.h1}
+        <br />
+        <span
+          className="italic"
+          style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+        >
+          {t.endCard.h2}
+        </span>
+      </h2>
+      <Link
+        href="/brief"
+        className="group inline-flex items-center gap-4 px-8 md:px-14 py-5 md:py-8 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
+        style={{
+          background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)",
+          color: JET,
+          boxShadow: "0 0 0 1px rgba(255,255,255,0.4) inset, 10px 10px 0 0 #2a2a2a",
+        }}
+      >
+        <span className="font-black text-xl md:text-3xl uppercase tracking-tight">{t.endCard.cta}</span>
+        <span className="font-black text-xl md:text-3xl transition-transform group-hover:translate-x-2" aria-hidden>→</span>
+      </Link>
+      <div
+        className="mt-10 text-[11px] uppercase tracking-[0.3em] opacity-60"
+        style={{ fontFamily: "var(--cine-pixel)" }}
+      >
+        {t.endCard.meta}
+      </div>
+    </section>
   );
 }
 
