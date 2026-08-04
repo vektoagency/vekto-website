@@ -759,6 +759,50 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
             </Link>
           </div>
 
+          {/* News chip row — sits DIRECTLY under the CTAs so it stays
+              grouped with the action area of the hero instead of
+              drifting down to the fold. */}
+          <div
+            className="hidden md:flex items-center gap-3 flex-wrap mt-6"
+          >
+            {/* LIVE label */}
+            <span
+              className="inline-flex items-center gap-1.5 shrink-0 text-[10px] font-bold uppercase tracking-[0.3em] px-2.5 py-1.5 border-2 border-black"
+              style={{
+                fontFamily: "var(--font-brutal-pixel)",
+                background: "#0d0d0d",
+                color: "#f4f4f4",
+                boxShadow: "3px 3px 0 0 #8a8a8a",
+              }}
+            >
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              {t.newsTitle}
+            </span>
+
+            {/* Individual news chips — brutalist bordered badges */}
+            {t.news.slice(0, 3).map((item) => (
+              <div
+                key={item.d}
+                className="inline-flex items-center gap-2.5 shrink-0 px-3 py-1.5 border-2 border-black text-[12px]"
+                style={{
+                  background: "#ebe8e0",
+                  boxShadow: "3px 3px 0 0 #0d0d0d",
+                }}
+              >
+                <span
+                  className="text-[10px] tabular-nums opacity-60 uppercase tracking-[0.15em]"
+                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                >
+                  {item.d}
+                </span>
+                <span className="opacity-30">·</span>
+                <span className="font-bold">
+                  {item.n}
+                </span>
+              </div>
+            ))}
+          </div>
+
           {/* Typewriter caption */}
           <div
             className="mt-6 md:mt-8 flex items-center gap-3 font-bold uppercase text-xs md:text-sm tracking-[0.25em]"
@@ -778,74 +822,21 @@ function StageHook({ targetRef, t, clock }: { targetRef: React.RefObject<HTMLEle
         </div>
       </div>
 
-      {/* BOTTOM — news chips + scroll cue.
-          Each news item now a hard-bordered chip with a 3px offset
-          shadow — same brutalist syntax as the CTA buttons in the
-          hero. Reads as a horizontal row of active-status badges.
-
-          flex-shrink-0 on this whole block is critical: without it
-          the flex-column parent squeezes this row into nothing under
-          the flex-1 content div when viewport height is short, and
-          the section's overflow:hidden clips it → invisible on load
-          bug. Guaranteed natural height now. */}
-      <div className="max-w-[1500px] mx-auto w-full shrink-0">
-        {/* News chip row */}
-        <div
-          className="hidden md:flex items-center gap-3 flex-wrap px-6 md:px-14 lg:pr-24 xl:pr-32 py-4 border-t-2 border-black"
-          style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
-        >
-          {/* LIVE label */}
-          <span
-            className="inline-flex items-center gap-1.5 shrink-0 text-[10px] font-bold uppercase tracking-[0.3em] px-2.5 py-1.5 border-2 border-black"
-            style={{
-              fontFamily: "var(--font-brutal-pixel)",
-              background: "#0d0d0d",
-              color: "#f4f4f4",
-              boxShadow: "3px 3px 0 0 #8a8a8a",
-            }}
+      {/* BOTTOM — just the scroll cue, pinned to viewport bottom.
+          News chips moved into the content column above so they
+          group with the CTAs, not with the scroll cue. */}
+      <div
+        className="max-w-[1500px] mx-auto w-full shrink-0 px-6 md:px-14 pb-6 md:pb-8"
+        style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
+      >
+        <div className="flex items-center gap-4">
+          <div
+            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]"
+            style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-            {t.newsTitle}
-          </span>
-
-          {/* Individual news chips — brutalist bordered badges */}
-          {t.news.slice(0, 3).map((item) => (
-            <div
-              key={item.d}
-              className="inline-flex items-center gap-2.5 shrink-0 px-3 py-1.5 border-2 border-black text-[12px]"
-              style={{
-                background: "#ebe8e0",
-                boxShadow: "3px 3px 0 0 #0d0d0d",
-              }}
-            >
-              <span
-                className="text-[10px] tabular-nums opacity-60 uppercase tracking-[0.15em]"
-                style={{ fontFamily: "var(--font-brutal-pixel)" }}
-              >
-                {item.d}
-              </span>
-              <span className="opacity-30">·</span>
-              <span className="font-bold">
-                {item.n}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Scroll cue pinned to viewport bottom */}
-        <div
-          className="px-6 md:px-14 pb-6 md:pb-8 pt-4"
-          style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
-        >
-          <div className="flex items-center gap-4">
-            <div
-              className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]"
-              style={{ fontFamily: "var(--font-brutal-pixel)" }}
-            >
-              {t.scrollCue}
-            </div>
-            <div className="flex-1 h-[2px] max-w-32 border-t-2 border-dashed border-black" />
+            {t.scrollCue}
           </div>
+          <div className="flex-1 h-[2px] max-w-32 border-t-2 border-dashed border-black" />
         </div>
       </div>
     </section>
