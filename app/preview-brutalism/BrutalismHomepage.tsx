@@ -802,7 +802,7 @@ export default function BrutalismHomepage() {
           return (
             <div key={s.id} className="flex items-center gap-2 justify-end">
               <span
-                className="text-[10px] font-bold tracking-[0.2em]"
+                className="text-[12px] font-bold tracking-[0.2em]"
                 style={{
                   fontFamily: "var(--font-brutal-pixel)",
                   opacity: active ? 1 : 0,
@@ -812,7 +812,7 @@ export default function BrutalismHomepage() {
                 {s.label}
               </span>
               <span
-                className="w-6 h-6 border-2 border-black flex items-center justify-center text-[10px] font-black transition-all"
+                className="w-6 h-6 border-2 border-black flex items-center justify-center text-[12px] font-black transition-all"
                 style={{
                   background: active ? SILVER : "#ebe8e0",
                   boxShadow: active ? "3px 3px 0 0 #0d0d0d" : "1px 1px 0 0 #0d0d0d",
@@ -961,10 +961,10 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         >
           <div>
             <div
-              className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-70 mb-1 flex items-center gap-1.5"
+              className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-70 mb-1 flex items-center gap-1.5"
               style={{ fontFamily: "var(--font-brutal-pixel)" }}
             >
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
               {s.subtitle}
             </div>
             <h2
@@ -1024,7 +1024,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               <div className="flex items-center gap-3 my-6">
                 <div className="flex-1 border-t-2 border-dashed border-black opacity-30" />
                 <div
-                  className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-60"
+                  className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-60"
                   style={{ fontFamily: "var(--font-brutal-pixel)" }}
                 >
                   {s.or}
@@ -1096,20 +1096,20 @@ function QuickAction({
         boxShadow: "3px 3px 0 0 #8a8a8a",
       }}
     >
-      <span className="text-xl md:text-2xl" style={{
+      <span className="text-3xl md:text-4xl" style={{
         background: SILVER_H,
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         backgroundClip: "text",
       }}>{glyph}</span>
       <span
-        className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em]"
+        className="text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em]"
         style={{ fontFamily: "var(--font-brutal-pixel)" }}
       >
         {label}
       </span>
       <span
-        className="text-[8px] md:text-[9px] opacity-60 tabular-nums hidden md:block"
+        className="text-[12px] md:text-[11px] opacity-60 tabular-nums hidden md:block"
         style={{ fontFamily: "var(--font-brutal-pixel)" }}
       >
         {sub}
@@ -1136,7 +1136,7 @@ function FormField({
   return (
     <div>
       <label
-        className="block text-[10px] font-bold uppercase tracking-[0.25em] mb-1.5 opacity-70"
+        className="block text-[12px] font-bold uppercase tracking-[0.25em] mb-1.5 opacity-70"
         style={{ fontFamily: "var(--font-brutal-pixel)" }}
       >
         {label}
@@ -1234,14 +1234,14 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
       <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full min-h-0">
         <div className="flex flex-col w-full min-w-0">
           <div
-            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
+            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
             style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
             {t.eyebrow}
           </div>
 
           <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] mb-5 md:mb-6 self-start"
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-[12px] md:text-xs font-bold uppercase tracking-[0.25em] mb-5 md:mb-6 self-start"
             style={{
               background: "#0d0d0d",
               color: "#f4f4f4",
@@ -1251,7 +1251,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
               fontFamily: "var(--font-brutal-pixel)",
             }}
           >
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             {t.pill}
             <span className="opacity-40">·</span>
             <span className="opacity-70">EET</span>
@@ -1320,7 +1320,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
           >
             {/* LIVE label */}
             <span
-              className="inline-flex items-center gap-1.5 shrink-0 text-[10px] font-bold uppercase tracking-[0.3em] px-2.5 py-1.5 border-2 border-black"
+              className="inline-flex items-center gap-1.5 shrink-0 text-[12px] font-bold uppercase tracking-[0.3em] px-2.5 py-1.5 border-2 border-black"
               style={{
                 fontFamily: "var(--font-brutal-pixel)",
                 background: "#0d0d0d",
@@ -1328,7 +1328,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
                 boxShadow: "3px 3px 0 0 #8a8a8a",
               }}
             >
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
               {t.newsTitle}
             </span>
 
@@ -1343,7 +1343,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
                 }}
               >
                 <span
-                  className="text-[10px] tabular-nums opacity-60 uppercase tracking-[0.15em]"
+                  className="text-[12px] tabular-nums opacity-60 uppercase tracking-[0.15em]"
                   style={{ fontFamily: "var(--font-brutal-pixel)" }}
                 >
                   {item.d}
@@ -1384,7 +1384,7 @@ function StageHook({ targetRef, t, clock, openBook }: { targetRef: React.RefObje
       >
         <div className="flex items-center gap-4">
           <div
-            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]"
+            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em]"
             style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
             {t.scrollCue}
@@ -1535,7 +1535,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   }}
                 >
                   <div
-                    className="inline-block px-2 py-1 border-2 border-black text-[10px] font-bold uppercase tracking-[0.25em] mb-6"
+                    className="inline-block px-2 py-1 border-2 border-black text-[12px] font-bold uppercase tracking-[0.25em] mb-6"
                     style={{ background: SILVER_H }}
                   >
                     {t.roomBadge}{r.id}
@@ -1706,7 +1706,7 @@ function CaseCard({
           {c.brand}
         </div>
         <div
-          className="text-[10px] uppercase tracking-[0.2em] opacity-60"
+          className="text-[12px] uppercase tracking-[0.2em] opacity-60"
           style={{ fontFamily: "var(--font-brutal-pixel)" }}
         >
           {c.category}
@@ -1732,7 +1732,7 @@ function CaseCard({
           {displayStr}
         </div>
         <div
-          className="text-[10px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
+          className="text-[12px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
           style={{ fontFamily: "var(--font-brutal-pixel)" }}
         >
           {c.metricLabel}
@@ -1742,7 +1742,7 @@ function CaseCard({
       {/* Duration + highlight */}
       <div className="p-5 space-y-3">
         <div
-          className="inline-block px-2 py-1 border border-black text-[10px] font-bold uppercase tracking-[0.2em]"
+          className="inline-block px-2 py-1 border border-black text-[12px] font-bold uppercase tracking-[0.2em]"
           style={{ fontFamily: "var(--font-brutal-pixel)" }}
         >
           {c.duration}
@@ -1842,7 +1842,7 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
                         {s.title}
                       </h3>
                       <span
-                        className="text-[10px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0"
+                        className="text-[12px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0"
                         style={{
                           fontFamily: "var(--font-brutal-pixel)",
                           background: "#0d0d0d",
@@ -1925,7 +1925,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             >
               {/* Region badge in top-right corner */}
               <span
-                className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] leading-none z-10"
+                className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10"
                 style={{ fontFamily: "var(--font-brutal-pixel)", color: "#0d0d0d" }}
               >
                 {t.region[c.region]}
@@ -1945,7 +1945,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
 
               {/* Name plate at bottom */}
               <div
-                className="border-t-2 border-black px-2 py-2 text-center text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none"
+                className="border-t-2 border-black px-2 py-2 text-center text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none"
                 style={{ color: "#0d0d0d" }}
               >
                 {c.name}
@@ -2251,7 +2251,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
           </div>
 
           <div
-            className="mt-24 text-[10px] tracking-[0.2em] opacity-40 border-t-2 border-dashed border-white/40 pt-4 max-w-3xl mx-auto uppercase"
+            className="mt-24 text-[12px] tracking-[0.2em] opacity-40 border-t-2 border-dashed border-white/40 pt-4 max-w-3xl mx-auto uppercase"
             style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
             {t.guestbook}
@@ -2259,7 +2259,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
 
           <Link
             href="/portfolio"
-            className="mt-6 inline-block text-[10px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 underline decoration-2 underline-offset-4"
+            className="mt-6 inline-block text-[12px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 underline decoration-2 underline-offset-4"
             style={{ fontFamily: "var(--font-brutal-pixel)" }}
           >
             {t.portfolioLink}
