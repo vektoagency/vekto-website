@@ -739,7 +739,7 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         {/* News ticker strip */}
         <div
           className="hidden md:flex items-center gap-4 px-6 md:px-14 lg:pr-24 xl:pr-32 py-3 border-t border-black/20 text-[11px] uppercase tracking-[0.2em] overflow-hidden"
-          style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
+          style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
         >
           <span
             className="flex items-center gap-1.5 shrink-0 opacity-70"
@@ -770,7 +770,7 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         {/* Scroll cue pinned to viewport bottom */}
         <div
           className="px-6 md:px-14 pb-6 md:pb-8"
-          style={{ opacity: 1 - p * 3, transition: "opacity 200ms ease" }}
+          style={{ opacity: Math.max(0, (1 - p) * 2), transition: "opacity 200ms ease" }}
         >
           <div className="flex items-center gap-4">
             <div
