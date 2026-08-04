@@ -95,10 +95,10 @@ const COPY = {
     stage3: {
       eyebrow: "03 · ЧЕТИРИ СТАИ · ЕДИН ПОКРИВ",
       rooms: [
-        { id: "01", title: "РЕКЛАМИ",    detail: "Meta · Google · TikTok",       num: "4.8×",  label: "СРЕДЕН ROAS" },
-        { id: "02", title: "СЪДЪРЖАНИЕ", detail: "UGC · AI · Live-action",       num: "200+",  label: "АСЕТА / МЕСЕЦ" },
-        { id: "03", title: "САЙТОВЕ",    detail: "Landing · E-com · Портали",    num: "12",    label: "LAUNCH / ГОДИНА" },
-        { id: "04", title: "СТРАТЕГИЯ",  detail: "Позициониране · Оферта · План", num: "50+",  label: "БРАНДА В ПОРТФЕЙЛА" },
+        { id: "01", title: "РЕКЛАМИ",   detail: "Meta · Google · TikTok",       num: "4.8×",  label: "СРЕДЕН ROAS" },
+        { id: "02", title: "КРЕАТИВ",   detail: "UGC · AI · Live-action",       num: "200+",  label: "АСЕТА / МЕСЕЦ" },
+        { id: "03", title: "САЙТОВЕ",   detail: "Landing · E-com · Портали",    num: "12",    label: "LAUNCH / ГОДИНА" },
+        { id: "04", title: "СТРАТЕГИЯ", detail: "Позициониране · Оферта · План", num: "50+", label: "БРАНДА В ПОРТФЕЙЛА" },
       ],
       roomBadge: "СТАЯ №",
     },
@@ -631,10 +631,11 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
       style={{ minHeight: "100vh", background: "#ebe8e0", overflow: "hidden" }}
     >
       {/* MAIN — 2 columns on desktop: content left + news sidebar right.
-          Content aligns to TOP of the flex-1 area — using justify-center
-          here left huge empty space above the eyebrow because the hero
-          content is shorter than a full viewport. */}
-      <div className="flex-1 flex items-start px-6 md:px-14 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full">
+          Content aligns to TOP of the flex-1 area. Right padding is
+          extra on lg+ so the sidebar doesn't collide with the fixed
+          right-rail funnel indicator (which sits at right-3 with a
+          text label that extends leftward). */}
+      <div className="flex-1 flex items-start px-6 md:px-14 lg:pr-24 xl:pr-32 pt-4 md:pt-6 pb-4 max-w-[1500px] mx-auto w-full">
         <div className="grid grid-cols-12 gap-6 md:gap-10 w-full">
           {/* LEFT — main content, ~2/3 on desktop */}
           <div className="col-span-12 lg:col-span-8 flex flex-col">
@@ -729,92 +730,84 @@ function StageHook({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             </div>
           </div>
 
-          {/* RIGHT SIDEBAR — news wire (desktop only) */}
+          {/* RIGHT SIDEBAR — clean recent-activity feed (desktop only).
+              Only 3 items so it stays airy. First item marked LIVE.
+              No stats footer — that was clutter. Narrower footprint
+              (col-span-3) so it doesn't crowd the right-rail indicator. */}
           <aside
-            className="hidden lg:flex col-span-4 flex-col self-stretch border-2 border-black"
+            className="hidden lg:flex col-span-4 xl:col-span-3 flex-col border-2 border-black self-start"
             style={{
-              background: "#d6d3ca",
+              background: "#ebe8e0",
               boxShadow: "6px 6px 0 0 #0d0d0d",
             }}
           >
-            {/* Sidebar header — silver plate */}
+            {/* Header — simple, single accent */}
             <div
-              className="border-b-2 border-black px-4 py-3 flex items-center gap-2"
+              className="border-b-2 border-black px-4 py-3 flex items-center justify-between"
               style={{ background: "#0d0d0d" }}
             >
               <span
-                className="text-[10px] font-black uppercase tracking-[0.3em]"
-                style={{
-                  fontFamily: "var(--font-brutal-pixel)",
-                  background: SILVER_H,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
+                className="text-[10px] font-bold uppercase tracking-[0.3em] text-white"
+                style={{ fontFamily: "var(--font-brutal-pixel)" }}
               >
-                ✦ {t.newsTitle} ✦
+                {t.newsTitle}
+              </span>
+              <span
+                className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.3em]"
+                style={{ fontFamily: "var(--font-brutal-pixel)", color: "#a8a8a8" }}
+              >
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                LIVE
               </span>
             </div>
 
-            {/* News items */}
-            <div className="flex-1 p-4 space-y-3">
-              {t.news.map((item, i) => (
+            {/* Feed items — first one has LIVE badge, others muted */}
+            <div className="divide-y divide-black/15">
+              {t.news.slice(0, 3).map((item, i) => (
                 <div
                   key={item.d}
-                  className={`pb-3 ${i < t.news.length - 1 ? "border-b border-dashed border-black/40" : ""}`}
+                  className="px-4 py-4"
                 >
-                  <div
-                    className="text-[10px] opacity-60 mb-1"
-                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                  >
-                    {item.d}
+                  <div className="flex items-center justify-between mb-2">
+                    <span
+                      className="text-[10px] tracking-[0.25em] opacity-60"
+                      style={{ fontFamily: "var(--font-brutal-pixel)" }}
+                    >
+                      {item.d}
+                    </span>
+                    {i === 0 && (
+                      <span
+                        className="text-[8px] px-1.5 py-0.5 border border-black font-bold uppercase tracking-[0.25em]"
+                        style={{
+                          fontFamily: "var(--font-brutal-pixel)",
+                          background: "#0d0d0d",
+                          color: "#f4f4f4",
+                        }}
+                      >
+                        NEW
+                      </span>
+                    )}
                   </div>
-                  <div className="text-[13px] font-bold leading-tight uppercase tracking-[0.03em]">
-                    <span className="mr-1">★</span>
+                  <div
+                    className="text-[13px] font-bold leading-[1.35] uppercase tracking-[0.02em]"
+                    style={{ color: "#0d0d0d" }}
+                  >
                     {item.n}
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Sidebar footer — 4 mini stat plates */}
-            <div className="grid grid-cols-2 border-t-2 border-black">
-              {[
-                ["50+", "БРАНДА"],
-                ["4.8×", "ROAS"],
-                ["24Ч", "ОТГОВОР"],
-                ["БГ+US", "ПАЗАРИ"],
-              ].map(([v, l], i) => (
-                <div
-                  key={l}
-                  className="border-black text-center py-3 px-2"
-                  style={{
-                    background: "#0d0d0d",
-                    color: "#f4f4f4",
-                    borderRightWidth: i % 2 === 0 ? "1.5px" : 0,
-                    borderTopWidth: i >= 2 ? "1.5px" : 0,
-                    borderStyle: "solid",
-                  }}
-                >
-                  <div
-                    className="text-lg font-black leading-none"
-                    style={{
-                      background: SILVER_H,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    {v}
-                  </div>
-                  <div
-                    className="text-[8px] tracking-[0.25em] opacity-70 mt-1 font-bold"
-                    style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                  >
-                    {l}
-                  </div>
-                </div>
-              ))}
+            {/* Footer — single link, not stats */}
+            <div
+              className="border-t-2 border-black px-4 py-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em]"
+              style={{
+                fontFamily: "var(--font-brutal-pixel)",
+                background: "#d6d3ca",
+              }}
+            >
+              <span className="opacity-70">САМО ЗАДАДЕНИ · MMXXVI</span>
+              <span>✦</span>
             </div>
           </aside>
         </div>
@@ -984,11 +977,8 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                     {t.roomBadge}{r.id}
                   </div>
                   <h3
-                    className="font-black leading-[0.9] tracking-[-0.03em] mb-6"
-                    style={{
-                      fontSize: "clamp(32px, 5vw, 72px)",
-                      wordBreak: "break-word",
-                    }}
+                    className="font-black leading-[0.9] tracking-[-0.03em] mb-6 whitespace-nowrap"
+                    style={{ fontSize: "clamp(38px, 6vw, 84px)" }}
                   >
                     {r.title}
                   </h3>
