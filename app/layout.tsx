@@ -23,11 +23,11 @@ const geist = Geist({
 // this as 'compact card' rather than the tall landscape hero card.
 export const metadata: Metadata = {
   metadataBase: new URL("https://vektoagency.com"),
-  title: "VEKTO — Независимо студио за растеж",
+  title: "VEKTO — Независима агенция за растеж",
   description:
     "Реклами, съдържание, уебсайтове и стратегия — под един покрив. 50+ бранда в България и САЩ. 4.8× среден ROAS.",
   openGraph: {
-    title: "VEKTO — Независимо студио за растеж",
+    title: "VEKTO — Независима агенция за растеж",
     description:
       "Реклами, съдържание, уебсайтове и стратегия — под един покрив. 50+ бранда в България и САЩ. 4.8× среден ROAS.",
     url: "https://vektoagency.com",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "VEKTO — Независимо студио за растеж",
+    title: "VEKTO — Независима агенция за растеж",
     description:
       "Реклами, съдържание, уебсайтове, стратегия — под един покрив. 50+ бранда, 4.8× ROAS.",
   },

@@ -66,7 +66,7 @@ export default function ContactModal() {
       phone: "Phone / WhatsApp",
       phonePh: "+1 ...",
       company: "Business / website",
-      companyPh: "Acme Studio",
+      companyPh: "Acme Agency",
       messageLabel: "Tell us about your project",
       messagePh: "We want to create a short-form video series for our brand...",
       submit: "Send Message →",

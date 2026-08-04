@@ -88,7 +88,7 @@ function VideoWallHero() {
   const tiles = [
     { src: `${V}/video-5s.webp`, col: "md:col-span-3 md:row-span-2", title: "MEN'S CARE · AI Reel" },
     { src: `${V}/video-2s.webp`, col: "md:col-span-2", title: "ISOSPORT · Promo" },
-    { src: `${V}/video-9s.webp`, col: "md:col-span-2", title: "MEN'S CARE · Studio" },
+    { src: `${V}/video-9s.webp`, col: "md:col-span-2", title: "MEN'S CARE · Behind the Scenes" },
     { src: `${V}/video-6s.webp`, col: "md:col-span-2", title: "ISOSPORT · Field" },
     { src: `${V}/video-12s.webp`, col: "md:col-span-2", title: "VEKTO LAB · WIP" },
     { src: `${V}/video-1s.webp`, col: "md:col-span-2", title: "MEN'S CARE · Spot" },

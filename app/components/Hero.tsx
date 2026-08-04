@@ -28,7 +28,7 @@ export default function Hero() {
   // proof numbers (50+ brands total, 4.8× ROAS, BG + US markets).
   const t = useT({
     bg: {
-      badge: "НЕЗАВИСИМО СТУДИО ЗА РАСТЕЖ",
+      badge: "НЕЗАВИСИМА АГЕНЦИЯ ЗА РАСТЕЖ",
       h1Em: "12 нови бранда",
       h1RestDesktop: ["на година.", "Твоят следващ."],
       h1RestMobile: "на година.",
@@ -45,7 +45,7 @@ export default function Hero() {
       credentialsCta: "Виж кейс стъдитата",
     },
     en: {
-      badge: "INDEPENDENT GROWTH STUDIO",
+      badge: "INDEPENDENT GROWTH AGENCY",
       h1Em: "12 new brands",
       h1RestDesktop: ["a year.", "Yours next."],
       h1RestMobile: "a year.",

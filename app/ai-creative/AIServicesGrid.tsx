@@ -31,7 +31,7 @@ const dict = {
         title: "AI аватари и говорители",
         image: "/images/service-2.webp",
         description:
-          "Персонални AI аватари за бизнеса ти. Правим съдържание на много езици с еднакво качество — без студио и снимачен ден.",
+          "Персонални AI аватари за бизнеса ти. Правим съдържание на много езици с еднакво качество — без снимачен екип и снимачен ден.",
         tags: ["AI аватар", "Многоезичен", "Автоматизация"],
       },
       {
@@ -70,7 +70,7 @@ const dict = {
         title: "AI Digital Avatars & Virtual Spokespersons",
         image: "/images/service-2.webp",
         description:
-          "Custom AI-powered avatars for brand representation. Deliver multilingual content at scale with consistent, high-quality presentations — no studio needed.",
+          "Custom AI-powered avatars for brand representation. Deliver multilingual content at scale with consistent, high-quality presentations — no full production needed.",
         tags: ["AI Avatar", "Multilingual", "Automation"],
       },
       {

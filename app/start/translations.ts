@@ -116,7 +116,7 @@ export const startCopy = {
       items: [
         {
           q: "Защо е толкова евтино за това качество?",
-          a: "AI намалява разходите за продукция с 60-70%. Не плащаш за студио, екип, седмици пред-продукция. Плащаш за резултат — готови видеа, готови за публикуване.",
+          a: "AI намалява разходите за продукция с 60-70%. Не плащаш за пълен снимачен екип, локация или седмици пред-продукция. Плащаш за резултат — готови видеа за публикуване.",
         },
         {
           q: "Какво се случва ако не съм доволен?",
@@ -276,7 +276,7 @@ export const startCopy = {
       items: [
         {
           q: "Why is it so cheap for this quality?",
-          a: "AI cuts production cost 60-70%. You don't pay for studio, crew, weeks of pre-production. You pay for result — ready-to-publish videos.",
+          a: "AI cuts production cost 60-70%. You don't pay for a full crew, location, or weeks of pre-production. You pay for the result — ready-to-publish videos.",
         },
         {
           q: "What if I'm not happy?",

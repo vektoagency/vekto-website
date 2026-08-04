@@ -11,7 +11,7 @@ export default function Footer() {
   const t = useT({
     bg: {
       tagline: "AI визия за бъдещето на бизнеса. От кинематографични филми до съдържание за социалните мрежи.",
-      based: "София, България",
+      based: "България · САЩ",
       explore: "Разгледай",
       exploreLinks: [
         { label: "Услуги", href: "#services" },
@@ -29,7 +29,7 @@ export default function Footer() {
     },
     en: {
       tagline: "AI vision for the future of business. From cinematic films to social media content.",
-      based: "Sofia, Bulgaria",
+      based: "Bulgaria · US",
       explore: "Explore",
       exploreLinks: [
         { label: "Services", href: "#services" },

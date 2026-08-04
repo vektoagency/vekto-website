@@ -31,13 +31,13 @@ function Stagger({
 export default function AICreativeHero() {
   const t = useT({
     bg: {
-      badge: "AI CREATIVE STUDIO",
+      badge: "AI CREATIVE ENGINE",
       h1Top: "AI визия",
       h1Highlight: "за бъдещето",
       h1Bottom: "на бизнеса ти.",
-      sub: "Кинематографични филми, кратки видеа, AI аватари, продуктови визии — създадени с AI на скорост и цена, каквито традиционните студия не могат да предложат.",
+      sub: "Кинематографични филми, кратки видеа, AI аватари, продуктови визии — създадени с AI на скорост и цена, каквито традиционните продукции не могат да предложат.",
       stats: [
-        { value: "3×", label: "по-бързо от студио" },
+        { value: "3×", label: "по-бързо от продукция" },
         { value: "60%", label: "по-евтино" },
         { value: "50+", label: "бранда използват" },
       ],
@@ -45,13 +45,13 @@ export default function AICreativeHero() {
       ctaSecondary: "Виж работата ни",
     },
     en: {
-      badge: "AI CREATIVE STUDIO",
+      badge: "AI CREATIVE ENGINE",
       h1Top: "AI-driven vision",
       h1Highlight: "for the future",
       h1Bottom: "of your brand.",
-      sub: "Cinematic films, short-form video, AI avatars, product visualization — produced with AI at speeds and prices traditional studios can't match.",
+      sub: "Cinematic films, short-form video, AI avatars, product visualization — produced with AI at speeds and prices traditional productions can't match.",
       stats: [
-        { value: "3×", label: "faster than studios" },
+        { value: "3×", label: "faster than production" },
         { value: "60%", label: "lower cost" },
         { value: "50+", label: "brands using it" },
       ],

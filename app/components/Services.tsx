@@ -28,7 +28,7 @@ const dict = {
         number: "02",
         title: "Съдържание и продукция",
         image: "/images/service-3.webp",
-        description: "AI-задвижена продукция + екип за живи снимки. Видео, кратки формати, кинематографични филми, продуктови визуализации. 3× по-бързо и 60% по-евтино от традиционните студия — без компромис в качеството.",
+        description: "AI-задвижена продукция + екип за живи снимки. Видео, кратки формати, кинематографични филми, продуктови визуализации. 3× по-бързо и 60% по-евтино от традиционните продукции — без компромис в качеството.",
         tags: ["Видео", "Кратки формати", "Живи снимки", "Продукт"],
       },
       {
@@ -63,7 +63,7 @@ const dict = {
         number: "02",
         title: "Creative Engine",
         image: "/images/service-3.webp",
-        description: "AI-native production system + live-action team. Video, UGC, cinematic films, product visualization. 3× faster and 60% cheaper than traditional studios — no quality compromise.",
+        description: "AI-native production system + live-action team. Video, UGC, cinematic films, product visualization. 3× faster and 60% cheaper than traditional productions — no quality compromise.",
         tags: ["AI Video", "UGC", "Live-action", "Product Visuals"],
       },
       {

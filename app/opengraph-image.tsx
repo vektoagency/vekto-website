@@ -199,7 +199,7 @@ export default async function Image() {
             vektoagency.com
           </span>
           <span style={{ fontFamily: "monospace", letterSpacing: 3 }}>
-            SOFIA · GLOBAL
+            BULGARIA · US
           </span>
         </div>
       </div>
