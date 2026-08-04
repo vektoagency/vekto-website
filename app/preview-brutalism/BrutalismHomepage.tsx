@@ -521,6 +521,29 @@ function useInView(ref: React.RefObject<HTMLElement | null>, threshold = 0.35) {
   return v;
 }
 
+// Number counter — animates from 0 to `to` when `trigger` flips true.
+// Preserves decimals (unlike useCounter which rounds). Used by the
+// case-card metrics (5.2×, 7.7×, 10×) so numbers tick up on enter
+// instead of just appearing.
+function useCounterFloat(trigger: boolean, to: number, ms = 1400, decimals = 1) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!trigger) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ms);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const mult = Math.pow(10, decimals);
+      setN(Math.round(to * eased * mult) / mult);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [trigger, to, ms, decimals]);
+  return n;
+}
+
 function useCurrentStage(refs: React.RefObject<HTMLElement | null>[]) {
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -1259,73 +1282,114 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {t.cases.map((c, i) => (
-            <div
-              key={c.brand}
-              className="border-2 border-black flex flex-col overflow-hidden transition-all duration-700"
-              style={{
-                background: "#ebe8e0",
-                boxShadow: "8px 8px 0 0 #0d0d0d",
-                opacity: inView ? 1 : 0,
-                transform: inView ? "translateY(0)" : "translateY(28px)",
-                transitionDelay: `${i * 140}ms`,
-              }}
-            >
-              {/* Header — brand + category */}
-              <div className="px-5 py-4 border-b-2 border-black flex items-center justify-between">
-                <div className="font-black text-lg uppercase tracking-tight">
-                  {c.brand}
-                </div>
-                <div
-                  className="text-[10px] uppercase tracking-[0.2em] opacity-60"
-                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                >
-                  {c.category}
-                </div>
-              </div>
-
-              {/* Metric plate — dark bg with silver-fill number */}
-              <div
-                className="px-5 py-8 md:py-10 border-b-2 border-black flex-1 flex flex-col justify-center"
-                style={{ background: "#0d0d0d", color: "#f4f4f4" }}
-              >
-                <div
-                  className="font-black leading-none tabular-nums"
-                  style={{
-                    fontSize: "clamp(56px, 7vw, 108px)",
-                    background: SILVER_H,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    letterSpacing: "-0.03em",
-                  }}
-                >
-                  {c.metric}
-                </div>
-                <div
-                  className="text-[10px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
-                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                >
-                  {c.metricLabel}
-                </div>
-              </div>
-
-              {/* Duration + highlight */}
-              <div className="p-5 space-y-3">
-                <div
-                  className="inline-block px-2 py-1 border border-black text-[10px] font-bold uppercase tracking-[0.2em]"
-                  style={{ fontFamily: "var(--font-brutal-pixel)" }}
-                >
-                  {c.duration}
-                </div>
-                <p className="text-[13px] leading-[1.5] font-medium">
-                  {c.highlight}
-                </p>
-              </div>
-            </div>
+            <CaseCard key={c.brand} c={c} inView={inView} idx={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+// Individual case card — extracted so it can own its own counter + enter
+// animation. Card enters with rotate+scale+translate (alternating rotate
+// direction per card for punchy variation), metric number ticks up from
+// 0 to target after the card lands.
+function CaseCard({
+  c,
+  inView,
+  idx,
+}: {
+  c: { brand: string; category: string; metric: string; metricLabel: string; duration: string; highlight: string };
+  inView: boolean;
+  idx: number;
+}) {
+  // Parse '5.2×' → { num: 5.2, suffix: '×' }
+  const match = c.metric.match(/(\d+(?:\.\d+)?)(.*)/);
+  const target = match ? parseFloat(match[1]) : 0;
+  const suffix = match ? match[2] : c.metric;
+  const decimals = c.metric.includes(".") ? 1 : 0;
+
+  // Trigger counter shortly after this card's stagger delay so the tick
+  // starts as the card settles into place, not before it arrives.
+  const [triggered, setTriggered] = useState(false);
+  useEffect(() => {
+    if (!inView) return;
+    const start = idx * 160 + 350;
+    const t = setTimeout(() => setTriggered(true), start);
+    return () => clearTimeout(t);
+  }, [inView, idx]);
+  const displayed = useCounterFloat(triggered, target, 1300, decimals);
+  const displayStr =
+    decimals > 0 ? displayed.toFixed(1) + suffix : Math.round(displayed) + suffix;
+
+  // Alternate rotation direction for a livelier grid entry.
+  const rot = idx % 2 === 0 ? -1.5 : 1.5;
+
+  return (
+    <div
+      className="border-2 border-black flex flex-col overflow-hidden"
+      style={{
+        background: "#ebe8e0",
+        boxShadow: "8px 8px 0 0 #0d0d0d",
+        opacity: inView ? 1 : 0,
+        transform: inView
+          ? "translateY(0) scale(1) rotate(0deg)"
+          : `translateY(60px) scale(0.92) rotate(${rot}deg)`,
+        transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms`,
+      }}
+    >
+      {/* Header — brand + category */}
+      <div className="px-5 py-4 border-b-2 border-black flex items-center justify-between">
+        <div className="font-black text-lg uppercase tracking-tight">
+          {c.brand}
+        </div>
+        <div
+          className="text-[10px] uppercase tracking-[0.2em] opacity-60"
+          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        >
+          {c.category}
+        </div>
+      </div>
+
+      {/* Metric plate — dark bg with silver-fill counter */}
+      <div
+        className="px-5 py-8 md:py-10 border-b-2 border-black flex-1 flex flex-col justify-center"
+        style={{ background: "#0d0d0d", color: "#f4f4f4" }}
+      >
+        <div
+          className="font-black leading-none tabular-nums"
+          style={{
+            fontSize: "clamp(56px, 7vw, 108px)",
+            background: SILVER_H,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            letterSpacing: "-0.03em",
+          }}
+        >
+          {displayStr}
+        </div>
+        <div
+          className="text-[10px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
+          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        >
+          {c.metricLabel}
+        </div>
+      </div>
+
+      {/* Duration + highlight */}
+      <div className="p-5 space-y-3">
+        <div
+          className="inline-block px-2 py-1 border border-black text-[10px] font-bold uppercase tracking-[0.2em]"
+          style={{ fontFamily: "var(--font-brutal-pixel)" }}
+        >
+          {c.duration}
+        </div>
+        <p className="text-[13px] leading-[1.5] font-medium">
+          {c.highlight}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -1380,18 +1444,22 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
             </p>
           </div>
 
-          {/* Right — step stack */}
+          {/* Right — step stack. Cards enter with alternating side slide
+              + scale so the list feels like it's snapping into position
+              rather than just fading in. */}
           <div className="md:col-span-7 space-y-4 md:space-y-6">
             {t.steps.map((s, i) => (
               <div
                 key={s.num}
-                className="border-2 border-black p-5 md:p-7 transition-all duration-700"
+                className="border-2 border-black p-5 md:p-7"
                 style={{
                   background: "#ebe8e0",
                   boxShadow: "6px 6px 0 0 #0d0d0d",
                   opacity: inView ? 1 : 0,
-                  transform: inView ? "translateY(0)" : "translateY(20px)",
-                  transitionDelay: `${i * 130}ms`,
+                  transform: inView
+                    ? "translateX(0) scale(1)"
+                    : `translateX(${i % 2 === 0 ? -50 : 50}px) scale(0.96)`,
+                  transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${i * 130}ms, transform 700ms cubic-bezier(0.16,1,0.3,1) ${i * 130}ms`,
                 }}
               >
                 <div className="flex items-baseline gap-4 md:gap-6">
@@ -1475,16 +1543,22 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-          {ROSTER.map((c, i) => (
+          {ROSTER.map((c, i) => {
+            // Alternate rotation direction per column for a punchier
+            // pop-into-place feel across the whole grid.
+            const rot = i % 2 === 0 ? -2 : 2;
+            return (
             <div
               key={c.name}
-              className="border-2 border-white bg-white flex flex-col relative transition-all duration-700"
+              className="border-2 border-white bg-white flex flex-col relative"
               style={{
                 aspectRatio: "5/4",
                 boxShadow: "5px 5px 0 0 #8a8a8a",
                 opacity: inView ? 1 : 0,
-                transform: inView ? "translateY(0)" : "translateY(18px)",
-                transitionDelay: `${i * 60}ms`,
+                transform: inView
+                  ? "translateY(0) scale(1) rotate(0deg)"
+                  : `translateY(30px) scale(0.85) rotate(${rot}deg)`,
+                transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${i * 55}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${i * 55}ms`,
               }}
             >
               {/* Region badge in top-right corner */}
@@ -1515,7 +1589,8 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
                 {c.name}
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
 
         {/* Coda under the grid */}
