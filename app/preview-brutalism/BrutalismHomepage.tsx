@@ -89,9 +89,9 @@ const COPY = {
     stage1: {
       eyebrow: "01 · VEKTO",
       pill: "АГЕНЦИЯ ЗА РАСТЕЖ",
-      headline1: "ИСКАШ ЛИ ДА СКАЛИРАШ?",
-      headline2Prefix: "БИЗНЕСЪТ ТИ",
-      headline2Highlight: "ГО ЗАСЛУЖАВА.",
+      headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
+      headline2Prefix: "ДА БЪДЕ",
+      headline2Highlight: "СКАЛИРАН?",
       typed: "ЕДИН ЕКИП. РЕКЛАМИ, КРЕАТИВ, САЙТ.",
       scrollCue: "▼ ПРОДЪЛЖИ",
       ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
@@ -276,9 +276,9 @@ const COPY = {
     stage1: {
       eyebrow: "01 · VEKTO",
       pill: "GROWTH AGENCY",
-      headline1: "WANT TO SCALE?",
-      headline2Prefix: "YOUR BUSINESS",
-      headline2Highlight: "DESERVES IT.",
+      headline1: "DOES YOUR BUSINESS",
+      headline2Prefix: "DESERVE",
+      headline2Highlight: "TO SCALE?",
       typed: "ONE TEAM. ADS, CREATIVE, SITE.",
       scrollCue: "▼ CONTINUE",
       ctaPrimary: "BOOK A CALL",
@@ -1338,9 +1338,10 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           <h1
             className="font-black tracking-[-0.03em] max-w-full"
             style={{
-              // The question headline is short — it can afford display
-              // scale without wrapping risk in either language.
-              fontSize: "clamp(40px, 6.2vw, 108px)",
+              // Sized against the longest line of the Bulgarian question
+              // ("БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ") so it holds one line on wide
+              // screens and wraps cleanly, not mid-highlight, below that.
+              fontSize: "clamp(36px, 5.6vw, 96px)",
               lineHeight: 0.94,
               overflowWrap: "break-word",
               hyphens: "none",
