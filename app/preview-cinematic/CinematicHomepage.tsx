@@ -27,6 +27,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Lenis from "lenis";
 import { FRAME_DIR, FRAME_COUNT, FRAME_SETS, ZONES, zoneEnvelope, zoneLocal } from "./journey";
 import { JOURNEY_COPY, type JourneyLang } from "./journeyCopy";
+import FlightPlan from "../components/FlightPlan";
 
 const ScrubReel = dynamic(() => import("./ScrubReel"), { ssr: false });
 
@@ -811,55 +812,22 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
 
 // 06 · PROCESS — four numbered steps, bone ground.
 function Process({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, 0.12);
+  // The plate-card stack is gone — the process is told as the Vector's
+  // trajectory in the film's own world (shared FlightPlan component).
   return (
-    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28" style={{ background: "#d6d3ca" }}>
-      <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-10 items-start">
-        <div className="md:col-span-5">
-          <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
-            {t.process.eyebrow}
-          </div>
-          <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase" style={{ fontSize: "clamp(30px, 4.4vw, 64px)", color: JET }}>
-            {t.process.headline1}
-            <br />
-            {t.process.headline2Prefix}{" "}
-            <span style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              {t.process.headline2Highlight}
-            </span>
-          </h2>
-        </div>
-        <div className="md:col-span-7 space-y-4 md:space-y-5">
-          {t.process.steps.map((st, i) => (
-            <div
-              key={st.num}
-              className="border-2 border-black p-5 md:p-6"
-              style={{
-                background: "#ebe8e0",
-                boxShadow: "6px 6px 0 0 #0d0d0d",
-                opacity: inView ? 1 : 0,
-                transform: inView ? "translateX(0)" : `translateX(${i % 2 === 0 ? -30 : 30}px)`,
-                transition: `opacity 550ms cubic-bezier(0.16,1,0.3,1) ${i * 110}ms, transform 650ms cubic-bezier(0.16,1,0.3,1) ${i * 110}ms`,
-              }}
-            >
-              <div className="flex items-baseline gap-4 md:gap-5">
-                <div className="text-3xl md:text-4xl font-black tabular-nums flex-shrink-0" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  {st.num}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1.5">
-                    <h3 className="font-black text-base md:text-xl uppercase tracking-tight leading-tight" style={{ color: JET }}>{st.title}</h3>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
-                      {st.duration}
-                    </span>
-                  </div>
-                  <p className="text-sm md:text-base leading-[1.5] font-medium opacity-85" style={{ fontFamily: "var(--cine-comic)", color: JET }}>{st.body}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <section>
+      <FlightPlan
+        eyebrow={t.process.eyebrow}
+        headline1={t.process.headline1}
+        headline2Prefix={t.process.headline2Prefix}
+        headline2Highlight={t.process.headline2Highlight}
+        steps={t.process.steps}
+        fonts={{
+          display: "var(--cine-display), system-ui, sans-serif",
+          pixel: "var(--cine-pixel), ui-monospace, monospace",
+          comic: "var(--cine-comic), system-ui, sans-serif",
+        }}
+      />
     </section>
   );
 }

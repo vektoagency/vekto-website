@@ -22,6 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { sendContactEmail } from "../actions/contact";
+import FlightPlan from "../components/FlightPlan";
 
 // ============================================================================
 // PALETTE
@@ -1796,109 +1797,25 @@ function CaseCard({
 // duration badge, body copy.
 // ============================================================================
 function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageProcess"] }) {
-  const inView = useInView(targetRef, 0.15);
+  // The plate-card stack repeated the furniture every other stage already
+  // uses; the process now runs as the Vector's trajectory — the shared
+  // FlightPlan component in the film's world (jet ground, one silver line,
+  // naked type), scroll-drawn.
   return (
-    <section
-      id="stage-06"
-      ref={targetRef}
-      className=""
-      style={{ background: "#d6d3ca", minHeight: "100vh" }}
-    >
-      <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-10 items-start">
-          {/* Left — sticky headline */}
-          <div className="md:col-span-5 md:sticky md:top-40">
-            <div
-              className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-              style={{ fontFamily: "var(--brutal-pixel)" }}
-            >
-              {t.eyebrow}
-            </div>
-            <h2
-              className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6"
-              style={{ fontSize: "clamp(34px, 5vw, 76px)" }}
-            >
-              {t.headline1}
-              <br />
-              {t.headline2Prefix}{" "}
-              <span
-                style={{
-                  background: GRAPHITE_H,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {t.headline2Highlight}
-              </span>
-            </h2>
-            <p
-              className="text-sm md:text-base leading-[1.55] opacity-75 max-w-md font-medium"
-              style={{ fontFamily: "var(--brutal-comic)" }}
-            >
-              {t.note}
-            </p>
-          </div>
-
-          {/* Right — step stack. Cards enter with alternating side slide
-              + scale so the list feels like it's snapping into position
-              rather than just fading in. */}
-          <div className="md:col-span-7 space-y-4 md:space-y-6">
-            {t.steps.map((s, i) => (
-              <div
-                key={s.num}
-                className="border-2 border-black p-5 md:p-7"
-                style={{
-                  background: "#ebe8e0",
-                  boxShadow: "6px 6px 0 0 #0d0d0d",
-                  opacity: inView ? 1 : 0,
-                  transform: inView
-                    ? "translateX(0) scale(1)"
-                    : `translateX(${i % 2 === 0 ? -50 : 50}px) scale(0.96)`,
-                  transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${i * 130}ms, transform 700ms cubic-bezier(0.16,1,0.3,1) ${i * 130}ms`,
-                }}
-              >
-                <div className="flex items-baseline gap-4 md:gap-6">
-                  <div
-                    className="text-3xl md:text-5xl font-black tabular-nums flex-shrink-0"
-                    style={{
-                      background: GRAPHITE_H,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    {s.num}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                      <h3 className="font-black text-lg md:text-2xl uppercase tracking-tight leading-tight">
-                        {s.title}
-                      </h3>
-                      <span
-                        className="text-[12px] font-bold uppercase tracking-[0.2em] px-2 py-1 border border-black shrink-0"
-                        style={{
-                          fontFamily: "var(--brutal-pixel)",
-                          background: "#0d0d0d",
-                          color: "#f4f4f4",
-                        }}
-                      >
-                        {s.duration}
-                      </span>
-                    </div>
-                    <p
-                      className="text-sm md:text-base leading-[1.55] font-medium opacity-85"
-                      style={{ fontFamily: "var(--brutal-comic)" }}
-                    >
-                      {s.body}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    <section id="stage-06" ref={targetRef} style={{ background: "#0d0d0d" }}>
+      <FlightPlan
+        eyebrow={t.eyebrow}
+        headline1={t.headline1}
+        headline2Prefix={t.headline2Prefix}
+        headline2Highlight={t.headline2Highlight}
+        note={t.note}
+        steps={t.steps}
+        fonts={{
+          display: "var(--brutal-display), system-ui, sans-serif",
+          pixel: "var(--brutal-pixel), ui-monospace, monospace",
+          comic: "var(--brutal-comic), system-ui, sans-serif",
+        }}
+      />
     </section>
   );
 }
