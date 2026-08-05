@@ -722,75 +722,73 @@ export default function BrutalismHomepage() {
           three-row block that ate a third of a phone viewport. On mobile
           the header is now one non-wrapping row and the same
           destinations stay reachable from the footer CTA block. */}
-      <div
-        className="border-b-2"
-        style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.25)" }}
-      >
-        <div className="px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4">
-          {/* LEFT — wordmark + inline nav */}
-          <div className="flex items-center gap-x-6 md:gap-x-10 min-w-0">
-            <Link
-              href="/preview-brutalism"
-              aria-label="VEKTO"
-              className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0"
-              style={{
-                background: WORDMARK_METAL,
-                WebkitMaskImage: "url(/images/logo.png)",
-                maskImage: "url(/images/logo.png)",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "left center",
-                maskPosition: "left center",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-              }}
-            />
-            <nav
-              aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"}
-              className="hidden md:flex items-center gap-x-7 text-sm font-bold uppercase tracking-[0.2em]"
-            >
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="opacity-70 hover:opacity-100 transition-opacity"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* RIGHT — language + primary CTA */}
-          <div className="flex items-center gap-2 md:gap-3 shrink-0">
-            <button
-              onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-              className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] transition-colors hover:bg-white hover:text-black"
-              style={{
-                background: "transparent",
-                color: "#f4f4f4",
-                border: "1.5px solid rgba(244,244,244,0.4)",
-              }}
-              aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
-            >
-              {t.nav.langSwitch}
-            </button>
-            <button
-              type="button"
-              onClick={openBook}
-              className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-              style={{
-                background: "#0d0d0d",
-                color: "#f4f4f4",
-                boxShadow: "3px 3px 0 0 #8a8a8a",
-                borderColor: "#f4f4f4",
-              }}
-            >
-              <span aria-hidden>→</span>
-              <span className="hidden sm:inline">{primaryCtaLabel}</span>
-              <span className="sm:hidden">{lang === "bg" ? "Разговор" : "Call"}</span>
-            </button>
-          </div>
+      {/* Same header grammar as the cinematic preview: fixed and fully
+          transparent — no bar, no border — wordmark alone on the left,
+          nav + language + CTA grouped right, halo shadows for legibility
+          over whatever the stage below is showing. */}
+      <div className="fixed inset-x-0 top-0 z-50" style={{ background: "transparent" }}>
+        <div className="px-4 md:px-6 py-3 md:py-4 flex items-center gap-x-5 md:gap-x-7">
+          <Link
+            href="/preview-brutalism"
+            aria-label="VEKTO"
+            className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0 mr-auto"
+            style={{
+              background: WORDMARK_METAL,
+              filter: "drop-shadow(0 0 1px rgba(13,13,13,0.95)) drop-shadow(0 1px 5px rgba(13,13,13,0.75))",
+              WebkitMaskImage: "url(/images/logo.png)",
+              maskImage: "url(/images/logo.png)",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "left center",
+              maskPosition: "left center",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+            }}
+          />
+          <nav
+            aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"}
+            className="hidden md:contents"
+          >
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="hidden md:inline text-sm font-bold uppercase tracking-[0.2em] opacity-95 hover:opacity-100 transition-opacity"
+                style={{ color: "#f4f4f4", textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9), 0 1px 6px rgba(13,13,13,0.55)" }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <button
+            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
+            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors hover:bg-white hover:text-black"
+            style={{
+              background: "transparent",
+              color: "#f4f4f4",
+              border: "1.5px solid rgba(244,244,244,0.75)",
+              textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9)",
+              filter: "drop-shadow(0 0 1px rgba(13,13,13,0.7))",
+            }}
+            aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
+          >
+            {t.nav.langSwitch}
+          </button>
+          <button
+            type="button"
+            onClick={openBook}
+            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
+            style={{
+              background: "#0d0d0d",
+              color: "#f4f4f4",
+              boxShadow: "3px 3px 0 0 #8a8a8a",
+              borderColor: "#f4f4f4",
+            }}
+          >
+            <span aria-hidden>→</span>
+            <span className="hidden sm:inline">{primaryCtaLabel}</span>
+            <span className="sm:hidden">{lang === "bg" ? "Разговор" : "Call"}</span>
+          </button>
         </div>
       </div>
 
@@ -1303,7 +1301,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           calm subline, a single big ask. The two-column globe hero is gone —
           the composition now holds itself on symmetry instead of an
           instrument in the right third. */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-20 md:pt-24 pb-8 max-w-[1200px] mx-auto w-full min-h-0">
+      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-20 md:pt-24 pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
           {/* Stage marker + positioning plate — stripped to essentials:
               the marker indexes, the plate positions. No era stamp, no
               geography pair, no "AI" prefix. */}
@@ -1339,11 +1337,12 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           <h1
             className="font-black tracking-[-0.03em] max-w-full"
             style={{
-              // Sized against the longest line of the Bulgarian question
-              // ("БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ") so it holds one line on wide
-              // screens and wraps cleanly, not mid-highlight, below that.
-              fontSize: "clamp(36px, 5.6vw, 96px)",
-              lineHeight: 0.94,
+              // Sized so the longest Bulgarian line ("БИЗНЕСЪТ ТИ ЗАСЛУЖАВА
+              // ЛИ", 24 chars) holds ONE line inside the 1320px column at
+              // the cap — the question reads as two decisive lines on
+              // desktop instead of an accidental three.
+              fontSize: "clamp(34px, 5vw, 86px)",
+              lineHeight: 0.96,
               overflowWrap: "break-word",
               hyphens: "none",
             }}
