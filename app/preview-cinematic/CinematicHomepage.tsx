@@ -230,7 +230,6 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
       mqDesktop.removeEventListener("change", apply);
     };
   }, []);
-  const frame = Math.round(p * (FRAME_COUNT - 1)) + 1;
   // Zones are unequal fractions since v4, so the active zone is found by
   // boundary, not by dividing progress into sixths.
   const rawZoneIdx = ZONES.findIndex((z) => p < z.to);
@@ -306,19 +305,15 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           <div className="h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />
         </div>
 
-        {/* HUD — instrument readout. Bottom-left on desktop; on phones it
-            shrinks to the zone chip alone and moves bottom-right, clearing
-            the bottom-left band where the landing copy sits. */}
+        {/* HUD — one slim readout: zone counter and the journey bar. The
+            frame counter and the loader percentage chip were two more
+            instruments in the same corner saying nothing a visitor needs. */}
         <div
           className="absolute bottom-3 right-3 left-auto sm:left-4 sm:right-auto sm:bottom-4 md:bottom-6 md:left-6 z-30 flex items-center gap-3 px-2.5 py-1.5 sm:px-3 sm:py-2 border-2"
           style={{ borderColor: "rgba(244,244,244,0.5)", background: "rgba(13,13,13,0.66)", color: "#f4f4f4" }}
         >
           <span className="text-[11px] uppercase tracking-[0.3em] tabular-nums" style={{ fontFamily: "var(--cine-pixel)" }}>
-            {t.hud.zone} {String(zoneIdx + 1).padStart(2, "0")}/06
-          </span>
-          <span className="opacity-40 hidden sm:inline">·</span>
-          <span className="text-[11px] uppercase tracking-[0.3em] tabular-nums hidden sm:inline" style={{ fontFamily: "var(--cine-pixel)" }}>
-            {t.hud.frame} {String(frame).padStart(3, "0")}/{String(FRAME_COUNT).padStart(3, "0")}
+            {String(zoneIdx + 1).padStart(2, "0")}/06
           </span>
           <span className="relative w-24 h-[2px] hidden sm:block" style={{ background: "rgba(244,244,244,0.25)" }}>
             <span className="absolute left-0 top-0 h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />

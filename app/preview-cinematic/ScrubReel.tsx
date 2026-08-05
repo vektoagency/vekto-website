@@ -214,8 +214,6 @@ export default function ScrubReel({
 
   useEffect(() => { scheduleRef.current(); }, [progress, loaded]);
 
-  const pct = Math.round((loaded / frames.count) * 100);
-
   return (
     <div
       ref={hostRef}
@@ -241,24 +239,10 @@ export default function ScrubReel({
             : { display: "block", width: "100%", height: "auto" }
         }
       />
-      {/* Loader readout — a small corner chip only. The first version laid a
-          72% black scrim over the whole film while the sequence decoded,
-          which made the opening read "dark, then suddenly bright" the moment
-          loading finished. The film must look the same at 7% loaded as at
-          100%; only the chip reports progress. */}
-      {!ready && (
-        <div
-          className="absolute bottom-3 left-3 pointer-events-none px-2 py-1 border"
-          style={{ background: "rgba(13,13,13,0.72)", borderColor: "rgba(244,244,244,0.4)" }}
-        >
-          <span
-            className="text-[11px] uppercase tracking-[0.3em] tabular-nums"
-            style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}
-          >
-            {String(pct).padStart(3, "0")}%
-          </span>
-        </div>
-      )}
+      {/* No loader chip: the sequence draws progressively via the
+          nearest-decoded fallback, and a second corner instrument stacked
+          under the HUD read as clutter. The film simply sharpens as frames
+          arrive. */}
     </div>
   );
 }
