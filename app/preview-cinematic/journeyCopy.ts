@@ -16,10 +16,10 @@ export const JOURNEY_COPY = {
   bg: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · AI GROWTH AGENCY · БЪЛГАРИЯ · САЩ",
+        kicker: "01 · VEKTO · АГЕНЦИЯ ЗА РАСТЕЖ",
         h1a: "ТВОЯТ ПАРТНЬОР",
         h1b: "ЗА",
-        h1hi: "РАСТЕЖ ОНЛАЙН.",
+        h1hi: "ОНЛАЙН РАСТЕЖ.",
         ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
         ctaSecondary: "ПОРТФОЛИО",
         proofTitle: "ROAS",
@@ -41,7 +41,7 @@ export const JOURNEY_COPY = {
         rooms: [
           { title: "РЕКЛАМИ", detail: "Meta · Google · TikTok", num: "4.8×", label: "СРЕДЕН ROAS" },
           { title: "КРЕАТИВ", detail: "UGC · AI · заснемане", num: "200+", label: "ВИДЕА / МЕСЕЦ" },
-          { title: "САЙТОВЕ", detail: "Landing · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
+          { title: "САЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
           { title: "СТРАТЕГИЯ", detail: "Позициониране · оферта", num: "50+", label: "БРАНДА" },
         ],
       },
@@ -61,19 +61,19 @@ export const JOURNEY_COPY = {
         // is computed from live Meta account data (beMe, last 90d:
         // 840 purchases / 24,389 link clicks = 3.4%).
         cases: [
-          { service: "РЕКЛАМИ", metric: "7.7×", sub: "ROAS · URGENCY ОФЕРТА", meta: "PARFEN · 60 ДНИ" },
+          { service: "РЕКЛАМИ", metric: "7.7×", sub: "ROAS · ОФЕРТА СЪС СРОК", meta: "PARFEN · 60 ДНИ" },
           { service: "КРЕАТИВ", metric: "5.2×", sub: "ROAS · AI КАМПАНИЯ", meta: "MEN'S CARE · 90 ДНИ" },
-          { service: "САЙТ + ФУНИЯ", metric: "3.4%", sub: "CVR · КЛИК → ПОРЪЧКА", meta: "beMe · 90 ДНИ" },
-          { service: "СТРАТЕГИЯ", metric: "10×", sub: "ROAS · NAIL НИША", meta: "FREYA · 120 ДНИ" },
+          { service: "САЙТ + ФУНИЯ", metric: "3.4%", sub: "CVR · ОТ КЛИК ДО ПОРЪЧКА", meta: "beMe · 90 ДНИ" },
+          { service: "СТРАТЕГИЯ", metric: "10×", sub: "ROAS · ПРОДУКТИ ЗА НОКТИ", meta: "FREYA · 120 ДНИ" },
         ],
-        note: "РЕАЛЕН МЕТРИК · РЕАЛЕН БЮДЖЕТ · РЕАЛЕН ПЕРИОД",
+        note: "РЕАЛНА МЕТРИКА · РЕАЛЕН БЮДЖЕТ · РЕАЛЕН ПЕРИОД",
       },
       landing: {
         kicker: "09 · АКО СИ СТИГНАЛ ДОТУК",
         h2a: "ТОГАВА Е ВРЕМЕ ЗА",
         h2hi: "РАЗГОВОР.",
         cta: "ЗАПАЗИ РАЗГОВОР",
-        meta: "БЪЛГАРИЯ · САЩ",
+        meta: "30 МИНУТИ · БЕЗПЛАТНО · БЕЗ АНГАЖИМЕНТ",
       },
     },
     hud: { zone: "ЗОНА", frame: "КАДЪР" },
@@ -81,7 +81,7 @@ export const JOURNEY_COPY = {
     scrollCue: "СКРОЛНИ",
     roster: {
       eyebrow: "05 · СЪСТАВЪТ",
-      headline1: "50+ БРАНДА В ПОРТФЕЙЛА.",
+      headline1: "50+ БРАНДА В ПОРТФОЛИОТО.",
       headline2Prefix: "12",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
@@ -91,12 +91,12 @@ export const JOURNEY_COPY = {
       eyebrow: "06 · КАК СЕ СЛУЧВА",
       headline1: "ОТ ПЪРВИЯ РАЗГОВОР",
       headline2Prefix: "ДО",
-      headline2Highlight: "РАСТЕЖ.",
+      headline2Highlight: "РАСТЕЖА.",
       steps: [
-        { num: "01", title: "ЗАПОЗНАВАНЕ", duration: "30 МИНУТИ · БЕЗПЛАТНО", body: "Разговор за бранда, целите, ситуацията. Проверяваме дали сме fit — от двете страни." },
-        { num: "02", title: "DIAGNOSTIC SPRINT", duration: "2 СЕДМИЦИ", body: "Audit на текущи канали, positioning, offer, tracking. Излизаш с конкретен 90-дневен план." },
-        { num: "03", title: "SETUP PHASE", duration: "30 ДНИ", body: "Изграждаме stack-а: стратегия, creative, funnel, tracking, инфраструктура. Launch-ready." },
-        { num: "04", title: "LAUNCH & SCALE", duration: "МЕСЕЦ 2 →", body: "Пускаме, мерим, скалираме. Данните решават посоката." },
+        { num: "01", title: "ЗАПОЗНАВАНЕ", duration: "30 МИНУТИ · БЕЗПЛАТНО", body: "Разговор за бранда, целите и ситуацията. Проверяваме дали си пасваме — и в двете посоки." },
+        { num: "02", title: "ДИАГНОСТИКА", duration: "2 СЕДМИЦИ", body: "Одит на каналите, позиционирането, офертата и проследяването. Излизаш с конкретен план за 90 дни." },
+        { num: "03", title: "ИЗГРАЖДАНЕ", duration: "30 ДНИ", body: "Сглобяваме системата: стратегия, криейтиви, фуния, проследяване, инфраструктура. Готово за старт." },
+        { num: "04", title: "СТАРТ И СКАЛИРАНЕ", duration: "МЕСЕЦ 2 →", body: "Пускаме, мерим, скалираме. Данните решават посоката." },
       ],
     },
     fit: {
@@ -105,31 +105,31 @@ export const JOURNEY_COPY = {
       headlineHighlight: "ЧЕТИРИ",
       headlineSuffix: "?",
       items: [
-        "Правиш €100k+ годишен приход",
+        "Имаш €100k+ годишен оборот",
         "Готов си да инвестираш в система, не в единични материали",
         "Искаш партньор, не изпълнител",
-        "Цениш занаята повече от трикове",
+        "Цениш занаята повече от триковете",
       ],
     },
     after: {
       workEyebrow: "РАБОТАТА · РЕАЛНИ КЛИПОВЕ",
       workHeadline1: "РЕАЛНИ БРАНДОВЕ.",
       workHeadline2: "РЕАЛНИ ВИДЕА.",
-      workNote: "Всяко видео долу е пускано като реклама. Мини с мишката, за да го гледаш.",
+      workNote: "Всяко видео долу е въртяно като истинска реклама. Задръж отгоре, за да го гледаш.",
       workAll: "Цялото портфолио",
     },
     endCard: {
       eyebrow: "СЛЕДВАЩАТА СТЪПКА",
-      h1: "ИМАШ БРАНД",
-      h2: "ЗА РАСТЕЖ?",
+      h1: "ИМАШ ЛИ БРАНД,",
+      h2: "КОЙТО ЗАСЛУЖАВА РАСТЕЖ?",
       cta: "ЗАПАЗИ РАЗГОВОР",
-      meta: "БЪЛГАРИЯ · САЩ",
+      meta: "30 МИНУТИ · БЕЗПЛАТНО · БЕЗ АНГАЖИМЕНТ",
     },
   },
   en: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · AI GROWTH AGENCY · BULGARIA · USA",
+        kicker: "01 · VEKTO · GROWTH AGENCY",
         h1a: "YOUR PARTNER",
         h1b: "FOR",
         h1hi: "ONLINE GROWTH.",
@@ -182,7 +182,7 @@ export const JOURNEY_COPY = {
         h2a: "THEN IT'S TIME FOR",
         h2hi: "A CALL.",
         cta: "BOOK A CALL",
-        meta: "BULGARIA · USA",
+        meta: "30 MINUTES · FREE · NO STRINGS",
       },
     },
     hud: { zone: "ZONE", frame: "FRAME" },
@@ -232,7 +232,7 @@ export const JOURNEY_COPY = {
       h1: "GOT A BRAND",
       h2: "WORTH GROWING?",
       cta: "BOOK A CALL",
-      meta: "BULGARIA · USA",
+      meta: "30 MINUTES · FREE · NO STRINGS",
     },
   },
 } as const;
