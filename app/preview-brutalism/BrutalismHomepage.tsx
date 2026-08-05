@@ -86,11 +86,11 @@ const COPY = {
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · VEKTO · EST. MMXXIV",
-      pill: "AI GROWTH AGENCY · БЪЛГАРИЯ · САЩ",
-      headline1: "ТВОЯТ ПАРТНЬОР",
-      headline2Prefix: "ЗА",
-      headline2Highlight: "РАСТЕЖ ОНЛАЙН.",
+      eyebrow: "01 · VEKTO",
+      pill: "АГЕНЦИЯ ЗА РАСТЕЖ",
+      headline1: "ИСКАШ ЛИ ДА СКАЛИРАШ?",
+      headline2Prefix: "БИЗНЕСЪТ ТИ",
+      headline2Highlight: "ГО ЗАСЛУЖАВА.",
       typed: "ЕДИН ЕКИП. РЕКЛАМИ, КРЕАТИВ, САЙТ.",
       scrollCue: "▼ ПРОДЪЛЖИ",
       ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
@@ -252,8 +252,7 @@ const COPY = {
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
-      location: "БЪЛГАРИЯ · САЩ",
-      guestbook: "// VEKTO · GROWTH AGENCY · MMXXVI",
+      guestbook: "// VEKTO · GROWTH AGENCY · 2026",
       portfolioLink: "← ВИЖ ПЪЛНО ПОРТФОЛИО",
     },
   },
@@ -274,11 +273,11 @@ const COPY = {
       { id: "09", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · VEKTO · EST. MMXXIV",
-      pill: "AI GROWTH AGENCY · BULGARIA · USA",
-      headline1: "YOUR PARTNER",
-      headline2Prefix: "FOR",
-      headline2Highlight: "ONLINE GROWTH.",
+      eyebrow: "01 · VEKTO",
+      pill: "GROWTH AGENCY",
+      headline1: "WANT TO SCALE?",
+      headline2Prefix: "YOUR BUSINESS",
+      headline2Highlight: "DESERVES IT.",
       typed: "ONE TEAM. ADS, CREATIVE, SITE.",
       scrollCue: "▼ CONTINUE",
       ctaPrimary: "BOOK A CALL",
@@ -440,8 +439,7 @@ const COPY = {
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
-      location: "BULGARIA · US",
-      guestbook: "// VEKTO · GROWTH AGENCY · MMXXVI",
+      guestbook: "// VEKTO · GROWTH AGENCY · 2026",
       portfolioLink: "← SEE FULL PORTFOLIO",
     },
   },
@@ -1303,20 +1301,19 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           calm subline, a single big ask. The two-column globe hero is gone —
           the composition now holds itself on symmetry instead of an
           instrument in the right third. */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-24 md:pt-28 pb-8 max-w-[1200px] mx-auto w-full min-h-0">
-          {/* Stage marker + positioning plate. These used to say
-              "01 · GROWTH AGENCY" and "AI GROWTH AGENCY · EST. MMXXIV" —
-              the same three words twice, 40px apart. The marker now does
-              indexing, the plate does positioning + geography. */}
+      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-20 md:pt-24 pb-8 max-w-[1200px] mx-auto w-full min-h-0">
+          {/* Stage marker + positioning plate — stripped to essentials:
+              the marker indexes, the plate positions. No era stamp, no
+              geography pair, no "AI" prefix. */}
           <div
-            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 opacity-60"
+            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 opacity-60"
             style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
           </div>
 
           <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 text-[12px] md:text-xs font-bold uppercase tracking-[0.25em] mb-5 md:mb-6"
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-[12px] md:text-xs font-bold uppercase tracking-[0.25em] mb-6 md:mb-7"
             style={{
               background: "#0d0d0d",
               color: "#f4f4f4",
@@ -1340,7 +1337,9 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           <h1
             className="font-black tracking-[-0.03em] max-w-full"
             style={{
-              fontSize: "clamp(34px, 4.9vw, 84px)",
+              // The question headline is short — it can afford display
+              // scale without wrapping risk in either language.
+              fontSize: "clamp(40px, 6.2vw, 108px)",
               lineHeight: 0.94,
               overflowWrap: "break-word",
               hyphens: "none",
@@ -1370,7 +1369,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           {/* Typewriter line — now the calm centred subline under the
               shout, where acquisition.com runs its supporting sentence. */}
           <div
-            className="mt-6 md:mt-8 flex items-center justify-center gap-3 font-bold uppercase text-xs md:text-base tracking-[0.25em]"
+            className="mt-5 md:mt-7 flex items-center justify-center gap-3 font-bold uppercase text-sm md:text-lg tracking-[0.25em]"
             style={{
               opacity: inView ? 0.75 : 0,
               transition: "opacity 400ms ease",
@@ -2278,8 +2277,6 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
             <a href="tel:+359882251474" className="hover:opacity-100">
               +359 88 225 1474
             </a>
-            <span className="opacity-40">·</span>
-            <span>{t.location}</span>
           </div>
 
           <div
