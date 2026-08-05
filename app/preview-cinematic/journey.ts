@@ -16,7 +16,10 @@
 // hides a jump that size — the scrub read as steppy. 12fps halves the delta;
 // the canvas additionally crossfades between neighbouring frames so the
 // remaining gap reads as motion blur rather than a step.
-export const FRAME_COUNT = 576;
+// 575: one frame short of 6×96 — the original frame 193 opened segment 3 in
+// a visibly different pose (smaller, horizontal) and was cut on review; the
+// ten frames after it carry a baked decaying re-alignment instead.
+export const FRAME_COUNT = 575;
 
 // Two extractions of the same 288 frames. The film runs full-bleed, so the
 // desktop set is sized for desktop viewports (1600w, q82 ≈ 6MB total) — the
