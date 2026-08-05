@@ -34,7 +34,6 @@ const ScrubReel = dynamic(() => import("./ScrubReel"), { ssr: false });
 // ---------------------------------------------------------------------------
 // PALETTE — shared with /preview-brutalism so the two previews are comparable.
 // ---------------------------------------------------------------------------
-const BONE = "#ebe8e0";
 const JET = "#0d0d0d";
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
@@ -163,8 +162,11 @@ export default function CinematicHomepage() {
     <div
       className="relative"
       style={{
-        background: BONE,
-        color: JET,
+        // The whole page lives in the film's own palette — jet, silver,
+        // white. Bone grounds are gone; every section is a shade of the
+        // hero's world.
+        background: JET,
+        color: "#f4f4f4",
         fontFamily: "var(--cine-display), system-ui, sans-serif",
         overflowX: "clip",
       }}
@@ -432,32 +434,32 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         <ZoneOverlay p={p} z={Z.curve} className="items-start justify-end md:justify-center pb-[11vh] md:pb-0">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             <Kicker text={t.zones.cases.kicker} dark />
-            <div className="flex flex-wrap gap-4 md:gap-5 mt-2">
+            {/* Naked type in the film's own greys — no plates, no borders:
+                the bone card boxes fought the titanium palette. Same
+                treatment as the roster/trajectory sections. */}
+            <div className="flex flex-wrap gap-x-12 gap-y-8 md:gap-x-16 mt-4">
               {t.zones.cases.cases.map((c, i) => {
                 const local = zoneLocal(p, Z.curve);
                 const on = local > 0.16 + i * 0.13;
                 return (
                   <div
                     key={c.service}
-                    className="border-2 border-black px-5 py-4"
                     style={{
-                      background: "rgba(235,232,224,0.92)",
-                      boxShadow: "6px 6px 0 0 #0d0d0d",
                       opacity: on ? 1 : 0,
                       transform: on ? "translateY(0)" : "translateY(16px)",
                       transition: "opacity 300ms ease, transform 380ms cubic-bezier(0.16,1,0.3,1)",
                     }}
                   >
-                    <div className="inline-block px-2 py-1 border-2 border-black text-[11px] font-bold uppercase tracking-[0.25em] mb-2" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-1 opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
                       {c.service}
                     </div>
-                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(32px, 3.8vw, 60px)", color: JET }}>
+                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(34px, 4vw, 64px)", background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                       {c.metric}
                     </div>
                     <div className="text-[11px] uppercase tracking-[0.25em] font-bold mt-2 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
                       {c.sub}
                     </div>
-                    <div className="text-[11px] uppercase tracking-[0.2em] mt-1 opacity-60" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
+                    <div className="text-[11px] uppercase tracking-[0.2em] mt-1 opacity-55" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
                       {c.meta}
                     </div>
                   </div>
@@ -607,18 +609,18 @@ function StaticJourney({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
     <section className="relative flex items-center" style={{ minHeight: "92vh", background: JET }}>
       <Image src={still} alt="" fill className="object-cover opacity-80" unoptimized />
       <div className="relative z-10 max-w-[1500px] w-full mx-auto px-6 md:px-14 py-24">
-        <div className="border-2 border-black p-6 md:p-9 max-w-3xl" style={{ background: "rgba(235,232,224,0.97)", boxShadow: "8px 8px 0 0 #0d0d0d" }}>
-          <div className="inline-block px-2.5 py-1.5 border-2 border-black text-[11px] font-bold uppercase tracking-[0.3em]" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
+        <div className="p-6 md:p-9 max-w-3xl" style={{ background: "rgba(13,13,13,0.86)", border: "1px solid rgba(244,244,244,0.28)" }}>
+          <div className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
             {t.zones.vault.kicker}
           </div>
-          <h1 className="font-black tracking-[-0.03em] mt-4" style={{ fontSize: "clamp(32px, 4.6vw, 78px)", lineHeight: 0.94, color: JET }}>
+          <h1 className="font-black tracking-[-0.03em] mt-4" style={{ fontSize: "clamp(32px, 4.6vw, 78px)", lineHeight: 0.94, color: "#f4f4f4" }}>
             {t.zones.vault.h1a} {t.zones.vault.h1b} {t.zones.vault.h1hi}
           </h1>
           <div className="flex flex-wrap gap-3 mt-7">
-            <Link href="/brief" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-black font-black uppercase text-sm tracking-[0.15em]" style={{ background: JET, color: "#f4f4f4" }}>
+            <Link href="/brief" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4" }}>
               → {t.zones.vault.ctaPrimary}
             </Link>
-            <Link href="/portfolio" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-black font-black uppercase text-sm tracking-[0.15em]" style={{ color: JET }}>
+            <Link href="/portfolio" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.6)" }}>
               ▶ {t.zones.vault.ctaSecondary}
             </Link>
           </div>
@@ -837,37 +839,37 @@ function Fit({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, 0.15);
   return (
-    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28" style={{ background: BONE }}>
+    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28" style={{ background: JET, color: "#f4f4f4" }}>
       <div className="max-w-[1400px] mx-auto">
-        <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
+        <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-55" style={{ fontFamily: "var(--cine-pixel)" }}>
           {t.fit.eyebrow}
         </div>
-        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12 max-w-4xl" style={{ fontSize: "clamp(30px, 4.6vw, 68px)", color: JET }}>
+        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12 max-w-4xl" style={{ fontSize: "clamp(30px, 4.6vw, 68px)" }}>
           {t.fit.headlinePrefix}{" "}
-          <span style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {t.fit.headlineHighlight}
           </span>
           {t.fit.headlineSuffix}
         </h2>
-        <ul className="space-y-4 md:space-y-5 max-w-4xl">
+        {/* Naked rows on jet — hairline separations instead of bone plates. */}
+        <ul className="max-w-4xl">
           {t.fit.items.map((q, i) => (
             <li
               key={q}
-              className="flex items-start gap-4 md:gap-6 border-2 border-black p-4 md:p-6"
+              className="flex items-start gap-4 md:gap-6 py-5 md:py-6"
               style={{
-                background: "#ebe8e0",
-                boxShadow: "6px 6px 0 0 #0d0d0d",
+                borderBottom: "1px solid rgba(244,244,244,0.14)",
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(18px)",
                 transition: `opacity 500ms cubic-bezier(0.16,1,0.3,1) ${i * 120}ms, transform 600ms cubic-bezier(0.16,1,0.3,1) ${i * 120}ms`,
               }}
             >
-              <span className="mt-1 w-8 h-8 md:w-10 md:h-10 flex-shrink-0 border-2 border-black flex items-center justify-center" style={{ background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)", color: JET }}>
+              <span className="mt-1 w-8 h-8 md:w-10 md:h-10 flex-shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)", color: JET }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
                   <path d="M3 8L7 12L13 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square" />
                 </svg>
               </span>
-              <span className="text-base md:text-xl leading-[1.35] font-bold uppercase" style={{ color: JET }}>{q}</span>
+              <span className="text-base md:text-xl leading-[1.35] font-bold uppercase">{q}</span>
             </li>
           ))}
         </ul>
@@ -880,14 +882,14 @@ function Work({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, 0.1);
   return (
-    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28 max-w-[1500px] mx-auto" style={{ background: BONE }}>
-      <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
+    <section ref={ref} className="px-6 md:px-14 py-20 md:py-28 max-w-[1500px] mx-auto" style={{ background: JET, color: "#f4f4f4" }}>
+      <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-55" style={{ fontFamily: "var(--cine-pixel)" }}>
         {t.after.workEyebrow}
       </div>
       <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl" style={{ fontSize: "clamp(34px, 5.2vw, 78px)" }}>
         {t.after.workHeadline1}
         <br />
-        <span style={{ background: "linear-gradient(90deg, #6d6d6d 0%, #2a2a2a 30%, #5a5a5a 58%, #232323 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+        <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
           {t.after.workHeadline2}
         </span>
       </h2>
@@ -932,10 +934,10 @@ function WorkCard({ w, i, inView }: { w: (typeof WORK)[number]; i: number; inVie
 
   return (
     <figure
-      className="border-2 border-black relative group"
+      className="border-2 relative group"
       style={{
         background: JET,
-        boxShadow: "5px 5px 0 0 #0d0d0d",
+        borderColor: "#3a3a3a",
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(24px)",
         transition: `opacity 500ms cubic-bezier(0.16,1,0.3,1) ${i * 70}ms, transform 600ms cubic-bezier(0.16,1,0.3,1) ${i * 70}ms`,
@@ -1034,8 +1036,6 @@ function Footer({ lang }: { lang: JourneyLang }) {
         <a href="mailto:vektoagency@gmail.com" className="hover:opacity-100">vektoagency@gmail.com</a>
         <span className="opacity-40">·</span>
         <a href="tel:+359882251474" className="hover:opacity-100">+359 88 225 1474</a>
-        <span className="opacity-40">·</span>
-        <span>{lang === "bg" ? "България · САЩ" : "Bulgaria · USA"}</span>
       </div>
     </section>
   );
