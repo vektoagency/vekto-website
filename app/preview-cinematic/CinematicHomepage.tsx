@@ -365,17 +365,6 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                   {t.zones.vault.ctaSecondary}
                 </Link>
               </div>
-              <div className="flex items-stretch flex-wrap gap-2 mt-6">
-                <span className="inline-flex items-center shrink-0 text-[11px] font-bold uppercase tracking-[0.3em] px-2.5 py-2 border-2" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4", borderColor: "rgba(244,244,244,0.6)" }}>
-                  {t.zones.vault.proofTitle}
-                </span>
-                {t.zones.vault.proof.map((item) => (
-                  <span key={item.brand} className="inline-flex items-baseline gap-2 shrink-0 px-3 py-1.5 border-2 border-black" style={{ background: "rgba(235,232,224,0.94)" }}>
-                    <span className="font-black text-base tabular-nums leading-none" style={{ color: JET }}>{item.metric}</span>
-                    <span className="text-[11px] uppercase tracking-[0.15em] opacity-70 leading-none" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>{item.brand}</span>
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
           <div className="absolute bottom-6 left-0 right-0 flex justify-center">
