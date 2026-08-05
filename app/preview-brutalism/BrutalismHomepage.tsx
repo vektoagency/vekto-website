@@ -722,6 +722,8 @@ export default function BrutalismHomepage() {
           three-row block that ate a third of a phone viewport. On mobile
           the header is now one non-wrapping row and the same
           destinations stay reachable from the footer CTA block. */}
+      <MobileProgress />
+
       {/* Same header grammar as the cinematic preview: fixed and fully
           transparent — no bar, no border — wordmark alone on the left,
           nav + language + CTA grouped right, halo shadows for legibility
@@ -1246,6 +1248,42 @@ function HazardStrip() {
   );
 }
 
+// Phone-only journey indicator: the stage rail is hidden below sm, which
+// left phones with no sense of position in a nine-stage funnel. A 2px
+// silver hairline pinned to the very top edge reads the whole document's
+// scroll — same instrument the cinematic preview uses over its film.
+function MobileProgress() {
+  const [p, setP] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const compute = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setP(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(compute);
+    };
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+  return (
+    <div
+      aria-hidden
+      className="fixed top-0 left-0 right-0 z-[60] h-[2px] sm:hidden"
+      style={{ background: "rgba(244,244,244,0.15)" }}
+    >
+      <div className="h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />
+    </div>
+  );
+}
+
 // ============================================================================
 // STAGE 01 · HOOK
 // ============================================================================
@@ -1367,7 +1405,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           {/* Typewriter line — now the calm centred subline under the
               shout, where acquisition.com runs its supporting sentence. */}
           <div
-            className="mt-5 md:mt-7 flex items-center justify-center gap-3 font-bold uppercase text-sm md:text-lg tracking-[0.25em]"
+            className="mt-5 md:mt-7 flex flex-wrap items-center justify-center gap-3 font-bold uppercase text-[13px] md:text-lg tracking-[0.16em] md:tracking-[0.25em] px-2"
             style={{
               opacity: inView ? 0.75 : 0,
               transition: "opacity 400ms ease",
@@ -1457,7 +1495,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
         >
           <blockquote
             className="font-black leading-[1.05] tracking-[-0.02em] mb-10"
-            style={{ fontSize: "clamp(30px, 4.8vw, 72px)" }}
+            style={{ fontSize: "clamp(25px, 4.8vw, 72px)" }}
           >
             {t.quoteMain}
           </blockquote>
@@ -1511,7 +1549,9 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       style={{ height: "400vh", background: "#141414" }}
     >
       <div className="sticky top-0 h-screen" style={{ overflowX: "clip" }}>
-        <div className="absolute top-6 md:top-10 left-6 md:left-14 z-10">
+        {/* Pushed below the fixed transparent header — at top-6 the eyebrow
+            sat directly under the wordmark. */}
+        <div className="absolute top-20 md:top-24 left-6 md:left-14 z-10">
           <div
             className="text-xs font-bold uppercase tracking-[0.35em] mb-2"
             style={{ fontFamily: "var(--brutal-pixel)" }}
@@ -2194,8 +2234,8 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
             {t.eyebrow}
           </div>
           <h2
-            className="font-black leading-[0.9] tracking-[-0.03em] uppercase mb-16"
-            style={{ fontSize: "clamp(48px, 8vw, 128px)" }}
+            className="font-black leading-[0.9] tracking-[-0.03em] uppercase mb-12 md:mb-16"
+            style={{ fontSize: "clamp(38px, 8vw, 128px)" }}
           >
             {t.headlinePrefix}{" "}
             <span
