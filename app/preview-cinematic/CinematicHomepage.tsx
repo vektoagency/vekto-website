@@ -336,7 +336,10 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
               <div className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
                 {t.zones.vault.kicker}
               </div>
-              <h1 className="font-black tracking-[-0.03em]" style={{ fontSize: "clamp(28px, 3.1vw, 56px)", lineHeight: 0.96, color: "#f4f4f4" }}>
+              {/* The question headline — same message as the brutalism hero.
+                  Slightly larger scale (the question is short per line) and
+                  uppercase to carry it. */}
+              <h1 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(30px, 3.4vw, 62px)", lineHeight: 0.96, color: "#f4f4f4" }}>
                 <span className="block">{t.zones.vault.h1a}</span>
                 <span className="block">
                   {t.zones.vault.h1b}{" "}
@@ -345,19 +348,22 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                   </span>
                 </span>
               </h1>
-              <div className="flex flex-wrap gap-3 mt-8 pointer-events-auto">
+              {/* One ask + one quiet path: two equal buttons competed for
+                  the same click. The white slab answers the question; the
+                  portfolio is a text link for the not-yet-convinced. */}
+              <div className="flex flex-wrap items-center gap-x-7 gap-y-4 mt-8 pointer-events-auto">
                 <Link
                   href="/brief"
-                  className="inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-4 border-2 font-black uppercase text-sm md:text-base tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                  style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4", boxShadow: "5px 5px 0 0 rgba(138,138,138,0.9)" }}
+                  className="inline-flex items-center gap-3 px-7 md:px-10 py-4 md:py-5 border-2 font-black uppercase text-sm md:text-lg tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                  style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4", boxShadow: "6px 6px 0 0 rgba(138,138,138,0.9)" }}
                 >
                   <span aria-hidden>→</span>
                   {t.zones.vault.ctaPrimary}
                 </Link>
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center gap-2 px-5 md:px-6 py-3 md:py-4 border-2 font-black uppercase text-sm md:text-base tracking-[0.15em] transition-colors hover:bg-white hover:text-black"
-                  style={{ background: "transparent", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.7)" }}
+                  className="inline-flex items-center gap-2 font-bold uppercase text-sm tracking-[0.2em] underline decoration-2 underline-offset-8 opacity-80 hover:opacity-100 transition-opacity"
+                  style={{ color: "#f4f4f4", textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9), 0 1px 6px rgba(13,13,13,0.55)" }}
                 >
                   <span aria-hidden>▶</span>
                   {t.zones.vault.ctaSecondary}

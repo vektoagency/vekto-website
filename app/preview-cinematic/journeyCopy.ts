@@ -17,9 +17,9 @@ export const JOURNEY_COPY = {
     zones: {
       vault: {
         kicker: "01 · VEKTO · АГЕНЦИЯ ЗА РАСТЕЖ",
-        h1a: "ТВОЯТ ПАРТНЬОР",
-        h1b: "ЗА",
-        h1hi: "ОНЛАЙН РАСТЕЖ.",
+        h1a: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
+        h1b: "ДА БЪДЕ",
+        h1hi: "СКАЛИРАН?",
         ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
         ctaSecondary: "ПОРТФОЛИО",
         proofTitle: "ROAS",
@@ -130,9 +130,9 @@ export const JOURNEY_COPY = {
     zones: {
       vault: {
         kicker: "01 · VEKTO · GROWTH AGENCY",
-        h1a: "YOUR PARTNER",
-        h1b: "FOR",
-        h1hi: "ONLINE GROWTH.",
+        h1a: "DOES YOUR BUSINESS",
+        h1b: "DESERVE",
+        h1hi: "TO SCALE?",
         ctaPrimary: "BOOK A CALL",
         ctaSecondary: "PORTFOLIO",
         proofTitle: "ROAS",
