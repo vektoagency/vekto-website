@@ -239,6 +239,7 @@ const COPY = {
         "Искаш партньор, не изпълнител",
         "Цениш занаята повече от триковете",
       ],
+      verdict: "4/4 — ЗАПАЗИ РАЗГОВОР",
     },
     stage7: {
       eyebrow: "09 · АКО СИ СТИГНАЛ ДОТУК",
@@ -426,6 +427,7 @@ const COPY = {
         "You want a partner, not a vendor",
         "You value craft over gimmicks",
       ],
+      verdict: "4/4 — BOOK A CALL",
     },
     stage7: {
       eyebrow: "09 · IF YOU'VE MADE IT THIS FAR",
@@ -852,7 +854,7 @@ export default function BrutalismHomepage() {
       <HazardStrip />
       <StageStandard targetRef={s5} t={t.stage5} />
       <HazardStrip />
-      <StageQualify targetRef={s6} t={t.stage6} />
+      <StageQualify targetRef={s6} t={t.stage6} openBook={openBook} />
       <HazardStrip />
       <StageAsk   targetRef={s7} t={t.stage7} openBook={openBook} />
 
@@ -1928,8 +1930,10 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
 // ============================================================================
 function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage5"] }) {
   const p = useStickyProgress(targetRef);
-  // Reveal a principle every quarter of the sticky pan
-  const revealed = Math.min(t.principles.length, Math.floor(p * (t.principles.length + 0.5)));
+  // One principle owns the screen per quarter of the sticky pan — a
+  // manifesto being stamped, not a plate list (06 draws a line, 08 stamps a
+  // pass; this one is pure display type so the three stop rhyming).
+  const current = Math.min(t.principles.length - 1, Math.floor(p * t.principles.length));
 
   return (
     <section
@@ -1938,99 +1942,85 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
       className="relative"
       style={{ height: "280vh", background: "#141414", color: "#f4f4f4" }}
     >
-      <div className="sticky top-0 h-screen flex items-center px-6 md:px-14">
-        <div className="max-w-[1400px] w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-10 items-start">
-          {/* Left column — anchored headline */}
-          <div className="md:col-span-5 md:sticky md:top-40">
-            <div
-              className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-              style={{ fontFamily: "var(--brutal-pixel)" }}
-            >
-              {t.eyebrow}
-            </div>
-            <h2
-              className="font-black leading-[0.92] tracking-[-0.03em] uppercase mb-6"
-              style={{ fontSize: "clamp(34px, 5vw, 76px)" }}
-            >
-              {t.headline1}
-              <br />
-              <span
-                className="italic"
-                style={{
-                  background: SILVER_H,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {t.headline2Highlight}
-              </span>
-            </h2>
-            <p
-              className="text-sm md:text-base leading-[1.55] max-w-md opacity-75 font-medium"
-              style={{ fontFamily: "var(--brutal-comic)" }}
-            >
-              {t.note}
-            </p>
-            <div className="mt-8 flex gap-2">
+      <div className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-14 overflow-hidden">
+        <div className="max-w-[1400px] w-full mx-auto">
+          <div
+            className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-55"
+            style={{ fontFamily: "var(--brutal-pixel)" }}
+          >
+            {t.eyebrow}
+          </div>
+
+          <div className="relative" style={{ minHeight: "min(56vh, 500px)" }}>
+            {t.principles.map((pr, i) => {
+              const active = i === current;
+              const past = i < current;
+              return (
+                <div
+                  key={pr.num}
+                  className="absolute inset-0 flex flex-col justify-center"
+                  style={{
+                    opacity: active ? 1 : 0,
+                    transform: active
+                      ? "translateY(0)"
+                      : past
+                        ? "translateY(-30px)"
+                        : "translateY(30px)",
+                    transition:
+                      "opacity 450ms ease, transform 550ms cubic-bezier(0.16,1,0.3,1)",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <div
+                    className="text-sm md:text-base font-bold tabular-nums mb-4 opacity-60"
+                    style={{ fontFamily: "var(--brutal-pixel)" }}
+                  >
+                    {pr.num} / {String(t.principles.length).padStart(2, "0")}
+                  </div>
+                  <div
+                    className="font-black uppercase leading-[0.95] tracking-[-0.02em] max-w-5xl"
+                    style={{
+                      fontSize: "clamp(34px, 6.2vw, 108px)",
+                      background: SILVER_H,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      filter: "drop-shadow(0 1px 4px rgba(13,13,13,0.6))",
+                    }}
+                  >
+                    {pr.title}
+                  </div>
+                  <p
+                    className="mt-6 text-sm md:text-lg leading-[1.55] max-w-2xl opacity-70 font-medium"
+                    style={{ fontFamily: "var(--brutal-comic)" }}
+                  >
+                    {pr.body}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 flex items-center gap-4">
+            <div className="flex gap-2">
               {t.principles.map((_, i) => (
                 <span
                   key={i}
                   className="h-[3px] border-2 transition-all"
                   style={{
-                    width: i < revealed ? 40 : 14,
+                    width: i <= current ? 40 : 14,
                     borderColor: "rgba(244,244,244,0.5)",
-                    background: i < revealed ? SILVER_H : "transparent",
+                    background: i <= current ? SILVER_H : "transparent",
                   }}
                 />
               ))}
             </div>
-          </div>
-
-          {/* Right column — principle stack */}
-          <div className="md:col-span-7 space-y-4 md:space-y-6">
-            {t.principles.map((pr, i) => {
-              const done = i < revealed;
-              return (
-                <div
-                  key={pr.num}
-                  className="border-2 p-5 md:p-7 transition-all duration-500"
-                  style={{
-                    background: done ? "#0d0d0d" : "transparent",
-                    borderColor: done ? "rgba(244,244,244,0.35)" : "rgba(244,244,244,0.18)",
-                    boxShadow: done ? "6px 6px 0 0 #2a2a2a" : "none",
-                    opacity: done ? 1 : 0.35,
-                    transform: done ? "translateY(0)" : "translateY(10px)",
-                  }}
-                >
-                  <div className="flex items-baseline gap-4 md:gap-6">
-                    <div
-                      className="text-3xl md:text-5xl font-black tabular-nums flex-shrink-0"
-                      style={{
-                        background: done ? SILVER_H : "transparent",
-                        color: done ? "transparent" : "#f4f4f4",
-                        WebkitBackgroundClip: done ? "text" : "initial",
-                        WebkitTextFillColor: done ? "transparent" : "initial",
-                        backgroundClip: done ? "text" : "initial",
-                      }}
-                    >
-                      {pr.num}
-                    </div>
-                    <div>
-                      <h3 className="font-black text-lg md:text-2xl uppercase tracking-tight leading-tight mb-2">
-                        {pr.title}
-                      </h3>
-                      <p
-                        className="text-sm md:text-base leading-[1.55] font-medium opacity-85"
-                        style={{ fontFamily: "var(--brutal-comic)" }}
-                      >
-                        {pr.body}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            <p
+              className="text-[11px] uppercase tracking-[0.2em] opacity-45 hidden md:block"
+              style={{ fontFamily: "var(--brutal-pixel)" }}
+            >
+              {t.note}
+            </p>
           </div>
         </div>
       </div>
@@ -2041,85 +2031,133 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
 // ============================================================================
 // STAGE 06 · QUALIFY
 // ============================================================================
-function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage6"] }) {
-  const p = useScrollProgress(targetRef);
-  const checked = Math.min(t.items.length, Math.floor(p * t.items.length * 1.7));
+function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage6"]; openBook: () => void }) {
+  // The qualification is one physical OBJECT — an access pass being
+  // stamped criterion by criterion as the visitor scrolls — instead of a
+  // third page-wide list in a row (06 draws a line, 07 is display type).
+  const p = useStickyProgress(targetRef);
+  const checked = Math.min(t.items.length, Math.floor(p * (t.items.length + 1.4)));
+  const all = checked >= t.items.length;
   return (
     <section
       id="stage-08"
       ref={targetRef}
-      className=""
-      style={{ background: "#141414", color: "#f4f4f4", minHeight: "100vh" }}
+      className="relative"
+      style={{ height: "240vh", background: "#141414", color: "#f4f4f4" }}
     >
-      <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
+      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14">
         <div
-          className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60"
-          style={{ fontFamily: "var(--brutal-pixel)" }}
+          className="w-full max-w-xl flex flex-col border-2"
+          style={{
+            background: "#0d0d0d",
+            borderColor: "rgba(244,244,244,0.45)",
+            boxShadow: "10px 10px 0 0 #2a2a2a",
+          }}
         >
-          {t.eyebrow}
-        </div>
-        <h2
-          className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-14 max-w-4xl"
-          style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
-        >
-          {t.headlinePrefix}{" "}
-          <span
-            className="italic"
-            style={{
-              background: SILVER_H,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
+          {/* Pass header — stage marker left, stamp counter right. */}
+          <div
+            className="flex items-center justify-between px-4 md:px-6 py-3 border-b-2"
+            style={{ borderColor: "rgba(244,244,244,0.25)" }}
           >
-            {t.headlineHighlight}
-          </span>
-          {t.headlineSuffix}
-        </h2>
+            <span
+              className="text-[11px] md:text-xs font-bold uppercase tracking-[0.3em] opacity-70"
+              style={{ fontFamily: "var(--brutal-pixel)" }}
+            >
+              {t.eyebrow}
+            </span>
+            <span
+              className="text-[11px] md:text-xs font-bold uppercase tracking-[0.3em] tabular-nums"
+              style={{
+                fontFamily: "var(--brutal-pixel)",
+                background: SILVER_H,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {String(checked).padStart(2, "0")}/{String(t.items.length).padStart(2, "0")}
+            </span>
+          </div>
 
-        <ul className="space-y-5 md:space-y-7 max-w-4xl">
-          {t.items.map((q, i) => {
-            const done = i < checked;
-            return (
-              <li
-                key={q}
-                className="flex items-start gap-4 md:gap-6 transition-all duration-500 border-2 p-4 md:p-6"
+          <div className="px-4 md:px-6 pt-5 pb-1">
+            <h2
+              className="font-black uppercase tracking-tight leading-[1.05]"
+              style={{ fontSize: "clamp(21px, 2.4vw, 32px)" }}
+            >
+              {t.headlinePrefix}{" "}
+              <span
+                className="italic"
                 style={{
-                  opacity: done ? 1 : 0.4,
-                  background: done ? "#0d0d0d" : "transparent",
-                  borderColor: done ? "rgba(244,244,244,0.35)" : "rgba(244,244,244,0.18)",
-                  boxShadow: done ? "6px 6px 0 0 #2a2a2a" : "none",
+                  background: SILVER_H,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
                 }}
               >
-                <span
-                  className="mt-1 w-8 h-8 md:w-11 md:h-11 flex-shrink-0 border-2 flex items-center justify-center transition-all"
+                {t.headlineHighlight}
+              </span>
+              {t.headlineSuffix}
+            </h2>
+          </div>
+
+          <div className="px-4 md:px-6 py-3">
+            {t.items.map((q, i) => {
+              const done = i < checked;
+              return (
+                <div
+                  key={q}
+                  className="flex items-start gap-4 py-3.5 transition-all duration-500"
                   style={{
-                    background: done ? SILVER : "transparent",
-                    borderColor: "rgba(244,244,244,0.5)",
-                    color: done ? "#0d0d0d" : "transparent",
+                    borderBottom:
+                      i < t.items.length - 1 ? "1px solid rgba(244,244,244,0.14)" : "none",
+                    opacity: done ? 1 : 0.4,
                   }}
                 >
-                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M3 8L7 12L13 4"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="square"
-                      style={{
-                        strokeDasharray: 20,
-                        strokeDashoffset: done ? 0 : 20,
-                        transition: "stroke-dashoffset 500ms ease-out",
-                      }}
-                    />
-                  </svg>
-                </span>
-                <span className="text-lg md:text-2xl leading-[1.35] font-bold uppercase">
-                  {q}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+                  <span
+                    className="mt-0.5 w-7 h-7 flex-shrink-0 border-2 flex items-center justify-center transition-all"
+                    style={{
+                      background: done ? SILVER : "transparent",
+                      borderColor: "rgba(244,244,244,0.5)",
+                      color: done ? "#0d0d0d" : "transparent",
+                    }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M3 8L7 12L13 4"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="square"
+                        style={{
+                          strokeDasharray: 20,
+                          strokeDashoffset: done ? 0 : 20,
+                          transition: "stroke-dashoffset 500ms ease-out",
+                        }}
+                      />
+                    </svg>
+                  </span>
+                  <span className="text-sm md:text-base leading-[1.4] font-bold uppercase">
+                    {q}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Verdict — arms only once every criterion is stamped. */}
+          <button
+            type="button"
+            onClick={openBook}
+            className="m-4 md:m-6 mt-2 border-2 py-3.5 font-black uppercase text-sm md:text-base tracking-[0.15em] transition-all duration-500"
+            style={{
+              background: all ? "#f4f4f4" : "transparent",
+              color: all ? "#0d0d0d" : "rgba(244,244,244,0.45)",
+              borderColor: all ? "#f4f4f4" : "rgba(244,244,244,0.3)",
+              boxShadow: all ? "5px 5px 0 0 #6d6d6d" : "none",
+            }}
+          >
+            → {t.verdict}
+          </button>
+        </div>
       </div>
     </section>
   );
