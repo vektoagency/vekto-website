@@ -80,7 +80,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · VEKTO",
-      pill: "50+ БРАНДА · 200+ ВИДЕА / МЕСЕЦ",
+      pill: "50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
       headline2Highlight: "СКАЛИРАН?",
@@ -119,7 +119,7 @@ const COPY = {
     stage3: {
       eyebrow: "03 · ЧЕТИРИ СТАИ · ЕДИН ПОКРИВ",
       rooms: [
-        { id: "01", title: "КРЕАТИВИ",   detail: "UGC · видео · заснемане на живо", num: "200+", label: "ВИДЕА НА МЕСЕЦ" },
+        { id: "01", title: "КРЕАТИВИ",   detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА НА МЕСЕЦ" },
         { id: "02", title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали",      num: "12",   label: "САЙТА НА ГОДИНА" },
         { id: "03", title: "СТРАТЕГИИ",  detail: "Позициониране · оферта · план",   num: "50+",  label: "БРАНДА В ПОРТФОЛИОТО" },
         { id: "04", title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации",        num: "5.2×", label: "ROAS · AI КАМПАНИЯ" },
@@ -268,7 +268,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · VEKTO",
-      pill: "50+ BRANDS · 200+ VIDEOS / MONTH",
+      pill: "50+ BRANDS · 500+ VIDEOS / MONTH",
       headline1: "DOES YOUR BUSINESS",
       headline2Prefix: "DESERVE",
       headline2Highlight: "TO SCALE?",
@@ -307,7 +307,7 @@ const COPY = {
     stage3: {
       eyebrow: "03 · FOUR ROOMS · ONE ROOF",
       rooms: [
-        { id: "01", title: "CREATIVE",     detail: "UGC · video · live-action",    num: "200+", label: "VIDEOS / MONTH" },
+        { id: "01", title: "CREATIVE",     detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
         { id: "02", title: "WEBSITES",     detail: "Landing · e-com · portals",    num: "12",   label: "SITES / YEAR" },
         { id: "03", title: "STRATEGY",     detail: "Positioning · offer · plan",   num: "50+",  label: "BRANDS IN PORTFOLIO" },
         { id: "04", title: "AI SOLUTIONS", detail: "AI video · automations",       num: "5.2×", label: "ROAS · AI CAMPAIGN" },

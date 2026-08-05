@@ -16,7 +16,7 @@ export const JOURNEY_COPY = {
   bg: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · 50+ БРАНДА · 200+ ВИДЕА / МЕСЕЦ",
+        kicker: "01 · VEKTO · 50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
         h1a: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
         h1b: "ДА БЪДЕ",
         h1hi: "СКАЛИРАН?",
@@ -39,7 +39,7 @@ export const JOURNEY_COPY = {
       focus: {
         kicker: "03 · ЧЕТИРИ СТАИ · ЕДИН ПОКРИВ",
         rooms: [
-          { title: "КРЕАТИВИ", detail: "UGC · видео · заснемане", num: "200+", label: "ВИДЕА / МЕСЕЦ" },
+          { title: "КРЕАТИВИ", detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА / МЕСЕЦ" },
           { title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
           { title: "СТРАТЕГИИ", detail: "Позициониране · оферта · план", num: "50+", label: "БРАНДА" },
           { title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации", num: "5.2×", label: "ROAS · AI КАМПАНИЯ" },
@@ -129,7 +129,7 @@ export const JOURNEY_COPY = {
   en: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · 50+ BRANDS · 200+ VIDEOS / MONTH",
+        kicker: "01 · VEKTO · 50+ BRANDS · 500+ VIDEOS / MONTH",
         h1a: "DOES YOUR BUSINESS",
         h1b: "DESERVE",
         h1hi: "TO SCALE?",
@@ -152,7 +152,7 @@ export const JOURNEY_COPY = {
       focus: {
         kicker: "03 · FOUR ROOMS · ONE ROOF",
         rooms: [
-          { title: "CREATIVE", detail: "UGC · video · live shoots", num: "200+", label: "VIDEOS / MONTH" },
+          { title: "CREATIVE", detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
           { title: "WEBSITES", detail: "Landing · e-com · portals", num: "12", label: "SITES / YEAR" },
           { title: "STRATEGY", detail: "Positioning · offer · plan", num: "50+", label: "BRANDS" },
           { title: "AI SOLUTIONS", detail: "AI video · automations", num: "5.2×", label: "ROAS · AI CAMPAIGN" },
