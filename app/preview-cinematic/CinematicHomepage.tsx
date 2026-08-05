@@ -211,16 +211,24 @@ export default function CinematicHomepage() {
 function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: JourneyLang }) {
   const ref = useRef<HTMLElement>(null);
   const p = useStickyProgress(ref);
-  // Full-bleed film: desktop pulls the 1600px set, phones the 960px one.
-  // Decided once on mount from the media query; a mid-session resize across
-  // the boundary re-decodes, which is acceptable for how rare it is.
-  const [frameSet, setFrameSet] = useState<(typeof FRAME_SETS)[keyof typeof FRAME_SETS]>(FRAME_SETS.sd);
+  // Full-bleed film in three device fits: portrait phones get the native
+  // 9:16 centre crop (no wasted pixels, no heavy upscale), desktops the
+  // 1600px set, everything between the 960px landscape set. Re-evaluated on
+  // media-query flips; a mid-session switch re-decodes, which is acceptable
+  // for how rare rotation/resize across a boundary is.
+  const [frameSet, setFrameSet] = useState<(typeof FRAME_SETS)[keyof typeof FRAME_SETS]>(FRAME_SETS.md);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const apply = () => setFrameSet(mq.matches ? FRAME_SETS.hd : FRAME_SETS.sd);
+    const mqPortrait = window.matchMedia("(orientation: portrait) and (max-width: 767px)");
+    const mqDesktop = window.matchMedia("(min-width: 1024px)");
+    const apply = () =>
+      setFrameSet(mqPortrait.matches ? FRAME_SETS.p : mqDesktop.matches ? FRAME_SETS.lg : FRAME_SETS.md);
     apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
+    mqPortrait.addEventListener("change", apply);
+    mqDesktop.addEventListener("change", apply);
+    return () => {
+      mqPortrait.removeEventListener("change", apply);
+      mqDesktop.removeEventListener("change", apply);
+    };
   }, []);
   const frame = Math.round(p * (FRAME_COUNT - 1)) + 1;
   // Zones are unequal fractions since v4, so the active zone is found by
@@ -291,26 +299,38 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           })}
         </nav>
 
-        {/* HUD — instrument readout, bottom left. */}
+        {/* Mobile progress hairline — the zone rail is desktop-only, so on
+            phones the journey's position reads from a 2px line pinned to the
+            very top of the film. */}
+        <div aria-hidden className="absolute top-0 left-0 right-0 z-40 h-[2px] sm:hidden" style={{ background: "rgba(244,244,244,0.18)" }}>
+          <div className="h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />
+        </div>
+
+        {/* HUD — instrument readout. Bottom-left on desktop; on phones it
+            shrinks to the zone chip alone and moves bottom-right, clearing
+            the bottom-left band where the landing copy sits. */}
         <div
-          className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-30 flex items-center gap-3 px-3 py-2 border-2"
+          className="absolute bottom-3 right-3 left-auto sm:left-4 sm:right-auto sm:bottom-4 md:bottom-6 md:left-6 z-30 flex items-center gap-3 px-2.5 py-1.5 sm:px-3 sm:py-2 border-2"
           style={{ borderColor: "rgba(244,244,244,0.5)", background: "rgba(13,13,13,0.66)", color: "#f4f4f4" }}
         >
           <span className="text-[11px] uppercase tracking-[0.3em] tabular-nums" style={{ fontFamily: "var(--cine-pixel)" }}>
             {t.hud.zone} {String(zoneIdx + 1).padStart(2, "0")}/06
           </span>
-          <span className="opacity-40">·</span>
-          <span className="text-[11px] uppercase tracking-[0.3em] tabular-nums" style={{ fontFamily: "var(--cine-pixel)" }}>
+          <span className="opacity-40 hidden sm:inline">·</span>
+          <span className="text-[11px] uppercase tracking-[0.3em] tabular-nums hidden sm:inline" style={{ fontFamily: "var(--cine-pixel)" }}>
             {t.hud.frame} {String(frame).padStart(3, "0")}/{String(FRAME_COUNT).padStart(3, "0")}
           </span>
-          <span className="relative w-24 h-[2px]" style={{ background: "rgba(244,244,244,0.25)" }}>
+          <span className="relative w-24 h-[2px] hidden sm:block" style={{ background: "rgba(244,244,244,0.25)" }}>
             <span className="absolute left-0 top-0 h-full" style={{ width: `${p * 100}%`, background: "#f4f4f4" }} />
           </span>
         </div>
 
         {/* ZONE 1 · HOOK — naked type over the dark vault, as the original
             design: no plate, white display type with the silver highlight. */}
-        <ZoneOverlay p={p} z={Z.vault} className="items-start justify-center text-left">
+        {/* Mobile banding: in the portrait crop the dart owns the vertical
+            centre of every shot, so each overlay anchors to the top or the
+            bottom band on phones and returns to its designed position ≥md. */}
+        <ZoneOverlay p={p} z={Z.vault} className="items-start justify-start md:justify-center text-left">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             {/* The dart owns the centre-right of this shot; the column stops
                 at ~40% width so type never crosses the object. */}
@@ -370,7 +390,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         </ZoneOverlay>
 
         {/* ZONE 2 · WHY — the quote as naked white type. */}
-        <ZoneOverlay p={p} z={Z.ignition} className="items-start justify-center">
+        <ZoneOverlay p={p} z={Z.ignition} className="items-start justify-start md:justify-center">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             <div className="max-w-xl">
               <Kicker text={t.zones.why.kicker} />
@@ -391,7 +411,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         </ZoneOverlay>
 
         {/* ZONE 3 · FOCUS — four rooms as open columns, silver numerals. */}
-        <ZoneOverlay p={p} z={Z.screen} className="items-end justify-center pb-16 md:pb-20">
+        <ZoneOverlay p={p} z={Z.screen} className="items-end justify-end md:justify-center pb-[9vh] md:pb-20">
           {/* The screen pass fills the centre of the frame — the rooms sit in
               the lower band where the shot is floor and darkness. */}
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
@@ -424,7 +444,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         <StandardOverlay p={p} z={Z.feed} kicker={t.zones.standard.kicker} words={t.zones.standard.principles} />
 
         {/* ZONE 5 · CASES — the original light cards over the white curve. */}
-        <ZoneOverlay p={p} z={Z.curve} className="items-start justify-center">
+        <ZoneOverlay p={p} z={Z.curve} className="items-start justify-end md:justify-center pb-[11vh] md:pb-0">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             <Kicker text={t.zones.cases.kicker} dark />
             <div className="flex flex-wrap gap-4 md:gap-6 mt-2">
@@ -463,7 +483,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         </ZoneOverlay>
 
         {/* ZONE 6 · CALL — dark type straight on the white film, chrome CTA. */}
-        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-start">
+        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-end md:justify-start pb-[11vh] md:pb-0">
           {/* The monument stands dead centre; the ask lives in the empty
               left half of the bone-white frame. */}
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
@@ -536,7 +556,7 @@ function StandardOverlay({
   const local = zoneLocal(p, z as never);
   return (
     <div
-      className="absolute inset-0 z-20 flex flex-col items-start justify-center pointer-events-none"
+      className="absolute inset-0 z-20 flex flex-col items-start justify-start md:justify-center pt-[13vh] md:pt-0 pointer-events-none"
       style={{ opacity: env, visibility: env <= 0.001 ? "hidden" : "visible" }}
     >
       <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
@@ -559,6 +579,10 @@ function StandardOverlay({
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
+                  // Gradient-filled glyphs can't take textShadow (the fill is
+                  // transparent); drop-shadow filters the painted pixels, so
+                  // the silver stays legible over the corridor's lit tiles.
+                  filter: "drop-shadow(0 1px 4px rgba(13,13,13,0.55))",
                 }}
               >
                 {w}

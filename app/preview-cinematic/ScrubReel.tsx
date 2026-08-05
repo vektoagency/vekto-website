@@ -62,6 +62,9 @@ export default function ScrubReel({
 
     // Ordered fetch with a small concurrency window: the opening frames are
     // usable before the tail arrives, without starving the connection.
+    // Loader state is BATCHED (every 12th frame + the final one): a setState
+    // per decoded frame re-rendered the whole journey ~400 times during the
+    // initial load, which is exactly when the main thread is busiest.
     const CONCURRENCY = 6;
     let next = 0;
     const pump = () => {
@@ -72,7 +75,7 @@ export default function ScrubReel({
       const advance = () => {
         if (cancelled) return;
         done += 1;
-        setLoaded(done);
+        if (done === frames.count || done % 12 === 0) setLoaded(done);
         pump();
       };
       img.onload = () => { arr[i] = img; advance(); };
@@ -96,16 +99,19 @@ export default function ScrubReel({
 
     // In cover mode the backing store tracks the host box (so there is no
     // CSS upscale blur); in intrinsic mode it is simply the frame size.
+    // Assigning width/height resets ALL context state, so the resampling
+    // quality hint must be re-applied after every size().
     const size = () => {
       if (!cover) {
         canvas.width = frames.w;
         canvas.height = frames.h;
-        return;
+      } else {
+        const r = host.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(2, Math.round(r.width * dpr));
+        canvas.height = Math.max(2, Math.round(r.height * dpr));
       }
-      const r = host.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(2, Math.round(r.width * dpr));
-      canvas.height = Math.max(2, Math.round(r.height * dpr));
+      ctx.imageSmoothingQuality = "high";
     };
     size();
 
@@ -133,36 +139,62 @@ export default function ScrubReel({
       return -1;
     };
 
+    // --- Smoothed playhead -------------------------------------------------
+    // The displayed position CHASES the scroll position with a critically
+    // damped exponential (dt-correct, so 60Hz and 120Hz screens feel the
+    // same). Wheel ticks and touch momentum arrive as discrete jumps of
+    // several frames; Lenis softens the wheel on desktop but touch scroll is
+    // native, so on phones those jumps used to map 1:1 onto the film. The
+    // chase turns every jump into a short glide — and because it happens at
+    // the playhead, not the scroll, it can never fight the browser's own
+    // scrolling (no jank, no scroll hijack).
     let shown = -1;
-    const draw = () => {
-      rafRef.current = 0;
-      const p = Math.max(0, Math.min(1, progressRef.current));
-      // Fractional playhead: i0 is the base frame, mix how far toward the
-      // next one the scroll sits. Drawing i0 opaque and i1 at `mix` alpha
-      // turns the residual inter-frame jump into a short dissolve — reads as
-      // motion blur instead of a step.
-      const f = p * (frames.count - 1);
+    let display = -1; // smoothed playhead, -1 = not initialised
+    let lastTs = 0;
+
+    const render = (f: number) => {
       const i0 = Math.floor(f);
       const mix = f - i0;
-
       const base = nearest(i0);
       if (base < 0) return;
-      // Skip redraws below a per-mille change of playhead position.
-      const key = Math.round(f * 32);
+      // Skip sub-visible redraws (finer gate than the pre-smoothing 1/32:
+      // the glide moves in small steps and must not quantise into stutter).
+      const key = Math.round(f * 128);
       if (key === shown) return;
-
       const img0 = imgsRef.current[base];
       if (!img0) return;
       drawOne(img0, 1);
-
       const next = base + 1 < frames.count ? imgsRef.current[base + 1] : null;
       if (next && base === i0 && mix > 0.02) drawOne(next, mix);
-
       shown = key;
     };
 
+    const step = (ts: number) => {
+      rafRef.current = 0;
+      const target = Math.max(0, Math.min(1, progressRef.current));
+      const dt = lastTs ? Math.min(0.1, (ts - lastTs) / 1000) : 1 / 60;
+      lastTs = ts;
+
+      if (display < 0) display = target; // first paint: no glide from 0
+      const delta = target - display;
+      // Big jumps (rail clicks) converge faster so navigation stays snappy;
+      // scroll-sized deltas glide at ~100ms.
+      const tau = Math.abs(delta) > 0.12 ? 0.05 : 0.1;
+      display += delta * (1 - Math.exp(-dt / tau));
+
+      // Converged: snap, draw once, go idle until the next schedule().
+      if (Math.abs(target - display) < 0.35 / ((frames.count - 1) * 128)) {
+        display = target;
+        render(display * (frames.count - 1));
+        lastTs = 0;
+        return;
+      }
+      render(display * (frames.count - 1));
+      rafRef.current = requestAnimationFrame(step);
+    };
+
     scheduleRef.current = () => {
-      if (!rafRef.current) rafRef.current = requestAnimationFrame(draw);
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(step);
     };
     scheduleRef.current();
 

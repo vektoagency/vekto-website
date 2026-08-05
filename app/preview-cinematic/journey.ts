@@ -23,16 +23,25 @@ export const FRAME_COUNT = 375;
 // first cut shipped 960w/q55 everywhere and read visibly soft stretched
 // across a 1920px screen. Phones keep the light set: same journey, a third
 // of the bytes.
-// v5 paths: the film is the user's own cut (new studio opening, the Omni
-// middle, their landing clip). Versioned directories guarantee no browser or
-// CDN cache can ever serve a frame from a previous chain.
+// v6 paths: same film as v5 (the user's 0805 cut), re-extracted in three
+// device-fit sets. Versioned directories guarantee no browser or CDN cache
+// can ever serve a frame from a previous chain.
+//   lg — desktop ≥1024px. v5 shipped 1280w which stretched soft across 1920
+//        displays; 1600w brings the cover upscale down to a mild 1.2×.
+//   md — tablets / small landscape viewports.
+//   p  — portrait phones: a native-pixel 9:16 CENTER CROP of the 1080p
+//        source. Phones previously downloaded the 16:9 frame, cover-cropped
+//        ~70% of it away and upscaled 540p to ~1700 device px — all of the
+//        mobile softness lived in that path. The film is centre-framed in
+//        every zone, so the static crop holds composition throughout.
 export const FRAME_SETS = {
-  hd: { dir: "/scrub/v5-hd", count: FRAME_COUNT, w: 1280, h: 720 },
-  sd: { dir: "/scrub/v5",    count: FRAME_COUNT, w: 960,  h: 540 },
+  lg: { dir: "/scrub/v6-lg", count: FRAME_COUNT, w: 1600, h: 900 },
+  md: { dir: "/scrub/v6-md", count: FRAME_COUNT, w: 960,  h: 540 },
+  p:  { dir: "/scrub/v6-p",  count: FRAME_COUNT, w: 608,  h: 1080 },
 } as const;
 
 // Static fallback (reduced motion) draws stills from the light set.
-export const FRAME_DIR = FRAME_SETS.sd.dir;
+export const FRAME_DIR = FRAME_SETS.md.dir;
 
 export type Zone = {
   id: string;
