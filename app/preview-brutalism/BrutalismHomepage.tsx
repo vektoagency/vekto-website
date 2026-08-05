@@ -39,17 +39,9 @@ const SILVER_H =
 // metallic-vinyl brand logo rather than a chrome-plated ornament.
 const WORDMARK_METAL =
   "linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 40%, #7a7a7a 70%, #969696 100%)";
-// GRAPHITE — dark chrome. Same shine variation but every tone dark
-// enough to stay readable on bone / concrete backgrounds. Use as
-// text-fill on LIGHT grounds where you want the chrome feel.
-const GRAPHITE_H =
-  "linear-gradient(90deg, #3a3a3a 0%, #6d6d6d 22%, #2a2a2a 50%, #6d6d6d 78%, #3a3a3a 100%)";
-// GRAPHITE_H_IN — same chrome, but the sweep resolves DARK instead of
-// mid-grey. Used on terminal words: the symmetric ramp above puts a
-// #6d6d6d highlight under the closing syllables, which on the hero
-// headline meant the payoff word was the faintest thing on the page.
-const GRAPHITE_H_IN =
-  "linear-gradient(90deg, #6d6d6d 0%, #2a2a2a 30%, #5a5a5a 58%, #232323 100%)";
+// GRAPHITE gradients (dark chrome for light grounds) were retired with the
+// bone paper era — the page now runs entirely on the film's jet ground and
+// silver accents.
 
 // ============================================================================
 // REEL FRAMES — hero contact sheet.
@@ -690,9 +682,12 @@ export default function BrutalismHomepage() {
     <div
       className="relative"
       style={{
-        background: "#ebe8e0",
+        // The film's palette, page-wide: jet ground, silver accents, white
+        // ink. The bone paper era is over — both previews live in the same
+        // world as the hero film now.
+        background: "#0d0d0d",
         fontFamily: "var(--brutal-display), system-ui, sans-serif",
-        color: "#0d0d0d",
+        color: "#f4f4f4",
         // Several stages enter by sliding in from off-axis
         // (translateX(±50px) in Process, rotate in Roster, translateX(-30px)
         // in Why). Those pre-entry transforms widened the document, which
@@ -713,7 +708,7 @@ export default function BrutalismHomepage() {
         className="pointer-events-none fixed inset-0 z-[2]"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(0,0,0,0.055) 0px, rgba(0,0,0,0.055) 1px, transparent 1px, transparent 3px)",
+            "repeating-linear-gradient(0deg, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 1px, transparent 1px, transparent 3px)",
         }}
       />
 
@@ -726,8 +721,8 @@ export default function BrutalismHomepage() {
           the header is now one non-wrapping row and the same
           destinations stay reachable from the footer CTA block. */}
       <div
-        className="border-b-4 border-black"
-        style={{ background: "#0d0d0d", color: "#f4f4f4" }}
+        className="border-b-2"
+        style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.25)" }}
       >
         <div className="px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4">
           {/* LEFT — wordmark + inline nav */}
@@ -827,11 +822,12 @@ export default function BrutalismHomepage() {
                 {s.label}
               </span>
               <span
-                className="w-6 h-6 border-2 border-black flex items-center justify-center text-[12px] font-black transition-all"
+                className="w-6 h-6 border-2 flex items-center justify-center text-[12px] font-black transition-all"
                 style={{
-                  background: active ? SILVER : "#ebe8e0",
-                  color: "#0d0d0d",
-                  boxShadow: active ? "3px 3px 0 0 #0d0d0d" : "1px 1px 0 0 #0d0d0d",
+                  borderColor: "#f4f4f4",
+                  background: active ? "#f4f4f4" : "rgba(13,13,13,0.55)",
+                  color: active ? "#0d0d0d" : "#f4f4f4",
+                  boxShadow: active ? "3px 3px 0 0 #3a3a3a" : "1px 1px 0 0 #3a3a3a",
                   transform: active ? "translate(-2px,-2px)" : "translate(0,0)",
                 }}
               >
@@ -1018,13 +1014,13 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         role="dialog"
         aria-modal="true"
         aria-labelledby="book-modal-title"
-        className="relative w-full max-w-2xl max-h-[92vh] overflow-hidden flex flex-col border-2 border-black"
-        style={{ background: "#ebe8e0", boxShadow: "10px 10px 0 0 #8a8a8a" }}
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-hidden flex flex-col border-2"
+        style={{ background: "#141414", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.4)", boxShadow: "10px 10px 0 0 #2a2a2a" }}
       >
         {/* Header — dark plate */}
         <div
-          className="flex items-start justify-between border-b-2 border-black px-5 md:px-7 py-4"
-          style={{ background: "#0d0d0d", color: "#f4f4f4" }}
+          className="flex items-start justify-between border-b-2 px-5 md:px-7 py-4"
+          style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.25)" }}
         >
           <div>
             <div
@@ -1089,14 +1085,14 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
 
               {/* Divider */}
               <div className="flex items-center gap-3 my-6">
-                <div className="flex-1 border-t-2 border-dashed border-black opacity-30" />
+                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
                 <div
                   className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-60"
                   style={{ fontFamily: "var(--brutal-pixel)" }}
                 >
                   {s.or}
                 </div>
-                <div className="flex-1 border-t-2 border-dashed border-black opacity-30" />
+                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
               </div>
 
               {/* Lead form */}
@@ -1120,11 +1116,12 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full border-2 border-black py-4 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full border-2 py-4 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
-                    background: "#0d0d0d",
-                    color: "#f4f4f4",
-                    boxShadow: "5px 5px 0 0 #8a8a8a",
+                    background: "#f4f4f4",
+                    color: "#0d0d0d",
+                    borderColor: "#f4f4f4",
+                    boxShadow: "5px 5px 0 0 #6d6d6d",
                   }}
                 >
                   {loading ? s.submitting : s.submit}
@@ -1214,7 +1211,8 @@ function FormField({
           required={required}
           placeholder={ph}
           rows={3}
-          className="w-full border-2 border-black bg-white px-3 py-2 text-sm resize-none focus:outline-none focus:shadow-[3px_3px_0_0_#0d0d0d]"
+          className="w-full border-2 px-3 py-2 text-sm resize-none focus:outline-none focus:shadow-[3px_3px_0_0_#6d6d6d]"
+          style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.4)" }}
         />
       ) : (
         <input
@@ -1222,7 +1220,8 @@ function FormField({
           name={name}
           required={required}
           placeholder={ph}
-          className="w-full border-2 border-black bg-white px-3 py-2 text-sm focus:outline-none focus:shadow-[3px_3px_0_0_#0d0d0d]"
+          className="w-full border-2 px-3 py-2 text-sm focus:outline-none focus:shadow-[3px_3px_0_0_#6d6d6d]"
+          style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.4)" }}
         />
       )}
     </div>
@@ -1296,7 +1295,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
       id="stage-01"
       ref={targetRef}
       className="relative flex flex-col"
-      style={{ minHeight: "100dvh", background: "#ebe8e0" }}
+      style={{ minHeight: "100dvh", background: "#0d0d0d", color: "#f4f4f4" }}
     >
       {/* MAIN — one centred column, acquisition.com-style: shout headline,
           calm subline, a single big ask. The two-column globe hero is gone —
@@ -1320,7 +1319,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               color: "#f4f4f4",
               border: "1.5px solid",
               borderImage: `${SILVER_H} 1`,
-              boxShadow: "4px 4px 0 0 #0d0d0d",
+              boxShadow: "4px 4px 0 0 #3a3a3a",
               fontFamily: "var(--brutal-pixel)",
             }}
           >
@@ -1353,11 +1352,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               <span
                 className="italic"
                 style={{
-                  // Reversed relative to GRAPHITE_H: the old direction
-                  // bottomed out light exactly on the last word, so the
-                  // single most important word in the headline was also
-                  // the lowest-contrast thing on the screen.
-                  background: GRAPHITE_H_IN,
+                  background: SILVER_H,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -1378,11 +1373,11 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               minHeight: "1.4em",
             }}
           >
-            <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#0d0d0d" }} />
+            <span className="inline-block h-[0.85em] w-[3px]" style={{ background: "#f4f4f4" }} />
             <span>{typed}</span>
             <span
               className="inline-block h-[0.85em] w-[8px] animate-pulse"
-              style={{ background: "#0d0d0d" }}
+              style={{ background: "#f4f4f4" }}
             />
           </div>
 
@@ -1393,11 +1388,12 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           <button
             type="button"
             onClick={openBook}
-            className="mt-8 md:mt-10 inline-flex items-center gap-3 px-10 md:px-16 py-4 md:py-6 border-2 border-black font-black uppercase text-base md:text-xl tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            className="mt-8 md:mt-10 inline-flex items-center gap-3 px-10 md:px-16 py-4 md:py-6 border-2 font-black uppercase text-base md:text-xl tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
             style={{
-              background: "#0d0d0d",
-              color: "#f4f4f4",
-              boxShadow: "6px 6px 0 0 #8a8a8a",
+              background: "#f4f4f4",
+              color: "#0d0d0d",
+              borderColor: "#f4f4f4",
+              boxShadow: "6px 6px 0 0 #6d6d6d",
             }}
           >
             <span aria-hidden>→</span>
@@ -1420,7 +1416,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
         >
           {t.scrollCue}
         </div>
-        <div className="h-[2px] w-24 border-t-2 border-dashed border-black" />
+        <div className="h-[2px] w-24 border-t-2 border-dashed" style={{ borderColor: "rgba(244,244,244,0.5)" }} />
       </div>
     </section>
   );
@@ -1511,7 +1507,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       id="stage-03"
       ref={targetRef}
       className="relative"
-      style={{ height: "400vh", background: "#d6d3ca" }}
+      style={{ height: "400vh", background: "#141414" }}
     >
       <div className="sticky top-0 h-screen" style={{ overflowX: "clip" }}>
         <div className="absolute top-6 md:top-10 left-6 md:left-14 z-10">
@@ -1523,7 +1519,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           </div>
           <div
             className="inline-flex items-center gap-2 px-2 py-1 border-2 border-black text-[11px] font-bold uppercase tracking-[0.2em]"
-            style={{ background: SILVER_H, boxShadow: "3px 3px 0 0 #0d0d0d" }}
+            style={{ background: SILVER_H, color: "#0d0d0d", boxShadow: "3px 3px 0 0 #3a3a3a" }}
           >
             {String(currentRoom).padStart(2, "0")} / 04
           </div>
@@ -1535,9 +1531,10 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
             return (
               <span
                 key={i}
-                className="h-[3px] border-2 border-black transition-all"
+                className="h-[3px] border-2 transition-all"
                 style={{
                   width: active ? 56 : 16,
+                  borderColor: "rgba(244,244,244,0.5)",
                   background: active ? SILVER_H : "transparent",
                 }}
               />
@@ -1563,16 +1560,18 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
             >
               <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 w-full items-center">
                 <div
-                  className="border-2 border-black p-6 md:p-8"
+                  className="border-2 p-6 md:p-8"
                   style={{
-                    background: "#ebe8e0",
-                    boxShadow: "8px 8px 0 0 #0d0d0d",
+                    background: "#0d0d0d",
+                    color: "#f4f4f4",
+                    borderColor: "rgba(244,244,244,0.3)",
+                    boxShadow: "8px 8px 0 0 #2a2a2a",
                     overflow: "hidden",
                   }}
                 >
                   <div
                     className="inline-block px-2 py-1 border-2 border-black text-[12px] font-bold uppercase tracking-[0.25em] mb-6"
-                    style={{ background: SILVER_H }}
+                    style={{ background: SILVER_H, color: "#0d0d0d" }}
                   >
                     {t.roomBadge}{r.id}
                   </div>
@@ -1591,11 +1590,12 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                 </div>
 
                 <div
-                  className="border-2 border-black p-6 md:p-10"
+                  className="border-2 p-6 md:p-10"
                   style={{
                     background: "#0d0d0d",
                     color: "#f4f4f4",
-                    boxShadow: "8px 8px 0 0 #8a8a8a",
+                    borderColor: "rgba(244,244,244,0.3)",
+                    boxShadow: "8px 8px 0 0 #2a2a2a",
                   }}
                 >
                   <div
@@ -1642,7 +1642,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       id="stage-04"
       ref={targetRef}
       className=""
-      style={{ background: "#ebe8e0", minHeight: "100vh" }}
+      style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
     >
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
         <div
@@ -1660,8 +1660,9 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           <br />
           {t.headline2Prefix}{" "}
           <span
+            className="italic"
             style={{
-              background: GRAPHITE_H,
+              background: SILVER_H,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -1725,10 +1726,12 @@ function CaseCard({
 
   return (
     <div
-      className="border-2 border-black flex flex-col overflow-hidden"
+      className="border-2 flex flex-col overflow-hidden"
       style={{
-        background: "#ebe8e0",
-        boxShadow: "8px 8px 0 0 #0d0d0d",
+        background: "#0d0d0d",
+        color: "#f4f4f4",
+        borderColor: "rgba(244,244,244,0.3)",
+        boxShadow: "8px 8px 0 0 #2a2a2a",
         opacity: inView ? 1 : 0,
         transform: inView
           ? "translateY(0) scale(1) rotate(0deg)"
@@ -1737,7 +1740,7 @@ function CaseCard({
       }}
     >
       {/* Header — brand + category */}
-      <div className="px-5 py-4 border-b-2 border-black flex items-center justify-between">
+      <div className="px-5 py-4 border-b-2 flex items-center justify-between" style={{ borderColor: "rgba(244,244,244,0.25)" }}>
         <div className="font-black text-lg uppercase tracking-tight">
           {c.brand}
         </div>
@@ -1778,8 +1781,8 @@ function CaseCard({
       {/* Duration + highlight */}
       <div className="p-5 space-y-3">
         <div
-          className="inline-block px-2 py-1 border border-black text-[12px] font-bold uppercase tracking-[0.2em]"
-          style={{ fontFamily: "var(--brutal-pixel)" }}
+          className="inline-block px-2 py-1 border text-[12px] font-bold uppercase tracking-[0.2em]"
+          style={{ fontFamily: "var(--brutal-pixel)", borderColor: "rgba(244,244,244,0.4)" }}
         >
           {c.duration}
         </div>
@@ -1933,7 +1936,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
       id="stage-07"
       ref={targetRef}
       className="relative"
-      style={{ height: "280vh", background: "#ebe8e0" }}
+      style={{ height: "280vh", background: "#141414", color: "#f4f4f4" }}
     >
       <div className="sticky top-0 h-screen flex items-center px-6 md:px-14">
         <div className="max-w-[1400px] w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-10 items-start">
@@ -1952,8 +1955,9 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
               {t.headline1}
               <br />
               <span
+                className="italic"
                 style={{
-                  background: GRAPHITE_H,
+                  background: SILVER_H,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -1972,10 +1976,11 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
               {t.principles.map((_, i) => (
                 <span
                   key={i}
-                  className="h-[3px] border-2 border-black transition-all"
+                  className="h-[3px] border-2 transition-all"
                   style={{
                     width: i < revealed ? 40 : 14,
-                    background: i < revealed ? GRAPHITE_H : "transparent",
+                    borderColor: "rgba(244,244,244,0.5)",
+                    background: i < revealed ? SILVER_H : "transparent",
                   }}
                 />
               ))}
@@ -1989,10 +1994,11 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
               return (
                 <div
                   key={pr.num}
-                  className="border-2 border-black p-5 md:p-7 transition-all duration-500"
+                  className="border-2 p-5 md:p-7 transition-all duration-500"
                   style={{
-                    background: done ? "#ebe8e0" : "transparent",
-                    boxShadow: done ? "6px 6px 0 0 #0d0d0d" : "none",
+                    background: done ? "#0d0d0d" : "transparent",
+                    borderColor: done ? "rgba(244,244,244,0.35)" : "rgba(244,244,244,0.18)",
+                    boxShadow: done ? "6px 6px 0 0 #2a2a2a" : "none",
                     opacity: done ? 1 : 0.35,
                     transform: done ? "translateY(0)" : "translateY(10px)",
                   }}
@@ -2001,8 +2007,8 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
                     <div
                       className="text-3xl md:text-5xl font-black tabular-nums flex-shrink-0"
                       style={{
-                        background: done ? GRAPHITE_H : "transparent",
-                        color: done ? "transparent" : "#0d0d0d",
+                        background: done ? SILVER_H : "transparent",
+                        color: done ? "transparent" : "#f4f4f4",
                         WebkitBackgroundClip: done ? "text" : "initial",
                         WebkitTextFillColor: done ? "transparent" : "initial",
                         backgroundClip: done ? "text" : "initial",
@@ -2043,7 +2049,7 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
       id="stage-08"
       ref={targetRef}
       className=""
-      style={{ background: "#d6d3ca", minHeight: "100vh" }}
+      style={{ background: "#141414", color: "#f4f4f4", minHeight: "100vh" }}
     >
       <div className="px-6 md:px-14 py-20 md:py-28 max-w-[1400px] mx-auto">
         <div
@@ -2058,8 +2064,9 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
         >
           {t.headlinePrefix}{" "}
           <span
+            className="italic"
             style={{
-              background: GRAPHITE_H,
+              background: SILVER_H,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -2076,17 +2083,19 @@ function StageQualify({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
             return (
               <li
                 key={q}
-                className="flex items-start gap-4 md:gap-6 transition-all duration-500 border-2 border-black p-4 md:p-6"
+                className="flex items-start gap-4 md:gap-6 transition-all duration-500 border-2 p-4 md:p-6"
                 style={{
                   opacity: done ? 1 : 0.4,
-                  background: done ? "#ebe8e0" : "transparent",
-                  boxShadow: done ? "6px 6px 0 0 #0d0d0d" : "none",
+                  background: done ? "#0d0d0d" : "transparent",
+                  borderColor: done ? "rgba(244,244,244,0.35)" : "rgba(244,244,244,0.18)",
+                  boxShadow: done ? "6px 6px 0 0 #2a2a2a" : "none",
                 }}
               >
                 <span
-                  className="mt-1 w-8 h-8 md:w-11 md:h-11 flex-shrink-0 border-2 border-black flex items-center justify-center transition-all"
+                  className="mt-1 w-8 h-8 md:w-11 md:h-11 flex-shrink-0 border-2 flex items-center justify-center transition-all"
                   style={{
                     background: done ? SILVER : "transparent",
+                    borderColor: "rgba(244,244,244,0.5)",
                     color: done ? "#0d0d0d" : "transparent",
                   }}
                 >
@@ -2173,7 +2182,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
               background: SILVER,
               color: "#0d0d0d",
               boxShadow:
-                "0 0 0 1px rgba(255,255,255,0.4) inset, 10px 10px 0 0 #ebe8e0",
+                "0 0 0 1px rgba(255,255,255,0.4) inset, 10px 10px 0 0 #2a2a2a",
             }}
           >
             <span className="font-black text-xl md:text-3xl uppercase tracking-tight">
