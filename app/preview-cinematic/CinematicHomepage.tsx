@@ -436,13 +436,13 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         <ZoneOverlay p={p} z={Z.curve} className="items-start justify-end md:justify-center pb-[11vh] md:pb-0">
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             <Kicker text={t.zones.cases.kicker} dark />
-            <div className="flex flex-wrap gap-4 md:gap-6 mt-2">
+            <div className="flex flex-wrap gap-4 md:gap-5 mt-2">
               {t.zones.cases.cases.map((c, i) => {
                 const local = zoneLocal(p, Z.curve);
-                const on = local > 0.18 + i * 0.16;
+                const on = local > 0.16 + i * 0.13;
                 return (
                   <div
-                    key={c.brand}
+                    key={c.service}
                     className="border-2 border-black px-5 py-4"
                     style={{
                       background: "rgba(235,232,224,0.92)",
@@ -452,14 +452,17 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                       transition: "opacity 300ms ease, transform 380ms cubic-bezier(0.16,1,0.3,1)",
                     }}
                   >
-                    <div className="text-[11px] uppercase tracking-[0.25em] opacity-70 mb-1" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
-                      {c.brand} · {c.duration}
+                    <div className="inline-block px-2 py-1 border-2 border-black text-[11px] font-bold uppercase tracking-[0.25em] mb-2" style={{ fontFamily: "var(--cine-pixel)", background: JET, color: "#f4f4f4" }}>
+                      {c.service}
                     </div>
-                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(34px, 4.5vw, 72px)", color: JET }}>
+                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(32px, 3.8vw, 60px)", color: JET }}>
                       {c.metric}
                     </div>
                     <div className="text-[11px] uppercase tracking-[0.25em] font-bold mt-2 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
-                      {c.label}
+                      {c.sub}
+                    </div>
+                    <div className="text-[11px] uppercase tracking-[0.2em] mt-1 opacity-60" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
+                      {c.meta}
                     </div>
                   </div>
                 );

@@ -56,10 +56,15 @@ export const JOURNEY_COPY = {
       },
       cases: {
         kicker: "04 · КЕЙСОВЕ · РЕАЛНИ РЕЗУЛТАТИ",
+        // One card per service room, one metric type per card. Every number
+        // is real: the three ROAS wins are the long-approved ones; the CVR
+        // is computed from live Meta account data (beMe, last 90d:
+        // 840 purchases / 24,389 link clicks = 3.4%).
         cases: [
-          { brand: "MEN'S CARE", metric: "5.2×", label: "ROAS · AI КАМПАНИЯ", duration: "90 ДНИ" },
-          { brand: "PARFEN", metric: "7.7×", label: "ROAS · URGENCY ОФЕРТА", duration: "60 ДНИ" },
-          { brand: "FREYA", metric: "10×", label: "ROAS · NAIL PRODUCTS", duration: "120 ДНИ" },
+          { service: "РЕКЛАМИ", metric: "7.7×", sub: "ROAS · URGENCY ОФЕРТА", meta: "PARFEN · 60 ДНИ" },
+          { service: "КРЕАТИВ", metric: "5.2×", sub: "ROAS · AI КАМПАНИЯ", meta: "MEN'S CARE · 90 ДНИ" },
+          { service: "САЙТ + ФУНИЯ", metric: "3.4%", sub: "CVR · КЛИК → ПОРЪЧКА", meta: "beMe · 90 ДНИ" },
+          { service: "СТРАТЕГИЯ", metric: "10×", sub: "ROAS · NAIL НИША", meta: "FREYA · 120 ДНИ" },
         ],
         note: "РЕАЛЕН МЕТРИК · РЕАЛЕН БЮДЖЕТ · РЕАЛЕН ПЕРИОД",
       },
@@ -165,9 +170,10 @@ export const JOURNEY_COPY = {
       cases: {
         kicker: "04 · CASES · REAL RESULTS",
         cases: [
-          { brand: "MEN'S CARE", metric: "5.2×", label: "ROAS · AI CAMPAIGN", duration: "90 DAYS" },
-          { brand: "PARFEN", metric: "7.7×", label: "ROAS · URGENCY OFFER", duration: "60 DAYS" },
-          { brand: "FREYA", metric: "10×", label: "ROAS · NAIL PRODUCTS", duration: "120 DAYS" },
+          { service: "ADS", metric: "7.7×", sub: "ROAS · URGENCY OFFER", meta: "PARFEN · 60 DAYS" },
+          { service: "CREATIVE", metric: "5.2×", sub: "ROAS · AI CAMPAIGN", meta: "MEN'S CARE · 90 DAYS" },
+          { service: "SITE + FUNNEL", metric: "3.4%", sub: "CVR · CLICK → ORDER", meta: "beMe · 90 DAYS" },
+          { service: "STRATEGY", metric: "10×", sub: "ROAS · NAIL NICHE", meta: "FREYA · 120 DAYS" },
         ],
         note: "REAL METRIC · REAL BUDGET · REAL PERIOD",
       },
