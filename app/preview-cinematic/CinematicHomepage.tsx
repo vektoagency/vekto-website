@@ -223,7 +223,10 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
     return () => mq.removeEventListener("change", apply);
   }, []);
   const frame = Math.round(p * (FRAME_COUNT - 1)) + 1;
-  const zoneIdx = Math.min(ZONES.length - 1, Math.floor(p * ZONES.length));
+  // Zones are unequal fractions since v4, so the active zone is found by
+  // boundary, not by dividing progress into sixths.
+  const rawZoneIdx = ZONES.findIndex((z) => p < z.to);
+  const zoneIdx = rawZoneIdx === -1 ? ZONES.length - 1 : rawZoneIdx;
 
   const Z = Object.fromEntries(ZONES.map((z) => [z.id, z]));
 

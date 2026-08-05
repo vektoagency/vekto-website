@@ -11,29 +11,23 @@
 // page component reads everything from here.
 // ============================================================================
 
-// 6 clips × 8s × 12fps. Doubled from the first cut's 6fps: at 6fps adjacent
-// frames were 166ms of camera motion apart, and no amount of smooth scrolling
-// hides a jump that size — the scrub read as steppy. 12fps halves the delta;
-// the canvas additionally crossfades between neighbouring frames so the
-// remaining gap reads as motion blur rather than a step.
-// 575: one frame short of 6×96 — the original frame 193 opened segment 3 in
-// a visibly different pose (smaller, horizontal) and was cut on review; the
-// ten frames after it carry a baked decaying re-alignment instead.
-export const FRAME_COUNT = 575;
+// v4 is the user's own edit of the film (33.55s @30fps source, sampled at
+// 12fps). 12fps because at 6fps adjacent frames were 166ms of camera motion
+// apart and the scrub read as steppy; the canvas additionally crossfades
+// between neighbouring frames so the remaining gap reads as motion blur.
+export const FRAME_COUNT = 402;
 
 // Two extractions of the same 288 frames. The film runs full-bleed, so the
 // desktop set is sized for desktop viewports (1600w, q82 ≈ 6MB total) — the
 // first cut shipped 960w/q55 everywhere and read visibly soft stretched
 // across a 1920px screen. Phones keep the light set: same journey, a third
 // of the bytes.
-// v3 paths: the chain was regenerated on Gemini Omni with a FIRST_FRAME
-// anchor per segment (previous segment's exact last frame), so every zone
-// boundary is frame-identical instead of stitched in post. Versioned
-// directories guarantee no browser or CDN cache can ever serve a frame from
-// a previous chain.
+// v4 paths: the film is the user's own cut (new studio opening, the Omni
+// middle, their landing clip). Versioned directories guarantee no browser or
+// CDN cache can ever serve a frame from a previous chain.
 export const FRAME_SETS = {
-  hd: { dir: "/scrub/v3-hd", count: FRAME_COUNT, w: 1280, h: 720 },
-  sd: { dir: "/scrub/v3",    count: FRAME_COUNT, w: 960,  h: 540 },
+  hd: { dir: "/scrub/v4-hd", count: FRAME_COUNT, w: 1280, h: 720 },
+  sd: { dir: "/scrub/v4",    count: FRAME_COUNT, w: 960,  h: 540 },
 } as const;
 
 // Static fallback (reduced motion) draws stills from the light set.
@@ -47,16 +41,20 @@ export type Zone = {
   to: number;
 };
 
-// Six equal beats of the flight. `from`/`to` are fractions of the whole
-// scrub; the overlay for a zone fades in shortly after `from` and out
-// shortly before `to`, so text never straddles a hand-over.
+// Six beats of the flight — no longer equal sixths: the user's cut spends
+// 10s in the studio opening and tightens the later beats. Boundaries were
+// read off the edit frame by frame (launch streak 10.2s, turn behind the
+// tail 13.0s, corridor wake-up 19.0s, white burst 27.3s, podium approach
+// 31.0s; total 33.55s). `from`/`to` are fractions of the whole scrub; the
+// overlay for a zone fades in shortly after `from` and out shortly before
+// `to`, so text never straddles a hand-over.
 export const ZONES: Zone[] = [
-  { id: "vault",    from: 0 / 6, to: 1 / 6 },
-  { id: "ignition", from: 1 / 6, to: 2 / 6 },
-  { id: "screen",   from: 2 / 6, to: 3 / 6 },
-  { id: "feed",     from: 3 / 6, to: 4 / 6 },
-  { id: "curve",    from: 4 / 6, to: 5 / 6 },
-  { id: "landing",  from: 5 / 6, to: 6 / 6 },
+  { id: "vault",    from: 0,      to: 0.3040 },
+  { id: "ignition", from: 0.3040, to: 0.3874 },
+  { id: "screen",   from: 0.3874, to: 0.5663 },
+  { id: "feed",     from: 0.5663, to: 0.8137 },
+  { id: "curve",    from: 0.8137, to: 0.9239 },
+  { id: "landing",  from: 0.9239, to: 1 },
 ];
 
 /** 0..1 progress local to a zone, clamped. */
