@@ -8,6 +8,8 @@ import {
   Balsamiq_Sans,
 } from "next/font/google";
 import CinematicHomepage from "./CinematicHomepage";
+import BrutalismHomepage from "../preview-brutalism/BrutalismHomepage";
+import ResponsiveVariant from "./ResponsiveVariant";
 
 // Same font strategy as /preview-brutalism: none of the Latin faces below
 // ships a Cyrillic subset, and Bulgarian is the default language here too, so
@@ -37,10 +39,17 @@ export default function PreviewCinematicPage() {
           "--cine-display": "var(--f-cine-display-lat), var(--f-cine-display-cyr), system-ui, sans-serif",
           "--cine-pixel": "var(--f-cine-pixel-lat), var(--f-cine-pixel-cyr), ui-monospace, monospace",
           "--cine-comic": "var(--f-cine-comic-lat), var(--f-cine-comic-cyr), system-ui, sans-serif",
+          // The mobile variant renders BrutalismHomepage, which reads the
+          // --brutal-* stacks. Both pages load the exact same six faces, so
+          // the aliases resolve to the already-loaded --f-cine-* variables —
+          // no extra font payload.
+          "--brutal-display": "var(--f-cine-display-lat), var(--f-cine-display-cyr), system-ui, sans-serif",
+          "--brutal-pixel": "var(--f-cine-pixel-lat), var(--f-cine-pixel-cyr), ui-monospace, monospace",
+          "--brutal-comic": "var(--f-cine-comic-lat), var(--f-cine-comic-cyr), system-ui, sans-serif",
         } as React.CSSProperties
       }
     >
-      <CinematicHomepage />
+      <ResponsiveVariant film={<CinematicHomepage />} brutalism={<BrutalismHomepage />} />
     </div>
   );
 }
