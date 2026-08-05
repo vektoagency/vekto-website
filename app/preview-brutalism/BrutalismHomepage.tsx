@@ -80,7 +80,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · VEKTO",
-      pill: "АГЕНЦИЯ ЗА РАСТЕЖ",
+      pill: "50+ БРАНДА · 200+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
       headline2Highlight: "СКАЛИРАН?",
@@ -268,7 +268,7 @@ const COPY = {
     ],
     stage1: {
       eyebrow: "01 · VEKTO",
-      pill: "GROWTH AGENCY",
+      pill: "50+ BRANDS · 200+ VIDEOS / MONTH",
       headline1: "DOES YOUR BUSINESS",
       headline2Prefix: "DESERVE",
       headline2Highlight: "TO SCALE?",

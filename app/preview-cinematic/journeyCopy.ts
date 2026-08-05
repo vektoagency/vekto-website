@@ -16,7 +16,7 @@ export const JOURNEY_COPY = {
   bg: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · АГЕНЦИЯ ЗА РАСТЕЖ",
+        kicker: "01 · VEKTO · 50+ БРАНДА · 200+ ВИДЕА / МЕСЕЦ",
         h1a: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
         h1b: "ДА БЪДЕ",
         h1hi: "СКАЛИРАН?",
@@ -129,7 +129,7 @@ export const JOURNEY_COPY = {
   en: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · GROWTH AGENCY",
+        kicker: "01 · VEKTO · 50+ BRANDS · 200+ VIDEOS / MONTH",
         h1a: "DOES YOUR BUSINESS",
         h1b: "DESERVE",
         h1hi: "TO SCALE?",
