@@ -31,18 +31,18 @@ export const JOURNEY_COPY = {
       },
       why: {
         kicker: "02 · ЗАЩО СЪЩЕСТВУВАМЕ",
-        quote: "„Инвестираме сериозно в реклама. Но никой не може да ми каже колко от това се връща.“",
-        attribution: "— повечето собственици, в един момент през първата година",
-        response: "Ако това ти звучи познато —",
-        responseHi: "разбираме се.",
+        quote: "„Едни правят рекламите, други — видеата, трети — сайта. Никой не говори с никого. А резултатът е мой проблем.“",
+        attribution: "— почти всеки бранд, преди да дойде при нас",
+        response: "Затова",
+        responseHi: "съществуваме.",
       },
       focus: {
         kicker: "03 · ЧЕТИРИ СТАИ · ЕДИН ПОКРИВ",
         rooms: [
-          { title: "РЕКЛАМИ", detail: "Meta · Google · TikTok", num: "4.8×", label: "СРЕДЕН ROAS" },
-          { title: "КРЕАТИВ", detail: "UGC · AI · заснемане", num: "200+", label: "ВИДЕА / МЕСЕЦ" },
-          { title: "САЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
-          { title: "СТРАТЕГИЯ", detail: "Позициониране · оферта", num: "50+", label: "БРАНДА" },
+          { title: "КРЕАТИВИ", detail: "UGC · видео · заснемане", num: "200+", label: "ВИДЕА / МЕСЕЦ" },
+          { title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
+          { title: "СТРАТЕГИИ", detail: "Позициониране · оферта · план", num: "50+", label: "БРАНДА" },
+          { title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации", num: "5.2×", label: "ROAS · AI КАМПАНИЯ" },
         ],
       },
       standard: {
@@ -144,18 +144,18 @@ export const JOURNEY_COPY = {
       },
       why: {
         kicker: "02 · WHY WE EXIST",
-        quote: "“We invest seriously in advertising. But nobody can tell me how much of that actually comes back.”",
-        attribution: "— most brand owners, at some point in year one",
-        response: "If that sounds familiar —",
-        responseHi: "we speak the same language.",
+        quote: "“One team runs the ads, another cuts the videos, a third built the site. Nobody talks to anybody. And the results are my problem.”",
+        attribution: "— almost every brand, before they find us",
+        response: "That's why",
+        responseHi: "we exist.",
       },
       focus: {
         kicker: "03 · FOUR ROOMS · ONE ROOF",
         rooms: [
-          { title: "ADS", detail: "Meta · Google · TikTok", num: "4.8×", label: "AVG ROAS" },
-          { title: "CREATIVE", detail: "UGC · AI · live shoots", num: "200+", label: "VIDEOS / MONTH" },
+          { title: "CREATIVE", detail: "UGC · video · live shoots", num: "200+", label: "VIDEOS / MONTH" },
           { title: "WEBSITES", detail: "Landing · e-com · portals", num: "12", label: "SITES / YEAR" },
-          { title: "STRATEGY", detail: "Positioning · offer", num: "50+", label: "BRANDS" },
+          { title: "STRATEGY", detail: "Positioning · offer · plan", num: "50+", label: "BRANDS" },
+          { title: "AI SOLUTIONS", detail: "AI video · automations", num: "5.2×", label: "ROAS · AI CAMPAIGN" },
         ],
       },
       standard: {
