@@ -475,7 +475,10 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
         </ZoneOverlay>
 
         {/* ZONE 6 · CALL — dark type straight on the white film, chrome CTA. */}
-        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-end md:justify-start pb-[11vh] md:pb-0">
+        {/* The ask sits at the BASE of the monument: bottom-left, on the
+            clean white floor, level with the planted dart — not up against
+            the header where it crowded the nav and doubled its CTA. */}
+        <ZoneOverlay p={p} z={Z.landing} className="items-center justify-end pb-[11vh] md:pb-[9vh]">
           {/* The monument stands dead centre; the ask lives in the empty
               left half of the bone-white frame. */}
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
