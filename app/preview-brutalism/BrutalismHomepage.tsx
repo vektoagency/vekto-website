@@ -1460,9 +1460,10 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             style={{
               // Sized so the longest Bulgarian line ("БИЗНЕСЪТ ТИ ЗАСЛУЖАВА
               // ЛИ", 24 chars) holds ONE line inside the 1320px column at
-              // the cap — the question reads as two decisive lines on
-              // desktop instead of an accidental three.
-              fontSize: "calc(clamp(34px, 5vw, 86px) * var(--bgk, 1))",
+              // the cap. The 28px floor keeps the ENGLISH lines ("DOES YOUR
+              // BUSINESS") inside a 360px phone instead of clipping at the
+              // viewport edge.
+              fontSize: "calc(clamp(28px, 5vw, 86px) * var(--bgk, 1))",
               lineHeight: 0.96,
               overflowWrap: "break-word",
               hyphens: "none",
@@ -1488,7 +1489,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           {/* Typewriter line — now the calm centred subline under the
               shout, where acquisition.com runs its supporting sentence. */}
           <div
-            className="mt-5 md:mt-7 flex flex-wrap items-center justify-center gap-3 font-bold uppercase text-[13px] md:text-lg tracking-[0.16em] md:tracking-[0.25em] px-2"
+            className="mt-5 md:mt-7 flex items-center justify-center gap-2 md:gap-3 font-bold uppercase text-[10.5px] md:text-lg tracking-[0.1em] md:tracking-[0.25em] whitespace-nowrap px-2"
             style={{
               opacity: inView ? 0.75 : 0,
               transition: "opacity 400ms ease",
