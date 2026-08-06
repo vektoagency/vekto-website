@@ -1428,16 +1428,18 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
       className="relative flex flex-col"
       style={{ minHeight: "100dvh", background: "#0d0d0d", color: "#f4f4f4" }}
     >
-      {/* MAIN — one centred column, acquisition.com-style: shout headline,
-          calm subline, a single big ask. The two-column globe hero is gone —
-          the composition now holds itself on symmetry instead of an
-          instrument in the right third. */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-16 md:pt-24 pb-0 md:pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
+      {/* MAIN. Desktop: one centred column, acquisition.com-style. Phones:
+          a TWO-ANCHOR layout — the question owns the upper third right
+          under the header, the ask owns the thumb zone at the bottom, and
+          the spacer between them turns the dead void into deliberate
+          breathing room instead of a floating island. */}
+      <div className="flex-1 flex flex-col items-center md:justify-center text-center px-5 md:px-14 pt-24 md:pt-24 pb-0 md:pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
+        <div className="w-full">
           {/* Stage marker + positioning plate — stripped to essentials:
               the marker indexes, the plate positions. No era stamp, no
               geography pair, no "AI" prefix. */}
           <div
-            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-6 md:mb-8 opacity-60"
+            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-5 md:mb-8 opacity-60"
             style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
@@ -1460,10 +1462,9 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             style={{
               // Sized so the longest Bulgarian line ("БИЗНЕСЪТ ТИ ЗАСЛУЖАВА
               // ЛИ", 24 chars) holds ONE line inside the 1320px column at
-              // the cap. The 28px floor keeps the ENGLISH lines ("DOES YOUR
-              // BUSINESS") inside a 360px phone instead of clipping at the
-              // viewport edge.
-              fontSize: "calc(clamp(28px, 5vw, 86px) * var(--bgk, 1))",
+              // the cap. The 40px floor makes phones a commanding 4-line
+              // stack — lines wrap at spaces, nothing can clip.
+              fontSize: "calc(clamp(40px, 5vw, 86px) * var(--bgk, 1))",
               lineHeight: 0.96,
               overflowWrap: "break-word",
               hyphens: "none",
@@ -1489,7 +1490,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           {/* Typewriter line — now the calm centred subline under the
               shout, where acquisition.com runs its supporting sentence. */}
           <div
-            className="mt-5 md:mt-7 flex items-center justify-center gap-2 md:gap-3 font-bold uppercase text-[10.5px] md:text-lg tracking-[0.1em] md:tracking-[0.25em] whitespace-nowrap px-2"
+            className="mt-5 md:mt-7 flex items-center justify-center gap-2 md:gap-3 font-bold uppercase text-[12px] md:text-lg tracking-[0.12em] md:tracking-[0.25em] whitespace-nowrap px-2"
             style={{
               opacity: inView ? 0.75 : 0,
               transition: "opacity 400ms ease",
@@ -1503,20 +1504,22 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               style={{ background: "#f4f4f4" }}
             />
           </div>
+        </div>
 
-          {/* ONE ask. The secondary portfolio button and the proof chips
-              are gone from the fold — stage 04 still carries every number,
-              the header still links the portfolio. One button, centred,
-              impossible to miss. */}
+        {/* Mobile spacer — pushes the ask into the thumb zone; gone on md
+            where the column centres as one block. */}
+        <div className="flex-1 md:hidden" aria-hidden />
+
+        <div className="w-full md:w-auto flex flex-col items-center mb-[6vh] md:mb-0">
           {/* The ask — straight to the calendar, no modal in between. One
               button, one action: the label promises a call, the click books
-              it. Brushed-titanium slab, same metal as the closing CTA. */}
+              it. Full-width slab in the phone's thumb zone. */}
           <button
             type="button"
             data-cal-namespace="30min"
             data-cal-link="vekto/30min"
             data-cal-config={JSON.stringify({ theme: "dark" })}
-            className="group mt-8 md:mt-10 inline-flex items-center gap-4 px-10 md:px-16 py-4 md:py-6 font-black uppercase text-base md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            className="group mt-6 md:mt-10 w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-4 px-8 md:px-16 py-5 md:py-6 font-black uppercase text-lg md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
               // Solid white, jet ink — the brushed gradient put a dark band
               // straight through the label. Contrast lives in the ground,
@@ -1535,6 +1538,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           >
             30 {lang === "bg" ? "МИН · БЕЗПЛАТНО · БЕЗ ОБВЪРЗВАНЕ" : "MIN · FREE · NO STRINGS"}
           </div>
+        </div>
 
       </div>
 
@@ -1570,7 +1574,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       className="flex items-center"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
     >
-      <div className="px-6 md:px-14 py-24 md:py-40 max-w-[1400px] mx-auto w-full">
+      <div className="px-6 md:px-14 py-16 md:py-40 max-w-[1400px] mx-auto w-full">
         <div
           className="text-xs font-bold uppercase tracking-[0.35em] mb-14 opacity-60"
           style={{ fontFamily: "var(--brutal-pixel)" }}
@@ -2314,7 +2318,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
       className="relative"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
     >
-      <div className="px-6 md:px-14 py-24 md:py-40 max-w-[1400px] mx-auto text-center relative">
+      <div className="px-6 md:px-14 py-16 md:py-40 max-w-[1400px] mx-auto text-center relative">
         {/* A soft radial bloom used to sit behind this block and an 80px
             glow around the CTA. Both are the generic dark-page-with-a-glow
             look this design is explicitly built against, and neither
@@ -2385,7 +2389,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
           </div>
 
           <div
-            className="mt-24 text-[12px] tracking-[0.2em] opacity-40 border-t-2 border-dashed border-white/40 pt-4 max-w-3xl mx-auto uppercase"
+            className="mt-14 md:mt-24 text-[12px] tracking-[0.2em] opacity-40 border-t-2 border-dashed border-white/40 pt-4 max-w-3xl mx-auto uppercase"
             style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.guestbook}

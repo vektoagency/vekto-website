@@ -90,7 +90,7 @@ export default function FlightPlan({
 
   return (
     <div
-      className="px-6 md:px-14 py-24 md:py-32"
+      className="px-6 md:px-14 py-16 md:py-32"
       style={{ background: "#0d0d0d", color: "#f4f4f4", fontFamily: fonts.display }}
     >
       <div className="max-w-[1400px] mx-auto">
