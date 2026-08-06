@@ -79,7 +79,7 @@ const ROSTER = [
   { name: "GIFTO",         region: "BG" as const, logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", region: "BG" as const, logo: "/images/logo-gifto2.webp" },
   { name: "ALPEN PHARMA",  region: "BG" as const, logo: "/images/logo-alpenpharma.png" },
-  { name: "NIDO",          region: "BG" as const, logo: "/images/logo-nido.png", dark: true },
+  { name: "NIDO",          region: "BG" as const, logo: "/images/logo-nido2.jpg" },
   { name: "ARTE HOTEL",    region: "BG" as const, logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG" as const, logo: "/images/logo-kashmirhotel.png" },
   { name: "CARTEL CAFFE",  region: "BG" as const, logo: "/images/logo-cartelcaffe.svg", invert: true },
@@ -813,17 +813,12 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         </h2>
         {/* Four per row on every viewport; phones drop the plates/badges and
             read as a pure logo wall — mass is the message. */}
-        <div className="grid grid-cols-4 md:grid-cols-6 gap-1.5 md:gap-4">
+        <div className="grid grid-cols-4 md:grid-cols-8 gap-1.5 md:gap-3">
           {ROSTER.map((c, i) => (
             <div
               key={c.name}
               className="border-2 border-white bg-white flex flex-col relative"
               style={{
-                // dark:true = the logo file is white/light-native and made
-                // for dark grounds — the tile flips to jet and shows the
-                // ORIGINAL colors instead of a broken invert.
-                background: c.dark ? "#0d0d0d" : undefined,
-                borderColor: c.dark ? "rgba(244,244,244,0.45)" : undefined,
                 aspectRatio: "5/4",
                 boxShadow: "5px 5px 0 0 #8a8a8a",
                 opacity: inView ? 1 : 0,
@@ -837,7 +832,7 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
               <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
                 <Image src={c.logo} alt={c.name} width={220} height={110} className="h-[72%] md:h-[68%] w-auto max-w-[90%] object-contain" style={{ filter: c.invert ? "invert(1)" : undefined }} unoptimized />
               </div>
-              <div className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate" style={{ color: c.dark ? "#f4f4f4" : JET, borderColor: c.dark ? "rgba(244,244,244,0.35)" : undefined }}>
+              <div className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate" style={{ color: JET }}>
                 {c.name}
               </div>
             </div>

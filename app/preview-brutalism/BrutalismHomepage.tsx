@@ -464,7 +464,7 @@ const ROSTER: Client[] = [
   { name: "GIFTO",         region: "BG", logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", region: "BG", logo: "/images/logo-gifto2.webp"      },
   { name: "ALPEN PHARMA",  region: "BG", logo: "/images/logo-alpenpharma.png"  },
-  { name: "NIDO",          region: "BG", logo: "/images/logo-nido.png", dark: true },
+  { name: "NIDO",          region: "BG", logo: "/images/logo-nido2.jpg" },
   { name: "ARTE HOTEL",    region: "BG", logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG", logo: "/images/logo-kashmirhotel.png" },
   { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg", invert: true },
@@ -2100,7 +2100,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         {/* Four per row on EVERY viewport — on phones the tiles drop their
             name plates and badges and read as a pure logo wall: mass is
             the message. */}
-        <div className="grid grid-cols-4 md:grid-cols-6 gap-1.5 md:gap-4">
+        <div className="grid grid-cols-4 md:grid-cols-8 gap-1.5 md:gap-3">
           {ROSTER.map((c, i) => {
             // Alternate rotation direction per column for a punchier
             // pop-into-place feel across the whole grid.
