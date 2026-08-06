@@ -442,7 +442,7 @@ const COPY = {
 };
 
 // Brand roster with real logo files from /public/images/logo-*.
-type Client = { name: string; region: "BG" | "US"; logo: string; invert?: boolean };
+type Client = { name: string; region: "BG" | "US"; logo: string; invert?: boolean; dark?: boolean };
 const ROSTER: Client[] = [
   { name: "MEN'S CARE",    region: "BG", logo: "/images/logo-menscare.png"     },
   { name: "DUSQ",          region: "US", logo: "/images/logo-dusq.webp"        },
@@ -464,11 +464,10 @@ const ROSTER: Client[] = [
   { name: "GIFTO",         region: "BG", logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", region: "BG", logo: "/images/logo-gifto2.webp"      },
   { name: "ALPEN PHARMA",  region: "BG", logo: "/images/logo-alpenpharma.png"  },
-  { name: "NIDO",          region: "BG", logo: "/images/logo-nido.png", invert: true },
+  { name: "NIDO",          region: "BG", logo: "/images/logo-nido.png", dark: true },
   { name: "ARTE HOTEL",    region: "BG", logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG", logo: "/images/logo-kashmirhotel.png" },
   { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg", invert: true },
-  { name: "LUDA PRINT",    region: "BG", logo: "/images/logo-ludaprint.jpg" },
 ];
 
 // Derived from ROSTER rather than typed out, so the globe readout can never
@@ -2101,7 +2100,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         {/* Four per row on EVERY viewport — on phones the tiles drop their
             name plates and badges and read as a pure logo wall: mass is
             the message. */}
-        <div className="grid grid-cols-4 md:grid-cols-5 gap-1.5 md:gap-4 [&>*:nth-child(25)]:col-start-2 [&>*:nth-child(25)]:col-span-2 md:[&>*:nth-child(25)]:col-start-auto md:[&>*:nth-child(25)]:col-span-1">
+        <div className="grid grid-cols-4 md:grid-cols-6 gap-1.5 md:gap-4">
           {ROSTER.map((c, i) => {
             // Alternate rotation direction per column for a punchier
             // pop-into-place feel across the whole grid.
@@ -2111,6 +2110,11 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
               key={c.name}
               className="border-2 border-white bg-white flex flex-col relative"
               style={{
+                // dark:true = the logo file is white/light-native and made
+                // for dark grounds — the tile flips to jet and shows the
+                // ORIGINAL colors instead of a broken invert.
+                background: c.dark ? "#0d0d0d" : undefined,
+                borderColor: c.dark ? "rgba(244,244,244,0.45)" : undefined,
                 aspectRatio: "5/4",
                 boxShadow: "5px 5px 0 0 #8a8a8a",
                 opacity: inView ? 1 : 0,
@@ -2135,7 +2139,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
                   alt={c.name}
                   width={220}
                   height={110}
-                  className="h-[58%] md:h-[56%] w-auto max-w-[86%] object-contain"
+                  className="h-[72%] md:h-[68%] w-auto max-w-[90%] object-contain"
                   style={{ filter: c.invert ? "invert(1)" : undefined }}
                   unoptimized
                 />
@@ -2144,7 +2148,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
               {/* Name plate at bottom */}
               <div
                 className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate"
-                style={{ color: "#0d0d0d" }}
+                style={{ color: c.dark ? "#f4f4f4" : "#0d0d0d", borderColor: c.dark ? "rgba(244,244,244,0.35)" : undefined }}
               >
                 {c.name}
               </div>
