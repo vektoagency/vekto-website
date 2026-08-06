@@ -1570,7 +1570,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               the marker indexes, the plate positions. No era stamp, no
               geography pair, no "AI" prefix. */}
           <div
-            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-5 md:mb-8 opacity-60"
+            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.22em] md:tracking-[0.35em] mb-4 md:mb-8 opacity-60"
             style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
