@@ -899,8 +899,30 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [lead, setLead] = useState<{ name: string; email: string }>({ name: "", email: "" });
 
   const panelRef = useRef<HTMLDivElement>(null);
+
+  // cal.com embed (vekto/30min) — loaded lazily the first time the modal
+  // opens, themed to the film world. The success screen's booking button
+  // uses the data-cal-* attributes this API registers.
+  useEffect(() => {
+    if (!open) return;
+    (async () => {
+      try {
+        const { getCalApi } = await import("@calcom/embed-react");
+        const cal = await getCalApi({ namespace: "30min" });
+        cal("ui", {
+          theme: "dark",
+          cssVarsPerTheme: {
+            light: { "cal-brand": "#0d0d0d" },
+            dark: { "cal-brand": "#f4f4f4" },
+          },
+          hideEventTypeDetails: false,
+        });
+      } catch {}
+    })();
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -964,7 +986,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         submit: "→ ПРАТИ ЗАЯВКА",
         submitting: "ПРАЩАМЕ...",
         sent: "ПОЛУЧИХМЕ ЗАЯВКАТА",
-        sentSub: "Отговаряме до 24 часа.",
+        sentSub: "Отговаряме до 24 часа. Или си запази час веднага:",
+        sentCal: "ИЗБЕРИ ЧАС ЗА РАЗГОВОРА",
         errorMsg: "Нещо се обърка. Опитай пак.",
       }
     : {
@@ -982,7 +1005,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         submit: "→ SEND BRIEF",
         submitting: "SENDING...",
         sent: "GOT IT",
-        sentSub: "We reply within 24 hours.",
+        sentSub: "We reply within 24 hours. Or lock a slot right now:",
+        sentCal: "PICK A TIME FOR THE CALL",
         errorMsg: "Something went wrong. Try again.",
       };
 
@@ -991,6 +1015,12 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
     setLoading(true);
     setError("");
     const formData = new FormData(e.currentTarget);
+    // Keep name + email so the cal.com booking on the success screen opens
+    // pre-filled — the visitor types their details exactly once.
+    setLead({
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+    });
     const result = await sendContactEmail(formData);
     setLoading(false);
     if (result.success) setSent(true);
@@ -1061,7 +1091,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         <div className="flex-1 overflow-y-auto p-5 md:p-7">
           {sent ? (
             <div
-              className="text-center py-12 px-6 border-2 border-black"
+              className="text-center py-10 px-6 border-2 border-black"
               style={{
                 background: SILVER,
                 color: "#0d0d0d",
@@ -1078,6 +1108,23 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               >
                 {s.sentSub}
               </div>
+              {/* Step two — book the slot NOW. cal.com opens pre-filled with
+                  the name + email the visitor just typed. */}
+              <button
+                type="button"
+                data-cal-namespace="30min"
+                data-cal-link="vekto/30min"
+                data-cal-config={JSON.stringify({ name: lead.name, email: lead.email, theme: "dark" })}
+                className="group mt-7 inline-flex items-center gap-3 px-8 md:px-12 py-4 border-2 border-black font-black uppercase text-sm md:text-lg tracking-[0.1em] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  background: "#0d0d0d",
+                  color: "#f4f4f4",
+                  boxShadow: "4px 4px 0 0 rgba(13,13,13,0.35)",
+                }}
+              >
+                {s.sentCal}
+                <span aria-hidden className="transition-transform group-hover:translate-x-2">→</span>
+              </button>
             </div>
           ) : (
             <>
