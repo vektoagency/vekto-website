@@ -82,10 +82,10 @@ export const JOURNEY_COPY = {
     roster: {
       eyebrow: "05 · СЪСТАВЪТ",
       headline1: "50+ БРАНДА В ПОРТФОЛИОТО.",
-      headline2Prefix: "12",
+      headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
-      coda: "12 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
+      coda: "24 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
     },
     process: {
       eyebrow: "06 · КАК РАБОТИМ",
@@ -191,10 +191,10 @@ export const JOURNEY_COPY = {
     roster: {
       eyebrow: "05 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
-      headline2Prefix: "12",
+      headline2Prefix: "24",
       headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },
-      coda: "12 / 50+ · REST ON REQUEST",
+      coda: "24 / 50+ · REST ON REQUEST",
     },
     process: {
       eyebrow: "06 · HOW IT HAPPENS",

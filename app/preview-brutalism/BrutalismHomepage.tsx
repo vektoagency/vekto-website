@@ -195,10 +195,10 @@ const COPY = {
     stage4: {
       eyebrow: "05 · СЪСТАВЪТ",
       headline1: "50+ БРАНДА В ПОРТФОЛИОТО.",
-      headline2Prefix: "23",
+      headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
-      coda: "23 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
+      coda: "24 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
     },
     stage5: {
       eyebrow: "07 · СТАНДАРТЪТ",
@@ -383,10 +383,10 @@ const COPY = {
     stage4: {
       eyebrow: "05 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
-      headline2Prefix: "23",
+      headline2Prefix: "24",
       headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },
-      coda: "23 / 50+ · REST ON REQUEST",
+      coda: "24 / 50+ · REST ON REQUEST",
     },
     stage5: {
       eyebrow: "07 · THE STANDARD",
@@ -441,7 +441,7 @@ const COPY = {
 };
 
 // Brand roster with real logo files from /public/images/logo-*.
-type Client = { name: string; region: "BG" | "US"; logo: string };
+type Client = { name: string; region: "BG" | "US"; logo: string; invert?: boolean };
 const ROSTER: Client[] = [
   { name: "MEN'S CARE",    region: "BG", logo: "/images/logo-menscare.png"     },
   { name: "DUSQ",          region: "US", logo: "/images/logo-dusq.webp"        },
@@ -456,16 +456,17 @@ const ROSTER: Client[] = [
   { name: "LUCKY ENERGY",  region: "US", logo: "/images/logo-lucky.webp"       },
   { name: "NUTRIFITT",     region: "US", logo: "/images/logo-nutrifitt.webp"   },
   { name: "beMe",          region: "BG", logo: "/images/logo-bemeacne.webp"    },
+  { name: "FREYA NAILS",   region: "BG", logo: "/images/logo-freya.svg" },
   { name: "TASTE FLAVOR",  region: "US", logo: "/images/logo-tasteflavor.webp" },
   { name: "KRISTA G",      region: "BG", logo: "/images/logo-krista-g-2022.webp" },
   { name: "PHYTOLIFE",     region: "BG", logo: "/images/logo-phytolife.webp"   },
   { name: "GIFTO",         region: "BG", logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", region: "BG", logo: "/images/logo-gifto2.webp"      },
   { name: "ALPEN PHARMA",  region: "BG", logo: "/images/logo-alpenpharma.png"  },
-  { name: "NIDO",          region: "BG", logo: "/images/logo-nido.png"         },
-  { name: "ARTE HOTEL",    region: "BG", logo: "/images/logo-artehotel.png"    },
+  { name: "NIDO",          region: "BG", logo: "/images/logo-nido.png", invert: true },
+  { name: "ARTE HOTEL",    region: "BG", logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG", logo: "/images/logo-kashmirhotel.png" },
-  { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg"  },
+  { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg", invert: true },
 ];
 
 // Derived from ROSTER rather than typed out, so the globe readout can never
@@ -2050,6 +2051,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
                   width={220}
                   height={110}
                   className="max-h-full max-w-full w-auto h-auto object-contain"
+                  style={{ filter: c.invert ? "invert(1)" : undefined }}
                   unoptimized
                 />
               </div>

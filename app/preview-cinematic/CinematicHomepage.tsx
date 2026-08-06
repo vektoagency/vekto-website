@@ -72,16 +72,17 @@ const ROSTER = [
   { name: "LUCKY ENERGY",  region: "US" as const, logo: "/images/logo-lucky.webp" },
   { name: "NUTRIFITT",     region: "US" as const, logo: "/images/logo-nutrifitt.webp" },
   { name: "beMe",          region: "BG" as const, logo: "/images/logo-bemeacne.webp" },
+  { name: "FREYA NAILS",   region: "BG" as const, logo: "/images/logo-freya.svg" },
   { name: "TASTE FLAVOR",  region: "US" as const, logo: "/images/logo-tasteflavor.webp" },
   { name: "KRISTA G",      region: "BG" as const, logo: "/images/logo-krista-g-2022.webp" },
   { name: "PHYTOLIFE",     region: "BG" as const, logo: "/images/logo-phytolife.webp" },
   { name: "GIFTO",         region: "BG" as const, logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", region: "BG" as const, logo: "/images/logo-gifto2.webp" },
   { name: "ALPEN PHARMA",  region: "BG" as const, logo: "/images/logo-alpenpharma.png" },
-  { name: "NIDO",          region: "BG" as const, logo: "/images/logo-nido.png" },
-  { name: "ARTE HOTEL",    region: "BG" as const, logo: "/images/logo-artehotel.png" },
+  { name: "NIDO",          region: "BG" as const, logo: "/images/logo-nido.png", invert: true },
+  { name: "ARTE HOTEL",    region: "BG" as const, logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG" as const, logo: "/images/logo-kashmirhotel.png" },
-  { name: "CARTEL CAFFE",  region: "BG" as const, logo: "/images/logo-cartelcaffe.svg" },
+  { name: "CARTEL CAFFE",  region: "BG" as const, logo: "/images/logo-cartelcaffe.svg", invert: true },
 ];
 
 // ---------------------------------------------------------------------------
@@ -818,7 +819,7 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
                 {t.roster.region[c.region]}
               </span>
               <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
-                <Image src={c.logo} alt={c.name} width={220} height={110} className="max-h-full max-w-full w-auto h-auto object-contain" unoptimized />
+                <Image src={c.logo} alt={c.name} width={220} height={110} className="max-h-full max-w-full w-auto h-auto object-contain" style={{ filter: c.invert ? "invert(1)" : undefined }} unoptimized />
               </div>
               <div className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate" style={{ color: JET }}>
                 {c.name}
