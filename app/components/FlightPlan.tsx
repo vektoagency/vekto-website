@@ -18,7 +18,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const SILVER_H =
-  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
+  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
 
 export type FlightStep = {
   num: string;
@@ -108,7 +108,7 @@ export default function FlightPlan({
           <br />
           {headline2Prefix}{" "}
           <span
-            className="italic"
+            className="italic pr-[0.08em]"
             style={{
               background: SILVER_H,
               WebkitBackgroundClip: "text",

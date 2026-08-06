@@ -33,7 +33,7 @@ import FlightPlan from "../components/FlightPlan";
 const SILVER =
   "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)";
 const SILVER_H =
-  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
+  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
 // WORDMARK_METAL — cleaner brushed-titanium look for the VEKTO wordmark
 // specifically. No mirror-shine highlights, so it reads like a real
 // metallic-vinyl brand logo rather than a chrome-plated ornament.
@@ -1432,7 +1432,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           calm subline, a single big ask. The two-column globe hero is gone —
           the composition now holds itself on symmetry instead of an
           instrument in the right third. */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-20 md:pt-24 pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
+      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 md:px-14 pt-16 md:pt-24 pb-0 md:pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
           {/* Stage marker + positioning plate — stripped to essentials:
               the marker indexes, the plate positions. No era stamp, no
               geography pair, no "AI" prefix. */}
@@ -1472,7 +1472,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             <span className="block">
               {t.headline2Prefix}{" "}
               <span
-                className="italic"
+                className="italic pr-[0.08em]"
                 style={{
                   background: SILVER_H,
                   WebkitBackgroundClip: "text",
@@ -1613,7 +1613,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
         >
           {t.response}{" "}
           <span
-            className="italic"
+            className="italic pr-[0.08em]"
             style={{
               background: SILVER_H,
               WebkitBackgroundClip: "text",
@@ -1797,7 +1797,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           <br />
           {t.headline2Prefix}{" "}
           <span
-            className="italic"
+            className="italic pr-[0.08em]"
             style={{
               background: SILVER_H,
               WebkitBackgroundClip: "text",
@@ -2221,7 +2221,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
             >
               {t.headlinePrefix}{" "}
               <span
-                className="italic"
+                className="italic pr-[0.08em]"
                 style={{
                   background: SILVER_H,
                   WebkitBackgroundClip: "text",
@@ -2338,7 +2338,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
           >
             {t.headlinePrefix}{" "}
             <span
-              className="italic"
+              className="italic pr-[0.08em]"
               style={{
                 background: SILVER_H,
                 WebkitBackgroundClip: "text",

@@ -36,7 +36,7 @@ const ScrubReel = dynamic(() => import("./ScrubReel"), { ssr: false });
 // ---------------------------------------------------------------------------
 const JET = "#0d0d0d";
 const SILVER_H =
-  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 20%, #8a8a8a 45%, #eaeaea 55%, #6d6d6d 80%, #b0b0b0 100%)";
+  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
 const GRAPHITE_IN =
   "linear-gradient(90deg, #6d6d6d 0%, #2a2a2a 30%, #5a5a5a 58%, #232323 100%)";
 const WORDMARK_METAL =
@@ -346,7 +346,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                 <span className="block">{t.zones.vault.h1a}</span>
                 <span className="block">
                   {t.zones.vault.h1b}{" "}
-                  <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  <span className="italic pr-[0.08em]" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                     {t.zones.vault.h1hi}
                   </span>
                 </span>
@@ -398,7 +398,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
               </div>
               <div className="mt-6 font-black uppercase tracking-tight" style={{ fontSize: "calc(clamp(18px, 2vw, 32px) * var(--bgk, 1))", color: "#f4f4f4" }}>
                 {t.zones.why.response}{" "}
-                <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                <span className="italic pr-[0.08em]" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                   {t.zones.why.responseHi}
                 </span>
               </div>
@@ -494,7 +494,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
             <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "calc(clamp(32px, 4.2vw, 72px) * var(--bgk, 1))", lineHeight: 0.94, color: JET }}>
               {t.zones.landing.h2a}
               <br />
-              <span className="italic" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              <span className="italic pr-[0.08em]" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 {t.zones.landing.h2hi}
               </span>
             </h2>
@@ -855,7 +855,7 @@ function Fit({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         </div>
         <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12 max-w-4xl" style={{ fontSize: "calc(clamp(30px, 4.6vw, 68px) * var(--bgk, 1))" }}>
           {t.fit.headlinePrefix}{" "}
-          <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          <span className="italic pr-[0.08em]" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {t.fit.headlineHighlight}
           </span>
           {t.fit.headlineSuffix}
@@ -898,7 +898,7 @@ function Work({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
       <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl" style={{ fontSize: "calc(clamp(34px, 5.2vw, 78px) * var(--bgk, 1))" }}>
         {t.after.workHeadline1}
         <br />
-        <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+        <span className="italic pr-[0.08em]" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
           {t.after.workHeadline2}
         </span>
       </h2>
@@ -1010,7 +1010,7 @@ function EndCard({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         {t.endCard.h1}
         <br />
         <span
-          className="italic"
+          className="italic pr-[0.08em]"
           style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
         >
           {t.endCard.h2}
