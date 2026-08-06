@@ -783,12 +783,11 @@ export default function BrutalismHomepage() {
           <button
             type="button"
             onClick={openBook}
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
+            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 border-black uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
             style={{
-              background: "#0d0d0d",
-              color: "#f4f4f4",
-              boxShadow: "3px 3px 0 0 #8a8a8a",
-              borderColor: "#f4f4f4",
+              background: SILVER,
+              color: "#0d0d0d",
+              boxShadow: "0 0 0 1px rgba(255,255,255,0.45) inset, 3px 3px 0 0 #2a2a2a",
             }}
           >
             <span aria-hidden>→</span>
@@ -952,11 +951,11 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   const s = bg
     ? {
         title: "ЗАПАЗИ РАЗГОВОР",
-        subtitle: "ТРИ БЪРЗИ НАЧИНА — ИЗБЕРИ КАК ТИ Е УДОБНО",
+        subtitle: "ОСТАВИ ЗАЯВКА — ОТГОВАРЯМЕ ДО 24 ЧАСА",
         call: "ОБАДИ СЕ", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "МОМЕНТАЛЕН ЧАТ",
         email: "ИМЕЙЛ", emailSub: "vektoagency@gmail.com",
-        or: "ИЛИ ОСТАВИ ЗАЯВКА",
+        or: "ИЛИ СЕ СВЪРЖИ ДИРЕКТНО",
         name: "Име", namePh: "Иван Иванов",
         phone: "Телефон", phonePh: "+359 88 000 0000",
         emailField: "Имейл", emailPh: "ти@brand.bg",
@@ -970,11 +969,11 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
       }
     : {
         title: "BOOK A CALL",
-        subtitle: "3 QUICK OPTIONS — PICK WHAT WORKS",
+        subtitle: "LEAVE A BRIEF — WE REPLY WITHIN 24 HOURS",
         call: "PHONE", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "INSTANT CHAT",
         email: "EMAIL", emailSub: "vektoagency@gmail.com",
-        or: "OR SEND A BRIEF",
+        or: "OR REACH US DIRECTLY",
         name: "Name", namePh: "Jane Doe",
         phone: "Phone", phonePh: "+1 000 000 0000",
         emailField: "Email", emailPh: "you@brand.com",
@@ -1082,26 +1081,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             </div>
           ) : (
             <>
-              {/* 3 quick action chips */}
-              <div className="grid grid-cols-3 gap-2 md:gap-3 mb-6">
-                <QuickAction href="tel:+359882251474" glyph="☎" label={s.call} sub={s.callSub} />
-                <QuickAction href="https://wa.me/359882251474" glyph="◉" label={s.wa} sub={s.waSub} target="_blank" />
-                <QuickAction href="mailto:vektoagency@gmail.com" glyph="✉" label={s.email} sub={s.emailSub} />
-              </div>
-
-              {/* Divider */}
-              <div className="flex items-center gap-3 my-6">
-                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
-                <div
-                  className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-60"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
-                >
-                  {s.or}
-                </div>
-                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
-              </div>
-
-              {/* Lead form */}
+              {/* Lead form FIRST — the CTAs exist to capture the lead; the
+                  quick contact channels are the secondary path below. */}
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <FormField name="name" label={s.name} ph={s.namePh} required />
@@ -1122,17 +1103,33 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full border-2 py-4 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full border-2 border-black py-4 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
-                    background: "#f4f4f4",
+                    background: SILVER,
                     color: "#0d0d0d",
-                    borderColor: "#f4f4f4",
-                    boxShadow: "5px 5px 0 0 #6d6d6d",
+                    boxShadow: "0 0 0 1px rgba(255,255,255,0.4) inset, 5px 5px 0 0 #2a2a2a",
                   }}
                 >
                   {loading ? s.submitting : s.submit}
                 </button>
               </form>
+
+              {/* Divider + quick channels, demoted below the form. */}
+              <div className="flex items-center gap-3 my-6">
+                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
+                <div
+                  className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-60"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
+                  {s.or}
+                </div>
+                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
+              </div>
+              <div className="grid grid-cols-3 gap-2 md:gap-3">
+                <QuickAction href="tel:+359882251474" glyph="☎" label={s.call} sub={s.callSub} />
+                <QuickAction href="https://wa.me/359882251474" glyph="◉" label={s.wa} sub={s.waSub} target="_blank" />
+                <QuickAction href="mailto:vektoagency@gmail.com" glyph="✉" label={s.email} sub={s.emailSub} />
+              </div>
             </>
           )}
         </div>
@@ -1418,19 +1415,21 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               are gone from the fold — stage 04 still carries every number,
               the header still links the portfolio. One button, centred,
               impossible to miss. */}
+          {/* The ask — brushed-titanium slab, same metal as the closing
+              stage's CTA: inset highlight line, hard machined shadow, arrow
+              that drives forward on hover. The flat white box read cheap. */}
           <button
             type="button"
             onClick={openBook}
-            className="mt-8 md:mt-10 inline-flex items-center gap-3 px-10 md:px-16 py-4 md:py-6 border-2 font-black uppercase text-base md:text-xl tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            className="group mt-8 md:mt-10 inline-flex items-center gap-4 px-10 md:px-16 py-4 md:py-6 border-2 border-black font-black uppercase text-base md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
-              background: "#f4f4f4",
+              background: SILVER,
               color: "#0d0d0d",
-              borderColor: "#f4f4f4",
-              boxShadow: "6px 6px 0 0 #6d6d6d",
+              boxShadow: "0 0 0 1px rgba(255,255,255,0.45) inset, 8px 8px 0 0 #2a2a2a",
             }}
           >
-            <span aria-hidden>→</span>
             {t.ctaPrimary}
+            <span aria-hidden className="transition-transform group-hover:translate-x-2">→</span>
           </button>
 
       </div>
