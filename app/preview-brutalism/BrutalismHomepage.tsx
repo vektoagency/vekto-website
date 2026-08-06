@@ -973,7 +973,11 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   const s = bg
     ? {
         title: "ЗАПАЗИ РАЗГОВОР",
-        subtitle: "ОСТАВИ ЗАЯВКА — ОТГОВАРЯМЕ ДО 24 ЧАСА",
+        subtitle: "ОНЛАЙН СРЕЩА ИЛИ КРАТКА ФОРМА — ТИ ИЗБИРАШ",
+        calCta: "РЕЗЕРВИРАЙ СРЕЩА",
+        calMeta: "30 МИН · БЕЗПЛАТНО",
+        orForm: "ИЛИ ОПИШИ ПРОЕКТА СИ · ≈1 МИНУТА",
+        trust: "ОТГОВОР ДО 24Ч · БЕЗ ОБВЪРЗВАНЕ",
         call: "ОБАДИ СЕ", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "МОМЕНТАЛЕН ЧАТ",
         email: "ИМЕЙЛ", emailSub: "vektoagency@gmail.com",
@@ -992,7 +996,11 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
       }
     : {
         title: "BOOK A CALL",
-        subtitle: "LEAVE A BRIEF — WE REPLY WITHIN 24 HOURS",
+        subtitle: "ONLINE MEETING OR A SHORT FORM — YOUR CALL",
+        calCta: "BOOK A MEETING",
+        calMeta: "30 MIN · FREE",
+        orForm: "OR DESCRIBE YOUR PROJECT · ≈1 MINUTE",
+        trust: "REPLY WITHIN 24H · NO STRINGS",
         call: "PHONE", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "INSTANT CHAT",
         email: "EMAIL", emailSub: "vektoagency@gmail.com",
@@ -1049,13 +1057,18 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         role="dialog"
         aria-modal="true"
         aria-labelledby="book-modal-title"
-        className="relative w-full max-w-2xl max-h-[92vh] overflow-hidden flex flex-col border-2"
-        style={{ background: "#141414", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.4)", boxShadow: "10px 10px 0 0 #2a2a2a" }}
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-hidden flex flex-col"
+        style={{
+          background: "#0d0d0d",
+          color: "#f4f4f4",
+          border: "1px solid rgba(244,244,244,0.28)",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
+        }}
       >
-        {/* Header — dark plate */}
+        {/* Header — naked type over the same ground, one hairline below. */}
         <div
-          className="flex items-start justify-between border-b-2 px-5 md:px-7 py-4"
-          style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.25)" }}
+          className="flex items-start justify-between px-5 md:px-7 py-4"
+          style={{ borderBottom: "1px solid rgba(244,244,244,0.18)" }}
         >
           <div>
             <div
@@ -1091,19 +1104,25 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         <div className="flex-1 overflow-y-auto p-5 md:p-7">
           {sent ? (
             <div
-              className="text-center py-10 px-6 border-2 border-black"
-              style={{
-                background: SILVER,
-                color: "#0d0d0d",
-                boxShadow: "6px 6px 0 0 #0d0d0d",
-              }}
+              className="text-center py-12 px-6"
+              style={{ border: "1px solid rgba(244,244,244,0.28)" }}
             >
-              <div className="text-4xl mb-4">✓</div>
+              <div
+                className="text-4xl mb-4 font-black"
+                style={{
+                  background: SILVER_H,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                ✓
+              </div>
               <div className="font-black text-xl md:text-2xl uppercase tracking-tight mb-2">
                 {s.sent}
               </div>
               <div
-                className="text-xs uppercase tracking-[0.25em] opacity-70"
+                className="text-xs uppercase tracking-[0.25em] opacity-60"
                 style={{ fontFamily: "var(--brutal-pixel)" }}
               >
                 {s.sentSub}
@@ -1115,11 +1134,11 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 data-cal-namespace="30min"
                 data-cal-link="vekto/30min"
                 data-cal-config={JSON.stringify({ name: lead.name, email: lead.email, theme: "dark" })}
-                className="group mt-7 inline-flex items-center gap-3 px-8 md:px-12 py-4 border-2 border-black font-black uppercase text-sm md:text-lg tracking-[0.1em] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                className="group mt-7 inline-flex items-center gap-3 px-8 md:px-12 py-4 font-black uppercase text-sm md:text-lg tracking-[0.1em] transition-transform hover:-translate-y-0.5"
                 style={{
-                  background: "#0d0d0d",
-                  color: "#f4f4f4",
-                  boxShadow: "4px 4px 0 0 rgba(13,13,13,0.35)",
+                  background: "#f4f4f4",
+                  color: "#0d0d0d",
+                  boxShadow: "0 8px 30px rgba(244,244,244,0.14)",
                 }}
               >
                 {s.sentCal}
@@ -1128,8 +1147,50 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             </div>
           ) : (
             <>
-              {/* Lead form FIRST — the CTAs exist to capture the lead; the
-                  quick contact channels are the secondary path below. */}
+              {/* PATH ONE — book the meeting directly, no form required.
+                  cal.com opens straight from here. */}
+              <button
+                type="button"
+                data-cal-namespace="30min"
+                data-cal-link="vekto/30min"
+                data-cal-config={JSON.stringify({ theme: "dark" })}
+                className="group w-full py-4 md:py-5 font-black text-base md:text-xl uppercase tracking-[0.12em] transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-3 flex-wrap"
+                style={{
+                  background: "#f4f4f4",
+                  color: "#0d0d0d",
+                  boxShadow: "0 8px 30px rgba(244,244,244,0.14)",
+                }}
+              >
+                <span aria-hidden>▦</span>
+                {s.calCta}
+                <span
+                  className="text-[11px] md:text-[12px] font-bold tracking-[0.2em] opacity-60"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
+                  {s.calMeta}
+                </span>
+                <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
+              </button>
+              <div
+                className="mt-3 flex items-center justify-center gap-x-6 text-[11px] uppercase tracking-[0.2em] opacity-50"
+                style={{ fontFamily: "var(--brutal-pixel)" }}
+              >
+                <span>✓ {s.trust}</span>
+              </div>
+
+              {/* PATH TWO — the short lead form. */}
+              <div
+                className="flex items-center gap-3 my-6"
+              >
+                <div className="flex-1" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }} />
+                <div
+                  className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-55"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
+                  {s.orForm}
+                </div>
+                <div className="flex-1" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }} />
+              </div>
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <FormField name="name" label={s.name} ph={s.namePh} required />
@@ -1150,32 +1211,37 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full border-2 border-black py-4 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full py-4 mt-2 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
-                    background: SILVER,
+                    background: "#f4f4f4",
                     color: "#0d0d0d",
-                    boxShadow: "0 0 0 1px rgba(255,255,255,0.4) inset, 5px 5px 0 0 #2a2a2a",
+                    boxShadow: "0 8px 30px rgba(244,244,244,0.12)",
                   }}
                 >
                   {loading ? s.submitting : s.submit}
                 </button>
               </form>
 
-              {/* Divider + quick channels, demoted below the form. */}
-              <div className="flex items-center gap-3 my-6">
-                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
-                <div
-                  className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-60"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
+              {/* Quick channels — one quiet hairline row, not slabs. */}
+              <div
+                className="mt-7 pt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] uppercase tracking-[0.2em]"
+                style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: "var(--brutal-pixel)" }}
+              >
+                <span className="opacity-45">{s.or}</span>
+                <a href="tel:+359882251474" className="opacity-70 hover:opacity-100 transition-opacity">
+                  ☎ {s.callSub}
+                </a>
+                <a
+                  href="https://wa.me/359882251474"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-70 hover:opacity-100 transition-opacity"
                 >
-                  {s.or}
-                </div>
-                <div className="flex-1 border-t-2 border-dashed border-white opacity-25" />
-              </div>
-              <div className="grid grid-cols-3 gap-2 md:gap-3">
-                <QuickAction href="tel:+359882251474" glyph="☎" label={s.call} sub={s.callSub} />
-                <QuickAction href="https://wa.me/359882251474" glyph="◉" label={s.wa} sub={s.waSub} target="_blank" />
-                <QuickAction href="mailto:vektoagency@gmail.com" glyph="✉" label={s.email} sub={s.emailSub} />
+                  {s.wa}
+                </a>
+                <a href="mailto:vektoagency@gmail.com" className="opacity-70 hover:opacity-100 transition-opacity">
+                  {s.emailSub}
+                </a>
               </div>
             </>
           )}
@@ -1252,14 +1318,16 @@ function FormField({
       >
         {label}
       </label>
+      {/* Underline fields — the page's hairline language, not boxed wells.
+          The line brightens to full white on focus. */}
       {textarea ? (
         <textarea
           name={name}
           required={required}
           placeholder={ph}
           rows={3}
-          className="w-full border-2 px-3 py-2 text-sm resize-none focus:outline-none focus:shadow-[3px_3px_0_0_#6d6d6d]"
-          style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.4)" }}
+          className="w-full px-0 py-2 text-sm md:text-base resize-none focus:outline-none transition-colors border-b placeholder:opacity-40 focus:border-white"
+          style={{ background: "transparent", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.35)" }}
         />
       ) : (
         <input
@@ -1267,8 +1335,8 @@ function FormField({
           name={name}
           required={required}
           placeholder={ph}
-          className="w-full border-2 px-3 py-2 text-sm focus:outline-none focus:shadow-[3px_3px_0_0_#6d6d6d]"
-          style={{ background: "#0d0d0d", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.4)" }}
+          className="w-full px-0 py-2 text-sm md:text-base focus:outline-none transition-colors border-b placeholder:opacity-40 focus:border-white"
+          style={{ background: "transparent", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.35)" }}
         />
       )}
     </div>
