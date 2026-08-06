@@ -1480,6 +1480,17 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
   const inView = useInView(targetRef, 0.2);
   const reduced = useReducedMotion();
 
+  // null until the media query resolves so neither background mounts (and
+  // neither downloads) on the wrong device class.
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const apply = () => setIsDesktop(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   // Typewriter: types character-by-character once the section is in view.
   // The old approach was tied to useScrollProgress, but the hero starts
   // at the top of the page so p immediately jumps to ~0.5 on first paint,
@@ -1520,19 +1531,22 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
       className="relative flex flex-col overflow-hidden"
       style={{ minHeight: "100dvh", background: "#0d0d0d", color: "#f4f4f4" }}
     >
-      {/* THE REEL — the main site's cinematic background rotation runs
-          behind the question, heavily letterboxed in jet so the type owns
-          the frame and the work breathes underneath it. */}
+      {/* THE REEL — desktop runs the July brand spot; phones keep the
+          clients-reel rotation (the spot is a web-only asset, and the
+          conditional mount means phones never download its mp4). */}
       <div className="absolute inset-0 z-0">
-        <video
-          src="/videos/hero-bg-brutal.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover"
-        />
+        {isDesktop === true && (
+          <video
+            src="/videos/hero-bg-brutal.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+          />
+        )}
+        {isDesktop === false && <HeroCinematicBg />}
       </div>
       <div aria-hidden className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "rgba(13,13,13,0.62)" }} />
       <div
