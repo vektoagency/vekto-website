@@ -80,7 +80,7 @@ const COPY = {
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · ПАРТНЬОР, НЕ ИЗПЪЛНИТЕЛ",
+      eyebrow: "01 · ЕДИН ЧЕСТЕН ВЪПРОС",
       pill: "50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
@@ -268,7 +268,7 @@ const COPY = {
       { id: "09", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · A PARTNER, NOT A VENDOR",
+      eyebrow: "01 · ONE HONEST QUESTION",
       pill: "50+ BRANDS · 500+ VIDEOS / MONTH",
       headline1: "DOES YOUR BUSINESS",
       headline2Prefix: "DESERVE",
