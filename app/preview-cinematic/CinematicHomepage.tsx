@@ -368,7 +368,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                   portfolio is a text link for the not-yet-convinced. */}
               <div className="flex flex-wrap items-center gap-x-7 gap-y-4 mt-8 pointer-events-auto">
                 <Link
-                  href="/brief"
+                  href="/start"
                   className="inline-flex items-center gap-3 px-7 md:px-10 py-4 md:py-5 border-2 font-black uppercase text-sm md:text-lg tracking-[0.15em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
                   style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4", boxShadow: "6px 6px 0 0 rgba(138,138,138,0.9)" }}
                 >
@@ -512,7 +512,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
             </h2>
             <div className="mt-10 pointer-events-auto inline-block">
               <Link
-                href="/brief"
+                href="/start"
                 className="group inline-flex items-center gap-4 px-8 md:px-12 py-5 md:py-7 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
                 style={{
                   background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)",
@@ -638,7 +638,7 @@ function StaticJourney({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
             {t.zones.vault.h1a} {t.zones.vault.h1b} {t.zones.vault.h1hi}
           </h1>
           <div className="flex flex-wrap gap-3 mt-7">
-            <Link href="/brief" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4" }}>
+            <Link href="/start" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ background: "#f4f4f4", color: JET, borderColor: "#f4f4f4" }}>
               → {t.zones.vault.ctaPrimary}
             </Link>
             <Link href="/portfolio" className="inline-flex items-center gap-2 px-6 py-4 border-2 font-black uppercase text-sm tracking-[0.15em]" style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.6)" }}>
@@ -703,8 +703,8 @@ function HazardStrip() {
 
 function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang) => void }) {
   const links = lang === "bg"
-    ? [["Портфолио", "/portfolio"], ["Кейсове", "/case-studies"], ["Анкета", "/brief"]]
-    : [["Portfolio", "/portfolio"], ["Case Studies", "/case-studies"], ["Brief", "/brief"]];
+    ? [["Портфолио", "/portfolio"], ["Кейсове", "/case-studies"], ["Анкета", "/start"]]
+    : [["Portfolio", "/portfolio"], ["Case Studies", "/case-studies"], ["Brief", "/start"]];
   const cta = lang === "bg" ? "Запази разговор" : "Book a call";
   // Transparent only over the opening frame — once scrolled the strip
   // solidifies to jet with a hairline so it stops fighting the film.
@@ -785,7 +785,7 @@ function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang
           {lang === "bg" ? "EN" : "БГ"}
         </button>
         <Link
-          href="/brief"
+          href="/start"
           className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
           style={{ background: JET, color: "#f4f4f4", boxShadow: "3px 3px 0 0 #8a8a8a", borderColor: "#f4f4f4" }}
         >
@@ -1042,7 +1042,7 @@ function EndCard({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         </span>
       </h2>
       <Link
-        href="/brief"
+        href="/start"
         className="group inline-flex items-center gap-4 px-8 md:px-14 py-5 md:py-8 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
         style={{
           background: "linear-gradient(180deg, #c4c4c4 0%, #f4f4f4 22%, #8a8a8a 48%, #eaeaea 52%, #6d6d6d 82%, #b0b0b0 100%)",

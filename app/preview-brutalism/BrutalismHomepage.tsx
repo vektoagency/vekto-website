@@ -680,12 +680,12 @@ export default function BrutalismHomepage() {
       ? [
           { label: "Портфолио", href: "/portfolio"    },
           { label: "Кейсове",   href: "/case-studies" },
-          { label: "Анкета",    href: "/brief"        },
+          { label: "Анкета",    href: "/start"        },
         ]
       : [
           { label: "Portfolio",    href: "/portfolio"    },
           { label: "Case Studies", href: "/case-studies" },
-          { label: "Brief",        href: "/brief"        },
+          { label: "Brief",        href: "/start"        },
         ];
 
   // One button, one action: every "ЗАПАЗИ РАЗГОВОР" opens the cal.com
@@ -833,9 +833,11 @@ export default function BrutalismHomepage() {
           >
             {t.nav.langSwitch}
           </button>
-          <button
-            type="button"
-            onClick={openBook}
+          {/* The intake lives at /start — the page the ad traffic already
+              lands on. One funnel, one form, one pixel stream; a full page
+              beats a modal for a multi-field intake. */}
+          <Link
+            href="/start"
             className="inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
             style={{
               background: "#f4f4f4",
@@ -846,7 +848,7 @@ export default function BrutalismHomepage() {
             <span aria-hidden>→</span>
             <span className="hidden sm:inline">{headerCtaLabel}</span>
             <span className="sm:hidden">{headerCtaShort}</span>
-          </button>
+          </Link>
           {/* Mobile menu trigger — desktop shows the links inline. */}
           <button
             type="button"
@@ -896,14 +898,14 @@ export default function BrutalismHomepage() {
             ))}
           </nav>
           <div className="px-8 pb-10">
-            <button
-              type="button"
-              onClick={() => { setMenuOpen(false); openBook(); }}
-              className="w-full py-4 font-black uppercase text-base tracking-[0.12em]"
+            <Link
+              href="/start"
+              onClick={() => setMenuOpen(false)}
+              className="block w-full py-4 text-center font-black uppercase text-base tracking-[0.12em]"
               style={{ background: "#f4f4f4", color: "#0d0d0d", boxShadow: "5px 5px 0 0 #3a3a3a" }}
             >
               → {headerCtaLabel}
-            </button>
+            </Link>
           </div>
         </div>
       )}
