@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import {
-  VT323,
+  IBM_Plex_Mono,
   Comic_Neue,
   Space_Grotesk,
   Onest,
-  Pixelify_Sans,
   Balsamiq_Sans,
 } from "next/font/google";
 import BrutalismHomepage from "./BrutalismHomepage";
 
 // ---------------------------------------------------------------------------
-// LATIN FACES — the intended look.
+// LATIN FACES — the intended look. The pixel role runs on IBM Plex Mono
+// (latin + cyrillic in ONE face): VT323/Pixelify had the right terminal
+// character but were near-unreadable at label sizes, especially Cyrillic.
 // ---------------------------------------------------------------------------
-const pixelLat = VT323({
-  subsets: ["latin", "latin-ext"],
-  weight: "400",
-  variable: "--f-pixel-lat",
+const pixelMono = IBM_Plex_Mono({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "700"],
+  variable: "--f-pixel",
   display: "swap",
 });
 const comicLat = Comic_Neue({
@@ -50,19 +51,13 @@ const displayLat = Space_Grotesk({
 //
 // Substitutes chosen for closest character match:
 //   Onest         ~ Space Grotesk (geometric grotesk, same weight range)
-//   Pixelify Sans ~ VT323         (pixel/terminal face)
 //   Balsamiq Sans ~ Comic Neue    (casual marker face)
+// (The pixel role needs no substitute — IBM Plex Mono covers both scripts.)
 // ---------------------------------------------------------------------------
 const displayCyr = Onest({
   subsets: ["cyrillic", "latin"],
   weight: ["400", "500", "700"],
   variable: "--f-display-cyr",
-  display: "swap",
-});
-const pixelCyr = Pixelify_Sans({
-  subsets: ["cyrillic", "latin"],
-  weight: ["400", "700"],
-  variable: "--f-pixel-cyr",
   display: "swap",
 });
 const comicCyr = Balsamiq_Sans({
@@ -81,10 +76,9 @@ export default function PreviewBrutalismPage() {
   return (
     <div
       className={[
-        pixelLat.variable,
+        pixelMono.variable,
         comicLat.variable,
         displayLat.variable,
-        pixelCyr.variable,
         comicCyr.variable,
         displayCyr.variable,
       ].join(" ")}
@@ -94,8 +88,7 @@ export default function PreviewBrutalismPage() {
         {
           "--brutal-display":
             "var(--f-display-lat), var(--f-display-cyr), system-ui, sans-serif",
-          "--brutal-pixel":
-            "var(--f-pixel-lat), var(--f-pixel-cyr), ui-monospace, monospace",
+          "--brutal-pixel": "var(--f-pixel), ui-monospace, monospace",
           "--brutal-comic":
             "var(--f-comic-lat), var(--f-comic-cyr), system-ui, sans-serif",
         } as React.CSSProperties
