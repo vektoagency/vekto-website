@@ -80,7 +80,7 @@ const COPY = {
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · РАСТЕЖ ЗА Е-КОМ БРАНДОВЕ",
+      eyebrow: "01 · ПАРТНЬОР, НЕ ИЗПЪЛНИТЕЛ",
       pill: "50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
@@ -268,7 +268,7 @@ const COPY = {
       { id: "09", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · GROWTH FOR E-COM BRANDS",
+      eyebrow: "01 · A PARTNER, NOT A VENDOR",
       pill: "50+ BRANDS · 500+ VIDEOS / MONTH",
       headline1: "DOES YOUR BUSINESS",
       headline2Prefix: "DESERVE",
@@ -1189,8 +1189,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         >
           <div>
             <div
-              className="text-[12px] font-bold uppercase tracking-[0.3em] opacity-70 mb-1"
-              style={{ fontFamily: "var(--brutal-pixel)" }}
+              className="text-[12px] font-semibold uppercase tracking-[0.18em] opacity-70 mb-1"
+              style={{ fontFamily: "var(--brutal-display)" }}
             >
               {s.subtitle}
             </div>
@@ -1238,8 +1238,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               <span aria-hidden>▦</span>
               {s.calCta}
               <span
-                className="text-[11px] font-bold tracking-[0.2em] opacity-60"
-                style={{ fontFamily: "var(--brutal-pixel)" }}
+                className="text-[12px] font-semibold tracking-[0.08em] opacity-60"
+                style={{ fontFamily: "var(--brutal-display)" }}
               >
                 {s.calMeta}
               </span>
@@ -1255,8 +1255,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               <span aria-hidden>✎</span>
               {s.formCta}
               <span
-                className="text-[11px] font-bold tracking-[0.2em] opacity-60"
-                style={{ fontFamily: "var(--brutal-pixel)" }}
+                className="text-[12px] font-semibold tracking-[0.08em] opacity-60"
+                style={{ fontFamily: "var(--brutal-display)" }}
               >
                 {s.formMeta}
               </span>
@@ -1268,8 +1268,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               the describe-project slab. */}
           <div className="mt-6 pt-5" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }}>
             <div
-              className="text-[11px] uppercase tracking-[0.2em] opacity-45 text-center mb-3"
-              style={{ fontFamily: "var(--brutal-pixel)" }}
+              className="text-[12px] font-semibold uppercase tracking-[0.14em] opacity-50 text-center mb-3"
+              style={{ fontFamily: "var(--brutal-display)" }}
             >
               {s.or}
             </div>
@@ -1280,10 +1280,10 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
               >
                 <span className="text-xl md:text-2xl leading-none" aria-hidden>☎</span>
-                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.call}
                 </span>
-                <span className="text-[10px] opacity-60 tabular-nums w-full truncate px-1" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                <span className="text-[11px] opacity-60 tabular-nums w-full truncate px-1" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.callSub}
                 </span>
               </a>
@@ -1295,10 +1295,10 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
               >
                 <span className="text-xl md:text-2xl leading-none" aria-hidden>◉</span>
-                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.wa}
                 </span>
-                <span className="text-[10px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                <span className="text-[11px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.waSub}
                 </span>
               </a>
@@ -1308,10 +1308,10 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
               >
                 <span className="text-xl md:text-2xl leading-none" aria-hidden>✉</span>
-                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.email}
                 </span>
-                <span className="text-[10px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                <span className="text-[11px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.emailSub}
                 </span>
               </a>
