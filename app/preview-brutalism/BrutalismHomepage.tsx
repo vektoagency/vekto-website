@@ -1348,25 +1348,15 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               the marker indexes, the plate positions. No era stamp, no
               geography pair, no "AI" prefix. */}
           <div
-            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 opacity-60"
+            className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em] mb-6 md:mb-8 opacity-60"
             style={{ fontFamily: "var(--brutal-pixel)" }}
           >
             {t.eyebrow}
           </div>
 
-          <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 text-[12px] md:text-xs font-bold uppercase tracking-[0.25em] mb-6 md:mb-7"
-            style={{
-              background: "#0d0d0d",
-              color: "#f4f4f4",
-              border: "1.5px solid",
-              borderImage: `${SILVER_H} 1`,
-              boxShadow: "4px 4px 0 0 #3a3a3a",
-              fontFamily: "var(--brutal-pixel)",
-            }}
-          >
-            {t.pill}
-          </div>
+          {/* No positioning plate above the question — a label was filler,
+              numbers were noise; both diluted the hook. The eyebrow indexes,
+              the question does the talking, the stats live in the rooms. */}
 
           {/* whitespace-nowrap used to be pinned on both lines while the
               section clipped overflow, so any width where the line did
