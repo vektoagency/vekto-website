@@ -80,7 +80,7 @@ const COPY = {
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · VEKTO",
+      eyebrow: "01 · ПОВЕЧЕ ПОРЪЧКИ. ПО-МАЛКО ХАОС.",
       pill: "50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
@@ -268,7 +268,7 @@ const COPY = {
       { id: "09", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · VEKTO",
+      eyebrow: "01 · MORE ORDERS. LESS CHAOS.",
       pill: "50+ BRANDS · 500+ VIDEOS / MONTH",
       headline1: "DOES YOUR BUSINESS",
       headline2Prefix: "DESERVE",
