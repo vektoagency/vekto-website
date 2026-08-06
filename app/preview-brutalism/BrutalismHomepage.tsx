@@ -675,10 +675,32 @@ export default function BrutalismHomepage() {
           { label: "Brief",        href: "/brief"        },
         ];
 
-  const primaryCtaLabel = lang === "bg" ? "Резервирай разговор" : "Book a call";
+  // One button, one action: every "ЗАПАЗИ РАЗГОВОР" opens the cal.com
+  // calendar DIRECTLY; the header's "ОПИШИ ПРОЕКТА СИ" opens the lead-form
+  // modal. The embed API loads lazily after mount so any data-cal-* button
+  // works without the modal ever opening first.
+  const headerCtaLabel = lang === "bg" ? "Опиши проекта си" : "Describe your project";
+  const headerCtaShort = lang === "bg" ? "Проект" : "Project";
   const [bookOpen, setBookOpen] = useState(false);
   const openBook = useCallback(() => setBookOpen(true), []);
   const closeBook = useCallback(() => setBookOpen(false), []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { getCalApi } = await import("@calcom/embed-react");
+        const cal = await getCalApi({ namespace: "30min" });
+        cal("ui", {
+          theme: "dark",
+          cssVarsPerTheme: {
+            light: { "cal-brand": "#0d0d0d" },
+            dark: { "cal-brand": "#f4f4f4" },
+          },
+          hideEventTypeDetails: false,
+        });
+      } catch {}
+    })();
+  }, []);
 
   return (
     <div
@@ -791,8 +813,8 @@ export default function BrutalismHomepage() {
             }}
           >
             <span aria-hidden>→</span>
-            <span className="hidden sm:inline">{primaryCtaLabel}</span>
-            <span className="sm:hidden">{lang === "bg" ? "Разговор" : "Call"}</span>
+            <span className="hidden sm:inline">{headerCtaLabel}</span>
+            <span className="sm:hidden">{headerCtaShort}</span>
           </button>
         </div>
       </div>
@@ -972,8 +994,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   const bg = lang === "bg";
   const s = bg
     ? {
-        title: "ЗАПАЗИ РАЗГОВОР",
-        subtitle: "ОНЛАЙН СРЕЩА ИЛИ КРАТКА ФОРМА — ТИ ИЗБИРАШ",
+        title: "ОПИШИ ПРОЕКТА СИ",
+        subtitle: "≈1 МИНУТА · ОТГОВАРЯМЕ ДО 24 ЧАСА",
         calCta: "РЕЗЕРВИРАЙ СРЕЩА",
         calMeta: "30 МИН · БЕЗПЛАТНО",
         orForm: "ИЛИ ОПИШИ ПРОЕКТА СИ · ≈1 МИНУТА",
@@ -995,8 +1017,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         errorMsg: "Нещо се обърка. Опитай пак.",
       }
     : {
-        title: "BOOK A CALL",
-        subtitle: "ONLINE MEETING OR A SHORT FORM — YOUR CALL",
+        title: "DESCRIBE YOUR PROJECT",
+        subtitle: "≈1 MINUTE · WE REPLY WITHIN 24 HOURS",
         calCta: "BOOK A MEETING",
         calMeta: "30 MIN · FREE",
         orForm: "OR DESCRIBE YOUR PROJECT · ≈1 MINUTE",
@@ -1147,50 +1169,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             </div>
           ) : (
             <>
-              {/* PATH ONE — book the meeting directly, no form required.
-                  cal.com opens straight from here. */}
-              <button
-                type="button"
-                data-cal-namespace="30min"
-                data-cal-link="vekto/30min"
-                data-cal-config={JSON.stringify({ theme: "dark" })}
-                className="group w-full py-4 md:py-5 font-black text-base md:text-xl uppercase tracking-[0.12em] transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-3 flex-wrap"
-                style={{
-                  background: "#f4f4f4",
-                  color: "#0d0d0d",
-                  boxShadow: "0 8px 30px rgba(244,244,244,0.14)",
-                }}
-              >
-                <span aria-hidden>▦</span>
-                {s.calCta}
-                <span
-                  className="text-[11px] md:text-[12px] font-bold tracking-[0.2em] opacity-60"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
-                >
-                  {s.calMeta}
-                </span>
-                <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
-              </button>
-              <div
-                className="mt-3 flex items-center justify-center gap-x-6 text-[11px] uppercase tracking-[0.2em] opacity-50"
-                style={{ fontFamily: "var(--brutal-pixel)" }}
-              >
-                <span>✓ {s.trust}</span>
-              </div>
-
-              {/* PATH TWO — the short lead form. */}
-              <div
-                className="flex items-center gap-3 my-6"
-              >
-                <div className="flex-1" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }} />
-                <div
-                  className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-55"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
-                >
-                  {s.orForm}
-                </div>
-                <div className="flex-1" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }} />
-              </div>
+              {/* Form only — the calendar has its own buttons on the page.
+                  One purpose per surface, no forked paths. */}
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <FormField name="name" label={s.name} ph={s.namePh} required />
@@ -1527,12 +1507,14 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               are gone from the fold — stage 04 still carries every number,
               the header still links the portfolio. One button, centred,
               impossible to miss. */}
-          {/* The ask — brushed-titanium slab, same metal as the closing
-              stage's CTA: inset highlight line, hard machined shadow, arrow
-              that drives forward on hover. The flat white box read cheap. */}
+          {/* The ask — straight to the calendar, no modal in between. One
+              button, one action: the label promises a call, the click books
+              it. Brushed-titanium slab, same metal as the closing CTA. */}
           <button
             type="button"
-            onClick={openBook}
+            data-cal-namespace="30min"
+            data-cal-link="vekto/30min"
+            data-cal-config={JSON.stringify({ theme: "dark" })}
             className="group mt-8 md:mt-10 inline-flex items-center gap-4 px-10 md:px-16 py-4 md:py-6 border-2 border-black font-black uppercase text-base md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
               background: SILVER,
@@ -1543,6 +1525,12 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             {t.ctaPrimary}
             <span aria-hidden className="transition-transform group-hover:translate-x-2">→</span>
           </button>
+          <div
+            className="mt-4 text-[11px] uppercase tracking-[0.25em] opacity-50"
+            style={{ fontFamily: "var(--brutal-pixel)" }}
+          >
+            30 {lang === "bg" ? "МИН · БЕЗПЛАТНО · БЕЗ ОБВЪРЗВАНЕ" : "MIN · FREE · NO STRINGS"}
+          </div>
 
       </div>
 
@@ -2287,10 +2275,13 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
             })}
           </div>
 
-          {/* Verdict — arms only once every criterion is stamped. */}
+          {/* Verdict — arms only once every criterion is stamped; opens the
+              calendar directly, same action as every "запази разговор". */}
           <button
             type="button"
-            onClick={openBook}
+            data-cal-namespace="30min"
+            data-cal-link="vekto/30min"
+            data-cal-config={JSON.stringify({ theme: "dark" })}
             className="m-4 md:m-6 mt-2 border-2 py-3.5 font-black uppercase text-sm md:text-base tracking-[0.15em] transition-all duration-500"
             style={{
               background: all ? "#f4f4f4" : "transparent",
@@ -2358,7 +2349,9 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
 
           <button
             type="button"
-            onClick={openBook}
+            data-cal-namespace="30min"
+            data-cal-link="vekto/30min"
+            data-cal-config={JSON.stringify({ theme: "dark" })}
             className="group inline-flex items-center gap-4 px-8 md:px-14 py-5 md:py-8 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
               background: SILVER,
