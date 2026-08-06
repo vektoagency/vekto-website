@@ -821,10 +821,9 @@ export default function BrutalismHomepage() {
           </nav>
           <button
             onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors hover:bg-white hover:text-black"
+            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
             style={{
               background: "transparent",
-              color: "#f4f4f4",
               border: "1.5px solid rgba(244,244,244,0.75)",
               textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9)",
               filter: "drop-shadow(0 0 1px rgba(13,13,13,0.7))",
@@ -1249,8 +1248,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             <Link
               href="/start"
               onClick={onClose}
-              className="group w-full py-4 md:py-5 font-black text-base md:text-lg uppercase tracking-[0.1em] transition-colors hover:bg-white hover:text-black flex items-center justify-center gap-3 flex-wrap border-2"
-              style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+              className="group w-full py-4 md:py-5 font-black text-base md:text-lg uppercase tracking-[0.1em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black flex items-center justify-center gap-3 flex-wrap border-2"
+              style={{ borderColor: "rgba(244,244,244,0.55)" }}
             >
               <span aria-hidden>✎</span>
               {s.formCta}
@@ -1276,8 +1275,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             <div className="grid grid-cols-3 gap-2">
               <a
                 href="tel:+359882251474"
-                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors hover:bg-white hover:text-black text-center"
-                style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black text-center"
+                style={{ borderColor: "rgba(244,244,244,0.55)" }}
               >
                 <span className="text-xl md:text-2xl leading-none" aria-hidden>☎</span>
                 <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
@@ -1291,8 +1290,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 href="https://wa.me/359882251474"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors hover:bg-white hover:text-black text-center"
-                style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black text-center"
+                style={{ borderColor: "rgba(244,244,244,0.55)" }}
               >
                 <span className="text-xl md:text-2xl leading-none" aria-hidden>◉</span>
                 <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
@@ -1304,8 +1303,8 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               </a>
               <a
                 href="mailto:vektoagency@gmail.com"
-                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors hover:bg-white hover:text-black text-center"
-                style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black text-center"
+                style={{ borderColor: "rgba(244,244,244,0.55)" }}
               >
                 <span className="text-xl md:text-2xl leading-none" aria-hidden>✉</span>
                 <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
@@ -1662,8 +1661,8 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           {/* Secondary — the work, one click away. */}
           <Link
             href="/portfolio"
-            className="w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-3 px-8 md:px-10 py-5 md:py-6 border-2 font-black uppercase text-base md:text-xl tracking-tight transition-colors hover:bg-white hover:text-black"
-            style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.6)" }}
+            className="w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-3 px-8 md:px-10 py-5 md:py-6 border-2 font-black uppercase text-base md:text-xl tracking-tight transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+            style={{ borderColor: "rgba(244,244,244,0.6)" }}
           >
             <span aria-hidden>▶</span>
             {t.ctaSecondary}
