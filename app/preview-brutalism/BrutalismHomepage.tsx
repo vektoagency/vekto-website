@@ -805,11 +805,11 @@ export default function BrutalismHomepage() {
           <button
             type="button"
             onClick={openBook}
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 border-black uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
+            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
             style={{
-              background: SILVER,
+              background: "#f4f4f4",
               color: "#0d0d0d",
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.45) inset, 3px 3px 0 0 #2a2a2a",
+              boxShadow: "3px 3px 0 0 #3a3a3a",
             }}
           >
             <span aria-hidden>→</span>
@@ -1515,11 +1515,14 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             data-cal-namespace="30min"
             data-cal-link="vekto/30min"
             data-cal-config={JSON.stringify({ theme: "dark" })}
-            className="group mt-8 md:mt-10 inline-flex items-center gap-4 px-10 md:px-16 py-4 md:py-6 border-2 border-black font-black uppercase text-base md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            className="group mt-8 md:mt-10 inline-flex items-center gap-4 px-10 md:px-16 py-4 md:py-6 font-black uppercase text-base md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
-              background: SILVER,
+              // Solid white, jet ink — the brushed gradient put a dark band
+              // straight through the label. Contrast lives in the ground,
+              // craft lives in the machined steel offset.
+              background: "#f4f4f4",
               color: "#0d0d0d",
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.45) inset, 8px 8px 0 0 #2a2a2a",
+              boxShadow: "8px 8px 0 0 #3a3a3a",
             }}
           >
             {t.ctaPrimary}
@@ -2352,12 +2355,11 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
             data-cal-namespace="30min"
             data-cal-link="vekto/30min"
             data-cal-config={JSON.stringify({ theme: "dark" })}
-            className="group inline-flex items-center gap-4 px-8 md:px-14 py-5 md:py-8 border-2 border-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            className="group inline-flex items-center gap-4 px-8 md:px-14 py-5 md:py-8 transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
-              background: SILVER,
+              background: "#f4f4f4",
               color: "#0d0d0d",
-              boxShadow:
-                "0 0 0 1px rgba(255,255,255,0.4) inset, 10px 10px 0 0 #2a2a2a",
+              boxShadow: "10px 10px 0 0 #3a3a3a",
             }}
           >
             <span className="font-black text-xl md:text-3xl uppercase tracking-tight">
