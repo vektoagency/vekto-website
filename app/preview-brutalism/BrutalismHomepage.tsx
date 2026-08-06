@@ -1264,26 +1264,58 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             </Link>
           </div>
 
-          {/* Direct channels — one quiet hairline row. */}
-          <div
-            className="mt-6 pt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] uppercase tracking-[0.2em]"
-            style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: "var(--brutal-pixel)" }}
-          >
-            <span className="opacity-45">{s.or}</span>
-            <a href="tel:+359882251474" className="opacity-70 hover:opacity-100 transition-opacity">
-              ☎ {s.callSub}
-            </a>
-            <a
-              href="https://wa.me/359882251474"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="opacity-70 hover:opacity-100 transition-opacity"
+          {/* Direct channels — proper buttons, same outline language as
+              the describe-project slab. */}
+          <div className="mt-6 pt-5" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }}>
+            <div
+              className="text-[11px] uppercase tracking-[0.2em] opacity-45 text-center mb-3"
+              style={{ fontFamily: "var(--brutal-pixel)" }}
             >
-              {s.wa}
-            </a>
-            <a href="mailto:vektoagency@gmail.com" className="opacity-70 hover:opacity-100 transition-opacity">
-              {s.emailSub}
-            </a>
+              {s.or}
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <a
+                href="tel:+359882251474"
+                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors hover:bg-white hover:text-black text-center"
+                style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+              >
+                <span className="text-xl md:text-2xl leading-none" aria-hidden>☎</span>
+                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {s.call}
+                </span>
+                <span className="text-[10px] opacity-60 tabular-nums w-full truncate px-1" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {s.callSub}
+                </span>
+              </a>
+              <a
+                href="https://wa.me/359882251474"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors hover:bg-white hover:text-black text-center"
+                style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+              >
+                <span className="text-xl md:text-2xl leading-none" aria-hidden>◉</span>
+                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {s.wa}
+                </span>
+                <span className="text-[10px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {s.waSub}
+                </span>
+              </a>
+              <a
+                href="mailto:vektoagency@gmail.com"
+                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors hover:bg-white hover:text-black text-center"
+                style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+              >
+                <span className="text-xl md:text-2xl leading-none" aria-hidden>✉</span>
+                <span className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {s.email}
+                </span>
+                <span className="text-[10px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {s.emailSub}
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
