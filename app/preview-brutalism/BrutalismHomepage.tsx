@@ -690,6 +690,10 @@ export default function BrutalismHomepage() {
         background: "#0d0d0d",
         fontFamily: "var(--brutal-display), system-ui, sans-serif",
         color: "#f4f4f4",
+        // Cyrillic (Onest fallback) sets ~8% wider than Space Grotesk, so
+        // at equal clamps the Bulgarian page reads oversized and wraps
+        // more. Every display fontSize multiplies by this factor.
+        ...({ "--bgk": lang === "bg" ? "0.92" : "1" } as React.CSSProperties),
         // Several stages enter by sliding in from off-axis
         // (translateX(±50px) in Process, rotate in Roster, translateX(-30px)
         // in Why). Those pre-entry transforms widened the document, which
@@ -1379,7 +1383,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
               // ЛИ", 24 chars) holds ONE line inside the 1320px column at
               // the cap — the question reads as two decisive lines on
               // desktop instead of an accidental three.
-              fontSize: "clamp(34px, 5vw, 86px)",
+              fontSize: "calc(clamp(34px, 5vw, 86px) * var(--bgk, 1))",
               lineHeight: 0.96,
               overflowWrap: "break-word",
               hyphens: "none",
@@ -1495,7 +1499,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
         >
           <blockquote
             className="font-black leading-[1.05] tracking-[-0.02em] mb-10"
-            style={{ fontSize: "clamp(25px, 4.8vw, 72px)" }}
+            style={{ fontSize: "calc(clamp(25px, 4.8vw, 72px) * var(--bgk, 1))" }}
           >
             {t.quoteMain}
           </blockquote>
@@ -1510,7 +1514,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
         <h2
           className="mt-16 md:mt-24 font-black uppercase tracking-tight leading-tight max-w-4xl transition-all duration-700 delay-300"
           style={{
-            fontSize: "clamp(32px, 5vw, 68px)",
+            fontSize: "calc(clamp(32px, 5vw, 68px) * var(--bgk, 1))",
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : "translateY(20px)",
           }}
@@ -1618,7 +1622,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   </div>
                   <h3
                     className="font-black leading-[0.9] tracking-[-0.03em] mb-6 whitespace-nowrap"
-                    style={{ fontSize: "clamp(38px, 6vw, 84px)" }}
+                    style={{ fontSize: "calc(clamp(38px, 6vw, 84px) * var(--bgk, 1))" }}
                   >
                     {r.title}
                   </h3>
@@ -1648,7 +1652,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   <div
                     className="font-black leading-none tabular-nums"
                     style={{
-                      fontSize: "clamp(72px, 12vw, 200px)",
+                      fontSize: "calc(clamp(72px, 12vw, 200px) * var(--bgk, 1))",
                       letterSpacing: "-0.03em",
                       background: SILVER_H,
                       WebkitBackgroundClip: "text",
@@ -1695,7 +1699,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 
         <h2
           className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl"
-          style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+          style={{ fontSize: "calc(clamp(36px, 5.5vw, 80px) * var(--bgk, 1))" }}
         >
           {t.headline1}
           <br />
@@ -1801,7 +1805,7 @@ function CaseCard({
         <div
           className="font-black leading-none tabular-nums"
           style={{
-            fontSize: "clamp(56px, 7vw, 108px)",
+            fontSize: "calc(clamp(56px, 7vw, 108px) * var(--bgk, 1))",
             background: SILVER_H,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -1883,7 +1887,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
         </div>
         <h2
           className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-14"
-          style={{ fontSize: "clamp(40px, 6vw, 88px)" }}
+          style={{ fontSize: "calc(clamp(40px, 6vw, 88px) * var(--bgk, 1))" }}
         >
           {t.headline1}
           <br />
@@ -2019,7 +2023,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
                   <div
                     className="font-black uppercase leading-[0.95] tracking-[-0.02em] max-w-5xl"
                     style={{
-                      fontSize: "clamp(34px, 6.2vw, 108px)",
+                      fontSize: "calc(clamp(34px, 6.2vw, 108px) * var(--bgk, 1))",
                       background: SILVER_H,
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
@@ -2121,7 +2125,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
           <div className="px-4 md:px-6 pt-5 pb-1">
             <h2
               className="font-black uppercase tracking-tight leading-[1.05]"
-              style={{ fontSize: "clamp(21px, 2.4vw, 32px)" }}
+              style={{ fontSize: "calc(clamp(21px, 2.4vw, 32px) * var(--bgk, 1))" }}
             >
               {t.headlinePrefix}{" "}
               <span
@@ -2235,7 +2239,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
           </div>
           <h2
             className="font-black leading-[0.9] tracking-[-0.03em] uppercase mb-12 md:mb-16"
-            style={{ fontSize: "clamp(38px, 8vw, 128px)" }}
+            style={{ fontSize: "calc(clamp(38px, 8vw, 128px) * var(--bgk, 1))" }}
           >
             {t.headlinePrefix}{" "}
             <span

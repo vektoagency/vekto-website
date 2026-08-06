@@ -169,6 +169,9 @@ export default function CinematicHomepage() {
         color: "#f4f4f4",
         fontFamily: "var(--cine-display), system-ui, sans-serif",
         overflowX: "clip",
+        // Cyrillic sets wider than the Latin face — Bulgarian display type
+        // scales by this factor so both languages hold the same space.
+        ...({ "--bgk": lang === "bg" ? "0.92" : "1" } as React.CSSProperties),
       }}
     >
       <CursorDot disabled={reduced} />
@@ -339,7 +342,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
               {/* The question headline — same message as the brutalism hero.
                   Slightly larger scale (the question is short per line) and
                   uppercase to carry it. */}
-              <h1 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(30px, 3.4vw, 62px)", lineHeight: 0.96, color: "#f4f4f4" }}>
+              <h1 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "calc(clamp(30px, 3.4vw, 62px) * var(--bgk, 1))", lineHeight: 0.96, color: "#f4f4f4" }}>
                 <span className="block">{t.zones.vault.h1a}</span>
                 <span className="block">
                   {t.zones.vault.h1b}{" "}
@@ -387,13 +390,13 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
             <div className="max-w-xl">
               <Kicker text={t.zones.why.kicker} />
-              <blockquote className="font-black tracking-[-0.02em]" style={{ fontSize: "clamp(22px, 2.6vw, 42px)", lineHeight: 1.08, color: "#f4f4f4" }}>
+              <blockquote className="font-black tracking-[-0.02em]" style={{ fontSize: "calc(clamp(22px, 2.6vw, 42px) * var(--bgk, 1))", lineHeight: 1.08, color: "#f4f4f4" }}>
                 {t.zones.why.quote}
               </blockquote>
               <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.25em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
                 {t.zones.why.attribution}
               </div>
-              <div className="mt-6 font-black uppercase tracking-tight" style={{ fontSize: "clamp(18px, 2vw, 32px)", color: "#f4f4f4" }}>
+              <div className="mt-6 font-black uppercase tracking-tight" style={{ fontSize: "calc(clamp(18px, 2vw, 32px) * var(--bgk, 1))", color: "#f4f4f4" }}>
                 {t.zones.why.response}{" "}
                 <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                   {t.zones.why.responseHi}
@@ -424,7 +427,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                   >
                     <div className="font-black uppercase tracking-tight text-lg md:text-2xl" style={{ color: "#f4f4f4" }}>{r.title}</div>
                     <div className="text-[11px] uppercase tracking-[0.15em] opacity-70 mt-1" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>{r.detail}</div>
-                    <div className="font-black tabular-nums mt-2" style={{ fontSize: "clamp(28px, 3vw, 48px)", lineHeight: 1, background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{r.num}</div>
+                    <div className="font-black tabular-nums mt-2" style={{ fontSize: "calc(clamp(28px, 3vw, 48px) * var(--bgk, 1))", lineHeight: 1, background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{r.num}</div>
                     <div className="text-[11px] uppercase tracking-[0.2em] opacity-70 mt-1" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>{r.label}</div>
                   </div>
                 );
@@ -459,7 +462,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
                     <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-1 opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
                       {c.service}
                     </div>
-                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(34px, 4vw, 64px)", background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                    <div className="font-black tabular-nums leading-none" style={{ fontSize: "calc(clamp(34px, 4vw, 64px) * var(--bgk, 1))", background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                       {c.metric}
                     </div>
                     <div className="text-[11px] uppercase tracking-[0.25em] font-bold mt-2 opacity-80" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
@@ -488,7 +491,7 @@ function Journey({ t, lang }: { t: (typeof JOURNEY_COPY)[JourneyLang]; lang: Jou
           <div className="max-w-[1500px] w-full mx-auto px-6 md:px-14">
           <div className="max-w-xl text-left">
             <Kicker text={t.zones.landing.kicker} dark />
-            <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(32px, 4.2vw, 72px)", lineHeight: 0.94, color: JET }}>
+            <h2 className="font-black uppercase tracking-[-0.03em]" style={{ fontSize: "calc(clamp(32px, 4.2vw, 72px) * var(--bgk, 1))", lineHeight: 0.94, color: JET }}>
               {t.zones.landing.h2a}
               <br />
               <span className="italic" style={{ background: GRAPHITE_IN, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
@@ -571,7 +574,7 @@ function StandardOverlay({
                 key={w}
                 className="font-black uppercase leading-[1.0] tracking-[-0.02em]"
                 style={{
-                  fontSize: "clamp(22px, 2.9vw, 46px)",
+                  fontSize: "calc(clamp(22px, 2.9vw, 46px) * var(--bgk, 1))",
                   opacity: tt,
                   transform: `translateX(${(1 - tt) * -50}px)`,
                   background: SILVER_H,
@@ -619,7 +622,7 @@ function StaticJourney({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
           <div className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-70" style={{ fontFamily: "var(--cine-pixel)", color: "#f4f4f4" }}>
             {t.zones.vault.kicker}
           </div>
-          <h1 className="font-black tracking-[-0.03em] mt-4" style={{ fontSize: "clamp(32px, 4.6vw, 78px)", lineHeight: 0.94, color: "#f4f4f4" }}>
+          <h1 className="font-black tracking-[-0.03em] mt-4" style={{ fontSize: "calc(clamp(32px, 4.6vw, 78px) * var(--bgk, 1))", lineHeight: 0.94, color: "#f4f4f4" }}>
             {t.zones.vault.h1a} {t.zones.vault.h1b} {t.zones.vault.h1hi}
           </h1>
           <div className="flex flex-wrap gap-3 mt-7">
@@ -777,7 +780,7 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
           {t.roster.eyebrow}
         </div>
-        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12" style={{ fontSize: "clamp(32px, 4.8vw, 72px)" }}>
+        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12" style={{ fontSize: "calc(clamp(32px, 4.8vw, 72px) * var(--bgk, 1))" }}>
           {t.roster.headline1}
           <br />
           {t.roster.headline2Prefix}{" "}
@@ -850,7 +853,7 @@ function Fit({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-55" style={{ fontFamily: "var(--cine-pixel)" }}>
           {t.fit.eyebrow}
         </div>
-        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12 max-w-4xl" style={{ fontSize: "clamp(30px, 4.6vw, 68px)" }}>
+        <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12 max-w-4xl" style={{ fontSize: "calc(clamp(30px, 4.6vw, 68px) * var(--bgk, 1))" }}>
           {t.fit.headlinePrefix}{" "}
           <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {t.fit.headlineHighlight}
@@ -892,7 +895,7 @@ function Work({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
       <div className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-55" style={{ fontFamily: "var(--cine-pixel)" }}>
         {t.after.workEyebrow}
       </div>
-      <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl" style={{ fontSize: "clamp(34px, 5.2vw, 78px)" }}>
+      <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl" style={{ fontSize: "calc(clamp(34px, 5.2vw, 78px) * var(--bgk, 1))" }}>
         {t.after.workHeadline1}
         <br />
         <span className="italic" style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
@@ -998,7 +1001,7 @@ function EndCard({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
       <h2
         className="font-black leading-[0.9] tracking-[-0.03em] uppercase mb-12"
         style={{
-          fontSize: "clamp(40px, 6.5vw, 110px)",
+          fontSize: "calc(clamp(40px, 6.5vw, 110px) * var(--bgk, 1))",
           opacity: inView ? 1 : 0,
           transform: inView ? "translateY(0)" : "translateY(24px)",
           transition: "opacity 600ms ease, transform 700ms cubic-bezier(0.16,1,0.3,1)",

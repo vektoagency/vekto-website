@@ -102,7 +102,7 @@ export default function FlightPlan({
         </div>
         <h2
           className="font-black leading-[0.94] tracking-[-0.03em] uppercase"
-          style={{ fontSize: "clamp(30px, 4.4vw, 68px)" }}
+          style={{ fontSize: "calc(clamp(30px, 4.4vw, 68px) * var(--bgk, 1))" }}
         >
           {headline1}
           <br />
