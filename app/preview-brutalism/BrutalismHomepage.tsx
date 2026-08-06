@@ -112,7 +112,7 @@ const COPY = {
     stage2: {
       eyebrow: "02 · ЗАЩО СМЕ ТУК",
       quoteMain:
-        "„Едни правят рекламите, други — видеата, трети — сайта. Никой не говори с никого. А резултатът е мой проблем.\"",
+        "„Стигнахме до едно ниво и заседнахме. Каквото и да пробваме — числата са същите.\"",
       quoteAttribution: "— почти всеки бранд, преди да дойде при нас",
       response: "Затова",
       responseHighlight: "сме тук.",
@@ -300,7 +300,7 @@ const COPY = {
     stage2: {
       eyebrow: "02 · WHY WE EXIST",
       quoteMain:
-        "\"One team runs the ads, another cuts the videos, a third built the site. Nobody talks to anybody. And the results are my problem.\"",
+        "\"We got to a level and got stuck. Whatever we try, the numbers stay the same.\"",
       quoteAttribution: "— almost every brand, before they find us",
       response: "That's why",
       responseHighlight: "we exist.",

@@ -31,7 +31,7 @@ export const JOURNEY_COPY = {
       },
       why: {
         kicker: "02 · ЗАЩО СМЕ ТУК",
-        quote: "„Едни правят рекламите, други — видеата, трети — сайта. Никой не говори с никого. А резултатът е мой проблем.“",
+        quote: "„Стигнахме до едно ниво и заседнахме. Каквото и да пробваме — числата са същите.“",
         attribution: "— почти всеки бранд, преди да дойде при нас",
         response: "Затова",
         responseHi: "сме тук.",
@@ -144,7 +144,7 @@ export const JOURNEY_COPY = {
       },
       why: {
         kicker: "02 · WHY WE EXIST",
-        quote: "“One team runs the ads, another cuts the videos, a third built the site. Nobody talks to anybody. And the results are my problem.”",
+        quote: "“We got to a level and got stuck. Whatever we try, the numbers stay the same.”",
         attribution: "— almost every brand, before they find us",
         response: "That's why",
         responseHi: "we exist.",
