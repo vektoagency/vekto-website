@@ -46,6 +46,7 @@ export default function FlightPlan({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const litRef = useRef<boolean[]>([]);
   const [p, setP] = useState(0);
   // Ignition thresholds measured from the real station offsets, so the tip
   // and the light-ups can never drift apart when copy wraps differently
@@ -164,7 +165,12 @@ export default function FlightPlan({
 
           <ol className="space-y-16 md:space-y-24 list-none m-0 p-0">
             {steps.map((s, i) => {
-              const on = p >= (marks[i] ?? (i + 0.4) / steps.length);
+              // Stations LATCH: once the tip has passed one it stays lit —
+              // stopping and resuming (or scrolling back) must not replay
+              // the ignition.
+              const reached = p >= (marks[i] ?? (i + 0.4) / steps.length);
+              if (reached) litRef.current[i] = true;
+              const on = litRef.current[i] === true;
               return (
                 <li
                   key={s.num}

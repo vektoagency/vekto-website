@@ -85,7 +85,7 @@ export const JOURNEY_COPY = {
       headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
-      coda: "24 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
+      coda: "ОСТАНАЛИТЕ — ПО ЗАЯВКА",
     },
     process: {
       eyebrow: "06 · КАК РАБОТИМ",
@@ -194,7 +194,7 @@ export const JOURNEY_COPY = {
       headline2Prefix: "24",
       headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },
-      coda: "24 / 50+ · REST ON REQUEST",
+      coda: "THE REST — ON REQUEST",
     },
     process: {
       eyebrow: "06 · HOW IT HAPPENS",

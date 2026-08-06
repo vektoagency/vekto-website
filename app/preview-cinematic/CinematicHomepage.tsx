@@ -72,7 +72,7 @@ const ROSTER = [
   { name: "LUCKY ENERGY",  region: "US" as const, logo: "/images/logo-lucky.webp" },
   { name: "NUTRIFITT",     region: "US" as const, logo: "/images/logo-nutrifitt.webp" },
   { name: "beMe",          region: "BG" as const, logo: "/images/logo-bemeacne.webp" },
-  { name: "FREYA NAILS",   region: "BG" as const, logo: "/images/logo-freya.svg" },
+  { name: "BULMAG",        region: "BG" as const, logo: "/images/logo-bulmag.png" },
   { name: "TASTE FLAVOR",  region: "US" as const, logo: "/images/logo-tasteflavor.webp" },
   { name: "KRISTA G",      region: "BG" as const, logo: "/images/logo-krista-g-2022.webp" },
   { name: "PHYTOLIFE",     region: "BG" as const, logo: "/images/logo-phytolife.webp" },
@@ -83,6 +83,7 @@ const ROSTER = [
   { name: "ARTE HOTEL",    region: "BG" as const, logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG" as const, logo: "/images/logo-kashmirhotel.png" },
   { name: "CARTEL CAFFE",  region: "BG" as const, logo: "/images/logo-cartelcaffe.svg", invert: true },
+  { name: "LUDA PRINT",    region: "BG" as const, logo: "/images/logo-ludaprint.jpg" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -706,13 +707,29 @@ function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang
     ? [["Портфолио", "/portfolio"], ["Кейсове", "/case-studies"], ["Анкета", "/brief"]]
     : [["Portfolio", "/portfolio"], ["Case Studies", "/case-studies"], ["Brief", "/brief"]];
   const cta = lang === "bg" ? "Запази разговор" : "Book a call";
+  // Transparent only over the opening frame — once scrolled the strip
+  // solidifies to jet with a hairline so it stops fighting the film.
+  const [solid, setSolid] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setSolid(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   // Fixed and FULLY transparent — no bar, no scrim, no blur: the film runs
   // uninterrupted to the top edge. Legibility over the bone-white zones
   // comes from a dark drop-shadow halo around every element instead of a
   // background. Layout: wordmark alone on the left; everything else — nav,
   // language, CTA — grouped on the right.
   return (
-    <div className="fixed inset-x-0 top-0 z-50" style={{ background: "transparent" }}>
+    <div
+      className="fixed inset-x-0 top-0 z-50 transition-colors duration-300"
+      style={{
+        background: solid ? "rgba(13,13,13,0.94)" : "transparent",
+        borderBottom: solid ? "1px solid rgba(244,244,244,0.18)" : "1px solid transparent",
+        backdropFilter: solid ? "blur(8px)" : undefined,
+      }}
+    >
       {/* Fully transparent strip — no bar, no scrim. Legibility over the
           bone-white zones comes from a tight near-opaque dark outline plus
           a soft halo on every element (text-shadow on text, drop-shadow on
@@ -794,15 +811,10 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
         </div>
         <h2 className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-12" style={{ fontSize: "calc(clamp(32px, 4.8vw, 72px) * var(--bgk, 1))" }}>
           {t.roster.headline1}
-          <br />
-          {t.roster.headline2Prefix}{" "}
-          <span style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-            {t.roster.headline2Highlight}
-          </span>
         </h2>
         {/* Four per row on every viewport; phones drop the plates/badges and
             read as a pure logo wall — mass is the message. */}
-        <div className="grid grid-cols-4 gap-1.5 md:gap-5">
+        <div className="grid grid-cols-4 md:grid-cols-5 gap-1.5 md:gap-4 [&>*:nth-child(25)]:col-start-2 [&>*:nth-child(25)]:col-span-2 md:[&>*:nth-child(25)]:col-start-auto md:[&>*:nth-child(25)]:col-span-1">
           {ROSTER.map((c, i) => (
             <div
               key={c.name}
@@ -819,7 +831,7 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
                 {t.roster.region[c.region]}
               </span>
               <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
-                <Image src={c.logo} alt={c.name} width={220} height={110} className="max-h-full max-w-full w-auto h-auto object-contain" style={{ filter: c.invert ? "invert(1)" : undefined }} unoptimized />
+                <Image src={c.logo} alt={c.name} width={220} height={110} className="h-[58%] md:h-[56%] w-auto max-w-[86%] object-contain" style={{ filter: c.invert ? "invert(1)" : undefined }} unoptimized />
               </div>
               <div className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate" style={{ color: JET }}>
                 {c.name}

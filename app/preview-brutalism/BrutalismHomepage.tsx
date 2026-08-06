@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { sendContactEmail } from "../actions/contact";
 import FlightPlan from "../components/FlightPlan";
+import HeroCinematicBg from "../components/HeroCinematicBg";
 
 // ============================================================================
 // PALETTE
@@ -198,7 +199,7 @@ const COPY = {
       headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
-      coda: "24 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
+      coda: "ОСТАНАЛИТЕ — ПО ЗАЯВКА",
     },
     stage5: {
       eyebrow: "07 · СТАНДАРТЪТ",
@@ -386,7 +387,7 @@ const COPY = {
       headline2Prefix: "24",
       headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },
-      coda: "24 / 50+ · REST ON REQUEST",
+      coda: "THE REST — ON REQUEST",
     },
     stage5: {
       eyebrow: "07 · THE STANDARD",
@@ -456,7 +457,7 @@ const ROSTER: Client[] = [
   { name: "LUCKY ENERGY",  region: "US", logo: "/images/logo-lucky.webp"       },
   { name: "NUTRIFITT",     region: "US", logo: "/images/logo-nutrifitt.webp"   },
   { name: "beMe",          region: "BG", logo: "/images/logo-bemeacne.webp"    },
-  { name: "FREYA NAILS",   region: "BG", logo: "/images/logo-freya.svg" },
+  { name: "BULMAG",        region: "BG", logo: "/images/logo-bulmag.png" },
   { name: "TASTE FLAVOR",  region: "US", logo: "/images/logo-tasteflavor.webp" },
   { name: "KRISTA G",      region: "BG", logo: "/images/logo-krista-g-2022.webp" },
   { name: "PHYTOLIFE",     region: "BG", logo: "/images/logo-phytolife.webp"   },
@@ -467,6 +468,7 @@ const ROSTER: Client[] = [
   { name: "ARTE HOTEL",    region: "BG", logo: "/images/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG", logo: "/images/logo-kashmirhotel.png" },
   { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg", invert: true },
+  { name: "LUDA PRINT",    region: "BG", logo: "/images/logo-ludaprint.jpg" },
 ];
 
 // Derived from ROSTER rather than typed out, so the globe readout can never
@@ -696,6 +698,18 @@ export default function BrutalismHomepage() {
   const [bookOpen, setBookOpen] = useState(false);
   const openBook = useCallback(() => setBookOpen(true), []);
   const closeBook = useCallback(() => setBookOpen(false), []);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Transparent header only makes sense over the hero — once the visitor
+  // scrolls, it solidifies to jet with a hairline so it stops fighting
+  // whatever stage is underneath.
+  const [headerSolid, setHeaderSolid] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setHeaderSolid(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -762,11 +776,17 @@ export default function BrutalismHomepage() {
           destinations stay reachable from the footer CTA block. */}
       <MobileProgress />
 
-      {/* Same header grammar as the cinematic preview: fixed and fully
-          transparent — no bar, no border — wordmark alone on the left,
-          nav + language + CTA grouped right, halo shadows for legibility
-          over whatever the stage below is showing. */}
-      <div className="fixed inset-x-0 top-0 z-50" style={{ background: "transparent" }}>
+      {/* Same header grammar as the cinematic preview: wordmark alone on
+          the left, nav + language + CTA grouped right. Transparent over
+          the hero, solid jet with a hairline once scrolled. */}
+      <div
+        className="fixed inset-x-0 top-0 z-50 transition-colors duration-300"
+        style={{
+          background: headerSolid ? "rgba(13,13,13,0.94)" : "transparent",
+          borderBottom: headerSolid ? "1px solid rgba(244,244,244,0.18)" : "1px solid transparent",
+          backdropFilter: headerSolid ? "blur(8px)" : undefined,
+        }}
+      >
         <div className="px-4 md:px-6 py-3 md:py-4 flex items-center gap-x-5 md:gap-x-7">
           <Link
             href="/preview-brutalism"
@@ -828,8 +848,66 @@ export default function BrutalismHomepage() {
             <span className="hidden sm:inline">{headerCtaLabel}</span>
             <span className="sm:hidden">{headerCtaShort}</span>
           </button>
+          {/* Mobile menu trigger — desktop shows the links inline. */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label={lang === "bg" ? "Меню" : "Menu"}
+            className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] shrink-0"
+            style={{ border: "1.5px solid rgba(244,244,244,0.75)" }}
+          >
+            <span className="block w-4 h-[2px]" style={{ background: "#f4f4f4" }} />
+            <span className="block w-4 h-[2px]" style={{ background: "#f4f4f4" }} />
+            <span className="block w-4 h-[2px]" style={{ background: "#f4f4f4" }} />
+          </button>
         </div>
       </div>
+
+      {/* ============= MOBILE MENU OVERLAY ============= */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-[120] flex flex-col md:hidden" style={{ background: "rgba(13,13,13,0.97)" }}>
+          <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: "1px solid rgba(244,244,244,0.18)" }}>
+            <span className="text-xs font-bold uppercase tracking-[0.35em] opacity-60" style={{ fontFamily: "var(--brutal-pixel)", color: "#f4f4f4" }}>
+              VEKTO
+            </span>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              aria-label={lang === "bg" ? "Затвори" : "Close"}
+              className="w-9 h-9 font-black text-xl leading-none"
+              style={{ border: "1.5px solid rgba(244,244,244,0.75)", color: "#f4f4f4" }}
+            >
+              ×
+            </button>
+          </div>
+          <nav className="flex-1 flex flex-col justify-center gap-7 px-8">
+            {NAV_LINKS.map((link, i) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="font-black uppercase tracking-tight text-4xl"
+                style={{ color: "#f4f4f4" }}
+              >
+                <span className="text-sm align-middle mr-4 opacity-40" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="px-8 pb-10">
+            <button
+              type="button"
+              onClick={() => { setMenuOpen(false); openBook(); }}
+              className="w-full py-4 font-black uppercase text-base tracking-[0.12em]"
+              style={{ background: "#f4f4f4", color: "#0d0d0d", boxShadow: "5px 5px 0 0 #3a3a3a" }}
+            >
+              → {headerCtaLabel}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ============= RIGHT-RAIL FUNNEL INDICATOR =============
           Was aria-hidden + pointer-events-none: it looks exactly like a
@@ -1437,15 +1515,33 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
     <section
       id="stage-01"
       ref={targetRef}
-      className="relative flex flex-col"
+      className="relative flex flex-col overflow-hidden"
       style={{ minHeight: "100dvh", background: "#0d0d0d", color: "#f4f4f4" }}
     >
+      {/* THE REEL — the main site's cinematic background rotation runs
+          behind the question, heavily letterboxed in jet so the type owns
+          the frame and the work breathes underneath it. */}
+      <div className="absolute inset-0 z-0">
+        <HeroCinematicBg />
+      </div>
+      <div aria-hidden className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "rgba(13,13,13,0.62)" }} />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[38%] z-[1] pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, rgba(13,13,13,0.96) 0%, rgba(13,13,13,0.6) 55%, transparent 100%)" }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-[34%] z-[1] pointer-events-none"
+        style={{ background: "linear-gradient(to top, rgba(13,13,13,0.96) 0%, rgba(13,13,13,0.6) 55%, transparent 100%)" }}
+      />
+
       {/* MAIN. Desktop: one centred column, acquisition.com-style. Phones:
           a TWO-ANCHOR layout — the question owns the upper third right
           under the header, the ask owns the thumb zone at the bottom, and
           the spacer between them turns the dead void into deliberate
           breathing room instead of a floating island. */}
-      <div className="flex-1 flex flex-col items-center md:justify-center text-center px-5 md:px-14 pt-24 md:pt-24 pb-0 md:pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
+      <div className="relative z-10 flex-1 flex flex-col items-center md:justify-center text-center px-5 md:px-14 pt-24 md:pt-24 pb-0 md:pb-[7vh] max-w-[1320px] mx-auto w-full min-h-0">
         <div className="w-full">
           {/* Stage marker + positioning plate — stripped to essentials:
               the marker indexes, the plate positions. No era stamp, no
@@ -1474,9 +1570,10 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             style={{
               // Sized so the longest Bulgarian line ("БИЗНЕСЪТ ТИ ЗАСЛУЖАВА
               // ЛИ", 24 chars) holds ONE line inside the 1320px column at
-              // the cap. The 40px floor makes phones a commanding 4-line
-              // stack — lines wrap at spaces, nothing can clip.
-              fontSize: "calc(clamp(40px, 5vw, 86px) * var(--bgk, 1))",
+              // the cap. The 32px floor holds the phone stack at THREE
+              // lines max in both languages — lines wrap at spaces,
+              // nothing can clip.
+              fontSize: "calc(clamp(32px, 5vw, 86px) * var(--bgk, 1))",
               lineHeight: 0.96,
               overflowWrap: "break-word",
               hyphens: "none",
@@ -1556,7 +1653,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
 
       {/* BOTTOM — centred scroll cue. */}
       <div
-        className="w-full shrink-0 px-6 pb-6 md:pb-8 flex items-center justify-center gap-4"
+        className="relative z-10 w-full shrink-0 px-6 pb-6 md:pb-8 flex items-center justify-center gap-4"
         style={{
           opacity: Math.max(0, (1 - p) * 2),
           transition: "opacity 200ms ease",
@@ -1999,24 +2096,12 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           style={{ fontSize: "calc(clamp(40px, 6vw, 88px) * var(--bgk, 1))" }}
         >
           {t.headline1}
-          <br />
-          {t.headline2Prefix}{" "}
-          <span
-            style={{
-              background: SILVER_H,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {t.headline2Highlight}
-          </span>
         </h2>
 
         {/* Four per row on EVERY viewport — on phones the tiles drop their
             name plates and badges and read as a pure logo wall: mass is
             the message. */}
-        <div className="grid grid-cols-4 gap-1.5 md:gap-5">
+        <div className="grid grid-cols-4 md:grid-cols-5 gap-1.5 md:gap-4 [&>*:nth-child(25)]:col-start-2 [&>*:nth-child(25)]:col-span-2 md:[&>*:nth-child(25)]:col-start-auto md:[&>*:nth-child(25)]:col-span-1">
           {ROSTER.map((c, i) => {
             // Alternate rotation direction per column for a punchier
             // pop-into-place feel across the whole grid.
@@ -2050,7 +2135,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
                   alt={c.name}
                   width={220}
                   height={110}
-                  className="max-h-full max-w-full w-auto h-auto object-contain"
+                  className="h-[58%] md:h-[56%] w-auto max-w-[86%] object-contain"
                   style={{ filter: c.invert ? "invert(1)" : undefined }}
                   unoptimized
                 />
@@ -2192,7 +2277,12 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
   // stamped criterion by criterion as the visitor scrolls — instead of a
   // third page-wide list in a row (06 draws a line, 07 is display type).
   const p = useStickyProgress(targetRef);
-  const checked = Math.min(t.items.length, Math.floor(p * (t.items.length + 1.4)));
+  // Stamps LATCH — the pass only fills forward. Scrolling back up (or
+  // stopping mid-run and resuming) never un-stamps a criterion.
+  const maxChecked = useRef(0);
+  const raw = Math.min(t.items.length, Math.floor(p * (t.items.length + 1.4)));
+  if (raw > maxChecked.current) maxChecked.current = raw;
+  const checked = maxChecked.current;
   const all = checked >= t.items.length;
   return (
     <section
