@@ -87,7 +87,7 @@ const COPY = {
       headline2Highlight: "СКАЛИРАН?",
       typed: "ЕДИН ЕКИП. КРЕАТИВИ, ФУНИИ И AI.",
       scrollCue: "▼ ПРОДЪЛЖИ",
-      ctaPrimary: "ЗАПАЗИ РАЗГОВОР",
+      ctaPrimary: "СВЪРЖИ СЕ С НАС",
       ctaSecondary: "ПОРТФОЛИО",
       proofTitle: "ROAS",
       proof: [
@@ -275,7 +275,7 @@ const COPY = {
       headline2Highlight: "TO SCALE?",
       typed: "ONE TEAM. CREATIVES, FUNNELS & AI.",
       scrollCue: "▼ CONTINUE",
-      ctaPrimary: "BOOK A CALL",
+      ctaPrimary: "CONTACT US",
       ctaSecondary: "PORTFOLIO",
       proofTitle: "ROAS",
       proof: [
@@ -1085,8 +1085,10 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   const bg = lang === "bg";
   const s = bg
     ? {
-        title: "ОПИШИ ПРОЕКТА СИ",
-        subtitle: "≈1 МИНУТА · ОТГОВАРЯМЕ ДО 24 ЧАСА",
+        title: "СВЪРЖИ СЕ С НАС",
+        subtitle: "ИЗБЕРИ КАК ТИ Е УДОБНО",
+        formCta: "ОПИШИ ПРОЕКТА СИ",
+        formMeta: "≈1 МИНУТА",
         calCta: "РЕЗЕРВИРАЙ СРЕЩА",
         calMeta: "30 МИН · БЕЗПЛАТНО",
         orForm: "ИЛИ ОПИШИ ПРОЕКТА СИ · ≈1 МИНУТА",
@@ -1094,7 +1096,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         call: "ОБАДИ СЕ", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "МОМЕНТАЛЕН ЧАТ",
         email: "ИМЕЙЛ", emailSub: "vektoagency@gmail.com",
-        or: "ИЛИ СЕ СВЪРЖИ ДИРЕКТНО",
+        or: "ИЛИ ДИРЕКТНО:",
         name: "Име", namePh: "Иван Иванов",
         phone: "Телефон", phonePh: "+359 88 000 0000",
         emailField: "Имейл", emailPh: "ти@brand.bg",
@@ -1108,8 +1110,10 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         errorMsg: "Нещо се обърка. Опитай пак.",
       }
     : {
-        title: "DESCRIBE YOUR PROJECT",
-        subtitle: "≈1 MINUTE · WE REPLY WITHIN 24 HOURS",
+        title: "CONTACT US",
+        subtitle: "PICK WHAT WORKS FOR YOU",
+        formCta: "DESCRIBE YOUR PROJECT",
+        formMeta: "≈1 MINUTE",
         calCta: "BOOK A MEETING",
         calMeta: "30 MIN · FREE",
         orForm: "OR DESCRIBE YOUR PROJECT · ≈1 MINUTE",
@@ -1117,7 +1121,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         call: "PHONE", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "INSTANT CHAT",
         email: "EMAIL", emailSub: "vektoagency@gmail.com",
-        or: "OR REACH US DIRECTLY",
+        or: "OR DIRECTLY:",
         name: "Name", namePh: "Jane Doe",
         phone: "Phone", phonePh: "+1 000 000 0000",
         emailField: "Email", emailPh: "you@brand.com",
@@ -1215,107 +1219,72 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-5 md:p-7">
-          {sent ? (
-            <div
-              className="text-center py-12 px-6"
-              style={{ border: "1px solid rgba(244,244,244,0.28)" }}
+          {/* UNIVERSAL HUB — every way in, one surface, each option
+              labelled with exactly what it does. No forms here: the
+              intake lives at /start, the calendar opens in place. */}
+          <div className="space-y-3">
+            <button
+              type="button"
+              data-cal-namespace="30min"
+              data-cal-link="vekto/30min"
+              data-cal-config={JSON.stringify({ theme: "dark" })}
+              className="group w-full py-4 md:py-5 font-black text-base md:text-lg uppercase tracking-[0.1em] transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-3 flex-wrap"
+              style={{
+                background: "#f4f4f4",
+                color: "#0d0d0d",
+                boxShadow: "0 8px 30px rgba(244,244,244,0.14)",
+              }}
             >
-              <div
-                className="text-4xl mb-4 font-black"
-                style={{
-                  background: SILVER_H,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                ✓
-              </div>
-              <div className="font-black text-xl md:text-2xl uppercase tracking-tight mb-2">
-                {s.sent}
-              </div>
-              <div
-                className="text-xs uppercase tracking-[0.25em] opacity-60"
+              <span aria-hidden>▦</span>
+              {s.calCta}
+              <span
+                className="text-[11px] font-bold tracking-[0.2em] opacity-60"
                 style={{ fontFamily: "var(--brutal-pixel)" }}
               >
-                {s.sentSub}
-              </div>
-              {/* Step two — book the slot NOW. cal.com opens pre-filled with
-                  the name + email the visitor just typed. */}
-              <button
-                type="button"
-                data-cal-namespace="30min"
-                data-cal-link="vekto/30min"
-                data-cal-config={JSON.stringify({ name: lead.name, email: lead.email, theme: "dark" })}
-                className="group mt-7 inline-flex items-center gap-3 px-8 md:px-12 py-4 font-black uppercase text-sm md:text-lg tracking-[0.1em] transition-transform hover:-translate-y-0.5"
-                style={{
-                  background: "#f4f4f4",
-                  color: "#0d0d0d",
-                  boxShadow: "0 8px 30px rgba(244,244,244,0.14)",
-                }}
+                {s.calMeta}
+              </span>
+              <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
+            </button>
+
+            <Link
+              href="/start"
+              onClick={onClose}
+              className="group w-full py-4 md:py-5 font-black text-base md:text-lg uppercase tracking-[0.1em] transition-colors hover:bg-white hover:text-black flex items-center justify-center gap-3 flex-wrap border-2"
+              style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.55)" }}
+            >
+              <span aria-hidden>✎</span>
+              {s.formCta}
+              <span
+                className="text-[11px] font-bold tracking-[0.2em] opacity-60"
+                style={{ fontFamily: "var(--brutal-pixel)" }}
               >
-                {s.sentCal}
-                <span aria-hidden className="transition-transform group-hover:translate-x-2">→</span>
-              </button>
-            </div>
-          ) : (
-            <>
-              {/* Form only — the calendar has its own buttons on the page.
-                  One purpose per surface, no forked paths. */}
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <FormField name="name" label={s.name} ph={s.namePh} required />
-                  <FormField name="phone" label={s.phone} ph={s.phonePh} required type="tel" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <FormField name="email" label={s.emailField} ph={s.emailPh} required type="email" />
-                  <FormField name="company" label={s.company} ph={s.companyPh} required />
-                </div>
-                <FormField name="message" label={s.message} ph={s.messagePh} required textarea />
+                {s.formMeta}
+              </span>
+              <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
+            </Link>
+          </div>
 
-                {error && (
-                  <div className="text-[12px] font-bold uppercase tracking-widest p-3 border-2 border-red-600 text-red-600 bg-red-50">
-                    {error}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-4 mt-2 font-black text-base md:text-lg uppercase tracking-[0.15em] transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
-                  style={{
-                    background: "#f4f4f4",
-                    color: "#0d0d0d",
-                    boxShadow: "0 8px 30px rgba(244,244,244,0.12)",
-                  }}
-                >
-                  {loading ? s.submitting : s.submit}
-                </button>
-              </form>
-
-              {/* Quick channels — one quiet hairline row, not slabs. */}
-              <div
-                className="mt-7 pt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] uppercase tracking-[0.2em]"
-                style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: "var(--brutal-pixel)" }}
-              >
-                <span className="opacity-45">{s.or}</span>
-                <a href="tel:+359882251474" className="opacity-70 hover:opacity-100 transition-opacity">
-                  ☎ {s.callSub}
-                </a>
-                <a
-                  href="https://wa.me/359882251474"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="opacity-70 hover:opacity-100 transition-opacity"
-                >
-                  {s.wa}
-                </a>
-                <a href="mailto:vektoagency@gmail.com" className="opacity-70 hover:opacity-100 transition-opacity">
-                  {s.emailSub}
-                </a>
-              </div>
-            </>
-          )}
+          {/* Direct channels — one quiet hairline row. */}
+          <div
+            className="mt-6 pt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] uppercase tracking-[0.2em]"
+            style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: "var(--brutal-pixel)" }}
+          >
+            <span className="opacity-45">{s.or}</span>
+            <a href="tel:+359882251474" className="opacity-70 hover:opacity-100 transition-opacity">
+              ☎ {s.callSub}
+            </a>
+            <a
+              href="https://wa.me/359882251474"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-70 hover:opacity-100 transition-opacity"
+            >
+              {s.wa}
+            </a>
+            <a href="mailto:vektoagency@gmail.com" className="opacity-70 hover:opacity-100 transition-opacity">
+              {s.emailSub}
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -1628,20 +1597,14 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             where the column centres as one block. */}
         <div className="flex-1 md:hidden" aria-hidden />
 
-        <div className="w-full md:w-auto flex flex-col items-center mb-[6vh] md:mb-0">
-          {/* The ask — straight to the calendar, no modal in between. One
-              button, one action: the label promises a call, the click books
-              it. Full-width slab in the phone's thumb zone. */}
+        <div className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mb-[6vh] md:mb-0 mt-6 md:mt-10">
+          {/* Primary — the universal contact hub: calendar, intake and
+              direct channels behind one honest label. */}
           <button
             type="button"
-            data-cal-namespace="30min"
-            data-cal-link="vekto/30min"
-            data-cal-config={JSON.stringify({ theme: "dark" })}
-            className="group mt-6 md:mt-10 w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-4 px-8 md:px-16 py-5 md:py-6 font-black uppercase text-lg md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            onClick={openBook}
+            className="group w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-4 px-8 md:px-14 py-5 md:py-6 font-black uppercase text-lg md:text-2xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
             style={{
-              // Solid white, jet ink — the brushed gradient put a dark band
-              // straight through the label. Contrast lives in the ground,
-              // craft lives in the machined steel offset.
               background: "#f4f4f4",
               color: "#0d0d0d",
               boxShadow: "8px 8px 0 0 #3a3a3a",
@@ -1650,12 +1613,15 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
             {t.ctaPrimary}
             <span aria-hidden className="transition-transform group-hover:translate-x-2">→</span>
           </button>
-          <div
-            className="mt-4 text-[11px] uppercase tracking-[0.25em] opacity-50"
-            style={{ fontFamily: "var(--brutal-pixel)" }}
+          {/* Secondary — the work, one click away. */}
+          <Link
+            href="/portfolio"
+            className="w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-3 px-8 md:px-10 py-5 md:py-6 border-2 font-black uppercase text-base md:text-xl tracking-tight transition-colors hover:bg-white hover:text-black"
+            style={{ color: "#f4f4f4", borderColor: "rgba(244,244,244,0.6)" }}
           >
-            30 {lang === "bg" ? "МИН · БЕЗПЛАТНО · БЕЗ ОБВЪРЗВАНЕ" : "MIN · FREE · NO STRINGS"}
-          </div>
+            <span aria-hidden>▶</span>
+            {t.ctaSecondary}
+          </Link>
         </div>
 
       </div>
