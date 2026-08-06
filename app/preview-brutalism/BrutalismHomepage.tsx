@@ -195,10 +195,10 @@ const COPY = {
     stage4: {
       eyebrow: "05 · СЪСТАВЪТ",
       headline1: "50+ БРАНДА В ПОРТФОЛИОТО.",
-      headline2Prefix: "12",
+      headline2Prefix: "23",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
-      coda: "12 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
+      coda: "23 / 50+ · ОСТАНАЛИТЕ ПО ЗАЯВКА",
     },
     stage5: {
       eyebrow: "07 · СТАНДАРТЪТ",
@@ -383,10 +383,10 @@ const COPY = {
     stage4: {
       eyebrow: "05 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
-      headline2Prefix: "12",
+      headline2Prefix: "23",
       headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },
-      coda: "12 / 50+ · REST ON REQUEST",
+      coda: "23 / 50+ · REST ON REQUEST",
     },
     stage5: {
       eyebrow: "07 · THE STANDARD",
@@ -455,6 +455,17 @@ const ROSTER: Client[] = [
   { name: "ETHAN'S",       region: "US", logo: "/images/logo-ethans.webp"      },
   { name: "LUCKY ENERGY",  region: "US", logo: "/images/logo-lucky.webp"       },
   { name: "NUTRIFITT",     region: "US", logo: "/images/logo-nutrifitt.webp"   },
+  { name: "beMe",          region: "BG", logo: "/images/logo-bemeacne.webp"    },
+  { name: "TASTE FLAVOR",  region: "US", logo: "/images/logo-tasteflavor.webp" },
+  { name: "KRISTA G",      region: "BG", logo: "/images/logo-krista-g-2022.webp" },
+  { name: "PHYTOLIFE",     region: "BG", logo: "/images/logo-phytolife.webp"   },
+  { name: "GIFTO",         region: "BG", logo: "/images/logo-adventuresbg.webp" },
+  { name: "ADVENTURES BG", region: "BG", logo: "/images/logo-gifto2.webp"      },
+  { name: "ALPEN PHARMA",  region: "BG", logo: "/images/logo-alpenpharma.png"  },
+  { name: "NIDO",          region: "BG", logo: "/images/logo-nido.png"         },
+  { name: "ARTE HOTEL",    region: "BG", logo: "/images/logo-artehotel.png"    },
+  { name: "KASHMIR HOTEL", region: "BG", logo: "/images/logo-kashmirhotel.png" },
+  { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg"  },
 ];
 
 // Derived from ROSTER rather than typed out, so the globe readout can never
@@ -2001,7 +2012,10 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           </span>
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {/* Four per row on EVERY viewport — on phones the tiles drop their
+            name plates and badges and read as a pure logo wall: mass is
+            the message. */}
+        <div className="grid grid-cols-4 gap-1.5 md:gap-5">
           {ROSTER.map((c, i) => {
             // Alternate rotation direction per column for a punchier
             // pop-into-place feel across the whole grid.
@@ -2022,14 +2036,14 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
             >
               {/* Region badge in top-right corner */}
               <span
-                className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10"
+                className="hidden md:block absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10"
                 style={{ fontFamily: "var(--brutal-pixel)", color: "#0d0d0d" }}
               >
                 {t.region[c.region]}
               </span>
 
               {/* Logo panel */}
-              <div className="flex-1 flex items-center justify-center p-4 md:p-6 min-h-0">
+              <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
                 <Image
                   src={c.logo}
                   alt={c.name}
@@ -2042,7 +2056,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
 
               {/* Name plate at bottom */}
               <div
-                className="border-t-2 border-black px-2 py-2 text-center text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none"
+                className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate"
                 style={{ color: "#0d0d0d" }}
               >
                 {c.name}

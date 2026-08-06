@@ -71,6 +71,17 @@ const ROSTER = [
   { name: "ETHAN'S",       region: "US" as const, logo: "/images/logo-ethans.webp" },
   { name: "LUCKY ENERGY",  region: "US" as const, logo: "/images/logo-lucky.webp" },
   { name: "NUTRIFITT",     region: "US" as const, logo: "/images/logo-nutrifitt.webp" },
+  { name: "beMe",          region: "BG" as const, logo: "/images/logo-bemeacne.webp" },
+  { name: "TASTE FLAVOR",  region: "US" as const, logo: "/images/logo-tasteflavor.webp" },
+  { name: "KRISTA G",      region: "BG" as const, logo: "/images/logo-krista-g-2022.webp" },
+  { name: "PHYTOLIFE",     region: "BG" as const, logo: "/images/logo-phytolife.webp" },
+  { name: "GIFTO",         region: "BG" as const, logo: "/images/logo-adventuresbg.webp" },
+  { name: "ADVENTURES BG", region: "BG" as const, logo: "/images/logo-gifto2.webp" },
+  { name: "ALPEN PHARMA",  region: "BG" as const, logo: "/images/logo-alpenpharma.png" },
+  { name: "NIDO",          region: "BG" as const, logo: "/images/logo-nido.png" },
+  { name: "ARTE HOTEL",    region: "BG" as const, logo: "/images/logo-artehotel.png" },
+  { name: "KASHMIR HOTEL", region: "BG" as const, logo: "/images/logo-kashmirhotel.png" },
+  { name: "CARTEL CAFFE",  region: "BG" as const, logo: "/images/logo-cartelcaffe.svg" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -788,7 +799,9 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
             {t.roster.headline2Highlight}
           </span>
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {/* Four per row on every viewport; phones drop the plates/badges and
+            read as a pure logo wall — mass is the message. */}
+        <div className="grid grid-cols-4 gap-1.5 md:gap-5">
           {ROSTER.map((c, i) => (
             <div
               key={c.name}
@@ -801,13 +814,13 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
                 transition: `opacity 550ms cubic-bezier(0.16,1,0.3,1) ${i * 45}ms, transform 650ms cubic-bezier(0.16,1,0.3,1) ${i * 45}ms`,
               }}
             >
-              <span className="absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
+              <span className="hidden md:block absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10" style={{ fontFamily: "var(--cine-pixel)", color: JET }}>
                 {t.roster.region[c.region]}
               </span>
-              <div className="flex-1 flex items-center justify-center p-4 md:p-6 min-h-0">
+              <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
                 <Image src={c.logo} alt={c.name} width={220} height={110} className="max-h-full max-w-full w-auto h-auto object-contain" unoptimized />
               </div>
-              <div className="border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none" style={{ color: JET }}>
+              <div className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate" style={{ color: JET }}>
                 {c.name}
               </div>
             </div>
