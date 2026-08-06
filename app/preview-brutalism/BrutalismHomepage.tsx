@@ -1156,27 +1156,24 @@ function QuickAction({
       href={href}
       target={target}
       rel={target === "_blank" ? "noopener noreferrer" : undefined}
-      className="flex flex-col items-center gap-1 border-2 border-black py-3 md:py-4 px-2 text-center transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+      className="flex flex-col items-center gap-1.5 border-2 border-black py-4 md:py-6 px-2 text-center transition-transform hover:-translate-y-0.5 hover:scale-[1.02]"
       style={{
-        background: "#0d0d0d",
-        color: "#f4f4f4",
-        boxShadow: "3px 3px 0 0 #8a8a8a",
+        // Same brushed titanium as the active CTA slabs — one physical
+        // language for every conversion surface, machined edge included.
+        background: SILVER,
+        color: "#0d0d0d",
+        boxShadow: "0 0 0 1px rgba(255,255,255,0.45) inset, 4px 4px 0 0 #2a2a2a",
       }}
     >
-      <span className="text-3xl md:text-4xl" style={{
-        background: SILVER_H,
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-      }}>{glyph}</span>
+      <span className="text-3xl md:text-4xl leading-none">{glyph}</span>
       <span
-        className="text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em]"
+        className="text-[12px] font-bold uppercase tracking-[0.2em]"
         style={{ fontFamily: "var(--brutal-pixel)" }}
       >
         {label}
       </span>
       <span
-        className="text-[12px] md:text-[11px] opacity-60 tabular-nums hidden md:block"
+        className="text-[11px] opacity-60 tabular-nums"
         style={{ fontFamily: "var(--brutal-pixel)" }}
       >
         {sub}
