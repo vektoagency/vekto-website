@@ -80,7 +80,7 @@ const COPY = {
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
-      eyebrow: "01 · ПОВЕЧЕ ПОРЪЧКИ. ПО-МАЛКО ХАОС.",
+      eyebrow: "01 · РАСТЕЖ ЗА Е-КОМ БРАНДОВЕ",
       pill: "50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
@@ -268,7 +268,7 @@ const COPY = {
       { id: "09", label: "TALK" },
     ],
     stage1: {
-      eyebrow: "01 · MORE ORDERS. LESS CHAOS.",
+      eyebrow: "01 · GROWTH FOR E-COM BRANDS",
       pill: "50+ BRANDS · 500+ VIDEOS / MONTH",
       headline1: "DOES YOUR BUSINESS",
       headline2Prefix: "DESERVE",
@@ -1523,7 +1523,15 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           behind the question, heavily letterboxed in jet so the type owns
           the frame and the work breathes underneath it. */}
       <div className="absolute inset-0 z-0">
-        <HeroCinematicBg />
+        <video
+          src="/videos/hero-bg-brutal.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover"
+        />
       </div>
       <div aria-hidden className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "rgba(13,13,13,0.62)" }} />
       <div
@@ -1756,8 +1764,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
     <section
       id="stage-03"
       ref={targetRef}
-      className="relative"
-      style={{ height: "400vh", background: "#141414" }}
+      className="relative h-[300vh] md:h-[400vh]" style={{ background: "#141414" }}
     >
       <div className="sticky top-0 h-screen" style={{ overflowX: "clip" }}>
         {/* Pushed below the fixed transparent header — at top-6 the eyebrow
@@ -2141,7 +2148,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
                   alt={c.name}
                   width={220}
                   height={110}
-                  className="h-[72%] md:h-[68%] w-auto max-w-[90%] object-contain"
+                  className="h-[82%] md:h-[78%] w-auto max-w-[93%] object-contain"
                   style={{ filter: c.invert ? "invert(1)" : undefined }}
                   unoptimized
                 />
@@ -2159,13 +2166,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           })}
         </div>
 
-        {/* Coda under the grid */}
-        <div
-          className="mt-10 text-xs uppercase tracking-[0.25em] opacity-60"
-          style={{ fontFamily: "var(--brutal-pixel)" }}
-        >
-          {t.coda}
-        </div>
+
       </div>
     </section>
   );
@@ -2186,8 +2187,7 @@ function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElemen
     <section
       id="stage-07"
       ref={targetRef}
-      className="relative"
-      style={{ height: "280vh", background: "#141414", color: "#f4f4f4" }}
+      className="relative h-[210vh] md:h-[280vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
       <div className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-14 overflow-hidden">
         <div className="max-w-[1400px] w-full mx-auto">
@@ -2294,8 +2294,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
     <section
       id="stage-08"
       ref={targetRef}
-      className="relative"
-      style={{ height: "240vh", background: "#141414", color: "#f4f4f4" }}
+      className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
       <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14">
         <div

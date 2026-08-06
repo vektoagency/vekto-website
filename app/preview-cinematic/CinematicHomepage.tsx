@@ -830,7 +830,7 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
                 {t.roster.region[c.region]}
               </span>
               <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
-                <Image src={c.logo} alt={c.name} width={220} height={110} className="h-[72%] md:h-[68%] w-auto max-w-[90%] object-contain" style={{ filter: c.invert ? "invert(1)" : undefined }} unoptimized />
+                <Image src={c.logo} alt={c.name} width={220} height={110} className="h-[82%] md:h-[78%] w-auto max-w-[93%] object-contain" style={{ filter: c.invert ? "invert(1)" : undefined }} unoptimized />
               </div>
               <div className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate" style={{ color: JET }}>
                 {c.name}
@@ -838,9 +838,7 @@ function Roster({ t }: { t: (typeof JOURNEY_COPY)[JourneyLang] }) {
             </div>
           ))}
         </div>
-        <div className="mt-10 text-xs uppercase tracking-[0.25em] opacity-60" style={{ fontFamily: "var(--cine-pixel)" }}>
-          {t.roster.coda}
-        </div>
+
       </div>
     </section>
   );
