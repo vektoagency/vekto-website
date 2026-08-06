@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import HeroCinematicBg from "./HeroCinematicBg";
 import HeroLeftCurtain from "./HeroLeftCurtain";
 import PortfolioTriggerButton from "./PortfolioTriggerButton";
+import PortfolioWindow from "./PortfolioWindow";
 import { useT } from "../i18n/LangProvider";
 
 function Stagger({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
@@ -17,91 +18,75 @@ function Stagger({ children, delay, className = "" }: { children: React.ReactNod
 }
 
 export default function Hero() {
-  // Premium repositioning — restraint + confidence pattern that
-  // Wieden+Kennedy, Mother, Droga5, Anomaly all use. Instead of
-  // enumerating services (which every agency does — that's table
-  // stakes, not premium), the hero states ONE claim and lets the
-  // work + client roster do the selling below the fold.
-  //
-  // The claim itself is a selectivity signal: 'we choose 12 new
-  // brands per year' (scarcity + curation) paired with the real
-  // proof numbers (50+ brands total, 4.8× ROAS, BG + US markets).
+  // Repositioned: from 'AI creative agency' (a WHAT) to 'growth
+  // partner' (an OUTCOME + relational tier). AI stays as HOW (in the
+  // Services / Creative Engine pillar), not the front-page pitch.
+  // Model: Common Thread Collective's 'ecommerce profit partner'
+  // framing + NoGood's anti-vendor premium tone.
   const t = useT({
     bg: {
-      badge: "НЕЗАВИСИМА АГЕНЦИЯ ЗА РАСТЕЖ",
-      h1Em: "12 нови бранда",
-      h1RestDesktop: ["на година.", "Твоят следващ."],
-      h1RestMobile: "на година.",
-      sub: "50+ бранда в България и САЩ. 4.8× среден ROAS. Един екип, един стандарт — от стратегия до резултат.",
-      subMobile: "50+ бранда · България и САЩ · 4.8× ROAS",
-      ctaPrimary: "Резервирай разговор",
-      ctaSecondary: "Виж работата",
-      credentialsEyebrow: "ДОКАЗАНО В ЦИФРИ",
-      credentialsStats: [
-        { value: "50+", label: "Бранда в България и САЩ" },
-        { value: "4.8×", label: "Среден ROAS от кампаниите" },
-        { value: "12", label: "Нови партньорства годишно" },
-      ],
-      credentialsCta: "Виж кейс стъдитата",
+      badge: "GROWTH PARTNER · БЪЛГАРИЯ + СВЯТ",
+      h1Em: "Един partner за",
+      h1RestDesktop: ["целия ти", "marketing stack."],
+      h1RestMobile: "целия ти marketing.",
+      sub: "PPC + Creative + Funnels + Strategy — цялата ти растежна система под един покрив. 50+ бранда. 4.8× среден ROAS.",
+      subMobile: "PPC + Creative + Funnels + Strategy — под един покрив.",
+      ctaPrimary: "Резервирай стратегически разговор",
+      ctaSecondary: "Виж резултатите",
     },
     en: {
-      badge: "INDEPENDENT GROWTH AGENCY",
-      h1Em: "12 new brands",
-      h1RestDesktop: ["a year.", "Yours next."],
-      h1RestMobile: "a year.",
-      sub: "50+ brands across Bulgaria and the US. 4.8× average ROAS. One team, one standard — from strategy through scale.",
-      subMobile: "50+ brands · BG + US · 4.8× ROAS",
-      ctaPrimary: "Book a call",
-      ctaSecondary: "See the work",
-      credentialsEyebrow: "PROVEN IN NUMBERS",
-      credentialsStats: [
-        { value: "50+", label: "Brands in Bulgaria and the US" },
-        { value: "4.8×", label: "Average campaign ROAS" },
-        { value: "12", label: "New partnerships per year" },
-      ],
-      credentialsCta: "See case studies",
+      badge: "GROWTH PARTNER · BULGARIA + WORLDWIDE",
+      h1Em: "One partner for",
+      h1RestDesktop: ["your entire", "marketing stack."],
+      h1RestMobile: "your entire marketing.",
+      sub: "PPC + Creative + Funnels + Strategy — your full growth system under one roof. 50+ brands. 4.8× average ROAS.",
+      subMobile: "PPC + Creative + Funnels + Strategy — under one roof.",
+      ctaPrimary: "Book a strategy call",
+      ctaSecondary: "See results",
     },
   });
   return (
     <section id="hero" className="relative min-h-screen flex overflow-hidden bg-[#080808]">
 
-      {/* MOBILE atmospheric background — was a cinematic video wall (AI
-          videos cycling), now a static premium dark surface with subtle
-          lime accents. Removes the 'AI video studio' signal that
-          dominated the umbrella positioning. AI portfolio work lives on
-          /ai-creative and /portfolio subpages now. */}
-      <div aria-hidden className="lg:hidden absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "#080808" }} />
-        {/* Lime glow — top-right */}
-        <div
-          className="absolute -top-40 -right-40 w-[560px] h-[560px] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 65%)",
-          }}
-        />
-        {/* Lime glow — bottom-left */}
-        <div
-          className="absolute -bottom-60 -left-40 w-[560px] h-[560px] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(200,255,0,0.08) 0%, rgba(200,255,0,0) 65%)",
-          }}
-        />
-        {/* Subtle blueprint grid */}
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-            WebkitMaskImage:
-              "radial-gradient(ellipse 90% 70% at 50% 50%, black 20%, transparent 80%)",
-            maskImage:
-              "radial-gradient(ellipse 90% 70% at 50% 50%, black 20%, transparent 80%)",
-          }}
-        />
+      {/* MOBILE: single cinematic clip as full-bleed background, cycling
+          smoothly through the curated heroFeaturedClipIds. Peak 2 decoders
+          (active + preloading next), zero grid chaos — feels like a brand
+          reel playing behind the text. */}
+      <div className="lg:hidden absolute inset-0 z-[1]">
+        <HeroCinematicBg />
       </div>
+
+      {/* MOBILE readability scrims — strong top + bottom dark gradients
+          frame the cinematic video band in the middle. No glass panel:
+          text and CTAs sit naturally in the dark zones, video breathes
+          uninterrupted in the middle ~30% of the screen. Reads as a
+          cinematic "letterbox" rather than a UI overlay. */}
+      <div
+        aria-hidden
+        className="lg:hidden absolute inset-x-0 top-0 h-[42%] z-[2] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.78) 45%, rgba(8,8,8,0.32) 80%, transparent 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="lg:hidden absolute inset-x-0 bottom-0 h-[38%] z-[2] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.75) 45%, rgba(8,8,8,0.3) 82%, transparent 100%)",
+        }}
+      />
+
+      {/* Edge vignette — pulls focus to the center video band */}
+      <div
+        aria-hidden
+        className="lg:hidden absolute inset-0 z-[2] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 110% 70% at 50% 50%, transparent 55%, rgba(0,0,0,0.4) 100%)",
+        }}
+      />
 
       {/* Desktop atmosphere — kept minimal: flat black base + subtle
           warm bottom + lime CRT halo + blueprint grid + floor glow.
@@ -136,52 +121,16 @@ export default function Hero() {
         />
       </div>
 
-      {/* DESKTOP right side — was a scrolling PortfolioWindow of video
-          thumbnails (which read as 'AI video studio'). Replaced with a
-          static credentials panel that fits the umbrella positioning:
-          three big proof numbers + a featured brands strip + a link to
-          the deep case studies page. Reads as premium 'here's who we
-          are + what we've delivered', not 'here are our videos'. */}
-      <div className="hidden lg:flex absolute right-0 top-24 bottom-10 w-[44%] items-center justify-center px-8">
-        <div
-          className="relative w-full max-w-md bg-[#0a0a0a] border border-[#1e1e1c] rounded-2xl p-8 xl:p-10"
-          style={{
-            boxShadow:
-              "0 20px 60px -20px rgba(0,0,0,0.6), 0 0 60px -20px rgba(200,255,0,0.12), inset 0 1px 0 rgba(255,255,255,0.03)",
-          }}
-        >
-          {/* Corner lime accent */}
-          <span
-            aria-hidden
-            className="absolute -top-px -right-px w-24 h-24 rounded-tr-2xl pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at top right, rgba(200,255,0,0.22) 0%, transparent 65%)",
-            }}
-          />
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] mb-6">
-            {t.credentialsEyebrow}
-          </p>
-          <div className="space-y-6 mb-8">
-            {t.credentialsStats.map((s: { value: string; label: string }) => (
-              <div key={s.label} className="flex items-baseline justify-between gap-4 pb-4 border-b border-[#1e1e1c] last:border-0 last:pb-0">
-                <div className="text-4xl xl:text-5xl font-extrabold text-[#c8ff00] tabular-nums leading-none">
-                  {s.value}
-                </div>
-                <div className="text-[11px] xl:text-[12px] uppercase tracking-[0.2em] text-[#7a7a7a] text-right max-w-[180px]">
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/case-studies"
-            className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] hover:text-[#e0ff4a] transition-colors"
-          >
-            <span>{t.credentialsCta}</span>
-            <span>→</span>
-          </Link>
-        </div>
+      {/* Desktop: canvas is fullscreen and transparent; Mac is panned
+          visually onto the right via the idle camera. The left curtain
+          below covers the rest so the layout reads the same as before.
+          On click, camera zooms while the curtain fades out — one
+          directionless motion, no rect expansion. */}
+      {/* DESKTOP: Portfolio window lives on the right side of the hero.
+          Top padding clears the fixed Navbar so the thumbnails don't bleed
+          into the logo / nav links area. */}
+      <div className="hidden lg:flex absolute right-0 top-24 bottom-10 w-[44%] items-center justify-center">
+        <PortfolioWindow />
       </div>
 
       {/* ── MOBILE: text/CTAs floated over the video background.
