@@ -91,7 +91,7 @@ export default function FlightPlan({
 
   return (
     <div
-      className="px-6 md:px-14 py-16 md:py-32"
+      className="px-6 md:px-14 py-12 md:py-32"
       style={{ background: "#0d0d0d", color: "#f4f4f4", fontFamily: fonts.display }}
     >
       <div className="max-w-[1400px] mx-auto">
@@ -129,7 +129,7 @@ export default function FlightPlan({
           </p>
         )}
 
-        <div ref={wrapRef} className="relative max-w-3xl mt-16 md:mt-24">
+        <div ref={wrapRef} className="relative max-w-3xl mt-8 md:mt-24">
           {/* Rail (dim, full height) + the drawn flight line over it. */}
           <div
             aria-hidden
@@ -163,7 +163,7 @@ export default function FlightPlan({
             />
           </div>
 
-          <ol className="space-y-16 md:space-y-24 list-none m-0 p-0">
+          <ol className="space-y-9 md:space-y-24 list-none m-0 p-0">
             {steps.map((s, i) => {
               // Stations LATCH: once the tip has passed one it stays lit —
               // stopping and resuming (or scrolling back) must not replay
