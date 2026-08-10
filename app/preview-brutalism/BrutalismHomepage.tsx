@@ -1769,34 +1769,9 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           {t.eyebrow}
         </div>
 
-        <h2
-          className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-6 max-w-4xl"
-          style={{ fontSize: "calc(clamp(36px, 5.5vw, 80px) * var(--bgk, 1))" }}
-        >
-          {t.headline1}
-          <br />
-          {t.headline2Prefix}{" "}
-          <span
-            className="italic pr-[0.08em]"
-            style={{
-              background: SILVER_H,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {t.headline2Highlight}
-          </span>
-        </h2>
-
-        <p
-          className="text-sm md:text-base leading-[1.55] font-medium max-w-2xl mb-14 opacity-75"
-          style={{ fontFamily: "var(--brutal-comic)" }}
-        >
-          {t.note}
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        {/* No headline block — the eyebrow indexes, the cards ARE the
+            content. Same treatment as the roster. */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-4">
           {t.cases.map((c, i) => (
             <CaseCard key={c.brand} c={c} inView={inView} idx={i} />
           ))}
