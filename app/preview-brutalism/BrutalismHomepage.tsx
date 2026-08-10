@@ -24,6 +24,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import FlightPlan from "../components/FlightPlan";
 import HeroCinematicBg from "../components/HeroCinematicBg";
 import { trackEventBoth } from "../components/MetaPixel";
+import { useLang } from "../i18n/LangProvider";
 
 // ============================================================================
 // PALETTE
@@ -417,16 +418,21 @@ const US_COUNT = ROSTER.filter((c) => c.region === "US").length;
 // HOOKS
 // ============================================================================
 function useLanguage(): [Lang, (l: Lang) => void] {
-  const [lang, setLang] = useState<Lang>("bg");
+  // Language now lives in the global LangProvider (vekto-lang cookie) so
+  // the homepage and every other route's SiteHeader stay in sync. One-time
+  // migration: visitors who picked EN back when the choice lived in
+  // localStorage keep it the first time they land without the cookie.
+  const { lang, setLang } = useLang();
   useEffect(() => {
-    const saved = localStorage.getItem("vekto.lang");
-    if (saved === "bg" || saved === "en") setLang(saved);
+    try {
+      if (!document.cookie.includes("vekto-lang=")) {
+        const saved = localStorage.getItem("vekto.lang");
+        if (saved === "bg" || saved === "en") setLang(saved);
+      }
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const set = useCallback((l: Lang) => {
-    setLang(l);
-    try { localStorage.setItem("vekto.lang", l); } catch {}
-  }, []);
-  return [lang, set];
+  return [lang, setLang];
 }
 
 // Progress 0→1 across the whole time the section overlaps the viewport
