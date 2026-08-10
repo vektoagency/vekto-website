@@ -75,9 +75,8 @@ const COPY = {
       { id: "04", label: "КЕЙСОВЕ" },
       { id: "05", label: "БРАНДОВЕ" },
       { id: "06", label: "ПРОЦЕС" },
-      { id: "07", label: "СТАНДАРТ" },
-      { id: "08", label: "ПРОФИЛ" },
-      { id: "09", label: "РАЗГОВОР" },
+      { id: "07", label: "ПРОФИЛ" },
+      { id: "08", label: "РАЗГОВОР" },
     ],
     stage1: {
       eyebrow: "01 · ЕДИН ЧЕСТЕН ВЪПРОС",
@@ -164,31 +163,30 @@ const COPY = {
       headline1: "ОТ ПЪРВИЯ РАЗГОВОР",
       headline2Prefix: "ДО",
       headline2Highlight: "РАСТЕЖА.",
-      note: "Един и същ път за всеки нов бранд. Клиничен, не корпоративен.",
-      steps: [
+            steps: [
         {
           num: "01",
           title: "ЗАПОЗНАВАНЕ",
           duration: "30 МИНУТИ · БЕЗПЛАТНО",
-          body: "Разговор за бранда, целите и ситуацията. Проверяваме дали си пасваме — и в двете посоки.",
+          body: "Бранд, цели, ситуация. Проверяваме дали си пасваме.",
         },
         {
           num: "02",
           title: "ДИАГНОСТИКА",
           duration: "2 СЕДМИЦИ",
-          body: "Одит на каналите, позиционирането, офертата и проследяването. Излизаш с конкретен план за 90 дни.",
+          body: "Одит на канали, оферта, проследяване. Излизаш с 90-дневен план.",
         },
         {
           num: "03",
           title: "ИЗГРАЖДАНЕ",
           duration: "30 ДНИ",
-          body: "Сглобяваме системата: стратегия, криейтиви, фуния, проследяване, инфраструктура. Готово за старт.",
+          body: "Стратегия, криейтиви, фуния, проследяване. Готово за старт.",
         },
         {
           num: "04",
           title: "СТАРТ И СКАЛИРАНЕ",
           duration: "МЕСЕЦ 2 →",
-          body: "Активни кампании, ежедневна оптимизация, месечен разбор в дълбочина, скалиране на печелившото.",
+          body: "Пускаме, мерим, скалираме печелившото.",
         },
       ],
     },
@@ -200,36 +198,8 @@ const COPY = {
       region: { BG: "БГ", US: "САЩ" },
       coda: "ОСТАНАЛИТЕ — ПО ЗАЯВКА",
     },
-    stage5: {
-      eyebrow: "07 · СТАНДАРТЪТ",
-      headline1: "ЧЕТИРИ ПРИНЦИПА",
-      headline2Highlight: "НА КОИТО НЕ ПРАВИМ КОМПРОМИС.",
-      note: "Ако някой от тях се разминава с очакванията ти — не сме правилният екип.",
-      principles: [
-        {
-          num: "01",
-          title: "ЕДИН БРАНД НА НИША",
-          body: "Не се състезаваме сами със себе си. Ако вече работим с бранд от твоята ниша — насочваме те към друг екип.",
-        },
-        {
-          num: "02",
-          title: "ТРЪГВАМЕ ОТ РЕЗУЛТАТА",
-          body: "Първо решаваме какво ще измерим. После — какво ще пуснем. Ако не можем да го проследим, не го правим.",
-        },
-        {
-          num: "03",
-          title: "AI ЗАПОЧВА. ХОРАТА ЗАВЪРШВАТ.",
-          body: "AI ускорява производството. Хората решават, коригират и защитават бранда.",
-        },
-        {
-          num: "04",
-          title: "ДАННИТЕ РЕШАВАТ. МНЕНИЯТА — НЕ.",
-          body: "Всичко минава през тест. Субективните спорове — не. Пазарът решава.",
-        },
-      ],
-    },
     stage6: {
-      eyebrow: "08 · КОГО ТЪРСИМ",
+      eyebrow: "07 · КОГО ТЪРСИМ",
       headlinePrefix: "ОТГОВАРЯШ ЛИ НА ВСИЧКИТЕ",
       headlineHighlight: "ЧЕТИРИ",
       headlineSuffix: "?",
@@ -242,7 +212,7 @@ const COPY = {
       verdict: "4/4 — ЗАПАЗИ РАЗГОВОР",
     },
     stage7: {
-      eyebrow: "09 · АКО СИ СТИГНАЛ ДОТУК",
+      eyebrow: "08 · АКО СИ СТИГНАЛ ДОТУК",
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
@@ -262,9 +232,8 @@ const COPY = {
       { id: "04", label: "CASES" },
       { id: "05", label: "ROSTER" },
       { id: "06", label: "PROCESS" },
-      { id: "07", label: "STANDARD" },
-      { id: "08", label: "FIT" },
-      { id: "09", label: "TALK" },
+      { id: "07", label: "FIT" },
+      { id: "08", label: "TALK" },
     ],
     stage1: {
       eyebrow: "01 · ONE HONEST QUESTION",
@@ -351,7 +320,6 @@ const COPY = {
       headline1: "FROM FIRST CALL",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
-      note: "Standard path for every new brand. Clinical, not corporate.",
       steps: [
         {
           num: "01",
@@ -369,7 +337,7 @@ const COPY = {
           num: "03",
           title: "SETUP PHASE",
           duration: "30 DAYS",
-          body: "We build the stack: strategy, creative, funnel, tracking, infrastructure. Launch-ready.",
+          body: "Strategy, creative, funnel, tracking. Launch-ready.",
         },
         {
           num: "04",
@@ -387,36 +355,8 @@ const COPY = {
       region: { BG: "BG", US: "US" },
       coda: "THE REST — ON REQUEST",
     },
-    stage5: {
-      eyebrow: "07 · THE STANDARD",
-      headline1: "FOUR PRINCIPLES",
-      headline2Highlight: "WE DON'T NEGOTIATE ON.",
-      note: "If any of them clashes with what you're after — we're probably not the right team.",
-      principles: [
-        {
-          num: "01",
-          title: "ONE BRAND PER NICHE",
-          body: "We don't compete with ourselves. If we already work with a brand in your niche — we refer you elsewhere.",
-        },
-        {
-          num: "02",
-          title: "FROM THE OUTCOME, BACKWARDS",
-          body: "First we decide what to measure. Then what to run. If we can't track it, we don't do it.",
-        },
-        {
-          num: "03",
-          title: "AI STARTS. HUMANS FINISH.",
-          body: "AI speeds production. Humans decide, correct and protect the brand.",
-        },
-        {
-          num: "04",
-          title: "DATA DECIDES. OPINIONS — DON'T.",
-          body: "Every choice runs a test. Subjective debate doesn't ship. The market is the judge.",
-        },
-      ],
-    },
     stage6: {
-      eyebrow: "08 · WHO WE'RE FOR",
+      eyebrow: "07 · WHO WE'RE FOR",
       headlinePrefix: "DO YOU MEET ALL",
       headlineHighlight: "FOUR",
       headlineSuffix: "?",
@@ -429,7 +369,7 @@ const COPY = {
       verdict: "4/4 — BOOK A CALL",
     },
     stage7: {
-      eyebrow: "09 · IF YOU'VE MADE IT THIS FAR",
+      eyebrow: "08 · IF YOU'VE MADE IT THIS FAR",
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
@@ -626,14 +566,13 @@ export default function BrutalismHomepage() {
   const sCases = useRef<HTMLElement>(null);
   const sProcess = useRef<HTMLElement>(null);
   const s4 = useRef<HTMLElement>(null);
-  const s5 = useRef<HTMLElement>(null);
   const s6 = useRef<HTMLElement>(null);
   const s7 = useRef<HTMLElement>(null);
   // Memoised: useCurrentStage takes the array as an effect dependency, so a
   // fresh literal on every render tore down and re-attached the scroll
   // listener continuously.
   const stageRefs = useMemo(
-    () => [s1, s2, s3, sCases, s4, sProcess, s5, s6, s7],
+    () => [s1, s2, s3, sCases, s4, sProcess, s6, s7],
     [],
   );
   const stage = useCurrentStage(stageRefs);
@@ -945,8 +884,6 @@ export default function BrutalismHomepage() {
       <StageCast  targetRef={s4} t={t.stage4} />
       <HazardStrip />
       <StageProcess targetRef={sProcess} t={t.stageProcess} />
-      <HazardStrip />
-      <StageStandard targetRef={s5} t={t.stage5} />
       <HazardStrip />
       <StageQualify targetRef={s6} t={t.stage6} openBook={openBook} />
       <HazardStrip />
@@ -1904,7 +1841,6 @@ function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement
         headline1={t.headline1}
         headline2Prefix={t.headline2Prefix}
         headline2Highlight={t.headline2Highlight}
-        note={t.note}
         steps={t.steps}
         fonts={{
           display: "var(--brutal-display), system-ui, sans-serif",
@@ -2009,104 +1945,6 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
 // STAGE 05 · THE STANDARD (replaces the fake "12 slots" scarcity)
 // 4 principles fill in as scroll progresses through this section.
 // ============================================================================
-function StageStandard({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage5"] }) {
-  const p = useStickyProgress(targetRef);
-  // One principle owns the screen per quarter of the sticky pan — a
-  // manifesto being stamped, not a plate list (06 draws a line, 08 stamps a
-  // pass; this one is pure display type so the three stop rhyming).
-  const current = Math.min(t.principles.length - 1, Math.floor(p * t.principles.length));
-
-  return (
-    <section
-      id="stage-07"
-      ref={targetRef}
-      className="relative h-[210vh] md:h-[280vh]" style={{ background: "#141414", color: "#f4f4f4" }}
-    >
-      <div className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-14 overflow-hidden">
-        <div className="max-w-[1400px] w-full mx-auto">
-          <div
-            className="text-xs font-bold uppercase tracking-[0.35em] mb-6 opacity-55"
-            style={{ fontFamily: "var(--brutal-pixel)" }}
-          >
-            {t.eyebrow}
-          </div>
-
-          <div className="relative" style={{ minHeight: "min(56vh, 500px)" }}>
-            {t.principles.map((pr, i) => {
-              const active = i === current;
-              const past = i < current;
-              return (
-                <div
-                  key={pr.num}
-                  className="absolute inset-0 flex flex-col justify-center"
-                  style={{
-                    opacity: active ? 1 : 0,
-                    transform: active
-                      ? "translateY(0)"
-                      : past
-                        ? "translateY(-30px)"
-                        : "translateY(30px)",
-                    transition:
-                      "opacity 450ms ease, transform 550ms cubic-bezier(0.16,1,0.3,1)",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <div
-                    className="text-sm md:text-base font-bold tabular-nums mb-4 opacity-60"
-                    style={{ fontFamily: "var(--brutal-pixel)" }}
-                  >
-                    {pr.num} / {String(t.principles.length).padStart(2, "0")}
-                  </div>
-                  <div
-                    className="font-black uppercase leading-[0.95] tracking-[-0.02em] max-w-5xl"
-                    style={{
-                      fontSize: "calc(clamp(34px, 6.2vw, 108px) * var(--bgk, 1))",
-                      background: SILVER_H,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      filter: "drop-shadow(0 1px 4px rgba(13,13,13,0.6))",
-                    }}
-                  >
-                    {pr.title}
-                  </div>
-                  <p
-                    className="mt-6 text-sm md:text-lg leading-[1.55] max-w-2xl opacity-70 font-medium"
-                    style={{ fontFamily: "var(--brutal-comic)" }}
-                  >
-                    {pr.body}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-8 flex items-center gap-4">
-            <div className="flex gap-2">
-              {t.principles.map((_, i) => (
-                <span
-                  key={i}
-                  className="h-[3px] border-2 transition-all"
-                  style={{
-                    width: i <= current ? 40 : 14,
-                    borderColor: "rgba(244,244,244,0.5)",
-                    background: i <= current ? SILVER_H : "transparent",
-                  }}
-                />
-              ))}
-            </div>
-            <p
-              className="text-[11px] uppercase tracking-[0.2em] opacity-45 hidden md:block"
-              style={{ fontFamily: "var(--brutal-pixel)" }}
-            >
-              {t.note}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ============================================================================
 // STAGE 06 · QUALIFY
@@ -2125,7 +1963,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
   const all = checked >= t.items.length;
   return (
     <section
-      id="stage-08"
+      id="stage-07"
       ref={targetRef}
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
@@ -2257,7 +2095,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
   const inView = useInView(targetRef, 0.35);
   return (
     <section
-      id="stage-09"
+      id="stage-08"
       ref={targetRef}
       className="relative"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
