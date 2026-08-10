@@ -73,7 +73,7 @@ const COPY = {
       { id: "01", label: "НАЧАЛО" },
       { id: "02", label: "ЗАЩО" },
       { id: "03", label: "ФОКУС" },
-      { id: "04", label: "КЕЙСОВЕ" },
+      { id: "04", label: "РЕЗУЛТАТИ" },
       { id: "05", label: "БРАНДОВЕ" },
       { id: "06", label: "ПРОЦЕС" },
       { id: "07", label: "ПРОФИЛ" },
@@ -127,11 +127,11 @@ const COPY = {
       roomBadge: "ЕКИП №",
     },
     stageCases: {
-      eyebrow: "04 · КЕЙСОВЕ · РЕАЛНИ РЕЗУЛТАТИ",
+      eyebrow: "04 · РЕАЛНИ РЕЗУЛТАТИ",
       headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
       headline2Prefix: "КЪМ",
       headline2Highlight: "РАСТЕЖ.",
-      note: "Три реални кейса. Всеки — с реална метрика, реален бюджет, реален период.",
+      note: "Три реални партньорства. Всяко — с реална метрика, реален бюджет, реален период.",
       cases: [
         {
           brand: "MEN'S CARE",
@@ -594,7 +594,7 @@ export default function BrutalismHomepage() {
     lang === "bg"
       ? [
           { label: "Портфолио", href: "/portfolio"    },
-          { label: "Кейсове",   href: "/case-studies" },
+          { label: "Резултати", href: "/case-studies" },
           { label: "Анкета",    href: "/start"        },
         ]
       : [

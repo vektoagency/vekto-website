@@ -66,7 +66,7 @@ export const startCopy = {
       callCta: "Обади се",
     },
     cases: {
-      eyebrow: "03 · КЕЙСОВЕ · РЕАЛНИ РЕЗУЛТАТИ",
+      eyebrow: "03 · РЕАЛНИ РЕЗУЛТАТИ",
       items: [
         {
           brand: "MEN'S CARE",

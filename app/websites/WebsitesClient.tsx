@@ -28,7 +28,7 @@ const dict = {
         { value: "30+", label: "изградени сайта" },
       ],
       ctaPrimary: "Резервирай разговор",
-      ctaSecondary: "Виж кейс стъдитата",
+      ctaSecondary: "Виж резултатите",
     },
     capabilities: {
       eyebrow: "КАКВО ИЗГРАЖДАМЕ",

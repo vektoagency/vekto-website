@@ -19,7 +19,7 @@ export default function Navbar() {
       services: "Услуги",
       aiCreative: "AI Creative",
       websites: "Уебсайтове",
-      caseStudies: "Кейс стъдита",
+      caseStudies: "Резултати",
       portfolio: "Портфолио",
       contact: "Контакт",
       cta: "Започни",

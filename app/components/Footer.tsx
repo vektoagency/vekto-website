@@ -16,7 +16,7 @@ export default function Footer() {
       exploreLinks: [
         { label: "Начало", href: "/" },
         { label: "Портфолио", href: "/portfolio" },
-        { label: "Кейсове", href: "/case-studies" },
+        { label: "Резултати", href: "/case-studies" },
         { label: "Анкета", href: "/start" },
       ],
       contactH: "Свържи се",

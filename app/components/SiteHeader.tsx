@@ -91,7 +91,7 @@ export default function SiteHeader({
     lang === "bg"
       ? [
           { label: "Портфолио", href: "/portfolio" },
-          { label: "Кейсове", href: "/case-studies" },
+          { label: "Резултати", href: "/case-studies" },
           { label: "Анкета", href: "/start" },
         ]
       : [
