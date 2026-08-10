@@ -1461,22 +1461,6 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
 
       </div>
 
-      {/* BOTTOM — centred scroll cue. */}
-      <div
-        className="relative z-10 w-full shrink-0 px-6 pb-6 md:pb-8 flex items-center justify-center gap-4"
-        style={{
-          opacity: Math.max(0, (1 - p) * 2),
-          transition: "opacity 200ms ease",
-        }}
-      >
-        <div
-          className="text-[12px] md:text-xs font-bold uppercase tracking-[0.35em]"
-          style={{ fontFamily: "var(--brutal-pixel)" }}
-        >
-          {t.scrollCue}
-        </div>
-        <div className="h-[2px] w-24 border-t-2 border-dashed" style={{ borderColor: "rgba(244,244,244,0.5)" }} />
-      </div>
     </section>
   );
 }
