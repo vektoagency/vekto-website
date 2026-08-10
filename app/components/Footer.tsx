@@ -10,14 +10,14 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const t = useT({
     bg: {
-      tagline: "AI визия за бъдещето на бизнеса. От кинематографични филми до съдържание за социалните мрежи.",
+      tagline: "Криейтиви, фунии и AI решения — под един покрив. Партньор за растеж на 50+ бранда в България и САЩ.",
       based: "България · САЩ",
       explore: "Разгледай",
       exploreLinks: [
-        { label: "Услуги", href: "#services" },
-        { label: "Защо VEKTO", href: "#why" },
-        { label: "Нашата работа", href: "#work" },
-        { label: "Процес", href: "#process" },
+        { label: "Начало", href: "/" },
+        { label: "Портфолио", href: "/portfolio" },
+        { label: "Кейсове", href: "/case-studies" },
+        { label: "Анкета", href: "/start" },
       ],
       contactH: "Свържи се",
       startProject: "Започни проект",
@@ -28,14 +28,14 @@ export default function Footer() {
       terms: "Условия",
     },
     en: {
-      tagline: "AI vision for the future of business. From cinematic films to social media content.",
+      tagline: "Creatives, funnels and AI solutions — under one roof. Growth partner to 50+ brands across Bulgaria and the US.",
       based: "Bulgaria · US",
       explore: "Explore",
       exploreLinks: [
-        { label: "Services", href: "#services" },
-        { label: "Why VEKTO", href: "#why" },
-        { label: "Our Work", href: "#work" },
-        { label: "Process", href: "#process" },
+        { label: "Home", href: "/" },
+        { label: "Portfolio", href: "/portfolio" },
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "Brief", href: "/start" },
       ],
       contactH: "Get in Touch",
       startProject: "Start a project",

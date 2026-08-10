@@ -11,7 +11,7 @@ import { join } from "node:path";
 // Loading a WebP data URI inside ImageResponse fails at build time
 // with a cryptic 'u2 is not iterable' from Satori's decode step.
 
-export const alt = "VEKTO — AI маркетинг агенция";
+export const alt = "VEKTO — Независима агенция за растеж";
 export const size = { width: 800, height: 800 };
 export const contentType = "image/png";
 
@@ -133,7 +133,7 @@ export default async function Image() {
                 display: "block",
               }}
             />
-            AI Creative Agency
+            Growth Agency
           </div>
         </div>
 

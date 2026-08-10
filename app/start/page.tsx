@@ -45,13 +45,13 @@ const comicCyr = Balsamiq_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Get Started — VEKTO",
+  title: "Опиши проекта си — VEKTO",
   description:
-    "Tell us about your brand — we reply in 24 hours. AI-driven creative agency for cinematic, UGC, and product video at scale.",
+    "Криейтиви, фунии и AI решения под един покрив. Разкажи ни за бизнеса си — отговаряме лично до 24 часа.",
   openGraph: {
-    title: "Get Started — VEKTO",
+    title: "Опиши проекта си — VEKTO",
     description:
-      "Tell us about your brand — we reply in 24 hours. AI-driven creative agency for cinematic, UGC, and product video at scale.",
+      "Криейтиви, фунии и AI решения под един покрив. Разкажи ни за бизнеса си — отговаряме лично до 24 часа.",
   },
 };
 

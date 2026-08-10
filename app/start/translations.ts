@@ -125,8 +125,12 @@ export const startCopy = {
       h2Highlight: "почти всеки питa това",
       items: [
         {
-          q: "Защо е толкова евтино за това качество?",
-          a: "AI намалява разходите за продукция с 60-70%. Не плащаш за пълен снимачен екип, локация или седмици пред-продукция. Плащаш за резултат — готови видеа за публикуване.",
+          q: "Какво точно предлагате?",
+          a: "Криейтиви (видео и статики), управление на реклами, уебсайтове и фунии, стратегия и AI решения. Един екип, един бюджет — целият растеж под един покрив.",
+        },
+        {
+          q: "Защо е толкова ефективно ценово?",
+          a: "AI намалява разходите за продукция с 60-70%. Не плащаш за пълен снимачен екип, локация или седмици пред-продукция. Плащаш за резултат — готови криейтиви и кампании.",
         },
         {
           q: "Какво се случва ако не съм доволен?",
@@ -146,7 +150,7 @@ export const startCopy = {
         },
         {
           q: "Какво ако имам in-house маркетинг екип?",
-          a: "Перфектно — функционираме като production extension. Те носят стратегията и creative direction; ние доставяме видеата за дни вместо седмици.",
+          a: "Перфектно — функционираме като extension на екипа. Те носят вътрешния контекст; ние доставяме криейтивите, фуниите и кампаниите за дни вместо седмици.",
         },
       ],
     },
@@ -154,7 +158,7 @@ export const startCopy = {
       eyebrow: "06 · РАЗГОВОР",
       h2: "Бранд, който се отличава —",
       h2Highlight: "бизнес, който расте.",
-      sub: "Видео, реклами, social и стратегия. Всичко за големия резултат.",
+      sub: "Криейтиви, реклами, сайтове и стратегия. Всичко за големия резултат.",
       scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай разговор",
     },
@@ -295,8 +299,12 @@ export const startCopy = {
       h2Highlight: "almost everyone asks this",
       items: [
         {
-          q: "Why is it so cheap for this quality?",
-          a: "AI cuts production cost 60-70%. You don't pay for a full crew, location, or weeks of pre-production. You pay for the result — ready-to-publish videos.",
+          q: "What exactly do you offer?",
+          a: "Creatives (video and statics), paid ads management, websites and funnels, strategy and AI solutions. One team, one budget — all of growth under one roof.",
+        },
+        {
+          q: "Why is it so cost-effective?",
+          a: "AI cuts production cost 60-70%. You don't pay for a full crew, location, or weeks of pre-production. You pay for the result — ready-to-run creatives and campaigns.",
         },
         {
           q: "What if I'm not happy?",
@@ -316,7 +324,7 @@ export const startCopy = {
         },
         {
           q: "What if I have an in-house marketing team?",
-          a: "Perfect — we function as a production extension. They handle strategy and creative direction; we deliver videos in days instead of weeks.",
+          a: "Perfect — we function as an extension of the team. They bring the internal context; we deliver the creatives, funnels and campaigns in days instead of weeks.",
         },
       ],
     },
@@ -324,7 +332,7 @@ export const startCopy = {
       eyebrow: "06 · THE TALK",
       h2: "A brand that stands out —",
       h2Highlight: "a business that grows.",
-      sub: "Video, ads, social, and strategy. Everything for real growth.",
+      sub: "Creatives, ads, websites and strategy. Everything for real growth.",
       scrollToForm: "Fill the survey →",
       orBook: "Or book a call",
     },
