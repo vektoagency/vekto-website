@@ -288,9 +288,12 @@ export default function StartClient() {
                   {t.meta.stageEyebrow}
                 </p>
                 <h1
-                  className="font-black uppercase leading-[0.97] tracking-[-0.03em] mb-5 md:mb-7 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-5 md:mb-7 animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{
-                    fontSize: "calc(clamp(30px, 6vw, 76px) * var(--bgk, 1))",
+                    // Sized so each sentence holds one line — two lines
+                    // total on every viewport (no text-balance: it split
+                    // the sentences into even halves on phones).
+                    fontSize: "calc(clamp(21px, 5.6vw, 76px) * var(--bgk, 1))",
                     textShadow: "0 2px 30px rgba(0,0,0,0.5)",
                   }}
                 >
