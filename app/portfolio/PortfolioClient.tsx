@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import bunnyData from "../data/bunny-clips.json";
 import { useT } from "../i18n/LangProvider";
@@ -43,7 +43,6 @@ type Clip = {
 const clips = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
 
 export default function PortfolioClient() {
-  const [filter, setFilter] = useState<string>("ALL");
   const [expanded, setExpanded] = useState<Clip | null>(null);
   const t = useT({
     bg: {
@@ -85,12 +84,7 @@ export default function PortfolioClient() {
       backToHome: "← Back to home",
     },
   });
-  const categories = t.categories;
-
-  const visible = useMemo(
-    () => (filter === "ALL" ? clips : clips.filter((c) => c.category === filter)),
-    [filter]
-  );
+  const visible = clips;
 
   // ESC closes the lightbox (page itself stays open).
   useEffect(() => {
@@ -133,7 +127,7 @@ export default function PortfolioClient() {
     <>
       {/* DB-style page header — matches the look the overlay used */}
       <div
-        className="sticky top-16 z-30 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#f4f4f4]/45 font-mono text-[11px] uppercase tracking-[0.3em]"
+        className="sticky top-[56px] md:top-[76px] z-30 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#f4f4f4]/45 font-mono text-[11px] uppercase tracking-[0.3em]"
         style={{
           background: "#161616",
           boxShadow: "0 2px 0 rgba(244,244,244,0.18), 0 10px 24px -12px rgba(0,0,0,0.6)",
@@ -145,57 +139,23 @@ export default function PortfolioClient() {
         </div>
         <Link
           href="/"
-          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#f4f4f4] hover:bg-white border border-[#f4f4f4] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(244,244,244,0.35)]"
+          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#0d0d0d] bg-[#f4f4f4] px-4 py-2 font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+          style={{ boxShadow: "3px 3px 0 0 #3a3a3a" }}
           aria-label={t.back}
         >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="group-hover:-translate-x-0.5 transition-transform">
-            <path d="M6 1L2 5L6 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-          </svg>
+          <span aria-hidden>←</span>
           <span>{t.back}</span>
         </Link>
       </div>
 
-      <section className="px-6 md:px-10 pt-5 pb-4 max-w-[1500px] mx-auto">
-        <nav
-          aria-label="Filter clips by category"
-          className="flex flex-wrap items-center gap-x-0.5 md:gap-x-1 gap-y-1.5 font-mono text-[10px] md:text-[14px] uppercase tracking-[0.14em] md:tracking-[0.18em] text-[#f4f4f4] rounded-md border border-[#f4f4f4]/25 px-2.5 md:px-3 py-1.5 md:py-2.5 font-semibold"
-          style={{
-            background: "linear-gradient(135deg, rgba(244,244,244,0.06) 0%, rgba(244,244,244,0.02) 100%)",
-            boxShadow: "inset 0 0 0 1px rgba(244,244,244,0.05), 0 0 22px -10px rgba(244,244,244,0.35)",
-          }}
-        >
-          <span className="mr-1.5 md:mr-3 text-[9px] md:text-[12px] text-[#f4f4f4]">{t.filter}</span>
-          {categories.map((cat, i) => {
-            const active = filter === cat.id;
-            return (
-              <span key={cat.id} className="flex items-center">
-                {i > 0 && <span aria-hidden className="mx-1 md:mx-2 text-[#f4f4f4]/45">|</span>}
-                <button
-                  onClick={() => setFilter(cat.id)}
-                  className={`py-0.5 md:py-1 px-0.5 md:px-1 transition-colors ${
-                    active
-                      ? "text-[#f4f4f4] font-bold"
-                      : "text-[#f4f4f4] hover:text-white"
-                  }`}
-                >
-                  {active ? `[${cat.label}]` : cat.label}
-                </button>
-              </span>
-            );
-          })}
-        </nav>
-      </section>
-
-      <section className="px-6 md:px-12 pb-16 max-w-[1240px] mx-auto">
+      <section className="px-6 md:px-12 pt-6 md:pt-8 pb-16 max-w-[1240px] mx-auto">
         {/* grid-flow-dense lets portrait tiles backfill the empty cells
             that landscape (col-span-2) clips would otherwise leave when
-            they don't fit at the end of a row. The key={`${filter}-${c.id}`}
-            forces a fresh boot animation on every filter change so the
-            grid restages with a stagger instead of a pop-replace. */}
+            they don't fit at the end of a row. */}
         <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
           {visible.map((c, i) => (
             <ClipTile
-              key={`${filter}-${c.id}`}
+              key={c.id}
               clip={c}
               idx={i}
               onExpand={() => setExpanded(c)}
@@ -205,7 +165,7 @@ export default function PortfolioClient() {
       </section>
 
       <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">
-        <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow text-balance">
+        <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#f4f4f4] po-glow text-balance">
           {t.ctaH2Top}<br />
           <span className="text-[#f4f4f4]">{t.ctaH2Bottom}</span>
         </h2>
@@ -214,14 +174,14 @@ export default function PortfolioClient() {
             data-cal-namespace="30min"
             data-cal-link="vekto/30min"
             data-cal-config='{"layout":"month_view","theme":"dark"}'
-            className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-semibold px-10 py-4 rounded-sm hover:bg-[#ffffff] transition-all hover:-translate-y-0.5 cursor-pointer"
-            style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
+            className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] text-[13px] px-10 py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform cursor-pointer"
+            style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
           >
             {t.bookCta}
           </button>
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/40 text-[#f4f4f4] font-semibold px-10 py-4 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors cursor-pointer font-mono text-sm uppercase tracking-[0.2em]"
+            className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] px-10 py-4 hover:bg-white hover:text-black transition-colors cursor-pointer font-mono text-sm uppercase tracking-[0.2em] font-bold"
           >
             {t.backToHome}
           </Link>
