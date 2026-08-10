@@ -145,7 +145,7 @@ export default function PortfolioClient() {
         </div>
         <Link
           href="/"
-          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#f4f4f4] hover:bg-[#e0ff4a] border border-[#f4f4f4] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(244,244,244,0.35)]"
+          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#f4f4f4] hover:bg-white border border-[#f4f4f4] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(244,244,244,0.35)]"
           aria-label={t.back}
         >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="group-hover:-translate-x-0.5 transition-transform">

@@ -194,7 +194,7 @@ export default function CaseStudiesClient() {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
+                  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)",
               }}
             >
               {t.h1Highlight}
@@ -245,7 +245,7 @@ export default function CaseStudiesClient() {
               <span
                 className="bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
+                  backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)",
                 }}
               >
                 {t.ctaH2Bottom}
@@ -353,7 +353,7 @@ function CaseCard({
         <div className="mt-auto pt-2">
           <span
             className={`inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] transition-colors ${
-              isLive ? "text-[#f4f4f4] group-hover:text-[#e0ff4a]" : "text-[#4a4540]"
+              isLive ? "text-[#f4f4f4] group-hover:text-[#ffffff]" : "text-[#4a4540]"
             }`}
           >
             <span>{isLive ? viewLabel : comingSoonLabel}</span>

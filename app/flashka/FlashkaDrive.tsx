@@ -55,8 +55,8 @@ export default function FlashkaDrive() {
             </pattern>
             {/* LED bloom — bright core + soft halo */}
             <radialGradient id="fdLed" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stopColor="#f5ffb0" stopOpacity="1" />
-              <stop offset="20%"  stopColor="#eaff7a" stopOpacity="1" />
+              <stop offset="0%"   stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="20%"  stopColor="#f4f4f4" stopOpacity="1" />
               <stop offset="55%"  stopColor="#f4f4f4" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#f4f4f4" stopOpacity="0" />
             </radialGradient>
@@ -157,7 +157,7 @@ export default function FlashkaDrive() {
           <g className="flashka-drive-led">
             <circle cx="98" cy="79" r="22" fill="url(#fdLed)" opacity="0.45" />
             <circle cx="98" cy="79" r="11" fill="url(#fdLed)" opacity="0.7" />
-            <circle cx="98" cy="79" r="3.5" fill="#f5ffb0" />
+            <circle cx="98" cy="79" r="3.5" fill="#ffffff" />
             <circle cx="98" cy="79" r="3.5" fill="none" stroke="rgba(0,0,0,0.4)" strokeWidth="0.5" />
           </g>
 

@@ -111,7 +111,7 @@ export default function AICreativeHero() {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
+                  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)",
                 filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.4))",
               }}
             >

@@ -55,7 +55,7 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
               {t.process.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.process.h2Highlight}
               </span>
@@ -95,7 +95,7 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
               {t.stats.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.stats.h2Highlight}
               </span>{" "}
@@ -144,7 +144,7 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
               {t.compare.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.compare.h2Highlight}
               </span>
@@ -211,7 +211,7 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
               {t.faq.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.faq.h2Highlight}
               </span>
@@ -241,7 +241,7 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
+                backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)",
                 filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.42))",
               }}
             >

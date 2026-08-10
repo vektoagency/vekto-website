@@ -69,7 +69,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
               {t.proof.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.proof.h2Highlight}
               </span>
@@ -153,7 +153,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
               <span className="text-white">{t.about.h2}</span>{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.about.h2Highlight}
               </span>
@@ -198,7 +198,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
               {t.inside.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.inside.h2Highlight}
               </span>
@@ -237,7 +237,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
               {t.qualify.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)" }}
               >
                 {t.qualify.h2Highlight}
               </span>

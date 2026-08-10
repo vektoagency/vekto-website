@@ -82,12 +82,12 @@ export default function TransitionBridge() {
       aria-hidden
       className={`pointer-events-none fixed inset-0 z-[70] ${cls}`}
     >
-      {/* Phosphor wash — radial lime from click origin */}
+      {/* Phosphor wash — radial silver from click origin */}
       <div
         className="absolute inset-0 tb-phosphor"
         style={{
           background:
-            "radial-gradient(circle at var(--tb-x, 75%) var(--tb-y, 50%), #e8ff5a 0%, #f4f4f4 10%, #4a5c0d 34%, #0a0805 62%, #0a0805 100%)",
+            "radial-gradient(circle at var(--tb-x, 75%) var(--tb-y, 50%), #ffffff 0%, #f4f4f4 10%, #3a3a3a 34%, #0a0a0a 62%, #0a0a0a 100%)",
         }}
       />
       {/* White flash at peak of covering */}
