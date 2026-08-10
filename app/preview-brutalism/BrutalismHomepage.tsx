@@ -21,9 +21,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { sendContactEmail } from "../actions/contact";
 import FlightPlan from "../components/FlightPlan";
 import HeroCinematicBg from "../components/HeroCinematicBg";
+import { trackEventBoth } from "../components/MetaPixel";
 
 // ============================================================================
 // PALETTE
@@ -76,7 +76,7 @@ const COPY = {
       { id: "05", label: "БРАНДОВЕ" },
       { id: "06", label: "ПРОЦЕС" },
       { id: "07", label: "СТАНДАРТ" },
-      { id: "08", label: "КАНДИДАТ" },
+      { id: "08", label: "ПРОФИЛ" },
       { id: "09", label: "РАЗГОВОР" },
     ],
     stage1: {
@@ -97,7 +97,7 @@ const COPY = {
       globeTitle: "ОБХВАТ",
       globeBg: "БЪЛГАРИЯ",
       globeUs: "САЩ",
-      globeNote: "БРАНДА В ПОРТФЕЙЛА",
+      globeNote: "БРАНДА В ПОРТФОЛИОТО",
       globeLink: "ВИЖ ГИ",
       sheetTitle: "ОТ РОЛКАТА",
       sheetNote: "9:16 · ЗА REELS / TIKTOK",
@@ -135,7 +135,7 @@ const COPY = {
       cases: [
         {
           brand: "MEN'S CARE",
-          category: "Beauty · BG",
+          category: "Козметика · BG",
           metric: "5.2×",
           metricLabel: "ROAS · AI КАМПАНИЯ",
           duration: "90 ДНИ",
@@ -143,7 +143,7 @@ const COPY = {
         },
         {
           brand: "PARFEN",
-          category: "Perfume · BG",
+          category: "Парфюмерия · BG",
           metric: "7.7×",
           metricLabel: "ROAS · ОФЕРТА СЪС СРОК",
           duration: "60 ДНИ",
@@ -151,7 +151,7 @@ const COPY = {
         },
         {
           brand: "beMe",
-          category: "Skincare · BG",
+          category: "Грижа за кожата · BG",
           metric: "3.4%",
           metricLabel: "CVR · ОТ КЛИК ДО ПОРЪЧКА",
           duration: "90 ДНИ",
@@ -163,7 +163,7 @@ const COPY = {
       eyebrow: "06 · КАК РАБОТИМ",
       headline1: "ОТ ПЪРВИЯ РАЗГОВОР",
       headline2Prefix: "ДО",
-      headline2Highlight: "РАСТЕЖ.",
+      headline2Highlight: "РАСТЕЖА.",
       note: "Един и същ път за всеки нов бранд. Клиничен, не корпоративен.",
       steps: [
         {
@@ -491,34 +491,6 @@ function useLanguage(): [Lang, (l: Lang) => void] {
 
 // Progress 0→1 across the whole time the section overlaps the viewport
 // (top hits viewport bottom → bottom leaves viewport top).
-function useScrollProgress(ref: React.RefObject<HTMLElement | null>) {
-  const [p, setP] = useState(0);
-  useEffect(() => {
-    let raf = 0;
-    const compute = () => {
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = rect.height + vh;
-      const scrolled = vh - rect.top;
-      setP(Math.max(0, Math.min(1, scrolled / total)));
-    };
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(compute);
-    };
-    compute();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, [ref]);
-  return p;
-}
 
 // Progress 0→1 ONLY across the sticky-active window (from when the
 // section top hits viewport top, to when the section bottom hits
@@ -693,7 +665,10 @@ export default function BrutalismHomepage() {
   const headerCtaLabel = lang === "bg" ? "Опиши проекта си" : "Describe your project";
   const headerCtaShort = lang === "bg" ? "Проект" : "Project";
   const [bookOpen, setBookOpen] = useState(false);
-  const openBook = useCallback(() => setBookOpen(true), []);
+  const openBook = useCallback(() => {
+    setBookOpen(true);
+    trackEventBoth("Contact", { contentName: "contact-hub" });
+  }, []);
   const closeBook = useCallback(() => setBookOpen(false), []);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -720,6 +695,12 @@ export default function BrutalismHomepage() {
             dark: { "cal-brand": "#f4f4f4" },
           },
           hideEventTypeDetails: false,
+        });
+        // A booked meeting is the page's highest-value conversion — mirror
+        // it into Meta (browser + CAPI) so campaigns can optimise on it.
+        cal("on", {
+          action: "bookingSuccessful",
+          callback: () => trackEventBoth("Schedule", { contentName: "cal-30min" }),
         });
       } catch {}
     })();
@@ -1006,38 +987,13 @@ export default function BrutalismHomepage() {
 // language so it stays consistent with the rest of the preview.
 // ============================================================================
 function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void; lang: Lang }) {
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [lead, setLead] = useState<{ name: string; email: string }>({ name: "", email: "" });
-
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // cal.com embed (vekto/30min) — loaded lazily the first time the modal
-  // opens, themed to the film world. The success screen's booking button
-  // uses the data-cal-* attributes this API registers.
-  useEffect(() => {
-    if (!open) return;
-    (async () => {
-      try {
-        const { getCalApi } = await import("@calcom/embed-react");
-        const cal = await getCalApi({ namespace: "30min" });
-        cal("ui", {
-          theme: "dark",
-          cssVarsPerTheme: {
-            light: { "cal-brand": "#0d0d0d" },
-            dark: { "cal-brand": "#f4f4f4" },
-          },
-          hideEventTypeDetails: false,
-        });
-      } catch {}
-    })();
-  }, [open]);
+  // cal("ui", …) is initialised once at page level; the modal's booking
+  // slab reuses that namespace via its data-cal-* attributes.
 
   useEffect(() => {
     if (!open) return;
-    setSent(false);
-    setError("");
 
     // Remember who opened the modal so focus can be handed back on close —
     // otherwise a keyboard user is dropped at the top of the document.
@@ -1131,23 +1087,6 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         sentCal: "PICK A TIME FOR THE CALL",
         errorMsg: "Something went wrong. Try again.",
       };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    const formData = new FormData(e.currentTarget);
-    // Keep name + email so the cal.com booking on the success screen opens
-    // pre-filled — the visitor types their details exactly once.
-    setLead({
-      name: String(formData.get("name") ?? ""),
-      email: String(formData.get("email") ?? ""),
-    });
-    const result = await sendContactEmail(formData);
-    setLoading(false);
-    if (result.success) setSent(true);
-    else setError(s.errorMsg);
-  };
 
   if (!open) return null;
 
@@ -1320,97 +1259,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
   );
 }
 
-function QuickAction({
-  href,
-  glyph,
-  label,
-  sub,
-  target,
-}: {
-  href: string;
-  glyph: string;
-  label: string;
-  sub: string;
-  target?: string;
-}) {
-  return (
-    <a
-      href={href}
-      target={target}
-      rel={target === "_blank" ? "noopener noreferrer" : undefined}
-      className="flex flex-col items-center gap-1.5 border-2 border-black py-4 md:py-6 px-2 text-center transition-transform hover:-translate-y-0.5 hover:scale-[1.02]"
-      style={{
-        // Same brushed titanium as the active CTA slabs — one physical
-        // language for every conversion surface, machined edge included.
-        background: SILVER,
-        color: "#0d0d0d",
-        boxShadow: "0 0 0 1px rgba(255,255,255,0.45) inset, 4px 4px 0 0 #2a2a2a",
-      }}
-    >
-      <span className="text-3xl md:text-4xl leading-none">{glyph}</span>
-      <span
-        className="text-[12px] font-bold uppercase tracking-[0.2em]"
-        style={{ fontFamily: "var(--brutal-pixel)" }}
-      >
-        {label}
-      </span>
-      <span
-        className="text-[11px] opacity-60 tabular-nums"
-        style={{ fontFamily: "var(--brutal-pixel)" }}
-      >
-        {sub}
-      </span>
-    </a>
-  );
-}
 
-function FormField({
-  name,
-  label,
-  ph,
-  type = "text",
-  required,
-  textarea,
-}: {
-  name: string;
-  label: string;
-  ph: string;
-  type?: string;
-  required?: boolean;
-  textarea?: boolean;
-}) {
-  return (
-    <div>
-      <label
-        className="block text-[12px] font-bold uppercase tracking-[0.25em] mb-1.5 opacity-70"
-        style={{ fontFamily: "var(--brutal-pixel)" }}
-      >
-        {label}
-      </label>
-      {/* Underline fields — the page's hairline language, not boxed wells.
-          The line brightens to full white on focus. */}
-      {textarea ? (
-        <textarea
-          name={name}
-          required={required}
-          placeholder={ph}
-          rows={3}
-          className="w-full px-0 py-2 text-sm md:text-base resize-none focus:outline-none transition-colors border-b placeholder:opacity-40 focus:border-white"
-          style={{ background: "transparent", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.35)" }}
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          required={required}
-          placeholder={ph}
-          className="w-full px-0 py-2 text-sm md:text-base focus:outline-none transition-colors border-b placeholder:opacity-40 focus:border-white"
-          style={{ background: "transparent", color: "#f4f4f4", borderColor: "rgba(244,244,244,0.35)" }}
-        />
-      )}
-    </div>
-  );
-}
 
 // ============================================================================
 // HAZARD STRIP — 6px diagonal safety-tape (silver + jet-black) used
