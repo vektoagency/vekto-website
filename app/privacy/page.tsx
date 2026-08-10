@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import Link from "next/link";
+import SiteHeader from "../components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — VEKTO",
@@ -221,16 +221,7 @@ export default async function PrivacyPage() {
 
   return (
     <div className="min-h-screen bg-[#080808] text-[#ece8e1]">
-      <header className="border-b border-[#1e1e1c] bg-[#080808]/95 backdrop-blur-md sticky top-0 z-20">
-        <div className="max-w-3xl mx-auto px-5 md:px-8 py-3 md:py-4">
-          <Link
-            href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
-          >
-            {t.home}
-          </Link>
-        </div>
-      </header>
+      <SiteHeader solid />
 
       <main className="max-w-3xl mx-auto px-5 md:px-8 py-10 md:py-16">
         <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">{t.eyebrow}</p>

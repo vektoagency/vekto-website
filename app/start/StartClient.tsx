@@ -4,9 +4,11 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
-import { startCopy, type Lang } from "./translations";
+import { startCopy } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
 import { trackEvent } from "../components/MetaPixel";
+import { useLang } from "../i18n/LangProvider";
+import SiteHeader from "../components/SiteHeader";
 
 // Lazy-load the below-fold sections (How it works · Stats · Compare ·
 // FAQ · Final CTA) — keeps the initial JS bundle for hero+form lean
@@ -16,7 +18,6 @@ const StartBelowFold = dynamic(() => import("./StartBelowFold"), {
   loading: () => null,
 });
 
-const LANG_KEY = "vekto-start-lang";
 
 // Brand logos used in the social-proof marquee. Mirrors the Clients
 // component's roster so the landing page reads as the same brand world.
@@ -57,7 +58,9 @@ const SOCIAL_PROOF_LOGOS = [
 ];
 
 export default function StartClient() {
-  const [lang, setLang] = useState<Lang>("bg");
+  // Language lives in the global LangProvider (vekto-lang cookie) so the
+  // shared SiteHeader toggle switches this page's copy too.
+  const { lang } = useLang();
   const [hydrated, setHydrated] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -74,10 +77,6 @@ export default function StartClient() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(LANG_KEY);
-      if (saved === "bg" || saved === "en") setLang(saved);
-    } catch {}
-    try {
       const params = new URLSearchParams(window.location.search);
       setUtm({
         source: params.get("utm_source") || undefined,
@@ -90,11 +89,6 @@ export default function StartClient() {
     } catch {}
     setHydrated(true);
   }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    try { localStorage.setItem(LANG_KEY, lang); } catch {}
-  }, [lang, hydrated]);
 
   // Cal.com namespace registration — deferred to idle so it doesn't
   // block the landing page's critical render path.
@@ -201,24 +195,8 @@ export default function StartClient() {
 
   return (
     <div className="min-h-screen bg-[#080808] text-[#ece8e1] flex flex-col">
-      {/* ─────────────────  HEADER (sticky, minimal)  ───────────────── */}
-      <header className="border-b border-[#1e1e1c] bg-[#080808]/95 backdrop-blur-md sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 md:py-4 flex items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
-          >
-            {t.meta.home}
-          </Link>
-          <button
-            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] border border-[#f4f4f4]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors"
-            aria-label="Toggle language"
-          >
-            {t.meta.langToggle}
-          </button>
-        </div>
-      </header>
+      {/* ─────────────────  HEADER — shared site header  ───────────────── */}
+      <SiteHeader solid ctaHref="#anketa" />
 
       <main className="flex-1">
         {!done ? (
@@ -372,7 +350,7 @@ export default function StartClient() {
             </section>
 
             {/* ─────────────  FORM SECTION (the conversion point)  ───────────── */}
-            <section ref={formRef} className="relative scroll-mt-20">
+            <section ref={formRef} id="anketa" className="relative scroll-mt-24">
               <div className="max-w-2xl mx-auto px-5 md:px-8 py-8 md:py-14">
                 <div data-animate className="reveal text-center mb-8 md:mb-10">
                   <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import Navbar from "../components/Navbar";
+import SiteHeader from "../components/SiteHeader";
 import AICreativeHero from "./AICreativeHero";
 import AIServicesGrid from "./AIServicesGrid";
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 export default function AICreativePage() {
   return (
     <>
-      <Navbar />
+      <SiteHeader />
       <main>
         <AICreativeHero />
         <Clients />

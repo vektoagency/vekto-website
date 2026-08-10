@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { briefCopy, type Lang } from "./translations";
 import { submitBrief, type BriefSubmission } from "../actions/brief";
+import { useLang } from "../i18n/LangProvider";
+import SiteHeader from "../components/SiteHeader";
 
 const TOTAL_STEPS = 7;
 const STORAGE_KEY = "vekto-brief-draft-v1";
-const LANG_KEY = "vekto-brief-lang";
 
 const initialForm: BriefSubmission = {
   lang: "bg",
@@ -58,18 +59,18 @@ const initialForm: BriefSubmission = {
 };
 
 export default function BriefClient() {
-  const [lang, setLang] = useState<Lang>("bg");
+  // Language lives in the global LangProvider (vekto-lang cookie) so the
+  // shared SiteHeader toggle switches this page's copy too.
+  const { lang } = useLang();
   const [step, setStep] = useState(0); // 0 = intro, 1-7 = steps, 8 = success
   const [form, setForm] = useState<BriefSubmission>(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
-  // Restore draft + lang on mount
+  // Restore draft on mount
   useEffect(() => {
     try {
-      const savedLang = localStorage.getItem(LANG_KEY);
-      if (savedLang === "bg" || savedLang === "en") setLang(savedLang);
       const draft = localStorage.getItem(STORAGE_KEY);
       if (draft) {
         const parsed = JSON.parse(draft) as BriefSubmission;
@@ -81,12 +82,10 @@ export default function BriefClient() {
     setHydrated(true);
   }, []);
 
-  // Persist lang
+  // Mirror the provider language into the submission payload
   useEffect(() => {
-    if (!hydrated) return;
-    localStorage.setItem(LANG_KEY, lang);
-    setForm((f) => ({ ...f, lang }));
-  }, [lang, hydrated]);
+    setForm((f) => (f.lang === lang ? f : { ...f, lang }));
+  }, [lang]);
 
   // Persist draft
   useEffect(() => {
@@ -146,30 +145,10 @@ export default function BriefClient() {
 
   return (
     <div className="min-h-screen bg-[#080808] text-[#ece8e1]">
-      {/* Top bar */}
-      <header className="sticky top-0 z-30 border-b border-[#1e1e1c] bg-[#080808]/95 backdrop-blur-md">
-        <div className="max-w-3xl mx-auto px-5 md:px-8 py-3 md:py-4 flex items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
-          >
-            {t.nav.home}
-          </Link>
-          <div className="flex items-center gap-3 md:gap-4">
-            {step > 0 && step < 8 && (
-              <span className="hidden sm:inline font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4]">
-                {t.meta.stepOf(step, TOTAL_STEPS)}
-              </span>
-            )}
-            <button
-              onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-              className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] border border-[#f4f4f4]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors"
-              aria-label="Toggle language"
-            >
-              {t.meta.langToggle}
-            </button>
-          </div>
-        </div>
+      {/* Top bar — shared site header + the wizard's own progress strip
+          sticky right under it */}
+      <SiteHeader solid />
+      <header className="sticky top-[56px] md:top-[76px] z-30">
         {/* Progress bar */}
         <div className="h-[2px] bg-[#1e1e1c]">
           <div

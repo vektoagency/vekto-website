@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import SiteHeader from "../../components/SiteHeader";
 
 const copy = {
   bg: {
@@ -71,15 +72,8 @@ export default async function MensCarePage() {
   return (
     <div className="min-h-screen bg-[#080808] text-white">
 
-      {/* Back */}
-      <div className="fixed top-6 left-6 z-50">
-        <Link href="/#work" className="flex items-center gap-2 text-sm text-[#a0a0a0] hover:text-white transition-colors">
-          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M10 4l-6 6 6 6" />
-          </svg>
-          {t.back}
-        </Link>
-      </div>
+      {/* Shared site header — same as the homepage */}
+      <SiteHeader />
 
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-end px-6 pb-16 pt-32 overflow-hidden">

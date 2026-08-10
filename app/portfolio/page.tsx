@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Navbar from "../components/Navbar";
+import SiteHeader from "../components/SiteHeader";
 import dynamic from "next/dynamic";
 import PortfolioClient from "./PortfolioClient";
 
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function PortfolioPage() {
   return (
     <>
-      <Navbar />
+      <SiteHeader />
       <main className="min-h-screen pt-20 bg-[#080808]">
         <PortfolioClient />
       </main>

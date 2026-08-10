@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import Navbar from "../components/Navbar";
+import SiteHeader from "../components/SiteHeader";
 import WebsitesClient from "./WebsitesClient";
 
 const Contact = dynamic(() => import("../components/Contact"));
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function WebsitesPage() {
   return (
     <>
-      <Navbar />
+      <SiteHeader />
       <main>
         <WebsitesClient />
         <Contact />

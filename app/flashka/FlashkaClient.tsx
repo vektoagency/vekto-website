@@ -4,10 +4,12 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
-import { flashkaCopy, type Lang } from "./translations";
+import { flashkaCopy } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
 import { trackEvent } from "../components/MetaPixel";
 import FlashkaDrive from "./FlashkaDrive";
+import { useLang } from "../i18n/LangProvider";
+import SiteHeader from "../components/SiteHeader";
 
 // Lazy-load below-fold (inside · proof · qualify · faq · finalCta) so
 // the hero+form chunk stays lean for cold paid-traffic landings.
@@ -23,10 +25,10 @@ const FlashkaPostForm = dynamic(() => import("./FlashkaPostForm"), {
   loading: () => null,
 });
 
-const LANG_KEY = "vekto-flashka-lang";
-
 export default function FlashkaClient() {
-  const [lang, setLang] = useState<Lang>("bg");
+  // Language lives in the global LangProvider (vekto-lang cookie) so the
+  // shared SiteHeader toggle switches this page's copy too.
+  const { lang } = useLang();
   const [hydrated, setHydrated] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,10 +47,6 @@ export default function FlashkaClient() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(LANG_KEY);
-      if (saved === "bg" || saved === "en") setLang(saved);
-    } catch {}
-    try {
       const params = new URLSearchParams(window.location.search);
       setUtm({
         source: params.get("utm_source") || undefined,
@@ -61,11 +59,6 @@ export default function FlashkaClient() {
     } catch {}
     setHydrated(true);
   }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    try { localStorage.setItem(LANG_KEY, lang); } catch {}
-  }, [lang, hydrated]);
 
   useEffect(() => {
     const initCal = async () => {
@@ -147,23 +140,8 @@ export default function FlashkaClient() {
 
   return (
     <div className="min-h-screen bg-[#080808] text-[#ece8e1] flex flex-col">
-      <header className="border-b border-[#1e1e1c] bg-[#080808]/95 backdrop-blur-md sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 md:py-4 flex items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
-          >
-            {t.meta.home}
-          </Link>
-          <button
-            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] border border-[#f4f4f4]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors"
-            aria-label="Toggle language"
-          >
-            {t.meta.langToggle}
-          </button>
-        </div>
-      </header>
+      {/* Shared site header — same as the homepage */}
+      <SiteHeader solid />
 
       <main className="flex-1">
         {!done ? (
