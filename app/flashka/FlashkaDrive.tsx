@@ -57,8 +57,8 @@ export default function FlashkaDrive() {
             <radialGradient id="fdLed" cx="50%" cy="50%" r="50%">
               <stop offset="0%"   stopColor="#f5ffb0" stopOpacity="1" />
               <stop offset="20%"  stopColor="#eaff7a" stopOpacity="1" />
-              <stop offset="55%"  stopColor="#c8ff00" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#c8ff00" stopOpacity="0" />
+              <stop offset="55%"  stopColor="#f4f4f4" stopOpacity="0.85" />
+              <stop offset="100%" stopColor="#f4f4f4" stopOpacity="0" />
             </radialGradient>
             {/* Body side-shading: thin gradient applied as overlay to
                 give the body a curved-edge feel (lighter top, darker
@@ -136,7 +136,7 @@ export default function FlashkaDrive() {
           {/* Top hairline highlight — catches light */}
           <rect x="70" y="45" width="240" height="1.4" fill="rgba(255,255,255,0.18)" />
           {/* Lime brand kiss along the very top edge */}
-          <rect x="70" y="48.5" width="240" height="1.6" fill="#c8ff00" opacity="0.65" />
+          <rect x="70" y="48.5" width="240" height="1.6" fill="#f4f4f4" opacity="0.65" />
           {/* Mid-body horizontal hairline — subtle product seam */}
           <rect x="70" y="78" width="240" height="0.4" fill="rgba(255,255,255,0.04)" />
           {/* Bottom shelf reflection */}
@@ -165,14 +165,14 @@ export default function FlashkaDrive() {
           <rect
             x="155" y="68"
             width="70" height="14"
-            fill="#c8ff00"
+            fill="#f4f4f4"
             opacity="0.85"
             mask="url(#fdLogoMask)"
           />
           <rect
             x="155" y="68"
             width="70" height="14"
-            fill="#c8ff00"
+            fill="#f4f4f4"
             opacity="0.22"
             mask="url(#fdLogoMask)"
             style={{ filter: "blur(1.5px)" }}
@@ -198,7 +198,7 @@ export default function FlashkaDrive() {
             fontFamily="ui-monospace, 'Geist Mono', monospace"
             fontSize="3.5"
             letterSpacing="0.5"
-            fill="rgba(200,255,0,0.55)"
+            fill="rgba(244,244,244,0.55)"
           >
             v.2026
           </text>

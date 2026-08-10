@@ -58,7 +58,7 @@ export default function Stats() {
             <AnimateIn key={s.label} delay={i * 120}>
               <div className="text-center py-6 px-2 md:py-14 md:px-8">
                 <div className="flex items-center justify-center mb-1 md:mb-2" style={{ height: "clamp(3rem, 10vw, 7rem)" }}>
-                  <span className="text-3xl sm:text-5xl md:text-7xl font-bold text-[#c8ff00] tracking-tight">
+                  <span className="text-3xl sm:text-5xl md:text-7xl font-bold text-[#f4f4f4] tracking-tight">
                     {s.symbol ? (
                       <span style={{ fontSize: "clamp(3rem, 10vw, 8rem)", fontWeight: 700, lineHeight: 1 }}>∞</span>
                     ) : (

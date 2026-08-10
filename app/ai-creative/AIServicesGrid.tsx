@@ -107,7 +107,7 @@ export default function AIServicesGrid() {
       <div className="max-w-7xl mx-auto">
         <AnimateIn className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10 md:mb-16">
           <div>
-            <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">
+            <p className="text-xs text-[#f4f4f4] uppercase tracking-widest mb-3">
               {t.eyebrow}
             </p>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight text-balance">
@@ -133,7 +133,7 @@ export default function AIServicesGrid() {
                 <div className="flex items-start gap-5">
                   <span
                     className={`text-sm font-mono mt-1 transition-colors ${
-                      active === i ? "text-[#c8ff00]" : "text-[#4a4540]"
+                      active === i ? "text-[#f4f4f4]" : "text-[#4a4540]"
                     }`}
                   >
                     {s.number}
@@ -141,7 +141,7 @@ export default function AIServicesGrid() {
                   <div className="flex-1">
                     <h3
                       className={`text-lg font-semibold mb-2 transition-colors ${
-                        active === i ? "text-[#c8ff00]" : "text-[#ece8e1]"
+                        active === i ? "text-[#f4f4f4]" : "text-[#ece8e1]"
                       }`}
                     >
                       {s.title}
@@ -210,7 +210,7 @@ export default function AIServicesGrid() {
                   <Image src={s.image} alt={s.title} fill className="object-cover" />
                 </div>
                 <div className="flex items-start gap-3.5">
-                  <span className="text-[#c8ff00]/70 text-sm font-mono mt-1 shrink-0">
+                  <span className="text-[#f4f4f4]/70 text-sm font-mono mt-1 shrink-0">
                     {s.number}
                   </span>
                   <div>

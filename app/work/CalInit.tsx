@@ -10,8 +10,8 @@ export default function CalInit() {
       cal("ui", {
         theme: "dark",
         cssVarsPerTheme: {
-          light: { "cal-brand": "#c8ff00" },
-          dark: { "cal-brand": "#c8ff00" },
+          light: { "cal-brand": "#f4f4f4" },
+          dark: { "cal-brand": "#f4f4f4" },
         },
         hideEventTypeDetails: false,
         layout: "month_view",

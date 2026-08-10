@@ -67,13 +67,13 @@ type Category = typeof CATEGORIES[number];
 /* ------- CRT-styled ticker ------- */
 function Ticker({ text }: { text: string }) {
   const content = Array.from({ length: 12 }).map((_, i) => (
-    <span key={i} className="mx-8 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.4em] text-[#c8ff00]/70">
-      <span className="inline-block w-1.5 h-1.5 bg-[#c8ff00] rounded-full" />
+    <span key={i} className="mx-8 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.4em] text-[#f4f4f4]/70">
+      <span className="inline-block w-1.5 h-1.5 bg-[#f4f4f4] rounded-full" />
       {text}
     </span>
   ));
   return (
-    <div className="border-y border-[#c8ff00]/15 bg-[#c8ff00]/[0.025] py-3 overflow-hidden">
+    <div className="border-y border-[#f4f4f4]/15 bg-[#f4f4f4]/[0.025] py-3 overflow-hidden">
       <div className="flex whitespace-nowrap scroll-left" style={{ animationDuration: "55s" }}>
         {content}
         {content}
@@ -108,11 +108,11 @@ function VideoWallHero() {
           {/* CRT phosphor tint overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%)" }} />
           <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-30"
-            style={{ background: "radial-gradient(ellipse at center, rgba(200,255,0,0.1), transparent 70%)" }} />
+            style={{ background: "radial-gradient(ellipse at center, rgba(244,244,244,0.1), transparent 70%)" }} />
           {/* Caption */}
-          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-[#c8ff00]/90">
+          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-[#f4f4f4]/90">
             <span className="inline-flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
               {String(i + 1).padStart(2, "0")} / {t.title}
             </span>
           </div>
@@ -162,14 +162,14 @@ function ProjectCard({ p, idx, active, featured = false }: { p: Project; idx: nu
         ))}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
         <div className="absolute inset-0 mix-blend-screen opacity-25 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(200,255,0,0.12), transparent 65%)" }} />
+          style={{ background: "radial-gradient(ellipse at center, rgba(244,244,244,0.12), transparent 65%)" }} />
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ background: "radial-gradient(circle at 50% 100%, rgba(200,255,0,0.25) 0%, transparent 55%)" }} />
+          style={{ background: "radial-gradient(circle at 50% 100%, rgba(244,244,244,0.25) 0%, transparent 55%)" }} />
       </div>
 
       {/* Hover border glow */}
       <div className="absolute inset-0 rounded-2xl md:rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ boxShadow: "inset 0 0 0 1px rgba(200,255,0,0.5), 0 0 60px -20px rgba(200,255,0,0.5)" }} />
+        style={{ boxShadow: "inset 0 0 0 1px rgba(244,244,244,0.5), 0 0 60px -20px rgba(244,244,244,0.5)" }} />
 
       {/* Huge numeral watermark */}
       <div className="absolute top-3 right-5 text-[120px] md:text-[180px] font-black leading-none text-white/[0.04] pointer-events-none select-none tracking-tighter">
@@ -199,7 +199,7 @@ function ProjectCard({ p, idx, active, featured = false }: { p: Project; idx: nu
                 className="block h-1 rounded-full transition-all duration-500"
                 style={{
                   width: i === current ? 18 : 6,
-                  background: i === current ? "#c8ff00" : "#333",
+                  background: i === current ? "#f4f4f4" : "#333",
                 }}
               />
             ))}
@@ -215,12 +215,12 @@ function ProjectCard({ p, idx, active, featured = false }: { p: Project; idx: nu
         <div className="mt-auto">
           {featured && p.metric && (
             <div className="inline-flex items-baseline gap-2 mb-5">
-              <span className="text-5xl md:text-6xl font-bold text-[#c8ff00] leading-none">{p.metric.value}</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#f4f4f4] leading-none">{p.metric.value}</span>
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#888]">{p.metric.label}</span>
             </div>
           )}
 
-          <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] mb-2">
+          <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] mb-2">
             ] {p.client}
           </p>
           <h3 className={`font-bold text-white tracking-tight leading-[1.05] mb-3 ${featured ? "text-3xl md:text-5xl lg:text-6xl" : "text-2xl md:text-3xl"}`}>
@@ -239,7 +239,7 @@ function ProjectCard({ p, idx, active, featured = false }: { p: Project; idx: nu
               ))}
             </div>
             {p.href ? (
-              <span className="text-xs text-[#c8ff00] font-semibold whitespace-nowrap inline-flex items-center gap-1.5 transition-transform duration-300 group-hover:translate-x-1">
+              <span className="text-xs text-[#f4f4f4] font-semibold whitespace-nowrap inline-flex items-center gap-1.5 transition-transform duration-300 group-hover:translate-x-1">
                 View case <span aria-hidden>→</span>
               </span>
             ) : (
@@ -304,10 +304,10 @@ export default function WorkClient() {
       <section className="relative pt-8 md:pt-14 pb-6 px-5 md:px-8">
         <div className="relative max-w-[1400px] mx-auto">
           {/* Terminal header bar */}
-          <div className="animate-hero-fade-in flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]/90 pb-4 border-b border-[#c8ff00]/15 mb-6"
+          <div className="animate-hero-fade-in flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-[#f4f4f4]/90 pb-4 border-b border-[#f4f4f4]/15 mb-6"
             style={{ animationDelay: "0ms" }}>
             <span className="inline-flex items-center gap-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
               ] PORTFOLIO.DB · 2024—26 · READY
             </span>
             <Link href="/" className="text-white/80 hover:text-white transition-colors inline-flex items-center gap-2">
@@ -321,7 +321,7 @@ export default function WorkClient() {
             style={{ animationDelay: "120ms" }}
           >
             <span className="block text-white">Selected</span>
-            <span className="block italic text-[#c8ff00]" style={{ fontStyle: "italic" }}>work, on loop.</span>
+            <span className="block italic text-[#f4f4f4]" style={{ fontStyle: "italic" }}>work, on loop.</span>
           </h1>
 
           <div
@@ -358,8 +358,8 @@ export default function WorkClient() {
                   {isActive && (
                     <span aria-hidden className="absolute inset-0 rounded-full"
                       style={{
-                        background: "linear-gradient(135deg, #c8ff00 0%, #9ed600 100%)",
-                        boxShadow: "0 6px 20px -6px rgba(200,255,0,0.6)",
+                        background: "linear-gradient(135deg, #f4f4f4 0%, #9ed600 100%)",
+                        boxShadow: "0 6px 20px -6px rgba(244,244,244,0.6)",
                       }}
                     />
                   )}
@@ -422,14 +422,14 @@ export default function WorkClient() {
       {/* ----------- CTA ----------- */}
       <section className="relative px-5 md:px-8 py-24 overflow-hidden">
         <div aria-hidden className="absolute inset-0 pointer-events-none opacity-[0.12]"
-          style={{ background: "radial-gradient(ellipse at center, #c8ff00 0%, transparent 60%)" }} />
+          style={{ background: "radial-gradient(ellipse at center, #f4f4f4 0%, transparent 60%)" }} />
 
         <div className="relative max-w-4xl mx-auto text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c8ff00] mb-4">] NEXT UP</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4] mb-4">] NEXT UP</p>
           <h2 className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-6">
             Want to be our
             <br />
-            <span className="text-[#c8ff00]">next case study?</span>
+            <span className="text-[#f4f4f4]">next case study?</span>
           </h2>
           <p className="text-[#a0a0a0] text-lg max-w-xl mx-auto mb-10 leading-relaxed">
             We take on a handful of brand partnerships every quarter.
@@ -440,14 +440,14 @@ export default function WorkClient() {
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
-              className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-10 py-4 rounded-full hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
-              style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+              className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-semibold px-10 py-4 rounded-full hover:bg-[#ffffff] transition-all hover:-translate-y-0.5 cursor-pointer"
+              style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
             >
               Book a Call
             </button>
             <button
               onClick={() => openContactModal("message")}
-              className="inline-flex items-center justify-center gap-2 border border-[#222] text-white font-semibold px-10 py-4 rounded-full hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 border border-[#222] text-white font-semibold px-10 py-4 rounded-full hover:border-[#f4f4f4]/40 hover:bg-[#f4f4f4]/5 transition-colors cursor-pointer"
             >
               Send Message
             </button>

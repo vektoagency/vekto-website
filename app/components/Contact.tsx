@@ -62,8 +62,8 @@ export default function Contact() {
       cal("ui", {
         theme: "dark",
         cssVarsPerTheme: {
-          light: { "cal-brand": "#c8ff00" },
-          dark: { "cal-brand": "#c8ff00" },
+          light: { "cal-brand": "#f4f4f4" },
+          dark: { "cal-brand": "#f4f4f4" },
         },
         hideEventTypeDetails: false,
         layout: "month_view",
@@ -83,17 +83,17 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-20 md:py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(to bottom, #060606, #0a0a0f)" }}>
       <div aria-hidden className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full pointer-events-none opacity-[0.10]"
-        style={{ background: "radial-gradient(circle, #c8ff00 0%, transparent 60%)" }} />
+        style={{ background: "radial-gradient(circle, #f4f4f4 0%, transparent 60%)" }} />
 
       <div className="relative max-w-3xl mx-auto text-center">
         <AnimateIn>
           {/* Eyebrow — pulse dot + lime label, matches Hero badge treatment */}
           <div className="inline-flex items-center gap-2 mb-5 md:mb-6">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inset-0 rounded-full bg-[#c8ff00] animate-ping opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#c8ff00]" />
+              <span className="absolute inset-0 rounded-full bg-[#f4f4f4] animate-ping opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#f4f4f4]" />
             </span>
-            <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] font-medium">
+            <p className="text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] font-medium">
               {t.eyebrow}
             </p>
           </div>
@@ -113,9 +113,9 @@ export default function Contact() {
               className="relative inline-block bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
+                  "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 45%, #a8e600 100%)",
                 WebkitBackgroundClip: "text",
-                filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.4))",
+                filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.4))",
               }}
             >
               {t.h2[1]}
@@ -137,10 +137,10 @@ export default function Contact() {
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
               onClick={() => trackEventBoth("Schedule", { contentName: "contact_section" })}
-              className="group inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#c8ff00] text-black font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all hover:-translate-y-0.5 cursor-pointer text-[14px] sm:text-[15px]"
+              className="group inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#f4f4f4] text-black font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all hover:-translate-y-0.5 cursor-pointer text-[14px] sm:text-[15px]"
               style={{
                 boxShadow:
-                  "0 16px 44px -10px rgba(200,255,0,0.7), 0 0 32px -4px rgba(200,255,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  "0 16px 44px -10px rgba(244,244,244,0.7), 0 0 32px -4px rgba(244,244,244,0.35), inset 0 1px 0 rgba(255,255,255,0.4)",
               }}
             >
               <CalendarIcon />
@@ -155,17 +155,17 @@ export default function Contact() {
               <a
                 href={`tel:${PHONE}`}
                 onClick={() => trackEventBoth("Contact", { contentName: "contact_section" })}
-                className="inline-flex items-center justify-center gap-2 sm:gap-2.5 border border-[#c8ff00]/55 text-[#c8ff00] font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full hover:bg-[#c8ff00]/10 active:scale-[0.98] transition-all cursor-pointer text-[14px] sm:text-[15px]"
+                className="inline-flex items-center justify-center gap-2 sm:gap-2.5 border border-[#f4f4f4]/55 text-[#f4f4f4] font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full hover:bg-[#f4f4f4]/10 active:scale-[0.98] transition-all cursor-pointer text-[14px] sm:text-[15px]"
               >
                 <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
                 </svg>
                 {t.callBtn}
-                <span className="hidden sm:inline text-[#c8ff00]/60 text-xs font-normal ml-1 tabular-nums">{PHONE_DISPLAY}</span>
+                <span className="hidden sm:inline text-[#f4f4f4]/60 text-xs font-normal ml-1 tabular-nums">{PHONE_DISPLAY}</span>
               </a>
               <a
                 href="/start"
-                className="inline-flex items-center justify-center gap-2 sm:gap-2.5 border border-white/25 text-white font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full bg-black/40 backdrop-blur-md hover:border-[#c8ff00]/40 hover:bg-[#c8ff00]/5 active:scale-[0.98] transition-all cursor-pointer text-[14px] sm:text-[15px]"
+                className="inline-flex items-center justify-center gap-2 sm:gap-2.5 border border-white/25 text-white font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full bg-black/40 backdrop-blur-md hover:border-[#f4f4f4]/40 hover:bg-[#f4f4f4]/5 active:scale-[0.98] transition-all cursor-pointer text-[14px] sm:text-[15px]"
               >
                 <MessageIcon />
                 {t.startForm}
@@ -179,7 +179,7 @@ export default function Contact() {
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-12 text-sm text-[#888]">
             {t.perks.map((item) => (
               <div key={item} className="flex items-center gap-2">
-                <span className="text-[#c8ff00]">✓</span>
+                <span className="text-[#f4f4f4]">✓</span>
                 {item}
               </div>
             ))}

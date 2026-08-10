@@ -46,7 +46,7 @@ export default async function Image() {
             height: 620,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.28) 0%, rgba(200,255,0,0) 62%)",
+              "radial-gradient(circle, rgba(244,244,244,0.28) 0%, rgba(244,244,244,0) 62%)",
           }}
         />
         <div
@@ -58,7 +58,7 @@ export default async function Image() {
             height: 620,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 62%)",
+              "radial-gradient(circle, rgba(244,244,244,0.14) 0%, rgba(244,244,244,0) 62%)",
           }}
         />
 
@@ -80,10 +80,10 @@ export default async function Image() {
               markerHeight="5"
               orient="auto"
             >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" />
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#f4f4f4" />
             </marker>
           </defs>
-          <g stroke="#c8ff00" strokeWidth="1.6" fill="none" markerEnd="url(#og-arrow)">
+          <g stroke="#f4f4f4" strokeWidth="1.6" fill="none" markerEnd="url(#og-arrow)">
             <line x1="60" y1="720" x2="220" y2="540" />
             <line x1="180" y1="800" x2="340" y2="620" />
             <line x1="500" y1="800" x2="660" y2="620" />
@@ -114,11 +114,11 @@ export default async function Image() {
               display: "flex",
               alignItems: "center",
               gap: 10,
-              border: "1px solid rgba(200,255,0,0.4)",
+              border: "1px solid rgba(244,244,244,0.4)",
               borderRadius: 999,
               padding: "8px 16px",
               fontSize: 15,
-              color: "#c8ff00",
+              color: "#f4f4f4",
               letterSpacing: 2.6,
               textTransform: "uppercase",
               fontWeight: 600,
@@ -129,7 +129,7 @@ export default async function Image() {
                 width: 8,
                 height: 8,
                 borderRadius: "50%",
-                background: "#c8ff00",
+                background: "#f4f4f4",
                 display: "block",
               }}
             />
@@ -161,7 +161,7 @@ export default async function Image() {
             }}
           >
             <span>12 нови бранда на година.</span>
-            <span style={{ color: "#c8ff00" }}>Твоят следващ.</span>
+            <span style={{ color: "#f4f4f4" }}>Твоят следващ.</span>
           </div>
           <div
             style={{
@@ -184,14 +184,14 @@ export default async function Image() {
             alignItems: "center",
             zIndex: 1,
             paddingTop: 18,
-            borderTop: "1px solid rgba(200,255,0,0.18)",
+            borderTop: "1px solid rgba(244,244,244,0.18)",
             fontSize: 18,
             color: "#6a6560",
           }}
         >
           <span
             style={{
-              color: "#c8ff00",
+              color: "#f4f4f4",
               fontWeight: 700,
               letterSpacing: 2,
             }}

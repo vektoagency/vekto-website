@@ -56,7 +56,7 @@ export default function Footer() {
             <Image src="/images/logo.webp" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />
             <p className="text-sm text-[#9a958e] leading-relaxed max-w-sm mb-5">{t.tagline}</p>
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#7a756e]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
               {t.based}
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function Footer() {
             </ul>
             <a
               href="/start"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-[#c8ff00] hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[#f4f4f4] hover:text-white transition-colors"
             >
               {t.bookCall}
               <span aria-hidden>→</span>

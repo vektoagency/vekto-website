@@ -101,11 +101,11 @@ export default function Process() {
     >
       <div className="max-w-6xl mx-auto">
         <AnimateIn className="mb-8 md:mb-10 max-w-3xl">
-          <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
+          <p className="text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-widest mb-3">{t.eyebrow}</p>
           <h2 className="text-[26px] md:text-5xl font-bold leading-[1.1] text-balance">
             {t.h2[0]}
             <br />
-            <span className="text-[#c8ff00]">{t.h2[1]}</span>
+            <span className="text-[#f4f4f4]">{t.h2[1]}</span>
           </h2>
         </AnimateIn>
 
@@ -118,7 +118,7 @@ export default function Process() {
               <div aria-hidden className="absolute inset-x-4 md:inset-x-6 top-[22px] md:top-1/2 h-px bg-[#1d1d1d]" />
               <div aria-hidden className="absolute inset-x-4 md:inset-x-6 top-[22px] md:top-1/2 h-px overflow-hidden">
                 <div
-                  className="h-full bg-[#c8ff00]/70 transition-all duration-500 ease-out"
+                  className="h-full bg-[#f4f4f4]/70 transition-all duration-500 ease-out"
                   style={{ width: `${(active / (steps.length - 1)) * 100}%` }}
                 />
               </div>
@@ -137,17 +137,17 @@ export default function Process() {
                       <span
                         className={`relative z-[1] w-9 h-9 md:w-11 md:h-11 rounded-full flex items-center justify-center font-mono text-[11px] md:text-xs font-bold transition-all duration-300 ${
                           isActive
-                            ? "bg-[#c8ff00] text-black scale-110 shadow-[0_0_25px_rgba(200,255,0,0.45)]"
+                            ? "bg-[#f4f4f4] text-black scale-110 shadow-[0_0_25px_rgba(244,244,244,0.45)]"
                             : isPast
-                              ? "bg-[#c8ff00]/25 text-[#c8ff00] border border-[#c8ff00]/40"
-                              : "bg-[#0d0d0d] text-[#666] border border-[#1c1c1c] group-hover:border-[#c8ff00]/30 group-hover:text-[#c8ff00]"
+                              ? "bg-[#f4f4f4]/25 text-[#f4f4f4] border border-[#f4f4f4]/40"
+                              : "bg-[#0d0d0d] text-[#666] border border-[#1c1c1c] group-hover:border-[#f4f4f4]/30 group-hover:text-[#f4f4f4]"
                         }`}
                       >
                         {s.number}
                       </span>
                       <span
                         className={`mt-2 md:mt-2.5 font-mono text-[8px] md:text-[11px] uppercase tracking-[0.14em] md:tracking-[0.25em] transition-colors ${
-                          isActive ? "text-[#c8ff00]" : "text-[#666] group-hover:text-[#aaa]"
+                          isActive ? "text-[#f4f4f4]" : "text-[#666] group-hover:text-[#aaa]"
                         }`}
                       >
                         {s.tag}
@@ -171,7 +171,7 @@ export default function Process() {
                   {current.bullets.map((b) => (
                     <li
                       key={b}
-                      className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.14em] md:tracking-[0.2em] border border-[#c8ff00]/25 text-[#c8ff00]/90 bg-[#c8ff00]/[0.04] px-2 md:px-3 py-1 md:py-1.5 rounded-full"
+                      className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.14em] md:tracking-[0.2em] border border-[#f4f4f4]/25 text-[#f4f4f4]/90 bg-[#f4f4f4]/[0.04] px-2 md:px-3 py-1 md:py-1.5 rounded-full"
                     >
                       {b}
                     </li>
@@ -183,14 +183,14 @@ export default function Process() {
             {/* Footer bar — auto-play progress + CTA. Mobile shows compact
                 "1/4" label + arrow-only button so it fits on one row. */}
             <div className="border-t border-[#161616] flex items-center justify-between gap-3 px-4 md:px-10 py-3 md:py-4 bg-[#0a0a0a]">
-              <div className="flex items-center gap-2 md:gap-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-[#c8ff00]/75 whitespace-nowrap">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse shrink-0" />
+              <div className="flex items-center gap-2 md:gap-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-[#f4f4f4]/75 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse shrink-0" />
                 <span className="hidden sm:inline">{t.progressLabel} {active + 1} / {steps.length}</span>
                 <span className="sm:hidden">{active + 1}/{steps.length}</span>
               </div>
               <a
                 href="/start"
-                className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-black bg-[#c8ff00] hover:bg-[#d4ff33] px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors whitespace-nowrap"
+                className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.18em] md:tracking-[0.25em] text-black bg-[#f4f4f4] hover:bg-[#ffffff] px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors whitespace-nowrap"
               >
                 {t.cta}
               </a>

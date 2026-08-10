@@ -164,7 +164,7 @@ export default function CaseStudiesClient() {
           className="absolute -top-40 -right-40 w-[720px] h-[720px] rounded-full pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 60%)",
+              "radial-gradient(circle, rgba(244,244,244,0.14) 0%, rgba(244,244,244,0) 60%)",
           }}
         />
         <div
@@ -172,7 +172,7 @@ export default function CaseStudiesClient() {
           className="absolute inset-0 opacity-[0.045] pointer-events-none"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
+              "linear-gradient(to right, rgba(244,244,244,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(244,244,244,0.85) 1px, transparent 1px)",
             backgroundSize: "72px 72px",
             WebkitMaskImage:
               "radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 85%)",
@@ -182,9 +182,9 @@ export default function CaseStudiesClient() {
         />
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="font-mono text-[10px] md:text-xs text-[#c8ff00] tracking-[0.3em]">
+          <div className="inline-flex items-center gap-2 border border-[#f4f4f4]/35 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#f4f4f4] animate-pulse" />
+            <span className="font-mono text-[10px] md:text-xs text-[#f4f4f4] tracking-[0.3em]">
               {t.badge}
             </span>
           </div>
@@ -194,7 +194,7 @@ export default function CaseStudiesClient() {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
+                  "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
               }}
             >
               {t.h1Highlight}
@@ -206,7 +206,7 @@ export default function CaseStudiesClient() {
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-14 py-6 border-y border-[#1e1e1c]/70 max-w-2xl mx-auto">
             {t.stats.map((s) => (
               <div key={s.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-extrabold text-[#c8ff00] tabular-nums leading-none mb-1.5">
+                <div className="text-3xl md:text-4xl font-extrabold text-[#f4f4f4] tabular-nums leading-none mb-1.5">
                   {s.value}
                 </div>
                 <div className="text-[11px] md:text-[13px] text-[#7a7a7a] uppercase tracking-[0.2em]">
@@ -235,7 +235,7 @@ export default function CaseStudiesClient() {
       <section className="py-20 md:py-28 px-6 border-t border-[#1e1e1c] relative" style={{ background: "#080808" }}>
         <div
           aria-hidden
-          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/40 to-transparent"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#f4f4f4]/40 to-transparent"
         />
         <div className="max-w-3xl mx-auto text-center">
           <AnimateIn>
@@ -245,7 +245,7 @@ export default function CaseStudiesClient() {
               <span
                 className="bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
+                  backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
                 }}
               >
                 {t.ctaH2Bottom}
@@ -257,14 +257,14 @@ export default function CaseStudiesClient() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors"
-                style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.5)" }}
+                className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] transition-colors"
+                style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.5)" }}
               >
                 {t.ctaPrimary}
               </a>
               <Link
                 href="/"
-                className="inline-flex items-center justify-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/50 hover:bg-white/5 transition-all"
+                className="inline-flex items-center justify-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#f4f4f4]/50 hover:bg-white/5 transition-all"
               >
                 {t.ctaSecondary}
               </Link>
@@ -289,7 +289,7 @@ function CaseCard({
 }) {
   const isLive = cs.live && cs.metric.value !== "TBD";
   const inner = (
-    <article className="group relative rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] overflow-hidden hover:border-[#c8ff00]/40 transition-colors h-full flex flex-col">
+    <article className="group relative rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] overflow-hidden hover:border-[#f4f4f4]/40 transition-colors h-full flex flex-col">
       {/* Cover — brand mark centred on tinted panel. Real page-level
           case study covers can be swapped in once each brand's cover
           image is designed. */}
@@ -299,7 +299,7 @@ function CaseCard({
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(200,255,0,0.08), transparent 65%)",
+              "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(244,244,244,0.08), transparent 65%)",
           }}
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -309,7 +309,7 @@ function CaseCard({
           className="absolute inset-0 w-full h-full object-contain p-10 md:p-14 opacity-90 group-hover:scale-[1.02] transition-transform duration-500"
         />
         {!isLive && (
-          <div className="absolute top-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80 bg-black/70 backdrop-blur-sm px-2.5 py-1 rounded-sm border border-[#c8ff00]/30">
+          <div className="absolute top-3 right-3 font-mono text-[9px] uppercase tracking-[0.25em] text-[#f4f4f4]/80 bg-black/70 backdrop-blur-sm px-2.5 py-1 rounded-sm border border-[#f4f4f4]/30">
             {comingSoonLabel}
           </div>
         )}
@@ -317,7 +317,7 @@ function CaseCard({
 
       <div className="p-6 md:p-7 flex-1 flex flex-col">
         <div className="flex items-center gap-3 mb-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#f4f4f4]">
             {cs.brand}
           </span>
           <span className="w-1 h-1 rounded-full bg-[#333]" />
@@ -331,7 +331,7 @@ function CaseCard({
 
         {/* Metric block — the premium 'proof at a glance' element */}
         <div className="flex items-baseline gap-3 mb-5 pb-5 border-b border-[#1e1e1c]">
-          <div className="text-3xl md:text-4xl font-extrabold text-[#c8ff00] tabular-nums leading-none">
+          <div className="text-3xl md:text-4xl font-extrabold text-[#f4f4f4] tabular-nums leading-none">
             {cs.metric.value}
           </div>
           <div className="text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#7a7a7a]">
@@ -353,7 +353,7 @@ function CaseCard({
         <div className="mt-auto pt-2">
           <span
             className={`inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] transition-colors ${
-              isLive ? "text-[#c8ff00] group-hover:text-[#e0ff4a]" : "text-[#4a4540]"
+              isLive ? "text-[#f4f4f4] group-hover:text-[#e0ff4a]" : "text-[#4a4540]"
             }`}
           >
             <span>{isLive ? viewLabel : comingSoonLabel}</span>

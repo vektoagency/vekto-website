@@ -259,7 +259,7 @@ export default function HeroCinematicBg() {
             aria-hidden
             className="absolute bottom-[14vh] left-4 flex items-center gap-2 pointer-events-none transition-opacity duration-700"
           >
-            <span className="w-1 h-1 rounded-full bg-[#c8ff00] animate-pulse" />
+            <span className="w-1 h-1 rounded-full bg-[#f4f4f4] animate-pulse" />
             <span
               className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/85"
               style={{ textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}

@@ -110,8 +110,8 @@ export default function PortfolioClient() {
       cal("ui", {
         theme: "dark",
         cssVarsPerTheme: {
-          light: { "cal-brand": "#c8ff00" },
-          dark: { "cal-brand": "#c8ff00" },
+          light: { "cal-brand": "#f4f4f4" },
+          dark: { "cal-brand": "#f4f4f4" },
         },
         hideEventTypeDetails: false,
         layout: "month_view",
@@ -133,19 +133,19 @@ export default function PortfolioClient() {
     <>
       {/* DB-style page header — matches the look the overlay used */}
       <div
-        className="sticky top-16 z-30 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#c8ff00]/45 font-mono text-[11px] uppercase tracking-[0.3em]"
+        className="sticky top-16 z-30 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#f4f4f4]/45 font-mono text-[11px] uppercase tracking-[0.3em]"
         style={{
           background: "#161616",
-          boxShadow: "0 2px 0 rgba(200,255,0,0.18), 0 10px 24px -12px rgba(0,0,0,0.6)",
+          boxShadow: "0 2px 0 rgba(244,244,244,0.18), 0 10px 24px -12px rgba(0,0,0,0.6)",
         }}
       >
-        <div className="flex items-center gap-3 text-[#c8ff00]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c8ff00] animate-pulse" />
+        <div className="flex items-center gap-3 text-[#f4f4f4]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
           {t.header} — {visible.length} {t.clipsSuffix}
         </div>
         <Link
           href="/"
-          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#c8ff00] hover:bg-[#e0ff4a] border border-[#c8ff00] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(200,255,0,0.35)]"
+          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black bg-[#f4f4f4] hover:bg-[#e0ff4a] border border-[#f4f4f4] px-4 py-2 rounded-sm font-bold transition-colors shadow-[0_0_20px_rgba(244,244,244,0.35)]"
           aria-label={t.back}
         >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="group-hover:-translate-x-0.5 transition-transform">
@@ -158,24 +158,24 @@ export default function PortfolioClient() {
       <section className="px-6 md:px-10 pt-5 pb-4 max-w-[1500px] mx-auto">
         <nav
           aria-label="Filter clips by category"
-          className="flex flex-wrap items-center gap-x-0.5 md:gap-x-1 gap-y-1.5 font-mono text-[10px] md:text-[14px] uppercase tracking-[0.14em] md:tracking-[0.18em] text-[#c8ff00] rounded-md border border-[#c8ff00]/25 px-2.5 md:px-3 py-1.5 md:py-2.5 font-semibold"
+          className="flex flex-wrap items-center gap-x-0.5 md:gap-x-1 gap-y-1.5 font-mono text-[10px] md:text-[14px] uppercase tracking-[0.14em] md:tracking-[0.18em] text-[#f4f4f4] rounded-md border border-[#f4f4f4]/25 px-2.5 md:px-3 py-1.5 md:py-2.5 font-semibold"
           style={{
-            background: "linear-gradient(135deg, rgba(200,255,0,0.06) 0%, rgba(200,255,0,0.02) 100%)",
-            boxShadow: "inset 0 0 0 1px rgba(200,255,0,0.05), 0 0 22px -10px rgba(200,255,0,0.35)",
+            background: "linear-gradient(135deg, rgba(244,244,244,0.06) 0%, rgba(244,244,244,0.02) 100%)",
+            boxShadow: "inset 0 0 0 1px rgba(244,244,244,0.05), 0 0 22px -10px rgba(244,244,244,0.35)",
           }}
         >
-          <span className="mr-1.5 md:mr-3 text-[9px] md:text-[12px] text-[#c8ff00]">{t.filter}</span>
+          <span className="mr-1.5 md:mr-3 text-[9px] md:text-[12px] text-[#f4f4f4]">{t.filter}</span>
           {categories.map((cat, i) => {
             const active = filter === cat.id;
             return (
               <span key={cat.id} className="flex items-center">
-                {i > 0 && <span aria-hidden className="mx-1 md:mx-2 text-[#c8ff00]/45">|</span>}
+                {i > 0 && <span aria-hidden className="mx-1 md:mx-2 text-[#f4f4f4]/45">|</span>}
                 <button
                   onClick={() => setFilter(cat.id)}
                   className={`py-0.5 md:py-1 px-0.5 md:px-1 transition-colors ${
                     active
-                      ? "text-[#c8ff00] font-bold"
-                      : "text-[#c8ff00] hover:text-white"
+                      ? "text-[#f4f4f4] font-bold"
+                      : "text-[#f4f4f4] hover:text-white"
                   }`}
                 >
                   {active ? `[${cat.label}]` : cat.label}
@@ -207,21 +207,21 @@ export default function PortfolioClient() {
       <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">
         <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#eaffb8] po-glow text-balance">
           {t.ctaH2Top}<br />
-          <span className="text-[#c8ff00]">{t.ctaH2Bottom}</span>
+          <span className="text-[#f4f4f4]">{t.ctaH2Bottom}</span>
         </h2>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             data-cal-namespace="30min"
             data-cal-link="vekto/30min"
             data-cal-config='{"layout":"month_view","theme":"dark"}'
-            className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-10 py-4 rounded-sm hover:bg-[#d4ff33] transition-all hover:-translate-y-0.5 cursor-pointer"
-            style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+            className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-semibold px-10 py-4 rounded-sm hover:bg-[#ffffff] transition-all hover:-translate-y-0.5 cursor-pointer"
+            style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
           >
             {t.bookCta}
           </button>
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/40 text-[#c8ff00] font-semibold px-10 py-4 rounded-sm hover:bg-[#c8ff00]/10 transition-colors cursor-pointer font-mono text-sm uppercase tracking-[0.2em]"
+            className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/40 text-[#f4f4f4] font-semibold px-10 py-4 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors cursor-pointer font-mono text-sm uppercase tracking-[0.2em]"
           >
             {t.backToHome}
           </Link>
@@ -288,7 +288,7 @@ function ClipTile({
   const cellClass = isLandscape
     ? "aspect-video col-span-2 sm:col-span-3 lg:col-start-2 lg:col-span-2"
     : "aspect-[9/16]";
-  const tileClass = `group relative ${cellClass} overflow-hidden rounded-sm border border-[#c8ff00]/20 hover:border-[#c8ff00]/60 bg-black transition-colors cursor-pointer`;
+  const tileClass = `group relative ${cellClass} overflow-hidden rounded-sm border border-[#f4f4f4]/20 hover:border-[#f4f4f4]/60 bg-black transition-colors cursor-pointer`;
   const bootDelay = Math.min(idx, 8) * 18;
   const durationLabel = formatDuration(clip.duration);
   const videoSrc = previewVideoUrl(clip.previewMp4);
@@ -368,7 +368,7 @@ function ClipTile({
       )}
 
       {durationLabel && (
-        <div className="absolute top-2 right-2 z-[2] font-mono text-[9px] tracking-[0.15em] text-white/90 bg-black/65 border border-[#c8ff00]/30 px-1.5 py-0.5 rounded-sm pointer-events-none">
+        <div className="absolute top-2 right-2 z-[2] font-mono text-[9px] tracking-[0.15em] text-white/90 bg-black/65 border border-[#f4f4f4]/30 px-1.5 py-0.5 rounded-sm pointer-events-none">
           {durationLabel}
         </div>
       )}
@@ -382,14 +382,14 @@ function ClipTile({
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white font-bold leading-tight">
           {clip.brand}
         </div>
-        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80">
+        <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#f4f4f4]/80">
           {clip.category}
         </div>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        <div className="w-12 h-12 rounded-full border border-[#c8ff00] bg-black/50 backdrop-blur-sm flex items-center justify-center">
-          <svg width="14" height="14" viewBox="0 0 12 12" fill="#c8ff00">
+        <div className="w-12 h-12 rounded-full border border-[#f4f4f4] bg-black/50 backdrop-blur-sm flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="#f4f4f4">
             <path d="M2 1l9 5-9 5V1z" />
           </svg>
         </div>
@@ -405,13 +405,13 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
         aspectRatio: "16 / 9",
         width: "min(92vw, 1280px)",
         maxHeight: "85vh",
-        boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
+        boxShadow: "0 30px 80px -20px rgba(244,244,244,0.35)",
       }
     : {
         aspectRatio: "9 / 16",
         height: "min(85vh, 780px)",
         maxWidth: "92vw",
-        boxShadow: "0 30px 80px -20px rgba(200,255,0,0.35)",
+        boxShadow: "0 30px 80px -20px rgba(244,244,244,0.35)",
       };
   return (
     <div
@@ -419,7 +419,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative rounded-sm overflow-hidden border border-[#c8ff00]/40 bg-black vekto-player"
+        className="relative rounded-sm overflow-hidden border border-[#f4f4f4]/40 bg-black vekto-player"
         onClick={(e) => e.stopPropagation()}
         style={frameStyle}
       >
@@ -428,7 +428,7 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
             src={(() => {
               const u = new URL(clip.embedUrl);
               u.searchParams.delete("preload");
-              u.searchParams.set("iframe_color", "c8ff00");
+              u.searchParams.set("iframe_color", "f4f4f4");
               return u.toString();
             })()}
             className="absolute inset-0 w-full h-full"
@@ -456,13 +456,13 @@ function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
             <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white font-bold leading-tight truncate">
               {clip.brand}
             </div>
-            <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c8ff00]/80 truncate">
+            <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#f4f4f4]/80 truncate">
               {clip.category}
             </div>
           </div>
           <button
             onClick={onClose}
-            className="pointer-events-auto shrink-0 font-mono text-[10px] uppercase tracking-[0.25em] border border-[#c8ff00]/50 text-[#c8ff00] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#c8ff00]/10"
+            className="pointer-events-auto shrink-0 font-mono text-[10px] uppercase tracking-[0.25em] border border-[#f4f4f4]/50 text-[#f4f4f4] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#f4f4f4]/10"
             aria-label="Close preview"
           >
             × close

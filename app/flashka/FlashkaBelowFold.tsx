@@ -62,14 +62,14 @@ export default function FlashkaBelowFold({ lang }: Props) {
       <section className="border-b border-[#1e1e1c] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-14">
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+            <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
               {t.proof.eyebrow}
             </p>
             <h2 className="text-[28px] sm:text-4xl md:text-[48px] font-extrabold leading-[1.08] tracking-[-0.02em] text-balance">
               {t.proof.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
               >
                 {t.proof.h2Highlight}
               </span>
@@ -80,9 +80,9 @@ export default function FlashkaBelowFold({ lang }: Props) {
               <div
                 key={s.label}
                 data-animate-fk
-                className="reveal-fk text-center px-3 py-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(200,255,0,0.25)] active:scale-[0.98] transition-all duration-200 touch-manipulation"
+                className="reveal-fk text-center px-3 py-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#f4f4f4]/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(244,244,244,0.25)] active:scale-[0.98] transition-all duration-200 touch-manipulation"
               >
-                <div className="font-extrabold text-[#c8ff00] tabular-nums tracking-tight text-[40px] md:text-6xl leading-none mb-2 md:mb-3">
+                <div className="font-extrabold text-[#f4f4f4] tabular-nums tracking-tight text-[40px] md:text-6xl leading-none mb-2 md:mb-3">
                   <CountUp target={s.value} decimals={s.decimals} />
                   <span>{s.suffix}</span>
                 </div>
@@ -104,7 +104,7 @@ export default function FlashkaBelowFold({ lang }: Props) {
       <section className="border-b border-[#1e1e1c] py-8 md:py-12 overflow-hidden">
         <div className="max-w-3xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-5 md:mb-7">
-            <p className="font-mono text-[10px] md:text-[11px] text-[#c8ff00]/85 uppercase tracking-[0.32em] mb-2">
+            <p className="font-mono text-[10px] md:text-[11px] text-[#f4f4f4]/85 uppercase tracking-[0.32em] mb-2">
               {t.clients.eyebrow}
             </p>
             <p className="text-[13px] md:text-[14.5px] text-[#9a958e] leading-relaxed">
@@ -146,14 +146,14 @@ export default function FlashkaBelowFold({ lang }: Props) {
       <section className="border-b border-[#1e1e1c] bg-[#0a0a0a] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-8 md:mb-12">
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+            <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
               {t.about.eyebrow}
             </p>
             <h2 className="text-[28px] sm:text-4xl md:text-[44px] font-extrabold leading-[1.08] tracking-[-0.02em] text-balance">
               <span className="text-white">{t.about.h2}</span>{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
               >
                 {t.about.h2Highlight}
               </span>
@@ -162,9 +162,9 @@ export default function FlashkaBelowFold({ lang }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/35 hover:-translate-y-1 hover:shadow-[0_14px_36px_-12px_rgba(200,255,0,0.18)] active:scale-[0.99] transition-all duration-200 touch-manipulation"
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#f4f4f4]/35 hover:-translate-y-1 hover:shadow-[0_14px_36px_-12px_rgba(244,244,244,0.18)] active:scale-[0.99] transition-all duration-200 touch-manipulation"
             >
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/85 mb-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4f4f4]/85 mb-3">
                 {t.about.vektoLabel}
               </p>
               <p className="text-[14px] md:text-[15.5px] text-[#cfcbc4] leading-relaxed">
@@ -173,10 +173,10 @@ export default function FlashkaBelowFold({ lang }: Props) {
             </div>
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.04] hover:border-[#c8ff00]/55 hover:-translate-y-1 active:scale-[0.99] transition-all duration-200 touch-manipulation"
-              style={{ boxShadow: "0 12px 36px -16px rgba(200,255,0,0.25)" }}
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#f4f4f4]/30 bg-[#f4f4f4]/[0.04] hover:border-[#f4f4f4]/55 hover:-translate-y-1 active:scale-[0.99] transition-all duration-200 touch-manipulation"
+              style={{ boxShadow: "0 12px 36px -16px rgba(244,244,244,0.25)" }}
             >
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c8ff00] mb-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4f4f4] mb-3">
                 {t.about.driveLabel}
               </p>
               <p className="text-[14px] md:text-[15.5px] text-[#dcdcd6] leading-relaxed">
@@ -191,14 +191,14 @@ export default function FlashkaBelowFold({ lang }: Props) {
       <section className="border-b border-[#1e1e1c] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-14">
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+            <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
               {t.inside.eyebrow}
             </p>
             <h2 className="text-[28px] sm:text-4xl md:text-[48px] font-extrabold leading-[1.08] tracking-[-0.02em] text-balance">
               {t.inside.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
               >
                 {t.inside.h2Highlight}
               </span>
@@ -209,9 +209,9 @@ export default function FlashkaBelowFold({ lang }: Props) {
               <div
                 key={s.number}
                 data-animate-fk
-                className="reveal-fk group relative p-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/50 hover:bg-[#101010] hover:-translate-y-1 hover:shadow-[0_14px_36px_-10px_rgba(200,255,0,0.22)] active:scale-[0.99] transition-all duration-200 touch-manipulation"
+                className="reveal-fk group relative p-6 md:p-7 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#f4f4f4]/50 hover:bg-[#101010] hover:-translate-y-1 hover:shadow-[0_14px_36px_-10px_rgba(244,244,244,0.22)] active:scale-[0.99] transition-all duration-200 touch-manipulation"
               >
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#c8ff00]/85 mb-3 inline-block">
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-3 inline-block">
                   / {s.number}
                 </span>
                 <h3 className="font-bold text-lg md:text-xl text-white mb-2.5 leading-tight">
@@ -230,14 +230,14 @@ export default function FlashkaBelowFold({ lang }: Props) {
       <section className="border-b border-[#1e1e1c] bg-[#0a0a0a] py-10 md:py-16">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div data-animate-fk className="reveal-fk text-center mb-10 md:mb-12">
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+            <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
               {t.qualify.eyebrow}
             </p>
             <h2 className="text-[28px] sm:text-4xl md:text-[48px] font-extrabold leading-[1.08] tracking-[-0.02em] text-balance">
               {t.qualify.h2}{" "}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)" }}
+                style={{ backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)" }}
               >
                 {t.qualify.h2Highlight}
               </span>
@@ -246,15 +246,15 @@ export default function FlashkaBelowFold({ lang }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div
               data-animate-fk
-              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#c8ff00]/30 bg-[#c8ff00]/[0.03] hover:border-[#c8ff00]/50 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(200,255,0,0.2)] transition-all duration-200 touch-manipulation"
+              className="reveal-fk p-6 md:p-8 rounded-2xl border border-[#f4f4f4]/30 bg-[#f4f4f4]/[0.03] hover:border-[#f4f4f4]/50 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(244,244,244,0.2)] transition-all duration-200 touch-manipulation"
             >
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] mb-5">
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] mb-5">
                 {t.qualify.yesTitle}
               </h3>
               <ul className="space-y-3">
                 {t.qualify.yesItems.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-[14px] md:text-[15px] text-[#dcdcd6] leading-relaxed">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f4f4f4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                     <span>{item}</span>

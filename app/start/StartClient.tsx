@@ -105,8 +105,8 @@ export default function StartClient() {
         cal("ui", {
           theme: "dark",
           cssVarsPerTheme: {
-            light: { "cal-brand": "#c8ff00" },
-            dark: { "cal-brand": "#c8ff00" },
+            light: { "cal-brand": "#f4f4f4" },
+            dark: { "cal-brand": "#f4f4f4" },
           },
           hideEventTypeDetails: false,
           layout: "month_view",
@@ -206,13 +206,13 @@ export default function StartClient() {
         <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 md:py-4 flex items-center justify-between gap-3">
           <Link
             href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#c8ff00] transition-colors"
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
           >
             {t.meta.home}
           </Link>
           <button
             onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] border border-[#c8ff00]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#c8ff00]/10 transition-colors"
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] border border-[#f4f4f4]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors"
             aria-label="Toggle language"
           >
             {t.meta.langToggle}
@@ -252,12 +252,12 @@ export default function StartClient() {
                       markerHeight="5"
                       orient="auto"
                     >
-                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" opacity="0.55" />
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f4f4f4" opacity="0.55" />
                     </marker>
                   </defs>
                   <g
                     className="vector-field"
-                    stroke="#c8ff00"
+                    stroke="#f4f4f4"
                     strokeWidth="1.5"
                     fill="none"
                     strokeLinecap="round"
@@ -289,8 +289,8 @@ export default function StartClient() {
                   <span
                     className="block md:whitespace-nowrap bg-clip-text text-transparent"
                     style={{
-                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
-                      filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))",
+                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 45%, #a8e600 100%)",
+                      filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.42))",
                     }}
                   >
                     {t.meta.h1Bottom}
@@ -301,7 +301,7 @@ export default function StartClient() {
                 <div className="flex flex-wrap items-center justify-center gap-x-4 md:gap-x-7 gap-y-2 mb-6 md:mb-8 animate-[startFade_0.65s_0.15s_ease-out_both]">
                   {t.meta.trustBadges.map((b) => (
                     <div key={b} className="flex items-center gap-1.5">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f4f4f4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
                       <span className="text-[12.5px] md:text-sm text-[#cfcbc4] font-medium">{b}</span>
@@ -312,8 +312,8 @@ export default function StartClient() {
                 {/* Primary CTA — scrolls to form */}
                 <button
                   onClick={scrollToForm}
-                  className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-7 md:px-9 py-3.5 md:py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px] md:text-[16px] animate-[startFade_0.7s_0.2s_ease-out_both]"
-                  style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+                  className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-7 md:px-9 py-3.5 md:py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[15px] md:text-[16px] animate-[startFade_0.7s_0.2s_ease-out_both]"
+                  style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                 >
                   <span>{t.cta.submit}</span>
                   <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">↓</span>
@@ -326,7 +326,7 @@ export default function StartClient() {
 
             {/* ─────────────  SOCIAL PROOF MARQUEE  ───────────── */}
             <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-4 md:py-6 relative overflow-hidden">
-              <p className="text-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]/85 mb-5 md:mb-6">
+              <p className="text-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4]/85 mb-5 md:mb-6">
                 {t.socialProof.heading}
               </p>
               <div
@@ -375,7 +375,7 @@ export default function StartClient() {
             <section ref={formRef} className="relative scroll-mt-20">
               <div className="max-w-2xl mx-auto px-5 md:px-8 py-8 md:py-14">
                 <div data-animate className="reveal text-center mb-8 md:mb-10">
-                  <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+                  <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
                     {t.formSection.eyebrow}
                   </p>
                   <h2 className="text-[22px] sm:text-3xl md:text-[40px] font-extrabold leading-[1.1] tracking-[-0.02em] mb-3 md:mb-4 whitespace-nowrap">
@@ -383,7 +383,7 @@ export default function StartClient() {
                     <span
                       className="bg-clip-text text-transparent"
                       style={{
-                        backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
+                        backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
                       }}
                     >
                       {t.formSection.h2Highlight}
@@ -424,8 +424,8 @@ export default function StartClient() {
                     <button
                       onClick={handleSubmit}
                       disabled={submitting || !name.trim() || !email.trim() || !phone.trim() || !brand.trim()}
-                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                     >
                       <span>{submitting ? t.cta.submitting : t.cta.submit}</span>
                       {!submitting && (
@@ -453,13 +453,13 @@ export default function StartClient() {
                       data-cal-namespace="30min"
                       data-cal-link="vekto/30min"
                       data-cal-config='{"layout":"month_view","theme":"dark"}'
-                      className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-7 py-3 rounded-full hover:bg-[#c8ff00]/10 transition-colors text-sm cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-7 py-3 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-sm cursor-pointer"
                     >
                       📅 {t.cta.bookCta}
                     </button>
                     <a
                       href="tel:+359882251474"
-                      className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-7 py-3 rounded-full hover:bg-[#c8ff00]/10 transition-colors text-sm"
+                      className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-7 py-3 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-sm"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -478,14 +478,14 @@ export default function StartClient() {
           <div className="min-h-[70vh] flex items-center justify-center px-5 md:px-8 py-10 md:py-16">
             <div className="text-center max-w-2xl mx-auto animate-[startFade_0.5s_ease-out_both]">
               <div
-                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#c8ff00] text-black mb-7"
-                style={{ boxShadow: "0 0 60px rgba(200,255,0,0.55)" }}
+                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#f4f4f4] text-black mb-7"
+                style={{ boxShadow: "0 0 60px rgba(244,244,244,0.55)" }}
               >
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-4">
+              <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-4">
                 {t.meta.eyebrow}
               </p>
               <h1 className="text-3xl md:text-5xl font-extrabold leading-[1.1] tracking-tight mb-5">
@@ -499,14 +499,14 @@ export default function StartClient() {
                   data-cal-namespace="30min"
                   data-cal-link="vekto/30min"
                   data-cal-config='{"layout":"month_view","theme":"dark"}'
-                  className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer"
-                  style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+                  className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#ffffff] transition-colors cursor-pointer"
+                  style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
                 >
                   {t.success.bookCta}
                 </button>
                 <a
                   href="tel:+359882251474"
-                  className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-8 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -515,7 +515,7 @@ export default function StartClient() {
                 </a>
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/40 text-[#c8ff00] font-semibold px-8 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors font-mono text-sm uppercase tracking-[0.2em]"
+                  className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/40 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors font-mono text-sm uppercase tracking-[0.2em]"
                 >
                   {t.success.backHome}
                 </Link>
@@ -536,8 +536,8 @@ export default function StartClient() {
            ~0.5KB CSS, no images, no JS. */
         .hero-mesh-bg {
           background:
-            radial-gradient(60% 50% at 22% 18%, rgba(200, 255, 0, 0.22), transparent 65%),
-            radial-gradient(55% 45% at 78% 38%, rgba(200, 255, 0, 0.14), transparent 70%),
+            radial-gradient(60% 50% at 22% 18%, rgba(244, 244, 244, 0.22), transparent 65%),
+            radial-gradient(55% 45% at 78% 38%, rgba(244, 244, 244, 0.14), transparent 70%),
             radial-gradient(70% 55% at 50% 88%, rgba(180, 240, 0, 0.10), transparent 72%);
           animation: heroMeshDrift 24s ease-in-out infinite;
           will-change: transform;
@@ -624,8 +624,8 @@ export default function StartClient() {
         .vekto-range::-webkit-slider-thumb {
           -webkit-appearance: none; appearance: none;
           width: 22px; height: 22px; margin-top: -8px;
-          border-radius: 999px; background: #c8ff00; border: 3px solid #050505;
-          box-shadow: 0 0 0 1px #c8ff00, 0 0 18px rgba(200, 255, 0, 0.7);
+          border-radius: 999px; background: #f4f4f4; border: 3px solid #050505;
+          box-shadow: 0 0 0 1px #f4f4f4, 0 0 18px rgba(244, 244, 244, 0.7);
           cursor: grab; transition: transform 0.15s ease;
         }
         .vekto-range:active::-webkit-slider-thumb {
@@ -633,8 +633,8 @@ export default function StartClient() {
         }
         .vekto-range::-moz-range-thumb {
           width: 22px; height: 22px;
-          border-radius: 999px; background: #c8ff00; border: 3px solid #050505;
-          box-shadow: 0 0 0 1px #c8ff00, 0 0 18px rgba(200, 255, 0, 0.7);
+          border-radius: 999px; background: #f4f4f4; border: 3px solid #050505;
+          box-shadow: 0 0 0 1px #f4f4f4, 0 0 18px rgba(244, 244, 244, 0.7);
           cursor: grab;
         }
         .vekto-range:active::-moz-range-thumb {
@@ -651,7 +651,7 @@ export default function StartClient() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#c8ff00]/85 mb-2">
+      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-2">
         {label}
       </label>
       {children}
@@ -678,7 +678,7 @@ function Input({
       autoComplete={autoComplete}
       autoCapitalize={type === "email" || type === "url" ? "off" : "sentences"}
       spellCheck={type === "email" || type === "url" || type === "tel" ? false : undefined}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#f4f4f4]/60 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
     />
   );
 }

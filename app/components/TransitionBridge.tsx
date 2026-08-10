@@ -87,7 +87,7 @@ export default function TransitionBridge() {
         className="absolute inset-0 tb-phosphor"
         style={{
           background:
-            "radial-gradient(circle at var(--tb-x, 75%) var(--tb-y, 50%), #e8ff5a 0%, #c8ff00 10%, #4a5c0d 34%, #0a0805 62%, #0a0805 100%)",
+            "radial-gradient(circle at var(--tb-x, 75%) var(--tb-y, 50%), #e8ff5a 0%, #f4f4f4 10%, #4a5c0d 34%, #0a0805 62%, #0a0805 100%)",
         }}
       />
       {/* White flash at peak of covering */}

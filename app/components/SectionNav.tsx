@@ -72,7 +72,7 @@ export default function SectionNav() {
             <span
               className="text-xs font-medium tracking-widest uppercase transition-all duration-300"
               style={{
-                color: isActive ? "#c8ff00" : "#444",
+                color: isActive ? "#f4f4f4" : "#444",
                 opacity: isHovered || isActive ? 1 : 0,
                 transform: isHovered || isActive ? "translateX(0)" : "translateX(8px)",
               }}
@@ -92,7 +92,7 @@ export default function SectionNav() {
               <div
                 className="absolute inset-0 rounded-full transition-all duration-300"
                 style={{
-                  border: isActive ? "1.5px solid #c8ff00" : "1.5px solid #333",
+                  border: isActive ? "1.5px solid #f4f4f4" : "1.5px solid #333",
                   transform: isActive ? "scale(1.8)" : "scale(1)",
                   opacity: isActive ? 1 : 0.5,
                 }}
@@ -103,8 +103,8 @@ export default function SectionNav() {
                 style={{
                   width: isActive ? 6 : isHovered ? 5 : 4,
                   height: isActive ? 6 : isHovered ? 5 : 4,
-                  backgroundColor: isActive ? "#c8ff00" : isHovered ? "#888" : "#333",
-                  boxShadow: isActive ? "0 0 8px #c8ff0088" : "none",
+                  backgroundColor: isActive ? "#f4f4f4" : isHovered ? "#888" : "#333",
+                  boxShadow: isActive ? "0 0 8px #f4f4f488" : "none",
                 }}
               />
             </div>

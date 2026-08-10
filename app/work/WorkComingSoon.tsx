@@ -23,14 +23,14 @@ export default function WorkComingSoon() {
       />
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-3xl flex-col items-center justify-center px-6 text-center animate-hero-fade-in" style={{ animationDelay: "650ms" }}>
-        <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#c8ff00]">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#c8ff00] align-middle mr-2 animate-pulse" />
+        <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#f4f4f4]">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#f4f4f4] align-middle mr-2 animate-pulse" />
           SYSTEM BOOTING — VEKTO/WORK
         </div>
 
         <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
           Our work reel is<br />
-          <span className="text-[#c8ff00]">loading{cursor ? "_" : " "}</span>
+          <span className="text-[#f4f4f4]">loading{cursor ? "_" : " "}</span>
         </h1>
 
         <p className="mt-6 max-w-xl text-[#9a958e] text-base sm:text-lg leading-relaxed">
@@ -41,13 +41,13 @@ export default function WorkComingSoon() {
         <div className="mt-10 flex flex-col sm:flex-row gap-3">
           <Link
             href="/#contact"
-            className="inline-flex items-center justify-center rounded-full bg-[#c8ff00] px-6 py-3 text-sm font-semibold text-[#0a0805] hover:bg-[#d4ff33] transition"
+            className="inline-flex items-center justify-center rounded-full bg-[#f4f4f4] px-6 py-3 text-sm font-semibold text-[#0a0805] hover:bg-[#ffffff] transition"
           >
             Get an early preview
           </Link>
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-full border border-[#2a2a28] px-6 py-3 text-sm font-semibold text-[#ece8e1] hover:border-[#c8ff00] hover:text-[#c8ff00] transition"
+            className="inline-flex items-center justify-center rounded-full border border-[#2a2a28] px-6 py-3 text-sm font-semibold text-[#ece8e1] hover:border-[#f4f4f4] hover:text-[#f4f4f4] transition"
           >
             Back to home
           </Link>

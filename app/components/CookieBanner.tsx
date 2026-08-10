@@ -79,10 +79,10 @@ export default function CookieBanner() {
       className="fixed bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-1rem)] max-w-[440px] animate-[cookieFade_0.4s_ease-out_both]"
     >
       <div
-        className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 bg-[#0d0d0d] border border-[#c8ff00]/25 rounded-lg px-3 py-2.5"
+        className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 bg-[#0d0d0d] border border-[#f4f4f4]/25 rounded-lg px-3 py-2.5"
         style={{
           boxShadow:
-            "0 10px 30px -8px rgba(0,0,0,0.85), 0 0 0 1px rgba(200,255,0,0.1)",
+            "0 10px 30px -8px rgba(0,0,0,0.85), 0 0 0 1px rgba(244,244,244,0.1)",
         }}
       >
         {/* Body row: emoji + text wraps cleanly without competing with
@@ -95,7 +95,7 @@ export default function CookieBanner() {
             {t.body}{" "}
             <Link
               href="/privacy"
-              className="text-[#c8ff00]/70 hover:text-[#c8ff00] underline-offset-2 hover:underline"
+              className="text-[#f4f4f4]/70 hover:text-[#f4f4f4] underline-offset-2 hover:underline"
             >
               {t.learn}
             </Link>
@@ -112,7 +112,7 @@ export default function CookieBanner() {
           </button>
           <button
             onClick={() => handle("accepted")}
-            className="bg-[#c8ff00] text-black font-semibold text-[10px] md:text-[11px] uppercase tracking-[0.1em] px-3.5 py-1.5 rounded-md hover:bg-[#d4ff33] transition-colors whitespace-nowrap"
+            className="bg-[#f4f4f4] text-black font-semibold text-[10px] md:text-[11px] uppercase tracking-[0.1em] px-3.5 py-1.5 rounded-md hover:bg-[#ffffff] transition-colors whitespace-nowrap"
           >
             {t.accept}
           </button>

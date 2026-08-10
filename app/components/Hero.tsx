@@ -99,7 +99,7 @@ export default function Hero() {
 
         {/* Lime CRT bounce — soft halo behind the monitor */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 36% 42% at 74% 48%, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0.04) 42%, transparent 78%)",
+          background: "radial-gradient(ellipse 36% 42% at 74% 48%, rgba(244,244,244,0.14) 0%, rgba(244,244,244,0.04) 42%, transparent 78%)",
         }} />
 
         {/* Blueprint grid — soft-masked schematic fade */}
@@ -108,7 +108,7 @@ export default function Hero() {
           style={{
             opacity: 0.055,
             backgroundImage:
-              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
+              "linear-gradient(to right, rgba(244,244,244,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(244,244,244,0.85) 1px, transparent 1px)",
             backgroundSize: "72px 72px",
             WebkitMaskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
             maskImage: "radial-gradient(ellipse 65% 70% at 45% 50%, black 30%, transparent 85%)",
@@ -117,7 +117,7 @@ export default function Hero() {
 
         <div
           className="absolute bottom-0 right-[8%] w-[52%] h-[16%]"
-          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(200,255,0,0.12), transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(244,244,244,0.12), transparent 70%)" }}
         />
       </div>
 
@@ -154,7 +154,7 @@ export default function Hero() {
                   "0 4px 36px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.9)",
               }}
             >
-              <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
+              <em className="not-italic text-[#f4f4f4]">{t.h1Em}</em>
               <br />
               {t.h1RestMobile}
             </h1>
@@ -177,10 +177,10 @@ export default function Hero() {
           <div className="flex flex-col items-center gap-3.5 w-full max-w-[340px] mx-auto">
             <a
               href="#contact"
-              className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold w-full px-7 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[16px]"
+              className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold w-full px-7 py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[16px]"
               style={{
                 boxShadow:
-                  "0 18px 50px -10px rgba(200,255,0,0.75), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)",
+                  "0 18px 50px -10px rgba(244,244,244,0.75), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)",
               }}
             >
               <span>{t.ctaPrimary}</span>
@@ -189,7 +189,7 @@ export default function Hero() {
               </span>
             </a>
             <PortfolioTriggerButton
-              className="inline-flex items-center gap-1.5 text-[#c8ff00] hover:text-white font-semibold text-[13px] tracking-[0.04em] px-5 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 hover:border-white/20 backdrop-blur-sm cursor-pointer transition-all"
+              className="inline-flex items-center gap-1.5 text-[#f4f4f4] hover:text-white font-semibold text-[13px] tracking-[0.04em] px-5 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 hover:border-white/20 backdrop-blur-sm cursor-pointer transition-all"
             >
               <span>{t.ctaSecondary}</span>
               <span className="text-[14px]">↗</span>
@@ -207,16 +207,16 @@ export default function Hero() {
         }}
       >
         <Stagger delay={0} className="w-fit">
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/30 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="text-xs text-[#c8ff00] font-medium tracking-widest uppercase">
+          <div className="inline-flex items-center gap-2 border border-[#f4f4f4]/30 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#f4f4f4] animate-pulse" />
+            <span className="text-xs text-[#f4f4f4] font-medium tracking-widest uppercase">
               {t.badge}
             </span>
           </div>
         </Stagger>
         <Stagger delay={150}>
           <h1 className="text-[64px] xl:text-[88px] font-bold leading-[1.04] tracking-tight mb-7">
-            <em className="not-italic text-[#c8ff00]">{t.h1Em}</em>
+            <em className="not-italic text-[#f4f4f4]">{t.h1Em}</em>
             <br />
             {t.h1RestDesktop[0]}
             <br />
@@ -230,7 +230,7 @@ export default function Hero() {
         </Stagger>
         <Stagger delay={450}>
           <div className="flex gap-4">
-            <a href="#contact" className="bg-[#c8ff00] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors">
+            <a href="#contact" className="bg-[#f4f4f4] text-black font-semibold px-8 py-4 rounded-full hover:bg-[#ffffff] transition-colors">
               {t.ctaPrimary}
             </a>
             <PortfolioTriggerButton className="border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#555] hover:bg-white/5 transition-colors cursor-pointer">

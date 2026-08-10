@@ -230,7 +230,7 @@ export default function WebsitesClient() {
           className="absolute -top-40 -right-40 w-[720px] h-[720px] rounded-full pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.14) 0%, rgba(200,255,0,0) 60%)",
+              "radial-gradient(circle, rgba(244,244,244,0.14) 0%, rgba(244,244,244,0) 60%)",
           }}
         />
         <div
@@ -238,7 +238,7 @@ export default function WebsitesClient() {
           className="absolute -bottom-60 -left-40 w-[720px] h-[720px] rounded-full pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle, rgba(200,255,0,0.08) 0%, rgba(200,255,0,0) 60%)",
+              "radial-gradient(circle, rgba(244,244,244,0.08) 0%, rgba(244,244,244,0) 60%)",
           }}
         />
         <div
@@ -246,7 +246,7 @@ export default function WebsitesClient() {
           className="absolute inset-0 opacity-[0.045] pointer-events-none"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
+              "linear-gradient(to right, rgba(244,244,244,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(244,244,244,0.85) 1px, transparent 1px)",
             backgroundSize: "72px 72px",
             WebkitMaskImage:
               "radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 85%)",
@@ -256,9 +256,9 @@ export default function WebsitesClient() {
         />
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="font-mono text-[10px] md:text-xs text-[#c8ff00] tracking-[0.3em]">
+          <div className="inline-flex items-center gap-2 border border-[#f4f4f4]/35 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#f4f4f4] animate-pulse" />
+            <span className="font-mono text-[10px] md:text-xs text-[#f4f4f4] tracking-[0.3em]">
               {t.hero.badge}
             </span>
           </div>
@@ -269,8 +269,8 @@ export default function WebsitesClient() {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
-                filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.4))",
+                  "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
+                filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.4))",
               }}
             >
               {t.hero.h1Highlight}
@@ -284,7 +284,7 @@ export default function WebsitesClient() {
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-14 mb-12 py-6 border-y border-[#1e1e1c]/70">
             {t.hero.stats.map((s) => (
               <div key={s.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-extrabold text-[#c8ff00] tabular-nums leading-none mb-1.5">
+                <div className="text-3xl md:text-4xl font-extrabold text-[#f4f4f4] tabular-nums leading-none mb-1.5">
                   {s.value}
                 </div>
                 <div className="text-[11px] md:text-[13px] text-[#7a7a7a] uppercase tracking-[0.2em]">
@@ -297,10 +297,10 @@ export default function WebsitesClient() {
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
             <a
               href="#contact"
-              className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px] md:text-[16px]"
+              className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[15px] md:text-[16px]"
               style={{
                 boxShadow:
-                  "0 18px 50px -10px rgba(200,255,0,0.55), 0 0 38px -4px rgba(200,255,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  "0 18px 50px -10px rgba(244,244,244,0.55), 0 0 38px -4px rgba(244,244,244,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
               }}
             >
               <span>{t.hero.ctaPrimary}</span>
@@ -308,7 +308,7 @@ export default function WebsitesClient() {
             </a>
             <Link
               href="/case-studies"
-              className="inline-flex items-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/50 hover:bg-white/5 transition-all text-[15px]"
+              className="inline-flex items-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#f4f4f4]/50 hover:bg-white/5 transition-all text-[15px]"
             >
               <span>{t.hero.ctaSecondary}</span>
               <span>↗</span>
@@ -321,7 +321,7 @@ export default function WebsitesClient() {
       <section className="py-20 md:py-28 px-6 border-t border-[#1e1e1c]" style={{ background: "linear-gradient(to bottom, #080808, #0a0a0f)" }}>
         <div className="max-w-6xl mx-auto">
           <AnimateIn>
-            <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3 text-center">
+            <p className="text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-widest mb-3 text-center">
               {t.capabilities.eyebrow}
             </p>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-14 md:mb-20 text-center text-balance max-w-3xl mx-auto">
@@ -332,9 +332,9 @@ export default function WebsitesClient() {
           <div className="grid md:grid-cols-2 gap-5 md:gap-7">
             {t.capabilities.items.map((item, i) => (
               <AnimateIn key={item.number} delay={i * 90}>
-                <div className="relative h-full p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#c8ff00]/35 hover:bg-[#101010] transition-colors">
+                <div className="relative h-full p-6 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] hover:border-[#f4f4f4]/35 hover:bg-[#101010] transition-colors">
                   <div className="flex items-baseline gap-4 mb-4">
-                    <span className="font-mono text-sm text-[#c8ff00]">{item.number}</span>
+                    <span className="font-mono text-sm text-[#f4f4f4]">{item.number}</span>
                     <h3 className="text-xl md:text-2xl font-bold text-white">{item.title}</h3>
                   </div>
                   <p className="text-[#a0a0a0] text-[14px] md:text-[15px] leading-relaxed mb-5">
@@ -361,7 +361,7 @@ export default function WebsitesClient() {
       <section className="py-20 md:py-28 px-6 border-t border-[#1e1e1c]" style={{ background: "#080808" }}>
         <div className="max-w-6xl mx-auto">
           <AnimateIn>
-            <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3 text-center">
+            <p className="text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-widest mb-3 text-center">
               {t.process.eyebrow}
             </p>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-14 md:mb-20 text-center text-balance max-w-3xl mx-auto">
@@ -373,7 +373,7 @@ export default function WebsitesClient() {
             {t.process.steps.map((step, i) => (
               <AnimateIn key={step.number} delay={i * 80}>
                 <div className="relative h-full p-6 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d]">
-                  <div className="font-mono text-xs text-[#c8ff00] mb-3">{step.number}</div>
+                  <div className="font-mono text-xs text-[#f4f4f4] mb-3">{step.number}</div>
                   <h3 className="text-lg font-bold text-white mb-1">{step.title}</h3>
                   <div className="font-mono text-[10px] uppercase tracking-widest text-[#7a7a7a] mb-4">
                     {step.duration}
@@ -390,7 +390,7 @@ export default function WebsitesClient() {
       <section className="py-16 md:py-20 px-6 border-t border-[#1e1e1c]" style={{ background: "#0a0a0a" }}>
         <div className="max-w-5xl mx-auto text-center">
           <AnimateIn>
-            <p className="text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest mb-3">
+            <p className="text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-widest mb-3">
               {t.stack.eyebrow}
             </p>
             <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-10 text-balance max-w-2xl mx-auto">
@@ -414,7 +414,7 @@ export default function WebsitesClient() {
       <section id="contact-teaser" className="py-20 md:py-28 px-6 border-t border-[#1e1e1c] relative" style={{ background: "#080808" }}>
         <div
           aria-hidden
-          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/40 to-transparent"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#f4f4f4]/40 to-transparent"
         />
         <div className="max-w-4xl mx-auto text-center">
           <AnimateIn>
@@ -424,7 +424,7 @@ export default function WebsitesClient() {
               <span
                 className="bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
+                  backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
                 }}
               >
                 {t.cta.h2Bottom}
@@ -436,14 +436,14 @@ export default function WebsitesClient() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] transition-colors"
-                style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.5)" }}
+                className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] transition-colors"
+                style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.5)" }}
               >
                 {t.cta.primary}
               </a>
               <Link
                 href="/#services"
-                className="inline-flex items-center justify-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/50 hover:bg-white/5 transition-all"
+                className="inline-flex items-center justify-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#f4f4f4]/50 hover:bg-white/5 transition-all"
               >
                 {t.cta.secondary}
               </Link>

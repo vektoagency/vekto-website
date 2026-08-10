@@ -22,10 +22,10 @@ export default function LangToggle({ className = "" }: { className?: string }) {
       {/* Sliding lime pill */}
       <span
         aria-hidden
-        className="absolute top-[3px] bottom-[3px] w-[38px] rounded-full bg-[#c8ff00] transition-transform duration-300 ease-out"
+        className="absolute top-[3px] bottom-[3px] w-[38px] rounded-full bg-[#f4f4f4] transition-transform duration-300 ease-out"
         style={{
           transform: isBg ? "translateX(0)" : "translateX(38px)",
-          boxShadow: "0 0 14px rgba(200,255,0,0.55)",
+          boxShadow: "0 0 14px rgba(244,244,244,0.55)",
         }}
       />
 

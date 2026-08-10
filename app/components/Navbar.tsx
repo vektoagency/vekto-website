@@ -118,7 +118,7 @@ export default function Navbar() {
           <LangToggle />
           <a
             href="/start"
-            className="inline-flex items-center gap-2 bg-[#c8ff00] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#d4ff33] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#f4f4f4] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#ffffff] transition-colors"
           >
             {t.cta}
           </a>
@@ -171,7 +171,7 @@ export default function Navbar() {
           <a
             href="/start"
             onClick={() => setMenuOpen(false)}
-            className="bg-[#c8ff00] text-black font-semibold px-5 py-3 rounded-full text-center hover:bg-[#d4ff33] transition-colors mt-1"
+            className="bg-[#f4f4f4] text-black font-semibold px-5 py-3 rounded-full text-center hover:bg-[#ffffff] transition-colors mt-1"
           >
             {t.cta}
           </a>

@@ -151,19 +151,19 @@ export default function BriefClient() {
         <div className="max-w-3xl mx-auto px-5 md:px-8 py-3 md:py-4 flex items-center justify-between gap-3">
           <Link
             href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#c8ff00] transition-colors"
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
           >
             {t.nav.home}
           </Link>
           <div className="flex items-center gap-3 md:gap-4">
             {step > 0 && step < 8 && (
-              <span className="hidden sm:inline font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#c8ff00]">
+              <span className="hidden sm:inline font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4]">
                 {t.meta.stepOf(step, TOTAL_STEPS)}
               </span>
             )}
             <button
               onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-              className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] border border-[#c8ff00]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#c8ff00]/10 transition-colors"
+              className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] border border-[#f4f4f4]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors"
               aria-label="Toggle language"
             >
               {t.meta.langToggle}
@@ -173,10 +173,10 @@ export default function BriefClient() {
         {/* Progress bar */}
         <div className="h-[2px] bg-[#1e1e1c]">
           <div
-            className="h-full bg-[#c8ff00] transition-all duration-500 ease-out"
+            className="h-full bg-[#f4f4f4] transition-all duration-500 ease-out"
             style={{
               width: `${progressPct}%`,
-              boxShadow: "0 0 10px rgba(200,255,0,0.55)",
+              boxShadow: "0 0 10px rgba(244,244,244,0.55)",
             }}
           />
         </div>
@@ -186,7 +186,7 @@ export default function BriefClient() {
         {/* Step 0 — intro */}
         {step === 0 && (
           <div className="animate-[briefFade_0.5s_ease-out_both]">
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-4">
+            <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-4">
               {t.intro.eyebrow}
             </p>
             <h1 className="text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-5">
@@ -196,7 +196,7 @@ export default function BriefClient() {
               {t.intro.sub}
             </p>
             <div className="flex flex-wrap items-center gap-3 mb-8">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#c8ff00]/70 border border-[#c8ff00]/30 px-3 py-1.5 rounded-full">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#f4f4f4]/70 border border-[#f4f4f4]/30 px-3 py-1.5 rounded-full">
                 {t.meta.timeEstimate}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#9a958e] border border-[#1e1e1c] px-3 py-1.5 rounded-full">
@@ -205,8 +205,8 @@ export default function BriefClient() {
             </div>
             <button
               onClick={() => setStep(1)}
-              className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors text-[15px]"
-              style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+              className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#ffffff] transition-colors text-[15px]"
+              style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
             >
               {t.intro.start}
             </button>
@@ -406,13 +406,13 @@ export default function BriefClient() {
         {/* Step 8 — Success */}
         {step === 8 && (
           <div className="animate-[briefFade_0.5s_ease-out_both] py-8 md:py-16 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#c8ff00] text-black mb-7"
-              style={{ boxShadow: "0 0 40px rgba(200,255,0,0.45)" }}>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#f4f4f4] text-black mb-7"
+              style={{ boxShadow: "0 0 40px rgba(244,244,244,0.45)" }}>
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-4">
+            <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-4">
               {t.intro.eyebrow}
             </p>
             <h1 className="text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-5">
@@ -424,8 +424,8 @@ export default function BriefClient() {
             <div className="flex justify-center">
               <Link
                 href="/"
-                className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors font-mono text-sm uppercase tracking-[0.2em]"
-                style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+                className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-semibold px-8 py-3.5 rounded-full hover:bg-[#ffffff] transition-colors font-mono text-sm uppercase tracking-[0.2em]"
+                style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
               >
                 {t.success.backHome}
               </Link>
@@ -438,7 +438,7 @@ export default function BriefClient() {
           <div className="mt-10 md:mt-12 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pt-6 border-t border-[#1e1e1c]">
             <button
               onClick={handleBack}
-              className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#9a958e] hover:text-[#c8ff00] transition-colors py-2 self-start sm:self-auto"
+              className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors py-2 self-start sm:self-auto"
             >
               {t.nav.back}
             </button>
@@ -450,8 +450,8 @@ export default function BriefClient() {
             {step < TOTAL_STEPS ? (
               <button
                 onClick={handleNext}
-                className="bg-[#c8ff00] text-black font-semibold px-8 py-3 rounded-full hover:bg-[#d4ff33] transition-colors text-[14px]"
-                style={{ boxShadow: "0 10px 30px -10px rgba(200,255,0,0.55)" }}
+                className="bg-[#f4f4f4] text-black font-semibold px-8 py-3 rounded-full hover:bg-[#ffffff] transition-colors text-[14px]"
+                style={{ boxShadow: "0 10px 30px -10px rgba(244,244,244,0.55)" }}
               >
                 {t.nav.next}
               </button>
@@ -459,8 +459,8 @@ export default function BriefClient() {
               <button
                 onClick={handleSubmit}
                 disabled={submitting || !form.brand.trim() || !form.name.trim() || !form.email.trim() || !form.phone.trim()}
-                className="bg-[#c8ff00] text-black font-semibold px-8 py-3 rounded-full hover:bg-[#d4ff33] transition-colors text-[14px] disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ boxShadow: "0 10px 30px -10px rgba(200,255,0,0.55)" }}
+                className="bg-[#f4f4f4] text-black font-semibold px-8 py-3 rounded-full hover:bg-[#ffffff] transition-colors text-[14px] disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ boxShadow: "0 10px 30px -10px rgba(244,244,244,0.55)" }}
               >
                 {submitting ? t.nav.submitting : t.nav.submit}
               </button>
@@ -494,7 +494,7 @@ function StepWrapper({
 }) {
   return (
     <div className="animate-[briefFade_0.5s_ease-out_both]">
-      <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+      <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
         {stepLabel}
       </p>
       <h2 className="text-2xl md:text-4xl font-bold leading-[1.15] tracking-tight mb-2">
@@ -509,7 +509,7 @@ function StepWrapper({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mb-6 md:mb-7">
-      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#c8ff00]/85 mb-2.5">
+      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-2.5">
         {label}
       </label>
       {children}
@@ -537,7 +537,7 @@ function Input({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       required={required}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#f4f4f4]/60 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
     />
   );
 }
@@ -559,7 +559,7 @@ function Textarea({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors resize-y leading-relaxed"
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#f4f4f4]/60 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 rounded-md px-4 py-3 text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors resize-y leading-relaxed"
     />
   );
 }
@@ -580,14 +580,14 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-1 focus:ring-[#c8ff00]/30 rounded-md px-4 py-3 pr-10 text-[15px] text-[#ece8e1] transition-colors cursor-pointer"
+        className="w-full appearance-none bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#f4f4f4]/60 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 rounded-md px-4 py-3 pr-10 text-[15px] text-[#ece8e1] transition-colors cursor-pointer"
       >
         <option value="">— {lang === "bg" ? "избери" : "select"} —</option>
         {options.map((o) => (
           <option key={o} value={o}>{o}</option>
         ))}
       </select>
-      <span aria-hidden className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#c8ff00] text-xs">▾</span>
+      <span aria-hidden className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#f4f4f4] text-xs">▾</span>
     </div>
   );
 }
@@ -614,8 +614,8 @@ function Pills({
             onClick={() => onChange(active ? "" : o)}
             className={`text-left px-4 py-2.5 rounded-md text-[13px] md:text-sm transition-all ${
               active
-                ? "bg-[#c8ff00] text-black font-semibold border border-[#c8ff00]"
-                : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#c8ff00]/40 hover:text-[#c8ff00]"
+                ? "bg-[#f4f4f4] text-black font-semibold border border-[#f4f4f4]"
+                : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#f4f4f4]/40 hover:text-[#f4f4f4]"
             }`}
           >
             {o}
@@ -648,13 +648,13 @@ function PillsMulti({
             onClick={() => onToggle(o)}
             className={`text-left px-4 py-2.5 rounded-md text-[13px] md:text-sm transition-all flex items-center gap-2 ${
               active
-                ? "bg-[#c8ff00] text-black font-semibold border border-[#c8ff00]"
-                : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#c8ff00]/40 hover:text-[#c8ff00]"
+                ? "bg-[#f4f4f4] text-black font-semibold border border-[#f4f4f4]"
+                : "bg-[#0d0d0d] text-[#ece8e1] border border-[#1e1e1c] hover:border-[#f4f4f4]/40 hover:text-[#f4f4f4]"
             }`}
           >
-            <span aria-hidden className={`w-3.5 h-3.5 border rounded-sm flex items-center justify-center shrink-0 ${active ? "border-black bg-black" : "border-[#c8ff00]/40"}`}>
+            <span aria-hidden className={`w-3.5 h-3.5 border rounded-sm flex items-center justify-center shrink-0 ${active ? "border-black bg-black" : "border-[#f4f4f4]/40"}`}>
               {active && (
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#c8ff00" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#f4f4f4" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               )}

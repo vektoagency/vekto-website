@@ -83,8 +83,8 @@ export async function submitStartLead(data: StartLead) {
   const html = `
     <div style="background:#080808;color:#ece8e1;font-family:Arial,sans-serif;padding:32px">
       <div style="max-width:640px;margin:0 auto;background:#0d0d0d;border:1px solid #1e1e1c;border-radius:6px;overflow:hidden">
-        <div style="padding:24px 28px;border-bottom:2px solid #c8ff00;background:#0a0a0a">
-          <div style="font-family:monospace;font-size:11px;letter-spacing:0.3em;color:#c8ff00;text-transform:uppercase;margin-bottom:8px">VEKTO / ${sourceTitle}</div>
+        <div style="padding:24px 28px;border-bottom:2px solid #f4f4f4;background:#0a0a0a">
+          <div style="font-family:monospace;font-size:11px;letter-spacing:0.3em;color:#f4f4f4;text-transform:uppercase;margin-bottom:8px">VEKTO / ${sourceTitle}</div>
           <h1 style="margin:0;font-size:20px;color:#fff">${escape(brandLabel)}</h1>
           <div style="margin-top:6px;color:#9a958e;font-size:13px">${escape(nameLabel)} · ${escape(data.email)}${data.phone ? ` · ${escape(data.phone)}` : ""}</div>
         </div>

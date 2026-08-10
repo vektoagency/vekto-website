@@ -225,7 +225,7 @@ export default async function PrivacyPage() {
         <div className="max-w-3xl mx-auto px-5 md:px-8 py-3 md:py-4">
           <Link
             href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#c8ff00] transition-colors"
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
           >
             {t.home}
           </Link>
@@ -233,7 +233,7 @@ export default async function PrivacyPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-5 md:px-8 py-10 md:py-16">
-        <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">{t.eyebrow}</p>
+        <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">{t.eyebrow}</p>
         <h1 className="text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-3">{t.h1}</h1>
         <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#666] mb-8">{t.updated}</p>
         <p className="text-[14px] md:text-base text-[#a0a0a0] leading-relaxed mb-10 md:mb-12">{t.intro}</p>
@@ -241,7 +241,7 @@ export default async function PrivacyPage() {
         <div className="space-y-8 md:space-y-10">
           {t.sections.map((s) => (
             <section key={s.title}>
-              <h2 className="font-mono text-[11px] md:text-xs text-[#c8ff00] uppercase tracking-[0.25em] mb-3">
+              <h2 className="font-mono text-[11px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.25em] mb-3">
                 {s.title}
               </h2>
               <div className="space-y-2 text-[14px] md:text-[15px] text-[#cfcbc4] leading-relaxed">

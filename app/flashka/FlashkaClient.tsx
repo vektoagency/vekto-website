@@ -74,8 +74,8 @@ export default function FlashkaClient() {
         cal("ui", {
           theme: "dark",
           cssVarsPerTheme: {
-            light: { "cal-brand": "#c8ff00" },
-            dark: { "cal-brand": "#c8ff00" },
+            light: { "cal-brand": "#f4f4f4" },
+            dark: { "cal-brand": "#f4f4f4" },
           },
           hideEventTypeDetails: false,
           layout: "month_view",
@@ -151,13 +151,13 @@ export default function FlashkaClient() {
         <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 md:py-4 flex items-center justify-between gap-3">
           <Link
             href="/"
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#c8ff00] transition-colors"
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[#9a958e] hover:text-[#f4f4f4] transition-colors"
           >
             {t.meta.home}
           </Link>
           <button
             onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#c8ff00] border border-[#c8ff00]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#c8ff00]/10 transition-colors"
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#f4f4f4] border border-[#f4f4f4]/40 px-2.5 md:px-3 py-1 md:py-1.5 rounded-sm hover:bg-[#f4f4f4]/10 transition-colors"
             aria-label="Toggle language"
           >
             {t.meta.langToggle}
@@ -192,12 +192,12 @@ export default function FlashkaClient() {
                       markerHeight="5"
                       orient="auto"
                     >
-                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8ff00" opacity="0.55" />
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f4f4f4" opacity="0.55" />
                     </marker>
                   </defs>
                   <g
                     className="flashka-vector-field"
-                    stroke="#c8ff00"
+                    stroke="#f4f4f4"
                     strokeWidth="1.5"
                     fill="none"
                     strokeLinecap="round"
@@ -230,8 +230,8 @@ export default function FlashkaClient() {
                   <span
                     className="inline-block bg-clip-text text-transparent"
                     style={{
-                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 45%, #a8e600 100%)",
-                      filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.42))",
+                      backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 45%, #a8e600 100%)",
+                      filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.42))",
                     }}
                   >
                     {t.meta.h1Bottom}
@@ -244,8 +244,8 @@ export default function FlashkaClient() {
 
                 <button
                   onClick={scrollToForm}
-                  className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 md:px-10 py-4 md:py-4 min-h-[52px] rounded-full hover:bg-[#d4ff33] active:scale-[0.96] transition-all text-[16px] md:text-[17px] animate-[startFade_0.7s_0.2s_ease-out_both] touch-manipulation"
-                  style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+                  className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 md:px-10 py-4 md:py-4 min-h-[52px] rounded-full hover:bg-[#ffffff] active:scale-[0.96] transition-all text-[16px] md:text-[17px] animate-[startFade_0.7s_0.2s_ease-out_both] touch-manipulation"
+                  style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                 >
                   <span>{t.meta.ctaPrimary}</span>
                   <span className="text-[18px] leading-none transition-transform duration-200 group-hover:translate-x-1 group-active:translate-x-2">→</span>
@@ -262,7 +262,7 @@ export default function FlashkaClient() {
                       <svg
                         width="11" height="11"
                         viewBox="0 0 24 24"
-                        fill="none" stroke="#c8ff00"
+                        fill="none" stroke="#f4f4f4"
                         strokeWidth="3"
                         strokeLinecap="round" strokeLinejoin="round"
                         className="shrink-0"
@@ -293,7 +293,7 @@ export default function FlashkaClient() {
             <section ref={formRef} className="relative scroll-mt-20">
               <div className="max-w-2xl mx-auto px-5 md:px-8 py-10 md:py-16">
                 <div className="text-center mb-8 md:mb-10">
-                  <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-3">
+                  <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
                     {t.formSection.eyebrow}
                   </p>
                   <h2 className="text-[24px] sm:text-3xl md:text-[40px] font-extrabold leading-[1.1] tracking-[-0.02em] mb-3 md:mb-4">
@@ -301,7 +301,7 @@ export default function FlashkaClient() {
                     <span
                       className="bg-clip-text text-transparent"
                       style={{
-                        backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
+                        backgroundImage: "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
                       }}
                     >
                       {t.formSection.h2Highlight}
@@ -341,8 +341,8 @@ export default function FlashkaClient() {
                     <button
                       onClick={handleSubmit}
                       disabled={submitting || !name.trim() || !email.trim() || !phone.trim() || !brand.trim()}
-                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 min-h-[56px] rounded-full hover:bg-[#d4ff33] active:scale-[0.97] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
-                      style={{ boxShadow: "0 18px 50px -10px rgba(200,255,0,0.7), 0 0 38px -4px rgba(200,255,0,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 min-h-[56px] rounded-full hover:bg-[#ffffff] active:scale-[0.97] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                      style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
                     >
                       <span>{submitting ? t.cta.submitting : t.cta.submit}</span>
                     </button>
@@ -366,13 +366,13 @@ export default function FlashkaClient() {
                       data-cal-namespace="30min"
                       data-cal-link="vekto/30min"
                       data-cal-config='{"layout":"month_view","theme":"dark"}'
-                      className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-7 py-3 rounded-full hover:bg-[#c8ff00]/10 transition-colors text-sm cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-7 py-3 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-sm cursor-pointer"
                     >
                       📅 {t.cta.bookCta}
                     </button>
                     <a
                       href="tel:+359882251474"
-                      className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-7 py-3 rounded-full hover:bg-[#c8ff00]/10 transition-colors text-sm"
+                      className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-7 py-3 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-sm"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -400,14 +400,14 @@ export default function FlashkaClient() {
           <div className="min-h-[70vh] flex items-center justify-center px-5 md:px-8 py-10 md:py-16">
             <div className="text-center max-w-2xl mx-auto animate-[startFade_0.5s_ease-out_both]">
               <div
-                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#c8ff00] text-black mb-7"
-                style={{ boxShadow: "0 0 60px rgba(200,255,0,0.55)" }}
+                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#f4f4f4] text-black mb-7"
+                style={{ boxShadow: "0 0 60px rgba(244,244,244,0.55)" }}
               >
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <p className="font-mono text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-[0.3em] mb-4">
+              <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-4">
                 {t.meta.eyebrow}
               </p>
               <h1 className="text-3xl md:text-5xl font-extrabold leading-[1.1] tracking-tight mb-5">
@@ -421,14 +421,14 @@ export default function FlashkaClient() {
                   data-cal-namespace="30min"
                   data-cal-link="vekto/30min"
                   data-cal-config='{"layout":"month_view","theme":"dark"}'
-                  className="inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#d4ff33] transition-colors cursor-pointer"
-                  style={{ boxShadow: "0 14px 40px -12px rgba(200,255,0,0.55)" }}
+                  className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#ffffff] transition-colors cursor-pointer"
+                  style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
                 >
                   {t.success.bookCta}
                 </button>
                 <a
                   href="tel:+359882251474"
-                  className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/55 text-[#c8ff00] font-semibold px-8 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -437,7 +437,7 @@ export default function FlashkaClient() {
                 </a>
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center gap-2 border border-[#c8ff00]/40 text-[#c8ff00] font-semibold px-8 py-3.5 rounded-full hover:bg-[#c8ff00]/10 transition-colors font-mono text-sm uppercase tracking-[0.2em]"
+                  className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/40 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors font-mono text-sm uppercase tracking-[0.2em]"
                 >
                   {t.success.backHome}
                 </Link>
@@ -540,7 +540,7 @@ export default function FlashkaClient() {
             drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65))
             drop-shadow(0 12px 22px rgba(0, 0, 0, 0.7))
             drop-shadow(0 28px 48px rgba(0, 0, 0, 0.45))
-            drop-shadow(0 0 42px rgba(200, 255, 0, 0.26));
+            drop-shadow(0 0 42px rgba(244, 244, 244, 0.26));
         }
         /* ======= 3D box side faces — REAL volumetric depth ======= */
         /* Common — each face sits in preserve-3d space, no events. */
@@ -568,7 +568,7 @@ export default function FlashkaClient() {
           transform-origin: right center;
           transform: rotateY(90deg) translateZ(0);
           background: linear-gradient(180deg, #1a1a1a 0%, #050505 50%, #1a1a1a 100%);
-          border-top: 1px solid #c8ff00;
+          border-top: 1px solid #f4f4f4;
           border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         /* TOP edge face — thin band rotated 90deg on X axis. */
@@ -609,7 +609,7 @@ export default function FlashkaClient() {
           font-size: 11px;
           letter-spacing: 0.35em;
           text-transform: uppercase;
-          color: rgba(200, 255, 0, 0.6);
+          color: rgba(244, 244, 244, 0.6);
         }
         @media (prefers-reduced-motion: reduce) {
           .flashka-drive-perspective { animation: none; }
@@ -619,8 +619,8 @@ export default function FlashkaClient() {
         }
         .flashka-mesh-bg {
           background:
-            radial-gradient(60% 50% at 22% 18%, rgba(200, 255, 0, 0.24), transparent 65%),
-            radial-gradient(55% 45% at 78% 38%, rgba(200, 255, 0, 0.16), transparent 70%),
+            radial-gradient(60% 50% at 22% 18%, rgba(244, 244, 244, 0.24), transparent 65%),
+            radial-gradient(55% 45% at 78% 38%, rgba(244, 244, 244, 0.16), transparent 70%),
             radial-gradient(70% 55% at 50% 88%, rgba(180, 240, 0, 0.12), transparent 72%);
           animation: flashkaMeshDrift 24s ease-in-out infinite;
           will-change: transform;
@@ -650,8 +650,8 @@ export default function FlashkaClient() {
         .vekto-range::-webkit-slider-thumb {
           -webkit-appearance: none; appearance: none;
           width: 22px; height: 22px; margin-top: -8px;
-          border-radius: 999px; background: #c8ff00; border: 3px solid #050505;
-          box-shadow: 0 0 0 1px #c8ff00, 0 0 18px rgba(200, 255, 0, 0.7);
+          border-radius: 999px; background: #f4f4f4; border: 3px solid #050505;
+          box-shadow: 0 0 0 1px #f4f4f4, 0 0 18px rgba(244, 244, 244, 0.7);
           cursor: grab; transition: transform 0.15s ease;
         }
         .vekto-range:active::-webkit-slider-thumb {
@@ -659,8 +659,8 @@ export default function FlashkaClient() {
         }
         .vekto-range::-moz-range-thumb {
           width: 22px; height: 22px;
-          border-radius: 999px; background: #c8ff00; border: 3px solid #050505;
-          box-shadow: 0 0 0 1px #c8ff00, 0 0 18px rgba(200, 255, 0, 0.7);
+          border-radius: 999px; background: #f4f4f4; border: 3px solid #050505;
+          box-shadow: 0 0 0 1px #f4f4f4, 0 0 18px rgba(244, 244, 244, 0.7);
           cursor: grab;
         }
         .vekto-range:active::-moz-range-thumb {
@@ -676,7 +676,7 @@ export default function FlashkaClient() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#c8ff00]/85 mb-2">
+      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-2">
         {label}
       </label>
       {children}
@@ -702,7 +702,7 @@ function Input({
       autoComplete={autoComplete}
       autoCapitalize={type === "email" || type === "url" ? "off" : "sentences"}
       spellCheck={type === "email" || type === "url" || type === "tel" ? false : undefined}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#c8ff00]/60 focus:outline-none focus:ring-2 focus:ring-[#c8ff00]/35 rounded-md px-4 py-4 md:py-3.5 min-h-[52px] md:min-h-0 text-[16px] md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-all hover:border-[#2a2a28] touch-manipulation"
+      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#f4f4f4]/60 focus:outline-none focus:ring-2 focus:ring-[#f4f4f4]/35 rounded-md px-4 py-4 md:py-3.5 min-h-[52px] md:min-h-0 text-[16px] md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-all hover:border-[#2a2a28] touch-manipulation"
     />
   );
 }

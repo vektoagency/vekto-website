@@ -124,11 +124,11 @@ export default function ContactModal() {
         {/* Header */}
         <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-[#151515]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#c8ff00] text-black">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#f4f4f4] text-black">
               <MessageIcon />
             </div>
             <div>
-              <p className="text-[10px] text-[#c8ff00] uppercase tracking-[0.2em] mb-0.5">{t.eyebrow}</p>
+              <p className="text-[10px] text-[#f4f4f4] uppercase tracking-[0.2em] mb-0.5">{t.eyebrow}</p>
               <h3 className="text-lg font-bold text-white leading-tight">{t.title}</h3>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function ContactModal() {
         <div className="flex-1 overflow-y-auto p-5">
           {sent ? (
             <div className="text-center py-10">
-              <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-[#c8ff00] text-black flex items-center justify-center text-2xl font-bold">✓</div>
+              <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-[#f4f4f4] text-black flex items-center justify-center text-2xl font-bold">✓</div>
               <h3 className="text-xl font-semibold text-white mb-2">{t.successTitle}</h3>
               <p className="text-[#a0a0a0]">{t.successBody}</p>
             </div>
@@ -158,7 +158,7 @@ export default function ContactModal() {
                     required type="text" placeholder={t.namePh} name="name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
+                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#f4f4f4]/60 text-sm"
                   />
                 </div>
                 <div>
@@ -167,7 +167,7 @@ export default function ContactModal() {
                     required type="email" placeholder={t.emailPh} name="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
+                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#f4f4f4]/60 text-sm"
                   />
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function ContactModal() {
                     inputMode="tel" autoComplete="tel"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
+                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#f4f4f4]/60 text-sm"
                   />
                 </div>
                 <div>
@@ -188,7 +188,7 @@ export default function ContactModal() {
                     required type="text" placeholder={t.companyPh} name="company"
                     value={form.company}
                     onChange={(e) => setForm({ ...form, company: e.target.value })}
-                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm"
+                    className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#f4f4f4]/60 text-sm"
                   />
                 </div>
               </div>
@@ -198,14 +198,14 @@ export default function ContactModal() {
                   required rows={3} placeholder={t.messagePh} name="message"
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c8ff00]/60 text-sm resize-none"
+                  className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#f4f4f4]/60 text-sm resize-none"
                 />
               </div>
               {error && <p className="text-red-400 text-sm">{error}</p>}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#c8ff00] text-black font-semibold py-4 rounded-full hover:bg-[#d4ff33] transition-colors disabled:opacity-50"
+                className="w-full bg-[#f4f4f4] text-black font-semibold py-4 rounded-full hover:bg-[#ffffff] transition-colors disabled:opacity-50"
               >
                 {loading ? t.submitting : t.submit}
               </button>

@@ -68,7 +68,7 @@ export default function AICreativeHero() {
         className="absolute -top-40 -right-40 w-[720px] h-[720px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(200,255,0,0.16) 0%, rgba(200,255,0,0) 60%)",
+            "radial-gradient(circle, rgba(244,244,244,0.16) 0%, rgba(244,244,244,0) 60%)",
         }}
       />
       <div
@@ -76,7 +76,7 @@ export default function AICreativeHero() {
         className="absolute -bottom-60 -left-40 w-[720px] h-[720px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(200,255,0,0.08) 0%, rgba(200,255,0,0) 60%)",
+            "radial-gradient(circle, rgba(244,244,244,0.08) 0%, rgba(244,244,244,0) 60%)",
         }}
       />
       {/* Blueprint grid */}
@@ -85,7 +85,7 @@ export default function AICreativeHero() {
         className="absolute inset-0 opacity-[0.045] pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(to right, rgba(200,255,0,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,0,0.85) 1px, transparent 1px)",
+            "linear-gradient(to right, rgba(244,244,244,0.85) 1px, transparent 1px), linear-gradient(to bottom, rgba(244,244,244,0.85) 1px, transparent 1px)",
           backgroundSize: "72px 72px",
           WebkitMaskImage:
             "radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 85%)",
@@ -96,9 +96,9 @@ export default function AICreativeHero() {
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         <Stagger delay={0}>
-          <div className="inline-flex items-center gap-2 border border-[#c8ff00]/35 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#c8ff00] animate-pulse" />
-            <span className="font-mono text-[10px] md:text-xs text-[#c8ff00] tracking-[0.3em]">
+          <div className="inline-flex items-center gap-2 border border-[#f4f4f4]/35 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#f4f4f4] animate-pulse" />
+            <span className="font-mono text-[10px] md:text-xs text-[#f4f4f4] tracking-[0.3em]">
               {t.badge}
             </span>
           </div>
@@ -111,8 +111,8 @@ export default function AICreativeHero() {
               className="bg-clip-text text-transparent"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #eaff7a 0%, #c8ff00 50%, #a8e600 100%)",
-                filter: "drop-shadow(0 2px 28px rgba(200,255,0,0.4))",
+                  "linear-gradient(135deg, #eaff7a 0%, #f4f4f4 50%, #a8e600 100%)",
+                filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.4))",
               }}
             >
               {t.h1Highlight}
@@ -132,7 +132,7 @@ export default function AICreativeHero() {
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-14 mb-12 py-6 border-y border-[#1e1e1c]/70">
             {t.stats.map((s) => (
               <div key={s.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-extrabold text-[#c8ff00] tabular-nums leading-none mb-1.5">
+                <div className="text-3xl md:text-4xl font-extrabold text-[#f4f4f4] tabular-nums leading-none mb-1.5">
                   {s.value}
                 </div>
                 <div className="text-[11px] md:text-[13px] text-[#7a7a7a] uppercase tracking-[0.2em]">
@@ -147,10 +147,10 @@ export default function AICreativeHero() {
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
             <a
               href="#contact"
-              className="group inline-flex items-center justify-center gap-2 bg-[#c8ff00] text-black font-bold px-8 py-4 rounded-full hover:bg-[#d4ff33] active:scale-[0.98] transition-all text-[15px] md:text-[16px]"
+              className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[15px] md:text-[16px]"
               style={{
                 boxShadow:
-                  "0 18px 50px -10px rgba(200,255,0,0.55), 0 0 38px -4px rgba(200,255,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  "0 18px 50px -10px rgba(244,244,244,0.55), 0 0 38px -4px rgba(244,244,244,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
               }}
             >
               <span>{t.ctaPrimary}</span>
@@ -160,7 +160,7 @@ export default function AICreativeHero() {
             </a>
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#c8ff00]/50 hover:bg-white/5 transition-all text-[15px]"
+              className="inline-flex items-center gap-2 border border-[#333] text-white font-semibold px-8 py-4 rounded-full hover:border-[#f4f4f4]/50 hover:bg-white/5 transition-all text-[15px]"
             >
               <span>{t.ctaSecondary}</span>
               <span className="text-[15px]">↗</span>

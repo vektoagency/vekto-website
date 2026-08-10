@@ -53,7 +53,7 @@ function trim(s: string | undefined, max = 300): string {
 function buildDiscordBody(p: LeadMirrorPayload): unknown {
   const ok = p.resendStatus === "ok";
   const statusEmoji = ok ? "✅" : "⚠️";
-  const color = ok ? 0xc8ff00 : 0xff8b00; // lime for OK, amber for degraded
+  const color = ok ? 0xf4f4f4 : 0xff8b00; // lime for OK, amber for degraded
 
   const fields = [
     { name: "📧 Email", value: p.email || "(none)", inline: true },

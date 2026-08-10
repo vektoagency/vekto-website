@@ -81,7 +81,7 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
       href={c.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#c8ff00]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(200,255,0,0.35)]"
+      className="group relative shrink-0 w-[140px] md:w-[230px] h-[88px] md:h-[140px] mx-1 md:mx-2.5 rounded-md overflow-hidden bg-[#0a0a0a] border border-[#161616] hover:border-[#f4f4f4]/55 transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_16px_48px_-16px_rgba(244,244,244,0.35)]"
       aria-label={`${c.name} — open website`}
     >
       {/* Phosphor glow on hover — bottom-up sweep */}
@@ -90,7 +90,7 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "radial-gradient(ellipse 70% 100% at 50% 100%, rgba(200,255,0,0.22) 0%, transparent 75%)",
+            "radial-gradient(ellipse 70% 100% at 50% 100%, rgba(244,244,244,0.22) 0%, transparent 75%)",
         }}
       />
 
@@ -115,8 +115,8 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
       </div>
 
       {/* Brand name + description — bottom strip */}
-      <div className="absolute inset-x-0 bottom-0 px-2 md:px-3 py-1.5 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#c8ff00]/30 transition-colors duration-500">
-        <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-[#c8ff00]/85 group-hover:text-[#c8ff00] transition-colors duration-500 truncate w-full">
+      <div className="absolute inset-x-0 bottom-0 px-2 md:px-3 py-1.5 md:py-2.5 flex flex-col items-center text-center border-t border-[#161616] group-hover:border-[#f4f4f4]/30 transition-colors duration-500">
+        <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.18em] md:tracking-[0.2em] text-[#f4f4f4]/85 group-hover:text-[#f4f4f4] transition-colors duration-500 truncate w-full">
           {c.name}
         </span>
         <span className="text-[8px] md:text-[10px] text-[#7a7a7a] group-hover:text-[#a0a0a0] transition-colors duration-500 truncate w-full leading-tight mt-0.5">
@@ -163,12 +163,12 @@ export default function Clients() {
       className="py-6 md:py-14 border-y border-[#1e1e1c] relative overflow-hidden"
       style={{ background: "linear-gradient(to bottom, #070707 0%, #0a0a0a 50%, #070707 100%)" }}
     >
-      <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/30 to-transparent" />
-      <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#c8ff00]/20 to-transparent" />
+      <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#f4f4f4]/30 to-transparent" />
+      <span aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#f4f4f4]/20 to-transparent" />
 
       <div className="max-w-6xl mx-auto px-4 md:px-6 mb-4 md:mb-8">
         <AnimateIn>
-          <p className="text-center text-[10px] md:text-xs text-[#c8ff00] uppercase tracking-widest">
+          <p className="text-center text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-widest">
             {t.title}
           </p>
         </AnimateIn>
@@ -176,10 +176,10 @@ export default function Clients() {
 
       {/* Region label — Bulgaria */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
-        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
+        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#f4f4f4]/70 whitespace-nowrap">
           {t.regionBg}
         </span>
-        <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
+        <span className="flex-1 h-px bg-gradient-to-r from-[#f4f4f4]/25 to-transparent" />
       </div>
 
       {/* Marquee track — Bulgaria — left-scrolling, edges masked */}
@@ -205,10 +205,10 @@ export default function Clients() {
 
       {/* Region label — USA / Worldwide */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 mt-4 md:mt-5 mb-2 md:mb-3 flex items-center gap-2 md:gap-3">
-        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#c8ff00]/70 whitespace-nowrap">
+        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#f4f4f4]/70 whitespace-nowrap">
           {t.regionUs}
         </span>
-        <span className="flex-1 h-px bg-gradient-to-r from-[#c8ff00]/25 to-transparent" />
+        <span className="flex-1 h-px bg-gradient-to-r from-[#f4f4f4]/25 to-transparent" />
       </div>
 
       {/* Marquee track — USA — right-scrolling (opposite direction), edges masked */}

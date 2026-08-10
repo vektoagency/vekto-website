@@ -57,11 +57,11 @@ export default function WhyVekto() {
       <div className="max-w-7xl mx-auto">
 
         <AnimateIn className="text-center mb-12 md:mb-20">
-          <p className="text-xs text-[#c8ff00] uppercase tracking-widest mb-3">{t.eyebrow}</p>
+          <p className="text-xs text-[#f4f4f4] uppercase tracking-widest mb-3">{t.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold text-balance">
             {t.h2[0]}
             <br />
-            <span className="text-[#c8ff00]">{t.h2[1]}</span>
+            <span className="text-[#f4f4f4]">{t.h2[1]}</span>
           </h2>
         </AnimateIn>
 
@@ -69,7 +69,7 @@ export default function WhyVekto() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16 md:mb-24">
           {pillars.map((p, i) => (
             <AnimateIn key={p.title} delay={i * 100}>
-              <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl p-5 md:p-6 hover:border-[#c8ff00]/30 hover:shadow-[0_0_20px_rgba(200,255,0,0.05)] transition-all duration-300 h-full">
+              <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl p-5 md:p-6 hover:border-[#f4f4f4]/30 hover:shadow-[0_0_20px_rgba(244,244,244,0.05)] transition-all duration-300 h-full">
                 <div className="text-2xl md:text-3xl mb-3">{p.icon}</div>
                 <h3 className="font-semibold text-white text-sm md:text-base mb-2">{p.title}</h3>
                 <p className="text-xs md:text-sm text-[#a0a0a0] leading-relaxed">{p.description}</p>
@@ -90,8 +90,8 @@ export default function WhyVekto() {
               <thead>
                 <tr className="border-b border-[#1a1a1a] bg-[#0d0d0d]">
                   <th className="text-left py-4 px-4 md:px-6 text-[#555] font-medium w-[28%]">{t.headers.aspect}</th>
-                  <th className="py-4 px-4 md:px-6 text-[#c8ff00] font-semibold w-[24%]">
-                    <div style={{ width: 72, height: 28, backgroundColor: "#c8ff00", maskImage: "url('/images/logo.webp')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.webp')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto" }} />
+                  <th className="py-4 px-4 md:px-6 text-[#f4f4f4] font-semibold w-[24%]">
+                    <div style={{ width: 72, height: 28, backgroundColor: "#f4f4f4", maskImage: "url('/images/logo.webp')", maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center", WebkitMaskImage: "url('/images/logo.webp')", WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center", margin: "0 auto" }} />
                   </th>
                   <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">{t.headers.traditional}</th>
                   <th className="py-4 px-4 md:px-6 text-[#555] font-medium w-[24%]">{t.headers.inhouse}</th>
@@ -101,7 +101,7 @@ export default function WhyVekto() {
                 {comparisons.map((row) => (
                   <tr key={row.aspect} className="hover:bg-white/[0.02] transition-colors">
                     <td className="py-3 px-4 md:py-4 md:px-6 text-[#666]">{row.aspect}</td>
-                    <td className="py-3 px-4 md:py-4 md:px-6 text-center text-white font-medium bg-[#c8ff00]/5">{row.vekto}</td>
+                    <td className="py-3 px-4 md:py-4 md:px-6 text-center text-white font-medium bg-[#f4f4f4]/5">{row.vekto}</td>
                     <td className="py-3 px-4 md:py-4 md:px-6 text-center text-[#444]">{row.traditional}</td>
                     <td className="py-3 px-4 md:py-4 md:px-6 text-center text-[#444]">{row.inhouse}</td>
                   </tr>
