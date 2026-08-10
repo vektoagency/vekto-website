@@ -18,6 +18,11 @@ const StartBelowFold = dynamic(() => import("./StartBelowFold"), {
   loading: () => null,
 });
 
+// The film's silver — same horizontal gradient the homepage uses for its
+// italic display highlights.
+const SILVER_H =
+  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
+
 
 // Brand logos used in the social-proof marquee. Mirrors the Clients
 // component's roster so the landing page reads as the same brand world.
@@ -194,7 +199,26 @@ export default function StartClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080808] text-[#ece8e1] flex flex-col">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        background: "#0d0d0d",
+        color: "#f4f4f4",
+        fontFamily: "var(--brutal-display), system-ui, sans-serif",
+        // Cyrillic display sets wider — same factor the homepage uses.
+        ...({ "--bgk": lang === "bg" ? "0.92" : "1" } as React.CSSProperties),
+        overflowX: "clip",
+      }}
+    >
+      {/* CRT scanlines — same fixed overlay as the homepage */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[2]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 1px, transparent 1px, transparent 3px)",
+        }}
+      />
       {/* ─────────────────  HEADER — shared site header  ───────────────── */}
       <SiteHeader solid ctaHref="#anketa" />
 
@@ -208,8 +232,6 @@ export default function StartClient() {
                   a subtle 1px dot grid overlay. Pure CSS, GPU-accelerated,
                   zero images. Replaces the old single ambient glow with
                   something that reads 2026-modern. */}
-              <div aria-hidden className="absolute inset-0 hero-mesh-bg pointer-events-none" />
-              <div aria-hidden className="absolute inset-0 hero-grid-overlay pointer-events-none" />
               {/* Animated vector field — diagonal arrows stagger-draw on
                   load, literally rendering 'vectors' behind the headline.
                   Brand-coherent (agency name = vector), designer polish
@@ -258,32 +280,48 @@ export default function StartClient() {
                   </g>
                 </svg>
               </div>
-              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-10 md:pt-20 pb-6 md:pb-10 text-center">
-                <h1
-                  className="text-[28px] sm:text-[40px] md:text-[56px] lg:text-[72px] font-extrabold leading-[1.05] tracking-[-0.025em] mb-4 md:mb-6 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
-                  style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
+              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-12 md:pt-24 pb-8 md:pb-12 text-center">
+                <p
+                  className="font-bold uppercase tracking-[0.35em] opacity-55 text-[10px] md:text-xs mb-5 md:mb-7 animate-[startFade_0.5s_ease-out_both]"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
                 >
-                  <span className="text-white block md:whitespace-nowrap">{t.meta.h1Top}</span>
-                  <span
-                    className="block md:whitespace-nowrap bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)",
-                      filter: "drop-shadow(0 2px 28px rgba(244,244,244,0.42))",
-                    }}
-                  >
-                    {t.meta.h1Bottom}
+                  {t.meta.stageEyebrow}
+                </p>
+                <h1
+                  className="font-black uppercase leading-[0.97] tracking-[-0.03em] mb-5 md:mb-7 text-balance animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  style={{
+                    fontSize: "calc(clamp(30px, 6vw, 76px) * var(--bgk, 1))",
+                    textShadow: "0 2px 30px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  <span className="block">{t.meta.h1Top}</span>
+                  <span className="block">
+                    {t.meta.h1Pre}{" "}
+                    <span
+                      className="italic pr-[0.08em]"
+                      style={{
+                        background: SILVER_H,
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      }}
+                    >
+                      {t.meta.h1Hl}
+                    </span>{" "}
+                    {t.meta.h1Post}
                   </span>
                 </h1>
 
-                {/* Trust badges row — hard numbers + safety claim */}
-                <div className="flex flex-wrap items-center justify-center gap-x-4 md:gap-x-7 gap-y-2 mb-6 md:mb-8 animate-[startFade_0.65s_0.15s_ease-out_both]">
+                {/* Trust row — instrument type, silver ticks */}
+                <div
+                  className="flex flex-wrap items-center justify-center gap-x-5 md:gap-x-8 gap-y-2 mb-7 md:mb-9 animate-[startFade_0.65s_0.15s_ease-out_both]"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
                   {t.meta.trustBadges.map((b) => (
-                    <div key={b} className="flex items-center gap-1.5">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f4f4f4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                      <span className="text-[12.5px] md:text-sm text-[#cfcbc4] font-medium">{b}</span>
-                    </div>
+                    <span key={b} className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.14em] opacity-85">
+                      <span className="mr-1.5" aria-hidden>✓</span>
+                      {b}
+                    </span>
                   ))}
                 </div>
 
@@ -296,15 +334,28 @@ export default function StartClient() {
                   <span>{t.cta.submit}</span>
                   <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">↓</span>
                 </button>
-                <p className="mt-3 text-[11px] md:text-[12px] text-[#888] tracking-wide animate-[startFade_0.75s_0.25s_ease-out_both]">
+                <p
+                  className="mt-3.5 text-[10px] md:text-[11px] uppercase tracking-[0.12em] opacity-60 animate-[startFade_0.75s_0.25s_ease-out_both]"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
                   {t.meta.ctaMicro}
                 </p>
               </div>
             </section>
 
             {/* ─────────────  SOCIAL PROOF MARQUEE  ───────────── */}
-            <section className="border-y border-[#1e1e1c] bg-[#0a0a0a] py-4 md:py-6 relative overflow-hidden">
-              <p className="text-center font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4]/85 mb-5 md:mb-6">
+            <section
+              className="py-4 md:py-6 relative overflow-hidden"
+              style={{
+                background: "#141414",
+                borderTop: "1px solid rgba(244,244,244,0.14)",
+                borderBottom: "1px solid rgba(244,244,244,0.14)",
+              }}
+            >
+              <p
+                className="text-center text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] opacity-55 mb-5 md:mb-6"
+                style={{ fontFamily: "var(--brutal-pixel)" }}
+              >
                 {t.socialProof.heading}
               </p>
               <div
@@ -353,29 +404,45 @@ export default function StartClient() {
             <section ref={formRef} id="anketa" className="relative scroll-mt-24">
               <div className="max-w-2xl mx-auto px-5 md:px-8 py-8 md:py-14">
                 <div data-animate className="reveal text-center mb-8 md:mb-10">
-                  <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-3">
+                  <p
+                    className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] opacity-55 mb-4"
+                    style={{ fontFamily: "var(--brutal-pixel)" }}
+                  >
                     {t.formSection.eyebrow}
                   </p>
-                  <h2 className="text-[22px] sm:text-3xl md:text-[40px] font-extrabold leading-[1.1] tracking-[-0.02em] mb-3 md:mb-4 whitespace-nowrap">
+                  <h2
+                    className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-3 md:mb-4"
+                    style={{ fontSize: "calc(clamp(26px, 4.6vw, 48px) * var(--bgk, 1))" }}
+                  >
                     {t.formSection.h2}{" "}
                     <span
-                      className="bg-clip-text text-transparent"
+                      className="italic pr-[0.08em]"
                       style={{
-                        backgroundImage: "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)",
+                        background: SILVER_H,
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
                       }}
                     >
                       {t.formSection.h2Highlight}
                     </span>
                   </h2>
-                  <p className="text-[14px] md:text-[16px] text-[#a8a8a8] leading-relaxed max-w-[540px] mx-auto text-balance">
+                  <p
+                    className="text-[14px] md:text-[16px] leading-relaxed max-w-[540px] mx-auto text-balance opacity-70 font-medium"
+                    style={{ fontFamily: "var(--brutal-comic)" }}
+                  >
                     {t.formSection.sub}
                   </p>
                 </div>
 
                 <div
                   data-animate
-                  className="reveal space-y-5 md:space-y-6 p-5 md:p-8 rounded-2xl border border-[#1e1e1c] bg-[#0a0a0a]"
-                  style={{ boxShadow: "0 24px 70px -24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03)" }}
+                  className="reveal space-y-5 md:space-y-6 p-5 md:p-8 border-2"
+                  style={{
+                    borderColor: "rgba(244,244,244,0.3)",
+                    background: "#0d0d0d",
+                    boxShadow: "8px 8px 0 0 #2a2a2a",
+                  }}
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                     <Field label={t.fields.name}>
@@ -415,15 +482,21 @@ export default function StartClient() {
                         {errorMsg}
                       </p>
                     )}
-                    <p className="mt-4 text-center text-[11px] md:text-[12px] text-[#888] tracking-wide">
+                    <p
+                      className="mt-4 text-center text-[10px] md:text-[11px] uppercase tracking-[0.1em] opacity-60"
+                      style={{ fontFamily: "var(--brutal-pixel)" }}
+                    >
                       {t.formSection.submitMicro}
                     </p>
                   </div>
                 </div>
 
                 {/* Alt CTAs */}
-                <div className="mt-10 pt-8 border-t border-[#1e1e1c] text-center">
-                  <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#9a958e] mb-4">
+                <div className="mt-10 pt-8 text-center" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }}>
+                  <p
+                    className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] opacity-55 mb-4"
+                    style={{ fontFamily: "var(--brutal-pixel)" }}
+                  >
                     {t.cta.orBook}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -463,10 +536,13 @@ export default function StartClient() {
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <p className="font-mono text-[10px] md:text-xs text-[#f4f4f4] uppercase tracking-[0.3em] mb-4">
+              <p
+                className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] opacity-55 mb-4"
+                style={{ fontFamily: "var(--brutal-pixel)" }}
+              >
                 {t.meta.eyebrow}
               </p>
-              <h1 className="text-3xl md:text-5xl font-extrabold leading-[1.1] tracking-tight mb-5">
+              <h1 className="text-3xl md:text-5xl font-black uppercase leading-[1.05] tracking-[-0.02em] mb-5">
                 {t.success.title}
               </h1>
               <p className="text-[15px] md:text-lg text-[#a0a0a0] leading-relaxed mb-8 max-w-xl mx-auto">
@@ -508,35 +584,6 @@ export default function StartClient() {
         @keyframes startFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
-        }
-        /* Modern hero mesh — three layered radial-gradients drifting
-           via translate-only transforms (GPU-accelerated, no repaint).
-           ~0.5KB CSS, no images, no JS. */
-        .hero-mesh-bg {
-          background:
-            radial-gradient(60% 50% at 22% 18%, rgba(244, 244, 244, 0.22), transparent 65%),
-            radial-gradient(55% 45% at 78% 38%, rgba(244, 244, 244, 0.14), transparent 70%),
-            radial-gradient(70% 55% at 50% 88%, rgba(244, 244, 244, 0.08), transparent 72%);
-          animation: heroMeshDrift 24s ease-in-out infinite;
-          will-change: transform;
-        }
-        @keyframes heroMeshDrift {
-          0%, 100% { transform: translate3d(0, 0, 0); }
-          33%      { transform: translate3d(2.5%, -2%, 0); }
-          66%      { transform: translate3d(-1.5%, 1.5%, 0); }
-        }
-        /* Subtle 1px dot grid overlay — Linear-style background detail.
-           Single CSS background-image, no DOM cost. Masks fade to
-           transparent at edges so it doesn't fight the gradient mesh. */
-        .hero-grid-overlay {
-          background-image:
-            radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.045) 1px, transparent 0);
-          background-size: 28px 28px;
-          mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
-          -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-mesh-bg { animation: none; }
         }
         /* Vector field hero bg — stagger-draw diagonal arrows. The
            literal 'vectors' behind 'Дай му вектор.' wordplay. */
@@ -629,7 +676,10 @@ export default function StartClient() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-2">
+      <label
+        className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-2"
+        style={{ fontFamily: "var(--brutal-pixel)" }}
+      >
         {label}
       </label>
       {children}
@@ -656,7 +706,7 @@ function Input({
       autoComplete={autoComplete}
       autoCapitalize={type === "email" || type === "url" ? "off" : "sentences"}
       spellCheck={type === "email" || type === "url" || type === "tel" ? false : undefined}
-      className="w-full bg-[#0d0d0d] border border-[#1e1e1c] focus:border-[#f4f4f4]/60 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 rounded-md px-4 py-3.5 text-base md:text-[15px] text-[#ece8e1] placeholder-[#555] transition-colors"
+      className="w-full bg-[#141414] border border-[#f4f4f4]/25 focus:border-[#f4f4f4]/70 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 px-4 py-3.5 text-base md:text-[15px] text-[#f4f4f4] placeholder-[#555] transition-colors"
     />
   );
 }
