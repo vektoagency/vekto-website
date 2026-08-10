@@ -599,7 +599,7 @@ export default function FlashkaClient() {
           background:
             radial-gradient(60% 50% at 22% 18%, rgba(244, 244, 244, 0.24), transparent 65%),
             radial-gradient(55% 45% at 78% 38%, rgba(244, 244, 244, 0.16), transparent 70%),
-            radial-gradient(70% 55% at 50% 88%, rgba(180, 240, 0, 0.12), transparent 72%);
+            radial-gradient(70% 55% at 50% 88%, rgba(244, 244, 244, 0.08), transparent 72%);
           animation: flashkaMeshDrift 24s ease-in-out infinite;
           will-change: transform;
         }

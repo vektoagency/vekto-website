@@ -290,8 +290,8 @@ export default function StartClient() {
                 {/* Primary CTA — scrolls to form */}
                 <button
                   onClick={scrollToForm}
-                  className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-7 md:px-9 py-3.5 md:py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[15px] md:text-[16px] animate-[startFade_0.7s_0.2s_ease-out_both]"
-                  style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+                  className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-7 md:px-9 py-3.5 md:py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[13px] md:text-[14px] animate-[startFade_0.7s_0.2s_ease-out_both]"
+                  style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
                 >
                   <span>{t.cta.submit}</span>
                   <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">↓</span>
@@ -402,8 +402,8 @@ export default function StartClient() {
                     <button
                       onClick={handleSubmit}
                       disabled={submitting || !name.trim() || !email.trim() || !phone.trim() || !brand.trim()}
-                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[16px] md:text-[17px] disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[14px] md:text-[15px] disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
                     >
                       <span>{submitting ? t.cta.submitting : t.cta.submit}</span>
                       {!submitting && (
@@ -431,13 +431,13 @@ export default function StartClient() {
                       data-cal-namespace="30min"
                       data-cal-link="vekto/30min"
                       data-cal-config='{"layout":"month_view","theme":"dark"}'
-                      className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-7 py-3 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-sm cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-7 py-3 hover:bg-white hover:text-black transition-colors text-[12px] cursor-pointer"
                     >
                       📅 {t.cta.bookCta}
                     </button>
                     <a
                       href="tel:+359882251474"
-                      className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-7 py-3 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-sm"
+                      className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-7 py-3 hover:bg-white hover:text-black transition-colors text-[12px]"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -456,8 +456,8 @@ export default function StartClient() {
           <div className="min-h-[70vh] flex items-center justify-center px-5 md:px-8 py-10 md:py-16">
             <div className="text-center max-w-2xl mx-auto animate-[startFade_0.5s_ease-out_both]">
               <div
-                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#f4f4f4] text-black mb-7"
-                style={{ boxShadow: "0 0 60px rgba(244,244,244,0.55)" }}
+                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-[#f4f4f4] text-[#0d0d0d] mb-7"
+                style={{ boxShadow: "5px 5px 0 0 #3a3a3a" }}
               >
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
@@ -477,14 +477,14 @@ export default function StartClient() {
                   data-cal-namespace="30min"
                   data-cal-link="vekto/30min"
                   data-cal-config='{"layout":"month_view","theme":"dark"}'
-                  className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#ffffff] transition-colors cursor-pointer"
-                  style={{ boxShadow: "0 14px 40px -12px rgba(244,244,244,0.55)" }}
+                  className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-3.5 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform cursor-pointer"
+                  style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
                 >
                   {t.success.bookCta}
                 </button>
                 <a
                   href="tel:+359882251474"
-                  className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-8 py-3.5 text-[13px] hover:bg-white hover:text-black transition-colors"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
@@ -493,7 +493,7 @@ export default function StartClient() {
                 </a>
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/40 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors font-mono text-sm uppercase tracking-[0.2em]"
+                  className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] px-8 py-3.5 hover:bg-white hover:text-black transition-colors font-mono text-sm uppercase tracking-[0.2em]"
                 >
                   {t.success.backHome}
                 </Link>
@@ -516,7 +516,7 @@ export default function StartClient() {
           background:
             radial-gradient(60% 50% at 22% 18%, rgba(244, 244, 244, 0.22), transparent 65%),
             radial-gradient(55% 45% at 78% 38%, rgba(244, 244, 244, 0.14), transparent 70%),
-            radial-gradient(70% 55% at 50% 88%, rgba(180, 240, 0, 0.10), transparent 72%);
+            radial-gradient(70% 55% at 50% 88%, rgba(244, 244, 244, 0.08), transparent 72%);
           animation: heroMeshDrift 24s ease-in-out infinite;
           will-change: transform;
         }

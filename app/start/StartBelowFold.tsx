@@ -254,8 +254,8 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
             <button
               onClick={scrollToForm}
-              className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-black font-bold px-8 py-4 rounded-full hover:bg-[#ffffff] active:scale-[0.98] transition-all text-[15px] md:text-[16px]"
-              style={{ boxShadow: "0 18px 50px -10px rgba(244,244,244,0.7), 0 0 38px -4px rgba(244,244,244,0.4), inset 0 1px 0 rgba(255,255,255,0.45)" }}
+              className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[13px] md:text-[14px]"
+              style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
             >
               {t.finalCta.scrollToForm}
             </button>
@@ -263,7 +263,7 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
-              className="inline-flex items-center justify-center gap-2 border border-[#f4f4f4]/55 text-[#f4f4f4] font-semibold px-8 py-3.5 rounded-full hover:bg-[#f4f4f4]/10 transition-colors text-[14px] md:text-[15px] cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-8 py-3.5 hover:bg-white hover:text-black transition-colors text-[12px] md:text-[13px] cursor-pointer"
             >
               📅 {t.finalCta.orBook}
             </button>
@@ -323,7 +323,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className={`rounded-xl border transition-colors ${
+      className={`border transition-colors ${
         open ? "border-[#f4f4f4]/35 bg-[#0d0d0d]" : "border-[#1e1e1c] bg-[#0a0a0a] hover:border-[#f4f4f4]/20"
       }`}
     >
@@ -338,7 +338,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         </span>
         <span
           aria-hidden
-          className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 ${
+          className={`shrink-0 w-7 h-7 flex items-center justify-center border transition-all duration-300 ${
             open
               ? "bg-[#f4f4f4] border-[#f4f4f4] text-black rotate-180"
               : "border-[#f4f4f4]/45 text-[#f4f4f4]"
