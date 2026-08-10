@@ -767,7 +767,7 @@ export default function BrutalismHomepage() {
       >
         <div className="px-4 md:px-6 py-3 md:py-4 flex items-center gap-x-5 md:gap-x-7">
           <Link
-            href="/preview-brutalism"
+            href="/"
             aria-label="VEKTO"
             className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0 mr-auto"
             style={{
