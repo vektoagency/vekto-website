@@ -1693,8 +1693,8 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                     {t.roomBadge}{r.id}
                   </div>
                   <h3
-                    className="font-black leading-[0.9] tracking-[-0.03em] mb-6 whitespace-nowrap"
-                    style={{ fontSize: "calc(clamp(38px, 6vw, 84px) * var(--bgk, 1))" }}
+                    className="font-black leading-[0.9] tracking-[-0.03em] mb-6 break-words"
+                    style={{ fontSize: "calc(clamp(34px, 4.6vw, 68px) * var(--bgk, 1))" }}
                   >
                     {r.title}
                   </h3>
