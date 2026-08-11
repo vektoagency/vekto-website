@@ -1152,17 +1152,21 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             >
               {s.or}
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            {/* Phones: full-width rows (label left, value right) so
+                nothing truncates; md+: the original three columns. */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <a
                 href="tel:+359882251474"
-                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black text-center"
+                className="flex items-center justify-between gap-3 px-4 py-3 md:flex-col md:justify-center md:gap-1 md:py-4 md:px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black md:text-center"
                 style={{ borderColor: "rgba(244,244,244,0.55)" }}
               >
-                <span className="text-xl md:text-2xl leading-none" aria-hidden>☎</span>
-                <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
-                  {s.call}
+                <span className="flex items-center gap-2.5 md:flex-col md:gap-1">
+                  <span className="text-lg md:text-2xl leading-none" aria-hidden>☎</span>
+                  <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
+                    {s.call}
+                  </span>
                 </span>
-                <span className="text-[11px] opacity-60 tabular-nums w-full truncate px-1" style={{ fontFamily: "var(--brutal-display)" }}>
+                <span className="text-[12px] md:text-[11px] opacity-60 tabular-nums md:w-full md:truncate md:px-1" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.callSub}
                 </span>
               </a>
@@ -1170,27 +1174,31 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
                 href="https://wa.me/359882251474"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black text-center"
+                className="flex items-center justify-between gap-3 px-4 py-3 md:flex-col md:justify-center md:gap-1 md:py-4 md:px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black md:text-center"
                 style={{ borderColor: "rgba(244,244,244,0.55)" }}
               >
-                <span className="text-xl md:text-2xl leading-none" aria-hidden>◉</span>
-                <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
-                  {s.wa}
+                <span className="flex items-center gap-2.5 md:flex-col md:gap-1">
+                  <span className="text-lg md:text-2xl leading-none" aria-hidden>◉</span>
+                  <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
+                    {s.wa}
+                  </span>
                 </span>
-                <span className="text-[11px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-display)" }}>
+                <span className="text-[12px] md:text-[11px] opacity-60 md:w-full md:truncate md:px-1" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.waSub}
                 </span>
               </a>
               <a
                 href="mailto:vektoagency@gmail.com"
-                className="flex flex-col items-center gap-1 py-3 md:py-4 px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black text-center"
+                className="flex items-center justify-between gap-3 px-4 py-3 md:flex-col md:justify-center md:gap-1 md:py-4 md:px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black md:text-center"
                 style={{ borderColor: "rgba(244,244,244,0.55)" }}
               >
-                <span className="text-xl md:text-2xl leading-none" aria-hidden>✉</span>
-                <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
-                  {s.email}
+                <span className="flex items-center gap-2.5 md:flex-col md:gap-1">
+                  <span className="text-lg md:text-2xl leading-none" aria-hidden>✉</span>
+                  <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
+                    {s.email}
+                  </span>
                 </span>
-                <span className="text-[11px] opacity-60 w-full truncate px-1" style={{ fontFamily: "var(--brutal-display)" }}>
+                <span className="text-[12px] md:text-[11px] opacity-60 break-all text-right md:break-normal md:text-center md:w-full md:truncate md:px-1" style={{ fontFamily: "var(--brutal-display)" }}>
                   {s.emailSub}
                 </span>
               </a>
