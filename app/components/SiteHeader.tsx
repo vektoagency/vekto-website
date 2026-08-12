@@ -101,7 +101,6 @@ export default function SiteHeader({
         ];
 
   const ctaLabel = lang === "bg" ? "Опиши проекта си" : "Describe your project";
-  const ctaShort = lang === "bg" ? "Проект" : "Project";
   const fontClasses = [
     pixelMono.variable,
     displayLat.variable,
@@ -179,7 +178,7 @@ export default function SiteHeader({
           </button>
           <Link
             href={ctaHref}
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
+            className="hidden sm:inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
             style={{
               background: "#f4f4f4",
               color: "#0d0d0d",
@@ -187,8 +186,7 @@ export default function SiteHeader({
             }}
           >
             <span aria-hidden>→</span>
-            <span className="hidden sm:inline">{ctaLabel}</span>
-            <span className="sm:hidden">{ctaShort}</span>
+            <span>{ctaLabel}</span>
           </Link>
           <button
             type="button"

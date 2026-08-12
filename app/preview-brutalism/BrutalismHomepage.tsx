@@ -608,7 +608,6 @@ export default function BrutalismHomepage() {
   // modal. The embed API loads lazily after mount so any data-cal-* button
   // works without the modal ever opening first.
   const headerCtaLabel = lang === "bg" ? "Опиши проекта си" : "Describe your project";
-  const headerCtaShort = lang === "bg" ? "Проект" : "Project";
   const [bookOpen, setBookOpen] = useState(false);
   const openBook = useCallback(() => {
     setBookOpen(true);
@@ -761,7 +760,7 @@ export default function BrutalismHomepage() {
               beats a modal for a multi-field intake. */}
           <Link
             href="/start"
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
+            className="hidden sm:inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
             style={{
               background: "#f4f4f4",
               color: "#0d0d0d",
@@ -769,8 +768,7 @@ export default function BrutalismHomepage() {
             }}
           >
             <span aria-hidden>→</span>
-            <span className="hidden sm:inline">{headerCtaLabel}</span>
-            <span className="sm:hidden">{headerCtaShort}</span>
+            <span>{headerCtaLabel}</span>
           </Link>
           {/* Mobile menu trigger — desktop shows the links inline. */}
           <button
