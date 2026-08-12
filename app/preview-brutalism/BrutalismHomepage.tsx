@@ -1102,44 +1102,51 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
               labelled with exactly what it does. No forms here: the
               intake lives at /start, the calendar opens in place. */}
           <div className="space-y-3">
+            {/* Phones: deliberate two-line stack (label / meta), each
+                line nowrap so nothing breaks mid-phrase on any width;
+                md+: the original single row. */}
             <button
               type="button"
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config={JSON.stringify({ theme: "dark" })}
-              className="group w-full py-4 md:py-5 font-black text-base md:text-lg uppercase tracking-[0.1em] transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-3 flex-wrap"
+              className="group w-full py-4 md:py-5 font-black uppercase transition-transform hover:-translate-y-0.5 flex flex-col items-center gap-1.5 md:flex-row md:justify-center md:gap-3"
               style={{
                 background: "#f4f4f4",
                 color: "#0d0d0d",
                 boxShadow: "0 8px 30px rgba(244,244,244,0.14)",
               }}
             >
-              <span aria-hidden>▦</span>
-              {s.calCta}
+              <span className="flex items-center gap-2.5 whitespace-nowrap text-base md:text-lg tracking-[0.1em]">
+                <span aria-hidden>▦</span>
+                {s.calCta}
+              </span>
               <span
-                className="text-[12px] font-semibold tracking-[0.08em] opacity-60"
+                className="flex items-center gap-2 whitespace-nowrap text-[12px] font-semibold tracking-[0.08em] opacity-60"
                 style={{ fontFamily: "var(--brutal-display)" }}
               >
                 {s.calMeta}
+                <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
               </span>
-              <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
             </button>
 
             <Link
               href="/start"
               onClick={onClose}
-              className="group w-full py-4 md:py-5 font-black text-base md:text-lg uppercase tracking-[0.1em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black flex items-center justify-center gap-3 flex-wrap border-2"
+              className="group w-full py-4 md:py-5 font-black uppercase transition-colors text-[#f4f4f4] hover:bg-white hover:text-black flex flex-col items-center gap-1.5 md:flex-row md:justify-center md:gap-3 border-2"
               style={{ borderColor: "rgba(244,244,244,0.55)" }}
             >
-              <span aria-hidden>✎</span>
-              {s.formCta}
+              <span className="flex items-center gap-2.5 whitespace-nowrap text-base md:text-lg tracking-[0.1em]">
+                <span aria-hidden>✎</span>
+                {s.formCta}
+              </span>
               <span
-                className="text-[12px] font-semibold tracking-[0.08em] opacity-60"
+                className="flex items-center gap-2 whitespace-nowrap text-[12px] font-semibold tracking-[0.08em] opacity-60"
                 style={{ fontFamily: "var(--brutal-display)" }}
               >
                 {s.formMeta}
+                <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
               </span>
-              <span aria-hidden className="transition-transform group-hover:translate-x-1.5">→</span>
             </Link>
           </div>
 
