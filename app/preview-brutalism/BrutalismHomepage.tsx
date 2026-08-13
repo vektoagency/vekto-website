@@ -25,6 +25,7 @@ import FlightPlan from "../components/FlightPlan";
 import HeroCinematicBg from "../components/HeroCinematicBg";
 import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
+import Footer from "../components/Footer";
 
 // ============================================================================
 // PALETTE
@@ -217,8 +218,8 @@ const COPY = {
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
-      guestbook: "// VEKTO · GROWTH AGENCY · 2026",
-      portfolioLink: "← ВИЖ ПЪЛНО ПОРТФОЛИО",
+      callCta: "Обади се",
+      formCta: "Опиши проекта си",
     },
   },
   en: {
@@ -374,8 +375,8 @@ const COPY = {
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
-      guestbook: "// VEKTO · GROWTH AGENCY · 2026",
-      portfolioLink: "← SEE FULL PORTFOLIO",
+      callCta: "Call us",
+      formCta: "Describe your project",
     },
   },
 };
@@ -892,6 +893,9 @@ export default function BrutalismHomepage() {
       <StageQualify targetRef={s6} t={t.stage6} openBook={openBook} />
       <HazardStrip />
       <StageAsk   targetRef={s7} t={t.stage7} openBook={openBook} />
+      {/* The real footer — navigation, contact and legal, same structure
+          the rest of the site carries. */}
+      <Footer />
 
       <style jsx global>{`
         /* Smooth scrolling is a preference, not a given — the right-rail
@@ -2163,33 +2167,28 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
             </span>
           </button>
 
-          <div
-            className="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.25em] opacity-70"
-            style={{ fontFamily: "var(--brutal-pixel)" }}
-          >
-            <a href="mailto:vektoagency@gmail.com" className="hover:opacity-100">
-              vektoagency@gmail.com
+          {/* Secondary ways in — same shape the old theme used under its
+              primary CTA (call with the number, then the written brief),
+              instead of a bare dotted line of contacts. */}
+          <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <a
+              href="tel:+359882251474"
+              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-black"
+              style={{ borderColor: "rgba(244,244,244,0.6)", color: "#f4f4f4" }}
+            >
+              <span aria-hidden>☎</span>
+              {t.callCta}
+              <span className="tabular-nums opacity-60">+359 88 225 1474</span>
             </a>
-            <span className="opacity-40">·</span>
-            <a href="tel:+359882251474" className="hover:opacity-100">
-              +359 88 225 1474
-            </a>
+            <Link
+              href="/start"
+              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-black"
+              style={{ borderColor: "rgba(244,244,244,0.6)", color: "#f4f4f4" }}
+            >
+              <span aria-hidden>✎</span>
+              {t.formCta}
+            </Link>
           </div>
-
-          <div
-            className="mt-14 md:mt-24 text-[12px] tracking-[0.2em] opacity-40 border-t-2 border-dashed border-white/40 pt-4 max-w-3xl mx-auto uppercase"
-            style={{ fontFamily: "var(--brutal-pixel)" }}
-          >
-            {t.guestbook}
-          </div>
-
-          <Link
-            href="/portfolio"
-            className="mt-6 inline-block text-[12px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 underline decoration-2 underline-offset-4"
-            style={{ fontFamily: "var(--brutal-pixel)" }}
-          >
-            {t.portfolioLink}
-          </Link>
         </div>
       </div>
     </section>

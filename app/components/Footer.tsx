@@ -1,16 +1,52 @@
 "use client";
 
-import Image from "next/image";
+// ============================================================================
+// SITE FOOTER — the structure the old theme's footer had (brand column,
+// explore links, get in touch, legal bottom bar), rebuilt in the film's
+// world: jet ground, hairline rules, brushed-metal wordmark, instrument
+// mono for labels. Loads its own faces like SiteHeader so every route
+// gets the same typography whether or not the page sets --brutal-*.
+// ============================================================================
+
+import Link from "next/link";
+import { IBM_Plex_Mono, Space_Grotesk, Onest } from "next/font/google";
 import { useT } from "../i18n/LangProvider";
+
+const pixelMono = IBM_Plex_Mono({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "700"],
+  variable: "--f-pixel",
+  display: "swap",
+});
+const displayLat = Space_Grotesk({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "700"],
+  variable: "--f-display-lat",
+  display: "swap",
+});
+const displayCyr = Onest({
+  subsets: ["cyrillic", "latin"],
+  weight: ["400", "500", "700"],
+  variable: "--f-display-cyr",
+  display: "swap",
+});
+
+const WORDMARK_METAL =
+  "linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 40%, #7a7a7a 70%, #969696 100%)";
+const DISPLAY_STACK =
+  "var(--f-display-lat), var(--f-display-cyr), system-ui, sans-serif";
+const PIXEL_STACK = "var(--f-pixel), ui-monospace, monospace";
 
 const PHONE = "+359882251474";
 const PHONE_DISPLAY = "+359 88 225 1474";
+const EMAIL = "vektoagency@gmail.com";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   const t = useT({
     bg: {
-      tagline: "Криейтиви, фунии и AI решения — под един покрив. Партньор за растеж на 50+ бизнеса в България и САЩ.",
+      tagline:
+        "Криейтиви, фунии и AI решения — под един покрив. Партньор за растеж на 50+ бизнеса в България и САЩ.",
       based: "България · САЩ",
       explore: "Разгледай",
       exploreLinks: [
@@ -20,15 +56,15 @@ export default function Footer() {
         { label: "Анкета", href: "/start" },
       ],
       contactH: "Свържи се",
-      startProject: "Започни проект",
-      callUs: "Обади се",
-      bookCall: "Резервирай безплатна среща",
+      startProject: "Опиши проекта си",
+      bookCall: "Запази разговор",
       rights: "Всички права запазени.",
       privacy: "Поверителност",
       terms: "Условия",
     },
     en: {
-      tagline: "Creatives, funnels and AI solutions — under one roof. Growth partner to 50+ brands across Bulgaria and the US.",
+      tagline:
+        "Creatives, funnels and AI solutions — under one roof. Growth partner to 50+ businesses across Bulgaria and the US.",
       based: "Bulgaria · US",
       explore: "Explore",
       exploreLinks: [
@@ -37,39 +73,83 @@ export default function Footer() {
         { label: "Case Studies", href: "/case-studies" },
         { label: "Brief", href: "/start" },
       ],
-      contactH: "Get in Touch",
-      startProject: "Start a project",
-      callUs: "Call us",
-      bookCall: "Book a free call",
+      contactH: "Get in touch",
+      startProject: "Describe your project",
+      bookCall: "Book a call",
       rights: "All rights reserved.",
       privacy: "Privacy",
       terms: "Terms",
     },
   });
 
+  const fontClasses = [
+    pixelMono.variable,
+    displayLat.variable,
+    displayCyr.variable,
+  ].join(" ");
+
+  const colLabel =
+    "text-[11px] font-bold uppercase tracking-[0.3em] opacity-45 mb-5";
+  const linkClass =
+    "inline-block text-[13px] md:text-[14px] font-bold uppercase tracking-[0.06em] opacity-70 hover:opacity-100 transition-opacity";
+
   return (
-    <footer className="border-t border-[#1e1e1c] py-10 md:py-14 px-6" style={{ background: "#060606" }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-8 md:gap-12 mb-8 md:mb-10">
+    <footer
+      className={fontClasses}
+      style={{
+        background: "#0d0d0d",
+        color: "#f4f4f4",
+        borderTop: "1px solid rgba(244,244,244,0.16)",
+        fontFamily: DISPLAY_STACK,
+      }}
+    >
+      <div className="px-6 md:px-14 py-14 md:py-20 max-w-[1400px] mx-auto">
+        <div className="grid gap-10 md:gap-14 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.1fr]">
           {/* Brand */}
           <div>
-            <Image src="/images/logo.webp" alt="VEKTO" width={110} height={36} className="object-contain mb-4" />
-            <p className="text-sm text-[#9a958e] leading-relaxed max-w-sm mb-5">{t.tagline}</p>
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#7a756e]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
+            <Link
+              href="/"
+              aria-label="VEKTO"
+              className="block h-9 w-[150px] mb-5"
+              style={{
+                background: WORDMARK_METAL,
+                WebkitMaskImage: "url(/images/logo.png)",
+                maskImage: "url(/images/logo.png)",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "left center",
+                maskPosition: "left center",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+              }}
+            />
+            <p className="text-[13.5px] md:text-[14.5px] leading-[1.6] opacity-60 max-w-sm mb-6 font-medium">
+              {t.tagline}
+            </p>
+            <div
+              className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.3em] opacity-50"
+              style={{ fontFamily: PIXEL_STACK }}
+            >
+              <span
+                aria-hidden
+                className="w-[7px] h-[7px] rotate-45"
+                style={{ background: "#f4f4f4" }}
+              />
               {t.based}
             </div>
           </div>
 
           {/* Explore */}
           <div>
-            <h4 className="text-xs text-[#4a4540] uppercase tracking-widest mb-4">{t.explore}</h4>
-            <ul className="space-y-2.5 text-sm text-[#9a958e]">
+            <h4 className={colLabel} style={{ fontFamily: PIXEL_STACK }}>
+              {t.explore}
+            </h4>
+            <ul className="flex flex-col gap-3 list-none m-0 p-0">
               {t.exploreLinks.map((l) => (
-                <li key={l.label}>
-                  <a href={l.href} className="hover:text-white transition-colors">
+                <li key={l.href}>
+                  <Link href={l.href} className={linkClass}>
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -77,41 +157,58 @@ export default function Footer() {
 
           {/* Get in touch */}
           <div>
-            <h4 className="text-xs text-[#4a4540] uppercase tracking-widest mb-4">{t.contactH}</h4>
-            <ul className="space-y-2.5 text-sm text-[#9a958e] mb-5">
+            <h4 className={colLabel} style={{ fontFamily: PIXEL_STACK }}>
+              {t.contactH}
+            </h4>
+            <ul className="flex flex-col gap-3 list-none m-0 p-0 mb-6">
               <li>
-                <a href="/start" className="hover:text-white transition-colors">
-                  {t.startProject}
+                <a href={`mailto:${EMAIL}`} className={`${linkClass} normal-case tracking-normal`}>
+                  {EMAIL}
                 </a>
               </li>
               <li>
-                <a
-                  href={`tel:${PHONE}`}
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
-                  </svg>
-                  <span className="tabular-nums">{PHONE_DISPLAY}</span>
+                <a href={`tel:${PHONE}`} className={`${linkClass} tabular-nums`}>
+                  {PHONE_DISPLAY}
                 </a>
+              </li>
+              <li>
+                <Link href="/start" className={linkClass}>
+                  {t.startProject}
+                </Link>
               </li>
             </ul>
-            <a
-              href="/start"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-[#f4f4f4] hover:text-white transition-colors"
+            <button
+              type="button"
+              data-cal-namespace="30min"
+              data-cal-link="vekto/30min"
+              data-cal-config='{"layout":"month_view","theme":"dark"}'
+              className="inline-flex items-center gap-2 border-[1.5px] px-4 py-2.5 text-[12px] font-black uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-black cursor-pointer"
+              style={{ borderColor: "rgba(244,244,244,0.6)", color: "#f4f4f4" }}
             >
+              <span aria-hidden>▦</span>
               {t.bookCall}
-              <span aria-hidden>→</span>
-            </a>
+            </button>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-[#1e1e1c] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-[#4a4540]">© {year} VEKTO. {t.rights}</p>
-          <div className="flex items-center gap-5 text-xs text-[#4a4540]">
-            <a href="/privacy" className="hover:text-[#9a958e] transition-colors">{t.privacy}</a>
-            <a href="/terms" className="hover:text-[#9a958e] transition-colors">{t.terms}</a>
+        {/* Legal bar */}
+        <div
+          className="mt-12 md:mt-16 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] opacity-45"
+          style={{
+            borderTop: "1px solid rgba(244,244,244,0.14)",
+            fontFamily: PIXEL_STACK,
+          }}
+        >
+          <p className="m-0">
+            © {year} VEKTO. {t.rights}
+          </p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="hover:opacity-100 transition-opacity">
+              {t.privacy}
+            </Link>
+            <Link href="/terms" className="hover:opacity-100 transition-opacity">
+              {t.terms}
+            </Link>
             <span>vektoagency.com</span>
           </div>
         </div>
