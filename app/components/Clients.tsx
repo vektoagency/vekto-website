@@ -44,7 +44,7 @@ const bgClients: Client[] = [
   { name: "NIDO", logo: "/images/logo-nido.png", url: "https://nido.bg", desc: { bg: "Търговски партньор", en: "Trusted partner" }, stacked: true },
   { name: "ARTE HOTEL", logo: "/images/logo-artehotel.png", url: "https://artehotel.bg", desc: { bg: "Бутиков хотел", en: "Boutique hotel" } },
   { name: "KASHMIR HOTEL", logo: "/images/logo-kashmirhotel.png", url: "https://kashmirhotel.bg", desc: { bg: "Луксозен хотел", en: "Luxury hotel" }, invert: true },
-  { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg", url: "https://www.cartelcaffe.com", desc: { bg: "Кафе бранд", en: "Coffee brand" } },
+  { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg", url: "https://www.cartelcaffe.com", desc: { bg: "Кафе бизнес", en: "Coffee brand" } },
   { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", url: "https://phytolife.bg", desc: { bg: "Натурални добавки", en: "Natural wellness" }, invert: true },
   { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", url: "https://gourmethouse.bg", desc: { bg: "Гурме продукти", en: "Gourmet food" }, invert: true },
 ];

@@ -10,7 +10,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const t = useT({
     bg: {
-      tagline: "Криейтиви, фунии и AI решения — под един покрив. Партньор за растеж на 50+ бранда в България и САЩ.",
+      tagline: "Криейтиви, фунии и AI решения — под един покрив. Партньор за растеж на 50+ бизнеса в България и САЩ.",
       based: "България · САЩ",
       explore: "Разгледай",
       exploreLinks: [

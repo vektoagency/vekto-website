@@ -74,14 +74,14 @@ const COPY = {
       { id: "02", label: "ЗАЩО" },
       { id: "03", label: "ФОКУС" },
       { id: "04", label: "РЕЗУЛТАТИ" },
-      { id: "05", label: "БРАНДОВЕ" },
+      { id: "05", label: "БИЗНЕСИ" },
       { id: "06", label: "ПРОЦЕС" },
       { id: "07", label: "ПРОФИЛ" },
       { id: "08", label: "РАЗГОВОР" },
     ],
     stage1: {
       eyebrow: "01 · ЕДИН ЧЕСТЕН ВЪПРОС",
-      pill: "50+ БРАНДА · 500+ ВИДЕА / МЕСЕЦ",
+      pill: "50+ БИЗНЕСА · 500+ ВИДЕА / МЕСЕЦ",
       headline1: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
       headline2Prefix: "ДА БЪДЕ",
       headline2Highlight: "СКАЛИРАН?",
@@ -97,7 +97,7 @@ const COPY = {
       globeTitle: "ОБХВАТ",
       globeBg: "БЪЛГАРИЯ",
       globeUs: "САЩ",
-      globeNote: "БРАНДА В ПОРТФОЛИОТО",
+      globeNote: "БИЗНЕСА В ПОРТФОЛИОТО",
       globeLink: "ВИЖ ГИ",
       sheetTitle: "ОТ РОЛКАТА",
       sheetNote: "9:16 · ЗА REELS / TIKTOK",
@@ -112,7 +112,7 @@ const COPY = {
       eyebrow: "02 · ЗАЩО СМЕ ТУК",
       quoteMain:
         "„Стигнахме до едно ниво и заседнахме. Каквото и да пробваме — числата са същите.\"",
-      quoteAttribution: "— почти всеки бранд, преди да дойде при нас",
+      quoteAttribution: "— почти всеки бизнес, преди да дойде при нас",
       response: "Затова",
       responseHighlight: "сме тук.",
     },
@@ -121,7 +121,7 @@ const COPY = {
       rooms: [
         { id: "01", title: "КРЕАТИВИ",   detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА НА МЕСЕЦ" },
         { id: "02", title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали",      num: "12",   label: "САЙТА НА ГОДИНА" },
-        { id: "03", title: "СТРАТЕГИИ",  detail: "Позициониране · оферта · план",   num: "50+",  label: "БРАНДА В ПОРТФОЛИОТО" },
+        { id: "03", title: "СТРАТЕГИИ",  detail: "Позициониране · оферта · план",   num: "50+",  label: "БИЗНЕСА В ПОРТФОЛИОТО" },
         { id: "04", title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации",        num: "5.2×", label: "ROAS · AI КАМПАНИЯ" },
       ],
       roomBadge: "ЕКИП №",
@@ -169,7 +169,7 @@ const COPY = {
           num: "01",
           title: "ЗАПОЗНАВАНЕ",
           duration: "30 МИНУТИ · БЕЗПЛАТНО",
-          body: "Бранд, цели, ситуация. Проверяваме дали си пасваме.",
+          body: "Бизнес, цели, ситуация. Проверяваме дали си пасваме.",
         },
         {
           num: "02",
@@ -193,7 +193,7 @@ const COPY = {
     },
     stage4: {
       eyebrow: "05 · СЪСТАВЪТ",
-      headline1: "50+ БРАНДА В ПОРТФОЛИОТО.",
+      headline1: "50+ БИЗНЕСА В ПОРТФОЛИОТО.",
       headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
@@ -994,7 +994,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         name: "Име", namePh: "Иван Иванов",
         phone: "Телефон", phonePh: "+359 88 000 0000",
         emailField: "Имейл", emailPh: "ти@brand.bg",
-        company: "Бранд", companyPh: "Име на бранда или сайт",
+        company: "Бизнес", companyPh: "Име на бизнеса или сайт",
         message: "Кратко за проекта", messagePh: "Имам онлайн магазин, искам да пусна кампания...",
         submit: "→ ПРАТИ ЗАЯВКА",
         submitting: "ПРАЩАМЕ...",
@@ -1905,33 +1905,36 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
                 transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${i * 55}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${i * 55}ms`,
               }}
             >
-              {/* Region badge in top-right corner */}
-              <span
-                className="hidden md:block absolute top-1.5 right-1.5 border border-black bg-white px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] leading-none z-10"
-                style={{ fontFamily: "var(--brutal-pixel)", color: "#0d0d0d" }}
-              >
-                {t.region[c.region]}
-              </span>
-
-              {/* Logo panel */}
-              <div className="flex-1 flex items-center justify-center p-2 md:p-6 min-h-0">
+              {/* Logo panel — object-contain across the FULL panel, so every
+                  mark scales to the largest size its own aspect ratio allows.
+                  The old fixed h-78% inside a p-6 box left tall logos tiny and
+                  wide ones floating in whitespace. */}
+              <div className="flex-1 flex items-center justify-center p-1.5 md:p-3 min-h-0">
                 <Image
                   src={c.logo}
                   alt={c.name}
                   width={220}
                   height={110}
-                  className="h-[82%] md:h-[78%] w-auto max-w-[93%] object-contain"
+                  className="w-full h-full object-contain"
                   style={{ filter: c.invert ? "invert(1)" : undefined }}
                   unoptimized
                 />
               </div>
 
-              {/* Name plate at bottom */}
+              {/* Name plate — region moved here from a floating corner badge,
+                  which used to sit on top of the mark and cost the panel its
+                  whole top-right corner. */}
               <div
-                className="hidden md:block border-t-2 border-black px-2 py-2 text-center text-[12px] md:text-[11px] font-bold uppercase tracking-[0.2em] leading-none truncate"
+                className="hidden md:flex items-center justify-between gap-1.5 border-t-2 border-black px-2 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] leading-none"
                 style={{ color: c.dark ? "#f4f4f4" : "#0d0d0d", borderColor: c.dark ? "rgba(244,244,244,0.35)" : undefined }}
               >
-                {c.name}
+                <span className="truncate">{c.name}</span>
+                <span
+                  className="shrink-0 opacity-45 text-[10px] tracking-[0.12em]"
+                  style={{ fontFamily: "var(--brutal-pixel)" }}
+                >
+                  {t.region[c.region]}
+                </span>
               </div>
             </div>
           );

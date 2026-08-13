@@ -9,11 +9,11 @@ const Footer = dynamic(() => import("../components/Footer"));
 export const metadata: Metadata = {
   title: "Портфолио — VEKTO",
   description:
-    "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за брандове в България и САЩ.",
+    "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за бизнеси в България и САЩ.",
   openGraph: {
     title: "Портфолио — VEKTO",
     description:
-      "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за брандове в България и САЩ.",
+      "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за бизнеси в България и САЩ.",
     type: "website",
   },
 };

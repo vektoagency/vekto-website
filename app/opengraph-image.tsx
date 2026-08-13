@@ -160,7 +160,7 @@ export default async function Image() {
               marginBottom: 28,
             }}
           >
-            <span>12 нови бранда на година.</span>
+            <span>12 нови бизнеса на година.</span>
             <span style={{ color: "#f4f4f4" }}>Твоят следващ.</span>
           </div>
           <div
@@ -171,7 +171,7 @@ export default async function Image() {
               lineHeight: 1.45,
             }}
           >
-            50+ бранда в България и САЩ. 4.8× среден ROAS.
+            50+ бизнеса в България и САЩ. 4.8× среден ROAS.
             Един екип, един стандарт — от стратегия до резултат.
           </div>
         </div>

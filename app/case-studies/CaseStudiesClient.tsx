@@ -46,7 +46,7 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-isosport.webp",
     category: "Beverage · Retail",
     headline: {
-      bg: "Кинематографична бранд идентичност + мащабируема кампания",
+      bg: "Кинематографична брандова идентичност + мащабируема кампания",
       en: "Cinematic brand identity + scalable campaign",
     },
     metric: { value: "3.8×", label: { bg: "ROAS на кампанията", en: "Campaign ROAS" } },
@@ -88,7 +88,7 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-gourmethouse.png",
     category: "Food · DTC",
     headline: {
-      bg: "Пълен ecom launch — от бранд до първи продажби",
+      bg: "Пълен ecom launch — от нула до първи продажби",
       en: "Full ecommerce launch — brand to first sales",
     },
     metric: { value: "TBD", label: { bg: "Първи 30 дни", en: "First 30 days" } },
@@ -116,8 +116,8 @@ const copy = {
   bg: {
     badge: "CASE STUDIES",
     h1Top: "Реални резултати",
-    h1Highlight: "за реални брандове.",
-    sub: "50+ бранда в България и САЩ. Всеки проект тук е партньорство — от бриф до launch и след него.",
+    h1Highlight: "за реални бизнеси.",
+    sub: "50+ бизнеса в България и САЩ. Всеки проект тук е партньорство — от бриф до launch и след него.",
     stats: [
       { value: "50+", label: "Партньорства" },
       { value: "4.8×", label: "Среден ROAS" },
@@ -127,7 +127,7 @@ const copy = {
     comingSoon: "Скоро",
     ctaH2Top: "Готов да си следващият?",
     ctaH2Bottom: "Да поговорим.",
-    ctaSub: "Работим с 12 нови бранда годишно. Едно въведение, лично прочитане, отговор до 24ч.",
+    ctaSub: "Работим с 12 нови бизнеса годишно. Едно въведение, лично прочитане, отговор до 24ч.",
     ctaPrimary: "Резервирай разговор",
     ctaSecondary: "← Обратно към сайта",
   },

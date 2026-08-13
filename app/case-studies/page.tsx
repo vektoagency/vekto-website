@@ -15,11 +15,11 @@ const ContactModal = dynamic(() => import("../components/ContactModal"));
 export const metadata: Metadata = {
   title: "VEKTO — Case Studies",
   description:
-    "Реални резултати за реални брандове. Растеж, приходи, ROAS — как сме помогнали на 50+ бранда в България и САЩ.",
+    "Реални резултати за реални бизнеси. Растеж, приходи, ROAS — как сме помогнали на 50+ бизнеса в България и САЩ.",
   openGraph: {
     title: "VEKTO — Case Studies",
     description:
-      "Реални резултати за реални брандове. Растеж, приходи, ROAS.",
+      "Реални резултати за реални бизнеси. Растеж, приходи, ROAS.",
     type: "website",
   },
 };

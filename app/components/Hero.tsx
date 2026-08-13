@@ -29,7 +29,7 @@ export default function Hero() {
       h1Em: "Един partner за",
       h1RestDesktop: ["целия ти", "marketing stack."],
       h1RestMobile: "целия ти marketing.",
-      sub: "PPC + Creative + Funnels + Strategy — цялата ти растежна система под един покрив. 50+ бранда. 4.8× среден ROAS.",
+      sub: "PPC + Creative + Funnels + Strategy — цялата ти растежна система под един покрив. 50+ бизнеса. 4.8× среден ROAS.",
       subMobile: "PPC + Creative + Funnels + Strategy — под един покрив.",
       ctaPrimary: "Резервирай стратегически разговор",
       ctaSecondary: "Виж резултатите",
