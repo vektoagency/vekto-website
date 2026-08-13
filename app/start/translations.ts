@@ -134,11 +134,11 @@ export const startCopy = {
         },
         {
           q: "Какво се случва ако не съм доволен?",
-          a: "Включени са 2 кръга безплатни редакции. Ако след тях още не сме на едно ниво — възстановяваме неизползваната част от месечния fee. Без споразумения за минимален срок.",
+          a: "Работим с обратна връзка, докато материалът стане както трябва. Колко кръга редакции влизат и какво следва, ако не сме на едно ниво — е записано в офертата ти, за да няма изненади.",
         },
         {
           q: "Има ли минимален договор / срок?",
-          a: "Не. Можеш да pause-неш или прекратиш по всяко време с 15-дневно предизвестие. Без 12-месечни ангажименти като агенциите.",
+          a: "Условията зависят от обхвата на работата и ги фиксираме в офертата — писмено, преди да започнем. Няма скрити клаузи и нищо не се подписва, преди да си видял всичко.",
         },
         {
           q: "Какво се случва веднага след като попълня?",
@@ -308,11 +308,11 @@ export const startCopy = {
         },
         {
           q: "What if I'm not happy?",
-          a: "Includes 2 rounds of free revisions. If after that we're still not aligned — we refund the unused portion of the monthly fee. No minimum-term lock-ins.",
+          a: "We work through feedback until the material is right. How many revision rounds are included, and what happens if we are still not aligned, is written into your proposal so there are no surprises.",
         },
         {
           q: "Is there a minimum contract?",
-          a: "No. You can pause or cancel anytime with 15 days notice. No 12-month commitments like agencies require.",
+          a: "Terms depend on the scope and are set in your proposal — in writing, before we start. No hidden clauses, and nothing is signed before you have seen all of it.",
         },
         {
           q: "What happens right after I submit?",

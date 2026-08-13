@@ -106,8 +106,8 @@ export const JOURNEY_COPY = {
       items: [
         "Отговор до 24 часа — от човек, не от бот",
         "Един екип за криейтиви, реклами, сайтове и стратегия",
-        "Без 12-месечни договори — спираш с 15 дни предизвестие",
-        "Два кръга редакции, включени в цената",
+        "Първи материали до 5 дни, не седмици",
+        "Числата идват от рекламния акаунт, не от разкрасен отчет",
       ],
     },
     after: {
@@ -214,8 +214,8 @@ export const JOURNEY_COPY = {
       items: [
         "A reply within 24 hours — from a person, not a bot",
         "One team for creatives, ads, websites and strategy",
-        "No 12-month contracts — leave on 15 days' notice",
-        "Two rounds of revisions, included",
+        "First deliverables in 5 days, not weeks",
+        "Numbers straight from the ad account, not a dressed-up report",
       ],
     },
     after: {
