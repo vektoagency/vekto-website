@@ -37,7 +37,7 @@ export const JOURNEY_COPY = {
         responseHi: "сме тук.",
       },
       focus: {
-        kicker: "03 · ЧЕТИРИ ЕКИПА · ЕДИН ПОКРИВ",
+        kicker: "03 · ЧЕТИРИ ЕКИПА · ЕДИН ПАРТНЬОР",
         rooms: [
           { title: "КРЕАТИВИ", detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА / МЕСЕЦ" },
           { title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
