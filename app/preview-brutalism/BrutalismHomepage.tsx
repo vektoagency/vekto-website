@@ -1876,8 +1876,14 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
           {t.eyebrow}
         </div>
         <h2
-          className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-14"
-          style={{ fontSize: "calc(clamp(40px, 6vw, 88px) * var(--bgk, 1))" }}
+          className="font-black leading-[0.94] tracking-[-0.03em] uppercase mb-14 md:whitespace-nowrap"
+          style={{
+            // One line from md up. The cap and the vw coefficient are set
+            // by the LONGER of the two headlines ("50+ BRANDS IN THE
+            // PORTFOLIO." in Latin), so neither language can wrap inside
+            // the 1400px container; phones still wrap freely.
+            fontSize: "calc(clamp(36px, 4.8vw, 74px) * var(--bgk, 1))",
+          }}
         >
           {t.headline1}
         </h2>
