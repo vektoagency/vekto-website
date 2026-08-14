@@ -330,6 +330,17 @@ const ROSTER: Client[] = [
 const BG_COUNT = ROSTER.filter((c) => c.region === "BG").length;
 const US_COUNT = ROSTER.filter((c) => c.region === "US").length;
 
+// ROOM_PLATES — one real frame from our own work behind each room, in
+// the same order as COPY.stage3.rooms. They cross-fade with the pan, so
+// the ground under the cards shows the discipline being described.
+// Everything here is work we actually made; nothing is stock.
+const ROOM_PLATES = [
+  "/images/service-1.webp",     // creatives — a sheet of delivered spots
+  "/images/service-5.webp",     // websites — screens and interfaces
+  "/images/work-isosport.webp", // strategy — one campaign, every angle
+  "/images/service-3.webp",     // AI — the chrome render
+] as const;
+
 // ============================================================================
 // HOOKS
 // ============================================================================
@@ -1397,7 +1408,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
 function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage3"] }) {
   const p = useStickyProgress(targetRef);
   const translate = -300 * p;
-  const currentRoom = Math.min(4, Math.floor(p * 4) + 1);
+  const currentRoom = Math.min(4, Math.round(p * 3) + 1);
 
   return (
     <section
@@ -1406,6 +1417,46 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
       className="relative h-[300vh] md:h-[400vh]" style={{ background: "#141414" }}
     >
       <div className="sticky top-0 h-screen" style={{ overflowX: "clip" }}>
+        {/* ROOM PLATES — room i is centred at p = i/3, so each plate peaks
+            exactly when its card lands and hands over at the midpoint.
+            Desaturated and scrimmed: the film's world stays jet + silver,
+            the frame underneath is texture, never a competing picture. */}
+        <div aria-hidden className="absolute inset-0 pointer-events-none">
+          {ROOM_PLATES.map((src, i) => {
+            const o = Math.max(0, Math.min(1, 1 - Math.abs(p - i / 3) * 3));
+            return (
+              <div
+                key={src}
+                className="absolute inset-0"
+                style={{
+                  opacity: o * 0.34,
+                  transform: `scale(${(1.05 - 0.05 * o).toFixed(4)})`,
+                  transition: "opacity 120ms linear",
+                  willChange: "opacity, transform",
+                }}
+              >
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  style={{ filter: "grayscale(1) contrast(1.15) brightness(0.85)" }}
+                  priority={false}
+                />
+              </div>
+            );
+          })}
+          {/* Scrim — keeps the cards readable and pulls the edges back to jet. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, #141414 0%, rgba(20,20,20,0.55) 28%, rgba(20,20,20,0.55) 72%, #141414 100%), linear-gradient(180deg, #141414 0%, rgba(20,20,20,0.3) 30%, rgba(20,20,20,0.45) 70%, #141414 100%)",
+            }}
+          />
+        </div>
+
         {/* Pushed below the fixed transparent header — at top-6 the eyebrow
             sat directly under the wordmark. */}
         <div className="absolute top-20 md:top-24 left-6 md:left-14 z-10">
