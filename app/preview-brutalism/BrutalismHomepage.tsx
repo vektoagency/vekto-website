@@ -596,7 +596,17 @@ export default function BrutalismHomepage() {
         // Cyrillic (Onest fallback) sets ~8% wider than Space Grotesk, so
         // at equal clamps the Bulgarian page reads oversized and wraps
         // more. Every display fontSize multiplies by this factor.
-        ...({ "--bgk": lang === "bg" ? "0.92" : "1" } as React.CSSProperties),
+        ...({
+          "--bgk": lang === "bg" ? "0.92" : "1",
+          // Headings that mix scripts ("AI РЕШЕНИЯ") use this instead of
+          // --brutal-display: on BG it leads with the Cyrillic-capable
+          // face so Latin fragments are drawn by it too, rather than
+          // falling back to a second typeface mid-word.
+          "--brutal-display-mixed":
+            lang === "bg"
+              ? "var(--f-display-cyr), var(--f-display-lat), system-ui, sans-serif"
+              : "var(--f-display-lat), var(--f-display-cyr), system-ui, sans-serif",
+        } as React.CSSProperties),
         // Several stages enter by sliding in from off-axis
         // (translateX(±50px) in Process, rotate in Roster, translateX(-30px)
         // in Why). Those pre-entry transforms widened the document, which
@@ -1534,7 +1544,10 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   </div>
                   <h3
                     className="font-black leading-[0.9] tracking-[-0.03em] mb-6 break-words"
-                    style={{ fontSize: "calc(clamp(34px, 4.6vw, 68px) * var(--bgk, 1))" }}
+                    style={{
+                      fontSize: "calc(clamp(34px, 4.6vw, 68px) * var(--bgk, 1))",
+                      fontFamily: "var(--brutal-display-mixed)",
+                    }}
                   >
                     {r.title}
                   </h3>
