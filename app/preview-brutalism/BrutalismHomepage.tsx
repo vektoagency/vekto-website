@@ -343,10 +343,10 @@ const US_COUNT = ROSTER.filter((c) => c.region === "US").length;
 // the ground under the cards shows the discipline being described.
 // Everything here is work we actually made; nothing is stock.
 const ROOM_PLATES = [
-  "/images/service-1.webp",     // creatives — a sheet of delivered spots
-  "/images/service-5.webp",     // websites — screens and interfaces
-  "/images/work-isosport.webp", // strategy — one campaign, every angle
-  "/images/service-3.webp",     // AI — the chrome render
+  "/images/rooms/creatives.webp", // the camera department, mid-shoot
+  "/images/rooms/websites.webp",  // a designer's desk after dark
+  "/images/rooms/strategy.webp",  // the planning wall, pinned and strung
+  "/images/rooms/ai.webp",        // the machines that do the rendering
 ] as const;
 
 // ============================================================================
@@ -1449,7 +1449,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  style={{ filter: "grayscale(1) contrast(1.15) brightness(0.85)" }}
+                  style={{ filter: "contrast(1.1) brightness(0.9)" }}
                   priority={false}
                 />
               </div>
