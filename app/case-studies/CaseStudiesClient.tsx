@@ -97,6 +97,20 @@ const CASE_STUDIES: CaseStudy[] = [
     live: false,
   },
   {
+    slug: "beme",
+    brand: "beMe",
+    brandLogo: "/images/logo-bemeacne.webp",
+    category: "Skincare · DTC",
+    headline: {
+      bg: "От клик до поръчка — конверсия при студен трафик",
+      en: "Click to order — cold-traffic conversion",
+    },
+    metric: { value: "3.4%", label: { bg: "CVR за 90 дни", en: "CVR over 90 days" } },
+    cover: "/images/logo-bemeacne.webp",
+    services: ["Statics", "Meta Ads", "CRO"],
+    live: false,
+  },
+  {
     slug: "nedelya",
     brand: "NEDELYA",
     brandLogo: "/images/logo-nedelya.svg",
@@ -289,7 +303,7 @@ function CaseCard({
 }) {
   const isLive = cs.live && cs.metric.value !== "TBD";
   const inner = (
-    <article className="group relative rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] overflow-hidden hover:border-[#f4f4f4]/40 transition-colors h-full flex flex-col">
+    <article id={cs.slug} className="group relative scroll-mt-28 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] overflow-hidden hover:border-[#f4f4f4]/40 transition-colors h-full flex flex-col">
       {/* Cover — brand mark centred on tinted panel. Real page-level
           case study covers can be swapped in once each brand's cover
           image is designed. */}

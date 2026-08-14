@@ -118,6 +118,7 @@ const COPY = {
     },
     stageCases: {
       eyebrow: "04 · РЕАЛНИ РЕЗУЛТАТИ",
+      viewCase: "Виж резултатите",
       headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
       headline2Prefix: "КЪМ",
       headline2Highlight: "РАСТЕЖ.",
@@ -125,6 +126,7 @@ const COPY = {
       cases: [
         {
           brand: "MEN'S CARE",
+          slug: "menscare",
           category: "Козметика · BG",
           metric: "5.2×",
           metricLabel: "ROAS · AI КАМПАНИЯ",
@@ -133,6 +135,7 @@ const COPY = {
         },
         {
           brand: "PARFEN",
+          slug: "parfen",
           category: "Парфюмерия · BG",
           metric: "7.7×",
           metricLabel: "ROAS · ОФЕРТА СЪС СРОК",
@@ -141,6 +144,7 @@ const COPY = {
         },
         {
           brand: "beMe",
+          slug: "beme",
           category: "Грижа за кожата · BG",
           metric: "3.4%",
           metricLabel: "CVR · ОТ КЛИК ДО ПОРЪЧКА",
@@ -233,6 +237,7 @@ const COPY = {
     },
     stageCases: {
       eyebrow: "04 · CASES · REAL RESULTS",
+      viewCase: "See the results",
       headline1: "FROM AD BUDGET",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
@@ -240,6 +245,7 @@ const COPY = {
       cases: [
         {
           brand: "MEN'S CARE",
+          slug: "menscare",
           category: "Beauty · BG",
           metric: "5.2×",
           metricLabel: "ROAS · AI CAMPAIGN",
@@ -248,6 +254,7 @@ const COPY = {
         },
         {
           brand: "PARFEN",
+          slug: "parfen",
           category: "Perfume · BG",
           metric: "7.7×",
           metricLabel: "ROAS · URGENCY OFFER",
@@ -256,6 +263,7 @@ const COPY = {
         },
         {
           brand: "beMe",
+          slug: "beme",
           category: "Skincare · BG",
           metric: "3.4%",
           metricLabel: "CVR · CLICK → ORDER",
@@ -1605,7 +1613,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
             content. Same treatment as the roster. */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-4">
           {t.cases.map((c, i) => (
-            <CaseCard key={c.brand} c={c} inView={inView} idx={i} />
+            <CaseCard key={c.brand} c={c} inView={inView} idx={i} viewLabel={t.viewCase} />
           ))}
         </div>
       </div>
@@ -1621,10 +1629,12 @@ function CaseCard({
   c,
   inView,
   idx,
+  viewLabel,
 }: {
-  c: { brand: string; category: string; metric: string; metricLabel: string; duration: string; highlight: string };
+  c: { brand: string; slug: string; category: string; metric: string; metricLabel: string; duration: string; highlight: string };
   inView: boolean;
   idx: number;
+  viewLabel: string;
 }) {
   // Parse '5.2×' → { num: 5.2, suffix: '×' }
   const match = c.metric.match(/(\d+(?:\.\d+)?)(.*)/);
@@ -1649,8 +1659,9 @@ function CaseCard({
   const rot = idx % 2 === 0 ? -1.5 : 1.5;
 
   return (
-    <div
-      className="border-2 flex flex-col overflow-hidden"
+    <Link
+      href={`/case-studies#${c.slug}`}
+      className="group border-2 flex flex-col overflow-hidden hover:-translate-x-0.5 hover:-translate-y-0.5"
       style={{
         background: "#0d0d0d",
         color: "#f4f4f4",
@@ -1660,7 +1671,9 @@ function CaseCard({
         transform: inView
           ? "translateY(0) scale(1) rotate(0deg)"
           : `translateY(60px) scale(0.92) rotate(${rot}deg)`,
-        transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms`,
+        transition: inView
+          ? "transform 180ms ease, opacity 200ms ease"
+          : `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms`,
       }}
     >
       {/* Header — brand + category */}
@@ -1713,8 +1726,15 @@ function CaseCard({
         <p className="text-[13px] leading-[1.5] font-medium">
           {c.highlight}
         </p>
+        <span
+          className="flex items-center gap-2 pt-1 text-[11px] font-bold uppercase tracking-[0.2em] opacity-55 group-hover:opacity-100 transition-opacity"
+          style={{ fontFamily: "var(--brutal-pixel)" }}
+        >
+          {viewLabel}
+          <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
 
