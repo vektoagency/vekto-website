@@ -1988,8 +1988,8 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
           <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
             <a
               href="tel:+359882251474"
-              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-black"
-              style={{ borderColor: "rgba(244,244,244,0.6)", color: "#f4f4f4" }}
+              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+              style={{ borderColor: "rgba(244,244,244,0.6)" }}
             >
               <span aria-hidden>☎</span>
               {t.callCta}
@@ -1997,8 +1997,8 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
             </a>
             <Link
               href="/start"
-              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-black"
-              style={{ borderColor: "rgba(244,244,244,0.6)", color: "#f4f4f4" }}
+              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+              style={{ borderColor: "rgba(244,244,244,0.6)" }}
             >
               <span aria-hidden>✎</span>
               {t.formCta}

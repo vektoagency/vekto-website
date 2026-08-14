@@ -186,8 +186,8 @@ export default function Footer() {
               data-cal-namespace="30min"
               data-cal-link="vekto/30min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
-              className="inline-flex items-center gap-2 border-[1.5px] px-4 py-2.5 text-[12px] font-black uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-black cursor-pointer"
-              style={{ borderColor: "rgba(244,244,244,0.6)", color: "#f4f4f4" }}
+              className="inline-flex items-center gap-2 border-[1.5px] px-4 py-2.5 text-[12px] font-black uppercase tracking-[0.14em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black cursor-pointer"
+              style={{ borderColor: "rgba(244,244,244,0.6)" }}
             >
               <span aria-hidden>▦</span>
               {t.bookCall}
