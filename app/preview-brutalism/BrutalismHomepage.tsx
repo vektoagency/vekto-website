@@ -72,12 +72,12 @@ const COPY = {
     },
     stages: [
       { id: "01", label: "НАЧАЛО" },
-      { id: "02", label: "ЗАЩО" },
-      { id: "03", label: "ФОКУС" },
-      { id: "04", label: "РЕЗУЛТАТИ" },
-      { id: "05", label: "БИЗНЕСИ" },
+      { id: "02", label: "БИЗНЕСИ" },
+      { id: "03", label: "ЗАЩО" },
+      { id: "04", label: "ФОКУС" },
+      { id: "05", label: "РЕЗУЛТАТИ" },
       { id: "06", label: "ПРОЦЕС" },
-      { id: "07", label: "ПРОФИЛ" },
+      { id: "07", label: "ПОЛУЧАВАШ" },
       { id: "08", label: "РАЗГОВОР" },
     ],
     stage1: {
@@ -110,7 +110,7 @@ const COPY = {
       ],
     },
     stage2: {
-      eyebrow: "02 · ЗАЩО СМЕ ТУК",
+      eyebrow: "03 · ЗАЩО СМЕ ТУК",
       quoteMain:
         "„Стигнахме до едно ниво и заседнахме. Каквото и да пробваме — числата са същите.\"",
       quoteAttribution: "— почти всеки бизнес, преди да дойде при нас",
@@ -118,7 +118,7 @@ const COPY = {
       responseHighlight: "сме тук.",
     },
     stage3: {
-      eyebrow: "03 · ЧЕТИРИ ЕКИПА · ЕДИН ПОКРИВ",
+      eyebrow: "04 · ЧЕТИРИ ЕКИПА · ЕДИН ПОКРИВ",
       rooms: [
         { id: "01", title: "КРЕАТИВИ",   detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА НА МЕСЕЦ" },
         { id: "02", title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали",      num: "12",   label: "САЙТА НА ГОДИНА" },
@@ -128,7 +128,7 @@ const COPY = {
       roomBadge: "ЕКИП №",
     },
     stageCases: {
-      eyebrow: "04 · РЕАЛНИ РЕЗУЛТАТИ",
+      eyebrow: "05 · РЕАЛНИ РЕЗУЛТАТИ",
       headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
       headline2Prefix: "КЪМ",
       headline2Highlight: "РАСТЕЖ.",
@@ -193,7 +193,7 @@ const COPY = {
       ],
     },
     stage4: {
-      eyebrow: "05 · СЪСТАВЪТ",
+      eyebrow: "02 · СЪСТАВЪТ",
       headline1: "50+ БИЗНЕСА В ПОРТФОЛИОТО.",
       headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
@@ -229,12 +229,12 @@ const COPY = {
     },
     stages: [
       { id: "01", label: "START" },
-      { id: "02", label: "WHY" },
-      { id: "03", label: "FOCUS" },
-      { id: "04", label: "CASES" },
-      { id: "05", label: "ROSTER" },
+      { id: "02", label: "ROSTER" },
+      { id: "03", label: "WHY" },
+      { id: "04", label: "FOCUS" },
+      { id: "05", label: "CASES" },
       { id: "06", label: "PROCESS" },
-      { id: "07", label: "FIT" },
+      { id: "07", label: "YOU GET" },
       { id: "08", label: "TALK" },
     ],
     stage1: {
@@ -267,7 +267,7 @@ const COPY = {
       ],
     },
     stage2: {
-      eyebrow: "02 · WHY WE EXIST",
+      eyebrow: "03 · WHY WE EXIST",
       quoteMain:
         "\"We got to a level and got stuck. Whatever we try, the numbers stay the same.\"",
       quoteAttribution: "— almost every brand, before they find us",
@@ -275,7 +275,7 @@ const COPY = {
       responseHighlight: "we exist.",
     },
     stage3: {
-      eyebrow: "03 · FOUR ROOMS · ONE ROOF",
+      eyebrow: "04 · FOUR ROOMS · ONE ROOF",
       rooms: [
         { id: "01", title: "CREATIVE",     detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
         { id: "02", title: "WEBSITES",     detail: "Landing · e-com · portals",    num: "12",   label: "SITES / YEAR" },
@@ -285,7 +285,7 @@ const COPY = {
       roomBadge: "ROOM №",
     },
     stageCases: {
-      eyebrow: "04 · CASES · REAL RESULTS",
+      eyebrow: "05 · CASES · REAL RESULTS",
       headline1: "FROM AD BUDGET",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
@@ -350,7 +350,7 @@ const COPY = {
       ],
     },
     stage4: {
-      eyebrow: "05 · THE ROSTER",
+      eyebrow: "02 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
       headline2Prefix: "24",
       headline2Highlight: "OF THEM.",
@@ -579,7 +579,7 @@ export default function BrutalismHomepage() {
   // fresh literal on every render tore down and re-attached the scroll
   // listener continuously.
   const stageRefs = useMemo(
-    () => [s1, s2, s3, sCases, s4, sProcess, s6, s7],
+    () => [s1, s4, s2, s3, sCases, sProcess, s6, s7],
     [],
   );
   const stage = useCurrentStage(stageRefs);
@@ -880,13 +880,13 @@ export default function BrutalismHomepage() {
 
       <StageHook  targetRef={s1} t={t.stage1} lang={lang} openBook={openBook} />
       <HazardStrip />
+      <StageCast  targetRef={s4} t={t.stage4} />
+      <HazardStrip />
       <StageTruth targetRef={s2} t={t.stage2} />
       <HazardStrip />
       <StageRooms targetRef={s3} t={t.stage3} />
       <HazardStrip />
       <StageCases targetRef={sCases} t={t.stageCases} />
-      <HazardStrip />
-      <StageCast  targetRef={s4} t={t.stage4} />
       <HazardStrip />
       <StageProcess targetRef={sProcess} t={t.stageProcess} />
       <HazardStrip />
@@ -1489,7 +1489,7 @@ function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
   const inView = useInView(targetRef, 0.35);
   return (
     <section
-      id="stage-02"
+      id="stage-03"
       ref={targetRef}
       className="flex items-center"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
@@ -1564,7 +1564,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 
   return (
     <section
-      id="stage-03"
+      id="stage-04"
       ref={targetRef}
       className="relative h-[300vh] md:h-[400vh]" style={{ background: "#141414" }}
     >
@@ -1700,7 +1700,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
   const inView = useInView(targetRef, 0.15);
   return (
     <section
-      id="stage-04"
+      id="stage-05"
       ref={targetRef}
       className=""
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
@@ -1863,7 +1863,7 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
   const inView = useInView(targetRef, 0.15);
   return (
     <section
-      id="stage-05"
+      id="stage-02"
       ref={targetRef}
       className=""
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
