@@ -97,9 +97,13 @@ export default function Footer() {
     <footer
       className={fontClasses}
       style={{
-        background: "#0d0d0d",
+        // Darker than the page's jet (#0d0d0d) and its alt sections
+        // (#141414) — the footer reads as the ground everything rests on,
+        // not as one more stage. The brighter top rule sells the step down.
+        background: "#050505",
         color: "#f4f4f4",
-        borderTop: "1px solid rgba(244,244,244,0.16)",
+        borderTop: "1px solid rgba(244,244,244,0.28)",
+        boxShadow: "inset 0 12px 24px -18px rgba(0,0,0,0.9)",
         fontFamily: DISPLAY_STACK,
       }}
     >
