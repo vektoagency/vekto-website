@@ -1437,7 +1437,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                 key={src}
                 className="absolute inset-0"
                 style={{
-                  opacity: o * 0.34,
+                  opacity: o * 0.5,
                   transform: `scale(${(1.05 - 0.05 * o).toFixed(4)})`,
                   transition: "opacity 120ms linear",
                   willChange: "opacity, transform",
@@ -1449,7 +1449,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  style={{ filter: "contrast(1.1) brightness(0.9)" }}
+                  style={{ filter: "contrast(1.08)" }}
                   priority={false}
                 />
               </div>
@@ -1460,7 +1460,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(90deg, #141414 0%, rgba(20,20,20,0.55) 28%, rgba(20,20,20,0.55) 72%, #141414 100%), linear-gradient(180deg, #141414 0%, rgba(20,20,20,0.3) 30%, rgba(20,20,20,0.45) 70%, #141414 100%)",
+                "linear-gradient(90deg, #141414 0%, rgba(20,20,20,0.35) 30%, rgba(20,20,20,0.35) 70%, #141414 100%), linear-gradient(180deg, #141414 0%, rgba(20,20,20,0.12) 32%, rgba(20,20,20,0.28) 70%, #141414 100%)",
             }}
           />
         </div>
