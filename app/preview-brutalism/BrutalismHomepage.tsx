@@ -21,7 +21,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import FlightPlan from "../components/FlightPlan";
 import HeroCinematicBg from "../components/HeroCinematicBg";
 import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
@@ -73,12 +72,10 @@ const COPY = {
     stages: [
       { id: "01", label: "НАЧАЛО" },
       { id: "02", label: "БИЗНЕСИ" },
-      { id: "03", label: "ЗАЩО" },
-      { id: "04", label: "ФОКУС" },
-      { id: "05", label: "РЕЗУЛТАТИ" },
-      { id: "06", label: "ПРОЦЕС" },
-      { id: "07", label: "ПОЛУЧАВАШ" },
-      { id: "08", label: "РАЗГОВОР" },
+      { id: "03", label: "ФОКУС" },
+      { id: "04", label: "РЕЗУЛТАТИ" },
+      { id: "05", label: "ПОЛУЧАВАШ" },
+      { id: "06", label: "РАЗГОВОР" },
     ],
     stage1: {
       eyebrow: "01 · ЕДИН ЧЕСТЕН ВЪПРОС",
@@ -109,16 +106,8 @@ const COPY = {
         "Кадър от рекламно видео — въздушна снимка на локация",
       ],
     },
-    stage2: {
-      eyebrow: "03 · ЗАЩО СМЕ ТУК",
-      quoteMain:
-        "„Стигнахме до едно ниво и заседнахме. Каквото и да пробваме — числата са същите.\"",
-      quoteAttribution: "— почти всеки бизнес, преди да дойде при нас",
-      response: "Затова",
-      responseHighlight: "сме тук.",
-    },
     stage3: {
-      eyebrow: "04 · ЧЕТИРИ ЕКИПА · ЕДИН ПОКРИВ",
+      eyebrow: "03 · ЧЕТИРИ ЕКИПА · ЕДИН ПОКРИВ",
       rooms: [
         { id: "01", title: "КРЕАТИВИ",   detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА НА МЕСЕЦ" },
         { id: "02", title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали",      num: "12",   label: "САЙТА НА ГОДИНА" },
@@ -128,7 +117,7 @@ const COPY = {
       roomBadge: "ЕКИП №",
     },
     stageCases: {
-      eyebrow: "05 · РЕАЛНИ РЕЗУЛТАТИ",
+      eyebrow: "04 · РЕАЛНИ РЕЗУЛТАТИ",
       headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
       headline2Prefix: "КЪМ",
       headline2Highlight: "РАСТЕЖ.",
@@ -160,38 +149,6 @@ const COPY = {
         },
       ],
     },
-    stageProcess: {
-      eyebrow: "06 · КАК РАБОТИМ",
-      headline1: "ОТ ПЪРВИЯ РАЗГОВОР",
-      headline2Prefix: "ДО",
-      headline2Highlight: "РАСТЕЖА.",
-            steps: [
-        {
-          num: "01",
-          title: "ЗАПОЗНАВАНЕ",
-          duration: "30 МИНУТИ · БЕЗПЛАТНО",
-          body: "Бизнес, цели, ситуация. Проверяваме дали си пасваме.",
-        },
-        {
-          num: "02",
-          title: "ДИАГНОСТИКА",
-          duration: "2 СЕДМИЦИ",
-          body: "Одит на канали, оферта, проследяване. Излизаш с 90-дневен план.",
-        },
-        {
-          num: "03",
-          title: "ИЗГРАЖДАНЕ",
-          duration: "30 ДНИ",
-          body: "Стратегия, криейтиви, фуния, проследяване. Готово за старт.",
-        },
-        {
-          num: "04",
-          title: "СТАРТ И СКАЛИРАНЕ",
-          duration: "МЕСЕЦ 2 →",
-          body: "Пускаме, мерим, скалираме печелившото.",
-        },
-      ],
-    },
     stage4: {
       eyebrow: "02 · СЪСТАВЪТ",
       headline1: "50+ БИЗНЕСА В ПОРТФОЛИОТО.",
@@ -201,7 +158,7 @@ const COPY = {
       coda: "ОСТАНАЛИТЕ — ПО ЗАЯВКА",
     },
     stage6: {
-      eyebrow: "07 · КАКВО ПОЛУЧАВАШ",
+      eyebrow: "05 · КАКВО ПОЛУЧАВАШ",
       headlinePrefix: "ЧЕТИРИ НЕЩА, КОИТО",
       headlineHighlight: "НЕ СЕ ПРОМЕНЯТ",
       headlineSuffix: ".",
@@ -214,7 +171,7 @@ const COPY = {
       verdict: "ЗАПАЗИ РАЗГОВОР",
     },
     stage7: {
-      eyebrow: "08 · АКО СИ СТИГНАЛ ДОТУК",
+      eyebrow: "06 · АКО СИ СТИГНАЛ ДОТУК",
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
@@ -230,12 +187,10 @@ const COPY = {
     stages: [
       { id: "01", label: "START" },
       { id: "02", label: "ROSTER" },
-      { id: "03", label: "WHY" },
-      { id: "04", label: "FOCUS" },
-      { id: "05", label: "CASES" },
-      { id: "06", label: "PROCESS" },
-      { id: "07", label: "YOU GET" },
-      { id: "08", label: "TALK" },
+      { id: "03", label: "FOCUS" },
+      { id: "04", label: "CASES" },
+      { id: "05", label: "YOU GET" },
+      { id: "06", label: "TALK" },
     ],
     stage1: {
       eyebrow: "01 · ONE HONEST QUESTION",
@@ -266,16 +221,8 @@ const COPY = {
         "Frame from an ad video — aerial shot of a location",
       ],
     },
-    stage2: {
-      eyebrow: "03 · WHY WE EXIST",
-      quoteMain:
-        "\"We got to a level and got stuck. Whatever we try, the numbers stay the same.\"",
-      quoteAttribution: "— almost every brand, before they find us",
-      response: "That's why",
-      responseHighlight: "we exist.",
-    },
     stage3: {
-      eyebrow: "04 · FOUR ROOMS · ONE ROOF",
+      eyebrow: "03 · FOUR ROOMS · ONE ROOF",
       rooms: [
         { id: "01", title: "CREATIVE",     detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
         { id: "02", title: "WEBSITES",     detail: "Landing · e-com · portals",    num: "12",   label: "SITES / YEAR" },
@@ -285,7 +232,7 @@ const COPY = {
       roomBadge: "ROOM №",
     },
     stageCases: {
-      eyebrow: "05 · CASES · REAL RESULTS",
+      eyebrow: "04 · CASES · REAL RESULTS",
       headline1: "FROM AD BUDGET",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
@@ -317,38 +264,6 @@ const COPY = {
         },
       ],
     },
-    stageProcess: {
-      eyebrow: "06 · HOW IT UNFOLDS",
-      headline1: "FROM FIRST CALL",
-      headline2Prefix: "TO",
-      headline2Highlight: "GROWTH.",
-      steps: [
-        {
-          num: "01",
-          title: "DISCOVERY CALL",
-          duration: "30 MIN · FREE",
-          body: "Brand, goals, situation. We check the fit.",
-        },
-        {
-          num: "02",
-          title: "DIAGNOSTIC SPRINT",
-          duration: "2 WEEKS",
-          body: "Audit of channels, offer, tracking. You leave with a 90-day plan.",
-        },
-        {
-          num: "03",
-          title: "SETUP PHASE",
-          duration: "30 DAYS",
-          body: "Strategy, creative, funnel, tracking. Launch-ready.",
-        },
-        {
-          num: "04",
-          title: "LAUNCH & SCALE",
-          duration: "MONTH 2 →",
-          body: "We launch, measure, scale what wins.",
-        },
-      ],
-    },
     stage4: {
       eyebrow: "02 · THE ROSTER",
       headline1: "50+ BRANDS IN THE PORTFOLIO.",
@@ -358,7 +273,7 @@ const COPY = {
       coda: "THE REST — ON REQUEST",
     },
     stage6: {
-      eyebrow: "07 · WHAT YOU GET",
+      eyebrow: "05 · WHAT YOU GET",
       headlinePrefix: "FOUR THINGS THAT",
       headlineHighlight: "DON'T CHANGE",
       headlineSuffix: ".",
@@ -371,7 +286,7 @@ const COPY = {
       verdict: "BOOK A CALL",
     },
     stage7: {
-      eyebrow: "08 · IF YOU'VE MADE IT THIS FAR",
+      eyebrow: "06 · IF YOU'VE MADE IT THIS FAR",
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
@@ -568,10 +483,8 @@ export default function BrutalismHomepage() {
   const t = COPY[lang];
 
   const s1 = useRef<HTMLElement>(null);
-  const s2 = useRef<HTMLElement>(null);
   const s3 = useRef<HTMLElement>(null);
   const sCases = useRef<HTMLElement>(null);
-  const sProcess = useRef<HTMLElement>(null);
   const s4 = useRef<HTMLElement>(null);
   const s6 = useRef<HTMLElement>(null);
   const s7 = useRef<HTMLElement>(null);
@@ -579,7 +492,7 @@ export default function BrutalismHomepage() {
   // fresh literal on every render tore down and re-attached the scroll
   // listener continuously.
   const stageRefs = useMemo(
-    () => [s1, s4, s2, s3, sCases, sProcess, s6, s7],
+    () => [s1, s4, s3, sCases, s6, s7],
     [],
   );
   const stage = useCurrentStage(stageRefs);
@@ -882,13 +795,9 @@ export default function BrutalismHomepage() {
       <HazardStrip />
       <StageCast  targetRef={s4} t={t.stage4} />
       <HazardStrip />
-      <StageTruth targetRef={s2} t={t.stage2} />
-      <HazardStrip />
       <StageRooms targetRef={s3} t={t.stage3} />
       <HazardStrip />
       <StageCases targetRef={sCases} t={t.stageCases} />
-      <HazardStrip />
-      <StageProcess targetRef={sProcess} t={t.stageProcess} />
       <HazardStrip />
       <StageQualify targetRef={s6} t={t.stage6} openBook={openBook} />
       <HazardStrip />
@@ -1483,78 +1392,6 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
 }
 
 // ============================================================================
-// STAGE 02 · WHY WE EXIST (pull quote — no fake numbers)
-// ============================================================================
-function StageTruth({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage2"] }) {
-  const inView = useInView(targetRef, 0.35);
-  return (
-    <section
-      id="stage-03"
-      ref={targetRef}
-      className="flex items-center"
-      style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
-    >
-      <div className="px-6 md:px-14 py-16 md:py-40 max-w-[1400px] mx-auto w-full">
-        <div
-          className="text-xs font-bold uppercase tracking-[0.35em] mb-14 opacity-60"
-          style={{ fontFamily: "var(--brutal-pixel)" }}
-        >
-          {t.eyebrow}
-        </div>
-
-        {/* Pull quote — the honest agitation. This is a real quotation,
-            so it is marked up as one; the section's own heading is the
-            response below it. Stage 02 was previously the only stage on
-            the page with no heading element at all. */}
-        <figure
-          className="border-l-4 pl-6 md:pl-14 max-w-5xl transition-all duration-700"
-          style={{
-            borderColor: "#8a8a8a",
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateX(0)" : "translateX(-30px)",
-          }}
-        >
-          <blockquote
-            className="font-black leading-[1.05] tracking-[-0.02em] mb-10"
-            style={{ fontSize: "calc(clamp(25px, 4.8vw, 72px) * var(--bgk, 1))" }}
-          >
-            {t.quoteMain}
-          </blockquote>
-          <figcaption
-            className="text-sm md:text-base uppercase tracking-[0.25em] opacity-70"
-            style={{ fontFamily: "var(--brutal-pixel)" }}
-          >
-            {t.quoteAttribution}
-          </figcaption>
-        </figure>
-
-        <h2
-          className="mt-16 md:mt-24 font-black uppercase tracking-tight leading-tight max-w-4xl transition-all duration-700 delay-300"
-          style={{
-            fontSize: "calc(clamp(32px, 5vw, 68px) * var(--bgk, 1))",
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateY(0)" : "translateY(20px)",
-          }}
-        >
-          {t.response}{" "}
-          <span
-            className="italic pr-[0.08em]"
-            style={{
-              background: SILVER_H,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {t.responseHighlight}
-          </span>
-        </h2>
-      </div>
-    </section>
-  );
-}
-
-// ============================================================================
 // STAGE 03 · FOUR ROOMS · sticky horizontal pan (progress now normalized)
 // ============================================================================
 function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage3"] }) {
@@ -1564,7 +1401,7 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 
   return (
     <section
-      id="stage-04"
+      id="stage-03"
       ref={targetRef}
       className="relative h-[300vh] md:h-[400vh]" style={{ background: "#141414" }}
     >
@@ -1700,7 +1537,7 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
   const inView = useInView(targetRef, 0.15);
   return (
     <section
-      id="stage-05"
+      id="stage-04"
       ref={targetRef}
       className=""
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
@@ -1830,34 +1667,6 @@ function CaseCard({
   );
 }
 
-// ============================================================================
-// STAGE 05 · PROCESS — 4-step engagement roadmap
-// Vertical stack of numbered steps, each a bordered plate. Reveals in
-// stagger as it scrolls into view. Each step has: big number, title,
-// duration badge, body copy.
-// ============================================================================
-function StageProcess({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageProcess"] }) {
-  // The plate-card stack repeated the furniture every other stage already
-  // uses; the process now runs as the Vector's trajectory — the shared
-  // FlightPlan component in the film's world (jet ground, one silver line,
-  // naked type), scroll-drawn.
-  return (
-    <section id="stage-06" ref={targetRef} style={{ background: "#0d0d0d" }}>
-      <FlightPlan
-        eyebrow={t.eyebrow}
-        headline1={t.headline1}
-        headline2Prefix={t.headline2Prefix}
-        headline2Highlight={t.headline2Highlight}
-        steps={t.steps}
-        fonts={{
-          display: "var(--brutal-display), system-ui, sans-serif",
-          pixel: "var(--brutal-pixel), ui-monospace, monospace",
-          comic: "var(--brutal-comic), system-ui, sans-serif",
-        }}
-      />
-    </section>
-  );
-}
 
 function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage4"] }) {
   const inView = useInView(targetRef, 0.15);
@@ -1979,7 +1788,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
   const all = checked >= t.items.length;
   return (
     <section
-      id="stage-07"
+      id="stage-05"
       ref={targetRef}
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
@@ -2111,7 +1920,7 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
   const inView = useInView(targetRef, 0.35);
   return (
     <section
-      id="stage-08"
+      id="stage-06"
       ref={targetRef}
       className="relative"
       style={{ background: "#0d0d0d", color: "#f4f4f4", minHeight: "100vh" }}
