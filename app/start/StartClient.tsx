@@ -50,6 +50,7 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true, stacked: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", stacked: true },
+  { name: "EVENTLINK", logo: "/images/logo-eventlink.webp" },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp" },
   { name: "ALPEN PHARMA", logo: "/images/logo-alpenpharma.png", invert: true, stacked: true },

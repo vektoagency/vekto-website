@@ -19,6 +19,7 @@ const FLASHKA_CLIENTS = [
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp" },
+  { name: "EVENTLINK", logo: "/images/logo-eventlink.webp" },
 ];
 
 // Pre-form sections (the EDUCATIONAL leg of the funnel for cold paid

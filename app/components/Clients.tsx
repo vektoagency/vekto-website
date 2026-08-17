@@ -57,6 +57,7 @@ const usClients: Client[] = [
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: { bg: "Енергийни напитки без захар", en: "Zero-sugar energy drinks" }, invert: true, stacked: true },
   // Orange wordmark — visible on dark, no invert.
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", url: "https://tasteflavorco.com", desc: { bg: "Гурме сосове с нисък калориен прием", en: "Low-calorie gourmet sauces" }, stacked: true },
+  { name: "EVENTLINK", logo: "/images/logo-eventlink.webp", url: "https://eventlink.bg", desc: { bg: "Дигитални покани и уеб решения", en: "Digital invitations and web solutions" } },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", url: "https://ethans.com", desc: { bg: "Растителни енергийни напитки", en: "Plant-based energy drinks" }, invert: true },
 ];
 
