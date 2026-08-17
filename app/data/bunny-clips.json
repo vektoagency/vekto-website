@@ -399,7 +399,8 @@
       "portrait": true,
       "metric": null,
       "href": null,
-      "featured": false
+      "featured": false,
+      "excludeFromPortfolio": true
     },
     {
       "id": "1b972963-4de6-4c87-95be-b74b2ce8a26e",

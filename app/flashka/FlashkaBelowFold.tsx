@@ -18,7 +18,6 @@ const FLASHKA_CLIENTS = [
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp" },
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp" },
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp" },
 ];
 

@@ -49,7 +49,6 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp" },
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true, stacked: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp" },
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", stacked: true },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp" },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp" },

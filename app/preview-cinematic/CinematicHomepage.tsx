@@ -74,7 +74,6 @@ const ROSTER = [
   { name: "beMe",          region: "BG" as const, logo: "/images/roster-trim/logo-bemeacne.png" },
   { name: "BULMAG",        region: "BG" as const, logo: "/images/roster-trim/logo-bulmag.png" },
   { name: "TASTE FLAVOR",  region: "US" as const, logo: "/images/roster-trim/logo-tasteflavor.png" },
-  { name: "KRISTA G",      region: "BG" as const, logo: "/images/roster-trim/logo-krista-g-2022.png" },
   { name: "PHYTOLIFE",     region: "BG" as const, logo: "/images/roster-trim/logo-phytolife.png" },
   { name: "GIFTO",         region: "BG" as const, logo: "/images/roster-trim/logo-adventuresbg.png" },
   { name: "ADVENTURES BG", region: "BG" as const, logo: "/images/roster-trim/logo-gifto2.png" },

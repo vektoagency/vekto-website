@@ -322,7 +322,6 @@ const ROSTER: Client[] = [
   { name: "beMe",          region: "BG", logo: "/images/roster-trim/logo-bemeacne.png"    },
   { name: "BULMAG",        region: "BG", logo: "/images/roster-trim/logo-bulmag.png" },
   { name: "TASTE FLAVOR",  region: "US", logo: "/images/roster-trim/logo-tasteflavor.png" },
-  { name: "KRISTA G",      region: "BG", logo: "/images/roster-trim/logo-krista-g-2022.png" },
   { name: "PHYTOLIFE",     region: "BG", logo: "/images/roster-trim/logo-phytolife.png"   },
   { name: "GIFTO",         region: "BG", logo: "/images/roster-trim/logo-adventuresbg.png" },
   { name: "ADVENTURES BG", region: "BG", logo: "/images/roster-trim/logo-gifto2.png"      },

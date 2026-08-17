@@ -27,7 +27,6 @@ const bgClients: Client[] = [
   { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: { bg: "Натурални хранителни добавки", en: "Natural supplements" }, circular: true, invert: true },
   { name: "NEDELYA", logo: "/images/logo-nedelya.svg", url: "https://nedelya.com", desc: { bg: "Торти и сладкарски продукти", en: "Cakes & bakery products" } },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: { bg: "Грижа за кожа срещу акне", en: "Acne skincare brand" } },
-  { name: "KRISTA G", logo: "/images/logo-krista-g-2022.webp", url: "https://kristag-bg.com", desc: { bg: "Натурална козметика", en: "Natural cosmetics" } },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: { bg: "Подаръчни ваучери за преживявания", en: "Experience voucher platform" } },
   { name: "ADVENTURES BG", logo: "/images/logo-gifto2.webp", url: "https://adventures.bg", desc: { bg: "Приключенски туризъм", en: "Adventure tourism" } },
   // Added 2026-07-02 — 7 new BG partners. Everything runs on the standard
