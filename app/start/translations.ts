@@ -67,9 +67,11 @@ export const startCopy = {
     },
     cases: {
       eyebrow: "03 · РЕАЛНИ РЕЗУЛТАТИ",
+      viewCase: "Виж резултатите",
       items: [
         {
           brand: "MEN'S CARE",
+          slug: "menscare",
           category: "Козметика · BG",
           metric: "5.2×",
           metricLabel: "ROAS · AI КАМПАНИЯ",
@@ -78,6 +80,7 @@ export const startCopy = {
         },
         {
           brand: "PARFEN",
+          slug: "parfen",
           category: "Парфюмерия · BG",
           metric: "7.7×",
           metricLabel: "ROAS · ОФЕРТА СЪС СРОК",
@@ -86,6 +89,7 @@ export const startCopy = {
         },
         {
           brand: "beMe",
+          slug: "beme",
           category: "Грижа за кожата · BG",
           metric: "3.4%",
           metricLabel: "CVR · ОТ КЛИК ДО ПОРЪЧКА",
@@ -94,29 +98,15 @@ export const startCopy = {
         },
       ],
     },
-    process: {
-      eyebrow: "04 · КАК РАБОТИ",
-      h2: "От анкета",
-      h2Highlight: "до готови видеа.",
-      steps: [
-        {
-          number: "01",
-          title: "Анкета",
-          duration: "60 СЕКУНДИ",
-          body: "Бизнес, цели, бюджет. Толкова.",
-        },
-        {
-          number: "02",
-          title: "Лична оферта",
-          duration: "ДО 24 ЧАСА",
-          body: "План, цени, срокове. Без вода.",
-        },
-        {
-          number: "03",
-          title: "Първи материали",
-          duration: "5 ДНИ",
-          body: "Готови за публикуване. Не седмици.",
-        },
+    promise: {
+      eyebrow: "04 · КАКВО ПОЛУЧАВАШ",
+      h2: "Четири неща, които",
+      h2Highlight: "не се променят.",
+      items: [
+        "Отговор до 24 часа — от човек, не от бот",
+        "Един екип за криейтиви, реклами, сайтове и стратегия",
+        "Първи материали до 5 дни, не седмици",
+        "Числата идват от рекламния акаунт, не от разкрасен отчет",
       ],
     },
     faq: {
@@ -241,9 +231,11 @@ export const startCopy = {
     },
     cases: {
       eyebrow: "03 · CASES · REAL RESULTS",
+      viewCase: "See the results",
       items: [
         {
           brand: "MEN'S CARE",
+          slug: "menscare",
           category: "Beauty · BG",
           metric: "5.2×",
           metricLabel: "ROAS · AI CAMPAIGN",
@@ -252,6 +244,7 @@ export const startCopy = {
         },
         {
           brand: "PARFEN",
+          slug: "parfen",
           category: "Perfume · BG",
           metric: "7.7×",
           metricLabel: "ROAS · URGENCY OFFER",
@@ -260,6 +253,7 @@ export const startCopy = {
         },
         {
           brand: "beMe",
+          slug: "beme",
           category: "Skincare · BG",
           metric: "3.4%",
           metricLabel: "CVR · CLICK → ORDER",
@@ -268,29 +262,15 @@ export const startCopy = {
         },
       ],
     },
-    process: {
-      eyebrow: "04 · HOW IT WORKS",
-      h2: "From brief",
-      h2Highlight: "to delivered videos.",
-      steps: [
-        {
-          number: "01",
-          title: "The brief",
-          duration: "60 SECONDS",
-          body: "Business, goals, budget. That's it.",
-        },
-        {
-          number: "02",
-          title: "Personal proposal",
-          duration: "WITHIN 24H",
-          body: "Plan, pricing, timeline. No fluff.",
-        },
-        {
-          number: "03",
-          title: "First deliverables",
-          duration: "5 DAYS",
-          body: "Ready to publish. Not weeks.",
-        },
+    promise: {
+      eyebrow: "04 · WHAT YOU GET",
+      h2: "Four things that",
+      h2Highlight: "don't change.",
+      items: [
+        "A reply within 24 hours — from a person, not a bot",
+        "One team for creatives, ads, websites and strategy",
+        "First deliverables in 5 days, not weeks",
+        "Numbers straight from the ad account, not a dressed-up report",
       ],
     },
     faq: {

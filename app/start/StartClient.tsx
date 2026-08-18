@@ -440,11 +440,11 @@ export default function StartClient() {
 
                 <div
                   data-animate
-                  className="reveal space-y-5 md:space-y-6 p-5 md:p-8 border-2"
+                  className="reveal space-y-5 md:space-y-6 p-4 md:p-8 border-2"
                   style={{
                     borderColor: "rgba(244,244,244,0.3)",
                     background: "#0d0d0d",
-                    boxShadow: "8px 8px 0 0 #2a2a2a",
+                    boxShadow: "5px 5px 0 0 #2a2a2a",
                   }}
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">

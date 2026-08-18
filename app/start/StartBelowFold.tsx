@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import FlightPlan from "../components/FlightPlan";
+import Link from "next/link";
+import Footer from "../components/Footer";
 import { startCopy, type Lang } from "./translations";
 
 // Below-the-fold of /start, now speaking the homepage's funnel language:
 // 03 · CASES (the homepage's hard-shadow case cards with silver counters)
-// 04 · PROCESS (the shared FlightPlan trajectory)
+// 04 · WHAT YOU GET (the homepage's stamped promise)
 // 05 · FAQ (naked hairline accordion)
 // 06 · THE TALK (final ask — big display + white slab)
 // Stats counters and the comparison table are gone — the numbers live in
@@ -60,26 +61,74 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {t.cases.items.map((c, i) => (
-              <CaseCard key={c.brand} c={c} idx={i} />
+              <CaseCard key={c.brand} c={c} idx={i} viewLabel={t.cases.viewCase} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ───────────── 04 · PROCESS — shared FlightPlan trajectory ───────────── */}
-      <FlightPlan
-        eyebrow={t.process.eyebrow}
-        headline1={t.process.h2}
-        headline2Prefix=""
-        headline2Highlight={t.process.h2Highlight}
-        steps={t.process.steps.map((s) => ({
-          num: s.number,
-          title: s.title,
-          duration: s.duration,
-          body: s.body,
-        }))}
-        fonts={FONTS}
-      />
+      {/* ───────────── 04 · WHAT YOU GET — the homepage's stamped pass,
+           rendered statically here: the homepage earns its 190vh sticky
+           scroll, a landing page should not spend it. ───────────── */}
+      <section className="py-14 md:py-24" style={{ background: "#0d0d0d" }}>
+        <div data-animate-bf className="reveal-bf max-w-3xl mx-auto px-5 md:px-8">
+          <div
+            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-55"
+            style={{ fontFamily: FONTS.pixel }}
+          >
+            {t.promise.eyebrow}
+          </div>
+          <h2
+            className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-8 md:mb-10"
+            style={{ fontSize: "calc(clamp(24px, 4vw, 44px) * var(--bgk, 1))" }}
+          >
+            {t.promise.h2}{" "}
+            <span
+              className="italic pr-[0.08em]"
+              style={{
+                background: SILVER_H,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {t.promise.h2Highlight}
+            </span>
+          </h2>
+          <div
+            className="border-2"
+            style={{
+              borderColor: "rgba(244,244,244,0.3)",
+              background: "#0d0d0d",
+              boxShadow: "5px 5px 0 0 #2a2a2a",
+            }}
+          >
+            {t.promise.items.map((item, i) => (
+              <div
+                key={item}
+                className="flex items-start gap-3 md:gap-4 px-3.5 md:px-6 py-3.5 md:py-4"
+                style={{
+                  borderBottom:
+                    i < t.promise.items.length - 1
+                      ? "1px solid rgba(244,244,244,0.14)"
+                      : "none",
+                }}
+              >
+                <span
+                  aria-hidden
+                  className="mt-0.5 w-7 h-7 shrink-0 border-2 flex items-center justify-center font-black text-[#0d0d0d]"
+                  style={{ background: SILVER_H, borderColor: "rgba(244,244,244,0.5)" }}
+                >
+                  ✓
+                </span>
+                <span className="text-sm md:text-base leading-[1.4] font-bold uppercase">
+                  {item}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ───────────── 05 · FAQ — naked hairline accordion ───────────── */}
       <section
@@ -188,6 +237,8 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
           [data-animate-bf].reveal-bf { opacity: 1; transform: none; }
         }
       `}</style>
+
+      <Footer />
     </>
   );
 }
@@ -198,9 +249,11 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
 function CaseCard({
   c,
   idx,
+  viewLabel,
 }: {
   c: {
     brand: string;
+    slug: string;
     category: string;
     metric: string;
     metricLabel: string;
@@ -208,6 +261,7 @@ function CaseCard({
     highlight: string;
   };
   idx: number;
+  viewLabel: string;
 }) {
   const match = c.metric.match(/(\d+(?:\.\d+)?)(.*)/);
   const target = match ? parseFloat(match[1]) : 0;
@@ -244,7 +298,8 @@ function CaseCard({
   const rot = idx % 2 === 0 ? -1.5 : 1.5;
 
   return (
-    <div
+    <Link
+      href={`/case-studies#${c.slug}`}
       ref={(el) => {
         if (!el || inView) return;
         const obs = new IntersectionObserver(
@@ -258,21 +313,23 @@ function CaseCard({
         );
         obs.observe(el);
       }}
-      className="border-2 flex flex-col overflow-hidden"
+      className="group border-2 flex flex-col overflow-hidden hover:-translate-x-0.5 hover:-translate-y-0.5"
       style={{
         background: "#0d0d0d",
         color: "#f4f4f4",
         borderColor: "rgba(244,244,244,0.3)",
-        boxShadow: "8px 8px 0 0 #2a2a2a",
+        boxShadow: "5px 5px 0 0 #2a2a2a",
         opacity: inView ? 1 : 0,
         transform: inView
           ? "translateY(0) scale(1) rotate(0deg)"
           : `translateY(60px) scale(0.92) rotate(${rot}deg)`,
-        transition: `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms`,
+        transition: inView
+          ? "transform 180ms ease, opacity 200ms ease"
+          : `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms`,
       }}
     >
       <div
-        className="px-5 py-4 border-b-2 flex items-center justify-between"
+        className="px-4 md:px-5 py-3.5 md:py-4 border-b-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 justify-between"
         style={{ borderColor: "rgba(244,244,244,0.25)" }}
       >
         <div className="font-black text-lg uppercase tracking-tight">{c.brand}</div>
@@ -283,11 +340,11 @@ function CaseCard({
           {c.category}
         </div>
       </div>
-      <div className="px-5 py-8 md:py-10 flex-1 flex flex-col justify-center">
+      <div className="px-4 md:px-5 py-7 md:py-10 flex-1 flex flex-col justify-center">
         <div
           className="font-black leading-none tabular-nums"
           style={{
-            fontSize: "calc(clamp(56px, 7vw, 96px) * var(--bgk, 1))",
+            fontSize: "calc(clamp(48px, 12vw, 96px) * var(--bgk, 1))",
             background: SILVER_H,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -304,7 +361,7 @@ function CaseCard({
           {c.metricLabel}
         </div>
       </div>
-      <div className="p-5 space-y-3" style={{ borderTop: "1px solid rgba(244,244,244,0.18)" }}>
+      <div className="p-4 md:p-5 space-y-3" style={{ borderTop: "1px solid rgba(244,244,244,0.18)" }}>
         <div
           className="inline-block px-2 py-1 border text-[12px] font-bold uppercase tracking-[0.2em]"
           style={{ fontFamily: FONTS.pixel, borderColor: "rgba(244,244,244,0.4)" }}
@@ -314,8 +371,15 @@ function CaseCard({
         <p className="text-[13px] leading-[1.5] font-medium" style={{ fontFamily: FONTS.comic }}>
           {c.highlight}
         </p>
+        <span
+          className="flex items-center gap-2 pt-1 text-[11px] font-bold uppercase tracking-[0.2em] opacity-55 group-hover:opacity-100 transition-opacity"
+          style={{ fontFamily: FONTS.pixel }}
+        >
+          {viewLabel}
+          <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
 
