@@ -146,8 +146,8 @@ export const startCopy = {
     },
     finalCta: {
       eyebrow: "06 · РАЗГОВОР",
-      h2: "Бизнес, който се отличава —",
-      h2Highlight: "растеж, който се вижда.",
+      h2: "Растеж,",
+      h2Highlight: "който се вижда.",
       sub: "Криейтиви, реклами, сайтове и стратегия. Всичко за големия резултат.",
       scrollToForm: "Попълни анкетата →",
       orBook: "Или резервирай разговор",
@@ -310,8 +310,8 @@ export const startCopy = {
     },
     finalCta: {
       eyebrow: "06 · THE TALK",
-      h2: "A brand that stands out —",
-      h2Highlight: "a business that grows.",
+      h2: "Growth",
+      h2Highlight: "you can see.",
       sub: "Creatives, ads, websites and strategy. Everything for real growth.",
       scrollToForm: "Fill the survey →",
       orBook: "Or book a call",

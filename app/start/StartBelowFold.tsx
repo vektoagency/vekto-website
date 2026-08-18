@@ -180,8 +180,8 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
             {t.finalCta.eyebrow}
           </p>
           <h2
-            className="font-black uppercase leading-[0.98] tracking-[-0.03em] mb-5 md:mb-7 text-balance"
-            style={{ fontSize: "calc(clamp(32px, 6.4vw, 84px) * var(--bgk, 1))" }}
+            className="font-black uppercase leading-[0.95] tracking-[-0.03em] mb-5 md:mb-7"
+            style={{ fontSize: "calc(clamp(34px, 6vw, 76px) * var(--bgk, 1))" }}
           >
             {t.finalCta.h2}{" "}
             <span
