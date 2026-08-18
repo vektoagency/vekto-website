@@ -77,7 +77,7 @@ const CASE_STUDIES: CaseStudy[] = [
       bg: "Кинематографичен филм за старт на продукт в САЩ",
       en: "Cinematic reel for US product launch",
     },
-    metric: { value: "1.2M+", label: { bg: "Reach на launch кампанията", en: "Launch campaign reach" } },
+    metric: { value: "1.2M+", label: { bg: "Обхват на стартовата кампания", en: "Launch campaign reach" } },
     cover: "/images/logo-dusq.webp",
     services: ["Cinematic", "Product visuals", "Launch"],
     live: false,
