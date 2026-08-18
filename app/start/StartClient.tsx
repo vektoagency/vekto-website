@@ -280,7 +280,7 @@ export default function StartClient() {
                   </g>
                 </svg>
               </div>
-              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-12 md:pt-24 pb-8 md:pb-12 text-center">
+              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-4 md:pt-16 pb-8 md:pb-12 text-center">
                 <p
                   className="font-bold uppercase tracking-[0.35em] opacity-55 text-[10px] md:text-xs mb-5 md:mb-7 animate-[startFade_0.5s_ease-out_both]"
                   style={{ fontFamily: "var(--brutal-pixel)" }}
