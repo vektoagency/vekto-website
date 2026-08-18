@@ -25,12 +25,12 @@ export default function Hero() {
   // framing + NoGood's anti-vendor premium tone.
   const t = useT({
     bg: {
-      badge: "GROWTH PARTNER · БЪЛГАРИЯ + СВЯТ",
-      h1Em: "Един partner за",
+      badge: "ПАРТНЬОР ЗА РАСТЕЖ · БЪЛГАРИЯ + СВЯТ",
+      h1Em: "Един партньор за",
       h1RestDesktop: ["целия ти", "marketing stack."],
-      h1RestMobile: "целия ти marketing.",
-      sub: "PPC + Creative + Funnels + Strategy — цялата ти растежна система на едно място. 50+ бизнеса. 4.8× среден ROAS.",
-      subMobile: "PPC + Creative + Funnels + Strategy — на едно място.",
+      h1RestMobile: "целия ти маркетинг.",
+      sub: "Реклами, криейтиви, фунии и стратегия — цялата ти система за растеж на едно място. 50+ бизнеса. 4.8× среден ROAS.",
+      subMobile: "Реклами, криейтиви, фунии и стратегия — на едно място.",
       ctaPrimary: "Резервирай стратегически разговор",
       ctaSecondary: "Виж резултатите",
     },

@@ -98,7 +98,7 @@ const COPY = {
       globeNote: "БИЗНЕСА В ПОРТФОЛИОТО",
       globeLink: "ВИЖ ГИ",
       sheetTitle: "ОТ РОЛКАТА",
-      sheetNote: "9:16 · ЗА REELS / TIKTOK",
+      sheetNote: "9:16 · ЗА СОЦИАЛНИТЕ МРЕЖИ",
       sheetCaptions: ["КРЕАТОР", "ПРОДУКТ", "ЛОКАЦИЯ"],
       sheetAlt: [
         "Кадър от рекламно видео — креатор говори пред камера",

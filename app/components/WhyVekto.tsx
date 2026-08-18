@@ -22,7 +22,7 @@ const dict = {
       { aspect: "Качество", vekto: "AI + майсторска ръка", traditional: "Само ръчно", inhouse: "Зависи от екипа" },
       { aspect: "Постоянство на стила", vekto: "Поддържано от AI", traditional: "Ръчно", inhouse: "Зависи от екипа" },
       { aspect: "Достъпност", vekto: "24/7", traditional: "Работно време", inhouse: "Работно време" },
-      { aspect: "Езици", vekto: "Многоезично без доплащане", traditional: "Срещу доплащане", inhouse: "Рядко" },
+      { aspect: "Езици", vekto: "Съдържание на български и английски", traditional: "Обикновено само на един", inhouse: "Рядко" },
     ],
   },
   en: {

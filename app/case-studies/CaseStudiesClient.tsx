@@ -32,12 +32,12 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-menscare.png",
     category: "Beauty · DTC",
     headline: {
-      bg: "Ръст на приходите чрез AI видео + performance",
+      bg: "Ръст на приходите чрез AI видео и реклами",
       en: "Revenue growth via AI video + performance",
     },
     metric: { value: "5.2×", label: { bg: "Ръст на месечния оборот", en: "Monthly revenue lift" } },
     cover: "/images/work-menscare.webp",
-    services: ["Video", "Meta Ads", "Landing pages"],
+    services: ["Видео", "Реклами", "Лендинг страници"],
     live: false,
   },
   {
@@ -51,7 +51,7 @@ const CASE_STUDIES: CaseStudy[] = [
     },
     metric: { value: "3.8×", label: { bg: "ROAS на кампанията", en: "Campaign ROAS" } },
     cover: "/images/work-isosport.webp",
-    services: ["Cinematic film", "Brand", "Ads"],
+    services: ["Кинематографичен филм", "Бранд", "Реклами"],
     live: false,
   },
   {
@@ -60,7 +60,7 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-parfen.webp",
     category: "Perfumes · Ecom",
     headline: {
-      bg: "AI UGC система за постоянен поток от нови creatives",
+      bg: "Система за постоянен поток от нови криейтиви",
       en: "AI UGC system for continuous fresh creative",
     },
     metric: { value: "40+", label: { bg: "AI видеа месечно", en: "AI videos monthly" } },
@@ -74,7 +74,7 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-dusq.webp",
     category: "Wearable · US Market",
     headline: {
-      bg: "Cinematic reel за product launch в САЩ",
+      bg: "Кинематографичен филм за старт на продукт в САЩ",
       en: "Cinematic reel for US product launch",
     },
     metric: { value: "1.2M+", label: { bg: "Reach на launch кампанията", en: "Launch campaign reach" } },
@@ -88,12 +88,12 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-gourmethouse.png",
     category: "Food · DTC",
     headline: {
-      bg: "Пълен ecom launch — от нула до първи продажби",
+      bg: "Пълен старт на онлайн магазин — от нула до първи продажби",
       en: "Full ecommerce launch — brand to first sales",
     },
     metric: { value: "TBD", label: { bg: "Първи 30 дни", en: "First 30 days" } },
     cover: "/images/logo-gourmethouse.png",
-    services: ["Website", "Brand", "Ads"],
+    services: ["Уебсайт", "Бранд", "Реклами"],
     live: false,
   },
   {
@@ -107,7 +107,7 @@ const CASE_STUDIES: CaseStudy[] = [
     },
     metric: { value: "3.4%", label: { bg: "CVR за 90 дни", en: "CVR over 90 days" } },
     cover: "/images/logo-bemeacne.webp",
-    services: ["Statics", "Meta Ads", "CRO"],
+    services: ["Статични банери", "Реклами", "Оптимизация на конверсии"],
     live: false,
   },
   {
@@ -116,12 +116,12 @@ const CASE_STUDIES: CaseStudy[] = [
     brandLogo: "/images/logo-nedelya.svg",
     category: "Bakery · Retail",
     headline: {
-      bg: "Съдържание за социални мрежи + storytelling",
+      bg: "Съдържание за социални мрежи и разказване на историята",
       en: "Social content + storytelling",
     },
     metric: { value: "TBD", label: { bg: "Engagement rate", en: "Engagement rate" } },
     cover: "/images/logo-nedelya.svg",
-    services: ["Social content", "Video", "Strategy"],
+    services: ["Съдържание за мрежите", "Видео", "Стратегия"],
     live: false,
   },
 ];
@@ -131,7 +131,7 @@ const copy = {
     badge: "CASE STUDIES",
     h1Top: "Реални резултати",
     h1Highlight: "за реални бизнеси.",
-    sub: "50+ бизнеса в България и САЩ. Всеки проект тук е партньорство — от бриф до launch и след него.",
+    sub: "50+ бизнеса в България и САЩ. Всеки проект тук е партньорство — от първия разговор до пускането и след него.",
     stats: [
       { value: "50+", label: "Партньорства" },
       { value: "4.8×", label: "Среден ROAS" },
