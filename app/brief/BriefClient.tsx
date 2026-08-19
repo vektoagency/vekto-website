@@ -7,7 +7,7 @@ import { submitBrief, type BriefSubmission } from "../actions/brief";
 import { useLang } from "../i18n/LangProvider";
 import SiteHeader from "../components/SiteHeader";
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 4;
 const STORAGE_KEY = "vekto-brief-draft-v1";
 
 const initialForm: BriefSubmission = {
@@ -16,9 +16,6 @@ const initialForm: BriefSubmission = {
   website: "",
   ig: "",
   industry: "",
-  stage: "",
-  revenue: "",
-  teamSize: "",
   pitch: "",
   audience: "",
   problem: "",
@@ -33,23 +30,6 @@ const initialForm: BriefSubmission = {
   whatNotWorking: "",
   topClips: "",
   adSpend: "",
-  services: [],
-  volume: "",
-  multilingual: "",
-  includeStrategy: "",
-  mainGoal: "",
-  goal90Days: "",
-  successMetric: "",
-  tracking: "",
-  brandAssets: "",
-  refsLove: "",
-  refsHate: "",
-  music: "",
-  restrictions: "",
-  hasScripts: "",
-  timeline: "",
-  engagement: "",
-  budget: "",
   name: "",
   role: "",
   email: "",
@@ -62,7 +42,7 @@ export default function BriefClient() {
   // Language lives in the global LangProvider (vekto-lang cookie) so the
   // shared SiteHeader toggle switches this page's copy too.
   const { lang } = useLang();
-  const [step, setStep] = useState(0); // 0 = intro, 1-7 = steps, 8 = success
+  const [step, setStep] = useState(0); // 0 = intro, 1-4 = steps, 5 = success
   const [form, setForm] = useState<BriefSubmission>(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -103,7 +83,7 @@ export default function BriefClient() {
     setForm((f) => ({ ...f, [key]: value }));
   };
 
-  const toggleArray = (key: "platforms" | "services", value: string) => {
+  const toggleArray = (key: "platforms", value: string) => {
     setForm((f) => {
       const cur = f[key];
       const next = cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value];
@@ -134,14 +114,14 @@ export default function BriefClient() {
       } catch {
         // ignore
       }
-      setStep(8);
+      setStep(5);
       if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setErrorMsg(t.error.generic);
     }
   };
 
-  const progressPct = step === 0 ? 0 : step === 8 ? 100 : ((step - 1) / TOTAL_STEPS) * 100 + 100 / TOTAL_STEPS / 2;
+  const progressPct = step === 0 ? 0 : step === 5 ? 100 : ((step - 1) / TOTAL_STEPS) * 100 + 100 / TOTAL_STEPS / 2;
 
   return (
     <div className="min-h-screen bg-[#080808] text-[#ece8e1]">
@@ -212,15 +192,6 @@ export default function BriefClient() {
                 lang={lang}
               />
             </Field>
-            <Field label={t.step1.stage}>
-              <Pills value={form.stage} onChange={(v) => update("stage", v)} options={t.step1.stageOptions} />
-            </Field>
-            <Field label={t.step1.revenue}>
-              <Pills value={form.revenue} onChange={(v) => update("revenue", v)} options={t.step1.revenueOptions} />
-            </Field>
-            <Field label={t.step1.teamSize}>
-              <Pills value={form.teamSize} onChange={(v) => update("teamSize", v)} options={t.step1.teamSizeOptions} />
-            </Field>
           </StepWrapper>
         )}
 
@@ -282,108 +253,37 @@ export default function BriefClient() {
           </StepWrapper>
         )}
 
-        {/* Step 4 — Services */}
-        {step === 4 && (
-          <StepWrapper title={t.step4.title} stepLabel={t.meta.stepOf(4, TOTAL_STEPS)} sub={t.step4.sub}>
-            <Field label={t.step4.services}>
-              <PillsMulti
-                values={form.services}
-                onToggle={(v) => toggleArray("services", v)}
-                options={t.step4.servicesOptions}
-                stack
-              />
-            </Field>
-            <Field label={t.step4.volume}>
-              <Pills value={form.volume} onChange={(v) => update("volume", v)} options={t.step4.volumeOptions} />
-            </Field>
-            <Field label={t.step4.multilingual}>
-              <Pills value={form.multilingual} onChange={(v) => update("multilingual", v)} options={t.step4.multilingualOptions} />
-            </Field>
-            <Field label={t.step4.includeStrategy}>
-              <Pills value={form.includeStrategy} onChange={(v) => update("includeStrategy", v)} options={t.step4.includeStrategyOptions} stack />
-            </Field>
-          </StepWrapper>
-        )}
 
-        {/* Step 5 — Goals */}
-        {step === 5 && (
-          <StepWrapper title={t.step5.title} stepLabel={t.meta.stepOf(5, TOTAL_STEPS)}>
-            <Field label={t.step5.mainGoal}>
-              <Pills value={form.mainGoal} onChange={(v) => update("mainGoal", v)} options={t.step5.mainGoalOptions} stack />
-            </Field>
-            <Field label={t.step5.goal90Days}>
-              <Input value={form.goal90Days} onChange={(v) => update("goal90Days", v)} placeholder={t.step5.goal90DaysPh} />
-            </Field>
-            <Field label={t.step5.successMetric}>
-              <Textarea value={form.successMetric} onChange={(v) => update("successMetric", v)} placeholder={t.step5.successMetricPh} />
-            </Field>
-            <Field label={t.step5.tracking}>
-              <Pills value={form.tracking} onChange={(v) => update("tracking", v)} options={t.step5.trackingOptions} stack />
-            </Field>
-          </StepWrapper>
-        )}
 
-        {/* Step 6 — Creative */}
-        {step === 6 && (
-          <StepWrapper title={t.step6.title} stepLabel={t.meta.stepOf(6, TOTAL_STEPS)} sub={t.step6.sub}>
-            <Field label={t.step6.brandAssets}>
-              <Textarea value={form.brandAssets} onChange={(v) => update("brandAssets", v)} placeholder={t.step6.brandAssetsPh} rows={2} />
-            </Field>
-            <Field label={t.step6.refsLove}>
-              <Textarea value={form.refsLove} onChange={(v) => update("refsLove", v)} placeholder={t.step6.refsLovePh} rows={4} />
-            </Field>
-            <Field label={t.step6.refsHate}>
-              <Textarea value={form.refsHate} onChange={(v) => update("refsHate", v)} placeholder={t.step6.refsHatePh} rows={3} />
-            </Field>
-            <Field label={t.step6.music}>
-              <Pills value={form.music} onChange={(v) => update("music", v)} options={t.step6.musicOptions} />
-            </Field>
-            <Field label={t.step6.restrictions}>
-              <Textarea value={form.restrictions} onChange={(v) => update("restrictions", v)} placeholder={t.step6.restrictionsPh} rows={3} />
-            </Field>
-            <Field label={t.step6.hasScripts}>
-              <Pills value={form.hasScripts} onChange={(v) => update("hasScripts", v)} options={t.step6.hasScriptsOptions} stack />
-            </Field>
-          </StepWrapper>
-        )}
 
         {/* Step 7 — Logistics */}
-        {step === 7 && (
-          <StepWrapper title={t.step7.title} stepLabel={t.meta.stepOf(7, TOTAL_STEPS)}>
-            <Field label={t.step7.timeline}>
-              <Pills value={form.timeline} onChange={(v) => update("timeline", v)} options={t.step7.timelineOptions} />
-            </Field>
-            <Field label={t.step7.engagement}>
-              <Pills value={form.engagement} onChange={(v) => update("engagement", v)} options={t.step7.engagementOptions} />
-            </Field>
-            <Field label={t.step7.budget}>
-              <Pills value={form.budget} onChange={(v) => update("budget", v)} options={t.step7.budgetOptions} />
-            </Field>
+        {step === 4 && (
+          <StepWrapper title={t.step4.title} stepLabel={t.meta.stepOf(4, TOTAL_STEPS)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-0">
-              <Field label={t.step7.name}>
-                <Input value={form.name} onChange={(v) => update("name", v)} placeholder={t.step7.namePh} required />
+              <Field label={t.step4.name}>
+                <Input value={form.name} onChange={(v) => update("name", v)} placeholder={t.step4.namePh} required />
               </Field>
-              <Field label={t.step7.role}>
-                <Input value={form.role} onChange={(v) => update("role", v)} placeholder={t.step7.rolePh} />
+              <Field label={t.step4.role}>
+                <Input value={form.role} onChange={(v) => update("role", v)} placeholder={t.step4.rolePh} />
               </Field>
-              <Field label={t.step7.email}>
-                <Input value={form.email} onChange={(v) => update("email", v)} placeholder={t.step7.emailPh} type="email" required />
+              <Field label={t.step4.email}>
+                <Input value={form.email} onChange={(v) => update("email", v)} placeholder={t.step4.emailPh} type="email" required />
               </Field>
-              <Field label={t.step7.phone}>
-                <Input value={form.phone} onChange={(v) => update("phone", v)} placeholder={t.step7.phonePh} type="tel" required />
+              <Field label={t.step4.phone}>
+                <Input value={form.phone} onChange={(v) => update("phone", v)} placeholder={t.step4.phonePh} type="tel" required />
               </Field>
             </div>
-            <Field label={t.step7.preferredChannel}>
-              <Pills value={form.preferredChannel} onChange={(v) => update("preferredChannel", v)} options={t.step7.preferredChannelOptions} />
+            <Field label={t.step4.preferredChannel}>
+              <Pills value={form.preferredChannel} onChange={(v) => update("preferredChannel", v)} options={t.step4.preferredChannelOptions} />
             </Field>
-            <Field label={t.step7.additional}>
-              <Textarea value={form.additional} onChange={(v) => update("additional", v)} placeholder={t.step7.additionalPh} rows={4} />
+            <Field label={t.step4.additional}>
+              <Textarea value={form.additional} onChange={(v) => update("additional", v)} placeholder={t.step4.additionalPh} rows={4} />
             </Field>
           </StepWrapper>
         )}
 
         {/* Step 8 — Success */}
-        {step === 8 && (
+        {step === 5 && (
           <div className="animate-[briefFade_0.5s_ease-out_both] py-8 md:py-16 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#f4f4f4] text-black mb-7"
               style={{ boxShadow: "0 0 40px rgba(244,244,244,0.45)" }}>
@@ -413,7 +313,7 @@ export default function BriefClient() {
         )}
 
         {/* Nav buttons (hide on intro & success) */}
-        {step > 0 && step < 8 && (
+        {step > 0 && step < 5 && (
           <div className="mt-10 md:mt-12 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pt-6 border-t border-[#1e1e1c]">
             <button
               onClick={handleBack}

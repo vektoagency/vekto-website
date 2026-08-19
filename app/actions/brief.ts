@@ -15,9 +15,6 @@ export type BriefSubmission = {
   website: string;
   ig: string;
   industry: string;
-  stage: string;
-  revenue: string;
-  teamSize: string;
   // step 2
   pitch: string;
   audience: string;
@@ -34,27 +31,6 @@ export type BriefSubmission = {
   whatNotWorking: string;
   topClips: string;
   adSpend: string;
-  // step 4
-  services: string[];
-  volume: string;
-  multilingual: string;
-  includeStrategy: string;
-  // step 5
-  mainGoal: string;
-  goal90Days: string;
-  successMetric: string;
-  tracking: string;
-  // step 6
-  brandAssets: string;
-  refsLove: string;
-  refsHate: string;
-  music: string;
-  restrictions: string;
-  hasScripts: string;
-  // step 7
-  timeline: string;
-  engagement: string;
-  budget: string;
   name: string;
   role: string;
   email: string;
@@ -68,9 +44,6 @@ const FIELD_LABELS: Record<string, string> = {
   website: "Website",
   ig: "Instagram",
   industry: "Industry",
-  stage: "Stage",
-  revenue: "Monthly revenue",
-  teamSize: "Team size",
   pitch: "One-line pitch",
   audience: "Ideal customer",
   problem: "Problem solved",
@@ -85,23 +58,6 @@ const FIELD_LABELS: Record<string, string> = {
   whatNotWorking: "Not working",
   topClips: "Top clips",
   adSpend: "Monthly ad spend",
-  services: "Services interested in",
-  volume: "Clips/month target",
-  multilingual: "Multilingual",
-  includeStrategy: "Scope wanted",
-  mainGoal: "Main goal",
-  goal90Days: "90-day goal",
-  successMetric: "Success metric",
-  tracking: "Tracking setup",
-  brandAssets: "Brand assets links",
-  refsLove: "References — love",
-  refsHate: "References — dislike",
-  music: "Music vibe",
-  restrictions: "Brand do's & don'ts",
-  hasScripts: "Has scripts/hooks",
-  timeline: "Timeline",
-  engagement: "Engagement model",
-  budget: "Monthly budget",
   name: "Name",
   role: "Role",
   email: "Email",
@@ -202,10 +158,8 @@ export async function submitBrief(data: BriefSubmission) {
     email: data.email || "",
     phone: data.phone || "",
     extra: {
-      Timeline: data.timeline,
-      "Monthly budget": data.budget,
-      "Main goal": data.mainGoal,
-      Services: Array.isArray(data.services) ? data.services.join(", ") : data.services,
+      Industry: data.industry,
+      Pitch: data.pitch,
       Additional: data.additional,
     },
     resendStatus,
