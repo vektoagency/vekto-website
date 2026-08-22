@@ -179,7 +179,6 @@ const COPY = {
       headlinePrefix: "ТОГАВА Е ВРЕМЕ ЗА",
       headlineHighlight: "РАЗГОВОР.",
       cta: "ЗАПАЗИ РАЗГОВОР",
-      callCta: "Обади се",
       formCta: "Опиши проекта си",
     },
   },
@@ -298,7 +297,6 @@ const COPY = {
       headlinePrefix: "THEN IT'S TIME FOR",
       headlineHighlight: "A CALL.",
       cta: "BOOK A CALL",
-      callCta: "Call us",
       formCta: "Describe your project",
     },
   },
@@ -929,7 +927,6 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         calMeta: "30 МИН · БЕЗПЛАТНО",
         orForm: "ИЛИ ОПИШИ ПРОЕКТА СИ · ≈1 МИНУТА",
         trust: "ОТГОВОР ДО 24Ч · БЕЗ ОБВЪРЗВАНЕ",
-        call: "ОБАДИ СЕ", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "МОМЕНТАЛЕН ЧАТ",
         email: "ИМЕЙЛ", emailSub: "vektoagency@gmail.com",
         or: "ИЛИ ДИРЕКТНО:",
@@ -954,7 +951,6 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         calMeta: "30 MIN · FREE",
         orForm: "OR DESCRIBE YOUR PROJECT · ≈1 MINUTE",
         trust: "REPLY WITHIN 24H · NO STRINGS",
-        call: "PHONE", callSub: "+359 88 225 1474",
         wa: "WHATSAPP", waSub: "INSTANT CHAT",
         email: "EMAIL", emailSub: "vektoagency@gmail.com",
         or: "OR DIRECTLY:",
@@ -1101,22 +1097,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
             </div>
             {/* Phones: full-width rows (label left, value right) so
                 nothing truncates; md+: the original three columns. */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-              <a
-                href="tel:+359882251474"
-                className="flex items-center justify-between gap-3 px-4 py-3 md:flex-col md:justify-center md:gap-1 md:py-4 md:px-1 border-2 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black md:text-center"
-                style={{ borderColor: "rgba(244,244,244,0.55)" }}
-              >
-                <span className="flex items-center gap-2.5 md:flex-col md:gap-1">
-                  <span className="text-lg md:text-2xl leading-none" aria-hidden>☎</span>
-                  <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-[0.08em]" style={{ fontFamily: "var(--brutal-display)" }}>
-                    {s.call}
-                  </span>
-                </span>
-                <span className="text-[12px] md:text-[11px] opacity-60 tabular-nums md:w-full md:truncate md:px-1" style={{ fontFamily: "var(--brutal-display)" }}>
-                  {s.callSub}
-                </span>
-              </a>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <a
                 href="https://wa.me/359882251474"
                 target="_blank"
@@ -2070,15 +2051,6 @@ function StageAsk({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLE
               primary CTA (call with the number, then the written brief),
               instead of a bare dotted line of contacts. */}
           <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <a
-              href="tel:+359882251474"
-              className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
-              style={{ borderColor: "rgba(244,244,244,0.6)" }}
-            >
-              <span aria-hidden>☎</span>
-              {t.callCta}
-              <span className="tabular-nums opacity-60">+359 88 225 1474</span>
-            </a>
             <Link
               href="/start"
               className="inline-flex items-center gap-2.5 border-[1.5px] px-6 py-3 text-[12px] font-black uppercase tracking-[0.14em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"

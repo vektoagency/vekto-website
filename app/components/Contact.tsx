@@ -6,8 +6,6 @@ import AnimateIn from "./AnimateIn";
 import { useT } from "../i18n/LangProvider";
 import { trackEventBoth } from "./MetaPixel";
 
-const PHONE = "+359882251474";
-const PHONE_DISPLAY = "+359 88 225 1474";
 
 function CalendarIcon() {
   return (
@@ -36,7 +34,6 @@ export default function Contact() {
       bookSuffix: "30 мин · безплатно",
       startForm: "Опиши проекта си",
       startFormSuffix: "≈ 1 минута",
-      callBtn: "Обади се",
       perks: ["Предложение до 24ч", "Без обвързване"],
     },
     en: {
@@ -47,7 +44,6 @@ export default function Contact() {
       bookSuffix: "30 min · free",
       startForm: "Describe your project",
       startFormSuffix: "≈ 1 minute",
-      callBtn: "Call now",
       perks: ["Proposal within 24h", "Growth partner"],
     },
   });
@@ -148,21 +144,8 @@ export default function Contact() {
               <span className="hidden sm:inline text-black/60 text-xs font-normal ml-1">{t.bookSuffix}</span>
             </button>
 
-            {/* Secondary CTAs — lime-outline (same treatment as hero's
-                secondary) for the "call" action; white-outline for the
-                tertiary form action. Compact mobile / expanded sm+. */}
+            {/* Secondary CTA — the written brief. */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href={`tel:${PHONE}`}
-                onClick={() => trackEventBoth("Contact", { contentName: "contact_section" })}
-                className="inline-flex items-center justify-center gap-2 sm:gap-2.5 border border-[#f4f4f4]/55 text-[#f4f4f4] font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full hover:bg-[#f4f4f4]/10 active:scale-[0.98] transition-all cursor-pointer text-[14px] sm:text-[15px]"
-              >
-                <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
-                </svg>
-                {t.callBtn}
-                <span className="hidden sm:inline text-[#f4f4f4]/60 text-xs font-normal ml-1 tabular-nums">{PHONE_DISPLAY}</span>
-              </a>
               <a
                 href="/start"
                 className="inline-flex items-center justify-center gap-2 sm:gap-2.5 border border-white/25 text-white font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-full bg-black/40 backdrop-blur-md hover:border-[#f4f4f4]/40 hover:bg-[#f4f4f4]/5 active:scale-[0.98] transition-all cursor-pointer text-[14px] sm:text-[15px]"

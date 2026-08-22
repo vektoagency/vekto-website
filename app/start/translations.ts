@@ -63,7 +63,6 @@ export const startCopy = {
       submitting: "Изпраща се…",
       orBook: "Или ако предпочиташ — поговори с нас директно:",
       bookCta: "Резервирай разговор",
-      callCta: "Обади се",
     },
     cases: {
       eyebrow: "03 · РЕАЛНИ РЕЗУЛТАТИ",
@@ -227,7 +226,6 @@ export const startCopy = {
       submitting: "Sending…",
       orBook: "Or if you prefer — talk to us directly:",
       bookCta: "Book a Call",
-      callCta: "Call now",
     },
     cases: {
       eyebrow: "03 · CASES · REAL RESULTS",

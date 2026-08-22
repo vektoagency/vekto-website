@@ -1066,8 +1066,6 @@ function Footer({ lang }: { lang: JourneyLang }) {
     <section className="px-6 md:px-14 py-16 text-center" style={{ background: JET, color: "#f4f4f4" }}>
       <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.25em] opacity-70" style={{ fontFamily: "var(--cine-pixel)" }}>
         <a href="mailto:vektoagency@gmail.com" className="hover:opacity-100">vektoagency@gmail.com</a>
-        <span className="opacity-40">·</span>
-        <a href="tel:+359882251474" className="hover:opacity-100">+359 88 225 1474</a>
       </div>
     </section>
   );
