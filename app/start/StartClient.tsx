@@ -8,7 +8,6 @@ import { startCopy } from "./translations";
 import { submitStartLead } from "../actions/start-lead";
 import { trackEvent } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
-import SectionPlate from "../components/SectionPlate";
 import SiteHeader from "../components/SiteHeader";
 
 // Lazy-load the below-fold sections (How it works · Stats · Compare ·
@@ -228,9 +227,6 @@ export default function StartClient() {
           <>
             {/* ─────────────  HERO (above the fold, brand promise)  ───────────── */}
             <section className="relative overflow-hidden">
-              {/* The camera department, same frame the homepage runs
-                  behind its creatives room. */}
-              <SectionPlate src="creatives" />
               {/* Modern hero background — Linear/Vercel-style.
                   Three layered radial gradients (mesh) drifting slowly +
                   a subtle 1px dot grid overlay. Pure CSS, GPU-accelerated,
