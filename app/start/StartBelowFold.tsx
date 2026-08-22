@@ -17,6 +17,16 @@ import { startCopy, type Lang } from "./translations";
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
 
+
+// The three case brands' marks, keyed by slug. `invert` flags dark-ink
+// logos that need flipping to read on the card's jet ground — the same
+// rule the social-proof marquee runs on.
+const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
+  menscare: { src: "/images/logo-menscare.png", invert: true },
+  parfen: { src: "/images/logo-parfen.webp", invert: true },
+  beme: { src: "/images/logo-bemeacne.webp" },
+};
+
 const FONTS = {
   display: "var(--brutal-display), system-ui, sans-serif",
   pixel: "var(--brutal-pixel), ui-monospace, monospace",
@@ -306,7 +316,22 @@ function CaseCard({
         className="px-4 md:px-5 py-3.5 md:py-4 border-b-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 justify-between"
         style={{ borderColor: "rgba(244,244,244,0.25)" }}
       >
-        <div className="font-black text-lg uppercase tracking-tight">{c.brand}</div>
+        {(() => {
+          const mark = CASE_LOGOS[c.slug];
+          return mark ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={mark.src}
+              alt={c.brand}
+              loading="lazy"
+              decoding="async"
+              className="h-5 md:h-6 w-auto max-w-[130px] object-contain"
+              style={{ filter: mark.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
+            />
+          ) : (
+            <div className="font-black text-lg uppercase tracking-tight">{c.brand}</div>
+          );
+        })()}
         <div
           className="text-[12px] uppercase tracking-[0.2em] opacity-60"
           style={{ fontFamily: FONTS.pixel }}

@@ -323,6 +323,16 @@ const ROOM_PLATES = [
   "/images/rooms/ai.webp",        // the machines that do the rendering
 ] as const;
 
+
+// The three case brands' marks, keyed by slug. `invert` flags dark-ink
+// logos that need flipping to read on the card's jet ground — the same
+// rule the social-proof marquee runs on.
+const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
+  menscare: { src: "/images/logo-menscare.png", invert: true },
+  parfen: { src: "/images/logo-parfen.webp", invert: true },
+  beme: { src: "/images/logo-bemeacne.webp" },
+};
+
 // ============================================================================
 // HOOKS
 // ============================================================================
@@ -1629,9 +1639,22 @@ function CaseCard({
     >
       {/* Header — brand + category */}
       <div className="px-5 py-4 border-b-2 flex items-center justify-between" style={{ borderColor: "rgba(244,244,244,0.25)" }}>
-        <div className="font-black text-lg uppercase tracking-tight">
-          {c.brand}
-        </div>
+        {(() => {
+          const mark = CASE_LOGOS[c.slug];
+          return mark ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={mark.src}
+              alt={c.brand}
+              loading="lazy"
+              decoding="async"
+              className="h-5 md:h-6 w-auto max-w-[130px] object-contain"
+              style={{ filter: mark.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
+            />
+          ) : (
+            <div className="font-black text-lg uppercase tracking-tight">{c.brand}</div>
+          );
+        })()}
         <div
           className="text-[12px] uppercase tracking-[0.2em] opacity-60"
           style={{ fontFamily: "var(--brutal-pixel)" }}
