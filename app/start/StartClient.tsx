@@ -489,12 +489,17 @@ export default function StartClient() {
                         {errorMsg}
                       </p>
                     )}
-                    <p
-                      className="mt-4 text-center text-[10px] md:text-[11px] uppercase tracking-[0.1em] opacity-60"
+                    <div
+                      className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] uppercase tracking-[0.14em] opacity-60"
                       style={{ fontFamily: "var(--brutal-pixel)" }}
                     >
-                      {t.formSection.submitMicro}
-                    </p>
+                      {t.formSection.submitMicro.map((item) => (
+                        <span key={item} className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                          <span aria-hidden>✓</span>
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

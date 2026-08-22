@@ -259,46 +259,16 @@ function CaseCard({
     brand: string;
     slug: string;
     category: string;
-    metric: string;
-    metricLabel: string;
-    duration: string;
+    focus: string;
     highlight: string;
   };
   idx: number;
   viewLabel: string;
 }) {
-  const match = c.metric.match(/(\d+(?:\.\d+)?)(.*)/);
-  const target = match ? parseFloat(match[1]) : 0;
-  const suffix = match ? match[2] : c.metric;
-  const decimals = c.metric.includes(".") ? 1 : 0;
 
   const [inView, setInView] = useState(false);
-  const [displayed, setDisplayed] = useState(0);
 
-  useEffect(() => {
-    if (!inView) return;
-    const delay = idx * 160 + 350;
-    const duration = 1300;
-    let raf = 0;
-    const timer = setTimeout(() => {
-      const t0 = performance.now();
-      const tick = (now: number) => {
-        const p = Math.min(1, (now - t0) / duration);
-        // ease-out cubic
-        const e = 1 - Math.pow(1 - p, 3);
-        setDisplayed(target * e);
-        if (p < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    }, delay);
-    return () => {
-      clearTimeout(timer);
-      cancelAnimationFrame(raf);
-    };
-  }, [inView, idx, target]);
 
-  const displayStr =
-    decimals > 0 ? displayed.toFixed(1) + suffix : Math.round(displayed) + suffix;
   const rot = idx % 2 === 0 ? -1.5 : 1.5;
 
   return (
@@ -344,34 +314,21 @@ function CaseCard({
           {c.category}
         </div>
       </div>
-      <div className="px-4 md:px-5 py-7 md:py-10 flex-1 flex flex-col justify-center">
+      <div className="px-4 md:px-5 py-7 md:py-10 flex-1 flex items-center">
         <div
-          className="font-black leading-none tabular-nums"
+          className="font-black uppercase leading-[0.98] tracking-[-0.02em]"
           style={{
-            fontSize: "calc(clamp(48px, 12vw, 96px) * var(--bgk, 1))",
+            fontSize: "calc(clamp(26px, 5.4vw, 40px) * var(--bgk, 1))",
             background: SILVER_H,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            letterSpacing: "-0.03em",
           }}
         >
-          {displayStr}
-        </div>
-        <div
-          className="text-[12px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
-          style={{ fontFamily: FONTS.pixel }}
-        >
-          {c.metricLabel}
+          {c.focus}
         </div>
       </div>
       <div className="p-4 md:p-5 space-y-3" style={{ borderTop: "1px solid rgba(244,244,244,0.18)" }}>
-        <div
-          className="inline-block px-2 py-1 border text-[12px] font-bold uppercase tracking-[0.2em]"
-          style={{ fontFamily: FONTS.pixel, borderColor: "rgba(244,244,244,0.4)" }}
-        >
-          {c.duration}
-        </div>
         <p className="text-[13px] leading-[1.5] font-medium" style={{ fontFamily: FONTS.comic }}>
           {c.highlight}
         </p>

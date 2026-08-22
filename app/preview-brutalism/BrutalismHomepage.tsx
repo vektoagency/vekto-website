@@ -87,11 +87,6 @@ const COPY = {
       scrollCue: "▼ ПРОДЪЛЖИ",
       ctaPrimary: "СВЪРЖИ СЕ С НАС",
       ctaSecondary: "ПОРТФОЛИО",
-      proofTitle: "ROAS",
-      proof: [
-        { metric: "5.2×", brand: "MEN'S CARE" },
-        { metric: "7.7×", brand: "PARFEN" },
-      ],
       globeTitle: "ОБХВАТ",
       globeBg: "БЪЛГАРИЯ",
       globeUs: "САЩ",
@@ -117,39 +112,32 @@ const COPY = {
       roomBadge: "ЕКИП №",
     },
     stageCases: {
-      eyebrow: "04 · РЕАЛНИ РЕЗУЛТАТИ",
+      eyebrow: "04 · КОГО ВОДИМ",
       viewCase: "Виж резултатите",
       headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
       headline2Prefix: "КЪМ",
       headline2Highlight: "РАСТЕЖ.",
-      note: "Три реални партньорства. Всяко — с реална метрика, реален бюджет, реален период.",
       cases: [
         {
           brand: "MEN'S CARE",
           slug: "menscare",
           category: "Козметика · BG",
-          metric: "5.2×",
-          metricLabel: "ROAS · AI КАМПАНИЯ",
-          duration: "90 ДНИ",
-          highlight: "AI продукцията на UGC замести външна продукция за €12k на месец — без разлика в качеството.",
+          focus: "AI продукция",
+          highlight: "Заменихме външната видео продукция със собствен AI поток.",
         },
         {
           brand: "PARFEN",
           slug: "parfen",
           category: "Парфюмерия · BG",
-          metric: "7.7×",
-          metricLabel: "ROAS · ОФЕРТА СЪС СРОК",
-          duration: "60 ДНИ",
-          highlight: "Статичен банер с оферта със срок победи видеата в 4 от 5 паралелни теста.",
+          focus: "Статични банери",
+          highlight: "Оферта със срок, разиграна в паралелни тестове.",
         },
         {
           brand: "beMe",
           slug: "beme",
           category: "Грижа за кожата · BG",
-          metric: "3.4%",
-          metricLabel: "CVR · ОТ КЛИК ДО ПОРЪЧКА",
-          duration: "90 ДНИ",
-          highlight: "840 поръчки от 24 389 клика за 90 дни — данните са директно от рекламния акаунт.",
+          focus: "От клик до поръчка",
+          highlight: "Пренаписахме пътя от рекламата до количката.",
         },
       ],
     },
@@ -205,11 +193,6 @@ const COPY = {
       scrollCue: "▼ CONTINUE",
       ctaPrimary: "CONTACT US",
       ctaSecondary: "PORTFOLIO",
-      proofTitle: "ROAS",
-      proof: [
-        { metric: "5.2×", brand: "MEN'S CARE" },
-        { metric: "7.7×", brand: "PARFEN" },
-      ],
       globeTitle: "REACH",
       globeBg: "BULGARIA",
       globeUs: "USA",
@@ -235,39 +218,32 @@ const COPY = {
       roomBadge: "ROOM №",
     },
     stageCases: {
-      eyebrow: "04 · CASES · REAL RESULTS",
+      eyebrow: "04 · WHO WE RUN",
       viewCase: "See the results",
       headline1: "FROM AD BUDGET",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
-      note: "Three real cases. Each with a real metric, real budget, real period.",
       cases: [
         {
           brand: "MEN'S CARE",
           slug: "menscare",
           category: "Beauty · BG",
-          metric: "5.2×",
-          metricLabel: "ROAS · AI CAMPAIGN",
-          duration: "90 DAYS",
-          highlight: "AI-generated UGC pipeline replaced €12k/mo of external production with no quality loss.",
+          focus: "AI production",
+          highlight: "Replaced outsourced video production with an in-house AI pipeline.",
         },
         {
           brand: "PARFEN",
           slug: "parfen",
           category: "Perfume · BG",
-          metric: "7.7×",
-          metricLabel: "ROAS · URGENCY OFFER",
-          duration: "60 DAYS",
-          highlight: "Static banner with urgency copy beat video creative in 4 out of 5 parallel tests.",
+          focus: "Static creative",
+          highlight: "A deadline offer, run head to head against video.",
         },
         {
           brand: "beMe",
           slug: "beme",
           category: "Skincare · BG",
-          metric: "3.4%",
-          metricLabel: "CVR · CLICK → ORDER",
-          duration: "90 DAYS",
-          highlight: "840 orders from 24,389 clicks in 90 days — numbers straight from the ad account.",
+          focus: "Click to order",
+          highlight: "Rewrote the path from the ad to the cart.",
         },
       ],
     },
@@ -1625,30 +1601,11 @@ function CaseCard({
   idx,
   viewLabel,
 }: {
-  c: { brand: string; slug: string; category: string; metric: string; metricLabel: string; duration: string; highlight: string };
+  c: { brand: string; slug: string; category: string; focus: string; highlight: string };
   inView: boolean;
   idx: number;
   viewLabel: string;
 }) {
-  // Parse '5.2×' → { num: 5.2, suffix: '×' }
-  const match = c.metric.match(/(\d+(?:\.\d+)?)(.*)/);
-  const target = match ? parseFloat(match[1]) : 0;
-  const suffix = match ? match[2] : c.metric;
-  const decimals = c.metric.includes(".") ? 1 : 0;
-
-  // Trigger counter shortly after this card's stagger delay so the tick
-  // starts as the card settles into place, not before it arrives.
-  const [triggered, setTriggered] = useState(false);
-  useEffect(() => {
-    if (!inView) return;
-    const start = idx * 160 + 350;
-    const t = setTimeout(() => setTriggered(true), start);
-    return () => clearTimeout(t);
-  }, [inView, idx]);
-  const displayed = useCounterFloat(triggered, target, 1300, decimals);
-  const displayStr =
-    decimals > 0 ? displayed.toFixed(1) + suffix : Math.round(displayed) + suffix;
-
   // Alternate rotation direction for a livelier grid entry.
   const rot = idx % 2 === 0 ? -1.5 : 1.5;
 
@@ -1683,40 +1640,25 @@ function CaseCard({
         </div>
       </div>
 
-      {/* Metric plate — dark bg with silver-fill counter */}
-      <div
-        className="px-5 py-8 md:py-10 border-b-2 border-black flex-1 flex flex-col justify-center"
-        style={{ background: "#0d0d0d", color: "#f4f4f4" }}
-      >
+      {/* The card's centre: what the work was, in the same silver the
+          counter used to hold. */}
+      <div className="px-5 py-8 md:py-10 flex-1 flex items-center">
         <div
-          className="font-black leading-none tabular-nums"
+          className="font-black uppercase leading-[0.98] tracking-[-0.02em]"
           style={{
-            fontSize: "calc(clamp(56px, 7vw, 108px) * var(--bgk, 1))",
+            fontSize: "calc(clamp(26px, 3vw, 40px) * var(--bgk, 1))",
             background: SILVER_H,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            letterSpacing: "-0.03em",
           }}
         >
-          {displayStr}
-        </div>
-        <div
-          className="text-[12px] uppercase tracking-[0.25em] opacity-70 mt-3 font-bold"
-          style={{ fontFamily: "var(--brutal-pixel)" }}
-        >
-          {c.metricLabel}
+          {c.focus}
         </div>
       </div>
 
       {/* Duration + highlight */}
       <div className="p-5 space-y-3">
-        <div
-          className="inline-block px-2 py-1 border text-[12px] font-bold uppercase tracking-[0.2em]"
-          style={{ fontFamily: "var(--brutal-pixel)", borderColor: "rgba(244,244,244,0.4)" }}
-        >
-          {c.duration}
-        </div>
         <p className="text-[13px] leading-[1.5] font-medium">
           {c.highlight}
         </p>
