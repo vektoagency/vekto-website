@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Footer from "../components/Footer";
+import SectionPlate from "../components/SectionPlate";
 import { startCopy, type Lang } from "./translations";
 
 // Below-the-fold of /start, now speaking the homepage's funnel language:
@@ -51,8 +52,9 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
   return (
     <>
       {/* ───────────── 03 · CASES — the homepage's case-card grammar ───────────── */}
-      <section className="py-14 md:py-24" style={{ background: "#0d0d0d" }}>
-        <div className="max-w-6xl mx-auto px-5 md:px-8">
+      <section className="relative overflow-hidden py-14 md:py-24" style={{ background: "#0d0d0d" }}>
+        <SectionPlate src="strategy" />
+        <div className="relative max-w-6xl mx-auto px-5 md:px-8">
           <div
             className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-8 md:mb-10 opacity-55"
             style={{ fontFamily: FONTS.pixel }}
@@ -70,8 +72,9 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
       {/* ───────────── 04 · WHAT YOU GET — the homepage's stamped pass,
            rendered statically here: the homepage earns its 190vh sticky
            scroll, a landing page should not spend it. ───────────── */}
-      <section className="py-14 md:py-24" style={{ background: "#0d0d0d" }}>
-        <div data-animate-bf className="reveal-bf max-w-3xl mx-auto px-5 md:px-8">
+      <section className="relative overflow-hidden py-14 md:py-24" style={{ background: "#0d0d0d" }}>
+        <SectionPlate src="ai" />
+        <div data-animate-bf className="reveal-bf relative max-w-3xl mx-auto px-5 md:px-8">
           <div
             className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-4 opacity-55"
             style={{ fontFamily: FONTS.pixel }}
@@ -169,10 +172,11 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
 
       {/* ───────────── 06 · THE TALK — final ask ───────────── */}
       <section
-        className="py-16 md:py-28"
+        className="relative overflow-hidden py-16 md:py-28"
         style={{ background: "#0d0d0d", borderTop: "1px solid rgba(244,244,244,0.14)" }}
       >
-        <div data-animate-bf className="reveal-bf max-w-4xl mx-auto px-5 md:px-8 text-center">
+        <SectionPlate src="websites" />
+        <div data-animate-bf className="reveal-bf relative max-w-4xl mx-auto px-5 md:px-8 text-center">
           <p
             className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] opacity-55 mb-5"
             style={{ fontFamily: FONTS.pixel }}
