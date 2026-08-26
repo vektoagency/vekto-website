@@ -25,17 +25,13 @@ export type BriefSubmission = {
   tone: string;
   // step 3
   platforms: string[];
-  postsPerMonth: string;
   currentMaker: string;
-  avgPerformance: string;
   whatNotWorking: string;
   topClips: string;
-  adSpend: string;
   name: string;
   role: string;
   email: string;
   phone: string;
-  preferredChannel: string;
   additional: string;
 };
 
@@ -52,17 +48,13 @@ const FIELD_LABELS: Record<string, string> = {
   competitorsStrengths: "Competitors' strengths",
   tone: "Brand tone",
   platforms: "Active platforms",
-  postsPerMonth: "Posts last month",
   currentMaker: "Currently made by",
-  avgPerformance: "Avg performance",
   whatNotWorking: "Not working",
   topClips: "Top clips",
-  adSpend: "Monthly ad spend",
   name: "Name",
   role: "Role",
   email: "Email",
   phone: "Phone",
-  preferredChannel: "Preferred channel",
   additional: "Additional",
 };
 

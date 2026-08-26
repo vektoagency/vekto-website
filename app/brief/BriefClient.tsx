@@ -24,17 +24,13 @@ const initialForm: BriefSubmission = {
   competitorsStrengths: "",
   tone: "",
   platforms: [],
-  postsPerMonth: "",
   currentMaker: "",
-  avgPerformance: "",
   whatNotWorking: "",
   topClips: "",
-  adSpend: "",
   name: "",
   role: "",
   email: "",
   phone: "",
-  preferredChannel: "",
   additional: "",
 };
 
@@ -232,23 +228,14 @@ export default function BriefClient() {
                 options={t.step3.platformsOptions}
               />
             </Field>
-            <Field label={t.step3.postsPerMonth}>
-              <Pills value={form.postsPerMonth} onChange={(v) => update("postsPerMonth", v)} options={t.step3.postsPerMonthOptions} />
-            </Field>
             <Field label={t.step3.currentMaker}>
               <Pills value={form.currentMaker} onChange={(v) => update("currentMaker", v)} options={t.step3.currentMakerOptions} />
-            </Field>
-            <Field label={t.step3.avgPerformance}>
-              <Input value={form.avgPerformance} onChange={(v) => update("avgPerformance", v)} placeholder={t.step3.avgPerformancePh} />
             </Field>
             <Field label={t.step3.whatNotWorking}>
               <Textarea value={form.whatNotWorking} onChange={(v) => update("whatNotWorking", v)} placeholder={t.step3.whatNotWorkingPh} />
             </Field>
             <Field label={t.step3.topClips}>
               <Textarea value={form.topClips} onChange={(v) => update("topClips", v)} placeholder={t.step3.topClipsPh} rows={3} />
-            </Field>
-            <Field label={t.step3.adSpend}>
-              <Pills value={form.adSpend} onChange={(v) => update("adSpend", v)} options={t.step3.adSpendOptions} />
             </Field>
           </StepWrapper>
         )}
@@ -273,9 +260,6 @@ export default function BriefClient() {
                 <Input value={form.phone} onChange={(v) => update("phone", v)} placeholder={t.step4.phonePh} type="tel" required />
               </Field>
             </div>
-            <Field label={t.step4.preferredChannel}>
-              <Pills value={form.preferredChannel} onChange={(v) => update("preferredChannel", v)} options={t.step4.preferredChannelOptions} />
-            </Field>
             <Field label={t.step4.additional}>
               <Textarea value={form.additional} onChange={(v) => update("additional", v)} placeholder={t.step4.additionalPh} rows={4} />
             </Field>
