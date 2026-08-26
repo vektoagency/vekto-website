@@ -43,12 +43,8 @@ const comicCyr = Balsamiq_Sans({
 
 export const metadata: Metadata = {
   title: "Бриф за проект — VEKTO",
-  description:
-    "Разкажи ни за бизнеса си — четири кратки секции. Връщаме се с готова стратегия на първия разговор.",
   openGraph: {
     title: "Бриф за проект — VEKTO",
-    description:
-      "Разкажи ни за бизнеса си — четири кратки секции. Връщаме се с готова стратегия на първия разговор.",
   },
 };
 
