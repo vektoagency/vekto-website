@@ -150,7 +150,7 @@ export default function BriefClient() {
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-5 md:px-8 py-8 md:py-14">
+      <main className="max-w-3xl mx-auto px-4 md:px-8 py-7 md:py-14">
         {/* Step 0 — intro */}
         {step === 0 && (
           <div className="animate-[briefFade_0.5s_ease-out_both]">
@@ -161,8 +161,8 @@ export default function BriefClient() {
               {t.intro.eyebrow}
             </p>
             <h1
-              className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-5"
-              style={{ fontSize: "calc(clamp(30px, 5vw, 56px) * var(--bgk, 1))" }}
+              className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-5 text-balance"
+              style={{ fontSize: "calc(clamp(26px, 5vw, 56px) * var(--bgk, 1))" }}
             >
               {t.intro.h1}
             </h1>
@@ -188,7 +188,7 @@ export default function BriefClient() {
             </div>
             <button
               onClick={() => setStep(1)}
-              className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-4 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-4 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
               style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
             >
               {t.intro.start}
@@ -348,7 +348,7 @@ export default function BriefClient() {
             {step < TOTAL_STEPS ? (
               <button
                 onClick={handleNext}
-                className="bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-3.5 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
+                className="w-full sm:w-auto bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-3.5 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
                 style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
               >
                 {t.nav.next}
@@ -357,7 +357,7 @@ export default function BriefClient() {
               <button
                 onClick={handleSubmit}
                 disabled={submitting || !form.brand.trim() || !form.name.trim() || !form.email.trim() || !form.phone.trim()}
-                className="bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-3.5 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-3.5 text-[13px] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
               >
                 {submitting ? t.nav.submitting : t.nav.submit}
@@ -399,8 +399,8 @@ function StepWrapper({
         {stepLabel}
       </p>
       <h2
-        className="font-black uppercase leading-[1.04] tracking-[-0.03em] mb-2"
-        style={{ fontSize: "calc(clamp(26px, 4vw, 44px) * var(--bgk, 1))" }}
+        className="font-black uppercase leading-[1.04] tracking-[-0.03em] mb-2 text-balance"
+        style={{ fontSize: "calc(clamp(23px, 4vw, 44px) * var(--bgk, 1))" }}
       >
         {title}
       </h2>
@@ -419,7 +419,7 @@ function StepWrapper({
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="mb-6 md:mb-7">
+    <div className="mb-5 md:mb-7">
       <label
         className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#f4f4f4]/85 mb-2.5"
         style={{ fontFamily: PIXEL }}
@@ -518,7 +518,7 @@ function Pills({
   stack?: boolean;
 }) {
   return (
-    <div className={stack ? "flex flex-col gap-2" : "flex flex-wrap gap-2"}>
+    <div className={stack ? "flex flex-col gap-2" : "grid grid-cols-2 sm:flex sm:flex-wrap gap-2"}>
       {options.map((o) => {
         const active = value === o;
         return (
@@ -526,7 +526,7 @@ function Pills({
             key={o}
             type="button"
             onClick={() => onChange(active ? "" : o)}
-            className={`text-left px-4 py-2.5 text-[13px] md:text-sm font-bold uppercase tracking-[0.06em] transition-all ${
+            className={`text-left px-3.5 md:px-4 py-3 md:py-2.5 text-[12.5px] md:text-sm font-bold uppercase tracking-[0.06em] transition-all ${
               active
                 ? "bg-[#f4f4f4] text-black font-semibold border border-[#f4f4f4]"
                 : "bg-[#141414] text-[#f4f4f4] border border-[#f4f4f4]/25 hover:border-[#f4f4f4]/70"
@@ -560,7 +560,7 @@ function PillsMulti({
             key={o}
             type="button"
             onClick={() => onToggle(o)}
-            className={`text-left px-4 py-2.5 text-[13px] md:text-sm font-bold uppercase tracking-[0.06em] transition-all flex items-center gap-2 ${
+            className={`text-left px-3.5 md:px-4 py-3 md:py-2.5 text-[12.5px] md:text-sm font-bold uppercase tracking-[0.06em] transition-all flex items-center gap-2 ${
               active
                 ? "bg-[#f4f4f4] text-black font-semibold border border-[#f4f4f4]"
                 : "bg-[#141414] text-[#f4f4f4] border border-[#f4f4f4]/25 hover:border-[#f4f4f4]/70"
