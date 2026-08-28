@@ -5,6 +5,15 @@ import ActiveRunsBadge from "@/components/ActiveRunsBadge";
 export const metadata = {
   title: "Vekto Dashboard",
   description: "Generate AI videos from briefs",
+  // Internal tool. Data sits behind the API session, but the shell renders
+  // for anyone with the URL — so keep it out of every index and stop
+  // crawlers following its links into the rest of the tool.
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: { index: false, follow: false, noimageindex: true },
+  },
 };
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
