@@ -75,7 +75,7 @@ export const flashkaCopy = {
       items: [
         { value: 50, suffix: "+", decimals: 0, label: "Бизнеса я ползват в БГ и САЩ" },
         { value: 3, suffix: "M+", decimals: 0, label: "$ генериран оборот за различни бизнеси" },
-        { value: 4.8, suffix: "×", decimals: 1, label: "Среден ROAS от наши кампании" },
+        { value: 12, suffix: "", decimals: 0, label: "Сайта на година" },
         { value: 5, suffix: "", decimals: 0, label: "Свободни спота за нови бизнеси" },
       ],
     },
@@ -141,7 +141,7 @@ export const flashkaCopy = {
         },
         {
           q: "Колко струва?",
-          a: "Цената зависи от мащаба и нишата. Обсъждаме я само с одобрените кандидати на discovery call-а. По принцип системата се отплаща за 30-45 дни от ROAS подобрението.",
+          a: "Цената зависи от мащаба и нишата. Обсъждаме я само с одобрените кандидати на първия разговор.",
         },
         {
           q: "Защо точно флашка?",
@@ -160,7 +160,7 @@ export const flashkaCopy = {
 
     finalCta: {
       eyebrow: "СПОТОВЕТЕ СВЪРШВАТ",
-      h2: "Следващият бизнес с 4.8× ROAS",
+      h2: "Следващият бизнес, който тръгва",
       h2Highlight: "може да е вашият.",
       sub: "Остават 5 спота. Една анкета. До 24 часа имаш отговор — да или не.",
       scrollToForm: "Кандидатствай сега →",
@@ -249,7 +249,7 @@ export const flashkaCopy = {
       items: [
         { value: 50, suffix: "+", decimals: 0, label: "Brands using it in BG and US" },
         { value: 3, suffix: "M+", decimals: 0, label: "$ revenue generated across brands" },
-        { value: 4.8, suffix: "×", decimals: 1, label: "Average ROAS on our campaigns" },
+        { value: 12, suffix: "", decimals: 0, label: "Websites a year" },
         { value: 5, suffix: "", decimals: 0, label: "Spots open for new businesses" },
       ],
     },
@@ -315,7 +315,7 @@ export const flashkaCopy = {
         },
         {
           q: "How much does it cost?",
-          a: "The price depends on scale and niche. We discuss it only with approved candidates on the discovery call. As a rule, the system pays for itself in 30-45 days via ROAS improvement.",
+          a: "The price depends on scale and niche. We discuss it only with approved candidates on the first call.",
         },
         {
           q: "Why a USB drive specifically?",
@@ -334,7 +334,7 @@ export const flashkaCopy = {
 
     finalCta: {
       eyebrow: "SPOTS ARE FILLING",
-      h2: "The next brand with 4.8× ROAS",
+      h2: "The next business that takes off",
       h2Highlight: "could be you.",
       sub: "5 spots left. One application. Within 24 hours you have an answer — yes or no.",
       scrollToForm: "Apply now →",

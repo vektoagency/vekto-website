@@ -51,10 +51,12 @@ export default function Footer() {
         { label: "Начало", href: "/" },
         { label: "Портфолио", href: "/portfolio" },
         { label: "Резултати", href: "/case-studies" },
-        { label: "Анкета", href: "/start" },
+        { label: "Криейтиви", href: "/ai-creative" },
+        { label: "Уебсайтове", href: "/websites" },
       ],
       contactH: "Свържи се",
       startProject: "Опиши проекта си",
+      longBrief: "Подробен бриф",
       bookCall: "Запази разговор",
       rights: "Всички права запазени.",
       privacy: "Поверителност",
@@ -69,10 +71,12 @@ export default function Footer() {
         { label: "Home", href: "/" },
         { label: "Portfolio", href: "/portfolio" },
         { label: "Case Studies", href: "/case-studies" },
-        { label: "Brief", href: "/start" },
+        { label: "Creative", href: "/ai-creative" },
+        { label: "Websites", href: "/websites" },
       ],
       contactH: "Get in touch",
       startProject: "Describe your project",
+      longBrief: "Full brief",
       bookCall: "Book a call",
       rights: "All rights reserved.",
       privacy: "Privacy",
@@ -171,6 +175,11 @@ export default function Footer() {
               <li>
                 <Link href="/start" className={linkClass}>
                   {t.startProject}
+                </Link>
+              </li>
+              <li>
+                <Link href="/brief" className={linkClass}>
+                  {t.longBrief}
                 </Link>
               </li>
             </ul>

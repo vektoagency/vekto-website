@@ -23,6 +23,8 @@ type CaseStudy = {
   cover: string;
   services: string[];
   live?: boolean;
+  /** Real destination when the case has a finished page of its own. */
+  href?: string;
 };
 
 const CASE_STUDIES: CaseStudy[] = [
@@ -38,7 +40,8 @@ const CASE_STUDIES: CaseStudy[] = [
     metric: { value: "AI видео", label: { bg: "Продукция и реклами", en: "Production and ads" } },
     cover: "/images/work-menscare.webp",
     services: ["Видео", "Реклами", "Лендинг страници"],
-    live: false,
+    live: true,
+    href: "/work/menscare",
   },
   {
     slug: "isosport",
@@ -297,7 +300,8 @@ function CaseCard({
   viewLabel: string;
   comingSoonLabel: string;
 }) {
-  const isLive = cs.live && cs.metric.value !== "TBD";
+  const isLive = Boolean(cs.live && cs.metric.value !== "TBD");
+  const destination = cs.href ?? `/case-studies/${cs.slug}`;
   const inner = (
     <article id={cs.slug} className="group relative scroll-mt-28 rounded-2xl border border-[#1e1e1c] bg-[#0d0d0d] overflow-hidden hover:border-[#f4f4f4]/40 transition-colors h-full flex flex-col">
       {/* Cover — brand mark centred on tinted panel. Real page-level
@@ -375,7 +379,7 @@ function CaseCard({
   );
 
   return isLive ? (
-    <Link href={`/case-studies/${cs.slug}`} className="block h-full">
+    <Link href={destination} className="block h-full">
       {inner}
     </Link>
   ) : (

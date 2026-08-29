@@ -42,7 +42,7 @@ export const JOURNEY_COPY = {
           { title: "КРЕАТИВИ", detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА / МЕСЕЦ" },
           { title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
           { title: "СТРАТЕГИИ", detail: "Позициониране · оферта · план", num: "50+", label: "БИЗНЕСА" },
-          { title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации", num: "5.2×", label: "ROAS · AI КАМПАНИЯ" },
+          { title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации", num: "24/7", label: "РАБОТЯЩИ АВТОМАТИЗАЦИИ" },
         ],
       },
       standard: {
@@ -154,7 +154,7 @@ export const JOURNEY_COPY = {
           { title: "CREATIVE", detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
           { title: "WEBSITES", detail: "Landing · e-com · portals", num: "12", label: "SITES / YEAR" },
           { title: "STRATEGY", detail: "Positioning · offer · plan", num: "50+", label: "BRANDS" },
-          { title: "AI SOLUTIONS", detail: "AI video · automations", num: "5.2×", label: "ROAS · AI CAMPAIGN" },
+          { title: "AI SOLUTIONS", detail: "AI video · automations", num: "24/7", label: "AUTOMATIONS RUNNING" },
         ],
       },
       standard: {

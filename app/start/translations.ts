@@ -17,7 +17,7 @@ export const startCopy = {
       sub: "Маркетинг агенция за бизнеса, който иска повече от пазара.",
       trustBadges: [
         "50+ доволни бизнеса",
-        "4.8× средно ROAS",
+        "Партньор, не изпълнител",
         "Партньор за растеж",
       ],
       ctaMicro: "60 секунди · безплатно · лична оферта до 24ч",
@@ -174,7 +174,7 @@ export const startCopy = {
       sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
         "50+ happy brands",
-        "4.8× average ROAS",
+        "A partner, not a vendor",
         "Growth partner",
       ],
       ctaMicro: "60 seconds · free · personal proposal within 24h",

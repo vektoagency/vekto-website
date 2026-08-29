@@ -21,7 +21,7 @@ const dict = {
         number: "01",
         title: "Реклами",
         image: "/images/service-4.webp",
-        description: "Meta, Google, TikTok — от стартиране до мащабиране. Пълно проследяване, оптимизация на ROAS, готови за шестцифрени месечни бюджети. Средно 4.8× ROAS от нашите кампании.",
+        description: "Meta, Google, TikTok — от стартиране до мащабиране. Пълно проследяване, оптимизация на разхода, готови за шестцифрени месечни бюджети.",
         tags: ["Meta", "Google", "TikTok", "Проследяване", "Мащабиране"],
       },
       {
@@ -56,7 +56,7 @@ const dict = {
         number: "01",
         title: "Performance / PPC",
         image: "/images/service-4.webp",
-        description: "Meta, Google, TikTok ads — from setup to scaling. Full-funnel attribution, ROAS optimization, ready for 6+ figure monthly budgets. 4.8× average ROAS.",
+        description: "Meta, Google, TikTok ads — from setup to scaling. Full-funnel attribution, spend optimisation, ready for 6+ figure monthly budgets.",
         tags: ["Meta Ads", "Google Ads", "TikTok", "Attribution", "Scaling"],
       },
       {

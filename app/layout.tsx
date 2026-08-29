@@ -25,11 +25,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://vektoagency.com"),
   title: "VEKTO — Независима агенция за растеж",
   description:
-    "Реклами, съдържание, уебсайтове и стратегия — всичко на едно място. 50+ бизнеса в България и САЩ. 4.8× среден ROAS.",
+    "Реклами, съдържание, уебсайтове и стратегия — всичко на едно място. 50+ бизнеса в България и САЩ.",
   openGraph: {
     title: "VEKTO — Независима агенция за растеж",
     description:
-      "Реклами, съдържание, уебсайтове и стратегия — всичко на едно място. 50+ бизнеса в България и САЩ. 4.8× среден ROAS.",
+      "Реклами, съдържание, уебсайтове и стратегия — всичко на едно място. 50+ бизнеса в България и САЩ.",
     url: "https://vektoagency.com",
     siteName: "VEKTO",
     locale: "bg_BG",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "VEKTO — Независима агенция за растеж",
     description:
-      "Реклами, съдържание, уебсайтове, стратегия — всичко на едно място. 50+ бизнеса, 4.8× ROAS.",
+      "Реклами, съдържание, уебсайтове, стратегия — всичко на едно място. 50+ бизнеса в България и САЩ.",
   },
 };
 
@@ -51,7 +51,9 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const cookieLang = cookieStore.get("vekto-lang")?.value;
-  const lang: Lang = cookieLang === "bg" ? "bg" : "en";
+  // BG-first: the audience, the ads and the metadata are Bulgarian, so a
+  // visitor with no preference yet gets Bulgarian. EN is opt-in.
+  const lang: Lang = cookieLang === "en" ? "en" : "bg";
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>
