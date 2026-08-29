@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "./lib/og";
 import {
   IBM_Plex_Mono,
   Comic_Neue,
@@ -55,6 +56,7 @@ export const metadata: Metadata = {
   description:
     "Един екип за криейтиви, фунии и AI решения. 50+ бизнеса в портфолиото, 500+ видеа на месец. Запази 30-минутен разговор — безплатно.",
   openGraph: {
+    images: [OG_IMAGE],
     title: "VEKTO — Криейтиви, фунии и AI на едно място",
     description:
       "Един екип за криейтиви, фунии и AI решения. 50+ бизнеса в портфолиото, 500+ видеа на месец.",

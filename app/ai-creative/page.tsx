@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import dynamic from "next/dynamic";
 import SiteHeader from "../components/SiteHeader";
 import AICreativeHero from "./AICreativeHero";
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
   description:
     "Кинематографични филми, кратки видеа, AI аватари и продуктови визуализации — създадени с AI на скорост и цена, каквито традиционните продукции не могат.",
   openGraph: {
+    images: [OG_IMAGE],
     title: "VEKTO — AI Creative",
     description:
       "Кинематографични филми, кратки видеа, AI аватари и продуктови визуализации — създадени с AI.",

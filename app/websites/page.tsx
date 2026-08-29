@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import dynamic from "next/dynamic";
 import SiteHeader from "../components/SiteHeader";
 import WebsitesClient from "./WebsitesClient";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   description:
     "Проектираме и разработваме бързи, конверсионни уебсайтове — от лендинг до пълен ecom магазин. Next.js, Shopify, Webflow. Стартиране за 3-6 седмици.",
   openGraph: {
+    images: [OG_IMAGE],
     title: "VEKTO — Уебсайтове и лендинг страници",
     description:
       "Бързи, конверсионни уебсайтове — от лендинг до пълен ecom. Next.js, Shopify, Webflow.",

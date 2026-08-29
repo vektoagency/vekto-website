@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import SiteHeader from "../components/SiteHeader";
 import dynamic from "next/dynamic";
 import PortfolioClient from "./PortfolioClient";
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
   description:
     "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за бизнеси в България и САЩ.",
   openGraph: {
+    images: [OG_IMAGE],
     title: "Портфолио — VEKTO",
     description:
       "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за бизнеси в България и САЩ.",

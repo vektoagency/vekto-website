@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import {
   IBM_Plex_Mono,
   Comic_Neue,
@@ -44,6 +45,7 @@ const comicCyr = Balsamiq_Sans({
 export const metadata: Metadata = {
   title: "Бриф за проект — VEKTO",
   openGraph: {
+    images: [OG_IMAGE],
     title: "Бриф за проект — VEKTO",
   },
 };

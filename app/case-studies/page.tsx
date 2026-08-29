@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import dynamic from "next/dynamic";
 import SiteHeader from "../components/SiteHeader";
 import CaseStudiesClient from "./CaseStudiesClient";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   description:
     "Реални резултати за реални бизнеси — какво сме правили за 50+ бизнеса в България и САЩ.",
   openGraph: {
+    images: [OG_IMAGE],
     title: "VEKTO — Case Studies",
     description:
       "Реални резултати за реални бизнеси в България и САЩ.",

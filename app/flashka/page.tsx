@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import FlashkaClient from "./FlashkaClient";
 
 // Dedicated landing for the 'векто адс' Meta paid-traffic campaign.
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     follow: false,
   },
   openGraph: {
+    images: [OG_IMAGE],
     title: "VEKTO · $1M оборот. Системата зад растежа. Вече в БГ.",
     description:
       "Кодът е в тази флашка. 50+ бизнеса я ползват в САЩ. Първите 5 спота за България.",

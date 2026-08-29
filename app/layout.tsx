@@ -7,6 +7,7 @@ import TransitionBridge from "./components/TransitionBridge";
 import MetaPixel from "./components/MetaPixel";
 import CookieBanner from "./components/CookieBanner";
 import { LangProvider, type Lang } from "./i18n/LangProvider";
+import { OG_IMAGE } from "./lib/og";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
+    images: [OG_IMAGE.url],
     title: "VEKTO — Независима агенция за растеж",
     description:
       "Реклами, съдържание, уебсайтове, стратегия — всичко на едно място. 50+ бизнеса в България и САЩ.",
