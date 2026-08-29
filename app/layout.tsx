@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
@@ -51,9 +51,18 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const cookieLang = cookieStore.get("vekto-lang")?.value;
-  // BG-first: the audience, the ads and the metadata are Bulgarian, so a
-  // visitor with no preference yet gets Bulgarian. EN is opt-in.
-  const lang: Lang = cookieLang === "en" ? "en" : "bg";
+  // On a first visit the middleware sets vekto-lang from geo on the
+  // RESPONSE — it is not on the request yet, so reading the same header it
+  // reads keeps this first render in step with the cookie it is about to
+  // set. Without it the first screen always fell back to a fixed language
+  // and only the next navigation matched. A saved choice always wins.
+  const country = (await headers()).get("x-vercel-ip-country")?.toUpperCase();
+  const lang: Lang =
+    cookieLang === "bg" || cookieLang === "en"
+      ? cookieLang
+      : country === "BG"
+        ? "bg"
+        : "en";
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>
