@@ -37,6 +37,8 @@ const DISPLAY_STACK =
   "var(--f-display-lat), var(--f-display-cyr), system-ui, sans-serif";
 const PIXEL_STACK = "var(--f-pixel), ui-monospace, monospace";
 
+const PHONE = "+359882251474";
+const PHONE_DISPLAY = "+359 88 225 1474";
 const EMAIL = "vektoagency@gmail.com";
 
 export default function Footer() {
@@ -170,6 +172,11 @@ export default function Footer() {
               <li>
                 <a href={`mailto:${EMAIL}`} className={`${linkClass} normal-case tracking-normal`}>
                   {EMAIL}
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${PHONE}`} className={`${linkClass} tabular-nums`}>
+                  {PHONE_DISPLAY}
                 </a>
               </li>
               <li>
