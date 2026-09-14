@@ -146,7 +146,8 @@
       "portrait": true,
       "metric": null,
       "href": null,
-      "featured": true
+      "featured": true,
+      "excludeFromPortfolio": true
     },
     {
       "id": "vekto-showreel",

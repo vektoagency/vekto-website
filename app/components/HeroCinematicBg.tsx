@@ -27,8 +27,8 @@ const heroClips: Clip[] = (() => {
 })();
 
 // 480p MP4 for Bunny clips AND mobile-specific 480p variants for local
-// clips (-480p.mp4). For Biotica/Taste/Showreel the mobile variant is
-// ~60-70%% smaller than the original 720p (1.9 MB vs 6.1 MB for Biotica),
+// clips (-480p.mp4). For Taste/Showreel the mobile variant is
+// ~60-70%% smaller than the original 720p,
 // so first frame paints much faster on mobile networks. At ~400 px wide
 // phone viewports there's no visible quality drop. Desktop card +
 // portfolio lightbox still use the full-resolution originals.

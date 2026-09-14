@@ -8,7 +8,6 @@
  *
  * Full clip list (as of last sync):
  *   1.  [BUNNY] PARFEN            | Cinematic     | 8c0bba5b-5949-43f4-9e09-d5308ad27dce
- *   2.  [LOCAL] Biotica           | Product       | vekto-product-demo-1
  *   3.  [LOCAL] Taste Flavor Co.  | Product       | vekto-product-demo-2
  *   4.  [BUNNY] MEN'S CARE        | Organic       | 46817022-ef22-4bdb-92ba-f964c29a3100
  *   5.  [BUNNY] GIFTO.BG          | Organic       | bc858219-3397-4952-b4ac-d40a7cff6898
@@ -22,7 +21,6 @@
  *  13.  [BUNNY] BANSKO ESTATES    | Cinematic     | e486e5a9-ae0c-407d-aa5f-eac6f6d96c29
  */
 export const heroFeaturedClipIds: string[] = [
-  "vekto-product-demo-1",                       // Biotica — Product (LOCAL)
   "vekto-product-demo-2",                       // Taste Flavor Co. — Product (LOCAL)
   "a57d4f6d-f0a3-426a-884f-3d4f63ec24b9",       // ISOSPORT — Cinematic
   "vekto-showreel",                             // VEKTO LAB studio showreel (LOCAL, was Bunny VEKTO LAB clip)

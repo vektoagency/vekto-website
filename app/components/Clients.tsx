@@ -18,13 +18,12 @@ type Client = {
 
 const bgClients: Client[] = [
   // BULTEX at slot 3, NEDELYA at slot 5 — interleaved with the older
-  // heavyweights (ISOSPORT, PARFEN, BIOTICA) so the two new entries
+  // heavyweights (ISOSPORT, PARFEN) so the two new entries
   // land in prominent early positions of the marquee loop without
   // stealing the leading slot from the established brands.
   { name: "ISOSPORT", logo: "/images/logo-isosport.webp", url: "https://neopak.eu", desc: { bg: "Енергийни и функционални напитки", en: "Energy & functional beverages" } },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", url: "https://parfen.online", desc: { bg: "Дизайнерски инспирирани парфюми", en: "Designer-inspired perfumes" }, invert: true },
   { name: "BULTEX", logo: "/images/logo-bultex.png", url: "https://bultex99.com", desc: { bg: "Работно облекло и предпазни средства", en: "Workwear & personal safety equipment" } },
-  { name: "BIOTICA", logo: "/images/logo-biotica.webp", url: "https://biotica.bg", desc: { bg: "Натурални хранителни добавки", en: "Natural supplements" }, circular: true, invert: true },
   { name: "NEDELYA", logo: "/images/logo-nedelya.svg", url: "https://nedelya.com", desc: { bg: "Торти и сладкарски продукти", en: "Cakes & bakery products" } },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp", url: "https://bemeacne.bg", desc: { bg: "Грижа за кожа срещу акне", en: "Acne skincare brand" } },
   { name: "GIFTO", logo: "/images/logo-adventuresbg.webp", url: "https://gifto.bg", desc: { bg: "Подаръчни ваучери за преживявания", en: "Experience voucher platform" } },
@@ -35,7 +34,7 @@ const bgClients: Client[] = [
   // move is to source a light/white variant of each logo from the brand
   // — not to switch the whole marquee to a mixed light+dark aesthetic.
   // ALPEN + NIDO source PNGs have more whitespace padding around the
-  // wordmark than PARFEN/BIOTICA etc., so at the standard 32/48 px
+  // wordmark than PARFEN etc., so at the standard 32/48 px
   // height tier they read visually smaller than neighbours. `stacked`
   // flag bumps them to the 42/60 px tier — same tier NUTRIFITT/LUCKY
   // use — which optically evens them out.
@@ -52,7 +51,7 @@ const usClients: Client[] = [
   { name: "DUSQ", logo: "/images/logo-dusq.webp", url: "https://dusq.com", desc: { bg: "Уред за по-добър сън", en: "Sleep wearable device" }, invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", url: "https://nutrifitt.com", desc: { bg: "Добавки за фитнес", en: "Fitness supplements" }, stacked: true },
   // Dark wordmarks — invert to white so they're visible on the dark tile.
-  // Mirrors the BG row pattern (PARFEN, BIOTICA use the same trick).
+  // Mirrors the BG row pattern (PARFEN uses the same trick).
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", url: "https://tryanomalyhealth.com", desc: { bg: "Имунитет и чревно здраве за цялото семейство", en: "Family immune & gut supplements" }, invert: true },
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", url: "https://luckybevco.com", desc: { bg: "Енергийни напитки без захар", en: "Zero-sugar energy drinks" }, invert: true, stacked: true },
   // Orange wordmark — visible on dark, no invert.

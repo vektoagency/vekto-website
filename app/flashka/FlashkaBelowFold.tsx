@@ -11,7 +11,6 @@ const FLASHKA_CLIENTS = [
   { name: "DUSQ", logo: "/images/logo-dusq.webp", invert: true },
   { name: "PARFEN", logo: "/images/logo-parfen.webp", invert: true },
   { name: "MEN'S CARE", logo: "/images/logo-menscare.png" },
-  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true },
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", invert: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp" },

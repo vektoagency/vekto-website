@@ -287,7 +287,6 @@ const ROSTER: Client[] = [
   { name: "DUSQ",          region: "US", logo: "/images/roster-trim/logo-dusq.png"        },
   { name: "PARFEN",        region: "BG", logo: "/images/roster-trim/logo-parfen.png"      },
   { name: "ISOSPORT",      region: "BG", logo: "/images/roster-trim/logo-isosport.png"    },
-  { name: "BIOTICA",       region: "BG", logo: "/images/roster-trim/logo-biotica.png"     },
   { name: "BULTEX",        region: "BG", logo: "/images/roster-trim/logo-bultex.png"       },
   { name: "НЕДЕЛЯ",        region: "BG", logo: "/images/logo-nedelya.svg"      },
   { name: "ANOMALY",       region: "US", logo: "/images/roster-trim/logo-anomaly.png"     },

@@ -42,7 +42,6 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "PARFEN", logo: "/images/logo-parfen.webp", invert: true },
   { name: "BULTEX", logo: "/images/logo-bultex.png" },
   { name: "NEDELYA", logo: "/images/logo-nedelya.svg" },
-  { name: "BIOTICA", logo: "/images/logo-biotica.webp", invert: true, stacked: true },
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", invert: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", stacked: true },
