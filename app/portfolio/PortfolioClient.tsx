@@ -15,7 +15,7 @@ function previewVideoUrl(src: string | null): string | null {
   return src.replace("play_1080p.mp4", "play_480p.mp4");
 }
 
-type Clip = {
+export type Clip = {
   id: string;
   brand: string;
   logo?: string;
@@ -38,6 +38,11 @@ type Clip = {
   // no-subtitles "atmospheric" version of vekto-showreel which is
   // duplicated by the subtitled 06b550bb agency reel in the portfolio.
   excludeFromPortfolio?: boolean;
+  // Groups a clip onto /hospitality — the English-only tab we send to
+  // hotels and villa owners. "hotel" = a place people stay in, "property"
+  // = a building we sold on camera. Kept apart so the page never implies
+  // a residential development was a hotel client.
+  hospitality?: "hotel" | "property";
 };
 
 const clips = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
@@ -217,7 +222,7 @@ function formatDuration(seconds: number | null | undefined): string | null {
  * as the user scrolls would burn ~50 MB on a metered connection for a
  * single page view.
  */
-function ClipTile({
+export function ClipTile({
   clip,
   idx,
   onExpand,
@@ -358,7 +363,7 @@ function ClipTile({
   );
 }
 
-function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
+export function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
   const isLandscape = clip.portrait === false;
   const frameStyle: React.CSSProperties = isLandscape
     ? {
