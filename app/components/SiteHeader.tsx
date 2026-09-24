@@ -58,7 +58,7 @@ export default function SiteHeader({
       which passes an in-page anchor. */
   ctaHref?: string;
 }) {
-  const { lang, setLang } = useLang();
+  const { lang, setLang, pinned } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -161,6 +161,9 @@ export default function SiteHeader({
               </Link>
             ))}
           </nav>
+          {/* Hidden where the route locks the language (/hospitality) -
+              the control would be dead there. */}
+          {!pinned && (
           <button
             onClick={() => setLang(lang === "bg" ? "en" : "bg")}
             className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
@@ -176,6 +179,7 @@ export default function SiteHeader({
           >
             {lang === "bg" ? "EN" : "БГ"}
           </button>
+          )}
           <Link
             href={ctaHref}
             className="hidden sm:inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"

@@ -7,9 +7,11 @@ export type Lang = "bg" | "en";
 type Ctx = {
   lang: Lang;
   setLang: (l: Lang) => void;
+  /** True on routes that lock the language — consumers hide the toggle. */
+  pinned: boolean;
 };
 
-const LangContext = createContext<Ctx>({ lang: "en", setLang: () => {} });
+const LangContext = createContext<Ctx>({ lang: "en", setLang: () => {}, pinned: false });
 
 export function useLang() {
   return useContext(LangContext);
@@ -30,9 +32,18 @@ function writeCookie(lang: Lang) {
 
 export function LangProvider({
   initialLang,
+  pin = false,
   children,
 }: {
   initialLang: Lang;
+  /**
+   * Locks the language to `initialLang` for this render tree. Used on
+   * English-only routes (/hospitality), where the middleware pins the
+   * language for a reader who will never want the Bulgarian copy. While
+   * pinned we skip the cookie sync and ignore setLang, so the visitor's own
+   * saved preference is neither read nor overwritten here.
+   */
+  pin?: boolean;
   children: ReactNode;
 }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
@@ -42,21 +53,28 @@ export function LangProvider({
   // same request — SSR will see the new value next time, but until then
   // we keep state in sync without a flicker).
   useEffect(() => {
+    if (pin) return;
     const c = readCookie();
     if (c && c !== lang) setLangState(c);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pin]);
 
-  const setLang = useCallback((l: Lang) => {
-    writeCookie(l);
-    setLangState(l);
-    // Sync <html lang> for accessibility
-    if (typeof document !== "undefined") {
-      document.documentElement.lang = l;
-    }
-  }, []);
+  const setLang = useCallback(
+    (l: Lang) => {
+      if (pin) return;
+      writeCookie(l);
+      setLangState(l);
+      // Sync <html lang> for accessibility
+      if (typeof document !== "undefined") {
+        document.documentElement.lang = l;
+      }
+    },
+    [pin]
+  );
 
-  return <LangContext.Provider value={{ lang, setLang }}>{children}</LangContext.Provider>;
+  return (
+    <LangContext.Provider value={{ lang, setLang, pinned: pin }}>{children}</LangContext.Provider>
+  );
 }
 
 /**

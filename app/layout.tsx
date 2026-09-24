@@ -58,9 +58,14 @@ export default async function RootLayout({
   // reads keeps this first render in step with the cookie it is about to
   // set. Without it the first screen always fell back to a fixed language
   // and only the next navigation matched. A saved choice always wins.
-  const country = (await headers()).get("x-vercel-ip-country")?.toUpperCase();
-  const lang: Lang =
-    cookieLang === "bg" || cookieLang === "en"
+  const h = await headers();
+  const country = h.get("x-vercel-ip-country")?.toUpperCase();
+  // Set by the middleware on English-only routes (/hospitality). It outranks
+  // both the saved cookie and geo, but never overwrites the cookie itself.
+  const pinned = h.get("x-vekto-lang-pin") === "en";
+  const lang: Lang = pinned
+    ? "en"
+    : cookieLang === "bg" || cookieLang === "en"
       ? cookieLang
       : country === "BG"
         ? "bg"
@@ -78,7 +83,7 @@ export default async function RootLayout({
         <meta name="facebook-domain-verification" content="bdtob8m89vuhtr9lk6kzwbiq9rb4t5" />
       </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
-        <LangProvider initialLang={lang}>
+        <LangProvider initialLang={lang} pin={pinned}>
           {children}
           <TransitionBridge />
           <CookieBanner />
