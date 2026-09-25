@@ -115,13 +115,13 @@ export default function HospitalityClient() {
       <section className="px-6 md:px-12 pt-6 pb-4 max-w-[1240px] mx-auto">
         <div className="border border-[#f4f4f4]/20 p-6 md:p-9">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4]/50">
-            What a package usually is
+            What we do for a property
           </div>
           <div className="mt-5 grid gap-5 sm:grid-cols-3">
             {[
-              ["Six to eight short videos", "Cut vertical for Reels, TikTok and the top of your Booking and Airbnb listings. Enough to keep a feed running well past the shoot."],
-              ["The stills behind them", "Graded photography from the same session — for listings, the site, and anything print."],
-              ["A direct booking page", "Plus the paid ads pointing at it, so a larger share of your guests arrive without an OTA commission."],
+              ["Short vertical video", "Cut for Reels, TikTok and the top of your Booking and Airbnb listings. Yours to keep and use anywhere. How many is agreed before we start."],
+              ["Stills from the same session", "Graded photography for listings, the site, and anything print — when it is wanted."],
+              ["A direct booking page", "And the paid ads pointing at it, when they are useful — so a larger share of your guests arrive without an OTA commission."],
             ].map(([h, b]) => (
               <div key={h}>
                 <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4] font-bold">{h}</div>
