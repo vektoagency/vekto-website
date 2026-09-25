@@ -76,19 +76,24 @@ export default function HospitalityClient() {
         </Link>
       </div>
 
-      <section className="px-6 md:px-12 pt-10 md:pt-14 pb-2 max-w-[1240px] mx-auto">
-        <h1 className="text-4xl md:text-6xl font-black leading-[1.03] tracking-tight text-[#f4f4f4] text-balance max-w-[16ch]">
-          Video for places people stay in.
-        </h1>
-        <p className="mt-5 max-w-[62ch] text-[#f4f4f4]/70 text-[15px] md:text-base leading-relaxed">
-          We are VEKTO, a creative agency out of Bulgaria. We shoot and cut the short
-          vertical video that hotels and villas run on Instagram, TikTok and their own
-          listings — and we build the direct booking pages and paid ads that turn it into
-          arrivals that owe no commission to anyone.
-        </p>
-        <p className="mt-3 max-w-[62ch] text-[#f4f4f4]/45 font-mono text-[11px] uppercase tracking-[0.18em]">
-          Everything below is client work. Sound on.
-        </p>
+      {/* Deliberately short. This page is opened from a cold email, so the
+          work has to be on screen before anyone decides to read anything —
+          the headline and the strapline share one row on desktop rather
+          than stacking into a wall the grid has to sit under. */}
+      <section className="px-6 md:px-12 pt-6 md:pt-8 max-w-[1240px] mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2.5 md:gap-10">
+          <h1 className="text-[28px] md:text-[42px] font-black leading-[1.05] tracking-tight text-[#f4f4f4] text-balance max-w-[14ch]">
+            Video for places people stay in.
+          </h1>
+          <div className="md:text-right md:pb-1 md:max-w-[44ch] shrink-0">
+            <p className="text-[#f4f4f4]/70 text-[14px] md:text-[15px] leading-snug">
+              Video, direct booking pages and paid ads for hotels and villas.
+            </p>
+            <p className="mt-1.5 text-[#f4f4f4]/40 font-mono text-[10px] uppercase tracking-[0.18em]">
+              Client work. Sound on.
+            </p>
+          </div>
+        </div>
       </section>
 
       <Group
@@ -176,8 +181,8 @@ function Group({
 }) {
   if (clips.length === 0) return null;
   return (
-    <section className="px-6 md:px-12 pt-8 md:pt-10 pb-2 max-w-[1240px] mx-auto">
-      <div className="flex items-baseline gap-4 border-b border-[#f4f4f4]/20 pb-3 mb-6">
+    <section className="px-6 md:px-12 pt-5 md:pt-6 pb-2 max-w-[1240px] mx-auto">
+      <div className="flex items-baseline gap-4 border-b border-[#f4f4f4]/20 pb-2.5 mb-4">
         <h2 className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#f4f4f4] font-bold whitespace-nowrap">
           {label}
         </h2>
