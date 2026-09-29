@@ -16,6 +16,7 @@ export default function robots(): MetadataRoute.Robots {
           "/preview-brutalism", // same component the homepage renders
           "/preview-cinematic", // the scroll-film variant, kept for rollback
           "/flashka",        // campaign landing page, carries its own noindex
+          "/cv",             // partner presentation page — handed out, never searched for
         ],
       },
     ],
