@@ -34,6 +34,16 @@ const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
   dusq: { src: "/images/logo-dusq.webp", invert: true },
 };
 
+// One cover per format, in the order the formats are listed — the same
+// stills /ai-creative already uses for these four services. Drawn in
+// silver so the cards stay in the film world; colour arrives on hover.
+const COVERS = [
+  "/images/service-1.webp",
+  "/images/service-2.webp",
+  "/images/service-3.webp",
+  "/images/service-4.webp",
+];
+
 // The portfolio's public clips, minus the "Organic" cuts — those are
 // edits of supplied footage, and this page promises video made with AI.
 // Featured first, capped so the page stays a profile, not the portfolio.
@@ -247,6 +257,7 @@ export default function CvClient() {
         overflowX: "clip",
       }}
     >
+      <style>{`.cv-format:hover img { filter: none !important; }`}</style>
       {/* CRT scanlines — the film's texture, same as the homepage */}
       <div
         aria-hidden
@@ -408,19 +419,38 @@ export default function CvClient() {
           {t.formats.map((f, i) => (
             <div
               key={f.title}
-              className="border-2 p-6 md:p-7 flex flex-col"
+              className="group cv-format border-2 flex flex-col overflow-hidden"
               style={{
                 background: "#0d0d0d",
                 borderColor: "rgba(244,244,244,0.3)",
                 boxShadow: "6px 6px 0 0 #2a2a2a",
               }}
             >
-              <span
-                className="inline-block self-start px-2 py-1 border-2 border-black text-[11px] font-bold uppercase tracking-[0.25em] mb-5"
-                style={{ background: SILVER_H, color: "#0d0d0d", fontFamily: PIXEL }}
+              <div
+                className="relative aspect-[16/10] overflow-hidden"
+                style={{ borderBottom: "2px solid rgba(244,244,244,0.3)" }}
               >
-                {String(i + 1).padStart(2, "0")}
-              </span>
+                <Image
+                  src={COVERS[i]}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-[filter,transform] duration-500 group-hover:scale-[1.03]"
+                  style={{ filter: "grayscale(1) contrast(1.08)" }}
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: "linear-gradient(to top, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.15) 45%, transparent 100%)" }}
+                />
+                <span
+                  className="absolute left-4 top-4 px-2 py-1 border-2 border-black text-[11px] font-bold uppercase tracking-[0.25em]"
+                  style={{ background: SILVER_H, color: "#0d0d0d", fontFamily: PIXEL }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div className="p-6 md:p-7 flex flex-col flex-1">
               <h3
                 className="font-black uppercase leading-[1] tracking-[-0.02em] mb-4 text-balance"
                 style={{ fontSize: "calc(clamp(20px, 1.7vw, 26px) * var(--bgk, 1))", fontFamily: displayMixed }}
@@ -440,6 +470,7 @@ export default function CvClient() {
                     {tag}
                   </span>
                 ))}
+              </div>
               </div>
             </div>
           ))}
