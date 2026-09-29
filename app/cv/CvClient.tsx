@@ -405,7 +405,7 @@ export default function CvClient() {
       </section>
 
       {/* ============ 01 · FOUR FORMATS ============ */}
-      <section className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto">
+      <section id="formats" className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto scroll-mt-16 md:scroll-mt-20">
         <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
           {t.formatsEyebrow}
         </p>
@@ -478,7 +478,7 @@ export default function CvClient() {
       </section>
 
       {/* ============ 02 · THE WORK ============ */}
-      <section className="py-16 md:py-28" style={altSection}>
+      <section id="work" className="py-16 md:py-28 scroll-mt-16 md:scroll-mt-20" style={altSection}>
         <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
           <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
             {t.workEyebrow} · {CLIPS.length}
@@ -498,7 +498,7 @@ export default function CvClient() {
       </section>
 
       {/* ============ 03 · THE ROSTER ============ */}
-      <section className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto">
+      <section id="brands" className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto scroll-mt-16 md:scroll-mt-20">
         <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
           {t.brandsEyebrow}
         </p>
@@ -546,7 +546,7 @@ export default function CvClient() {
       </section>
 
       {/* ============ 04 · THREE CASES ============ */}
-      <section className="py-16 md:py-28" style={altSection}>
+      <section id="cases" className="py-16 md:py-28 scroll-mt-16 md:scroll-mt-20" style={altSection}>
         <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
           <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
             {t.casesEyebrow}
@@ -619,7 +619,7 @@ export default function CvClient() {
       </section>
 
       {/* ============ 05 · CONTACT ============ */}
-      <section className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto">
+      <section id="contact" className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto scroll-mt-16 md:scroll-mt-20">
         <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
           {t.contactEyebrow}
         </p>
