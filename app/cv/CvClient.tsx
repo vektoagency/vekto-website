@@ -1,13 +1,14 @@
 "use client";
 
 // ============================================================================
-// /cv — VEKTO presented by someone else.
+// /cv — VEKTO's AI video work, presented by someone else.
 //
 // A partner agency hands this page to its own clients, so it reads as a
-// profile, not a funnel: who we are, the four teams, the work, the brands,
-// three cases, one contact line. No nav, no "describe your project", no
-// calendar, no footer links — the reader belongs to the partner. Every
-// number and every logo here is the same one the homepage already carries.
+// profile of ONE capability, not a funnel: video made with AI. What we
+// make, the work, the brands, three cases, one contact line. No nav, no
+// "describe your project", no calendar, no footer links — the reader
+// belongs to the partner. Every claim, number and logo here already
+// stands on the public site; nothing is written fresh for this page.
 // ============================================================================
 
 import { useEffect, useState } from "react";
@@ -17,7 +18,6 @@ import { ROSTER } from "../data/roster";
 import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
 import HeroCinematicBg from "../components/HeroCinematicBg";
 import { useLang } from "../i18n/LangProvider";
-import { startCopy } from "../start/translations";
 
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
@@ -26,18 +26,21 @@ const WORDMARK_METAL =
 const PIXEL = "var(--brutal-pixel), ui-monospace, monospace";
 const COMIC = "var(--brutal-comic), system-ui, sans-serif";
 
-// Same marks the case cards use elsewhere; `invert` flips dark-ink logos
-// so they read on a jet card.
+// Dark-ink marks flipped so they read on a jet card — same treatment the
+// homepage case cards give them.
 const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
   menscare: { src: "/images/logo-menscare.png", invert: true },
   parfen: { src: "/images/logo-parfen.webp", invert: true },
-  beme: { src: "/images/logo-bemeacne.webp" },
+  dusq: { src: "/images/logo-dusq.webp", invert: true },
 };
 
-// Featured work first, then the rest, capped so the page stays a profile
-// rather than becoming the whole portfolio.
+// The portfolio's public clips, minus the "Organic" cuts — those are
+// edits of supplied footage, and this page promises video made with AI.
+// Featured first, capped so the page stays a profile, not the portfolio.
 const CLIPS: Clip[] = (() => {
-  const visible = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
+  const visible = (bunnyData.clips as Clip[]).filter(
+    (c) => !c.excludeFromPortfolio && c.category !== "Organic",
+  );
   const featured = visible.filter((c) => c.featured);
   const rest = visible.filter((c) => !c.featured);
   return [...featured, ...rest].slice(0, 12);
@@ -46,24 +49,68 @@ const CLIPS: Clip[] = (() => {
 const COPY = {
   bg: {
     toggle: "EN",
-    heroEyebrow: "VEKTO · ПРЕДСТАВЯНЕ",
-    h1a: "КРИЕЙТИВИ, ФУНИИ И",
-    h1b: "AI РЕШЕНИЯ.",
-    sub: "Един екип за целия растеж на един бизнес — криейтиви, реклами, уебсайтове, стратегия и AI. 50+ бизнеса в България и САЩ.",
-    teamsEyebrow: "01 · ЧЕТИРИ ЕКИПА · ЕДИН ПАРТНЬОР",
-    teamsTitle: "КОИ СМЕ",
-    rooms: [
-      { title: "КРИЕЙТИВИ",  detail: "Видео · заснемане · AI ads",       num: "500+", label: "ВИДЕА НА МЕСЕЦ" },
-      { title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали",       num: "12",   label: "САЙТА НА ГОДИНА" },
-      { title: "СТРАТЕГИИ",  detail: "Позициониране · оферта · план",    num: "50+",  label: "БИЗНЕСА В ПОРТФОЛИОТО" },
-      { title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации",         num: "24/7", label: "РАБОТЯЩИ АВТОМАТИЗАЦИИ" },
+    heroEyebrow: "VEKTO · AI ВИДЕО ПРОДУКЦИЯ",
+    h1a: "ВИДЕО БЕЗ",
+    h1b: "СНИМАЧЕН ДЕН.",
+    sub: "Кинематографични спотове, UGC, AI аватари и продуктови визии — създадени с AI за 50+ бизнеса в България и САЩ.",
+    stats: [
+      { num: "500+", label: "ВИДЕА НА МЕСЕЦ" },
+      { num: "50+", label: "БИЗНЕСА" },
+      { num: "БГ · САЩ", label: "ДВА ПАЗАРА" },
+    ],
+    formatsEyebrow: "01 · AI ВИДЕО · ЧЕТИРИ ФОРМАТА",
+    formatsTitle: "КАКВО ПРАВИМ",
+    formats: [
+      {
+        title: "Кратки видеа за социалните мрежи",
+        text: "Кратки силни видеа, които правят бизнеса ти експерт в твоята сфера. Стигат до повече хора и държат вниманието им.",
+        tags: ["Социални мрежи", "Кратки формати", "Стратегия"],
+      },
+      {
+        title: "AI аватари и говорители",
+        text: "Персонални AI аватари за бизнеса ти. Правим съдържание на много езици с еднакво качество — без снимачен екип и снимачен ден.",
+        tags: ["AI аватар", "Многоезичен", "Автоматизация"],
+      },
+      {
+        title: "Кинематографични филми за бизнеса",
+        text: "Премиум филми с пълен процес — от идея до финален монтаж. AI добавя кинематографично качество от висок клас.",
+        tags: ["Кинематографичен", "Корпоративен филм", "Продукция"],
+      },
+      {
+        title: "AI визуализации на продукти",
+        text: "Реалистични AI визуализации за продукти — готови за онлайн магазини и реклами. Премиум визия, която продава.",
+        tags: ["Продуктови визуализации", "Електронна търговия", "AI"],
+      },
     ],
     workEyebrow: "02 · ИЗБРАНА РАБОТА",
-    workTitle: "КАКВО ПРАВИМ",
+    workTitle: "ВИДЕАТА",
     brandsEyebrow: "03 · СЪСТАВЪТ",
-    brandsTitle: "С КОГО РАБОТИМ",
+    brandsTitle: "БРАНДОВЕ, С КОИТО РАБОТИМ",
     casesEyebrow: "04 · РЕЗУЛТАТИ",
     casesTitle: "ТРИ ПРИМЕРА",
+    cases: [
+      {
+        slug: "menscare",
+        brand: "MEN'S CARE",
+        category: "Козметика · BG",
+        focus: "AI ПРОДУКЦИЯ",
+        highlight: "Заменихме външната видео продукция със собствен AI поток — видеа за реклами и съдържание.",
+      },
+      {
+        slug: "parfen",
+        brand: "PARFEN",
+        category: "Парфюмерия · BG",
+        focus: "AI UGC ПОТОК",
+        highlight: "Система за постоянен поток от нови криейтиви за рекламите в Meta.",
+      },
+      {
+        slug: "dusq",
+        brand: "DUSQ",
+        category: "Носимо устройство · САЩ",
+        focus: "КИНЕМАТОГРАФИЧЕН ФИЛМ",
+        highlight: "Филм и продуктови визии за старт на продукт на пазара в САЩ.",
+      },
+    ],
     contactEyebrow: "05 · КОНТАКТ",
     contactTitle: "ДА ГОВОРИМ.",
     based: "БЪЛГАРИЯ · САЩ",
@@ -72,24 +119,68 @@ const COPY = {
   },
   en: {
     toggle: "БГ",
-    heroEyebrow: "VEKTO · PROFILE",
-    h1a: "CREATIVE, FUNNELS AND",
-    h1b: "AI SOLUTIONS.",
-    sub: "One team for the whole growth of a business — creative, ads, websites, strategy and AI. 50+ businesses across Bulgaria and the US.",
-    teamsEyebrow: "01 · FOUR ROOMS · ONE PARTNER",
-    teamsTitle: "WHO WE ARE",
-    rooms: [
-      { title: "CREATIVE",     detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
-      { title: "WEBSITES",     detail: "Landing · e-com · portals",    num: "12",   label: "SITES / YEAR" },
-      { title: "STRATEGY",     detail: "Positioning · offer · plan",   num: "50+",  label: "BUSINESSES IN PORTFOLIO" },
-      { title: "AI SOLUTIONS", detail: "AI video · automations",       num: "24/7", label: "AUTOMATIONS RUNNING" },
+    heroEyebrow: "VEKTO · AI VIDEO PRODUCTION",
+    h1a: "VIDEO WITHOUT",
+    h1b: "A SHOOT DAY.",
+    sub: "Cinematic spots, UGC, AI avatars and product visuals — produced with AI for 50+ businesses across Bulgaria and the US.",
+    stats: [
+      { num: "500+", label: "VIDEOS / MONTH" },
+      { num: "50+", label: "BUSINESSES" },
+      { num: "BG · US", label: "TWO MARKETS" },
+    ],
+    formatsEyebrow: "01 · AI VIDEO · FOUR FORMATS",
+    formatsTitle: "WHAT WE MAKE",
+    formats: [
+      {
+        title: "Short-Form Authority Series",
+        text: "Engaging, high-impact short-form videos for social media that position your brand as an authority in your space — optimized for maximum reach and engagement.",
+        tags: ["Social Media", "Short-Form", "Strategy"],
+      },
+      {
+        title: "AI Digital Avatars & Virtual Spokespersons",
+        text: "Custom AI-powered avatars for brand representation. Deliver multilingual content at scale with consistent, high-quality presentations — no full production needed.",
+        tags: ["AI Avatar", "Multilingual", "Automation"],
+      },
+      {
+        title: "Cinematic Brand Films",
+        text: "High-end immersive storytelling with full production pipeline from concept to post-processing. AI-enhanced for a premium cinematic finish.",
+        tags: ["Cinematic", "Brand Film", "Production"],
+      },
+      {
+        title: "AI Product Visual Engineering",
+        text: "Hyper-realistic AI-enhanced product visuals optimized for eCommerce and marketing assets. Premium presentation that converts.",
+        tags: ["Product Visuals", "eCommerce", "AI"],
+      },
     ],
     workEyebrow: "02 · SELECTED WORK",
-    workTitle: "WHAT WE DO",
+    workTitle: "THE VIDEOS",
     brandsEyebrow: "03 · THE ROSTER",
-    brandsTitle: "WHO WE WORK WITH",
+    brandsTitle: "BRANDS WE WORK WITH",
     casesEyebrow: "04 · RESULTS",
     casesTitle: "THREE EXAMPLES",
+    cases: [
+      {
+        slug: "menscare",
+        brand: "MEN'S CARE",
+        category: "Beauty · BG",
+        focus: "AI PRODUCTION",
+        highlight: "Replaced outsourced video production with an in-house AI pipeline — video for ads and content.",
+      },
+      {
+        slug: "parfen",
+        brand: "PARFEN",
+        category: "Perfume · BG",
+        focus: "AI UGC SYSTEM",
+        highlight: "A system for a continuous flow of fresh creative for Meta ads.",
+      },
+      {
+        slug: "dusq",
+        brand: "DUSQ",
+        category: "Wearable · US",
+        focus: "CINEMATIC FILM",
+        highlight: "A film and product visuals for a US product launch.",
+      },
+    ],
     contactEyebrow: "05 · CONTACT",
     contactTitle: "LET'S TALK.",
     based: "BULGARIA · US",
@@ -101,7 +192,6 @@ const COPY = {
 export default function CvClient() {
   const { lang, setLang } = useLang();
   const t = COPY[lang];
-  const cases = startCopy[lang].cases.items;
 
   const [solid, setSolid] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -114,8 +204,8 @@ export default function CvClient() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // The hero's July spot is a desktop-only asset; phones run the clients
-  // reel. Resolved after mount so a phone never downloads the mp4.
+  // The hero's spot is a desktop-only asset; phones run the clients reel.
+  // Resolved after mount so a phone never downloads the mp4.
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const apply = () => setIsDesktop(mq.matches);
@@ -130,9 +220,9 @@ export default function CvClient() {
     window.dispatchEvent(new Event(expanded ? "vekto:player-open" : "vekto:player-closed"));
   }, [expanded]);
 
-  // "AI РЕШЕНИЯ" mixes scripts inside one word; on Bulgarian the
-  // Cyrillic-capable face draws the Latin letters too, so the pair reads
-  // as one typeface.
+  // "AI UGC" and friends mix scripts inside one line; on Bulgarian the
+  // Cyrillic-capable face draws the Latin letters too, so a heading never
+  // switches typeface mid-word.
   const displayMixed =
     lang === "bg"
       ? "var(--f-display-cyr), var(--f-display-lat), system-ui, sans-serif"
@@ -140,6 +230,11 @@ export default function CvClient() {
 
   const eyebrow = "text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] opacity-55";
   const sectionTitle = "font-black uppercase leading-[0.96] tracking-[-0.03em]";
+  const altSection = {
+    background: "#141414",
+    borderTop: "1px solid rgba(244,244,244,0.14)",
+    borderBottom: "1px solid rgba(244,244,244,0.14)",
+  } as const;
 
   return (
     <div
@@ -237,7 +332,7 @@ export default function CvClient() {
           style={{ background: "linear-gradient(to top, rgba(13,13,13,0.98) 0%, rgba(13,13,13,0.7) 55%, transparent 100%)" }}
         />
 
-        <div className="relative z-10 px-6 md:px-14 pb-16 md:pb-24 max-w-[1400px] w-full mx-auto">
+        <div className="relative z-10 px-6 md:px-14 pb-14 md:pb-20 max-w-[1400px] w-full mx-auto">
           <p className={`${eyebrow} mb-5`} style={{ fontFamily: PIXEL }}>
             {t.heroEyebrow}
           </p>
@@ -263,29 +358,56 @@ export default function CvClient() {
             </span>
           </h1>
           <p
-            className="text-[15px] md:text-lg leading-relaxed max-w-2xl opacity-75 font-medium"
+            className="text-[15px] md:text-lg leading-relaxed max-w-2xl opacity-75 font-medium mb-10 md:mb-12"
             style={{ fontFamily: COMIC }}
           >
             {t.sub}
           </p>
+
+          {/* Three numbers the homepage already claims, on one hairline */}
+          <div
+            className="grid grid-cols-3 gap-4 md:gap-10 pt-5"
+            style={{ borderTop: "1px solid rgba(244,244,244,0.25)" }}
+          >
+            {t.stats.map((s) => (
+              <div key={s.label}>
+                <div
+                  className="font-black leading-none tabular-nums"
+                  style={{
+                    fontSize: "calc(clamp(22px, 3vw, 44px) * var(--bgk, 1))",
+                    letterSpacing: "-0.03em",
+                    background: SILVER_H,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {s.num}
+                </div>
+                <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.22em] opacity-65 mt-1.5" style={{ fontFamily: PIXEL }}>
+                  {s.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ============ 01 · THE TEAMS ============ */}
+      {/* ============ 01 · FOUR FORMATS ============ */}
       <section className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto">
         <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
-          {t.teamsEyebrow}
+          {t.formatsEyebrow}
         </p>
         <h2
           className={`${sectionTitle} mb-10 md:mb-14`}
           style={{ fontSize: "calc(clamp(34px, 5.4vw, 80px) * var(--bgk, 1))" }}
         >
-          {t.teamsTitle}
+          {t.formatsTitle}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7">
-          {t.rooms.map((r, i) => (
+          {t.formats.map((f, i) => (
             <div
-              key={r.title}
+              key={f.title}
               className="border-2 p-6 md:p-7 flex flex-col"
               style={{
                 background: "#0d0d0d",
@@ -300,40 +422,32 @@ export default function CvClient() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3
-                className="font-black uppercase leading-[0.95] tracking-[-0.02em] mb-3"
-                style={{ fontSize: "calc(clamp(24px, 2.2vw, 32px) * var(--bgk, 1))", fontFamily: displayMixed }}
+                className="font-black uppercase leading-[1] tracking-[-0.02em] mb-4 text-balance"
+                style={{ fontSize: "calc(clamp(20px, 1.7vw, 26px) * var(--bgk, 1))", fontFamily: displayMixed }}
               >
-                {r.title}
+                {f.title}
               </h3>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-60 mb-7" style={{ fontFamily: PIXEL }}>
-                {r.detail}
+              <p className="text-[13.5px] leading-[1.55] font-medium opacity-80 mb-7" style={{ fontFamily: COMIC }}>
+                {f.text}
               </p>
-              <div
-                className="mt-auto font-black leading-none tabular-nums"
-                style={{
-                  fontSize: "calc(clamp(44px, 4.2vw, 64px) * var(--bgk, 1))",
-                  letterSpacing: "-0.03em",
-                  background: SILVER_H,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {r.num}
+              <div className="mt-auto flex flex-wrap gap-1.5">
+                {f.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] opacity-75"
+                    style={{ border: "1px solid rgba(244,244,244,0.35)", fontFamily: PIXEL }}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-70 mt-2" style={{ fontFamily: PIXEL }}>
-                {r.label}
-              </p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ============ 02 · THE WORK ============ */}
-      <section
-        className="py-16 md:py-28"
-        style={{ background: "#141414", borderTop: "1px solid rgba(244,244,244,0.14)", borderBottom: "1px solid rgba(244,244,244,0.14)" }}
-      >
+      <section className="py-16 md:py-28" style={altSection}>
         <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
           <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
             {t.workEyebrow} · {CLIPS.length}
@@ -358,8 +472,8 @@ export default function CvClient() {
           {t.brandsEyebrow}
         </p>
         <h2
-          className={`${sectionTitle} mb-10 md:mb-14`}
-          style={{ fontSize: "calc(clamp(34px, 5.4vw, 80px) * var(--bgk, 1))" }}
+          className={`${sectionTitle} mb-10 md:mb-14 text-balance`}
+          style={{ fontSize: "calc(clamp(30px, 4.6vw, 72px) * var(--bgk, 1))" }}
         >
           {t.brandsTitle}
         </h2>
@@ -401,10 +515,7 @@ export default function CvClient() {
       </section>
 
       {/* ============ 04 · THREE CASES ============ */}
-      <section
-        className="py-16 md:py-28"
-        style={{ background: "#141414", borderTop: "1px solid rgba(244,244,244,0.14)", borderBottom: "1px solid rgba(244,244,244,0.14)" }}
-      >
+      <section className="py-16 md:py-28" style={altSection}>
         <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
           <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
             {t.casesEyebrow}
@@ -416,7 +527,7 @@ export default function CvClient() {
             {t.casesTitle}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {cases.map((c) => {
+            {t.cases.map((c) => {
               const mark = CASE_LOGOS[c.slug];
               return (
                 <div
@@ -451,9 +562,9 @@ export default function CvClient() {
                   </div>
                   <div className="px-4 md:px-5 py-7 md:py-9 flex-1 flex items-center">
                     <div
-                      className="font-black uppercase leading-[0.98] tracking-[-0.02em]"
+                      className="font-black uppercase leading-[0.98] tracking-[-0.02em] text-balance"
                       style={{
-                        fontSize: "calc(clamp(26px, 2.6vw, 38px) * var(--bgk, 1))",
+                        fontSize: "calc(clamp(26px, 2.4vw, 36px) * var(--bgk, 1))",
                         background: SILVER_H,
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",

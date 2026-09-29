@@ -47,13 +47,13 @@ const comicCyr = Balsamiq_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "VEKTO — Представяне",
-  description: "Кои сме, какво правим и за кого. Криейтиви, уебсайтове, стратегия и AI решения.",
+  title: "VEKTO — AI видео",
+  description: "Видео без снимачен ден. Кинематографични спотове, UGC, AI аватари и продуктови визии, създадени с AI.",
   robots: { index: false, follow: false },
   openGraph: {
     images: [OG_IMAGE],
-    title: "VEKTO — Представяне",
-    description: "Кои сме, какво правим и за кого.",
+    title: "VEKTO — AI видео",
+    description: "Видео без снимачен ден. Спотове, UGC, аватари и продуктови визии, създадени с AI.",
   },
 };
 
