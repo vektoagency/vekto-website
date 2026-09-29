@@ -134,9 +134,9 @@ const copy = {
     badge: "CASE STUDIES",
     h1Top: "Реални резултати",
     h1Highlight: "за реални бизнеси.",
-    sub: "50+ бизнеса в България и САЩ. Всеки проект тук е партньорство — от първия разговор до пускането и след него.",
+    sub: "100+ бизнеса в България и САЩ. Всеки проект тук е партньорство — от първия разговор до пускането и след него.",
     stats: [
-      { value: "50+", label: "Партньорства" },
+      { value: "100+", label: "Партньорства" },
     ],
     viewCase: "Виж резултатите",
     comingSoon: "Скоро",
@@ -150,9 +150,9 @@ const copy = {
     badge: "CASE STUDIES",
     h1Top: "Real results",
     h1Highlight: "for real brands.",
-    sub: "50+ brands across Bulgaria and the US. Every case here is a partnership — from brief through launch and beyond.",
+    sub: "100+ brands across Bulgaria and the US. Every case here is a partnership — from brief through launch and beyond.",
     stats: [
-      { value: "50+", label: "Partnerships" },
+      { value: "100+", label: "Partnerships" },
     ],
     viewCase: "View case",
     comingSoon: "Coming soon",

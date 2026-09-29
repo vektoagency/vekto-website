@@ -48,12 +48,12 @@ const comicCyr = Balsamiq_Sans({
 
 export const metadata: Metadata = {
   title: "VEKTO — AI видео",
-  description: "Видео без снимачен ден. Кинематографични спотове, UGC, AI аватари и продуктови визии, създадени с AI.",
+  description: "Видео без снимачен ден. Кинематографични филми, UGC, AI аватари и продуктови визии, създадени с AI.",
   robots: { index: false, follow: false },
   openGraph: {
     images: [OG_IMAGE],
     title: "VEKTO — AI видео",
-    description: "Видео без снимачен ден. Спотове, UGC, аватари и продуктови визии, създадени с AI.",
+    description: "Видео без снимачен ден. Филми, UGC, аватари и продуктови визии, създадени с AI.",
   },
 };
 

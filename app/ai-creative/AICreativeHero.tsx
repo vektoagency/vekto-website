@@ -39,7 +39,7 @@ export default function AICreativeHero() {
       stats: [
         { value: "3×", label: "по-бързо от продукция" },
         { value: "60%", label: "по-евтино" },
-        { value: "50+", label: "бизнеса използват" },
+        { value: "100+", label: "бизнеса използват" },
       ],
       ctaPrimary: "Резервирай разговор",
       ctaSecondary: "Виж работата ни",
@@ -53,7 +53,7 @@ export default function AICreativeHero() {
       stats: [
         { value: "3×", label: "faster than production" },
         { value: "60%", label: "lower cost" },
-        { value: "50+", label: "brands using it" },
+        { value: "100+", label: "brands using it" },
       ],
       ctaPrimary: "Book a call",
       ctaSecondary: "See our work",

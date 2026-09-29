@@ -46,7 +46,7 @@ export default function Footer() {
   const t = useT({
     bg: {
       tagline:
-        "Криейтиви, фунии и AI решения — всичко на едно място. Партньор за растеж на 50+ бизнеса в България и САЩ.",
+        "Криейтиви, фунии и AI решения — всичко на едно място. Партньор за растеж на 100+ бизнеса в България и САЩ.",
       based: "България · САЩ",
       explore: "Разгледай",
       exploreLinks: [
@@ -66,7 +66,7 @@ export default function Footer() {
     },
     en: {
       tagline:
-        "Creatives, funnels and AI solutions — under one roof. Growth partner to 50+ businesses across Bulgaria and the US.",
+        "Creatives, funnels and AI solutions — under one roof. Growth partner to 100+ businesses across Bulgaria and the US.",
       based: "Bulgaria · US",
       explore: "Explore",
       exploreLinks: [

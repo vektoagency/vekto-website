@@ -16,7 +16,7 @@ export const JOURNEY_COPY = {
   bg: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · 50+ БИЗНЕСА · 500+ ВИДЕА / МЕСЕЦ",
+        kicker: "01 · VEKTO · 100+ БИЗНЕСА · 300+ ВИДЕА / МЕСЕЦ",
         h1a: "БИЗНЕСЪТ ТИ ЗАСЛУЖАВА ЛИ",
         h1b: "ДА БЪДЕ",
         h1hi: "СКАЛИРАН?",
@@ -39,9 +39,9 @@ export const JOURNEY_COPY = {
       focus: {
         kicker: "03 · ЧЕТИРИ ЕКИПА · ЕДИН ПАРТНЬОР",
         rooms: [
-          { title: "КРЕАТИВИ", detail: "Видео · заснемане · AI ads", num: "500+", label: "ВИДЕА / МЕСЕЦ" },
+          { title: "КРЕАТИВИ", detail: "Видео · заснемане · AI ads", num: "300+", label: "ВИДЕА / МЕСЕЦ" },
           { title: "УЕБСАЙТОВЕ", detail: "Лендинги · е-ком · портали", num: "12", label: "САЙТА / ГОДИНА" },
-          { title: "СТРАТЕГИИ", detail: "Позициониране · оферта · план", num: "50+", label: "БИЗНЕСА" },
+          { title: "СТРАТЕГИИ", detail: "Позициониране · оферта · план", num: "100+", label: "БИЗНЕСА" },
           { title: "AI РЕШЕНИЯ", detail: "AI видео · автоматизации", num: "24/7", label: "РАБОТЯЩИ АВТОМАТИЗАЦИИ" },
         ],
       },
@@ -80,7 +80,7 @@ export const JOURNEY_COPY = {
     scrollCue: "СКРОЛНИ",
     roster: {
       eyebrow: "05 · СЪСТАВЪТ",
-      headline1: "50+ БИЗНЕСА В ПОРТФОЛИОТО.",
+      headline1: "100+ БИЗНЕСА В ПОРТФОЛИОТО.",
       headline2Prefix: "24",
       headline2Highlight: "ОТ ТЯХ.",
       region: { BG: "БГ", US: "САЩ" },
@@ -128,7 +128,7 @@ export const JOURNEY_COPY = {
   en: {
     zones: {
       vault: {
-        kicker: "01 · VEKTO · 50+ BRANDS · 500+ VIDEOS / MONTH",
+        kicker: "01 · VEKTO · 100+ BRANDS · 300+ VIDEOS / MONTH",
         h1a: "DOES YOUR BUSINESS",
         h1b: "DESERVE",
         h1hi: "TO SCALE?",
@@ -151,9 +151,9 @@ export const JOURNEY_COPY = {
       focus: {
         kicker: "03 · FOUR ROOMS · ONE ROOF",
         rooms: [
-          { title: "CREATIVE", detail: "Video · live shoots · AI ads", num: "500+", label: "VIDEOS / MONTH" },
+          { title: "CREATIVE", detail: "Video · live shoots · AI ads", num: "300+", label: "VIDEOS / MONTH" },
           { title: "WEBSITES", detail: "Landing · e-com · portals", num: "12", label: "SITES / YEAR" },
-          { title: "STRATEGY", detail: "Positioning · offer · plan", num: "50+", label: "BRANDS" },
+          { title: "STRATEGY", detail: "Positioning · offer · plan", num: "100+", label: "BRANDS" },
           { title: "AI SOLUTIONS", detail: "AI video · automations", num: "24/7", label: "AUTOMATIONS RUNNING" },
         ],
       },
@@ -188,7 +188,7 @@ export const JOURNEY_COPY = {
     scrollCue: "SCROLL",
     roster: {
       eyebrow: "05 · THE ROSTER",
-      headline1: "50+ BRANDS IN THE PORTFOLIO.",
+      headline1: "100+ BRANDS IN THE PORTFOLIO.",
       headline2Prefix: "24",
       headline2Highlight: "OF THEM.",
       region: { BG: "BG", US: "US" },

@@ -16,7 +16,7 @@ export const startCopy = {
       h1Post: "всеки може.",
       sub: "Маркетинг агенция за бизнеса, който иска повече от пазара.",
       trustBadges: [
-        "50+ доволни бизнеса",
+        "100+ доволни бизнеса",
         "Партньор, не изпълнител",
         "Партньор за растеж",
       ],
@@ -174,7 +174,7 @@ export const startCopy = {
       h1Post: "do.",
       sub: "A marketing agency for brands that want more from the market.",
       trustBadges: [
-        "50+ happy brands",
+        "100+ happy brands",
         "A partner, not a vendor",
         "Growth partner",
       ],

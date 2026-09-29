@@ -16,7 +16,7 @@ const ContactModal = dynamic(() => import("../components/ContactModal"));
 export const metadata: Metadata = {
   title: "VEKTO — Case Studies",
   description:
-    "Реални резултати за реални бизнеси — какво сме правили за 50+ бизнеса в България и САЩ.",
+    "Реални резултати за реални бизнеси — какво сме правили за 100+ бизнеса в България и САЩ.",
   openGraph: {
     images: [OG_IMAGE],
     title: "VEKTO — Case Studies",
