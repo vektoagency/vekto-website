@@ -125,7 +125,6 @@ const COPY = {
     ],
     copy: "Копирай",
     copied: "Копирано",
-    portfolioCta: "Цялото портфолио",
     based: "БЪЛГАРИЯ · САЩ",
     region: { BG: "БГ", US: "САЩ" } as const,
     rights: "Всички права запазени.",
@@ -179,7 +178,6 @@ const COPY = {
     ],
     copy: "Copy",
     copied: "Copied",
-    portfolioCta: "Full portfolio",
     based: "BULGARIA · US",
     region: { BG: "BG", US: "US" } as const,
     rights: "All rights reserved.",
@@ -650,26 +648,6 @@ export default function CvClient() {
               );
             })}
           </div>
-
-          {/* The door to the rest of the work */}
-          <a
-            href="/portfolio"
-            target="_blank"
-            rel="noopener"
-            className="mt-6 md:mt-8 flex items-center justify-between gap-4 px-5 md:px-7 py-5 md:py-6 font-black uppercase tracking-[0.14em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-            style={{ background: "#f4f4f4", color: "#0d0d0d", boxShadow: "6px 6px 0 0 #3a3a3a" }}
-          >
-            <span className="flex items-center gap-3 md:gap-4 text-[15px] md:text-[18px]">
-              <span aria-hidden className="text-[13px] md:text-[15px]">▶</span>
-              {t.portfolioCta}
-            </span>
-            <span className="flex items-center gap-3">
-              <span className="hidden sm:inline text-[11px] tracking-[0.25em] opacity-55 normal-case" style={{ fontFamily: PIXEL }}>
-                vektoagency.com/portfolio
-              </span>
-              <span aria-hidden className="text-xl md:text-2xl">→</span>
-            </span>
-          </a>
 
           <div
             className="mt-14 md:mt-20 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] opacity-45"
