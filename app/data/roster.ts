@@ -34,4 +34,5 @@ export const ROSTER: Client[] = [
   { name: "ARTE HOTEL",    region: "BG", logo: "/images/roster-trim/logo-artehotel.png", invert: true },
   { name: "KASHMIR HOTEL", region: "BG", logo: "/images/roster-trim/logo-kashmirhotel.png" },
   { name: "CARTEL CAFFE",  region: "BG", logo: "/images/logo-cartelcaffe.svg", invert: true },
+  { name: "CODEFASHION",   region: "BG", logo: "/images/roster-trim/logo-codefashion.png" },
 ];
