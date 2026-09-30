@@ -601,9 +601,8 @@ export default function CvClient() {
                     href={ch.href}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="group flex h-full flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0 border-2 p-4 md:p-6 transition-[background-color,color,transform] duration-200 text-[#f4f4f4] hover:bg-white hover:text-black hover:-translate-x-0.5 hover:-translate-y-0.5"
+                    className="group flex h-full flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0 border-2 p-4 md:p-6 transition-[background-color,color,transform] duration-200 bg-[rgba(13,13,13,0.82)] text-[#f4f4f4] hover:bg-white hover:text-black hover:-translate-x-0.5 hover:-translate-y-0.5"
                     style={{
-                      background: "rgba(13,13,13,0.82)",
                       borderColor: "rgba(244,244,244,0.55)",
                       boxShadow: "6px 6px 0 0 #2a2a2a",
                     }}
@@ -640,8 +639,8 @@ export default function CvClient() {
                     <button
                       type="button"
                       onClick={copyEmail}
-                      className="hidden md:block absolute right-6 bottom-[21px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.22em] border transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
-                      style={{ fontFamily: PIXEL, borderColor: "rgba(244,244,244,0.55)", background: "rgba(13,13,13,0.9)" }}
+                      className="hidden md:block absolute right-6 bottom-[21px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.22em] border transition-colors bg-[rgba(13,13,13,0.9)] text-[#f4f4f4] hover:bg-white hover:text-black"
+                      style={{ fontFamily: PIXEL, borderColor: "rgba(244,244,244,0.55)" }}
                       aria-live="polite"
                     >
                       {copied ? `✓ ${t.copied}` : t.copy}
