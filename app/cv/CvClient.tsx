@@ -36,17 +36,9 @@ const COVERS = [
   "/images/service-4.webp",
 ];
 
-// The portfolio's public clips, minus the "Organic" cuts — those are
-// edits of supplied footage, and this page promises video made with AI.
-// Featured first, capped so the page stays a profile, not the portfolio.
-const CLIPS: Clip[] = (() => {
-  const visible = (bunnyData.clips as Clip[]).filter(
-    (c) => !c.excludeFromPortfolio && c.category !== "Organic",
-  );
-  const featured = visible.filter((c) => c.featured);
-  const rest = visible.filter((c) => !c.featured);
-  return [...featured, ...rest].slice(0, 12);
-})();
+// Every clip the /portfolio page shows, in the same order — one source,
+// so the two can never disagree about what the work is.
+const CLIPS: Clip[] = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
 
 const COPY = {
   bg: {
