@@ -5,7 +5,7 @@
 //
 // A partner agency hands this page to its own clients, so it reads as a
 // profile of ONE capability, not a funnel: video made with AI. What we
-// make, the work, the brands, three cases, one contact line. No nav, no
+// make, the work, the brands, one contact block. No nav, no
 // "describe your project", no calendar, no footer links — the reader
 // belongs to the partner. Every claim, number and logo here already
 // stands on the public site; nothing is written fresh for this page.
@@ -25,14 +25,6 @@ const WORDMARK_METAL =
   "linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 40%, #7a7a7a 70%, #969696 100%)";
 const PIXEL = "var(--brutal-pixel), ui-monospace, monospace";
 const COMIC = "var(--brutal-comic), system-ui, sans-serif";
-
-// Dark-ink marks flipped so they read on a jet card — same treatment the
-// homepage case cards give them.
-const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
-  menscare: { src: "/images/logo-menscare.png", invert: true },
-  parfen: { src: "/images/logo-parfen.webp", invert: true },
-  dusq: { src: "/images/logo-dusq.webp", invert: true },
-};
 
 // One cover per format, in the order the formats are listed — the same
 // stills /ai-creative already uses for these four services. Drawn in
@@ -96,33 +88,15 @@ const COPY = {
     workTitle: "ВИДЕАТА",
     brandsEyebrow: "03 · СЪСТАВЪТ",
     brandsTitle: "БРАНДОВЕ, С КОИТО РАБОТИМ",
-    casesEyebrow: "04 · РЕЗУЛТАТИ",
-    casesTitle: "ТРИ ПРИМЕРА",
-    cases: [
-      {
-        slug: "menscare",
-        brand: "MEN'S CARE",
-        category: "Козметика · BG",
-        focus: "AI ПРОДУКЦИЯ",
-        highlight: "Заменихме външната видео продукция със собствен AI поток — видеа за реклами и съдържание.",
-      },
-      {
-        slug: "parfen",
-        brand: "PARFEN",
-        category: "Парфюмерия · BG",
-        focus: "AI UGC ПОТОК",
-        highlight: "Система за постоянен поток от нови криейтиви за рекламите в Meta.",
-      },
-      {
-        slug: "dusq",
-        brand: "DUSQ",
-        category: "Носимо устройство · САЩ",
-        focus: "КИНЕМАТОГРАФИЧЕН ФИЛМ",
-        highlight: "Филм и продуктови визии за старт на продукт на пазара в САЩ.",
-      },
-    ],
-    contactEyebrow: "05 · КОНТАКТ",
+    contactEyebrow: "04 · КОНТАКТ",
     contactTitle: "ДА ГОВОРИМ.",
+    contactSub: "Отговор до 24 часа — от човек, не от бот.",
+    channels: [
+      { label: "ОБАДИ СЕ", value: "+359 88 225 1474", href: "tel:+359882251474" },
+      { label: "WHATSAPP", value: "+359 88 225 1474", href: "https://wa.me/359882251474" },
+      { label: "ИМЕЙЛ", value: "vektoagency@gmail.com", href: "mailto:vektoagency@gmail.com" },
+    ],
+    portfolioCta: "Цялото портфолио",
     based: "БЪЛГАРИЯ · САЩ",
     region: { BG: "БГ", US: "САЩ" } as const,
     rights: "Всички права запазени.",
@@ -166,33 +140,15 @@ const COPY = {
     workTitle: "THE VIDEOS",
     brandsEyebrow: "03 · THE ROSTER",
     brandsTitle: "BRANDS WE WORK WITH",
-    casesEyebrow: "04 · RESULTS",
-    casesTitle: "THREE EXAMPLES",
-    cases: [
-      {
-        slug: "menscare",
-        brand: "MEN'S CARE",
-        category: "Beauty · BG",
-        focus: "AI PRODUCTION",
-        highlight: "Replaced outsourced video production with an in-house AI pipeline — video for ads and content.",
-      },
-      {
-        slug: "parfen",
-        brand: "PARFEN",
-        category: "Perfume · BG",
-        focus: "AI UGC SYSTEM",
-        highlight: "A system for a continuous flow of fresh creative for Meta ads.",
-      },
-      {
-        slug: "dusq",
-        brand: "DUSQ",
-        category: "Wearable · US",
-        focus: "CINEMATIC FILM",
-        highlight: "A film and product visuals for a US product launch.",
-      },
-    ],
-    contactEyebrow: "05 · CONTACT",
+    contactEyebrow: "04 · CONTACT",
     contactTitle: "LET'S TALK.",
+    contactSub: "A reply within 24 hours — from a person, not a bot.",
+    channels: [
+      { label: "CALL", value: "+359 88 225 1474", href: "tel:+359882251474" },
+      { label: "WHATSAPP", value: "+359 88 225 1474", href: "https://wa.me/359882251474" },
+      { label: "EMAIL", value: "vektoagency@gmail.com", href: "mailto:vektoagency@gmail.com" },
+    ],
+    portfolioCta: "Full portfolio",
     based: "BULGARIA · US",
     region: { BG: "BG", US: "US" } as const,
     rights: "All rights reserved.",
@@ -545,108 +501,80 @@ export default function CvClient() {
         </div>
       </section>
 
-      {/* ============ 04 · THREE CASES ============ */}
-      <section id="cases" className="py-16 md:py-28 scroll-mt-16 md:scroll-mt-20" style={altSection}>
+      {/* ============ 04 · CONTACT ============ */}
+      <section id="contact" className="py-16 md:py-28 scroll-mt-16 md:scroll-mt-20" style={altSection}>
         <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
-          <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
-            {t.casesEyebrow}
-          </p>
-          <h2
-            className={`${sectionTitle} mb-10 md:mb-14`}
-            style={{ fontSize: "calc(clamp(34px, 5.4vw, 80px) * var(--bgk, 1))" }}
-          >
-            {t.casesTitle}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {t.cases.map((c) => {
-              const mark = CASE_LOGOS[c.slug];
-              return (
-                <div
-                  key={c.slug}
-                  className="border-2 flex flex-col overflow-hidden"
-                  style={{
-                    background: "#0d0d0d",
-                    borderColor: "rgba(244,244,244,0.3)",
-                    boxShadow: "6px 6px 0 0 #2a2a2a",
-                  }}
-                >
-                  <div
-                    className="px-4 md:px-5 py-3.5 md:py-4 border-b-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 justify-between"
-                    style={{ borderColor: "rgba(244,244,244,0.25)" }}
-                  >
-                    {mark ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={mark.src}
-                        alt={c.brand}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-5 md:h-6 w-auto max-w-[130px] object-contain"
-                        style={{ filter: mark.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
-                      />
-                    ) : (
-                      <div className="font-black text-lg uppercase tracking-tight">{c.brand}</div>
-                    )}
-                    <div className="text-[12px] uppercase tracking-[0.2em] opacity-60" style={{ fontFamily: PIXEL }}>
-                      {c.category}
-                    </div>
-                  </div>
-                  <div className="px-4 md:px-5 py-7 md:py-9 flex-1 flex items-center">
-                    <div
-                      className="font-black uppercase leading-[0.98] tracking-[-0.02em] text-balance"
-                      style={{
-                        fontSize: "calc(clamp(26px, 2.4vw, 36px) * var(--bgk, 1))",
-                        background: SILVER_H,
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                        fontFamily: displayMixed,
-                      }}
-                    >
-                      {c.focus}
-                    </div>
-                  </div>
-                  <div className="p-4 md:p-5" style={{ borderTop: "1px solid rgba(244,244,244,0.18)" }}>
-                    <p className="text-[13px] leading-[1.5] font-medium opacity-85" style={{ fontFamily: COMIC }}>
-                      {c.highlight}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+          <div className="grid gap-10 lg:gap-16 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+            <div>
+              <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
+                {t.contactEyebrow}
+              </p>
+              <h2
+                className={`${sectionTitle} mb-6 lg:whitespace-nowrap`}
+                style={{ fontSize: "calc(clamp(40px, 5vw, 84px) * var(--bgk, 1))" }}
+              >
+                {t.contactTitle}
+              </h2>
+              <p className="text-[15px] md:text-lg leading-relaxed opacity-75 font-medium mb-6" style={{ fontFamily: COMIC }}>
+                {t.contactSub}
+              </p>
+              <div
+                className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.3em] opacity-50"
+                style={{ fontFamily: PIXEL }}
+              >
+                <span aria-hidden className="w-[7px] h-[7px] rotate-45" style={{ background: "#f4f4f4" }} />
+                {t.based}
+              </div>
+            </div>
 
-      {/* ============ 05 · CONTACT ============ */}
-      <section id="contact" className="px-6 md:px-14 py-16 md:py-28 max-w-[1400px] mx-auto scroll-mt-16 md:scroll-mt-20">
-        <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
-          {t.contactEyebrow}
-        </p>
-        <h2
-          className={`${sectionTitle} mb-8 md:mb-10`}
-          style={{ fontSize: "calc(clamp(38px, 7vw, 108px) * var(--bgk, 1))" }}
-        >
-          {t.contactTitle}
-        </h2>
-        <div
-          className="flex flex-col sm:flex-row sm:flex-wrap gap-x-10 gap-y-3 text-sm md:text-base font-bold uppercase tracking-[0.12em]"
-          style={{ fontFamily: PIXEL }}
-        >
-          <a href="mailto:vektoagency@gmail.com" className="normal-case tracking-normal opacity-85 hover:opacity-100">
-            vektoagency@gmail.com
-          </a>
-          <a href="tel:+359882251474" className="tabular-nums opacity-85 hover:opacity-100">
-            +359 88 225 1474
-          </a>
-          <span className="opacity-50">{t.based}</span>
-        </div>
-        <div
-          className="mt-14 md:mt-20 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] opacity-40"
-          style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: PIXEL }}
-        >
-          <span>© {new Date().getFullYear()} VEKTO. {t.rights}</span>
-          <span>vektoagency.com</span>
+            {/* Three channels as slabs — the same trio the homepage hub offers */}
+            <div className="flex flex-col gap-3 md:gap-4">
+              {t.channels.map((ch) => (
+                <a
+                  key={ch.label}
+                  href={ch.href}
+                  target={ch.href.startsWith("http") ? "_blank" : undefined}
+                  rel={ch.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="group flex items-center justify-between gap-4 border-2 px-5 md:px-6 py-4 md:py-5 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+                  style={{ borderColor: "rgba(244,244,244,0.55)", boxShadow: "5px 5px 0 0 #2a2a2a" }}
+                >
+                  <span className="min-w-0">
+                    <span
+                      className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.3em] opacity-55 mb-1.5"
+                      style={{ fontFamily: PIXEL }}
+                    >
+                      {ch.label}
+                    </span>
+                    <span className="block font-black text-[17px] md:text-[22px] tracking-[-0.01em] tabular-nums truncate">
+                      {ch.value}
+                    </span>
+                  </span>
+                  <span aria-hidden className="shrink-0 text-xl md:text-2xl font-black transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </a>
+              ))}
+              <a
+                href="/portfolio"
+                target="_blank"
+                rel="noopener"
+                className="mt-2 flex items-center justify-center gap-3 px-5 py-4 md:py-5 font-black uppercase text-[14px] md:text-[15px] tracking-[0.14em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                style={{ background: "#f4f4f4", color: "#0d0d0d", boxShadow: "5px 5px 0 0 #3a3a3a" }}
+              >
+                <span aria-hidden>▶</span>
+                {t.portfolioCta}
+                <span aria-hidden>→</span>
+              </a>
+            </div>
+          </div>
+
+          <div
+            className="mt-14 md:mt-20 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] opacity-40"
+            style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: PIXEL }}
+          >
+            <span>© {new Date().getFullYear()} VEKTO. {t.rights}</span>
+            <span>vektoagency.com</span>
+          </div>
         </div>
       </section>
 
