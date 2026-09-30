@@ -17,6 +17,7 @@ import bunnyData from "../data/bunny-clips.json";
 import { ROSTER } from "../data/roster";
 import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
 import HeroCinematicBg from "../components/HeroCinematicBg";
+import SectionPlate from "../components/SectionPlate";
 import { useLang } from "../i18n/LangProvider";
 
 const SILVER_H =
@@ -39,6 +40,40 @@ const COVERS = [
 // Every clip the /portfolio page shows, in the same order — one source,
 // so the two can never disagree about what the work is.
 const CLIPS: Clip[] = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
+
+// Line icons for the contact channels — drawn in currentColor so they
+// flip with the tile on hover.
+function ChannelIcon({ kind }: { kind: string }) {
+  const common = {
+    width: 22,
+    height: 22,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "square" as const,
+    strokeLinejoin: "miter" as const,
+  };
+  if (kind === "call")
+    return (
+      <svg {...common} aria-hidden>
+        <path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" />
+      </svg>
+    );
+  if (kind === "whatsapp")
+    return (
+      <svg {...common} aria-hidden>
+        <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" />
+        <path d="M9 9.5c.4 2.3 2.2 4.1 4.5 4.5l1.2-1.2 1.8.8v1.6c-4 .4-8.4-4-8-8h1.6l.8 1.8z" strokeWidth={1.4} />
+      </svg>
+    );
+  return (
+    <svg {...common} aria-hidden>
+      <rect x="3" y="5" width="18" height="14" />
+      <path d="M3 6l9 7 9-7" />
+    </svg>
+  );
+}
 
 const COPY = {
   bg: {
@@ -84,10 +119,12 @@ const COPY = {
     contactTitle: "ДА ГОВОРИМ.",
     contactSub: "Отговор до 24 часа — от човек, не от бот.",
     channels: [
-      { label: "ОБАДИ СЕ", value: "+359 88 225 1474", href: "tel:+359882251474" },
-      { label: "WHATSAPP", value: "+359 88 225 1474", href: "https://wa.me/359882251474" },
-      { label: "ИМЕЙЛ", value: "vektoagency@gmail.com", href: "mailto:vektoagency@gmail.com" },
+      { kind: "call", label: "ОБАДИ СЕ", value: "+359 88 225 1474", action: "Звънни", href: "tel:+359882251474" },
+      { kind: "whatsapp", label: "WHATSAPP", value: "Пиши ни в чата", action: "Отвори чат", href: "https://wa.me/359882251474" },
+      { kind: "email", label: "ИМЕЙЛ", value: "vektoagency@gmail.com", action: "Пиши", href: "mailto:vektoagency@gmail.com" },
     ],
+    copy: "Копирай",
+    copied: "Копирано",
     portfolioCta: "Цялото портфолио",
     based: "БЪЛГАРИЯ · САЩ",
     region: { BG: "БГ", US: "САЩ" } as const,
@@ -136,10 +173,12 @@ const COPY = {
     contactTitle: "LET'S TALK.",
     contactSub: "A reply within 24 hours — from a person, not a bot.",
     channels: [
-      { label: "CALL", value: "+359 88 225 1474", href: "tel:+359882251474" },
-      { label: "WHATSAPP", value: "+359 88 225 1474", href: "https://wa.me/359882251474" },
-      { label: "EMAIL", value: "vektoagency@gmail.com", href: "mailto:vektoagency@gmail.com" },
+      { kind: "call", label: "CALL", value: "+359 88 225 1474", action: "Call", href: "tel:+359882251474" },
+      { kind: "whatsapp", label: "WHATSAPP", value: "Message us", action: "Open chat", href: "https://wa.me/359882251474" },
+      { kind: "email", label: "EMAIL", value: "vektoagency@gmail.com", action: "Write", href: "mailto:vektoagency@gmail.com" },
     ],
+    copy: "Copy",
+    copied: "Copied",
     portfolioCta: "Full portfolio",
     based: "BULGARIA · US",
     region: { BG: "BG", US: "US" } as const,
@@ -154,6 +193,19 @@ export default function CvClient() {
   const [solid, setSolid] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
   const [expanded, setExpanded] = useState<Clip | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Desktop readers often have no mail client wired to mailto:, so the
+  // address can be copied straight from the tile.
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("vektoagency@gmail.com");
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = "mailto:vektoagency@gmail.com";
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
@@ -494,74 +546,134 @@ export default function CvClient() {
       </section>
 
       {/* ============ 04 · CONTACT ============ */}
-      <section id="contact" className="py-16 md:py-28 scroll-mt-16 md:scroll-mt-20" style={altSection}>
-        <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
-          <div className="grid gap-10 lg:gap-16 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+      <section
+        id="contact"
+        className="relative overflow-hidden scroll-mt-16 md:scroll-mt-20"
+        style={{ background: "#141414", borderTop: "1px solid rgba(244,244,244,0.14)" }}
+      >
+        <SectionPlate src="creatives" ground="#141414" opacity={0.42} />
+        <div className="relative z-10 px-6 md:px-14 pt-16 md:pt-28 pb-10 md:pb-12 max-w-[1400px] mx-auto">
+          {/* Headline row: the ask on the left, the promise on the right */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-12 mb-10 md:mb-14">
             <div>
               <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL }}>
                 {t.contactEyebrow}
               </p>
               <h2
-                className={`${sectionTitle} mb-6 lg:whitespace-nowrap`}
-                style={{ fontSize: "calc(clamp(40px, 5vw, 84px) * var(--bgk, 1))" }}
+                className={`${sectionTitle} lg:whitespace-nowrap`}
+                style={{ fontSize: "calc(clamp(48px, 8.4vw, 132px) * var(--bgk, 1))" }}
               >
-                {t.contactTitle}
+                {t.contactTitle.split(" ")[0]}{" "}
+                <span
+                  className="italic pr-[0.06em]"
+                  style={{
+                    background: SILVER_H,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {t.contactTitle.split(" ").slice(1).join(" ")}
+                </span>
               </h2>
-              <p className="text-[15px] md:text-lg leading-relaxed opacity-75 font-medium mb-6" style={{ fontFamily: COMIC }}>
+            </div>
+            <div className="lg:max-w-[340px] lg:pb-3">
+              <p className="text-[15px] md:text-[17px] leading-relaxed opacity-80 font-medium mb-4" style={{ fontFamily: COMIC }}>
                 {t.contactSub}
               </p>
               <div
-                className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.3em] opacity-50"
+                className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.3em] opacity-55"
                 style={{ fontFamily: PIXEL }}
               >
                 <span aria-hidden className="w-[7px] h-[7px] rotate-45" style={{ background: "#f4f4f4" }} />
                 {t.based}
               </div>
             </div>
+          </div>
 
-            {/* Three channels as slabs — the same trio the homepage hub offers */}
-            <div className="flex flex-col gap-3 md:gap-4">
-              {t.channels.map((ch) => (
-                <a
-                  key={ch.label}
-                  href={ch.href}
-                  target={ch.href.startsWith("http") ? "_blank" : undefined}
-                  rel={ch.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group flex items-center justify-between gap-4 border-2 px-5 md:px-6 py-4 md:py-5 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
-                  style={{ borderColor: "rgba(244,244,244,0.55)", boxShadow: "5px 5px 0 0 #2a2a2a" }}
-                >
-                  <span className="min-w-0">
+          {/* Three channels: one row on desktop, stacked on phones */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {t.channels.map((ch) => {
+              const external = ch.href.startsWith("http");
+              return (
+                <div key={ch.kind} className="relative">
+                  <a
+                    href={ch.href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="group flex h-full flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0 border-2 p-4 md:p-6 transition-[background-color,color,transform] duration-200 text-[#f4f4f4] hover:bg-white hover:text-black hover:-translate-x-0.5 hover:-translate-y-0.5"
+                    style={{
+                      background: "rgba(13,13,13,0.82)",
+                      borderColor: "rgba(244,244,244,0.55)",
+                      boxShadow: "6px 6px 0 0 #2a2a2a",
+                    }}
+                  >
+                    <span className="flex shrink-0 items-start justify-between md:mb-10">
+                      <span className="w-11 h-11 flex items-center justify-center border-2" style={{ borderColor: "currentColor" }}>
+                        <ChannelIcon kind={ch.kind} />
+                      </span>
+                      <span aria-hidden className="hidden md:inline text-2xl font-black leading-none transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </span>
+                    <span className="min-w-0 flex-1 md:flex-none">
                     <span
-                      className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.3em] opacity-55 mb-1.5"
+                      className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.3em] opacity-60 mb-1.5 md:mb-2"
                       style={{ fontFamily: PIXEL }}
                     >
                       {ch.label}
                     </span>
-                    <span className="block font-black text-[17px] md:text-[22px] tracking-[-0.01em] tabular-nums truncate">
+                    <span className="block font-black text-[17px] md:text-[clamp(16px,1.55vw,23px)] tracking-[-0.01em] tabular-nums leading-tight truncate md:whitespace-normal">
                       {ch.value}
                     </span>
-                  </span>
-                  <span aria-hidden className="shrink-0 text-xl md:text-2xl font-black transition-transform group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-              ))}
-              <a
-                href="/portfolio"
-                target="_blank"
-                rel="noopener"
-                className="mt-2 flex items-center justify-center gap-3 px-5 py-4 md:py-5 font-black uppercase text-[14px] md:text-[15px] tracking-[0.14em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-                style={{ background: "#f4f4f4", color: "#0d0d0d", boxShadow: "5px 5px 0 0 #3a3a3a" }}
-              >
-                <span aria-hidden>▶</span>
-                {t.portfolioCta}
-                <span aria-hidden>→</span>
-              </a>
-            </div>
+                    </span>
+                    <span aria-hidden className="md:hidden shrink-0 text-xl font-black leading-none">→</span>
+                    <span
+                      className="hidden md:block mt-auto pt-4 text-[11px] font-bold uppercase tracking-[0.25em] opacity-70"
+                      style={{ fontFamily: PIXEL }}
+                    >
+                      <span className="block mb-4 mt-5 h-px" style={{ background: "currentColor", opacity: 0.35 }} />
+                      {ch.action}
+                    </span>
+                  </a>
+                  {ch.kind === "email" && (
+                    <button
+                      type="button"
+                      onClick={copyEmail}
+                      className="hidden md:block absolute right-6 bottom-[21px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.22em] border transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+                      style={{ fontFamily: PIXEL, borderColor: "rgba(244,244,244,0.55)", background: "rgba(13,13,13,0.9)" }}
+                      aria-live="polite"
+                    >
+                      {copied ? `✓ ${t.copied}` : t.copy}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
+          {/* The door to the rest of the work */}
+          <a
+            href="/portfolio"
+            target="_blank"
+            rel="noopener"
+            className="mt-6 md:mt-8 flex items-center justify-between gap-4 px-5 md:px-7 py-5 md:py-6 font-black uppercase tracking-[0.14em] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            style={{ background: "#f4f4f4", color: "#0d0d0d", boxShadow: "6px 6px 0 0 #3a3a3a" }}
+          >
+            <span className="flex items-center gap-3 md:gap-4 text-[15px] md:text-[18px]">
+              <span aria-hidden className="text-[13px] md:text-[15px]">▶</span>
+              {t.portfolioCta}
+            </span>
+            <span className="flex items-center gap-3">
+              <span className="hidden sm:inline text-[11px] tracking-[0.25em] opacity-55 normal-case" style={{ fontFamily: PIXEL }}>
+                vektoagency.com/portfolio
+              </span>
+              <span aria-hidden className="text-xl md:text-2xl">→</span>
+            </span>
+          </a>
+
           <div
-            className="mt-14 md:mt-20 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] opacity-40"
+            className="mt-14 md:mt-20 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] opacity-45"
             style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: PIXEL }}
           >
             <span>© {new Date().getFullYear()} VEKTO. {t.rights}</span>
