@@ -94,6 +94,24 @@
       "featured": true
     },
     {
+      "id": "codefashion-1",
+      "brand": "CODEFASHION",
+      "logo": null,
+      "category": "Cinematic",
+      "description": "Brand film — fashion shows and events.",
+      "thumbnail": "/videos/thumbnails/codefashion-1.webp",
+      "previewMp4": "/videos/codefashion-1.mp4",
+      "hlsPlaylist": null,
+      "embedUrl": null,
+      "duration": 57,
+      "width": 720,
+      "height": 1280,
+      "portrait": true,
+      "metric": null,
+      "href": null,
+      "featured": true
+    },
+    {
       "id": "8c0bba5b-5949-43f4-9e09-d5308ad27dce",
       "brand": "PARFEN",
       "logo": null,
