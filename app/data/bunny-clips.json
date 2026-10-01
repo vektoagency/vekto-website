@@ -518,6 +518,26 @@
       "hospitality": "hotel"
     },
     {
+      "id": "hubchev-script-1",
+      "brand": "HUBCHEV PROPERTIES",
+      "logo": null,
+      "category": "Cinematic",
+      "description": "Residential development - the site tour, from the plot to the finished bathroom.",
+      "thumbnail": "/videos/thumbnails/hubchev-script-1.webp",
+      "previewMp4": "/videos/hubchev-script-1.mp4",
+      "hlsPlaylist": null,
+      "embedUrl": null,
+      "duration": 29,
+      "width": 720,
+      "height": 1280,
+      "portrait": true,
+      "metric": null,
+      "href": null,
+      "featured": false,
+      "excludeFromPortfolio": true,
+      "hospitality": "property"
+    },
+    {
       "id": "smartinvest-script-4",
       "brand": "SMARTINVEST",
       "logo": null,

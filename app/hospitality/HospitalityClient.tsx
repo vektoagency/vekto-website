@@ -1,200 +1,414 @@
 "use client";
 
-import Link from "next/link";
+// ============================================================================
+// /hospitality — the /cv page, cut down for hotels and villa owners.
+//
+// Four parts: hero, the work, what we do for a property, contact. No nav,
+// no funnel - the reader arrived from an email about a stay. English and
+// Thai, on their own toggle (?lang=th or a Thai browser opens in Thai).
+// Thai has no capitals and breaks under wide tracking, and its vowel and
+// tone marks sit above and below the line - so Thai text gets normal
+// tracking and open line-height instead of the film-world uppercase.
+// ============================================================================
+
 import { useEffect, useState } from "react";
-import { getCalApi } from "@calcom/embed-react";
 import bunnyData from "../data/bunny-clips.json";
 import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
+import SectionPlate from "../components/SectionPlate";
 
-// English-only on purpose. This page is the link we put in cold outreach to
-// hotels and villa owners abroad, so it deliberately sits outside the site's
-// BG/EN toggle — the reader is never Bulgarian.
+type L = "en" | "th";
+
+const SILVER_H =
+  "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
+const WORDMARK_METAL =
+  "linear-gradient(180deg, #d4d4d4 0%, #a8a8a8 40%, #7a7a7a 70%, #969696 100%)";
+const PIXEL = "var(--brutal-pixel), ui-monospace, monospace";
+const COMIC = "var(--brutal-comic), system-ui, sans-serif";
 
 const all = bunnyData.clips as Clip[];
-const hotels = all.filter((c) => c.hospitality === "hotel");
-const property = all.filter((c) => c.hospitality === "property");
+const HOTELS = all.filter((c) => c.hospitality === "hotel");
+const PROPERTY = all.filter((c) => c.hospitality === "property");
+
+function ChannelIcon({ kind }: { kind: string }) {
+  const common = {
+    width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
+    strokeWidth: 1.8, strokeLinecap: "square" as const, strokeLinejoin: "miter" as const,
+  };
+  if (kind === "call")
+    return (<svg {...common} aria-hidden><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>);
+  if (kind === "whatsapp")
+    return (
+      <svg {...common} aria-hidden>
+        <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" />
+        <path d="M9 9.5c.4 2.3 2.2 4.1 4.5 4.5l1.2-1.2 1.8.8v1.6c-4 .4-8.4-4-8-8h1.6l.8 1.8z" strokeWidth={1.4} />
+      </svg>
+    );
+  return (<svg {...common} aria-hidden><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>);
+}
+
+const COPY = {
+  en: {
+    toggle: "ไทย",
+    toggleLabel: "เปลี่ยนเป็นภาษาไทย",
+    heroEyebrow: "VEKTO · VIDEO FOR HOTELS & VILLAS",
+    h1a: "VIDEO FOR PLACES",
+    h1b: "PEOPLE STAY IN.",
+    sub: "Short vertical video for Instagram, TikTok and your listings - plus direct booking pages and ads that bring guests to you without an OTA commission.",
+    here: "In Phuket 9 January - 8 February 2027",
+    stats: [
+      { num: "300+", label: "VIDEOS / MONTH" },
+      { num: "100+", label: "BUSINESSES" },
+      { num: "BG · US", label: "TWO MARKETS" },
+    ],
+    workEyebrow: "01 · CLIENT WORK",
+    workTitle: "THE VIDEOS",
+    soundOn: "Sound on.",
+    hotels: "Hotels & resorts",
+    hotelsNote: "Wellness and mountain resorts - rooms, pools, restaurant, grounds.",
+    property: "Property",
+    propertyNote: "Not hotels - residential developments. Same job: sell a building on camera.",
+    offerEyebrow: "02 · FOR YOUR PROPERTY",
+    offerTitle: "WHAT WE DO",
+    offer: [
+      { title: "Short vertical video", text: "Cut for Reels, TikTok and the top of your Booking and Airbnb listings. Yours to keep and use anywhere." },
+      { title: "Stills from the same session", text: "Graded photos for your listings, your website and print." },
+      { title: "Direct booking page + ads", text: "So more guests book with you directly, instead of paying an OTA around 15%." },
+    ],
+    offerNote: "How many videos, and which parts, we agree with you before we start.",
+    contactEyebrow: "03 · CONTACT",
+    contactA: "LET'S",
+    contactB: "TALK.",
+    contactSub: "A reply within 24 hours - from a person, not a bot.",
+    channels: [
+      { kind: "call", label: "CALL", value: "+359 88 225 1474", action: "Call", href: "tel:+359882251474" },
+      { kind: "whatsapp", label: "WHATSAPP", value: "Message us", action: "Open chat", href: "https://wa.me/359882251474" },
+      { kind: "email", label: "EMAIL", value: "vektoagency@gmail.com", action: "Write", href: "mailto:vektoagency@gmail.com" },
+    ],
+    copy: "Copy",
+    copied: "Copied",
+    based: "BULGARIA · US",
+    rights: "All rights reserved.",
+  },
+  th: {
+    toggle: "EN",
+    toggleLabel: "Switch to English",
+    heroEyebrow: "VEKTO · วิดีโอสำหรับโรงแรมและวิลล่า",
+    h1a: "วิดีโอสำหรับ",
+    h1b: "ที่พักของคุณ",
+    sub: "วิดีโอแนวตั้งสั้น ๆ สำหรับ Instagram, TikTok และหน้าประกาศที่พักของคุณ พร้อมหน้าเว็บจองตรงและโฆษณา ที่พาแขกมาจองกับคุณโดยไม่ต้องเสียค่าคอมมิชชั่นให้ OTA",
+    here: "เราจะอยู่ที่ภูเก็ต 9 มกราคม - 8 กุมภาพันธ์ 2027",
+    stats: [
+      { num: "300+", label: "วิดีโอต่อเดือน" },
+      { num: "100+", label: "ธุรกิจ" },
+      { num: "BG · US", label: "สองตลาด" },
+    ],
+    workEyebrow: "01 · ผลงานลูกค้า",
+    workTitle: "ผลงานวิดีโอ",
+    soundOn: "เปิดเสียงเพื่อรับชม",
+    hotels: "โรงแรมและรีสอร์ต",
+    hotelsNote: "รีสอร์ตสุขภาพและรีสอร์ตบนภูเขา - ห้องพัก สระว่ายน้ำ ร้านอาหาร และบริเวณรอบ ๆ",
+    property: "อสังหาริมทรัพย์",
+    propertyNote: "ไม่ใช่โรงแรม แต่เป็นโครงการที่อยู่อาศัย - งานเดียวกัน คือขายอาคารผ่านวิดีโอ",
+    offerEyebrow: "02 · สำหรับที่พักของคุณ",
+    offerTitle: "สิ่งที่เราทำ",
+    offer: [
+      { title: "วิดีโอแนวตั้งสั้น", text: "ตัดต่อสำหรับ Reels, TikTok และหน้าประกาศบน Booking และ Airbnb เป็นของคุณ ใช้ได้ทุกที่" },
+      { title: "ภาพนิ่งจากการถ่ายครั้งเดียวกัน", text: "ภาพที่ปรับสีแล้ว สำหรับหน้าประกาศ เว็บไซต์ และงานพิมพ์" },
+      { title: "หน้าเว็บจองตรง + โฆษณา", text: "เพื่อให้แขกจองกับคุณโดยตรงมากขึ้น แทนที่จะเสียค่าคอมมิชชั่นประมาณ 15% ให้ OTA" },
+    ],
+    offerNote: "จำนวนวิดีโอและขอบเขตงาน เราตกลงกับคุณก่อนเริ่มงาน",
+    contactEyebrow: "03 · ติดต่อ",
+    contactA: "คุย",
+    contactB: "กับเรา",
+    contactSub: "ตอบกลับภายใน 24 ชั่วโมง โดยคนจริง ไม่ใช่บอท",
+    channels: [
+      { kind: "call", label: "โทร", value: "+359 88 225 1474", action: "โทรเลย", href: "tel:+359882251474" },
+      { kind: "whatsapp", label: "WHATSAPP", value: "ส่งข้อความหาเรา", action: "เปิดแชท", href: "https://wa.me/359882251474" },
+      { kind: "email", label: "อีเมล", value: "vektoagency@gmail.com", action: "เขียนถึงเรา", href: "mailto:vektoagency@gmail.com" },
+    ],
+    copy: "คัดลอก",
+    copied: "คัดลอกแล้ว",
+    based: "บัลแกเรีย · สหรัฐฯ",
+    rights: "สงวนลิขสิทธิ์",
+  },
+} as const;
 
 export default function HospitalityClient() {
+  const [lang, setLang] = useState<L>("en");
+  const t = COPY[lang];
+  const th = lang === "th";
+
+  const [solid, setSolid] = useState(false);
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
   const [expanded, setExpanded] = useState<Clip | null>(null);
-  const total = hotels.length + property.length;
+  const [copied, setCopied] = useState(false);
+
+  // ?lang=th from an email, or a Thai browser, opens the page in Thai.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("lang");
+    if (q === "th" || q === "en") setLang(q);
+    else if ((navigator.language || "").toLowerCase().startsWith("th")) setLang("th");
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  useEffect(() => {
+    const onScroll = () => setSolid(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // The hero video is desktop-only; phones get its still.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const apply = () => setIsDesktop(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     if (!expanded) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setExpanded(null);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setExpanded(null); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [expanded]);
 
   useEffect(() => {
-    (async () => {
-      const cal = await getCalApi({ namespace: "30min" });
-      cal("ui", {
-        theme: "dark",
-        cssVarsPerTheme: {
-          light: { "cal-brand": "#f4f4f4" },
-          dark: { "cal-brand": "#f4f4f4" },
-        },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-    })();
-  }, []);
-
-  // Same contract as /portfolio — pause the Hero R3F background and any
-  // mobile preview tiles while a clip is playing full-screen.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
     window.dispatchEvent(new Event(expanded ? "vekto:player-open" : "vekto:player-closed"));
-    return () => {
-      if (expanded) window.dispatchEvent(new Event("vekto:player-closed"));
-    };
   }, [expanded]);
 
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("vektoagency@gmail.com");
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = "mailto:vektoagency@gmail.com";
+    }
+  };
+
+  // Thai: no wide tracking, no forced caps, room for marks above and below.
+  const track = (en: string) => (th ? "0.02em" : en);
+  const lh = (en: number) => (th ? Math.max(en, 1.3) : en);
+  const eyebrow = `text-[10px] md:text-xs font-bold ${th ? "" : "uppercase"} opacity-55`;
+  const sectionTitle = `font-black ${th ? "" : "uppercase"}`;
+  const silver = { background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" } as const;
+
   return (
-    <>
+    <div
+      className="relative"
+      style={{ background: "#0d0d0d", color: "#f4f4f4", fontFamily: "var(--brutal-display), system-ui, sans-serif", overflowX: "clip" }}
+    >
       <div
-        className="sticky top-[56px] md:top-[76px] z-30 flex items-center justify-between px-6 md:px-10 py-3 border-b border-[#f4f4f4]/45 font-mono text-[11px] uppercase tracking-[0.3em]"
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[2]"
+        style={{ backgroundImage: "repeating-linear-gradient(0deg, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 1px, transparent 1px, transparent 3px)" }}
+      />
+
+      {/* ============ HEADER — wordmark and the language toggle ============ */}
+      <div
+        className="fixed inset-x-0 top-0 z-50"
         style={{
-          background: "#161616",
-          boxShadow: "0 2px 0 rgba(244,244,244,0.18), 0 10px 24px -12px rgba(0,0,0,0.6)",
+          background: solid ? "rgba(13,13,13,0.94)" : "transparent",
+          borderBottom: solid ? "1px solid rgba(244,244,244,0.18)" : "1px solid transparent",
+          backdropFilter: solid ? "blur(8px)" : undefined,
+          transition: "background-color 300ms ease, border-color 300ms ease",
         }}
       >
-        <div className="flex items-center gap-3 text-[#f4f4f4]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
-          Hospitality — {total} videos
+        <div className="px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          <div
+            role="img"
+            aria-label="VEKTO"
+            className="h-8 md:h-11 w-[112px] md:w-[180px] shrink-0"
+            style={{
+              background: WORDMARK_METAL,
+              filter: "drop-shadow(0 0 1px rgba(13,13,13,0.95)) drop-shadow(0 1px 5px rgba(13,13,13,0.75))",
+              WebkitMaskImage: "url(/images/logo.png)", maskImage: "url(/images/logo.png)",
+              WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat",
+              WebkitMaskPosition: "left center", maskPosition: "left center",
+              WebkitMaskSize: "contain", maskSize: "contain",
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => setLang(th ? "en" : "th")}
+            className="px-2.5 md:px-3 py-2 font-bold text-xs shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+            style={{ border: "1.5px solid rgba(244,244,244,0.75)", letterSpacing: th ? "0.25em" : "0.02em", fontFamily: "var(--f-thai), var(--f-display-lat), sans-serif" }}
+            aria-label={t.toggleLabel}
+          >
+            {t.toggle}
+          </button>
         </div>
-        <Link
-          href="/"
-          className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#0d0d0d] bg-[#f4f4f4] px-4 py-2 font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
-          style={{ boxShadow: "3px 3px 0 0 #3a3a3a" }}
-          aria-label="Back"
-        >
-          <span aria-hidden>←</span>
-          <span>Back</span>
-        </Link>
       </div>
 
-      {/* Deliberately short. This page is opened from a cold email, so the
-          work has to be on screen before anyone decides to read anything —
-          the headline and the strapline share one row on desktop rather
-          than stacking into a wall the grid has to sit under. */}
-      <section className="px-6 md:px-12 pt-6 md:pt-8 max-w-[1240px] mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2.5 md:gap-10">
-          <h1 className="text-[28px] md:text-[42px] font-black leading-[1.05] tracking-tight text-[#f4f4f4] text-balance max-w-[14ch]">
-            Video for places people stay in.
-          </h1>
-          <div className="md:text-right md:pb-1 md:max-w-[44ch] shrink-0">
-            <p className="text-[#f4f4f4]/70 text-[14px] md:text-[15px] leading-snug">
-              Video, direct booking pages and paid ads for hotels and villas.
-            </p>
-            <p className="mt-1.5 text-[#f4f4f4]/40 font-mono text-[10px] uppercase tracking-[0.18em]">
-              Client work. Sound on.
-            </p>
-          </div>
+      {/* ============ HERO ============ */}
+      <section className="relative flex flex-col justify-end overflow-hidden" style={{ minHeight: "88dvh" }}>
+        <div className="absolute inset-0 z-0">
+          {isDesktop === true && (
+            <video src="/videos/arte-script-1-480p.mp4" autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
+          )}
+          {isDesktop === false && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src="/videos/thumbnails/arte-script-1.webp" alt="" className="w-full h-full object-cover" />
+          )}
         </div>
-      </section>
+        <div aria-hidden className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "rgba(13,13,13,0.6)" }} />
+        <div aria-hidden className="absolute inset-x-0 top-0 h-[38%] z-[1] pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(13,13,13,0.96) 0%, rgba(13,13,13,0.6) 55%, transparent 100%)" }} />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[50%] z-[1] pointer-events-none" style={{ background: "linear-gradient(to top, rgba(13,13,13,0.98) 0%, rgba(13,13,13,0.7) 55%, transparent 100%)" }} />
 
-      <Group
-        label="Hotels & resorts"
-        note="Wellness and mountain resorts — rooms, pools, restaurant, grounds."
-        clips={hotels}
-        onExpand={setExpanded}
-        offset={0}
-      />
-
-      <Group
-        label="Property"
-        note="Not hotels — residential developments. Same job: sell a building on camera."
-        clips={property}
-        onExpand={setExpanded}
-        offset={hotels.length}
-      />
-
-      <section className="px-6 md:px-12 pt-6 pb-4 max-w-[1240px] mx-auto">
-        <div className="border border-[#f4f4f4]/20 p-6 md:p-9">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#f4f4f4]/50">
-            What we do for a property
-          </div>
-          <div className="mt-5 grid gap-5 sm:grid-cols-3">
-            {[
-              ["Short vertical video", "Cut for Reels, TikTok and the top of your Booking and Airbnb listings. Yours to keep and use anywhere. How many is agreed before we start."],
-              ["Stills from the same session", "Graded photography for listings, the site, and anything print — when it is wanted."],
-              ["A direct booking page", "And the paid ads pointing at it, when they are useful — so a larger share of your guests arrive without an OTA commission."],
-            ].map(([h, b]) => (
-              <div key={h}>
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f4f4] font-bold">{h}</div>
-                <p className="mt-2 text-[13px] leading-relaxed text-[#f4f4f4]/60">{b}</p>
+        <div className="relative z-10 px-6 md:px-14 pb-12 md:pb-16 max-w-[1400px] w-full mx-auto">
+          <p className={`${eyebrow} mb-5`} style={{ fontFamily: PIXEL, letterSpacing: track("0.35em") }}>{t.heroEyebrow}</p>
+          <h1
+            className={`font-black ${th ? "" : "uppercase"} mb-6 max-w-5xl`}
+            style={{ fontSize: th ? "clamp(34px, 6vw, 88px)" : "clamp(38px, 7.2vw, 108px)", lineHeight: lh(0.94), letterSpacing: th ? "0" : "-0.03em" }}
+          >
+            {t.h1a}
+            <br />
+            <span className={th ? "" : "italic pr-[0.08em]"} style={silver}>{t.h1b}</span>
+          </h1>
+          <p className="text-[15px] md:text-lg max-w-2xl opacity-80 font-medium mb-5" style={{ fontFamily: COMIC, lineHeight: th ? 1.7 : 1.6 }}>
+            {t.sub}
+          </p>
+          <p className="flex items-center gap-2.5 text-[11px] md:text-xs font-bold opacity-75 mb-9 md:mb-10" style={{ fontFamily: PIXEL, letterSpacing: track("0.25em") }}>
+            <span aria-hidden className="w-[7px] h-[7px] rotate-45 shrink-0" style={{ background: "#f4f4f4" }} />
+            <span className={th ? "" : "uppercase"}>{t.here}</span>
+          </p>
+          <div className="grid grid-cols-3 gap-4 md:gap-10 pt-5" style={{ borderTop: "1px solid rgba(244,244,244,0.25)" }}>
+            {t.stats.map((s) => (
+              <div key={s.num}>
+                <div className="font-black leading-none tabular-nums" style={{ fontSize: "clamp(22px, 3vw, 44px)", letterSpacing: "-0.03em", ...silver }}>{s.num}</div>
+                <p className={`text-[10px] md:text-[11px] font-bold ${th ? "" : "uppercase"} opacity-65 mt-1.5`} style={{ fontFamily: PIXEL, letterSpacing: track("0.22em") }}>{s.label}</p>
               </div>
             ))}
           </div>
-          <p className="mt-6 text-[13px] leading-relaxed text-[#f4f4f4]/50 max-w-[70ch]">
-            Nothing here is a fixed package. Tell us which part is actually useful to you and
-            we will shape the work around that.
-          </p>
         </div>
       </section>
 
-      <section className="relative px-6 md:px-10 pt-10 pb-20 max-w-[1100px] mx-auto text-center">
-        <h2 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-[#f4f4f4] po-glow text-balance">
-          Want this for
-          <br />
-          <span className="text-[#f4f4f4]">your property?</span>
-        </h2>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button
-            data-cal-namespace="30min"
-            data-cal-link="vekto/30min"
-            data-cal-config='{"layout":"month_view","theme":"dark"}'
-            className="inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] text-[13px] px-10 py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform cursor-pointer"
-            style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
-          >
-            Book a call
-          </button>
-          <a
-            href="mailto:vektoagency@gmail.com"
-            className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] px-10 py-4 hover:bg-white hover:text-black transition-colors cursor-pointer font-mono text-sm uppercase tracking-[0.2em] font-bold"
-          >
-            vektoagency@gmail.com
-          </a>
+      {/* ============ 01 · THE WORK ============ */}
+      <section id="work" className="py-14 md:py-24" style={{ background: "#141414", borderTop: "1px solid rgba(244,244,244,0.14)", borderBottom: "1px solid rgba(244,244,244,0.14)" }}>
+        <div className="px-6 md:px-14 max-w-[1400px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-10 md:mb-12">
+            <div>
+              <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL, letterSpacing: track("0.35em") }}>{t.workEyebrow} · {HOTELS.length + PROPERTY.length}</p>
+              <h2 className={sectionTitle} style={{ fontSize: "clamp(34px, 5.4vw, 80px)", lineHeight: lh(0.96), letterSpacing: th ? "0" : "-0.03em" }}>{t.workTitle}</h2>
+            </div>
+            <p className={`text-[11px] font-bold opacity-50 ${th ? "" : "uppercase"}`} style={{ fontFamily: PIXEL, letterSpacing: track("0.2em") }}>{t.soundOn}</p>
+          </div>
+
+          {[
+            { label: t.hotels, note: t.hotelsNote, clips: HOTELS, offset: 0 },
+            { label: t.property, note: t.propertyNote, clips: PROPERTY, offset: HOTELS.length },
+          ]
+            .filter((g) => g.clips.length > 0)
+            .map((g) => (
+              <div key={g.label} className="mb-10 md:mb-14 last:mb-0">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 border-b border-[#f4f4f4]/20 pb-2.5 mb-5">
+                  <h3 className={`text-[12px] font-bold ${th ? "" : "uppercase"} whitespace-nowrap`} style={{ fontFamily: PIXEL, letterSpacing: track("0.3em") }}>{g.label}</h3>
+                  <span className={`text-[11px] opacity-45 ${th ? "" : "uppercase"}`} style={{ fontFamily: PIXEL, letterSpacing: track("0.14em") }}>{g.note}</span>
+                </div>
+                <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7">
+                  {g.clips.map((c, i) => (
+                    <ClipTile key={c.id} clip={c} idx={g.offset + i} onExpand={() => setExpanded(c)} />
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+      </section>
+
+      {/* ============ 02 · WHAT WE DO FOR A PROPERTY ============ */}
+      <section className="px-6 md:px-14 py-14 md:py-24 max-w-[1400px] mx-auto">
+        <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL, letterSpacing: track("0.35em") }}>{t.offerEyebrow}</p>
+        <h2 className={`${sectionTitle} mb-10 md:mb-12`} style={{ fontSize: "clamp(34px, 5.4vw, 80px)", lineHeight: lh(0.96), letterSpacing: th ? "0" : "-0.03em" }}>{t.offerTitle}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
+          {t.offer.map((o, i) => (
+            <div key={o.title} className="border-2 p-6 md:p-7 flex flex-col" style={{ background: "#0d0d0d", borderColor: "rgba(244,244,244,0.3)", boxShadow: "6px 6px 0 0 #2a2a2a" }}>
+              <span className="self-start px-2 py-1 border-2 border-black text-[11px] font-bold tracking-[0.25em] mb-6" style={{ background: SILVER_H, color: "#0d0d0d", fontFamily: "var(--f-pixel), monospace" }}>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className={`font-black ${th ? "" : "uppercase"} mb-3 text-balance`} style={{ fontSize: "clamp(20px, 1.7vw, 26px)", lineHeight: lh(1), letterSpacing: th ? "0" : "-0.02em" }}>{o.title}</h3>
+              <p className="text-[14px] font-medium opacity-80" style={{ fontFamily: COMIC, lineHeight: th ? 1.75 : 1.55 }}>{o.text}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 text-[14px] opacity-60 max-w-[70ch]" style={{ fontFamily: COMIC, lineHeight: th ? 1.75 : 1.55 }}>{t.offerNote}</p>
+      </section>
+
+      {/* ============ 03 · CONTACT ============ */}
+      <section id="contact" className="relative overflow-hidden" style={{ background: "#141414", borderTop: "1px solid rgba(244,244,244,0.14)" }}>
+        <SectionPlate src="creatives" ground="#141414" opacity={0.42} />
+        <div className="relative z-10 px-6 md:px-14 pt-14 md:pt-24 pb-10 md:pb-12 max-w-[1400px] mx-auto">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-12 mb-10 md:mb-14">
+            <div>
+              <p className={`${eyebrow} mb-4`} style={{ fontFamily: PIXEL, letterSpacing: track("0.35em") }}>{t.contactEyebrow}</p>
+              <h2 className={`${sectionTitle} lg:whitespace-nowrap`} style={{ fontSize: th ? "clamp(44px, 7vw, 110px)" : "clamp(48px, 8.4vw, 132px)", lineHeight: lh(0.96), letterSpacing: th ? "0" : "-0.03em" }}>
+                {t.contactA}{th ? "" : " "}
+                <span className={th ? "" : "italic pr-[0.06em]"} style={silver}>{t.contactB}</span>
+              </h2>
+            </div>
+            <div className="lg:max-w-[340px] lg:pb-3">
+              <p className="text-[15px] md:text-[17px] opacity-80 font-medium mb-4" style={{ fontFamily: COMIC, lineHeight: th ? 1.7 : 1.6 }}>{t.contactSub}</p>
+              <div className={`flex items-center gap-2.5 text-[11px] font-bold opacity-55 ${th ? "" : "uppercase"}`} style={{ fontFamily: PIXEL, letterSpacing: track("0.3em") }}>
+                <span aria-hidden className="w-[7px] h-[7px] rotate-45" style={{ background: "#f4f4f4" }} />
+                {t.based}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {t.channels.map((ch) => {
+              const external = ch.href.startsWith("http");
+              return (
+                <div key={ch.kind} className="relative">
+                  <a
+                    href={ch.href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="group flex h-full flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0 border-2 p-4 md:p-6 transition-[background-color,color,transform] duration-200 bg-[rgba(13,13,13,0.82)] text-[#f4f4f4] hover:bg-white hover:text-black hover:-translate-x-0.5 hover:-translate-y-0.5"
+                    style={{ borderColor: "rgba(244,244,244,0.55)", boxShadow: "6px 6px 0 0 #2a2a2a" }}
+                  >
+                    <span className="flex shrink-0 items-start justify-between md:mb-10">
+                      <span className="w-11 h-11 flex items-center justify-center border-2" style={{ borderColor: "currentColor" }}><ChannelIcon kind={ch.kind} /></span>
+                      <span aria-hidden className="hidden md:inline text-2xl font-black leading-none transition-transform group-hover:translate-x-1">→</span>
+                    </span>
+                    <span className="min-w-0 flex-1 md:flex-none">
+                      <span className="block text-[10px] md:text-[11px] font-bold opacity-60 mb-1.5 md:mb-2" style={{ fontFamily: PIXEL, letterSpacing: track("0.3em") }}>{ch.label}</span>
+                      <span className="block font-black text-[17px] md:text-[clamp(16px,1.55vw,23px)] tabular-nums leading-tight truncate md:whitespace-normal">{ch.value}</span>
+                    </span>
+                    <span aria-hidden className="md:hidden shrink-0 text-xl font-black leading-none">→</span>
+                    <span className="hidden md:block mt-auto pt-4 text-[11px] font-bold opacity-70" style={{ fontFamily: PIXEL, letterSpacing: track("0.25em") }}>
+                      <span className="block mb-4 mt-5 h-px" style={{ background: "currentColor", opacity: 0.35 }} />
+                      {ch.action}
+                    </span>
+                  </a>
+                  {ch.kind === "email" && (
+                    <button
+                      type="button"
+                      onClick={copyEmail}
+                      className="hidden md:block absolute right-6 bottom-[21px] px-2.5 py-1 text-[10px] font-bold border transition-colors bg-[rgba(13,13,13,0.9)] text-[#f4f4f4] hover:bg-white hover:text-black"
+                      style={{ fontFamily: PIXEL, borderColor: "rgba(244,244,244,0.55)", letterSpacing: track("0.22em") }}
+                      aria-live="polite"
+                    >
+                      {copied ? `✓ ${t.copied}` : t.copy}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-14 md:mt-20 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] opacity-45" style={{ borderTop: "1px solid rgba(244,244,244,0.14)", fontFamily: PIXEL, letterSpacing: track("0.2em") }}>
+            <span>© {new Date().getFullYear()} VEKTO. {t.rights}</span>
+            <span>vektoagency.com</span>
+          </div>
         </div>
       </section>
 
       {expanded && <ClipLightbox clip={expanded} onClose={() => setExpanded(null)} />}
-    </>
-  );
-}
-
-function Group({
-  label,
-  note,
-  clips,
-  onExpand,
-  offset,
-}: {
-  label: string;
-  note: string;
-  clips: Clip[];
-  onExpand: (c: Clip) => void;
-  offset: number;
-}) {
-  if (clips.length === 0) return null;
-  return (
-    <section className="px-6 md:px-12 pt-5 md:pt-6 pb-2 max-w-[1240px] mx-auto">
-      <div className="flex items-baseline gap-4 border-b border-[#f4f4f4]/20 pb-2.5 mb-4">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#f4f4f4] font-bold whitespace-nowrap">
-          {label}
-        </h2>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#f4f4f4]/40 truncate">
-          {note}
-        </span>
-      </div>
-      <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
-        {clips.map((c, i) => (
-          <ClipTile key={c.id} clip={c} idx={offset + i} onExpand={() => onExpand(c)} />
-        ))}
-      </div>
-    </section>
+    </div>
   );
 }
