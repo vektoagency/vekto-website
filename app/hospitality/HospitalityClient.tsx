@@ -4,8 +4,9 @@
 // /hospitality — the /cv page, cut down for hotels and villa owners.
 //
 // Four parts: hero, the work, what we do for a property, contact. No nav,
-// no funnel - the reader arrived from an email about a stay. English and
-// Thai, on their own toggle (?lang=th or a Thai browser opens in Thai).
+// no funnel - the reader arrived from an email about a stay. English, Thai
+// and Spanish on their own switch (?lang=th|es, or a Thai / Spanish browser).
+// The page names no trip or dates - one link serves every outreach.
 // Thai has no capitals and breaks under wide tracking, and its vowel and
 // tone marks sit above and below the line - so Thai text gets normal
 // tracking and open line-height instead of the film-world uppercase.
@@ -16,7 +17,7 @@ import bunnyData from "../data/bunny-clips.json";
 import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
 import SectionPlate from "../components/SectionPlate";
 
-type L = "en" | "th";
+type L = "en" | "th" | "es";
 
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
@@ -48,13 +49,10 @@ function ChannelIcon({ kind }: { kind: string }) {
 
 const COPY = {
   en: {
-    toggle: "ไทย",
-    toggleLabel: "เปลี่ยนเป็นภาษาไทย",
     heroEyebrow: "VEKTO · VIDEO FOR HOTELS & VILLAS",
     h1a: "VIDEO FOR PLACES",
     h1b: "PEOPLE STAY IN.",
     sub: "Short vertical video for Instagram, TikTok and your listings - plus direct booking pages and ads that bring guests to you without an OTA commission.",
-    here: "In Phuket 9 January - 8 February 2027",
     stats: [
       { num: "300+", label: "VIDEOS / MONTH" },
       { num: "100+", label: "BUSINESSES" },
@@ -90,13 +88,10 @@ const COPY = {
     rights: "All rights reserved.",
   },
   th: {
-    toggle: "EN",
-    toggleLabel: "Switch to English",
     heroEyebrow: "VEKTO · วิดีโอสำหรับโรงแรมและวิลล่า",
     h1a: "วิดีโอสำหรับ",
     h1b: "ที่พักของคุณ",
     sub: "วิดีโอแนวตั้งสั้น ๆ สำหรับ Instagram, TikTok และหน้าประกาศที่พักของคุณ พร้อมหน้าเว็บจองตรงและโฆษณา ที่พาแขกมาจองกับคุณโดยไม่ต้องเสียค่าคอมมิชชั่นให้ OTA",
-    here: "เราจะอยู่ที่ภูเก็ต 9 มกราคม - 8 กุมภาพันธ์ 2027",
     stats: [
       { num: "300+", label: "วิดีโอต่อเดือน" },
       { num: "100+", label: "ธุรกิจ" },
@@ -131,7 +126,52 @@ const COPY = {
     based: "บัลแกเรีย · สหรัฐฯ",
     rights: "สงวนลิขสิทธิ์",
   },
+  es: {
+    heroEyebrow: "VEKTO · VÍDEO PARA HOTELES Y VILLAS",
+    h1a: "VÍDEO PARA",
+    h1b: "HOTELES Y VILLAS.",
+    sub: "Vídeos verticales cortos para Instagram, TikTok y tus anuncios - y páginas de reserva directa y publicidad que te traen huéspedes sin pagar comisión a Booking o Airbnb.",
+    stats: [
+      { num: "300+", label: "VÍDEOS / MES" },
+      { num: "100+", label: "EMPRESAS" },
+      { num: "BG · US", label: "DOS MERCADOS" },
+    ],
+    workEyebrow: "01 · TRABAJO PARA CLIENTES",
+    workTitle: "LOS VÍDEOS",
+    soundOn: "Con sonido.",
+    hotels: "Hoteles y resorts",
+    hotelsNote: "Resorts de bienestar y de montaña - habitaciones, piscinas, restaurante, entorno.",
+    property: "Inmuebles",
+    propertyNote: "No son hoteles - promociones residenciales. El mismo trabajo: vender un edificio en vídeo.",
+    offerEyebrow: "02 · PARA TU ALOJAMIENTO",
+    offerTitle: "LO QUE HACEMOS",
+    offer: [
+      { title: "Vídeo vertical corto", text: "Montado para Reels, TikTok y la parte superior de tus anuncios en Booking y Airbnb. Es tuyo y lo usas donde quieras." },
+      { title: "Fotos de la misma sesión", text: "Fotos retocadas para tus anuncios, tu web e impresión." },
+      { title: "Reserva directa + publicidad", text: "Para que más huéspedes reserven directamente contigo, en lugar de pagar alrededor de un 15 % a una OTA." },
+    ],
+    offerNote: "Cuántos vídeos y qué partes, lo acordamos contigo antes de empezar.",
+    contactEyebrow: "03 · CONTACTO",
+    contactA: "VAMOS A",
+    contactB: "HABLAR.",
+    contactSub: "Respuesta en 24 horas - de una persona, no de un bot.",
+    channels: [
+      { kind: "call", label: "LLAMAR", value: "+359 88 225 1474", action: "Llamar", href: "tel:+359882251474" },
+      { kind: "whatsapp", label: "WHATSAPP", value: "Escríbenos", action: "Abrir chat", href: "https://wa.me/359882251474" },
+      { kind: "email", label: "EMAIL", value: "vektoagency@gmail.com", action: "Escribir", href: "mailto:vektoagency@gmail.com" },
+    ],
+    copy: "Copiar",
+    copied: "Copiado",
+    based: "BULGARIA · EE. UU.",
+    rights: "Todos los derechos reservados.",
+  },
 } as const;
+
+const LANGS: { id: L; label: string; aria: string }[] = [
+  { id: "en", label: "EN", aria: "English" },
+  { id: "th", label: "ไทย", aria: "ภาษาไทย" },
+  { id: "es", label: "ES", aria: "Español" },
+];
 
 export default function HospitalityClient() {
   const [lang, setLang] = useState<L>("en");
@@ -145,9 +185,12 @@ export default function HospitalityClient() {
 
   // ?lang=th from an email, or a Thai browser, opens the page in Thai.
   useEffect(() => {
-    const q = new URLSearchParams(window.location.search).get("lang");
-    if (q === "th" || q === "en") setLang(q);
-    else if ((navigator.language || "").toLowerCase().startsWith("th")) setLang("th");
+    const qs = new URLSearchParams(window.location.search);
+    const q = qs.get("lang");
+    const nav = (navigator.language || "").toLowerCase();
+    if (q === "th" || q === "en" || q === "es") setLang(q);
+    else if (nav.startsWith("th")) setLang("th");
+    else if (nav.startsWith("es")) setLang("es");
   }, []);
 
   useEffect(() => {
@@ -233,15 +276,26 @@ export default function HospitalityClient() {
               WebkitMaskSize: "contain", maskSize: "contain",
             }}
           />
-          <button
-            type="button"
-            onClick={() => setLang(th ? "en" : "th")}
-            className="px-2.5 md:px-3 py-2 font-bold text-xs shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
-            style={{ border: "1.5px solid rgba(244,244,244,0.75)", letterSpacing: th ? "0.25em" : "0.02em", fontFamily: "var(--f-thai), var(--f-display-lat), sans-serif" }}
-            aria-label={t.toggleLabel}
-          >
-            {t.toggle}
-          </button>
+          <div className="flex shrink-0" role="group" aria-label="Language">
+            {LANGS.map((o, i) => (
+              <button
+                key={o.id}
+                type="button"
+                onClick={() => setLang(o.id)}
+                aria-label={o.aria}
+                aria-pressed={lang === o.id}
+                className={`px-2.5 md:px-3 py-2 font-bold text-xs transition-colors ${lang === o.id ? "bg-white text-black" : "text-[#f4f4f4] hover:bg-white/15"}`}
+                style={{
+                  border: "1.5px solid rgba(244,244,244,0.75)",
+                  marginLeft: i ? -1.5 : 0,
+                  letterSpacing: o.id === "th" ? "0" : "0.2em",
+                  fontFamily: "var(--f-thai), var(--f-display-lat), sans-serif",
+                }}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -273,10 +327,7 @@ export default function HospitalityClient() {
           <p className="text-[15px] md:text-lg max-w-2xl opacity-80 font-medium mb-5" style={{ fontFamily: COMIC, lineHeight: th ? 1.7 : 1.6 }}>
             {t.sub}
           </p>
-          <p className="flex items-center gap-2.5 text-[11px] md:text-xs font-bold opacity-75 mb-9 md:mb-10" style={{ fontFamily: PIXEL, letterSpacing: track("0.25em") }}>
-            <span aria-hidden className="w-[7px] h-[7px] rotate-45 shrink-0" style={{ background: "#f4f4f4" }} />
-            <span className={th ? "" : "uppercase"}>{t.here}</span>
-          </p>
+          <div className="mb-5 md:mb-6" />
           <div className="grid grid-cols-3 gap-4 md:gap-10 pt-5" style={{ borderTop: "1px solid rgba(244,244,244,0.25)" }}>
             {t.stats.map((s) => (
               <div key={s.num}>
