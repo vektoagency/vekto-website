@@ -1818,8 +1818,10 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
       <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14 overflow-hidden">
-        {/* The strategy room behind the pass, held still while it stamps. */}
-        <SectionPlate src="strategy" ground="#141414" opacity={0.55} />
+        {/* An audience on its feet behind the pass (a frame from our
+            CODEFASHION film) - not one of the 03 rooms, so the page never
+            shows the same plate twice. Held still while the pass stamps. */}
+        <SectionPlate src="applause" ground="#141414" opacity={0.6} />
         <div
           className="relative z-10 w-full max-w-xl flex flex-col border-2"
           style={{
