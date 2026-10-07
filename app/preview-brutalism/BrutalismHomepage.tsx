@@ -25,6 +25,7 @@ import HeroCinematicBg from "../components/HeroCinematicBg";
 import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
 import Footer from "../components/Footer";
+import SectionPlate from "../components/SectionPlate";
 import { ROSTER, type Client } from "../data/roster";
 
 // ============================================================================
@@ -1816,11 +1817,13 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
       ref={targetRef}
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
-      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14">
+      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14 overflow-hidden">
+        {/* The strategy room behind the pass, held still while it stamps. */}
+        <SectionPlate src="strategy" ground="#141414" opacity={0.55} />
         <div
-          className="w-full max-w-xl flex flex-col border-2"
+          className="relative z-10 w-full max-w-xl flex flex-col border-2"
           style={{
-            background: "#0d0d0d",
+            background: "rgba(13,13,13,0.9)",
             borderColor: "rgba(244,244,244,0.45)",
             boxShadow: "10px 10px 0 0 #2a2a2a",
           }}
