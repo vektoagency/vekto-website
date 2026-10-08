@@ -1871,6 +1871,17 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
       ref={targetRef}
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
+      <style>{`
+        @keyframes q-stamp {
+          0%   { transform: translateY(-40%) scale(1.7) rotate(-10deg); opacity: 0; }
+          55%  { transform: translateY(0) scale(0.9) rotate(2deg); opacity: 1; }
+          100% { transform: none; opacity: 1; }
+        }
+        @keyframes q-tick { to { stroke-dashoffset: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="q-stamp"], [style*="q-tick"] { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+        }
+      `}</style>
       <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14 pt-[56px] md:pt-[76px] overflow-hidden">
         <ContactSheet p={p} />
         <div
@@ -1940,30 +1951,44 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
                     opacity: done ? 1 : 0.4,
                   }}
                 >
+                  {/* The box never changes size, so rows stay aligned. A
+                      stamp lands inside it: the silver plate drops in from
+                      above, tilted and oversized, and settles; the tick
+                      then draws itself across it. Both run once, when the
+                      criterion is first stamped (the pass only fills forward). */}
                   <span
-                    className="mt-0.5 w-7 h-7 flex-shrink-0 border-2 flex items-center justify-center transition-all duration-300"
-                    style={{
-                      // A stamp lands: the box drops in from slightly larger.
-                      transform: done ? "scale(1)" : "scale(1.25)",
-                      transitionTimingFunction: "cubic-bezier(0.2, 1.4, 0.4, 1)",
-                      background: done ? SILVER : "transparent",
-                      borderColor: "rgba(244,244,244,0.5)",
-                      color: done ? "#0d0d0d" : "transparent",
-                    }}
+                    className="relative mt-0.5 w-7 h-7 flex-shrink-0 border-2"
+                    style={{ borderColor: done ? "rgba(244,244,244,0.85)" : "rgba(244,244,244,0.5)" }}
                   >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M3 8L7 12L13 4"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="square"
-                        style={{
-                          strokeDasharray: 20,
-                          strokeDashoffset: done ? 0 : 20,
-                          transition: "stroke-dashoffset 500ms ease-out",
-                        }}
-                      />
-                    </svg>
+                    {done && (
+                      <>
+                        <span
+                          aria-hidden
+                          className="absolute inset-0"
+                          style={{ background: SILVER, animation: "q-stamp 420ms cubic-bezier(0.2, 1.3, 0.4, 1) both" }}
+                        />
+                        <svg
+                          className="absolute inset-0 m-auto"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          aria-hidden
+                        >
+                          <path
+                            d="M3 8L7 12L13 4"
+                            stroke="#0d0d0d"
+                            strokeWidth="2.5"
+                            strokeLinecap="square"
+                            style={{
+                              strokeDasharray: 18,
+                              strokeDashoffset: 18,
+                              animation: "q-tick 320ms ease-out 260ms forwards",
+                            }}
+                          />
+                        </svg>
+                      </>
+                    )}
                   </span>
                   <span className="text-sm md:text-base leading-[1.4] font-bold uppercase">
                     {q}
