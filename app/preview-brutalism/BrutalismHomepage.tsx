@@ -25,7 +25,7 @@ import HeroCinematicBg from "../components/HeroCinematicBg";
 import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
 import Footer from "../components/Footer";
-import SectionPlate from "../components/SectionPlate";
+import bunnyData from "../data/bunny-clips.json";
 import { ROSTER, type Client } from "../data/roster";
 
 // ============================================================================
@@ -1799,6 +1799,55 @@ function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | 
 // ============================================================================
 // STAGE 06 · QUALIFY
 // ============================================================================
+// A contact sheet of the actual work: every portfolio cover in a tight
+// greyscale grid, like frames laid out on a light table. It sits behind
+// the stage-05 pass so "what you get" stands on what we have made, and it
+// never repeats a room plate from stage 03. Covers are repeated to fill
+// the frame on any screen; CSS backgrounds keep every tile full-size
+// even before its picture arrives.
+const SHEET_COVERS: string[] = (
+  bunnyData.clips as { thumbnail: string; excludeFromPortfolio?: boolean }[]
+)
+  .filter((c) => !c.excludeFromPortfolio && c.thumbnail)
+  .map((c) => c.thumbnail);
+
+function ContactSheet() {
+  const covers = [...SHEET_COVERS, ...SHEET_COVERS, ...SHEET_COVERS].slice(0, 36);
+  return (
+    <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div
+        className="absolute -inset-[4%] grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-9 gap-[6px] md:gap-2 content-center"
+        style={{ transform: "rotate(-4deg) scale(1.08)" }}
+      >
+        {covers.map((src, i) => (
+          <div
+            key={i}
+            className="w-full aspect-[9/16] bg-center bg-cover"
+            style={{
+              backgroundImage: `url(${src})`,
+              backgroundColor: "#1c1c1c",
+              filter: "grayscale(1) contrast(1.1) brightness(0.8)",
+              opacity: 0.55,
+            }}
+          />
+        ))}
+      </div>
+      {/* Scrim: darker toward the middle where the pass sits, fading to the
+          section ground at every edge so the sheet has no hard border. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: [
+            "radial-gradient(ellipse 55% 60% at 50% 50%, rgba(20,20,20,0.82) 0%, rgba(20,20,20,0.55) 60%, rgba(20,20,20,0.35) 100%)",
+            "linear-gradient(180deg, #141414 0%, transparent 18%, transparent 82%, #141414 100%)",
+            "linear-gradient(90deg, #141414 0%, transparent 10%, transparent 90%, #141414 100%)",
+          ].join(", "),
+        }}
+      />
+    </div>
+  );
+}
+
 function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage6"]; openBook: () => void }) {
   // The qualification is one physical OBJECT — an access pass being
   // stamped criterion by criterion as the visitor scrolls — instead of a
@@ -1818,10 +1867,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
       <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14 overflow-hidden">
-        {/* An audience on its feet behind the pass (a frame from our
-            CODEFASHION film) - not one of the 03 rooms, so the page never
-            shows the same plate twice. Held still while the pass stamps. */}
-        <SectionPlate src="applause" ground="#141414" opacity={0.6} />
+        <ContactSheet />
         <div
           className="relative z-10 w-full max-w-xl flex flex-col border-2"
           style={{

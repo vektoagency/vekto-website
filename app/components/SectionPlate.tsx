@@ -12,7 +12,7 @@
 
 import Image from "next/image";
 
-export type PlateName = "creatives" | "websites" | "strategy" | "ai" | "applause";
+export type PlateName = "creatives" | "websites" | "strategy" | "ai";
 
 export default function SectionPlate({
   src,
