@@ -1809,13 +1809,18 @@ const SHEET_COVERS: string[] = (
   .filter((c) => !c.excludeFromPortfolio && c.thumbnail)
   .map((c) => c.thumbnail);
 
-function ContactSheet() {
+function ContactSheet({ p = 0 }: { p?: number }) {
   const covers = [...SHEET_COVERS, ...SHEET_COVERS, ...SHEET_COVERS].slice(0, 36);
   return (
     <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
       <div
         className="absolute -inset-[4%] grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-9 gap-[6px] md:gap-2 content-center"
-        style={{ transform: "rotate(-4deg) scale(1.08)" }}
+        // Drifts slowly up and across as the visitor scrolls, so the sheet
+        // reads as film moving past the pass rather than a frozen wall.
+        style={{
+          transform: `rotate(-4deg) scale(1.12) translate3d(${(p - 0.5) * -3}%, ${(p - 0.5) * -9}%, 0)`,
+          willChange: "transform",
+        }}
       >
         {covers.map((src, i) => (
           <div
@@ -1854,7 +1859,9 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
   // Stamps LATCH — the pass only fills forward. Scrolling back up (or
   // stopping mid-run and resuming) never un-stamps a criterion.
   const maxChecked = useRef(0);
-  const raw = Math.min(t.items.length, Math.floor(p * (t.items.length + 1.4)));
+  // Stamps spread evenly across the run: first at ~10%, last at ~78%,
+  // so there is no dead stretch before the first or between any two.
+  const raw = Math.min(t.items.length, Math.max(0, Math.floor((p - 0.1) / 0.17) + 1));
   if (raw > maxChecked.current) maxChecked.current = raw;
   const checked = maxChecked.current;
   const all = checked >= t.items.length;
@@ -1864,8 +1871,8 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
       ref={targetRef}
       className="relative h-[190vh] md:h-[240vh]" style={{ background: "#141414", color: "#f4f4f4" }}
     >
-      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14 overflow-hidden">
-        <ContactSheet />
+      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-14 pt-[56px] md:pt-[76px] overflow-hidden">
+        <ContactSheet p={p} />
         <div
           className="relative z-10 w-full max-w-xl flex flex-col border-2"
           style={{
@@ -1934,8 +1941,11 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
                   }}
                 >
                   <span
-                    className="mt-0.5 w-7 h-7 flex-shrink-0 border-2 flex items-center justify-center transition-all"
+                    className="mt-0.5 w-7 h-7 flex-shrink-0 border-2 flex items-center justify-center transition-all duration-300"
                     style={{
+                      // A stamp lands: the box drops in from slightly larger.
+                      transform: done ? "scale(1)" : "scale(1.25)",
+                      transitionTimingFunction: "cubic-bezier(0.2, 1.4, 0.4, 1)",
                       background: done ? SILVER : "transparent",
                       borderColor: "rgba(244,244,244,0.5)",
                       color: done ? "#0d0d0d" : "transparent",
