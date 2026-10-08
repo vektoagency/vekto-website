@@ -1856,14 +1856,10 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
   // stamped criterion by criterion as the visitor scrolls — instead of a
   // third page-wide list in a row (06 draws a line, 07 is display type).
   const p = useStickyProgress(targetRef);
-  // Stamps LATCH — the pass only fills forward. Scrolling back up (or
-  // stopping mid-run and resuming) never un-stamps a criterion.
-  const maxChecked = useRef(0);
-  // Stamps spread evenly across the run: first at ~10%, last at ~78%,
-  // so there is no dead stretch before the first or between any two.
-  const raw = Math.min(t.items.length, Math.max(0, Math.floor((p - 0.1) / 0.17) + 1));
-  if (raw > maxChecked.current) maxChecked.current = raw;
-  const checked = maxChecked.current;
+  // Stamps follow the scroll both ways: scrolling down stamps the next
+  // criterion, scrolling back up lifts it again. Spread evenly across the
+  // run: first at ~10%, then one every ~17%, no dead stretch between.
+  const checked = Math.min(t.items.length, Math.max(0, Math.floor((p - 0.1) / 0.17) + 1));
   const all = checked >= t.items.length;
   return (
     <section
@@ -1955,7 +1951,7 @@ function StageQualify({ targetRef, t, openBook }: { targetRef: React.RefObject<H
                       stamp lands inside it: the silver plate drops in from
                       above, tilted and oversized, and settles; the tick
                       then draws itself across it. Both run once, when the
-                      criterion is first stamped (the pass only fills forward). */}
+                      criterion is stamped; scrolling back up lifts the stamp. */}
                   <span
                     className="relative mt-0.5 w-7 h-7 flex-shrink-0 border-2"
                     style={{ borderColor: done ? "rgba(244,244,244,0.85)" : "rgba(244,244,244,0.5)" }}
