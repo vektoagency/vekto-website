@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import {
   IBM_Plex_Mono,
   Comic_Neue,
@@ -77,14 +77,8 @@ const COPY = {
 } as const;
 
 export default async function NotFound() {
-  const cookieLang = (await cookies()).get("vekto-lang")?.value;
-  const country = (await headers()).get("x-vercel-ip-country")?.toUpperCase();
-  const lang: "bg" | "en" =
-    cookieLang === "bg" || cookieLang === "en"
-      ? cookieLang
-      : country === "BG"
-        ? "bg"
-        : "en";
+  const cookieLang = (await cookies()).get("vekto-lang2")?.value;
+  const lang: "bg" | "en" = cookieLang === "bg" ? "bg" : "en";
   const t = COPY[lang];
 
   return (

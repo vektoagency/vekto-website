@@ -315,20 +315,9 @@ const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
 // HOOKS
 // ============================================================================
 function useLanguage(): [Lang, (l: Lang) => void] {
-  // Language now lives in the global LangProvider (vekto-lang cookie) so
-  // the homepage and every other route's SiteHeader stay in sync. One-time
-  // migration: visitors who picked EN back when the choice lived in
-  // localStorage keep it the first time they land without the cookie.
+  // Language lives in the global LangProvider (vekto-lang2 cookie, English
+  // unless the visitor picked Bulgarian) so every route stays in sync.
   const { lang, setLang } = useLang();
-  useEffect(() => {
-    try {
-      if (!document.cookie.includes("vekto-lang=")) {
-        const saved = localStorage.getItem("vekto.lang");
-        if (saved === "bg" || saved === "en") setLang(saved);
-      }
-    } catch {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return [lang, setLang];
 }
 

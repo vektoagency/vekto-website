@@ -34,7 +34,7 @@ const copy = {
           "• Месечен бюджет, тип съдържание",
           "Автоматично при посещение на сайта:",
           "• IP адрес, browser, тип устройство, страници които посещаваш",
-          "• Cookie за избор на език (vekto-lang) и cookie consent",
+          "• Cookie за избор на език (vekto-lang2) и cookie consent",
         ],
       },
       {
@@ -58,7 +58,7 @@ const copy = {
         title: "5. Cookies и проследяване",
         body: [
           "Използваме следните видове cookies:",
-          "• Необходими — функционалност на сайта (vekto-lang за език, cookie-consent)",
+          "• Необходими — функционалност на сайта (vekto-lang2 за език, cookie-consent)",
           "• Маркетинг — Meta Pixel за измерване на реклами и retargeting (само със съгласие)",
           "Можеш да управляваш съгласието чрез cookie banner-а на сайта или browser settings-ите си.",
           "Meta Pixel записва: PageView, Lead (при submit на форма), Schedule (резервация на среща), Contact (клик на телефон).",
@@ -136,7 +136,7 @@ const copy = {
           "• Monthly budget, content type",
           "Automatically during site visit:",
           "• IP, browser, device type, pages visited",
-          "• Language cookie (vekto-lang), cookie consent",
+          "• Language cookie (vekto-lang2), cookie consent",
         ],
       },
       {
@@ -160,7 +160,7 @@ const copy = {
         title: "5. Cookies and tracking",
         body: [
           "We use the following cookie types:",
-          "• Necessary — site functionality (vekto-lang, cookie-consent)",
+          "• Necessary — site functionality (vekto-lang2, cookie-consent)",
           "• Marketing — Meta Pixel for ad measurement and retargeting (only with consent)",
           "You can manage consent via the cookie banner or your browser settings.",
           "Meta Pixel tracks: PageView, Lead (form submit), Schedule (meeting booking), Contact (phone click).",
@@ -216,7 +216,7 @@ const copy = {
 
 export default async function PrivacyPage() {
   const cookieStore = await cookies();
-  const lang = (cookieStore.get("vekto-lang")?.value === "bg" ? "bg" : "en") as "bg" | "en";
+  const lang = (cookieStore.get("vekto-lang2")?.value === "bg" ? "bg" : "en") as "bg" | "en";
   const t = copy[lang];
 
   return (

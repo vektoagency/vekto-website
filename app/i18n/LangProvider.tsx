@@ -17,11 +17,11 @@ export function useLang() {
   return useContext(LangContext);
 }
 
-const COOKIE_KEY = "vekto-lang";
+const COOKIE_KEY = "vekto-lang2";
 
 function readCookie(): Lang | null {
   if (typeof document === "undefined") return null;
-  const m = document.cookie.match(/(?:^|;\s*)vekto-lang=(bg|en)/);
+  const m = document.cookie.match(/(?:^|;\s*)vekto-lang2=(bg|en)/);
   return (m?.[1] as Lang) ?? null;
 }
 

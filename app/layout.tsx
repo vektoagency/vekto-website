@@ -52,24 +52,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const cookieLang = cookieStore.get("vekto-lang")?.value;
-  // On a first visit the middleware sets vekto-lang from geo on the
-  // RESPONSE — it is not on the request yet, so reading the same header it
-  // reads keeps this first render in step with the cookie it is about to
-  // set. Without it the first screen always fell back to a fixed language
-  // and only the next navigation matched. A saved choice always wins.
+  // English by default for every visitor. Only a visitor who taps the
+  // language toggle gets another language, saved in vekto-lang2 (a new name
+  // on purpose: the old "vekto-lang" was set automatically from geo, so it
+  // says nothing about what anyone chose).
+  const cookieLang = cookieStore.get("vekto-lang2")?.value;
   const h = await headers();
-  const country = h.get("x-vercel-ip-country")?.toUpperCase();
   // Set by the middleware on English-only routes (/hospitality). It outranks
-  // both the saved cookie and geo, but never overwrites the cookie itself.
+  // the saved cookie but never overwrites it.
   const pinned = h.get("x-vekto-lang-pin") === "en";
-  const lang: Lang = pinned
-    ? "en"
-    : cookieLang === "bg" || cookieLang === "en"
-      ? cookieLang
-      : country === "BG"
-        ? "bg"
-        : "en";
+  const lang: Lang = pinned ? "en" : cookieLang === "bg" ? "bg" : "en";
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>
