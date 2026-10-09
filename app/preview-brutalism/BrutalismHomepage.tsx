@@ -636,17 +636,6 @@ export default function BrutalismHomepage() {
               </Link>
             ))}
           </nav>
-          <button
-            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black [text-shadow:0_0_1px_#0d0d0d,0_0_3px_rgba(13,13,13,0.9)] hover:[text-shadow:none]"
-            style={{
-              border: "1.5px solid rgba(244,244,244,0.75)",
-              filter: "drop-shadow(0 0 1px rgba(13,13,13,0.7))",
-            }}
-            aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
-          >
-            {t.nav.langSwitch}
-          </button>
           {/* The intake lives at /start — the page the ad traffic already
               lands on. One funnel, one form, one pixel stream; a full page
               beats a modal for a multi-field intake. */}

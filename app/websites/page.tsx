@@ -14,14 +14,14 @@ const ContactModal = dynamic(() => import("../components/ContactModal"));
 // on a page that speaks their language, not the growth-partner
 // umbrella hero.
 export const metadata: Metadata = {
-  title: "VEKTO — Уебсайтове и лендинг страници",
+  title: "VEKTO — Websites and landing pages",
   description:
-    "Проектираме и разработваме бързи, конверсионни уебсайтове — от лендинг до пълен ecom магазин. Next.js, Shopify, Webflow. Стартиране за 3-6 седмици.",
+    "We design and build fast, high-converting websites, from a landing page to a full e-commerce store. Next.js, Shopify, Webflow. Live in 3-6 weeks.",
   openGraph: {
     images: [OG_IMAGE],
-    title: "VEKTO — Уебсайтове и лендинг страници",
+    title: "VEKTO — Websites and landing pages",
     description:
-      "Бързи, конверсионни уебсайтове — от лендинг до пълен ecom. Next.js, Shopify, Webflow.",
+      "Fast, high-converting websites, from a landing page to full e-commerce. Next.js, Shopify, Webflow.",
     type: "website",
   },
 };

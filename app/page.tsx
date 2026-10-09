@@ -52,14 +52,14 @@ const comicCyr = Balsamiq_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "VEKTO — Криейтиви, фунии и AI на едно място",
+  title: "VEKTO — Creative, funnels and AI in one place",
   description:
-    "Един екип за криейтиви, фунии и AI решения. 100+ бизнеса в портфолиото, 300+ видеа на месец. Запази 30-минутен разговор — безплатно.",
+    "One team for creative, funnels and AI solutions. 100+ businesses in the portfolio, 300+ videos a month. Book a free 30-minute call.",
   openGraph: {
     images: [OG_IMAGE],
-    title: "VEKTO — Криейтиви, фунии и AI на едно място",
+    title: "VEKTO — Creative, funnels and AI in one place",
     description:
-      "Един екип за криейтиви, фунии и AI решения. 100+ бизнеса в портфолиото, 300+ видеа на месец.",
+      "One team for creative, funnels and AI solutions. 100+ businesses in the portfolio, 300+ videos a month.",
     url: "https://vektoagency.com",
     siteName: "VEKTO",
     locale: "bg_BG",

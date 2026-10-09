@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { cookies, headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
@@ -24,13 +23,13 @@ const geist = Geist({
 // this as 'compact card' rather than the tall landscape hero card.
 export const metadata: Metadata = {
   metadataBase: new URL("https://vektoagency.com"),
-  title: "VEKTO — Независима агенция за растеж",
+  title: "VEKTO — Independent growth agency",
   description:
-    "Реклами, съдържание, уебсайтове и стратегия — всичко на едно място. 100+ бизнеса в България и САЩ.",
+    "Ads, content, websites and strategy, all in one place. 100+ businesses in Bulgaria and the US.",
   openGraph: {
-    title: "VEKTO — Независима агенция за растеж",
+    title: "VEKTO — Independent growth agency",
     description:
-      "Реклами, съдържание, уебсайтове и стратегия — всичко на едно място. 100+ бизнеса в България и САЩ.",
+      "Ads, content, websites and strategy, all in one place. 100+ businesses in Bulgaria and the US.",
     url: "https://vektoagency.com",
     siteName: "VEKTO",
     locale: "bg_BG",
@@ -40,9 +39,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     images: [OG_IMAGE.url],
-    title: "VEKTO — Независима агенция за растеж",
+    title: "VEKTO — Independent growth agency",
     description:
-      "Реклами, съдържание, уебсайтове, стратегия — всичко на едно място. 100+ бизнеса в България и САЩ.",
+      "Ads, content, websites and strategy, all in one place. 100+ businesses in Bulgaria and the US.",
   },
 };
 
@@ -51,17 +50,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  // English by default for every visitor. Only a visitor who taps the
-  // language toggle gets another language, saved in vekto-lang2 (a new name
-  // on purpose: the old "vekto-lang" was set automatically from geo, so it
-  // says nothing about what anyone chose).
-  const cookieLang = cookieStore.get("vekto-lang2")?.value;
-  const h = await headers();
-  // Set by the middleware on English-only routes (/hospitality). It outranks
-  // the saved cookie but never overwrites it.
-  const pinned = h.get("x-vekto-lang-pin") === "en";
-  const lang: Lang = pinned ? "en" : cookieLang === "bg" ? "bg" : "en";
+  // The site is English only (owner's call, 2026-10-09). Every route is
+  // pinned to English: LangProvider ignores setLang and the header hides
+  // its toggle. The Bulgarian copy still sits in the dictionaries, unused.
+  const lang: Lang = "en";
+  const pinned = true;
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>

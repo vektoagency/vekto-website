@@ -136,7 +136,7 @@ const copy = {
 
 export default async function TermsPage() {
   const cookieStore = await cookies();
-  const lang = (cookieStore.get("vekto-lang2")?.value === "bg" ? "bg" : "en") as "bg" | "en";
+  const lang = "en" as "bg" | "en";
   const t = copy[lang];
 
   return (

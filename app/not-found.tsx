@@ -51,7 +51,7 @@ const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
 
 export const metadata: Metadata = {
-  title: "Страницата я няма — VEKTO",
+  title: "Page not found — VEKTO",
   robots: { index: false, follow: true },
 };
 
@@ -77,8 +77,8 @@ const COPY = {
 } as const;
 
 export default async function NotFound() {
-  const cookieLang = (await cookies()).get("vekto-lang2")?.value;
-  const lang: "bg" | "en" = cookieLang === "bg" ? "bg" : "en";
+  // The site is English only.
+  const lang: "bg" | "en" = "en";
   const t = COPY[lang];
 
   return (
@@ -97,7 +97,7 @@ export default async function NotFound() {
           "--brutal-pixel": "var(--f-pixel), ui-monospace, monospace",
           "--brutal-comic":
             "var(--f-comic-lat), var(--f-comic-cyr), system-ui, sans-serif",
-          "--bgk": lang === "bg" ? "0.92" : "1",
+          "--bgk": "1",
         } as React.CSSProperties
       }
     >

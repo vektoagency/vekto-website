@@ -21,12 +21,12 @@ const ContactModal = dynamic(() => import("../components/ContactModal"));
 export const metadata: Metadata = {
   title: "VEKTO — AI Creative",
   description:
-    "Кинематографични филми, кратки видеа, AI аватари и продуктови визуализации — създадени с AI на скорост и цена, каквито традиционните продукции не могат.",
+    "Cinematic films, short-form video, AI avatars and product visuals, made with AI at a speed and price traditional production can't match.",
   openGraph: {
     images: [OG_IMAGE],
     title: "VEKTO — AI Creative",
     description:
-      "Кинематографични филми, кратки видеа, AI аватари и продуктови визуализации — създадени с AI.",
+      "Cinematic films, short-form video, AI avatars and product visuals, made with AI.",
     type: "website",
   },
 };

@@ -769,20 +769,6 @@ function Header({ lang, setLang }: { lang: JourneyLang; setLang: (l: JourneyLang
             </Link>
           ))}
         </nav>
-        <button
-          onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-          className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0"
-          style={{
-            background: "transparent",
-            color: "#f4f4f4",
-            border: "1.5px solid rgba(244,244,244,0.75)",
-            textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9)",
-            filter: "drop-shadow(0 0 1px rgba(13,13,13,0.7))",
-          }}
-          aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
-        >
-          {lang === "bg" ? "EN" : "БГ"}
-        </button>
         <Link
           href="/start"
           className="inline-flex items-center gap-2 px-3 md:px-4 py-2 border-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"

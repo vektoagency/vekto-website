@@ -43,10 +43,10 @@ const comicCyr = Balsamiq_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Бриф за проект — VEKTO",
+  title: "Project brief — VEKTO",
   openGraph: {
     images: [OG_IMAGE],
-    title: "Бриф за проект — VEKTO",
+    title: "Project brief — VEKTO",
   },
 };
 

@@ -8,14 +8,14 @@ import PortfolioClient from "./PortfolioClient";
 const Footer = dynamic(() => import("../components/Footer"));
 
 export const metadata: Metadata = {
-  title: "Портфолио — VEKTO",
+  title: "Portfolio — VEKTO",
   description:
-    "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за бизнеси в България и САЩ.",
+    "Selected work: cinematic films, UGC, product videos and AI campaigns for businesses in Bulgaria and the US.",
   openGraph: {
     images: [OG_IMAGE],
-    title: "Портфолио — VEKTO",
+    title: "Portfolio — VEKTO",
     description:
-      "Selected work — кинематографични филми, UGC, продуктови видеа и AI кампании за бизнеси в България и САЩ.",
+      "Selected work: cinematic films, UGC, product videos and AI campaigns for businesses in Bulgaria and the US.",
     type: "website",
   },
 };

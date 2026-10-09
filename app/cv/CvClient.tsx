@@ -295,18 +295,6 @@ export default function CvClient() {
               maskSize: "contain",
             }}
           />
-          <button
-            type="button"
-            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
-            style={{
-              border: "1.5px solid rgba(244,244,244,0.75)",
-              textShadow: "0 0 1px #0d0d0d, 0 0 3px rgba(13,13,13,0.9)",
-            }}
-            aria-label={lang === "bg" ? "Switch to English" : "Превключи на български"}
-          >
-            {t.toggle}
-          </button>
         </div>
       </div>
 

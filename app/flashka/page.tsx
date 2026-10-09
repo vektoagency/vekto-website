@@ -8,9 +8,9 @@ import FlashkaClient from "./FlashkaClient";
 // reuses /start's server action with source: 'flashka' for inbox +
 // CAPI event segmentation.
 export const metadata: Metadata = {
-  title: "VEKTO · Кандидатствай за флашката",
+  title: "VEKTO · Apply for the flash drive",
   description:
-    "На тази флашка е кодът зад $1,000,000 оборот. Системата работи в САЩ с 50+ бизнеса. Сега я носим в България — за първите 5.",
+    "This flash drive holds the code behind $1,000,000 in revenue. The system runs with 50+ businesses in the US. Now open to the first 5.",
   robots: {
     // Paid-traffic LP — no organic indexing wanted; keeps it from
     // diluting the main domain rank or showing up to non-ad visitors.
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: [OG_IMAGE],
-    title: "VEKTO · $1M оборот. Системата зад растежа. Вече в БГ.",
+    title: "VEKTO · $1M in revenue. The system behind the growth.",
     description:
-      "Кодът е в тази флашка. 50+ бизнеса я ползват в САЩ. Първите 5 спота за България.",
+      "The code is on this flash drive. 50+ businesses use it in the US. 5 spots open.",
     type: "website",
   },
 };

@@ -46,14 +46,14 @@ const comicCyr = Balsamiq_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Опиши проекта си — VEKTO",
+  title: "Describe your project — VEKTO",
   description:
-    "Криейтиви, фунии и AI решения — всичко на едно място. Разкажи ни за бизнеса си — отговаряме лично до 24 часа.",
+    "Creative, funnels and AI solutions, all in one place. Tell us about your business and a person replies within 24 hours.",
   openGraph: {
     images: [OG_IMAGE],
-    title: "Опиши проекта си — VEKTO",
+    title: "Describe your project — VEKTO",
     description:
-      "Криейтиви, фунии и AI решения — всичко на едно място. Разкажи ни за бизнеса си — отговаряме лично до 24 часа.",
+      "Creative, funnels and AI solutions, all in one place. Tell us about your business and a person replies within 24 hours.",
   },
 };
 

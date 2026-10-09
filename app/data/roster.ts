@@ -16,7 +16,7 @@ export const ROSTER: Client[] = [
   { name: "PARFEN",        region: "BG", logo: "/images/roster-trim/logo-parfen.png"      },
   { name: "ISOSPORT",      region: "BG", logo: "/images/roster-trim/logo-isosport.png"    },
   { name: "BULTEX",        region: "BG", logo: "/images/roster-trim/logo-bultex.png"       },
-  { name: "НЕДЕЛЯ",        region: "BG", logo: "/images/logo-nedelya.svg"      },
+  { name: "NEDELYA",       region: "BG", logo: "/images/logo-nedelya.svg"      },
   { name: "ANOMALY",       region: "US", logo: "/images/roster-trim/logo-anomaly.png"     },
   { name: "GOURMET HOUSE", region: "BG", logo: "/images/roster-trim/logo-gourmethouse.png" },
   { name: "ETHAN'S",       region: "US", logo: "/images/roster-trim/logo-ethans.png"      },
