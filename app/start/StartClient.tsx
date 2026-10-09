@@ -45,7 +45,7 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "ANOMALY", logo: "/images/logo-anomaly.webp", invert: true },
   { name: "ETHAN'S", logo: "/images/logo-ethans.webp", invert: true },
   { name: "NUTRIFITT", logo: "/images/logo-nutrifitt.webp", stacked: true },
-  { name: "ISOSPORT", logo: "/images/logo-isosport.webp" },
+  { name: "ISOSPORT", logo: "/images/logo-isosport.webp", invert: true },
   { name: "LUCKY ENERGY", logo: "/images/logo-lucky.webp", invert: true, stacked: true },
   { name: "BEMEACNE", logo: "/images/logo-bemeacne.webp" },
   { name: "TASTE FLAVOR CO.", logo: "/images/logo-tasteflavor.webp", stacked: true },
@@ -59,6 +59,7 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg" },
   { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", invert: true },
   { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", invert: true },
+  { name: "CODEFASHION", logo: "/images/roster-trim/logo-codefashion.png", invert: true },
 ];
 
 export default function StartClient() {
@@ -385,7 +386,10 @@ export default function StartClient() {
                         src={c.logo}
                         alt={c.name}
                         draggable={false}
-                        loading="lazy"
+                        // Eager on purpose: the strip moves by CSS transform,
+                        // which lazy loading never notices, so logos sliding
+                        // in from the right stayed blank. 22 small files.
+                        loading="eager"
                         decoding="async"
                         className={`w-auto object-contain max-w-full ${
                           c.stacked
@@ -417,8 +421,10 @@ export default function StartClient() {
                     style={{ fontSize: "calc(clamp(26px, 4.6vw, 48px) * var(--bgk, 1))" }}
                   >
                     {t.formSection.h2}{" "}
+                    {/* Kept on one line: a silver italic that breaks across
+                        lines clips its slanted last letter at the break. */}
                     <span
-                      className="italic pr-[0.08em]"
+                      className="italic inline-block whitespace-nowrap pr-[0.12em]"
                       style={{
                         background: SILVER_H,
                         WebkitBackgroundClip: "text",
