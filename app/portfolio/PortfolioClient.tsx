@@ -38,6 +38,9 @@ export type Clip = {
   // no-subtitles "atmospheric" version of vekto-showreel which is
   // duplicated by the subtitled 06b550bb agency reel in the portfolio.
   excludeFromPortfolio?: boolean;
+  // Spoken / on-screen language. The site is English only, so Bulgarian
+  // cuts stay in the data (hero, /hospitality) but out of the grid.
+  language?: "en" | "bg";
   // Groups a clip onto /hospitality — the English-only tab we send to
   // hotels and villa owners. "hotel" = a place people stay in, "property"
   // = a building we sold on camera. Kept apart so the page never implies
