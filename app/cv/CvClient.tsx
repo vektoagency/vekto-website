@@ -28,7 +28,7 @@ const PIXEL = "var(--brutal-pixel), ui-monospace, monospace";
 const COMIC = "var(--brutal-comic), system-ui, sans-serif";
 
 // One cover per format, in the order the formats are listed — the same
-// stills /ai-creative already uses for these four services. Drawn in
+// stills the retired /ai-creative page used for these four services. Drawn in
 // silver so the cards stay in the film world; colour arrives on hover.
 const COVERS = [
   "/images/service-1.webp",

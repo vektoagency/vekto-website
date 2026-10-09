@@ -15,8 +15,6 @@ const ROUTES: Array<{
   { path: "/portfolio",     changeFrequency: "weekly",  priority: 0.8 },
   { path: "/hospitality",   changeFrequency: "monthly", priority: 0.8 },
   { path: "/case-studies",  changeFrequency: "monthly", priority: 0.8 },
-  { path: "/websites",      changeFrequency: "monthly", priority: 0.7 },
-  { path: "/ai-creative",   changeFrequency: "monthly", priority: 0.7 },
   { path: "/brief",         changeFrequency: "monthly", priority: 0.6 },
   { path: "/work/menscare", changeFrequency: "yearly",  priority: 0.5 },
   { path: "/privacy",       changeFrequency: "yearly",  priority: 0.2 },

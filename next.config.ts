@@ -34,6 +34,13 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // Retired service pages. Google still listed them as sitelinks; a
+      // permanent redirect tells it to drop them. The AI video work lives
+      // in the portfolio now, the web work on the homepage.
+      { source: "/ai-creative", destination: "/portfolio", permanent: true },
+      { source: "/ai-creative/:path*", destination: "/portfolio", permanent: true },
+      { source: "/websites", destination: "/", permanent: true },
+      { source: "/websites/:path*", destination: "/", permanent: true },
     ];
   },
 };
