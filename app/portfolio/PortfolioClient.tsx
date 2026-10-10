@@ -245,7 +245,7 @@ export default function PortfolioClient() {
   const [expanded, setExpanded] = useState<Clip | null>(null);
   const t = useT({
     bg: {
-      header: "ИЗБРАНА РАБОТА",
+      header: "РАБОТАТА",
       clipsSuffix: "ВИДЕА",
       back: "Назад",
       filter: "> ФИЛТЪР",
@@ -264,7 +264,7 @@ export default function PortfolioClient() {
       backToHome: "← Обратно към сайта",
     },
     en: {
-      header: "SELECTED WORK",
+      header: "THE WORK",
       clipsSuffix: "VIDEOS",
       back: "Back",
       filter: "> FILTER",
@@ -334,7 +334,7 @@ export default function PortfolioClient() {
       >
         <div className="flex items-center gap-3 text-[#f4f4f4]">
           <span className="w-1.5 h-1.5 rounded-full bg-[#f4f4f4] animate-pulse" />
-          {t.header} — {visible.length} {t.clipsSuffix}
+          {t.header}
         </div>
         <Link
           href="/"
