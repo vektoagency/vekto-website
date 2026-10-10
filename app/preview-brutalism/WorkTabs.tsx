@@ -25,14 +25,10 @@ const REAL = VISIBLE.filter((c) => c.kind === "real");
 const AI = VISIBLE.filter((c) => c.kind !== "real");
 const SHOWN = 8;
 
-// Live builds. Only KingOfKlean runs on its own domain; the others are
-// shown as screenshots until they move to theirs.
-const SITES: { name: string; type: string; img: string; href?: string; tags: string[] }[] = [
-  { name: "Ritello Bulgaria", type: "Marketing site · 25 pages", img: "/images/sites/ritello.webp", tags: ["Next.js", "Demo bookings", "Video library"] },
-  { name: "Angel Face", type: "Salon chain website", img: "/images/sites/angelface.webp", tags: ["4 cities", "Online booking", "Services"] },
-  { name: "FADEMASTER", type: "E-commerce store", img: "/images/sites/fademaster.webp", tags: ["Own checkout", "Cash on delivery", "Admin"] },
-  { name: "KingOfKlean", type: "E-commerce store", img: "/images/sites/kingofklean.webp", href: "https://kingofklean.shop", tags: ["Own checkout", "Cash on delivery", "Admin"] },
-];
+// Websites the owner will add later. Each entry: a screenshot in
+// /images/sites, a name, the type of build and a few tags; `href` only for
+// a site on its own domain. Empty list = the Websites tab stays hidden.
+const SITES: { name: string; type: string; img: string; href?: string; tags: string[] }[] = [];
 
 type TabId = "real" | "ai" | "sites" | "cases";
 // A tab with nothing in it stays hidden: "Real videos" appears by itself
