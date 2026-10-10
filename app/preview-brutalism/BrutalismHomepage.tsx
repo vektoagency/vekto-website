@@ -478,12 +478,10 @@ export default function BrutalismHomepage() {
     lang === "bg"
       ? [
           { label: "Портфолио", href: "/portfolio"    },
-          { label: "Резултати", href: "/case-studies" },
           { label: "Анкета",    href: "/start"        },
         ]
       : [
           { label: "Portfolio",    href: "/portfolio"    },
-          { label: "Case Studies", href: "/case-studies" },
           { label: "Brief",        href: "/start"        },
         ];
 
