@@ -10,7 +10,7 @@ import { useT, useLang } from "../i18n/LangProvider";
 // a schema migration. Placeholder metrics ('TBD') mark cases where
 // we don't have client-approved numbers yet — replace once approved.
 
-type CaseStudy = {
+export type CaseStudy = {
   slug: string;
   brand: string;
   brandLogo?: string;
@@ -27,7 +27,7 @@ type CaseStudy = {
   href?: string;
 };
 
-const CASE_STUDIES: CaseStudy[] = [
+export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "menscare",
     brand: "MEN'S CARE",

@@ -41,6 +41,9 @@ export type Clip = {
   // Spoken / on-screen language. The site is English only, so Bulgarian
   // cuts stay in the data (hero, /hospitality) but out of the grid.
   language?: "en" | "bg";
+  // Filmed with real people and places, or made with AI. Drives the
+  // homepage work tabs.
+  kind?: "real" | "ai";
   // Groups a clip onto /hospitality — the English-only tab we send to
   // hotels and villa owners. "hotel" = a place people stay in, "property"
   // = a building we sold on camera. Kept apart so the page never implies
