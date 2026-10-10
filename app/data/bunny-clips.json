@@ -361,7 +361,7 @@
       "href": null,
       "featured": true,
       "language": "bg",
-      "kind": "real"
+      "kind": "ai"
     },
     {
       "id": "gourmet-2",
@@ -401,7 +401,7 @@
       "href": "/work/menscare",
       "featured": false,
       "language": "bg",
-      "kind": "real"
+      "kind": "ai"
     },
     {
       "id": "bc858219-3397-4952-b4ac-d40a7cff6898",
@@ -421,7 +421,7 @@
       "href": null,
       "featured": false,
       "language": "bg",
-      "kind": "real"
+      "kind": "ai"
     },
     {
       "id": "07be6d30-0764-4cd1-bac5-23f2cfecd853",
@@ -441,7 +441,7 @@
       "href": "/work/menscare",
       "featured": false,
       "language": "bg",
-      "kind": "real"
+      "kind": "ai"
     },
     {
       "id": "06b550bb-c1c9-4b4c-b7d3-ae031d6d920a",

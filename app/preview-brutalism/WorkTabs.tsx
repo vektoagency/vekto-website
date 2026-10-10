@@ -35,12 +35,14 @@ const SITES: { name: string; type: string; img: string; href?: string; tags: str
 ];
 
 type TabId = "real" | "ai" | "sites" | "cases";
+// A tab with nothing in it stays hidden: "Real videos" appears by itself
+// once the first clip tagged kind: "real" lands in the data.
 const TABS: { id: TabId; label: string; count: number }[] = [
-  { id: "real", label: "Real videos", count: REAL.length },
-  { id: "ai", label: "AI videos", count: AI.length },
-  { id: "sites", label: "Websites", count: SITES.length },
-  { id: "cases", label: "Case studies", count: CASE_STUDIES.length },
-];
+  { id: "real" as TabId, label: "Real videos", count: REAL.length },
+  { id: "ai" as TabId, label: "AI videos", count: AI.length },
+  { id: "sites" as TabId, label: "Websites", count: SITES.length },
+  { id: "cases" as TabId, label: "Case studies", count: CASE_STUDIES.length },
+].filter((tb) => tb.count > 0);
 
 export default function WorkTabs() {
   const [tab, setTab] = useState<TabId>("ai");
