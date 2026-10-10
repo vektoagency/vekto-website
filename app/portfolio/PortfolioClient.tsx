@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CASE_STUDIES } from "../case-studies/CaseStudiesClient";
+import type { CaseStudy } from "../case-studies/CaseStudiesClient";
 import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import bunnyData from "../data/bunny-clips.json";
@@ -95,9 +95,8 @@ export function ClipSections({
   );
 }
 
-// The portfolio is split into tabs, one per kind of work. A tab with
-// nothing in it stays hidden: "Real videos" and "Websites" appear by
-// themselves once their first item lands. The open tab lives in the URL
+// The portfolio is split into tabs, one per kind of work. Tabs with
+// nothing in them yet show a "Coming soon" panel until content lands. The open tab lives in the URL
 // hash (/portfolio#cases), so every tab has its own link.
 type WorkTabId = "ai" | "real" | "sites" | "cases";
 
@@ -105,17 +104,19 @@ type WorkTabId = "ai" | "real" | "sites" | "cases";
 // of build, a few tags; `href` only for a site on its own domain.
 const SITES: { name: string; type: string; img: string; href?: string; tags: string[] }[] = [];
 
+// Case studies shown on this page. Empty for now, by the owner's call;
+// fill with entries shaped like the case-studies page data.
+const CASES: CaseStudy[] = [];
+
 function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => void }) {
   const ai = clips.filter((c) => c.kind !== "real");
   const real = clips.filter((c) => c.kind === "real");
-  const tabs = (
-    [
-      { id: "ai", label: "AI videos", count: ai.length },
-      { id: "real", label: "Real videos", count: real.length },
-      { id: "sites", label: "Websites", count: SITES.length },
-      { id: "cases", label: "Case studies", count: CASE_STUDIES.length },
-    ] as { id: WorkTabId; label: string; count: number }[]
-  ).filter((tb) => tb.count > 0);
+  const tabs: { id: WorkTabId; label: string; count: number }[] = [
+    { id: "ai", label: "AI videos", count: ai.length },
+    { id: "real", label: "Real videos", count: real.length },
+    { id: "sites", label: "Websites", count: SITES.length },
+    { id: "cases", label: "Case studies", count: CASES.length },
+  ];
 
   const [tab, setTab] = useState<WorkTabId>("ai");
 
@@ -165,18 +166,33 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
               style={{ boxShadow: active ? "4px 4px 0 0 #3a3a3a" : undefined }}
             >
               {tb.label}
-              <span className="font-mono text-[10px] font-bold tabular-nums opacity-60">{tb.count}</span>
+              {tb.count > 0 && (
+                <span className="font-mono text-[10px] font-bold tabular-nums opacity-60">{tb.count}</span>
+              )}
             </button>
           );
         })}
       </div>
 
       <div id="work-panel" role="tabpanel" aria-labelledby={`work-tab-${tab}`}>
-        {(tab === "ai" || tab === "real") && (
+        {(tab === "ai" || tab === "real") && (tab === "real" ? real : ai).length > 0 && (
           <ClipSections clips={tab === "real" ? real : ai} onExpand={onExpand} />
         )}
 
-        {tab === "sites" && (
+        {((tab === "real" && real.length === 0) ||
+          (tab === "sites" && SITES.length === 0) ||
+          (tab === "cases" && CASES.length === 0)) && (
+          <div className="border-2 border-dashed border-[#f4f4f4]/25 px-6 py-16 md:py-24 flex flex-col items-center text-center gap-3">
+            <p className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.35em] text-[#f4f4f4]/55">
+              {tab === "real" ? "Real videos" : tab === "sites" ? "Websites" : "Case studies"}
+            </p>
+            <p className="font-black uppercase text-[26px] md:text-[40px] leading-none tracking-[-0.02em] text-[#f4f4f4]">
+              Coming soon.
+            </p>
+          </div>
+        )}
+
+        {tab === "sites" && SITES.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {SITES.map((st) => {
               const body = (
@@ -204,9 +220,9 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
           </div>
         )}
 
-        {tab === "cases" && (
+        {tab === "cases" && CASES.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
-            {CASE_STUDIES.map((cs) => (
+            {CASES.map((cs) => (
               <Link
                 key={cs.slug}
                 href={`/case-studies#${cs.slug}`}
