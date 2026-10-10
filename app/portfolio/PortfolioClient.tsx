@@ -50,6 +50,47 @@ export type Clip = {
 
 const clips = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
 
+// The work in two runs: English first, then a labelled rule, then the
+// Bulgarian cuts. The site is English, so the English work leads; the
+// Bulgarian work stays visible below the line instead of being hidden.
+export function ClipSections({
+  clips,
+  onExpand,
+}: {
+  clips: Clip[];
+  onExpand: (c: Clip) => void;
+}) {
+  const en = clips.filter((c) => c.language !== "bg");
+  const bg = clips.filter((c) => c.language === "bg");
+  const grid =
+    "grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto";
+  return (
+    <>
+      <div className={grid}>
+        {en.map((c, i) => (
+          <ClipTile key={c.id} clip={c} idx={i} onExpand={() => onExpand(c)} />
+        ))}
+      </div>
+      {bg.length > 0 && (
+        <>
+          <div className="flex items-center gap-4 md:gap-6 my-10 md:my-14" role="separator" aria-label="Bulgarian-language work">
+            <span aria-hidden className="h-px flex-1" style={{ background: "rgba(244,244,244,0.3)" }} />
+            <span className="shrink-0 font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-[#f4f4f4]/70">
+              Bulgarian-language work · {bg.length}
+            </span>
+            <span aria-hidden className="h-px flex-1" style={{ background: "rgba(244,244,244,0.3)" }} />
+          </div>
+          <div className={grid}>
+            {bg.map((c, i) => (
+              <ClipTile key={c.id} clip={c} idx={en.length + i} onExpand={() => onExpand(c)} />
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
 export default function PortfolioClient() {
   const [expanded, setExpanded] = useState<Clip | null>(null);
   const t = useT({
@@ -160,16 +201,7 @@ export default function PortfolioClient() {
         {/* grid-flow-dense lets portrait tiles backfill the empty cells
             that landscape (col-span-2) clips would otherwise leave when
             they don't fit at the end of a row. */}
-        <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
-          {visible.map((c, i) => (
-            <ClipTile
-              key={c.id}
-              clip={c}
-              idx={i}
-              onExpand={() => setExpanded(c)}
-            />
-          ))}
-        </div>
+        <ClipSections clips={visible} onExpand={setExpanded} />
       </section>
 
       <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">

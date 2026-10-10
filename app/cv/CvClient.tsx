@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import bunnyData from "../data/bunny-clips.json";
 import { ROSTER } from "../data/roster";
-import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
+import { ClipSections, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
 import HeroCinematicBg from "../components/HeroCinematicBg";
 import SectionPlate from "../components/SectionPlate";
 import { useLang } from "../i18n/LangProvider";
@@ -475,11 +475,7 @@ export default function CvClient() {
           >
             {t.workTitle}
           </h2>
-          <div className="grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto">
-            {CLIPS.map((c, i) => (
-              <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
-            ))}
-          </div>
+          <ClipSections clips={CLIPS} onExpand={setExpanded} />
         </div>
       </section>
 
