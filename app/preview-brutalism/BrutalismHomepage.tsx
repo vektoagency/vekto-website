@@ -26,7 +26,6 @@ import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
 import Footer from "../components/Footer";
 import bunnyData from "../data/bunny-clips.json";
-import WorkTabs from "./WorkTabs";
 import { ROSTER, type Client } from "../data/roster";
 
 // ============================================================================
@@ -761,8 +760,6 @@ export default function BrutalismHomepage() {
 
       <StageHook  targetRef={s1} t={t.stage1} lang={lang} openBook={openBook} />
       <HazardStrip />
-      <WorkTabs />
-      <HazardStrip />
       <StageCast  targetRef={s4} t={t.stage4} />
       <HazardStrip />
       <StageRooms targetRef={s3} t={t.stage3} />
@@ -1346,7 +1343,7 @@ function StageHook({ targetRef, t, lang, openBook }: { targetRef: React.RefObjec
           </button>
           {/* Secondary — the work, one click away. */}
           <Link
-            href="#work"
+            href="/portfolio"
             className="w-full max-w-[380px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-3 px-8 md:px-10 py-5 md:py-6 border-2 font-black uppercase text-base md:text-xl tracking-tight transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
             style={{ borderColor: "rgba(244,244,244,0.6)" }}
           >

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CASE_STUDIES } from "../case-studies/CaseStudiesClient";
 import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import bunnyData from "../data/bunny-clips.json";
@@ -90,6 +91,152 @@ export function ClipSections({
           </div>
         </>
       )}
+    </>
+  );
+}
+
+// The portfolio is split into tabs, one per kind of work. A tab with
+// nothing in it stays hidden: "Real videos" and "Websites" appear by
+// themselves once their first item lands. The open tab lives in the URL
+// hash (/portfolio#cases), so every tab has its own link.
+type WorkTabId = "ai" | "real" | "sites" | "cases";
+
+// Websites the owner will add: a screenshot in /images/sites, name, type
+// of build, a few tags; `href` only for a site on its own domain.
+const SITES: { name: string; type: string; img: string; href?: string; tags: string[] }[] = [];
+
+function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => void }) {
+  const ai = clips.filter((c) => c.kind !== "real");
+  const real = clips.filter((c) => c.kind === "real");
+  const tabs = (
+    [
+      { id: "ai", label: "AI videos", count: ai.length },
+      { id: "real", label: "Real videos", count: real.length },
+      { id: "sites", label: "Websites", count: SITES.length },
+      { id: "cases", label: "Case studies", count: CASE_STUDIES.length },
+    ] as { id: WorkTabId; label: string; count: number }[]
+  ).filter((tb) => tb.count > 0);
+
+  const [tab, setTab] = useState<WorkTabId>("ai");
+
+  // Open the tab named in the hash, and follow back/forward between tabs.
+  useEffect(() => {
+    const read = () => {
+      const h = window.location.hash.replace("#", "") as WorkTabId;
+      if (tabs.some((tb) => tb.id === h)) setTab(h);
+    };
+    read();
+    window.addEventListener("hashchange", read);
+    return () => window.removeEventListener("hashchange", read);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const pick = (id: WorkTabId) => {
+    setTab(id);
+    history.replaceState(null, "", id === "ai" ? window.location.pathname : `#${id}`);
+  };
+
+  const tag = "px-2 py-1 text-[10px] font-bold uppercase tracking-[0.16em] opacity-75 font-mono";
+  const tagStyle = { border: "1px solid rgba(244,244,244,0.35)" };
+
+  return (
+    <>
+      <div
+        role="tablist"
+        aria-label="Work by type"
+        className="flex gap-2 md:gap-3 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 mb-8 md:mb-10 [scrollbar-width:none]"
+      >
+        {tabs.map((tb) => {
+          const active = tb.id === tab;
+          return (
+            <button
+              key={tb.id}
+              type="button"
+              role="tab"
+              id={`work-tab-${tb.id}`}
+              aria-selected={active}
+              aria-controls="work-panel"
+              onClick={() => pick(tb.id)}
+              className={`shrink-0 flex items-center gap-2.5 border-[1.5px] px-4 md:px-5 py-2.5 md:py-3 font-black uppercase text-[12px] md:text-[13px] tracking-[0.14em] transition-colors ${
+                active
+                  ? "bg-[#f4f4f4] text-[#0d0d0d] border-[#f4f4f4]"
+                  : "bg-transparent text-[#f4f4f4] border-[#f4f4f4]/55 hover:bg-white hover:text-black"
+              }`}
+              style={{ boxShadow: active ? "4px 4px 0 0 #3a3a3a" : undefined }}
+            >
+              {tb.label}
+              <span className="font-mono text-[10px] font-bold tabular-nums opacity-60">{tb.count}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div id="work-panel" role="tabpanel" aria-labelledby={`work-tab-${tab}`}>
+        {(tab === "ai" || tab === "real") && (
+          <ClipSections clips={tab === "real" ? real : ai} onExpand={onExpand} />
+        )}
+
+        {tab === "sites" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {SITES.map((st) => {
+              const body = (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={st.img} alt={`${st.name} website`} loading="lazy" className="w-full aspect-[1200/616] object-cover object-top border-b-2 border-[#f4f4f4]/25" />
+                  <div className="p-5 md:p-6 flex flex-col gap-3 text-[#f4f4f4]">
+                    <h3 className="font-black uppercase text-[18px] md:text-[20px]">{st.name}</h3>
+                    <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] opacity-60">{st.type}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {st.tags.map((tg) => (
+                        <span key={tg} className={tag} style={tagStyle}>{tg}</span>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              );
+              const cls = "block border-2 border-[#f4f4f4]/30 bg-[#141414] overflow-hidden";
+              return st.href ? (
+                <a key={st.name} href={st.href} target="_blank" rel="noopener noreferrer" className={`${cls} transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5`} style={{ boxShadow: "6px 6px 0 0 #2a2a2a" }}>{body}</a>
+              ) : (
+                <div key={st.name} className={cls} style={{ boxShadow: "6px 6px 0 0 #2a2a2a" }}>{body}</div>
+              );
+            })}
+          </div>
+        )}
+
+        {tab === "cases" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
+            {CASE_STUDIES.map((cs) => (
+              <Link
+                key={cs.slug}
+                href={`/case-studies#${cs.slug}`}
+                className="flex flex-col border-2 border-[#f4f4f4]/30 bg-[#141414] overflow-hidden text-[#f4f4f4] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                style={{ boxShadow: "6px 6px 0 0 #2a2a2a" }}
+              >
+                <div className="h-24 md:h-28 flex items-center justify-center bg-white px-8 border-b-2 border-black">
+                  {cs.brandLogo ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={cs.brandLogo} alt={cs.brand} loading="lazy" className="max-h-12 md:max-h-14 max-w-[70%] object-contain" />
+                  ) : (
+                    <span className="font-black uppercase text-[#0d0d0d]">{cs.brand}</span>
+                  )}
+                </div>
+                <div className="p-5 md:p-6 flex flex-col gap-3 flex-1">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] opacity-60">
+                    {cs.brand} · {cs.category}
+                  </p>
+                  <h3 className="font-black text-[17px] md:text-[19px] leading-[1.2] text-balance">{cs.headline.en}</h3>
+                  <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
+                    {cs.services.map((sv) => (
+                      <span key={sv} className={tag} style={tagStyle}>{sv}</span>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 }
@@ -204,7 +351,7 @@ export default function PortfolioClient() {
         {/* grid-flow-dense lets portrait tiles backfill the empty cells
             that landscape (col-span-2) clips would otherwise leave when
             they don't fit at the end of a row. */}
-        <ClipSections clips={visible} onExpand={setExpanded} />
+        <WorkTabs clips={visible} onExpand={setExpanded} />
       </section>
 
       <section className="relative px-6 md:px-10 pt-6 pb-20 max-w-[1100px] mx-auto text-center">
