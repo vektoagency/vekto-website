@@ -26,6 +26,7 @@ import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
 import Footer from "../components/Footer";
 import bunnyData from "../data/bunny-clips.json";
+import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
 import { ROSTER, type Client } from "../data/roster";
 
 // ============================================================================
@@ -75,7 +76,7 @@ const COPY = {
       { id: "01", label: "НАЧАЛО" },
       { id: "02", label: "БИЗНЕСИ" },
       { id: "03", label: "ФОКУС" },
-      { id: "04", label: "РЕЗУЛТАТИ" },
+      { id: "04", label: "РАБОТА" },
       { id: "05", label: "ПОЛУЧАВАШ" },
       { id: "06", label: "РАЗГОВОР" },
     ],
@@ -114,8 +115,9 @@ const COPY = {
       roomBadge: "ЕКИП №",
     },
     stageCases: {
-      eyebrow: "04 · КОГО ВОДИМ",
+      eyebrow: "04 · РАБОТАТА",
       viewCase: "Виж резултатите",
+      seeAll: "Цялата работа",
       headline1: "ОТ РЕКЛАМЕН БЮДЖЕТ",
       headline2Prefix: "КЪМ",
       headline2Highlight: "РАСТЕЖ.",
@@ -182,7 +184,7 @@ const COPY = {
       { id: "01", label: "START" },
       { id: "02", label: "ROSTER" },
       { id: "03", label: "FOCUS" },
-      { id: "04", label: "CASES" },
+      { id: "04", label: "WORK" },
       { id: "05", label: "YOU GET" },
       { id: "06", label: "TALK" },
     ],
@@ -221,8 +223,9 @@ const COPY = {
       roomBadge: "ROOM №",
     },
     stageCases: {
-      eyebrow: "04 · WHO WE RUN",
+      eyebrow: "04 · THE WORK",
       viewCase: "See the results",
+      seeAll: "See all work",
       headline1: "FROM AD BUDGET",
       headline2Prefix: "TO",
       headline2Highlight: "GROWTH.",
@@ -1541,8 +1544,13 @@ function StageRooms({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
 // Reveals as a stagger on scroll-in. Each card = hard-bordered plate
 // with big silver metric on dark ground, brand + duration + one-liner.
 // ============================================================================
+// First four English clips, portrait only, in portfolio order.
+const HOME_WORK: Clip[] = (bunnyData.clips as Clip[])
+  .filter((c) => !c.excludeFromPortfolio && c.language === "en" && c.portrait !== false)
+  .slice(0, 4);
+
 function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageCases"] }) {
-  const inView = useInView(targetRef, 0.15);
+  const [expanded, setExpanded] = useState<Clip | null>(null);
   return (
     <section
       id="stage-04"
@@ -1558,14 +1566,25 @@ function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement |
           {t.eyebrow}
         </div>
 
-        {/* No headline block — the eyebrow indexes, the cards ARE the
-            content. Same treatment as the roster. */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-4">
-          {t.cases.map((c, i) => (
-            <CaseCard key={c.brand} c={c} inView={inView} idx={i} viewLabel={t.viewCase} />
+        {/* The work itself: the first English clips of the portfolio, in
+            its order, playable on the spot. The case cards that stood here
+            pointed at results the site no longer shows. */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 mt-4">
+          {HOME_WORK.map((c, i) => (
+            <ClipTile key={c.id} clip={c} idx={i} onExpand={() => setExpanded(c)} />
           ))}
         </div>
+        <div className="mt-10 md:mt-12 flex justify-center">
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center gap-3 border-[1.5px] border-[#f4f4f4]/75 px-6 py-3.5 font-black uppercase text-[12px] md:text-[13px] tracking-[0.16em] transition-colors text-[#f4f4f4] hover:bg-white hover:text-black"
+          >
+            {t.seeAll}
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
       </div>
+      {expanded && <ClipLightbox clip={expanded} onClose={() => setExpanded(null)} />}
     </section>
   );
 }
