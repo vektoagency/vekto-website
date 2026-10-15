@@ -30,7 +30,7 @@ export const briefCopy = {
       backHome: "← Към сайта",
     },
     error: {
-      generic: "Нещо се обърка. Опитай отново или ни пиши на vektoagency@gmail.com",
+      generic: "Не успя да се изпрати. Опресни страницата и натисни „Изпрати“ отново — отговорите ти са запазени. Или ни пиши на vektoagency@gmail.com",
       requiredField: "Това поле е задължително",
     },
     intro: {
@@ -128,7 +128,7 @@ export const briefCopy = {
       backHome: "← Back to site",
     },
     error: {
-      generic: "Something went wrong. Try again or email us at vektoagency@gmail.com",
+      generic: "It did not send. Refresh the page and press Submit again — your answers are saved. Or email us at vektoagency@gmail.com",
       requiredField: "This field is required",
     },
     intro: {

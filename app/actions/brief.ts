@@ -3,7 +3,10 @@
 import { Resend } from "resend";
 import { mirrorLeadToWebhook } from "../lib/lead-mirror";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Built on first send, not at import: the build collects route data
+// without secrets, and a missing key must fail one send, not the build.
+let resendClient: Resend | null = null;
+const getResend = () => (resendClient ??= new Resend(process.env.RESEND_API_KEY));
 
 // Shape mirrors the form fields in BriefClient.tsx. Kept as Record<string,
 // string | string[]> so we don't have to enumerate every key — the email
@@ -117,7 +120,7 @@ export async function submitBrief(data: BriefSubmission) {
   let resendError: string | undefined;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: "VEKTO Brief <no-reply@vektoagency.com>",
       to: process.env.CONTACT_EMAIL!,
       subject: `[BRIEF] ${brandLabel} — ${nameLabel}`,

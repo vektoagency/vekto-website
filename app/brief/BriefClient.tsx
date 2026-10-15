@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { briefCopy, type Lang } from "./translations";
-import { submitBrief, type BriefSubmission } from "../actions/brief";
+import type { BriefSubmission } from "../actions/brief";
 import { useLang } from "../i18n/LangProvider";
 import SiteHeader from "../components/SiteHeader";
 
@@ -115,7 +115,19 @@ export default function BriefClient() {
   const handleSubmit = async () => {
     setSubmitting(true);
     setErrorMsg(null);
-    const res = await submitBrief(form);
+    // Any failure (network, server, a deploy mid-session) must unlock the
+    // button and say what to do; the draft stays saved until success.
+    let res: { success: boolean } = { success: false };
+    try {
+      const r = await fetch("/api/brief", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      res = await r.json().catch(() => ({ success: false }));
+    } catch {
+      res = { success: false };
+    }
     setSubmitting(false);
     if (res.success) {
       try {
