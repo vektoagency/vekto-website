@@ -12,7 +12,7 @@ const getResend = () => (resendClient ??= new Resend(process.env.RESEND_API_KEY)
 // string | string[]> so we don't have to enumerate every key — the email
 // renderer just iterates and shows whatever was filled in.
 export type BriefSubmission = {
-  lang: "bg" | "en";
+  lang: "bg" | "en" | "de";
   // step 1
   brand: string;
   website: string;

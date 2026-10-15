@@ -5,7 +5,7 @@ import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
 import MetaPixel from "./components/MetaPixel";
 import CookieBanner from "./components/CookieBanner";
-import { LangProvider, type Lang } from "./i18n/LangProvider";
+import { LangProvider, type AnyLang } from "./i18n/LangProvider";
 import { cookies, headers } from "next/headers";
 import { OG_IMAGE } from "./lib/og";
 
@@ -58,7 +58,7 @@ export default async function RootLayout({
   // the visitor's choice is read from vekto-lang2.
   const free = (await headers()).get("x-vekto-lang-free") === "1";
   const saved = (await cookies()).get("vekto-lang2")?.value;
-  const lang: Lang = free && saved === "bg" ? "bg" : "en";
+  const lang: AnyLang = free && (saved === "bg" || saved === "de") ? saved : "en";
   const pinned = !free;
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>

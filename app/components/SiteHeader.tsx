@@ -58,7 +58,7 @@ export default function SiteHeader({
       which passes an in-page anchor. */
   ctaHref?: string;
 }) {
-  const { lang, setLang, pinned } = useLang();
+  const { fullLang: lang, setLang, pinned } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -93,12 +93,18 @@ export default function SiteHeader({
           { label: "Портфолио", href: "/portfolio" },
           { label: "Анкета", href: "/start" },
         ]
-      : [
-          { label: "Portfolio", href: "/portfolio" },
-          { label: "Brief", href: "/start" },
-        ];
+      : lang === "de"
+        ? [
+            { label: "Portfolio", href: "/portfolio" },
+            { label: "Anfrage", href: "/start" },
+          ]
+        : [
+            { label: "Portfolio", href: "/portfolio" },
+            { label: "Brief", href: "/start" },
+          ];
 
-  const ctaLabel = lang === "bg" ? "Опиши проекта си" : "Describe your project";
+  const ctaLabel =
+    lang === "bg" ? "Опиши проекта си" : lang === "de" ? "Projekt beschreiben" : "Describe your project";
   const fontClasses = [
     pixelMono.variable,
     displayLat.variable,
@@ -161,20 +167,23 @@ export default function SiteHeader({
           </nav>
           {/* Hidden where the route locks the language (/hospitality) -
               the control would be dead there. */}
+          {/* Language menu, only on routes that allow switching (/brief).
+              English first: it is the site's language. */}
           {!pinned && (
-          <button
-            onClick={() => setLang(lang === "bg" ? "en" : "bg")}
-            className="px-2.5 md:px-3 py-2 font-bold uppercase text-xs tracking-[0.25em] shrink-0 transition-colors text-[#f4f4f4] hover:bg-white hover:text-black [text-shadow:0_0_1px_#0d0d0d,0_0_3px_rgba(13,13,13,0.9)] hover:[text-shadow:none]"
-            style={{
-              border: "1.5px solid rgba(244,244,244,0.75)",
-              filter: "drop-shadow(0 0 1px rgba(13,13,13,0.7))",
-            }}
-            aria-label={
-              lang === "bg" ? "Switch to English" : "Превключи на български"
-            }
-          >
-            {lang === "bg" ? "EN" : "БГ"}
-          </button>
+            <label className="relative shrink-0">
+              <span className="sr-only">Language</span>
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value as typeof lang)}
+                className="appearance-none cursor-pointer pl-3 pr-7 py-2 font-bold uppercase text-xs tracking-[0.2em] bg-[#0d0d0d] text-[#f4f4f4] hover:bg-white hover:text-black transition-colors"
+                style={{ border: "1.5px solid rgba(244,244,244,0.75)", fontFamily: PIXEL_STACK }}
+              >
+                <option value="en">EN</option>
+                <option value="de">DE</option>
+                <option value="bg">БГ</option>
+              </select>
+              <span aria-hidden className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-current">▼</span>
+            </label>
           )}
           <Link
             href={ctaHref}

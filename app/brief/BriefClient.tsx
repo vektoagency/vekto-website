@@ -42,7 +42,8 @@ const initialForm: BriefSubmission = {
 export default function BriefClient() {
   // Language lives in the global LangProvider (vekto-lang cookie) so the
   // shared SiteHeader toggle switches this page's copy too.
-  const { lang, setLang } = useLang();
+  // The brief is the one page with German, so it reads the full choice.
+  const { fullLang: lang, setLang } = useLang();
   const [step, setStep] = useState(0); // 0 = intro, 1-4 = steps, 5 = success
   const [form, setForm] = useState<BriefSubmission>(initialForm);
   const [submitting, setSubmitting] = useState(false);
@@ -53,7 +54,7 @@ export default function BriefClient() {
   // so a Bulgarian client can be sent straight to the Bulgarian version.
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get("lang");
-    if (q === "bg" || q === "en") setLang(q);
+    if (q === "bg" || q === "en" || q === "de") setLang(q);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -532,7 +533,7 @@ function Select({
         onChange={(e) => onChange(e.target.value)}
         className="w-full appearance-none bg-[#141414] border border-[#f4f4f4]/25 focus:border-[#f4f4f4]/70 focus:outline-none focus:ring-1 focus:ring-[#f4f4f4]/30 px-4 py-3.5 pr-10 text-[15px] text-[#f4f4f4] transition-colors cursor-pointer"
       >
-        <option value="">— {lang === "bg" ? "избери" : "select"} —</option>
+        <option value="">— {lang === "bg" ? "избери" : lang === "de" ? "auswählen" : "select"} —</option>
         {options.map((o) => (
           <option key={o} value={o}>{o}</option>
         ))}

@@ -2,7 +2,7 @@
 // step structure so the component reads `t.step1.label.brand` rather than
 // nested switches. Keep keys synced between bg/en — TS type-checks this.
 
-export type Lang = "bg" | "en";
+export type Lang = "bg" | "en" | "de";
 
 export const briefCopy = {
   bg: {
@@ -199,6 +199,104 @@ export const briefCopy = {
       phonePh: "+1...",
       additional: "Additional info / questions",
       additionalPh: "Anything we haven't covered — tell us.",
+    },
+  },
+  de: {
+    meta: {
+      title: "VEKTO — Projekt-Briefing",
+      tagline: "Geben Sie uns den Kontext, damit wir mit einer fertigen Strategie ins erste Gespräch gehen.",
+      stepOf: (cur: number, total: number) => `SCHRITT ${cur} / ${total}`,
+      langToggle: "EN",
+      progress: "Fortschritt",
+      timeEstimate: "≈ 4 Minuten",
+      autoSaved: "Automatisch gespeichert",
+    },
+    nav: {
+      back: "← Zurück",
+      next: "Weiter →",
+      submit: "Briefing senden",
+      submitting: "Wird gesendet…",
+      startOver: "Neu beginnen",
+      home: "← Zur Website",
+    },
+    success: {
+      title: "Briefing erhalten.",
+      body: "Danke für Ihre Zeit. Wir sehen uns alles persönlich an und melden uns unter der angegebenen E-Mail-Adresse.",
+      bookCta: "",
+      backHome: "← Zur Website",
+    },
+    error: {
+      generic: "Das hat nicht geklappt. Laden Sie die Seite neu und klicken Sie erneut auf „Briefing senden“ — Ihre Antworten sind gespeichert. Oder schreiben Sie uns an vektoagency@gmail.com",
+      requiredField: "Pflichtfeld",
+    },
+    intro: {
+      eyebrow: "VEKTO / BRIEFING",
+      h1: "Erzählen Sie uns von Ihrem Unternehmen",
+      sub: "4 Abschnitte, ca. 4 Minuten. Je genauer Ihre Angaben, desto präziser die Strategie, die Sie von uns bekommen. Wird lokal gespeichert — Sie können jederzeit schließen und später weitermachen.",
+      start: "Los geht's →",
+    },
+    step1: {
+      title: "Wer Sie sind",
+      brand: "Firmenname",
+      brandPh: "",
+      website: "Website",
+      websitePh: "https://...",
+      ig: "Instagram-Name",
+      igPh: "",
+      industry: "Branche / Nische",
+      industryOptions: [
+        "Beauty / Pflege",
+        "Gesundheit / Nahrungsergänzung",
+        "E-Commerce",
+        "Immobilien",
+        "Sport / Fitness",
+        "Hotellerie / Gastronomie",
+        "B2B / Dienstleistungen",
+        "Mode",
+        "Tech / SaaS",
+        "Sonstiges",
+      ],
+    },
+    step2: {
+      title: "Positionierung & Zielgruppe",
+      pitch: "In einem Satz — was Sie verkaufen und an wen",
+      pitchPh: "z. B. „Premium-Pflegeprodukte für Männer über 30.“",
+      audience: "Idealer Kunde — Alter, Geschlecht, Verhalten",
+      audiencePh: "Bitte konkret — wo verbringen diese Menschen online ihre Zeit, was begeistert sie, was kaufen sie?",
+      problem: "Welches Problem lösen Sie",
+      problemPh: "Welches Problem haben Ihre Kunden, bevor sie Sie entdecken?",
+      usp: "Was unterscheidet Sie vom Wettbewerb",
+      uspPh: "Warum sollte jemand bei Ihnen kaufen und nicht woanders?",
+      competitors: "Top-3-Wettbewerber (URLs)",
+      competitorsPh: "https://...\nhttps://...\nhttps://...",
+      competitorsStrengths: "Was machen die Wettbewerber besser",
+      competitorsStrengthsPh: "Ganz ehrlich — Content, Preis, Vertrieb, Produkt, Community? Alles, worum Sie sie beneiden.",
+      tone: "Aktueller Markenton",
+      toneOptions: ["Luxuriös", "Verspielt", "Kompetent", "Minimalistisch", "Mutig", "Freundlich", "Kantig", "Unsicher"],
+    },
+    step3: {
+      title: "Aktueller Content (Audit)",
+      platforms: "Aktive Plattformen",
+      platformsOptions: ["TikTok", "Instagram Reels", "YouTube Shorts", "Facebook", "LinkedIn", "Twitter/X", "Andere"],
+      currentMaker: "Wer erstellt ihn derzeit",
+      currentMakerOptions: ["Internes Team", "Freelancer", "Andere Agentur", "Wir machen keine Videos", "Eine Mischung davon"],
+      whatNotWorking: "Was funktioniert gerade NICHT",
+      whatNotWorkingPh: "Ganz ehrlich — was stört Sie am aktuellen Content oder am Ablauf?",
+      topClips: "Top-3-Clips mit der besten Performance (URLs)",
+      topClipsPh: "https://...\nhttps://...\nhttps://...",
+    },
+    step4: {
+      title: "Organisatorisches & Kontakt",
+      name: "Ihr Name",
+      namePh: "Max Mustermann",
+      role: "Position",
+      rolePh: "Gründer, CEO, Marketing-Leitung...",
+      email: "E-Mail",
+      emailPh: "sie@firma.de",
+      phone: "Telefon / WhatsApp / Telegram",
+      phonePh: "+49...",
+      additional: "Weitere Infos / Fragen",
+      additionalPh: "Alles, was wir nicht abgefragt haben — schreiben Sie es uns.",
     },
   },
 } as const;

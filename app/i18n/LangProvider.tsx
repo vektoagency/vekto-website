@@ -2,16 +2,22 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
+/** The site's two languages. Every page reads one of these. */
 export type Lang = "bg" | "en";
+/** Every language a visitor can pick. German exists only on the brief, so
+ *  `lang` reports it as English to the rest of the site and `fullLang`
+ *  carries the real choice to the few places that have German copy. */
+export type AnyLang = Lang | "de";
 
 type Ctx = {
   lang: Lang;
-  setLang: (l: Lang) => void;
+  fullLang: AnyLang;
+  setLang: (l: AnyLang) => void;
   /** True on routes that lock the language — consumers hide the toggle. */
   pinned: boolean;
 };
 
-const LangContext = createContext<Ctx>({ lang: "en", setLang: () => {}, pinned: false });
+const LangContext = createContext<Ctx>({ lang: "en", fullLang: "en", setLang: () => {}, pinned: false });
 
 export function useLang() {
   return useContext(LangContext);
@@ -19,13 +25,13 @@ export function useLang() {
 
 const COOKIE_KEY = "vekto-lang2";
 
-function readCookie(): Lang | null {
+function readCookie(): AnyLang | null {
   if (typeof document === "undefined") return null;
-  const m = document.cookie.match(/(?:^|;\s*)vekto-lang2=(bg|en)/);
-  return (m?.[1] as Lang) ?? null;
+  const m = document.cookie.match(/(?:^|;\s*)vekto-lang2=(bg|en|de)/);
+  return (m?.[1] as AnyLang) ?? null;
 }
 
-function writeCookie(lang: Lang) {
+function writeCookie(lang: AnyLang) {
   if (typeof document === "undefined") return;
   document.cookie = `${COOKIE_KEY}=${lang}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
 }
@@ -35,7 +41,7 @@ export function LangProvider({
   pin = false,
   children,
 }: {
-  initialLang: Lang;
+  initialLang: AnyLang;
   /**
    * Locks the language to `initialLang` for this render tree. Used on
    * English-only routes (/hospitality), where the middleware pins the
@@ -46,7 +52,7 @@ export function LangProvider({
   pin?: boolean;
   children: ReactNode;
 }) {
-  const [lang, setLangState] = useState<Lang>(initialLang);
+  const [lang, setLangState] = useState<AnyLang>(initialLang);
 
   // After hydration, prefer the client-side cookie if it disagrees with
   // SSR (handles cases where the cookie was set by the middleware on the
@@ -60,7 +66,7 @@ export function LangProvider({
   }, [pin]);
 
   const setLang = useCallback(
-    (l: Lang) => {
+    (l: AnyLang) => {
       if (pin) return;
       writeCookie(l);
       setLangState(l);
@@ -73,7 +79,9 @@ export function LangProvider({
   );
 
   return (
-    <LangContext.Provider value={{ lang, setLang, pinned: pin }}>{children}</LangContext.Provider>
+    <LangContext.Provider value={{ lang: lang === "de" ? "en" : lang, fullLang: lang, setLang, pinned: pin }}>
+      {children}
+    </LangContext.Provider>
   );
 }
 
@@ -82,7 +90,9 @@ export function LangProvider({
  * Usage:
  *   const copy = useT({ bg: {...}, en: {...} });
  */
-export function useT<T>(dict: { bg: T; en: T }): T {
-  const { lang } = useLang();
-  return dict[lang];
+export function useT<T>(dict: { bg: T; en: T; de?: T }): T {
+  const { fullLang: lang } = useLang();
+  // German exists only on the brief; any component without German copy
+  // falls back to English there.
+  return (lang === "de" ? dict.de : dict[lang]) ?? dict.en;
 }

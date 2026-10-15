@@ -47,6 +47,12 @@ export default function CookieBanner() {
       reject: "Decline",
       learn: "Learn more",
     },
+    de: {
+      body: "Cookies für ein besseres Erlebnis.",
+      accept: "Akzeptieren",
+      reject: "Ablehnen",
+      learn: "Mehr erfahren",
+    },
   });
 
   useEffect(() => {
