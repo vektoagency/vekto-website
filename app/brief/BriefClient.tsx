@@ -42,12 +42,20 @@ const initialForm: BriefSubmission = {
 export default function BriefClient() {
   // Language lives in the global LangProvider (vekto-lang cookie) so the
   // shared SiteHeader toggle switches this page's copy too.
-  const { lang } = useLang();
+  const { lang, setLang } = useLang();
   const [step, setStep] = useState(0); // 0 = intro, 1-4 = steps, 5 = success
   const [form, setForm] = useState<BriefSubmission>(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+
+  // A link with ?lang=bg or ?lang=en opens the brief in that language,
+  // so a Bulgarian client can be sent straight to the Bulgarian version.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("lang");
+    if (q === "bg" || q === "en") setLang(q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Restore draft on mount
   useEffect(() => {
@@ -330,13 +338,29 @@ export default function BriefClient() {
         {/* Nav buttons (hide on intro & success) */}
         {step > 0 && step < 5 && (
           <div className="mt-10 md:mt-12 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pt-6" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }}>
-            <button
-              onClick={handleBack}
-              className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-55 hover:opacity-100 transition-opacity py-2 self-start sm:self-auto"
-              style={{ fontFamily: PIXEL }}
-            >
-              {t.nav.back}
-            </button>
+            <div className="flex items-center gap-5 self-start sm:self-auto">
+              <button
+                onClick={handleBack}
+                className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-55 hover:opacity-100 transition-opacity py-2"
+                style={{ fontFamily: PIXEL }}
+              >
+                {t.nav.back}
+              </button>
+              {/* The brief keeps a draft in this browser so nothing is lost
+                  on reload; this clears it and starts from the first step. */}
+              <button
+                onClick={() => {
+                  try { localStorage.removeItem(STORAGE_KEY); } catch {}
+                  setForm({ ...initialForm, lang });
+                  setErrorMsg(null);
+                  setStep(1);
+                }}
+                className="text-[11px] font-bold uppercase tracking-[0.25em] opacity-40 hover:opacity-100 transition-opacity py-2"
+                style={{ fontFamily: PIXEL }}
+              >
+                {t.nav.startOver}
+              </button>
+            </div>
             {errorMsg && (
               <span
                 className="text-[10px] font-bold uppercase tracking-[0.2em] text-red-400 sm:flex-1 sm:text-center"

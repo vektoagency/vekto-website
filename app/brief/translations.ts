@@ -20,6 +20,7 @@ export const briefCopy = {
       next: "Напред →",
       submit: "Изпрати брифа",
       submitting: "Изпраща се…",
+      startOver: "Изчисти",
       home: "← Към сайта",
     },
     success: {
@@ -117,6 +118,7 @@ export const briefCopy = {
       next: "Next →",
       submit: "Submit brief",
       submitting: "Sending…",
+      startOver: "Start over",
       home: "← Back to site",
     },
     success: {

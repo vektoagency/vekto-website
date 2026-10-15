@@ -6,6 +6,7 @@ import TransitionBridge from "./components/TransitionBridge";
 import MetaPixel from "./components/MetaPixel";
 import CookieBanner from "./components/CookieBanner";
 import { LangProvider, type Lang } from "./i18n/LangProvider";
+import { cookies, headers } from "next/headers";
 import { OG_IMAGE } from "./lib/og";
 
 const geist = Geist({
@@ -52,9 +53,13 @@ export default async function RootLayout({
 }>) {
   // The site is English only (owner's call, 2026-10-09). Every route is
   // pinned to English: LangProvider ignores setLang and the header hides
-  // its toggle. The Bulgarian copy still sits in the dictionaries, unused.
-  const lang: Lang = "en";
-  const pinned = true;
+  // its toggle. The one exception is /brief (owner's call, 2026-10-15):
+  // the middleware marks it, the header shows the EN/BG toggle there, and
+  // the visitor's choice is read from vekto-lang2.
+  const free = (await headers()).get("x-vekto-lang-free") === "1";
+  const saved = (await cookies()).get("vekto-lang2")?.value;
+  const lang: Lang = free && saved === "bg" ? "bg" : "en";
+  const pinned = !free;
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>
