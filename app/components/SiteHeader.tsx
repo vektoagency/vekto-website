@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IBM_Plex_Mono, Space_Grotesk, Onest } from "next/font/google";
 import { useLang } from "../i18n/LangProvider";
+import LangMenu from "./LangMenu";
 
 // Same faces + config as the homepage loads, so the header typography is
 // identical on every route (and Next dedupes the font payloads).
@@ -58,7 +59,7 @@ export default function SiteHeader({
       which passes an in-page anchor. */
   ctaHref?: string;
 }) {
-  const { fullLang: lang, setLang, pinned } = useLang();
+  const { fullLang: lang } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -147,7 +148,7 @@ export default function SiteHeader({
             }}
           />
           <nav
-            aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"}
+            aria-label={lang === "bg" ? "Основна навигация" : lang === "de" ? "Hauptnavigation" : "Main navigation"}
             className="hidden md:contents"
           >
             {NAV_LINKS.map((link) => (
@@ -167,24 +168,7 @@ export default function SiteHeader({
           </nav>
           {/* Hidden where the route locks the language (/hospitality) -
               the control would be dead there. */}
-          {/* Language menu, only on routes that allow switching (/brief).
-              English first: it is the site's language. */}
-          {!pinned && (
-            <label className="relative shrink-0">
-              <span className="sr-only">Language</span>
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value as typeof lang)}
-                className="appearance-none cursor-pointer pl-3 pr-7 py-2 font-bold uppercase text-xs tracking-[0.2em] bg-[#0d0d0d] text-[#f4f4f4] hover:bg-white hover:text-black transition-colors"
-                style={{ border: "1.5px solid rgba(244,244,244,0.75)", fontFamily: PIXEL_STACK }}
-              >
-                <option value="en">EN</option>
-                <option value="de">DE</option>
-                <option value="bg">БГ</option>
-              </select>
-              <span aria-hidden className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-current">▼</span>
-            </label>
-          )}
+          <LangMenu />
           <Link
             href={ctaHref}
             className="hidden sm:inline-flex items-center gap-2 px-3 md:px-4 py-2 uppercase text-[12px] md:text-[13px] tracking-[0.2em] font-black transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 shrink-0"
@@ -200,7 +184,7 @@ export default function SiteHeader({
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
-            aria-label={lang === "bg" ? "Меню" : "Menu"}
+            aria-label={lang === "bg" ? "Меню" : lang === "de" ? "Menü" : "Menu"}
             className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] shrink-0"
             style={{ border: "1.5px solid rgba(244,244,244,0.75)" }}
           >
@@ -234,7 +218,7 @@ export default function SiteHeader({
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              aria-label={lang === "bg" ? "Затвори" : "Close"}
+              aria-label={lang === "bg" ? "Затвори" : lang === "de" ? "Schließen" : "Close"}
               className="w-9 h-9 font-black text-xl leading-none"
               style={{ border: "1.5px solid rgba(244,244,244,0.75)", color: "#f4f4f4" }}
             >

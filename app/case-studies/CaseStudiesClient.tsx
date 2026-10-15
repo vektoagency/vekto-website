@@ -15,10 +15,10 @@ export type CaseStudy = {
   brand: string;
   brandLogo?: string;
   category: string;
-  headline: { bg: string; en: string };
+  headline: { bg: string; en: string; de: string };
   metric: {
     value: string;
-    label: { bg: string; en: string };
+    label: { bg: string; en: string; de: string };
   };
   cover: string;
   services: string[];
@@ -36,8 +36,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "Ръст на приходите чрез AI видео и реклами",
       en: "Revenue growth via AI video + performance",
+      de: "Umsatzwachstum durch AI-Video + Performance",
     },
-    metric: { value: "AI video", label: { bg: "Продукция и реклами", en: "Production and ads" } },
+    metric: { value: "AI video", label: { bg: "Продукция и реклами", en: "Production and ads", de: "Produktion und Anzeigen" } },
     cover: "/images/work-menscare.webp",
     services: ["Video", "Ads", "Landing pages"],
     live: true,
@@ -51,8 +52,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "Кинематографична брандова идентичност + мащабируема кампания",
       en: "Cinematic brand identity + scalable campaign",
+      de: "Cinematic Markenidentität + skalierbare Kampagne",
     },
-    metric: { value: "Campaign", label: { bg: "Бранд и реклами", en: "Brand and ads" } },
+    metric: { value: "Campaign", label: { bg: "Бранд и реклами", en: "Brand and ads", de: "Marke und Anzeigen" } },
     cover: "/images/work-isosport.webp",
     services: ["Cinematic film", "Brand", "Ads"],
     live: false,
@@ -65,8 +67,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "Система за постоянен поток от нови криейтиви",
       en: "AI UGC system for continuous fresh creative",
+      de: "AI-UGC-System für laufend neue Creatives",
     },
-    metric: { value: "UGC flow", label: { bg: "Постоянен креатив", en: "A steady creative flow" } },
+    metric: { value: "UGC flow", label: { bg: "Постоянен креатив", en: "A steady creative flow", de: "Ein stetiger Creative-Fluss" } },
     cover: "/images/logo-parfen.webp",
     services: ["AI UGC", "Ads creative", "Meta"],
     live: false,
@@ -79,8 +82,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "Кинематографичен филм за старт на продукт в САЩ",
       en: "Cinematic reel for US product launch",
+      de: "Cinematic Reel für einen Produktlaunch in den USA",
     },
-    metric: { value: "Launch", label: { bg: "Пускане на пазара", en: "Bringing it to market" } },
+    metric: { value: "Launch", label: { bg: "Пускане на пазара", en: "Bringing it to market", de: "Markteinführung" } },
     cover: "/images/logo-dusq.webp",
     services: ["Cinematic", "Product visuals", "Launch"],
     live: false,
@@ -93,8 +97,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "Пълен старт на онлайн магазин — от нула до първи продажби",
       en: "Full ecommerce launch — brand to first sales",
+      de: "Kompletter E-Commerce-Start — von der Marke bis zu den ersten Verkäufen",
     },
-    metric: { value: "Online store", label: { bg: "От нула до продажби", en: "Zero to first sales" } },
+    metric: { value: "Online store", label: { bg: "От нула до продажби", en: "Zero to first sales", de: "Von null zu den ersten Verkäufen" } },
     cover: "/images/logo-gourmethouse.png",
     services: ["Website", "Brand", "Ads"],
     live: false,
@@ -107,8 +112,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "От клик до поръчка — конверсия при студен трафик",
       en: "Click to order — cold-traffic conversion",
+      de: "Vom Klick zur Bestellung — Conversion bei Cold Traffic",
     },
-    metric: { value: "Conversion", label: { bg: "От клик до поръчка", en: "Click to order" } },
+    metric: { value: "Conversion", label: { bg: "От клик до поръчка", en: "Click to order", de: "Vom Klick zur Bestellung" } },
     cover: "/images/logo-bemeacne.webp",
     services: ["Static banners", "Ads", "Conversion optimisation"],
     live: false,
@@ -121,8 +127,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: {
       bg: "Съдържание за социални мрежи и разказване на историята",
       en: "Social content + storytelling",
+      de: "Social Content + Storytelling",
     },
-    metric: { value: "Content", label: { bg: "Разказ за бранда", en: "The brand story" } },
+    metric: { value: "Content", label: { bg: "Разказ за бранда", en: "The brand story", de: "Die Markengeschichte" } },
     cover: "/images/logo-nedelya.svg",
     services: ["Social content", "Video", "Strategy"],
     live: false,
@@ -161,6 +168,22 @@ const copy = {
     ctaSub: "We take on 12 new partners a year. One intro, personal review, reply within 24h.",
     ctaPrimary: "Book a call",
     ctaSecondary: "← Back to home",
+  },
+  de: {
+    badge: "CASE STUDIES",
+    h1Top: "Echte Ergebnisse",
+    h1Highlight: "für echte Marken.",
+    sub: "100+ Marken in Bulgarien und den USA. Jedes Projekt hier ist eine Partnerschaft — vom Briefing über den Launch hinaus.",
+    stats: [
+      { value: "100+", label: "Partnerschaften" },
+    ],
+    viewCase: "Case ansehen",
+    comingSoon: "Demnächst",
+    ctaH2Top: "Bereit, die Nächsten zu sein?",
+    ctaH2Bottom: "Sprechen wir.",
+    ctaSub: "Wir nehmen 12 neue Partner pro Jahr auf. Ein Erstkontakt, persönliche Prüfung, Antwort innerhalb von 24 Std.",
+    ctaPrimary: "Gespräch buchen",
+    ctaSecondary: "← Zurück zur Startseite",
   },
 };
 
@@ -296,7 +319,7 @@ function CaseCard({
   comingSoonLabel,
 }: {
   cs: CaseStudy;
-  lang: "bg" | "en";
+  lang: "bg" | "en" | "de";
   viewLabel: string;
   comingSoonLabel: string;
 }) {

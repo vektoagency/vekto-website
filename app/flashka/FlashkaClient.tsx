@@ -28,7 +28,10 @@ const FlashkaPostForm = dynamic(() => import("./FlashkaPostForm"), {
 export default function FlashkaClient() {
   // Language lives in the global LangProvider (vekto-lang cookie) so the
   // shared SiteHeader toggle switches this page's copy too.
-  const { lang } = useLang();
+  // No German copy here (a Bulgarian-market page / legacy component):
+  // German visitors get the English text.
+  const { lang: pickedLang } = useLang();
+  const lang = pickedLang === "de" ? "en" : pickedLang;
   const [hydrated, setHydrated] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

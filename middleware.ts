@@ -34,11 +34,6 @@ export function middleware(req: NextRequest) {
   if (/^\/hospitality(\/|$)/.test(url.pathname)) {
     requestHeaders.set("x-vekto-lang-pin", "en");
   }
-  // The brief is the one page with a Bulgarian version: BG clients fill
-  // it in Bulgarian. Everything else on the site stays English only.
-  if (/^\/brief(\/|$)/.test(url.pathname)) {
-    requestHeaders.set("x-vekto-lang-free", "1");
-  }
 
   const res = NextResponse.next({ request: { headers: requestHeaders } });
 

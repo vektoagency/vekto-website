@@ -62,11 +62,41 @@ const copy = {
     ctaH2: ["Let's build your", "success story"],
     ctaBtn: "Let's Talk",
   },
+  de: {
+    back: "Zurück",
+    eyebrow: "Case Study",
+    h1: ["Markenaufwertung &", "Content-Strategie"],
+    sub: "Wie wir eine Creative-Pipeline aufgebaut und das Werbekonto eines Premium-Grooming-Unternehmens neu strukturiert haben.",
+    stats: [
+      { value: "Creative", label: "Videos und Statics im Fluss" },
+      { value: "Ads", label: "Meta-Konto neu strukturiert" },
+      { value: "KI", label: "Skripte und Schnitt" },
+      { value: "Strategie", label: "Angles, Hooks, Angebot" },
+    ],
+    brandEyebrow: "Die Marke",
+    brandH2: ["Premium-Grooming,", "angetrieben von der Natur"],
+    brandP1:
+      "Men's Care ist ein Premium-Grooming-Unternehmen, spezialisiert auf Produkte für Bart- und Haarwachstum mit natürlichen Inhaltsstoffen.",
+    brandP2:
+      "Sie kamen mit einem Ziel zu uns: aggressive und zugleich nachhaltige Skalierung der Online-Umsätze über 6 Monate — eine breitere Zielgruppe erreichen und das Bestellvolumen maximieren, ohne dass die Kosten pro Akquisition (CPA) in die Höhe schießen.",
+    approachEyebrow: "Unser Ansatz",
+    approachH2: ["Creative-Testing", "im großen Maßstab"],
+    approachP1:
+      "Wir haben in kurzer Zeit eine enorme Vielfalt an Marketing-Angles produziert und getestet — mit KI-gestützten Tools für Skripterstellung und dynamischen Schnitt — und so die viralen Hooks und Pain Points gefunden, die wirklich ankamen.",
+    approachP2:
+      "Parallel zum Creative-Output haben wir das Meta-Ads-Setup neu strukturiert, mit sauberem Prospecting im oberen Funnel und Retargeting im unteren Funnel — für effizientes Skalieren ohne verschwendetes Budget.",
+    servicesEyebrow: "Eingesetzte Leistungen",
+    services: ["Short-Form Authority Series", "KI-Produktvisuals", "KI-Content-Automatisierung", "Cinematic Styling"],
+    ctaEyebrow: "Bereit zu skalieren?",
+    ctaH2: ["Lassen Sie uns Ihre", "Erfolgsgeschichte schreiben"],
+    ctaBtn: "Sprechen wir",
+  },
 };
 
 export default async function MensCarePage() {
   const cookieStore = await cookies();
-  const lang = "en" as "bg" | "en";
+  const saved = cookieStore.get("vekto-lang2")?.value;
+  const lang: "bg" | "en" | "de" = saved === "bg" || saved === "de" ? saved : "en";
   const t = copy[lang];
 
   return (

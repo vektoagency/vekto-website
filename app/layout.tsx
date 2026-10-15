@@ -51,15 +51,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // The site is English only (owner's call, 2026-10-09). Every route is
-  // pinned to English: LangProvider ignores setLang and the header hides
-  // its toggle. The one exception is /brief (owner's call, 2026-10-15):
-  // the middleware marks it, the header shows the EN/BG toggle there, and
-  // the visitor's choice is read from vekto-lang2.
-  const free = (await headers()).get("x-vekto-lang-free") === "1";
+  // 2026-10-15, owner's call: the whole site speaks EN (default), DE and
+  // BG, picked from the header's language menu and kept in vekto-lang2.
+  // Only routes the middleware pins (/hospitality) stay English.
+  const h = await headers();
   const saved = (await cookies()).get("vekto-lang2")?.value;
-  const lang: AnyLang = free && (saved === "bg" || saved === "de") ? saved : "en";
-  const pinned = !free;
+  const pinned = h.get("x-vekto-lang-pin") === "en";
+  const lang: AnyLang = !pinned && (saved === "bg" || saved === "de") ? saved : "en";
   return (
     <html lang={lang} className={`${geist.variable} h-full antialiased`}>
       <head>

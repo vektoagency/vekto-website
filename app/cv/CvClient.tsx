@@ -19,6 +19,7 @@ import { ClipSections, ClipLightbox, type Clip } from "../portfolio/PortfolioCli
 import HeroCinematicBg from "../components/HeroCinematicBg";
 import SectionPlate from "../components/SectionPlate";
 import { useLang } from "../i18n/LangProvider";
+import LangMenu from "../components/LangMenu";
 
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
@@ -182,6 +183,59 @@ const COPY = {
     region: { BG: "BG", US: "US" } as const,
     rights: "All rights reserved.",
   },
+  de: {
+    toggle: "БГ",
+    heroEyebrow: "VEKTO · AI-VIDEOPRODUKTION",
+    h1a: "VIDEO OHNE",
+    h1b: "DREHTAG.",
+    sub: "Cinematic Spots, UGC, AI-Avatare und Produktvisuals — mit AI produziert für 100+ Unternehmen in Bulgarien und den USA.",
+    stats: [
+      { num: "300+", label: "VIDEOS / MONAT" },
+      { num: "100+", label: "UNTERNEHMEN" },
+      { num: "BG · US", label: "ZWEI MÄRKTE" },
+    ],
+    formatsEyebrow: "01 · AI-VIDEO · VIER FORMATE",
+    formatsTitle: "WAS WIR MACHEN",
+    formats: [
+      {
+        title: "Short-Form-Serien mit Expertenstatus",
+        text: "Wirkungsstarke Kurzvideos für Social Media, die Ihre Marke als Autorität in Ihrer Branche positionieren — optimiert für maximale Reichweite und Interaktion.",
+        tags: ["Social Media", "Short-Form", "Strategie"],
+      },
+      {
+        title: "AI-Avatare & virtuelle Sprecher",
+        text: "Individuelle AI-Avatare als Gesicht Ihrer Marke. Mehrsprachige Inhalte in großem Umfang, mit gleichbleibend hochwertiger Präsentation — ohne aufwendige Produktion.",
+        tags: ["AI-Avatar", "Mehrsprachig", "Automatisierung"],
+      },
+      {
+        title: "Cinematic Brand Films",
+        text: "Hochwertiges, immersives Storytelling mit kompletter Produktion vom Konzept bis zur Postproduktion. Mit AI veredelt für einen erstklassigen Kino-Look.",
+        tags: ["Cinematic", "Markenfilm", "Produktion"],
+      },
+      {
+        title: "AI-Produktvisuals",
+        text: "Hyperrealistische, mit AI erstellte Produktvisuals für E-Commerce und Marketing. Eine Premium-Präsentation, die verkauft.",
+        tags: ["Produktvisuals", "E-Commerce", "AI"],
+      },
+    ],
+    workEyebrow: "02 · PORTFOLIO",
+    workTitle: "DIE VIDEOS",
+    brandsEyebrow: "03 · DIE KUNDEN",
+    brandsTitle: "MARKEN, MIT DENEN WIR ARBEITEN",
+    contactEyebrow: "04 · KONTAKT",
+    contactTitle: "SPRECHEN WIR.",
+    contactSub: "Antwort innerhalb von 24 Stunden — von einem Menschen, nicht von einem Bot.",
+    channels: [
+      { kind: "call", label: "ANRUFEN", value: "+359 88 225 1474", action: "Anrufen", href: "tel:+359882251474" },
+      { kind: "whatsapp", label: "WHATSAPP", value: "Schreiben Sie uns", action: "Chat öffnen", href: "https://wa.me/359882251474" },
+      { kind: "email", label: "E-MAIL", value: "vektoagency@gmail.com", action: "Schreiben", href: "mailto:vektoagency@gmail.com" },
+    ],
+    copy: "Kopieren",
+    copied: "Kopiert",
+    based: "BULGARIEN · USA",
+    region: { BG: "BG", US: "US" } as const,
+    rights: "Alle Rechte vorbehalten.",
+  },
 } as const;
 
 export default function CvClient() {
@@ -295,6 +349,7 @@ export default function CvClient() {
               maskSize: "contain",
             }}
           />
+          <LangMenu />
         </div>
       </div>
 

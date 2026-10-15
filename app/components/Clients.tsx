@@ -129,7 +129,10 @@ function BrandTile({ c, lang }: { c: Client; lang: "bg" | "en" }) {
 export default function Clients() {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
-  const { lang } = useLang();
+  // No German copy here (a Bulgarian-market page / legacy component):
+  // German visitors get the English text.
+  const { lang: pickedLang } = useLang();
+  const lang = pickedLang === "de" ? "en" : pickedLang;
   const t = useT({
     bg: {
       title: "Бизнес партньори, които ни се довериха",

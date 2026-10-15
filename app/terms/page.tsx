@@ -132,11 +132,74 @@ const copy = {
       },
     ],
   },
+  de: {
+    home: "← Zurück zur Website",
+    eyebrow: "Rechtliches",
+    h1: "Allgemeine Geschäftsbedingungen",
+    updated: "Zuletzt aktualisiert: 19. Mai 2026",
+    intro:
+      "Diese Allgemeinen Geschäftsbedingungen („Bedingungen“) regeln die Nutzung von vektoagency.com und der Leistungen, die VEKTO erbringt. Durch die Nutzung der Website oder die Unterzeichnung eines Projekts erklären Sie sich mit ihnen einverstanden.",
+    sections: [
+      {
+        title: "1. Wer wir sind",
+        body: [
+          "VEKTO ist eine unabhängige Wachstumsagentur mit Sitz in Bulgarien — Creatives, Werbeanzeigen, Websites und KI-Lösungen aus einer Hand.",
+          "E-Mail: vektoagency@gmail.com · Telefon: +359 88 225 1474",
+        ],
+      },
+      {
+        title: "2. Leistungen",
+        body: [
+          "Wir bieten die folgenden Leistungen an:",
+          "• Kurzvideos für soziale Medien",
+          "• KI-Avatare und virtuelle Sprecher",
+          "• Cinematische Filme für Unternehmen",
+          "• KI-Produktvisualisierungen",
+          "Der konkrete Leistungsumfang, die Preise und die Fristen werden für jedes Projekt in einer gesonderten Vereinbarung festgelegt.",
+        ],
+      },
+      {
+        title: "3. Fristen und Lieferung",
+        body: [
+          "Die Fristen werden in der Projektvereinbarung festgelegt. Die Lieferung des ersten Materials erfolgt standardmäßig innerhalb von 5-10 Werktagen.",
+          "Im angegebenen Preis sind bis zu 2 Korrekturschleifen enthalten. Weitere Korrekturen werden gesondert berechnet.",
+          "Verzögerungen auf Seiten des Kunden (fehlende Materialien, verspätete Freigaben) verlängern die Frist.",
+        ],
+      },
+      {
+        title: "4. Geistiges Eigentum",
+        body: [
+          "Nach vollständiger Bezahlung erhält der Kunde die vollen Nutzungsrechte an den finalen Inhalten.",
+          "VEKTO behält sich das Recht vor, abgeschlossene Arbeiten in Portfolio, Fallstudien und Marketing zu verwenden — es sei denn, der Kunde untersagt dies ausdrücklich schriftlich.",
+          "Quelldateien (Projektdateien, Rohmaterial, Skripte) bleiben Eigentum von VEKTO und können gegen eine zusätzliche Gebühr bereitgestellt werden.",
+        ],
+      },
+      {
+        title: "5. Vertraulichkeit",
+        body: [
+          "Beide Parteien verpflichten sich, die Geschäftsinformationen der jeweils anderen Partei vertraulich zu behandeln. Auf Wunsch kann vor Beginn der Arbeiten eine Geheimhaltungsvereinbarung (NDA) unterzeichnet werden.",
+        ],
+      },
+      {
+        title: "6. Änderungen der Bedingungen",
+        body: [
+          "Wir können diese Bedingungen aktualisieren. Für jedes Projekt gelten die Bedingungen, die zum Zeitpunkt der Unterzeichnung der Projektvereinbarung gültig sind.",
+        ],
+      },
+      {
+        title: "7. Anwendbares Recht",
+        body: [
+          "Diese Bedingungen unterliegen dem Recht der Republik Bulgarien. Streitigkeiten werden durch Verhandlungen beigelegt; ist dies nicht möglich, durch die zuständigen bulgarischen Gerichte.",
+        ],
+      },
+    ],
+  },
 };
 
 export default async function TermsPage() {
   const cookieStore = await cookies();
-  const lang = "en" as "bg" | "en";
+  const saved = cookieStore.get("vekto-lang2")?.value;
+  const lang: "bg" | "en" | "de" = saved === "bg" || saved === "de" ? saved : "en";
   const t = copy[lang];
 
   return (

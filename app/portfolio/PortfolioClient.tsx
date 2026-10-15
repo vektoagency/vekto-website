@@ -5,7 +5,7 @@ import type { CaseStudy } from "../case-studies/CaseStudiesClient";
 import { useEffect, useRef, useState } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import bunnyData from "../data/bunny-clips.json";
-import { useT } from "../i18n/LangProvider";
+import { useT, useLang, type Lang } from "../i18n/LangProvider";
 
 // Lighter preview-video URL — Bunny: 1080p → 480p; local: file.mp4 → file-480p.mp4.
 // Both forms exist in /public/videos for our local clips, and Bunny serves the
@@ -54,6 +54,40 @@ export type Clip = {
 
 const clips = (bunnyData.clips as Clip[]).filter((c) => !c.excludeFromPortfolio);
 
+// Labels for the work tabs and the clip grid, per language.
+const WORK_COPY: Record<
+  Lang,
+  { tabs: Record<WorkTabId, string>; tabsAria: string; soon: string; bgWork: string; bgWorkAria: string; close: string; closeAria: string }
+> = {
+  en: {
+    tabs: { ai: "AI videos", real: "Real videos", sites: "Websites", cases: "Case studies" },
+    tabsAria: "Work by type",
+    soon: "Coming soon.",
+    bgWork: "Bulgarian-language work",
+    bgWorkAria: "Bulgarian-language work",
+    close: "× close",
+    closeAria: "Close preview",
+  },
+  de: {
+    tabs: { ai: "AI-Videos", real: "Echte Videos", sites: "Websites", cases: "Case Studies" },
+    tabsAria: "Arbeiten nach Typ",
+    soon: "Demnächst.",
+    bgWork: "Videos auf Bulgarisch",
+    bgWorkAria: "Videos auf Bulgarisch",
+    close: "× schließen",
+    closeAria: "Vorschau schließen",
+  },
+  bg: {
+    tabs: { ai: "AI видеа", real: "Реални видеа", sites: "Сайтове", cases: "Казуси" },
+    tabsAria: "Работа по вид",
+    soon: "Очаквайте скоро.",
+    bgWork: "Видеа на български",
+    bgWorkAria: "Видеа на български",
+    close: "× затвори",
+    closeAria: "Затвори прегледа",
+  },
+};
+
 // The work in two runs: English first, then a labelled rule, then the
 // Bulgarian cuts. The site is English, so the English work leads; the
 // Bulgarian work stays visible below the line instead of being hidden.
@@ -64,6 +98,8 @@ export function ClipSections({
   clips: Clip[];
   onExpand: (c: Clip) => void;
 }) {
+  const { lang } = useLang();
+  const w = WORK_COPY[lang];
   const en = clips.filter((c) => c.language !== "bg");
   const bg = clips.filter((c) => c.language === "bg");
   const grid =
@@ -77,10 +113,10 @@ export function ClipSections({
       </div>
       {bg.length > 0 && (
         <>
-          <div className="flex items-center gap-4 md:gap-6 my-10 md:my-14" role="separator" aria-label="Bulgarian-language work">
+          <div className="flex items-center gap-4 md:gap-6 my-10 md:my-14" role="separator" aria-label={w.bgWorkAria}>
             <span aria-hidden className="h-px flex-1" style={{ background: "rgba(244,244,244,0.3)" }} />
             <span className="shrink-0 font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-[#f4f4f4]/70">
-              Bulgarian-language work · {bg.length}
+              {w.bgWork} · {bg.length}
             </span>
             <span aria-hidden className="h-px flex-1" style={{ background: "rgba(244,244,244,0.3)" }} />
           </div>
@@ -109,13 +145,15 @@ const SITES: { name: string; type: string; img: string; href?: string; tags: str
 const CASES: CaseStudy[] = [];
 
 function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => void }) {
+  const { lang } = useLang();
+  const w = WORK_COPY[lang];
   const ai = clips.filter((c) => c.kind !== "real");
   const real = clips.filter((c) => c.kind === "real");
   const tabs: { id: WorkTabId; label: string; count: number }[] = [
-    { id: "ai", label: "AI videos", count: ai.length },
-    { id: "real", label: "Real videos", count: real.length },
-    { id: "sites", label: "Websites", count: SITES.length },
-    { id: "cases", label: "Case studies", count: CASES.length },
+    { id: "ai", label: w.tabs.ai, count: ai.length },
+    { id: "real", label: w.tabs.real, count: real.length },
+    { id: "sites", label: w.tabs.sites, count: SITES.length },
+    { id: "cases", label: w.tabs.cases, count: CASES.length },
   ];
 
   const [tab, setTab] = useState<WorkTabId>("ai");
@@ -144,7 +182,7 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
     <>
       <div
         role="tablist"
-        aria-label="Work by type"
+        aria-label={w.tabsAria}
         className="flex gap-2 md:gap-3 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 mb-8 md:mb-10 [scrollbar-width:none]"
       >
         {tabs.map((tb) => {
@@ -184,10 +222,10 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
           (tab === "cases" && CASES.length === 0)) && (
           <div className="border-2 border-dashed border-[#f4f4f4]/25 px-6 py-16 md:py-24 flex flex-col items-center text-center gap-3">
             <p className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.35em] text-[#f4f4f4]/55">
-              {tab === "real" ? "Real videos" : tab === "sites" ? "Websites" : "Case studies"}
+              {w.tabs[tab]}
             </p>
             <p className="font-black uppercase text-[26px] md:text-[40px] leading-none tracking-[-0.02em] text-[#f4f4f4]">
-              Coming soon.
+              {w.soon}
             </p>
           </div>
         )}
@@ -198,7 +236,7 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
               const body = (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={st.img} alt={`${st.name} website`} loading="lazy" className="w-full aspect-[1200/616] object-cover object-top border-b-2 border-[#f4f4f4]/25" />
+                  <img src={st.img} alt={`${st.name} ${lang === "bg" ? "сайт" : lang === "de" ? "Website" : "website"}`} loading="lazy" className="w-full aspect-[1200/616] object-cover object-top border-b-2 border-[#f4f4f4]/25" />
                   <div className="p-5 md:p-6 flex flex-col gap-3 text-[#f4f4f4]">
                     <h3 className="font-black uppercase text-[18px] md:text-[20px]">{st.name}</h3>
                     <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] opacity-60">{st.type}</p>
@@ -241,7 +279,7 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
                   <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] opacity-60">
                     {cs.brand} · {cs.category}
                   </p>
-                  <h3 className="font-black text-[17px] md:text-[19px] leading-[1.2] text-balance">{cs.headline.en}</h3>
+                  <h3 className="font-black text-[17px] md:text-[19px] leading-[1.2] text-balance">{cs.headline[lang]}</h3>
                   <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
                     {cs.services.map((sv) => (
                       <span key={sv} className={tag} style={tagStyle}>{sv}</span>
@@ -297,6 +335,25 @@ export default function PortfolioClient() {
       ctaH2Bottom: "next case study?",
       bookCta: "Book a Call",
       backToHome: "← Back to home",
+    },
+    de: {
+      header: "DIE ARBEITEN",
+      clipsSuffix: "VIDEOS",
+      back: "Zurück",
+      filter: "> FILTER",
+      categories: [
+        { id: "ALL", label: "ALLE" },
+        { id: "Product", label: "Produkt" },
+        { id: "Organic", label: "Organisch" },
+        { id: "UGC", label: "UGC" },
+        { id: "Cinematic", label: "Cinematic" },
+        { id: "Animation", label: "Animation" },
+        { id: "Experimental", label: "Experimentell" },
+      ],
+      ctaH2Top: "Möchten Sie unsere",
+      ctaH2Bottom: "nächste Case Study sein?",
+      bookCta: "Gespräch buchen",
+      backToHome: "← Zurück zur Startseite",
     },
   });
   const visible = clips;
@@ -565,6 +622,8 @@ export function ClipTile({
 }
 
 export function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => void }) {
+  const { lang } = useLang();
+  const w = WORK_COPY[lang];
   const isLandscape = clip.portrait === false;
   const frameStyle: React.CSSProperties = isLandscape
     ? {
@@ -629,9 +688,9 @@ export function ClipLightbox({ clip, onClose }: { clip: Clip; onClose: () => voi
           <button
             onClick={onClose}
             className="pointer-events-auto shrink-0 font-mono text-[10px] uppercase tracking-[0.25em] border border-[#f4f4f4]/50 text-[#f4f4f4] bg-black/60 px-3 py-1.5 rounded-sm hover:bg-[#f4f4f4]/10"
-            aria-label="Close preview"
+            aria-label={w.closeAria}
           >
-            × close
+            {w.close}
           </button>
         </div>
       </div>

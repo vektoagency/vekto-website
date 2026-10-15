@@ -3,7 +3,7 @@
 // animated stats, comparison table, FAQ, sticky mobile CTA.
 // Designed to convert cold Meta paid traffic at 6-10%+ rate.
 
-export type Lang = "bg" | "en";
+export type Lang = "bg" | "en" | "de";
 
 export const startCopy = {
   bg: {
@@ -320,6 +320,164 @@ export const startCopy = {
       requiredName: "Name is required.",
       requiredBrand: "Business name is required.",
       requiredPhone: "Phone is required.",
+    },
+  },
+  de: {
+    meta: {
+      eyebrow: "VEKTO",
+      stageEyebrow: "01 · BRIEFING IN 60 SEKUNDEN",
+      h1Top: "Nicht jedes Unternehmen wächst.",
+      h1Pre: "Die mit",
+      h1Hl: "Richtung",
+      h1Post: "schon.",
+      sub: "Eine Marketingagentur für Marken, die mehr vom Markt wollen.",
+      trustBadges: [
+        "100+ zufriedene Marken",
+        "Partner, kein Dienstleister",
+        "Wachstumspartner",
+      ],
+      ctaMicro: "60 Sekunden · kostenlos · persönliches Angebot innerhalb von 24 Std.",
+      langToggle: "EN",
+      home: "← Zur Website",
+    },
+    socialProof: {
+      heading: "Marken, die uns bereits vertrauen",
+    },
+    formSection: {
+      eyebrow: "02 · DAS BRIEFING",
+      h2: "Ihr Angebot",
+      h2Highlight: "in 24 Stunden",
+      sub: "60 Sekunden zum Ausfüllen. 24 Stunden bis zur Antwort.",
+      submitMicro: ["Antwort innerhalb von 24 Stunden", "Wachstumspartner", "Kostenlos"],
+    },
+    fields: {
+      name: "Name",
+      namePh: "Max Mustermann",
+      email: "E-Mail",
+      emailPh: "sie@marke.de",
+      brand: "Unternehmen / Website",
+      brandPh: "Name des Unternehmens oder Link",
+      phone: "Telefon / WhatsApp",
+      phonePh: "+49 ...",
+      message: "Was möchten Sie erreichen? (optional)",
+      messagePh: "Beschreiben Sie kurz Ihr Unternehmen und Ihre Ziele. Je mehr Details, desto genauer das Angebot.",
+      contentType: "Welche Inhalte brauchen Sie?",
+      contentTypeOptions: [
+        { id: "cinematic", label: "Markenvideos / Filme" },
+        { id: "ugc", label: "UGC / Kurzvideos" },
+        { id: "ads", label: "Betreuung bezahlter Anzeigen" },
+        { id: "social", label: "Social-Media-Betreuung" },
+        { id: "product", label: "Produktvisualisierungen" },
+        { id: "unsure", label: "Unsicher — bitte empfehlen" },
+      ],
+      budget: "Monatliches Budget",
+      budgetSuffix: "€ / Monat",
+      budgetMaxLabel: "10.000 €+",
+    },
+    cta: {
+      submit: "Angebot anfordern →",
+      submitting: "Wird gesendet…",
+      orBook: "Oder sprechen Sie direkt mit uns:",
+      bookCta: "Gespräch buchen",
+      callCta: "Jetzt anrufen",
+    },
+    cases: {
+      eyebrow: "03 · FÜR WEN WIR ARBEITEN",
+      viewCase: "Ergebnisse ansehen",
+      items: [
+        {
+          brand: "MEN'S CARE",
+          slug: "menscare",
+          category: "Beauty · BG",
+          focus: "AI-Produktion",
+          highlight: "Externe Videoproduktion durch eine eigene AI-Pipeline ersetzt.",
+        },
+        {
+          brand: "PARFEN",
+          slug: "parfen",
+          category: "Parfüm · BG",
+          focus: "Statische Creatives",
+          highlight: "Ein befristetes Angebot, direkt gegen Video getestet.",
+        },
+        {
+          brand: "beMe",
+          slug: "beme",
+          category: "Hautpflege · BG",
+          focus: "Vom Klick zur Bestellung",
+          highlight: "Den Weg von der Anzeige bis zum Warenkorb neu geschrieben.",
+        },
+      ],
+    },
+    promise: {
+      eyebrow: "04 · WAS SIE BEKOMMEN",
+      h2: "Vier Dinge, die sich",
+      h2Highlight: "nicht ändern.",
+      items: [
+        "Antwort innerhalb von 24 Stunden — von einem Menschen, nicht von einem Bot",
+        "Ein Team für Creatives, Anzeigen, Websites und Strategie",
+        "Erste Ergebnisse in 5 Tagen, nicht in Wochen",
+        "Zahlen direkt aus dem Werbekonto, kein geschönter Bericht",
+      ],
+    },
+    faq: {
+      eyebrow: "05 · FAQ",
+      h2: "Bevor Sie entscheiden —",
+      h2Highlight: "das fragt fast jeder",
+      items: [
+        {
+          q: "Was genau bieten Sie an?",
+          a: "Creatives (Video und statisch), Betreuung bezahlter Anzeigen, Websites und Funnels, Strategie und AI-Lösungen. Ein Team, ein Budget — Ihr gesamtes Wachstum aus einer Hand.",
+        },
+        {
+          q: "Warum ist das so kosteneffizient?",
+          a: "AI senkt die Produktionskosten um 60-70 %. Sie zahlen kein komplettes Filmteam, keine Location und keine wochenlange Vorproduktion. Sie zahlen für das Ergebnis — einsatzbereite Creatives und Kampagnen.",
+        },
+        {
+          q: "Was, wenn ich nicht zufrieden bin?",
+          a: "Wir arbeiten Ihr Feedback ein, bis das Material passt. Wie viele Korrekturschleifen enthalten sind und was passiert, wenn wir uns nicht einig werden, steht in Ihrem Angebot — damit es keine Überraschungen gibt.",
+        },
+        {
+          q: "Gibt es eine Mindestvertragslaufzeit?",
+          a: "Die Bedingungen hängen vom Umfang ab und werden in Ihrem Angebot festgelegt — schriftlich, bevor wir starten. Keine versteckten Klauseln, und nichts wird unterschrieben, bevor Sie alles gesehen haben.",
+        },
+        {
+          q: "Was passiert direkt nach dem Absenden?",
+          a: "Wir prüfen Ihr Briefing persönlich (kein AI-Chatbot) innerhalb von 24 Stunden. Sie erhalten ein persönliches Angebot per E-Mail — genaue Preise, Leistungen, Zeitplan. Danach entscheiden Sie.",
+        },
+        {
+          q: "Arbeiten Sie mit Unternehmen außerhalb Bulgariens?",
+          a: "Ja. Wir arbeiten aktiv mit Marken in den USA (Anomaly, Ethan's, Nutrifitt, DUSQ) und Europa. Mehrsprachige Inhalte — ohne Aufpreis.",
+        },
+        {
+          q: "Was, wenn ich ein eigenes Marketingteam habe?",
+          a: "Perfekt — wir arbeiten als Erweiterung Ihres Teams. Es bringt den internen Kontext mit; wir liefern Creatives, Funnels und Kampagnen in Tagen statt Wochen.",
+        },
+      ],
+    },
+    finalCta: {
+      eyebrow: "06 · DAS GESPRÄCH",
+      h2: "Wachstum,",
+      h2Highlight: "das man sieht.",
+      sub: "Creatives, Anzeigen, Websites und Strategie. Alles für echtes Wachstum.",
+      scrollToForm: "Briefing ausfüllen →",
+      orBook: "Oder Gespräch buchen",
+    },
+    stickyMobile: {
+      label: "Start",
+      cta: "Briefing ausfüllen →",
+    },
+    success: {
+      title: "Briefing erhalten.",
+      body: "Danke für Ihre Zeit. Wir prüfen alles persönlich und melden uns innerhalb von 24 Stunden per E-Mail. In der Zwischenzeit können Sie ein 30-minütiges Gespräch buchen:",
+      bookCta: "Termin buchen",
+      backHome: "← Zur Website",
+    },
+    error: {
+      generic: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an vektoagency@gmail.com",
+      requiredEmail: "E-Mail ist ein Pflichtfeld.",
+      requiredName: "Name ist ein Pflichtfeld.",
+      requiredBrand: "Unternehmen ist ein Pflichtfeld.",
+      requiredPhone: "Telefon ist ein Pflichtfeld.",
     },
   },
 } as const;

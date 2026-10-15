@@ -8,7 +8,7 @@ import { mirrorLeadToWebhook } from "../lib/lead-mirror";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export type StartLead = {
-  lang: "bg" | "en";
+  lang: "bg" | "en" | "de";
   // Which LP the form was submitted from. Lets us segment leads in the
   // inbox + dedup CAPI events per source. Defaults to "start" for
   // back-compat with the original /start form.

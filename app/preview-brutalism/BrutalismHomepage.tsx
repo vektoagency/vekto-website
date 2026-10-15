@@ -25,6 +25,7 @@ import HeroCinematicBg from "../components/HeroCinematicBg";
 import { trackEventBoth } from "../components/MetaPixel";
 import { useLang } from "../i18n/LangProvider";
 import Footer from "../components/Footer";
+import LangMenu from "../components/LangMenu";
 import bunnyData from "../data/bunny-clips.json";
 import { ClipTile, ClipLightbox, type Clip } from "../portfolio/PortfolioClient";
 import { ROSTER, type Client } from "../data/roster";
@@ -64,7 +65,7 @@ const REEL_FRAMES = [
 // ============================================================================
 // COPY (bg + en). Brand names stay Latin in both languages.
 // ============================================================================
-type Lang = "bg" | "en";
+type Lang = "bg" | "en" | "de";
 
 const COPY = {
   bg: {
@@ -283,6 +284,114 @@ const COPY = {
       formCta: "Describe your project",
     },
   },
+  de: {
+    cta: "SCHREIBEN SIE UNS",
+    nav: {
+      langSwitch: "EN",
+    },
+    stages: [
+      { id: "01", label: "START" },
+      { id: "02", label: "KUNDEN" },
+      { id: "03", label: "FOKUS" },
+      { id: "04", label: "ARBEIT" },
+      { id: "05", label: "IHR PLUS" },
+      { id: "06", label: "GESPRÄCH" },
+    ],
+    stage1: {
+      eyebrow: "01 · EINE EHRLICHE FRAGE",
+      pill: "100+ MARKEN · 300+ VIDEOS / MONAT",
+      headline1: "VERDIENT IHR UNTERNEHMEN",
+      headline2Prefix: "ES,",
+      headline2Highlight: "ZU WACHSEN?",
+      typed: "EIN TEAM. CREATIVES, FUNNELS & AI.",
+      scrollCue: "▼ WEITER",
+      ctaPrimary: "KONTAKT",
+      ctaSecondary: "PORTFOLIO",
+      globeTitle: "REICHWEITE",
+      globeBg: "BULGARIEN",
+      globeUs: "USA",
+      globeNote: "MARKEN IM PORTFOLIO",
+      globeLink: "ANSEHEN",
+      sheetTitle: "AUS DEM REEL",
+      sheetNote: "9:16 · FÜR REELS / TIKTOK",
+      sheetCaptions: ["CREATOR", "PRODUKT", "LOCATION"],
+      sheetAlt: [
+        "Standbild aus einem Werbevideo – Creator spricht in die Kamera",
+        "Standbild aus einem Werbevideo – Makroaufnahme eines Produkts",
+        "Standbild aus einem Werbevideo – Luftaufnahme einer Location",
+      ],
+    },
+    stage3: {
+      eyebrow: "03 · VIER TEAMS · EIN PARTNER",
+      rooms: [
+        { id: "01", title: "CREATIVE",     detail: "Video · Drehs · AI-Ads",           num: "300+", label: "VIDEOS / MONAT" },
+        { id: "02", title: "WEBSITES",     detail: "Landingpages · E-Com · Portale",   num: "12",   label: "SITES / JAHR" },
+        { id: "03", title: "STRATEGIE",    detail: "Positionierung · Angebot · Plan",  num: "100+", label: "MARKEN IM PORTFOLIO" },
+        { id: "04", title: "AI-LÖSUNGEN",  detail: "AI-Video · Automatisierungen",     num: "24/7", label: "AKTIVE AUTOMATISIERUNGEN" },
+      ],
+      roomBadge: "TEAM №",
+    },
+    stageCases: {
+      eyebrow: "04 · DIE ARBEIT",
+      viewCase: "Ergebnisse ansehen",
+      seeAll: "Alle Arbeiten",
+      headline1: "VOM WERBEBUDGET",
+      headline2Prefix: "ZUM",
+      headline2Highlight: "WACHSTUM.",
+      cases: [
+        {
+          brand: "MEN'S CARE",
+          slug: "menscare",
+          category: "Beauty · BG",
+          focus: "AI-Produktion",
+          highlight: "Externe Videoproduktion durch eine eigene AI-Pipeline ersetzt.",
+        },
+        {
+          brand: "PARFEN",
+          slug: "parfen",
+          category: "Parfüm · BG",
+          focus: "Statische Creatives",
+          highlight: "Ein befristetes Angebot, direkt gegen Video getestet.",
+        },
+        {
+          brand: "beMe",
+          slug: "beme",
+          category: "Hautpflege · BG",
+          focus: "Vom Klick zur Bestellung",
+          highlight: "Den Weg von der Anzeige zum Warenkorb neu geschrieben.",
+        },
+      ],
+    },
+    stage4: {
+      eyebrow: "02 · DIE KUNDEN",
+      headline1: "100+ MARKEN IM PORTFOLIO.",
+      headline2Prefix: "24",
+      headline2Highlight: "DAVON.",
+      region: { BG: "BG", US: "USA" },
+      coda: "DIE ÜBRIGEN – AUF ANFRAGE",
+    },
+    stage6: {
+      eyebrow: "05 · WAS SIE BEKOMMEN",
+      headlinePrefix: "VIER DINGE, DIE",
+      headlineHighlight: "SICH NICHT ÄNDERN",
+      headlineSuffix: ".",
+      items: [
+        "Antwort innerhalb von 24 Stunden – von einem Menschen, nicht von einem Bot",
+        "Ein Team für Creatives, Ads, Websites und Strategie",
+        "Erste Ergebnisse in 5 Tagen, nicht in Wochen",
+        "Zahlen direkt aus dem Werbekonto, kein geschönter Report",
+      ],
+      verdict: "GESPRÄCH BUCHEN",
+    },
+    stage7: {
+      eyebrow: "06 · WENN SIE ES BIS HIER GESCHAFFT HABEN",
+      headlinePrefix: "DANN IST ES ZEIT FÜR",
+      headlineHighlight: "EIN GESPRÄCH.",
+      cta: "GESPRÄCH BUCHEN",
+      callCta: "Anrufen",
+      formCta: "Projekt beschreiben",
+    },
+  },
 };
 
 // Brand roster with real logo files from /public/images/logo-*.
@@ -483,6 +592,11 @@ export default function BrutalismHomepage() {
           { label: "Портфолио", href: "/portfolio"    },
           { label: "Анкета",    href: "/start"        },
         ]
+      : lang === "de"
+      ? [
+          { label: "Portfolio",    href: "/portfolio"    },
+          { label: "Briefing",     href: "/start"        },
+        ]
       : [
           { label: "Portfolio",    href: "/portfolio"    },
           { label: "Brief",        href: "/start"        },
@@ -492,7 +606,7 @@ export default function BrutalismHomepage() {
   // calendar DIRECTLY; the header's "ОПИШИ ПРОЕКТА СИ" opens the lead-form
   // modal. The embed API loads lazily after mount so any data-cal-* button
   // works without the modal ever opening first.
-  const headerCtaLabel = lang === "bg" ? "Опиши проекта си" : "Describe your project";
+  const headerCtaLabel = lang === "bg" ? "Опиши проекта си" : lang === "de" ? "Projekt beschreiben" : "Describe your project";
   const [bookOpen, setBookOpen] = useState(false);
   const openBook = useCallback(() => {
     setBookOpen(true);
@@ -623,7 +737,7 @@ export default function BrutalismHomepage() {
             }}
           />
           <nav
-            aria-label={lang === "bg" ? "Основна навигация" : "Main navigation"}
+            aria-label={lang === "bg" ? "Основна навигация" : lang === "de" ? "Hauptnavigation" : "Main navigation"}
             className="hidden md:contents"
           >
             {NAV_LINKS.map((link) => (
@@ -637,6 +751,7 @@ export default function BrutalismHomepage() {
               </Link>
             ))}
           </nav>
+          <LangMenu />
           {/* The intake lives at /start — the page the ad traffic already
               lands on. One funnel, one form, one pixel stream; a full page
               beats a modal for a multi-field intake. */}
@@ -656,7 +771,7 @@ export default function BrutalismHomepage() {
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
-            aria-label={lang === "bg" ? "Меню" : "Menu"}
+            aria-label={lang === "bg" ? "Меню" : lang === "de" ? "Menü" : "Menu"}
             className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] shrink-0"
             style={{ border: "1.5px solid rgba(244,244,244,0.75)" }}
           >
@@ -677,7 +792,7 @@ export default function BrutalismHomepage() {
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              aria-label={lang === "bg" ? "Затвори" : "Close"}
+              aria-label={lang === "bg" ? "Затвори" : lang === "de" ? "Schließen" : "Close"}
               className="w-9 h-9 font-black text-xl leading-none"
               style={{ border: "1.5px solid rgba(244,244,244,0.75)", color: "#f4f4f4" }}
             >
@@ -719,7 +834,7 @@ export default function BrutalismHomepage() {
           happened. Every stage already has an id, so the rail is now a
           real jump nav. */}
       <nav
-        aria-label={lang === "bg" ? "Секции" : "Sections"}
+        aria-label={lang === "bg" ? "Секции" : lang === "de" ? "Abschnitte" : "Sections"}
         className="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-1.5"
       >
         {t.stages.map((s, i) => {
@@ -884,6 +999,32 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
         sentCal: "ИЗБЕРИ ЧАС ЗА РАЗГОВОРА",
         errorMsg: "Нещо се обърка. Опитай пак.",
       }
+    : lang === "de"
+    ? {
+        title: "KONTAKT",
+        subtitle: "WÄHLEN SIE, WAS IHNEN PASST",
+        formCta: "PROJEKT BESCHREIBEN",
+        formMeta: "≈1 MINUTE",
+        calCta: "TERMIN BUCHEN",
+        calMeta: "30 MIN · KOSTENLOS",
+        orForm: "ODER PROJEKT BESCHREIBEN · ≈1 MINUTE",
+        trust: "ANTWORT IN 24 STD. · UNVERBINDLICH",
+        call: "TELEFON", callSub: "+359 88 225 1474",
+        wa: "WHATSAPP", waSub: "SOFORT-CHAT",
+        email: "E-MAIL", emailSub: "vektoagency@gmail.com",
+        or: "ODER DIREKT:",
+        name: "Name", namePh: "Max Mustermann",
+        phone: "Telefon", phonePh: "+49 000 0000000",
+        emailField: "E-Mail", emailPh: "sie@marke.de",
+        company: "Marke", companyPh: "Markenname oder Website",
+        message: "Kurz zum Projekt", messagePh: "Wir betreiben einen Onlineshop und möchten eine Kampagne starten...",
+        submit: "→ ANFRAGE SENDEN",
+        submitting: "WIRD GESENDET...",
+        sent: "ANFRAGE ERHALTEN",
+        sentSub: "Wir antworten innerhalb von 24 Stunden. Oder sichern Sie sich gleich einen Termin:",
+        sentCal: "TERMIN FÜR DAS GESPRÄCH WÄHLEN",
+        errorMsg: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+      }
     : {
         title: "CONTACT US",
         subtitle: "PICK WHAT WORKS FOR YOU",
@@ -920,7 +1061,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
           its own heading rather than announcing as an unnamed dialog. */}
       <button
         type="button"
-        aria-label={bg ? "Затвори" : "Close"}
+        aria-label={bg ? "Затвори" : lang === "de" ? "Schließen" : "Close"}
         tabIndex={-1}
         onClick={onClose}
         className="absolute inset-0 cursor-default"
@@ -968,7 +1109,7 @@ function BookModal({ open, onClose, lang }: { open: boolean; onClose: () => void
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={bg ? "Затвори" : lang === "de" ? "Schließen" : "Close"}
             className="w-9 h-9 md:w-10 md:h-10 border-2 border-white font-black text-lg leading-none flex items-center justify-center transition-colors hover:bg-white hover:text-black flex-shrink-0"
           >
             ×

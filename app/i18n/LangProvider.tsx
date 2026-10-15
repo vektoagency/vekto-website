@@ -2,12 +2,11 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
-/** The site's two languages. Every page reads one of these. */
-export type Lang = "bg" | "en";
-/** Every language a visitor can pick. German exists only on the brief, so
- *  `lang` reports it as English to the rest of the site and `fullLang`
- *  carries the real choice to the few places that have German copy. */
-export type AnyLang = Lang | "de";
+/** The site's languages. English is the default everywhere; German and
+ *  Bulgarian are one pick away in the header's language menu. */
+export type Lang = "bg" | "en" | "de";
+/** Kept as an alias for code written while German lived only on /brief. */
+export type AnyLang = Lang;
 
 type Ctx = {
   lang: Lang;
@@ -79,7 +78,7 @@ export function LangProvider({
   );
 
   return (
-    <LangContext.Provider value={{ lang: lang === "de" ? "en" : lang, fullLang: lang, setLang, pinned: pin }}>
+    <LangContext.Provider value={{ lang, fullLang: lang, setLang, pinned: pin }}>
       {children}
     </LangContext.Provider>
   );

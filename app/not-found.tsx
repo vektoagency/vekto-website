@@ -74,11 +74,22 @@ const COPY = {
     work: "See the work",
     start: "Describe your project",
   },
+  de: {
+    eyebrow: "404 · FALSCHE ADRESSE",
+    h1: "HIER GIBT ES",
+    hl: "NICHTS.",
+    body: "Diese Adresse existiert nicht, oder die Seite ist nicht mehr auf der Website. Hier geht es weiter.",
+    home: "Zur Startseite",
+    work: "Arbeiten ansehen",
+    start: "Projekt beschreiben",
+  },
 } as const;
 
 export default async function NotFound() {
-  // The site is English only.
-  const lang: "bg" | "en" = "en";
+  // English by default; the visitor's pick from the header menu wins.
+  const cookieLang = (await cookies()).get("vekto-lang2")?.value;
+  const lang: "bg" | "en" | "de" =
+    cookieLang === "bg" || cookieLang === "de" ? cookieLang : "en";
   const t = COPY[lang];
 
   return (
@@ -97,7 +108,7 @@ export default async function NotFound() {
           "--brutal-pixel": "var(--f-pixel), ui-monospace, monospace",
           "--brutal-comic":
             "var(--f-comic-lat), var(--f-comic-cyr), system-ui, sans-serif",
-          "--bgk": "1",
+          "--bgk": lang === "bg" ? "0.92" : "1",
         } as React.CSSProperties
       }
     >

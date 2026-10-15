@@ -80,6 +80,24 @@ export default function Footer() {
       privacy: "Privacy",
       terms: "Terms",
     },
+    de: {
+      tagline:
+        "Creatives, Funnels und AI-Lösungen — alles aus einer Hand. Wachstumspartner für 100+ Unternehmen in Bulgarien und den USA.",
+      based: "Bulgarien · USA",
+      explore: "Entdecken",
+      exploreLinks: [
+        { label: "Startseite", href: "/" },
+        { label: "Portfolio", href: "/portfolio" },
+        { label: "Case Studies", href: "/case-studies" },
+      ],
+      contactH: "Kontakt",
+      startProject: "Projekt beschreiben",
+      longBrief: "Ausführliches Briefing",
+      bookCall: "Gespräch buchen",
+      rights: "Alle Rechte vorbehalten.",
+      privacy: "Datenschutz",
+      terms: "AGB",
+    },
   });
 
   const fontClasses = [

@@ -212,11 +212,114 @@ const copy = {
       },
     ],
   },
+  de: {
+    home: "← Zurück zur Website",
+    eyebrow: "Rechtliches",
+    h1: "Datenschutzerklärung",
+    updated: "Zuletzt aktualisiert: 19. Mai 2026",
+    intro:
+      "Diese Datenschutzerklärung erläutert, wie VEKTO („wir“, „unsere Agentur“) die personenbezogenen Daten erhebt, verwendet, speichert und schützt, die Sie uns bei der Nutzung von vektoagency.com oder unserer Leistungen zur Verfügung stellen.",
+    sections: [
+      {
+        title: "1. Wer wir sind",
+        body: [
+          "VEKTO ist eine unabhängige Wachstumsagentur mit Sitz in Bulgarien — Creatives, Werbeanzeigen, Websites und KI-Lösungen aus einer Hand.",
+          "Kontakt-E-Mail: vektoagency@gmail.com",
+          "Telefon: +359 88 225 1474",
+          "Bei Fragen zum Datenschutz schreiben Sie uns bitte eine E-Mail mit dem Betreff „GDPR“.",
+        ],
+      },
+      {
+        title: "2. Welche Daten wir erheben",
+        body: [
+          "Über Formulare (/start, /brief, Nachrichtenformular):",
+          "• Name, E-Mail-Adresse, Telefon/WhatsApp",
+          "• Website des Unternehmens, Branche, Projektbeschreibung",
+          "• Monatliches Budget, Art der Inhalte",
+          "Automatisch beim Besuch der Website:",
+          "• IP-Adresse, Browser, Gerätetyp, besuchte Seiten",
+          "• Sprach-Cookie (vekto-lang2), Cookie-Einwilligung",
+        ],
+      },
+      {
+        title: "3. Zu welchen Zwecken wir sie erheben",
+        body: [
+          "• Um Ihre Anfrage zu beantworten und ein Angebot zu erstellen",
+          "• Um einen Termin über Cal.com zu vereinbaren",
+          "• Um die Website zu verbessern (anonyme Analyse)",
+          "• Zur Optimierung von Werbeanzeigen über das Meta Pixel (nur mit Ihrer Einwilligung in Cookies)",
+        ],
+      },
+      {
+        title: "4. Rechtsgrundlage (Art. 6 DSGVO)",
+        body: [
+          "• Vertragserfüllung / vorvertragliche Kommunikation — wenn Sie ein Formular ausfüllen",
+          "• Berechtigtes Interesse — für die grundlegende Funktionalität der Website",
+          "• Einwilligung — für Marketing-Cookies und das Tracking über das Meta Pixel",
+        ],
+      },
+      {
+        title: "5. Cookies und Tracking",
+        body: [
+          "Wir verwenden die folgenden Arten von Cookies:",
+          "• Notwendige Cookies — Funktionalität der Website (vekto-lang2, cookie-consent)",
+          "• Marketing-Cookies — Meta Pixel zur Messung von Werbeanzeigen und für Retargeting (nur mit Einwilligung)",
+          "Sie können Ihre Einwilligung über das Cookie-Banner oder Ihre Browsereinstellungen verwalten.",
+          "Das Meta Pixel erfasst: PageView, Lead (Absenden eines Formulars), Schedule (Terminbuchung), Contact (Klick auf die Telefonnummer).",
+        ],
+      },
+      {
+        title: "6. Auftragsverarbeiter (Drittanbieter)",
+        body: [
+          "• Vercel (Hosting) — vercel.com/legal/privacy-policy",
+          "• Resend (Transaktions-E-Mails) — resend.com/legal/privacy",
+          "• Cal.com (Terminbuchungen) — cal.com/privacy",
+          "• Meta (Pixel + Werbeanzeigen) — facebook.com/privacy/policy",
+          "• Bunny CDN (Video-Hosting) — bunny.net/privacy",
+          "Alle Anbieter sind DSGVO-konform, und wir haben mit ihnen Auftragsverarbeitungsverträge (AVV) abgeschlossen.",
+        ],
+      },
+      {
+        title: "7. Wie lange wir Daten speichern",
+        body: [
+          "• E-Mails aus Formularen — bis zu 3 Jahre nach dem letzten Kontakt",
+          "• Cookie-Einwilligung — 12 Monate",
+          "• Meta-Pixel-Daten — gemäß den Aufbewahrungsrichtlinien von Meta",
+          "Nach Ablauf dieser Frist werden die Daten automatisch gelöscht.",
+        ],
+      },
+      {
+        title: "8. Ihre Rechte (DSGVO)",
+        body: [
+          "Sie haben das Recht:",
+          "• Auskunft über Ihre Daten zu verlangen",
+          "• Berichtigung oder Löschung zu verlangen",
+          "• der Verarbeitung zu Marketingzwecken zu widersprechen",
+          "• auf Datenübertragbarkeit",
+          "• Beschwerde bei der Aufsichtsbehörde einzulegen",
+          "Zur Ausübung dieser Rechte schreiben Sie bitte eine E-Mail an vektoagency@gmail.com mit dem Betreff „GDPR“. Wir antworten innerhalb von 30 Tagen.",
+        ],
+      },
+      {
+        title: "9. Sicherheit",
+        body: [
+          "Daten werden über HTTPS übertragen. Das Hosting erfolgt bei nach ISO 27001 zertifizierten Partnern (Vercel, Resend). Wir geben keine Daten an Dritte außerhalb der hier beschriebenen weiter.",
+        ],
+      },
+      {
+        title: "10. Änderungen dieser Datenschutzerklärung",
+        body: [
+          "Wir können diese Datenschutzerklärung aktualisieren. Das Datum der letzten Aktualisierung steht oben. Wesentliche Änderungen werden über die Website mitgeteilt.",
+        ],
+      },
+    ],
+  },
 };
 
 export default async function PrivacyPage() {
   const cookieStore = await cookies();
-  const lang = "en" as "bg" | "en";
+  const saved = cookieStore.get("vekto-lang2")?.value;
+  const lang: "bg" | "en" | "de" = saved === "bg" || saved === "de" ? saved : "en";
   const t = copy[lang];
 
   return (
