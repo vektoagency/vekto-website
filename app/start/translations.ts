@@ -59,7 +59,7 @@ export const startCopy = {
       budgetMaxLabel: "10 000 €+",
     },
     cta: {
-      submit: "Получи оферта →",
+      submit: "Получи оферта",
       submitting: "Изпраща се…",
       orBook: "Или ако предпочиташ — поговори с нас директно:",
       bookCta: "Резервирай разговор",
@@ -217,7 +217,7 @@ export const startCopy = {
       budgetMaxLabel: "€10,000+",
     },
     cta: {
-      submit: "Get my proposal →",
+      submit: "Get my proposal",
       submitting: "Sending…",
       orBook: "Or if you prefer — talk to us directly:",
       bookCta: "Book a Call",
@@ -375,7 +375,7 @@ export const startCopy = {
       budgetMaxLabel: "10.000 €+",
     },
     cta: {
-      submit: "Angebot anfordern →",
+      submit: "Angebot anfordern",
       submitting: "Wird gesendet…",
       orBook: "Oder sprechen Sie direkt mit uns:",
       bookCta: "Gespräch buchen",
