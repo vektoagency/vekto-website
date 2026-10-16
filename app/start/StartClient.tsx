@@ -288,12 +288,12 @@ export default function StartClient() {
                   {t.meta.stageEyebrow}
                 </p>
                 <h1
-                  className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-5 md:mb-7 animate-[startFade_0.55s_0.05s_ease-out_both]"
+                  className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-8 md:mb-10 animate-[startFade_0.55s_0.05s_ease-out_both]"
                   style={{
-                    // Sized so each sentence holds one line — two lines
-                    // total on every viewport (no text-balance: it split
-                    // the sentences into even halves on phones).
-                    fontSize: "calc(clamp(21px, 5.6vw, 76px) * var(--bgk, 1))",
+                    // The headline and the button are the whole hero: no
+                    // badges or fine print around them. Larger on phones,
+                    // where a sentence may now take two lines.
+                    fontSize: "calc(clamp(30px, 8vw, 80px) * var(--bgk, 1))",
                     textShadow: "0 2px 30px rgba(0,0,0,0.5)",
                   }}
                 >
@@ -315,34 +315,15 @@ export default function StartClient() {
                   </span>
                 </h1>
 
-                {/* Trust row — instrument type, silver ticks */}
-                <div
-                  className="flex flex-wrap items-center justify-center gap-x-5 md:gap-x-8 gap-y-2 mb-7 md:mb-9 animate-[startFade_0.65s_0.15s_ease-out_both]"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
-                >
-                  {t.meta.trustBadges.map((b) => (
-                    <span key={b} className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.14em] opacity-85">
-                      <span className="mr-1.5" aria-hidden>✓</span>
-                      {b}
-                    </span>
-                  ))}
-                </div>
-
                 {/* Primary CTA — scrolls to form */}
                 <button
                   onClick={scrollToForm}
-                  className="group inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-7 md:px-9 py-3.5 md:py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[13px] md:text-[14px] animate-[startFade_0.7s_0.2s_ease-out_both]"
-                  style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
+                  className="group w-full max-w-[360px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-3 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 md:px-12 py-5 md:py-5 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[15px] md:text-[17px] animate-[startFade_0.7s_0.2s_ease-out_both]"
+                  style={{ boxShadow: "5px 5px 0 0 #3a3a3a" }}
                 >
                   <span>{t.cta.submit}</span>
                   <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">↓</span>
                 </button>
-                <p
-                  className="mt-3.5 text-[10px] md:text-[11px] uppercase tracking-[0.12em] opacity-60 animate-[startFade_0.75s_0.25s_ease-out_both]"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
-                >
-                  {t.meta.ctaMicro}
-                </p>
               </div>
             </section>
 
