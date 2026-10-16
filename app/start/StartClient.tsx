@@ -62,6 +62,76 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "CODEFASHION", logo: "/images/roster-trim/logo-codefashion.png", invert: true },
 ];
 
+// The /start headline: the lead-in sentence small and muted, the claim
+// big. The claim is measured and scaled to fill the column on one line
+// (capped at 96px), so the headline is exactly two lines on every screen
+// and in every language.
+function FitHeadline({ lead, pre, hl, post }: { lead: string; pre: string; hl: string; post: string }) {
+  const boxRef = useRef<HTMLHeadingElement>(null);
+  // An invisible copy of the claim, set at 100px, is what gets measured;
+  // the visible line is never touched outside React.
+  const probeRef = useRef<HTMLSpanElement>(null);
+  const [size, setSize] = useState<number | null>(null);
+
+  useEffect(() => {
+    const box = boxRef.current;
+    const probe = probeRef.current;
+    if (!box || !probe) return;
+    const fit = () => {
+      const natural = probe.getBoundingClientRect().width;
+      const room = box.clientWidth;
+      if (!natural || !room) return;
+      setSize(Math.max(22, Math.min(96, Math.floor((100 * room) / natural) - 1)));
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(box);
+    document.fonts?.ready.then(fit).catch(() => {});
+    return () => ro.disconnect();
+  }, [lead, pre, hl, post]);
+
+  const claimSize = size ? `${size}px` : "clamp(28px, 7vw, 88px)";
+  const leadSize = size ? `${Math.max(14, Math.round(size * 0.48))}px` : "clamp(15px, 3.4vw, 42px)";
+
+  return (
+    <h1
+      ref={boxRef}
+      className="relative w-full overflow-hidden font-black uppercase tracking-[-0.03em] mb-8 md:mb-10 animate-[startFade_0.55s_0.05s_ease-out_both]"
+      style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
+    >
+      <span
+        className="block whitespace-nowrap leading-[1.1] opacity-60 mb-[0.35em]"
+        style={{ fontSize: leadSize }}
+      >
+        {lead}
+      </span>
+      <span
+        ref={probeRef}
+        aria-hidden
+        className="absolute left-0 top-0 whitespace-nowrap pointer-events-none"
+        style={{ fontSize: "100px", visibility: "hidden" }}
+      >
+        {pre} <span className="italic pr-[0.08em]">{hl}</span> {post}
+      </span>
+      <span className="block whitespace-nowrap leading-[1]" style={{ fontSize: claimSize }}>
+        {pre}{" "}
+        <span
+          className="italic pr-[0.08em]"
+          style={{
+            background: SILVER_H,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          {hl}
+        </span>{" "}
+        {post}
+      </span>
+    </h1>
+  );
+}
+
 export default function StartClient() {
   // Language lives in the global LangProvider (vekto-lang cookie) so the
   // shared SiteHeader toggle switches this page's copy too.
@@ -287,33 +357,16 @@ export default function StartClient() {
                 >
                   {t.meta.stageEyebrow}
                 </p>
-                <h1
-                  className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-8 md:mb-10 animate-[startFade_0.55s_0.05s_ease-out_both]"
-                  style={{
-                    // The headline and the button are the whole hero: no
-                    // badges or fine print around them. Larger on phones,
-                    // where a sentence may now take two lines.
-                    fontSize: "calc(clamp(30px, 8vw, 80px) * var(--bgk, 1))",
-                    textShadow: "0 2px 30px rgba(0,0,0,0.5)",
-                  }}
-                >
-                  <span className="block">{t.meta.h1Top}</span>
-                  <span className="block">
-                    {t.meta.h1Pre}{" "}
-                    <span
-                      className="italic pr-[0.08em]"
-                      style={{
-                        background: SILVER_H,
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                    >
-                      {t.meta.h1Hl}
-                    </span>{" "}
-                    {t.meta.h1Post}
-                  </span>
-                </h1>
+                {/* Two lines, always: a quiet lead-in, then the claim set
+                    as large as the column allows. FitHeadline scales the
+                    claim to the width so it never wraps, in any language,
+                    and the lead-in follows at half its size. */}
+                <FitHeadline
+                  lead={t.meta.h1Top}
+                  pre={t.meta.h1Pre}
+                  hl={t.meta.h1Hl}
+                  post={t.meta.h1Post}
+                />
 
                 {/* Primary CTA — scrolls to form */}
                 <button
