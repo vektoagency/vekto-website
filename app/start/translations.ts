@@ -10,6 +10,11 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO",
       stageEyebrow: "01 · АНКЕТА ЗА 60 СЕКУНДИ",
+      steps: [
+        { n: "01", label: "Попълваш", note: "60 секунди" },
+        { n: "02", label: "Преглежда го човек", note: "не бот" },
+        { n: "03", label: "Получаваш оферта", note: "до 24 часа" },
+      ],
       h1Top: "Не всеки бизнес расте.",
       h1Pre: "Но с",
       h1Hl: "посока",
@@ -168,6 +173,11 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO",
       stageEyebrow: "01 · A 60-SECOND BRIEF",
+      steps: [
+        { n: "01", label: "You fill it in", note: "60 seconds" },
+        { n: "02", label: "A person reviews it", note: "not a bot" },
+        { n: "03", label: "You get a proposal", note: "within 24h" },
+      ],
       h1Top: "Not every business grows.",
       h1Pre: "The ones with",
       h1Hl: "direction",
@@ -326,6 +336,11 @@ export const startCopy = {
     meta: {
       eyebrow: "VEKTO",
       stageEyebrow: "01 · BRIEFING IN 60 SEKUNDEN",
+      steps: [
+        { n: "01", label: "Sie füllen es aus", note: "60 Sekunden" },
+        { n: "02", label: "Ein Mensch prüft es", note: "kein Bot" },
+        { n: "03", label: "Sie erhalten ein Angebot", note: "in 24 Std." },
+      ],
       h1Top: "Nicht jedes Unternehmen wächst.",
       h1Pre: "Die mit",
       h1Hl: "Richtung",

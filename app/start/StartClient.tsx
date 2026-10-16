@@ -62,76 +62,6 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "CODEFASHION", logo: "/images/roster-trim/logo-codefashion.png", invert: true },
 ];
 
-// The /start headline: the lead-in sentence small and muted, the claim
-// big. The claim is measured and scaled to fill the column on one line
-// (capped at 96px), so the headline is exactly two lines on every screen
-// and in every language.
-function FitHeadline({ lead, pre, hl, post }: { lead: string; pre: string; hl: string; post: string }) {
-  const boxRef = useRef<HTMLHeadingElement>(null);
-  // An invisible copy of the claim, set at 100px, is what gets measured;
-  // the visible line is never touched outside React.
-  const probeRef = useRef<HTMLSpanElement>(null);
-  const [size, setSize] = useState<number | null>(null);
-
-  useEffect(() => {
-    const box = boxRef.current;
-    const probe = probeRef.current;
-    if (!box || !probe) return;
-    const fit = () => {
-      const natural = probe.getBoundingClientRect().width;
-      const room = box.clientWidth;
-      if (!natural || !room) return;
-      setSize(Math.max(22, Math.min(96, Math.floor((100 * room) / natural) - 1)));
-    };
-    fit();
-    const ro = new ResizeObserver(fit);
-    ro.observe(box);
-    document.fonts?.ready.then(fit).catch(() => {});
-    return () => ro.disconnect();
-  }, [lead, pre, hl, post]);
-
-  const claimSize = size ? `${size}px` : "clamp(28px, 7vw, 88px)";
-  const leadSize = size ? `${Math.max(14, Math.round(size * 0.48))}px` : "clamp(15px, 3.4vw, 42px)";
-
-  return (
-    <h1
-      ref={boxRef}
-      className="relative w-full overflow-hidden font-black uppercase tracking-[-0.03em] mb-8 md:mb-10 animate-[startFade_0.55s_0.05s_ease-out_both]"
-      style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
-    >
-      <span
-        className="block whitespace-nowrap leading-[1.1] opacity-60 mb-[0.35em]"
-        style={{ fontSize: leadSize }}
-      >
-        {lead}
-      </span>
-      <span
-        ref={probeRef}
-        aria-hidden
-        className="absolute left-0 top-0 whitespace-nowrap pointer-events-none"
-        style={{ fontSize: "100px", visibility: "hidden" }}
-      >
-        {pre} <span className="italic pr-[0.08em]">{hl}</span> {post}
-      </span>
-      <span className="block whitespace-nowrap leading-[1]" style={{ fontSize: claimSize }}>
-        {pre}{" "}
-        <span
-          className="italic pr-[0.08em]"
-          style={{
-            background: SILVER_H,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          {hl}
-        </span>{" "}
-        {post}
-      </span>
-    </h1>
-  );
-}
-
 export default function StartClient() {
   // Language lives in the global LangProvider (vekto-lang cookie) so the
   // shared SiteHeader toggle switches this page's copy too.
@@ -350,33 +280,138 @@ export default function StartClient() {
                   </g>
                 </svg>
               </div>
-              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-8 md:pt-20 pb-8 md:pb-12 text-center">
-                <p
-                  className="font-bold uppercase tracking-[0.35em] opacity-55 text-[10px] md:text-xs mb-5 md:mb-7 animate-[startFade_0.5s_ease-out_both]"
-                  style={{ fontFamily: "var(--brutal-pixel)" }}
-                >
-                  {t.meta.stageEyebrow}
-                </p>
-                {/* Two lines, always: a quiet lead-in, then the claim set
-                    as large as the column allows. FitHeadline scales the
-                    claim to the width so it never wraps, in any language,
-                    and the lead-in follows at half its size. */}
-                <FitHeadline
-                  lead={t.meta.h1Top}
-                  pre={t.meta.h1Pre}
-                  hl={t.meta.h1Hl}
-                  post={t.meta.h1Post}
-                />
+              {/* Split hero, after the contact pages of Superside, Stripe
+                  and Linear: the form is not below the fold but beside the
+                  promise, so the visitor sees what they are filling in on
+                  the first screen. Phones stack it under the headline. */}
+              <div className="relative max-w-6xl mx-auto px-5 md:px-8 pt-8 md:pt-16 pb-12 md:pb-16 grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-14 items-center">
+                <div className="min-w-0 animate-[startFade_0.5s_ease-out_both]">
+                  <p
+                    className="font-bold uppercase tracking-[0.35em] opacity-55 text-[10px] md:text-xs mb-5 md:mb-6"
+                    style={{ fontFamily: "var(--brutal-pixel)" }}
+                  >
+                    {t.meta.stageEyebrow}
+                  </p>
+                  <h1
+                    className="font-black uppercase tracking-[-0.03em] text-balance"
+                    style={{ textShadow: "0 2px 30px rgba(0,0,0,0.5)" }}
+                  >
+                    <span
+                      className="block leading-[1.1] opacity-55 mb-2 md:mb-3"
+                      style={{ fontSize: "calc(clamp(17px, 2.2vw, 30px) * var(--bgk, 1))" }}
+                    >
+                      {t.meta.h1Top}
+                    </span>
+                    <span
+                      className="block leading-[0.98]"
+                      style={{ fontSize: "calc(clamp(40px, 4.4vw, 66px) * var(--bgk, 1))" }}
+                    >
+                      {t.meta.h1Pre}{" "}
+                      <span
+                        className="italic pr-[0.08em]"
+                        style={{
+                          background: SILVER_H,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
+                      >
+                        {t.meta.h1Hl}
+                      </span>{" "}
+                      {t.meta.h1Post}
+                    </span>
+                  </h1>
 
-                {/* Primary CTA — scrolls to form */}
-                <button
-                  onClick={scrollToForm}
-                  className="group w-full max-w-[360px] md:w-auto md:max-w-none inline-flex items-center justify-center gap-3 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 md:px-12 py-5 md:py-5 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[15px] md:text-[17px] animate-[startFade_0.7s_0.2s_ease-out_both]"
-                  style={{ boxShadow: "5px 5px 0 0 #3a3a3a" }}
-                >
-                  <span>{t.cta.submit}</span>
-                  <span className="text-[17px] leading-none transition-transform duration-200 group-hover:translate-x-1">↓</span>
-                </button>
+                  {/* What happens after Send, in order: the only extra
+                      information the hero carries. */}
+                  <ol className="mt-8 md:mt-10 grid grid-cols-3 border-t border-[#f4f4f4]/20">
+                    {t.meta.steps.map((st, i) => (
+                      <li
+                        key={st.n}
+                        className={`pt-4 pr-3 ${i > 0 ? "pl-3 md:pl-5 border-l border-[#f4f4f4]/20" : ""}`}
+                      >
+                        <span className="block text-[10px] md:text-[11px] font-bold tracking-[0.3em] opacity-45" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                          {st.n}
+                        </span>
+                        <span className="block mt-2 font-black uppercase text-[13px] md:text-[16px] leading-[1.15] tracking-[-0.01em]">
+                          {st.label}
+                        </span>
+                        <span className="block mt-1 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.18em] opacity-55" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                          {st.note}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+
+                <div ref={formRef} id="anketa" className="min-w-0 scroll-mt-24 animate-[startFade_0.6s_0.1s_ease-out_both]">
+                  <div
+                    className="border-2"
+                    style={{ borderColor: "rgba(244,244,244,0.35)", background: "rgba(13,13,13,0.92)", boxShadow: "8px 8px 0 0 #2a2a2a" }}
+                  >
+                    <div className="flex items-baseline justify-between gap-4 px-5 md:px-7 py-4 border-b-2 border-[#f4f4f4]/20">
+                      <p className="font-black uppercase text-[15px] md:text-[17px] tracking-[-0.01em]">
+                        {t.formSection.h2}{" "}
+                        <span
+                          className="italic whitespace-nowrap pr-[0.1em]"
+                          style={{ background: SILVER_H, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+                        >
+                          {t.formSection.h2Highlight}
+                        </span>
+                      </p>
+                      <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.25em] opacity-50" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                        {t.meta.steps[0].note}
+                      </span>
+                    </div>
+                    <div className="p-5 md:p-7 space-y-4 md:space-y-5">
+                      <Field label={t.fields.name}>
+                        <Input value={name} onChange={setName} placeholder={t.fields.namePh} required />
+                      </Field>
+                      <Field label={t.fields.email}>
+                        <Input value={email} onChange={setEmail} placeholder={t.fields.emailPh} type="email" required />
+                      </Field>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+                        <Field label={t.fields.phone}>
+                          <Input value={phone} onChange={setPhone} placeholder={t.fields.phonePh} type="tel" required />
+                        </Field>
+                        <Field label={t.fields.brand}>
+                          {/* No type="url": the field takes a business name or a URL. */}
+                          <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} required />
+                        </Field>
+                      </div>
+                      <button
+                        onClick={handleSubmit}
+                        disabled={submitting || !name.trim() || !email.trim() || !phone.trim() || !brand.trim()}
+                        className="group w-full inline-flex items-center justify-center gap-3 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-4 md:py-5 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[14px] md:text-[16px] disabled:opacity-50 disabled:cursor-not-allowed"
+                        style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
+                      >
+                        <span>{submitting ? t.cta.submitting : t.cta.submit}</span>
+                        {!submitting && (
+                          <span className="text-[18px] leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
+                        )}
+                      </button>
+                      {errorMsg && (
+                        <p className="text-center font-mono text-[10px] uppercase tracking-[0.2em] text-red-400">{errorMsg}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Other ways in, quietly under the form */}
+                  <div className="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                    <span className="opacity-45">{t.cta.orBook}</span>
+                    <button
+                      data-cal-namespace="30min"
+                      data-cal-link="vekto/30min"
+                      data-cal-config='{"layout":"month_view","theme":"dark"}'
+                      className="opacity-80 hover:opacity-100 underline underline-offset-4 decoration-[#f4f4f4]/40 cursor-pointer"
+                    >
+                      {t.cta.bookCta}
+                    </button>
+                    <a href="tel:+359882251474" className="opacity-80 hover:opacity-100 underline underline-offset-4 decoration-[#f4f4f4]/40">
+                      {t.cta.callCta}
+                    </a>
+                  </div>
+                </div>
               </div>
             </section>
 
@@ -440,123 +475,6 @@ export default function StartClient() {
               </div>
             </section>
 
-            {/* ─────────────  FORM SECTION (the conversion point)  ───────────── */}
-            <section ref={formRef} id="anketa" className="relative scroll-mt-24">
-              <div className="max-w-2xl mx-auto px-5 md:px-8 py-8 md:py-14">
-                <div data-animate className="reveal text-center mb-8 md:mb-10">
-                  <p
-                    className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] opacity-55 mb-4"
-                    style={{ fontFamily: "var(--brutal-pixel)" }}
-                  >
-                    {t.formSection.eyebrow}
-                  </p>
-                  <h2
-                    className="font-black uppercase leading-[1.02] tracking-[-0.03em] mb-3 md:mb-4"
-                    style={{ fontSize: "calc(clamp(26px, 4.6vw, 48px) * var(--bgk, 1))" }}
-                  >
-                    {t.formSection.h2}{" "}
-                    {/* Kept on one line: a silver italic that breaks across
-                        lines clips its slanted last letter at the break. */}
-                    <span
-                      className="italic inline-block whitespace-nowrap pr-[0.12em]"
-                      style={{
-                        background: SILVER_H,
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                    >
-                      {t.formSection.h2Highlight}
-                    </span>
-                  </h2>
-                  <p
-                    className="text-[14px] md:text-[16px] leading-relaxed max-w-[540px] mx-auto text-balance opacity-70 font-medium"
-                    style={{ fontFamily: "var(--brutal-comic)" }}
-                  >
-                    {t.formSection.sub}
-                  </p>
-                </div>
-
-                <div
-                  data-animate
-                  className="reveal space-y-5 md:space-y-6 p-4 md:p-8 border-2"
-                  style={{
-                    borderColor: "rgba(244,244,244,0.3)",
-                    background: "#0d0d0d",
-                    boxShadow: "5px 5px 0 0 #2a2a2a",
-                  }}
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                    <Field label={t.fields.name}>
-                      <Input value={name} onChange={setName} placeholder={t.fields.namePh} required />
-                    </Field>
-                    <Field label={t.fields.email}>
-                      <Input value={email} onChange={setEmail} placeholder={t.fields.emailPh} type="email" required />
-                    </Field>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                    <Field label={t.fields.phone}>
-                      <Input value={phone} onChange={setPhone} placeholder={t.fields.phonePh} type="tel" required />
-                    </Field>
-                    <Field label={t.fields.brand}>
-                      {/* No type="url" — the field accepts both a business name
-                          and a URL, and the strict URL validator would reject
-                          plain names like 'Acme Studio'. */}
-                      <Input value={brand} onChange={setBrand} placeholder={t.fields.brandPh} required />
-                    </Field>
-                  </div>
-
-                  <div className="pt-2">
-                    <button
-                      onClick={handleSubmit}
-                      disabled={submitting || !name.trim() || !email.trim() || !phone.trim() || !brand.trim()}
-                      className="group w-full inline-flex items-center justify-center gap-2 bg-[#f4f4f4] text-[#0d0d0d] font-black uppercase tracking-[0.15em] px-8 py-4 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform text-[14px] md:text-[15px] disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{ boxShadow: "4px 4px 0 0 #3a3a3a" }}
-                    >
-                      <span>{submitting ? t.cta.submitting : t.cta.submit}</span>
-                      {!submitting && (
-                        <span className="text-[18px] leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
-                      )}
-                    </button>
-                    {errorMsg && (
-                      <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-red-400">
-                        {errorMsg}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Alt CTAs */}
-                <div className="mt-10 pt-8 text-center" style={{ borderTop: "1px solid rgba(244,244,244,0.14)" }}>
-                  <p
-                    className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] opacity-55 mb-4"
-                    style={{ fontFamily: "var(--brutal-pixel)" }}
-                  >
-                    {t.cta.orBook}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                    <button
-                      data-cal-namespace="30min"
-                      data-cal-link="vekto/30min"
-                      data-cal-config='{"layout":"month_view","theme":"dark"}'
-                      className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-7 py-3 hover:bg-white hover:text-black transition-colors text-[12px] cursor-pointer"
-                    >
-                      📅 {t.cta.bookCta}
-                    </button>
-                    <a
-                      href="tel:+359882251474"
-                      className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-7 py-3 hover:bg-white hover:text-black transition-colors text-[12px]"
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
-                      </svg>
-                      {t.cta.callCta}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </section>
             <StartBelowFold lang={lang} scrollToForm={scrollToForm} />
 
           </>
