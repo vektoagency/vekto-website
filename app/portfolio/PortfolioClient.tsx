@@ -104,13 +104,33 @@ export function ClipSections({
   const bg = clips.filter((c) => c.language === "bg");
   const grid =
     "grid grid-flow-dense grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-7 auto-rows-auto";
-  return (
-    <>
-      <div className={grid}>
-        {en.map((c, i) => (
-          <ClipTile key={c.id} clip={c} idx={i} onExpand={() => onExpand(c)} />
+  // A run made only of portrait clips is laid out as a centred wrap with
+  // the same column widths, so a short last row sits in the middle instead
+  // of leaving a hole on the right. Runs with landscape clips keep the
+  // dense grid (those tiles already centre themselves on their own row).
+  const portraitOnly = (list: Clip[]) => list.every((c) => c.portrait !== false);
+  const wrap = "flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-7";
+  const cell =
+    "w-[calc(50%-8px)] sm:w-[calc((100%-32px)/3)] md:w-[calc((100%-48px)/3)] lg:w-[calc((100%-84px)/4)] [&>*]:w-full";
+  const run = (list: Clip[], offset: number) =>
+    portraitOnly(list) ? (
+      <div className={wrap}>
+        {list.map((c, i) => (
+          <div key={c.id} className={cell}>
+            <ClipTile clip={c} idx={offset + i} onExpand={() => onExpand(c)} />
+          </div>
         ))}
       </div>
+    ) : (
+      <div className={grid}>
+        {list.map((c, i) => (
+          <ClipTile key={c.id} clip={c} idx={offset + i} onExpand={() => onExpand(c)} />
+        ))}
+      </div>
+    );
+  return (
+    <>
+      {run(en, 0)}
       {bg.length > 0 && (
         <>
           <div className="flex items-center gap-4 md:gap-6 my-10 md:my-14" role="separator" aria-label={w.bgWorkAria}>
@@ -120,11 +140,7 @@ export function ClipSections({
             </span>
             <span aria-hidden className="h-px flex-1" style={{ background: "rgba(244,244,244,0.3)" }} />
           </div>
-          <div className={grid}>
-            {bg.map((c, i) => (
-              <ClipTile key={c.id} clip={c} idx={en.length + i} onExpand={() => onExpand(c)} />
-            ))}
-          </div>
+          {run(bg, en.length)}
         </>
       )}
     </>
