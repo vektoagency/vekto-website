@@ -324,19 +324,22 @@ export default function StartClient() {
 
                   {/* What happens after Send, in order: the only extra
                       information the hero carries. */}
-                  <ol className="mt-8 md:mt-10 grid grid-cols-3 border-t border-[#f4f4f4]/20">
+                  {/* Three steps as one plate: equal columns, label held to two
+                      lines, note pinned to the bottom so the three baselines
+                      line up whatever the label length. */}
+                  <ol className="mt-7 md:mt-10 grid grid-cols-3 border border-[#f4f4f4]/20" style={{ background: "rgba(13,13,13,0.55)" }}>
                     {t.meta.steps.map((st, i) => (
                       <li
                         key={st.n}
-                        className={`pt-4 pr-3 ${i > 0 ? "pl-3 md:pl-5 border-l border-[#f4f4f4]/20" : ""}`}
+                        className={`flex flex-col px-3 md:px-5 py-3.5 md:py-4 ${i > 0 ? "border-l border-[#f4f4f4]/20" : ""}`}
                       >
-                        <span className="block text-[10px] md:text-[11px] font-bold tracking-[0.3em] opacity-45" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                        <span className="text-[10px] md:text-[11px] font-bold tracking-[0.25em] opacity-40" style={{ fontFamily: "var(--brutal-pixel)" }}>
                           {st.n}
                         </span>
-                        <span className="block mt-2 font-black uppercase text-[13px] md:text-[16px] leading-[1.15] tracking-[-0.01em]">
+                        <span className="mt-1.5 font-black uppercase text-[12px] md:text-[15px] leading-[1.12] tracking-[-0.01em] min-h-[2.24em] text-balance">
                           {st.label}
                         </span>
-                        <span className="block mt-1 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.18em] opacity-55" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                        <span className="mt-auto pt-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.14em] opacity-55 whitespace-nowrap" style={{ fontFamily: "var(--brutal-pixel)" }}>
                           {st.note}
                         </span>
                       </li>
@@ -346,9 +349,9 @@ export default function StartClient() {
                   {/* The brands, on the first screen too (Yavor, 17.10): a
                       compact strip right under the three steps, before the
                       form on phones. The full band below the hero stays. */}
-                  <div className="mt-7 md:mt-9">
+                  <div className="mt-6 md:mt-8 border-t border-[#f4f4f4]/15 pt-4 md:pt-5">
                     <p
-                      className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] opacity-45 mb-3"
+                      className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.22em] opacity-50 mb-3"
                       style={{ fontFamily: "var(--brutal-pixel)" }}
                     >
                       {t.socialProof.heading}
@@ -356,15 +359,18 @@ export default function StartClient() {
                     <div
                       className="relative overflow-hidden"
                       style={{
-                        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-                        maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+                        maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
                       }}
                     >
-                      <div className="flex sp-marquee gap-5 md:gap-7 w-max">
+                      {/* One tone, one size: every mark is flattened to the
+                          same silver (grayscale, then light) and held in the
+                          same box, so no logo shouts and none whispers. */}
+                      <div className="flex sp-marquee items-center gap-7 md:gap-9 w-max">
                         {[...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS].map((c, i) => (
                           <div
                             key={`hero-${c.name}-${i}`}
-                            className="shrink-0 w-24 md:w-28 h-12 md:h-14 flex items-center justify-center px-1.5 opacity-75"
+                            className="shrink-0 w-[84px] md:w-[100px] h-9 md:h-10 flex items-center justify-center"
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
@@ -373,8 +379,11 @@ export default function StartClient() {
                               draggable={false}
                               loading="eager"
                               decoding="async"
-                              className={`w-auto object-contain max-w-full ${c.stacked ? "max-h-9 md:max-h-10" : "max-h-6 md:max-h-7"}`}
-                              style={{ filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
+                              className={`w-auto object-contain max-w-full ${c.stacked ? "max-h-8 md:max-h-9" : "max-h-5 md:max-h-6"}`}
+                              style={{
+                                filter: `${c.invert ? "invert(1) " : ""}grayscale(1) brightness(1.6) contrast(0.9)`,
+                                opacity: 0.72,
+                              }}
                             />
                           </div>
                         ))}
