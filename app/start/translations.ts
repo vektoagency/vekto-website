@@ -67,7 +67,7 @@ export const startCopy = {
       submit: "Получи оферта",
       submitting: "Изпраща се…",
       orBook: "Или ако предпочиташ — поговори с нас директно:",
-      bookCta: "Резервирай разговор",
+      bookCta: "Запази разговор",
       callCta: "Обади се",
     },
     cases: {

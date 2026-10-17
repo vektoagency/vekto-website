@@ -444,20 +444,34 @@ export default function StartClient() {
                     </div>
                   </div>
 
-                  {/* Other ways in, quietly under the form */}
-                  <div className="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ fontFamily: "var(--brutal-pixel)" }}>
-                    <span className="opacity-45">{t.cta.orBook}</span>
-                    <button
-                      data-cal-namespace="30min"
-                      data-cal-link="vekto/30min"
-                      data-cal-config='{"layout":"month_view","theme":"dark"}'
-                      className="opacity-80 hover:opacity-100 underline underline-offset-4 decoration-[#f4f4f4]/40 cursor-pointer"
-                    >
-                      {t.cta.bookCta}
-                    </button>
-                    <a href="tel:+359882251474" className="opacity-80 hover:opacity-100 underline underline-offset-4 decoration-[#f4f4f4]/40">
-                      {t.cta.callCta}
-                    </a>
+                  {/* Other ways in: a hairline with "or", then two equal
+                      square buttons in the site's outline style. */}
+                  <div className="mt-6">
+                    <div className="flex items-center gap-3 mb-4" aria-hidden>
+                      <span className="h-px flex-1 bg-[#f4f4f4]/20" />
+                      <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-50" style={{ fontFamily: "var(--brutal-pixel)" }}>
+                        {lang === "bg" ? "или" : lang === "de" ? "oder" : "or"}
+                      </span>
+                      <span className="h-px flex-1 bg-[#f4f4f4]/20" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        data-cal-namespace="30min"
+                        data-cal-link="vekto/30min"
+                        data-cal-config='{"layout":"month_view","theme":"dark"}'
+                        className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/60 whitespace-nowrap px-2 py-3 text-[10.5px] sm:text-[11px] md:text-[12px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.14em] text-[#f4f4f4] hover:bg-white hover:text-black transition-colors cursor-pointer"
+                      >
+                        <span aria-hidden>▦</span>
+                        {t.cta.bookCta}
+                      </button>
+                      <a
+                        href="tel:+359882251474"
+                        className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/60 whitespace-nowrap px-2 py-3 text-[10.5px] sm:text-[11px] md:text-[12px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.14em] text-[#f4f4f4] hover:bg-white hover:text-black transition-colors"
+                      >
+                        <span aria-hidden>☎</span>
+                        {t.cta.callCta}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
