@@ -463,9 +463,11 @@ export default function StartClient() {
               </div>
             </section>
 
-            {/* ─────────────  SOCIAL PROOF MARQUEE  ───────────── */}
+            {/* ─────────────  SOCIAL PROOF MARQUEE  ─────────────
+                Desktop only: phones already show the compact brand strip on
+                the first screen, so a second strip there was a repeat. */}
             <section
-              className="py-4 md:py-6 relative overflow-hidden"
+              className="hidden lg:block py-4 md:py-6 relative overflow-hidden"
               style={{
                 background: "#141414",
                 borderTop: "1px solid rgba(244,244,244,0.14)",
