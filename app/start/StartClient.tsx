@@ -225,6 +225,66 @@ export default function StartClient() {
       <main className="flex-1">
         {!done ? (
           <>
+            {/* ─────────────  SOCIAL PROOF MARQUEE  ───────────── */}
+            <section
+              className="py-4 md:py-6 relative overflow-hidden"
+              style={{
+                background: "#141414",
+                borderTop: "1px solid rgba(244,244,244,0.14)",
+                borderBottom: "1px solid rgba(244,244,244,0.14)",
+              }}
+            >
+              <p
+                className="text-center text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] opacity-55 mb-5 md:mb-6"
+                style={{ fontFamily: "var(--brutal-pixel)" }}
+              >
+                {t.socialProof.heading}
+              </p>
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
+                  maskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
+                }}
+              >
+                {/* Each brand sits inside a fixed-size flexbox 'cell'
+                    — 128px×64px on mobile, 176px×80px on desktop.
+                    The <img> inside is constrained by max-height +
+                    max-width (via the tier classes) so wide wordmarks
+                    and taller stacked logos both scale to fit the same
+                    optical footprint. Result: no logo dominates the
+                    others regardless of its native aspect ratio. */}
+                <div className="flex sp-marquee gap-6 md:gap-10 w-max">
+                  {[...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS].map((c, i) => (
+                    <div
+                      key={`${c.name}-${i}`}
+                      className="shrink-0 w-32 md:w-44 h-16 md:h-20 flex items-center justify-center px-2 md:px-3 opacity-80 hover:opacity-100 transition-opacity"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.logo}
+                        alt={c.name}
+                        draggable={false}
+                        // Eager on purpose: the strip moves by CSS transform,
+                        // which lazy loading never notices, so logos sliding
+                        // in from the right stayed blank. 22 small files.
+                        loading="eager"
+                        decoding="async"
+                        className={`w-auto object-contain max-w-full ${
+                          c.stacked
+                            ? "max-h-11 md:max-h-14"
+                            : "max-h-8 md:max-h-10"
+                        }`}
+                        // Hue-preserving invert — same filter Clients.tsx
+                        // uses. See there for the rationale.
+                        style={{ filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
             {/* ─────────────  HERO (above the fold, brand promise)  ───────────── */}
             <section className="relative overflow-hidden">
               {/* Modern hero background — Linear/Vercel-style.
@@ -411,66 +471,6 @@ export default function StartClient() {
                       {t.cta.callCta}
                     </a>
                   </div>
-                </div>
-              </div>
-            </section>
-
-            {/* ─────────────  SOCIAL PROOF MARQUEE  ───────────── */}
-            <section
-              className="py-4 md:py-6 relative overflow-hidden"
-              style={{
-                background: "#141414",
-                borderTop: "1px solid rgba(244,244,244,0.14)",
-                borderBottom: "1px solid rgba(244,244,244,0.14)",
-              }}
-            >
-              <p
-                className="text-center text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] opacity-55 mb-5 md:mb-6"
-                style={{ fontFamily: "var(--brutal-pixel)" }}
-              >
-                {t.socialProof.heading}
-              </p>
-              <div
-                className="relative overflow-hidden"
-                style={{
-                  WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
-                  maskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
-                }}
-              >
-                {/* Each brand sits inside a fixed-size flexbox 'cell'
-                    — 128px×64px on mobile, 176px×80px on desktop.
-                    The <img> inside is constrained by max-height +
-                    max-width (via the tier classes) so wide wordmarks
-                    and taller stacked logos both scale to fit the same
-                    optical footprint. Result: no logo dominates the
-                    others regardless of its native aspect ratio. */}
-                <div className="flex sp-marquee gap-6 md:gap-10 w-max">
-                  {[...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS].map((c, i) => (
-                    <div
-                      key={`${c.name}-${i}`}
-                      className="shrink-0 w-32 md:w-44 h-16 md:h-20 flex items-center justify-center px-2 md:px-3 opacity-80 hover:opacity-100 transition-opacity"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={c.logo}
-                        alt={c.name}
-                        draggable={false}
-                        // Eager on purpose: the strip moves by CSS transform,
-                        // which lazy loading never notices, so logos sliding
-                        // in from the right stayed blank. 22 small files.
-                        loading="eager"
-                        decoding="async"
-                        className={`w-auto object-contain max-w-full ${
-                          c.stacked
-                            ? "max-h-11 md:max-h-14"
-                            : "max-h-8 md:max-h-10"
-                        }`}
-                        // Hue-preserving invert — same filter Clients.tsx
-                        // uses. See there for the rationale.
-                        style={{ filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
-                      />
-                    </div>
-                  ))}
                 </div>
               </div>
             </section>
