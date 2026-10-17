@@ -349,7 +349,7 @@ export default function StartClient() {
                   {/* The brands, on the first screen too (Yavor, 17.10): a
                       compact strip right under the three steps, before the
                       form on phones. The full band below the hero stays. */}
-                  <div className="mt-6 md:mt-8 border-t border-[#f4f4f4]/15 pt-4 md:pt-5">
+                  <div className="lg:hidden mt-6 border-t border-[#f4f4f4]/15 pt-4">
                     <p
                       className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.22em] opacity-50 mb-3"
                       style={{ fontFamily: "var(--brutal-pixel)" }}
@@ -363,9 +363,9 @@ export default function StartClient() {
                         maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
                       }}
                     >
-                      {/* One tone, one size: every mark is flattened to the
-                          same silver (grayscale, then light) and held in the
-                          same box, so no logo shouts and none whispers. */}
+                      {/* Phones only: on desktop the full band sits right under
+                          the hero, so a second strip here would repeat it. The
+                          marks keep their own colours, same filter as the band. */}
                       <div className="flex sp-marquee items-center gap-7 md:gap-9 w-max">
                         {[...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS].map((c, i) => (
                           <div
@@ -381,8 +381,8 @@ export default function StartClient() {
                               decoding="async"
                               className={`w-auto object-contain max-w-full ${c.stacked ? "max-h-8 md:max-h-9" : "max-h-5 md:max-h-6"}`}
                               style={{
-                                filter: `${c.invert ? "invert(1) " : ""}grayscale(1) brightness(1.6) contrast(0.9)`,
-                                opacity: 0.72,
+                                filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined,
+                                opacity: 0.9,
                               }}
                             />
                           </div>
