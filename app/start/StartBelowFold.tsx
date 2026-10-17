@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import SectionPlate from "../components/SectionPlate";
 import { startCopy, type Lang } from "./translations";
+import { COPY as HOME_COPY, StageCast, StageCases } from "../preview-brutalism/BrutalismHomepage";
 
 // Below-the-fold of /start, now speaking the homepage's funnel language:
-// 03 · CASES (the homepage's hard-shadow case cards with silver counters)
+// 03 · ROSTER + THE WORK (the homepage's own sections)
 // 04 · WHAT YOU GET (the homepage's stamped promise)
 // 05 · FAQ (naked hairline accordion)
 // 06 · THE TALK (final ask — big display + white slab)
@@ -17,15 +17,6 @@ import { startCopy, type Lang } from "./translations";
 const SILVER_H =
   "linear-gradient(90deg, #b0b0b0 0%, #f4f4f4 22%, #8a8a8a 45%, #eaeaea 62%, #c8c8c8 78%, #ffffff 100%)";
 
-
-// The three case brands' marks, keyed by slug. `invert` flags dark-ink
-// logos that need flipping to read on the card's jet ground — the same
-// rule the social-proof marquee runs on.
-const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
-  menscare: { src: "/images/logo-menscare.png", invert: true },
-  parfen: { src: "/images/logo-parfen.webp", invert: true },
-  beme: { src: "/images/logo-bemeacne.webp" },
-};
 
 const FONTS = {
   display: "var(--brutal-display), system-ui, sans-serif",
@@ -40,6 +31,9 @@ type Props = {
 
 export default function StartBelowFold({ lang, scrollToForm }: Props) {
   const t = startCopy[lang];
+  const home = HOME_COPY[lang];
+  const castRef = useRef<HTMLElement | null>(null);
+  const casesRef = useRef<HTMLElement | null>(null);
 
   // Scroll-triggered reveal — same single-observer pattern as the parent.
   useEffect(() => {
@@ -61,23 +55,11 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
 
   return (
     <>
-      {/* ───────────── 03 · CASES — the homepage's case-card grammar ───────────── */}
-      <section className="relative overflow-hidden py-14 md:py-24" style={{ background: "#0d0d0d" }}>
-        <SectionPlate src="strategy" />
-        <div className="relative max-w-6xl mx-auto px-5 md:px-8">
-          <div
-            className="text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-8 md:mb-10 opacity-55"
-            style={{ fontFamily: FONTS.pixel }}
-          >
-            {t.cases.eyebrow}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {t.cases.items.map((c, i) => (
-              <CaseCard key={c.brand} c={c} idx={i} viewLabel={t.cases.viewCase} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ───────────── 03 · ROSTER + THE WORK — същите секции като началната
+           страница (Явор, 17.10: „тук използвай секции от home page“), вместо
+           старите карти с казуси. ───────────── */}
+      <StageCast targetRef={castRef} t={home.stage4} />
+      <StageCases targetRef={casesRef} t={home.stageCases} />
 
       {/* ───────────── 04 · WHAT YOU GET — the homepage's stamped pass,
            rendered statically here: the homepage earns its 190vh sticky
@@ -257,119 +239,6 @@ export default function StartBelowFold({ lang, scrollToForm }: Props) {
   );
 }
 
-// ───────────── Case card — the homepage's CaseCard, reveal-driven ─────────────
-// Hard offset shadow, hairline internal borders, silver-fill metric that
-// ticks up once the card enters the viewport.
-function CaseCard({
-  c,
-  idx,
-  viewLabel,
-}: {
-  c: {
-    brand: string;
-    slug: string;
-    category: string;
-    focus: string;
-    highlight: string;
-  };
-  idx: number;
-  viewLabel: string;
-}) {
-
-  const [inView, setInView] = useState(false);
-
-
-  const rot = idx % 2 === 0 ? -1.5 : 1.5;
-
-  return (
-    <Link
-      href={`/case-studies#${c.slug}`}
-      ref={(el) => {
-        if (!el || inView) return;
-        const obs = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setInView(true);
-              obs.disconnect();
-            }
-          },
-          { threshold: 0.15 }
-        );
-        obs.observe(el);
-      }}
-      className="group border-2 flex flex-col overflow-hidden hover:-translate-x-0.5 hover:-translate-y-0.5"
-      style={{
-        background: "#0d0d0d",
-        color: "#f4f4f4",
-        borderColor: "rgba(244,244,244,0.3)",
-        boxShadow: "5px 5px 0 0 #2a2a2a",
-        opacity: inView ? 1 : 0,
-        transform: inView
-          ? "translateY(0) scale(1) rotate(0deg)"
-          : `translateY(60px) scale(0.92) rotate(${rot}deg)`,
-        transition: inView
-          ? "transform 180ms ease, opacity 200ms ease"
-          : `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms, transform 720ms cubic-bezier(0.16,1,0.3,1) ${idx * 160}ms`,
-      }}
-    >
-      <div
-        className="px-4 md:px-5 py-3.5 md:py-4 border-b-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 justify-between"
-        style={{ borderColor: "rgba(244,244,244,0.25)" }}
-      >
-        {(() => {
-          const mark = CASE_LOGOS[c.slug];
-          return mark ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={mark.src}
-              alt={c.brand}
-              loading="lazy"
-              decoding="async"
-              className="h-5 md:h-6 w-auto max-w-[130px] object-contain"
-              style={{ filter: mark.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
-            />
-          ) : (
-            <div className="font-black text-lg uppercase tracking-tight">{c.brand}</div>
-          );
-        })()}
-        <div
-          className="text-[12px] uppercase tracking-[0.2em] opacity-60"
-          style={{ fontFamily: FONTS.pixel }}
-        >
-          {c.category}
-        </div>
-      </div>
-      <div className="px-4 md:px-5 py-7 md:py-10 flex-1 flex items-center">
-        <div
-          className="font-black uppercase leading-[0.98] tracking-[-0.02em]"
-          style={{
-            fontSize: "calc(clamp(26px, 5.4vw, 40px) * var(--bgk, 1))",
-            background: SILVER_H,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          {c.focus}
-        </div>
-      </div>
-      <div className="p-4 md:p-5 space-y-3" style={{ borderTop: "1px solid rgba(244,244,244,0.18)" }}>
-        <p className="text-[13px] leading-[1.5] font-medium" style={{ fontFamily: FONTS.comic }}>
-          {c.highlight}
-        </p>
-        <span
-          className="flex items-center gap-2 pt-1 text-[11px] font-bold uppercase tracking-[0.2em] opacity-55 group-hover:opacity-100 transition-opacity"
-          style={{ fontFamily: FONTS.pixel }}
-        >
-          {viewLabel}
-          <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
-        </span>
-      </div>
-    </Link>
-  );
-}
-
-// ───────────── FAQ item — naked hairline accordion row ─────────────
 function FaqItem({ q, a, last }: { q: string; a: string; last: boolean }) {
   const [open, setOpen] = useState(false);
   return (

@@ -67,7 +67,7 @@ const REEL_FRAMES = [
 // ============================================================================
 type Lang = "bg" | "en" | "de";
 
-const COPY = {
+export const COPY = {
   bg: {
     cta: "ПИШИ НИ",
     nav: {
@@ -1690,7 +1690,7 @@ const HOME_WORK: Clip[] = (bunnyData.clips as Clip[])
   .filter((c) => !c.excludeFromPortfolio && c.language === "en" && c.portrait !== false)
   .slice(0, 4);
 
-function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageCases"] }) {
+export function StageCases({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stageCases"] }) {
   const [expanded, setExpanded] = useState<Clip | null>(null);
   return (
     <section
@@ -1827,7 +1827,7 @@ function CaseCard({
 }
 
 
-function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage4"] }) {
+export function StageCast({ targetRef, t }: { targetRef: React.RefObject<HTMLElement | null>; t: (typeof COPY)["bg"]["stage4"] }) {
   const inView = useInView(targetRef, 0.15);
   return (
     <section
