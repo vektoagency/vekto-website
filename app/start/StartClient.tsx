@@ -342,6 +342,45 @@ export default function StartClient() {
                       </li>
                     ))}
                   </ol>
+
+                  {/* The brands, on the first screen too (Yavor, 17.10): a
+                      compact strip right under the three steps, before the
+                      form on phones. The full band below the hero stays. */}
+                  <div className="mt-7 md:mt-9">
+                    <p
+                      className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] opacity-45 mb-3"
+                      style={{ fontFamily: "var(--brutal-pixel)" }}
+                    >
+                      {t.socialProof.heading}
+                    </p>
+                    <div
+                      className="relative overflow-hidden"
+                      style={{
+                        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                        maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                      }}
+                    >
+                      <div className="flex sp-marquee gap-5 md:gap-7 w-max">
+                        {[...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS].map((c, i) => (
+                          <div
+                            key={`hero-${c.name}-${i}`}
+                            className="shrink-0 w-24 md:w-28 h-12 md:h-14 flex items-center justify-center px-1.5 opacity-75"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={c.logo}
+                              alt={c.name}
+                              draggable={false}
+                              loading="eager"
+                              decoding="async"
+                              className={`w-auto object-contain max-w-full ${c.stacked ? "max-h-9 md:max-h-10" : "max-h-6 md:max-h-7"}`}
+                              style={{ filter: c.invert ? "invert(1) hue-rotate(180deg) saturate(1.15)" : undefined }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div ref={formRef} id="anketa" className="min-w-0 scroll-mt-24 animate-[startFade_0.6s_0.1s_ease-out_both]">
