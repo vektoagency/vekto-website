@@ -22,17 +22,20 @@ export function useLang() {
   return useContext(LangContext);
 }
 
-const COOKIE_KEY = "vekto-lang2";
+const COOKIE_KEY = "vekto-lang3";
 
 function readCookie(): AnyLang | null {
   if (typeof document === "undefined") return null;
-  const m = document.cookie.match(/(?:^|;\s*)vekto-lang2=(bg|en|de)/);
+  const m = document.cookie.match(/(?:^|;\s*)vekto-lang3=(bg|en|de)/);
   return (m?.[1] as AnyLang) ?? null;
 }
 
 function writeCookie(lang: AnyLang) {
   if (typeof document === "undefined") return;
-  document.cookie = `${COOKIE_KEY}=${lang}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+  // A session cookie on purpose: every new visit opens in English, wherever
+  // the visitor is. A pick from the language menu holds only until the
+  // browser closes. (The old one-year vekto-lang2 cookie is ignored.)
+  document.cookie = `${COOKIE_KEY}=${lang}; path=/; samesite=lax`;
 }
 
 export function LangProvider({

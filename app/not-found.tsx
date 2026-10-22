@@ -87,7 +87,7 @@ const COPY = {
 
 export default async function NotFound() {
   // English by default; the visitor's pick from the header menu wins.
-  const cookieLang = (await cookies()).get("vekto-lang2")?.value;
+  const cookieLang = (await cookies()).get("vekto-lang3")?.value;
   const lang: "bg" | "en" | "de" =
     cookieLang === "bg" || cookieLang === "de" ? cookieLang : "en";
   const t = COPY[lang];

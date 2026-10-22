@@ -52,10 +52,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // 2026-10-15, owner's call: the whole site speaks EN (default), DE and
-  // BG, picked from the header's language menu and kept in vekto-lang2.
+  // BG, picked from the header's language menu and kept in vekto-lang3.
   // Only routes the middleware pins (/hospitality) stay English.
   const h = await headers();
-  const saved = (await cookies()).get("vekto-lang2")?.value;
+  const saved = (await cookies()).get("vekto-lang3")?.value;
   const pinned = h.get("x-vekto-lang-pin") === "en";
   const lang: AnyLang = !pinned && (saved === "bg" || saved === "de") ? saved : "en";
   return (

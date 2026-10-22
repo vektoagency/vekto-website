@@ -95,7 +95,7 @@ const copy = {
 
 export default async function MensCarePage() {
   const cookieStore = await cookies();
-  const saved = cookieStore.get("vekto-lang2")?.value;
+  const saved = cookieStore.get("vekto-lang3")?.value;
   const lang: "bg" | "en" | "de" = saved === "bg" || saved === "de" ? saved : "en";
   const t = copy[lang];
 

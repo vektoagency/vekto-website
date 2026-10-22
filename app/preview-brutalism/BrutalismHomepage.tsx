@@ -427,7 +427,7 @@ const CASE_LOGOS: Record<string, { src: string; invert?: boolean }> = {
 // HOOKS
 // ============================================================================
 function useLanguage(): [Lang, (l: Lang) => void] {
-  // Language lives in the global LangProvider (vekto-lang2 cookie, English
+  // Language lives in the global LangProvider (vekto-lang3 cookie, English
   // unless the visitor picked Bulgarian) so every route stays in sync.
   const { lang, setLang } = useLang();
   return [lang, setLang];

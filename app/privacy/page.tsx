@@ -34,7 +34,7 @@ const copy = {
           "• Месечен бюджет, тип съдържание",
           "Автоматично при посещение на сайта:",
           "• IP адрес, browser, тип устройство, страници които посещаваш",
-          "• Cookie за избор на език (vekto-lang2) и cookie consent",
+          "• Cookie за избор на език (vekto-lang3) и cookie consent",
         ],
       },
       {
@@ -58,7 +58,7 @@ const copy = {
         title: "5. Cookies и проследяване",
         body: [
           "Използваме следните видове cookies:",
-          "• Необходими — функционалност на сайта (vekto-lang2 за език, cookie-consent)",
+          "• Необходими — функционалност на сайта (vekto-lang3 за език, cookie-consent)",
           "• Маркетинг — Meta Pixel за измерване на реклами и retargeting (само със съгласие)",
           "Можеш да управляваш съгласието чрез cookie banner-а на сайта или browser settings-ите си.",
           "Meta Pixel записва: PageView, Lead (при submit на форма), Schedule (резервация на среща), Contact (клик на телефон).",
@@ -136,7 +136,7 @@ const copy = {
           "• Monthly budget, content type",
           "Automatically during site visit:",
           "• IP, browser, device type, pages visited",
-          "• Language cookie (vekto-lang2), cookie consent",
+          "• Language cookie (vekto-lang3), cookie consent",
         ],
       },
       {
@@ -160,7 +160,7 @@ const copy = {
         title: "5. Cookies and tracking",
         body: [
           "We use the following cookie types:",
-          "• Necessary — site functionality (vekto-lang2, cookie-consent)",
+          "• Necessary — site functionality (vekto-lang3, cookie-consent)",
           "• Marketing — Meta Pixel for ad measurement and retargeting (only with consent)",
           "You can manage consent via the cookie banner or your browser settings.",
           "Meta Pixel tracks: PageView, Lead (form submit), Schedule (meeting booking), Contact (phone click).",
@@ -238,7 +238,7 @@ const copy = {
           "• Monatliches Budget, Art der Inhalte",
           "Automatisch beim Besuch der Website:",
           "• IP-Adresse, Browser, Gerätetyp, besuchte Seiten",
-          "• Sprach-Cookie (vekto-lang2), Cookie-Einwilligung",
+          "• Sprach-Cookie (vekto-lang3), Cookie-Einwilligung",
         ],
       },
       {
@@ -262,7 +262,7 @@ const copy = {
         title: "5. Cookies und Tracking",
         body: [
           "Wir verwenden die folgenden Arten von Cookies:",
-          "• Notwendige Cookies — Funktionalität der Website (vekto-lang2, cookie-consent)",
+          "• Notwendige Cookies — Funktionalität der Website (vekto-lang3, cookie-consent)",
           "• Marketing-Cookies — Meta Pixel zur Messung von Werbeanzeigen und für Retargeting (nur mit Einwilligung)",
           "Sie können Ihre Einwilligung über das Cookie-Banner oder Ihre Browsereinstellungen verwalten.",
           "Das Meta Pixel erfasst: PageView, Lead (Absenden eines Formulars), Schedule (Terminbuchung), Contact (Klick auf die Telefonnummer).",
@@ -318,7 +318,7 @@ const copy = {
 
 export default async function PrivacyPage() {
   const cookieStore = await cookies();
-  const saved = cookieStore.get("vekto-lang2")?.value;
+  const saved = cookieStore.get("vekto-lang3")?.value;
   const lang: "bg" | "en" | "de" = saved === "bg" || saved === "de" ? saved : "en";
   const t = copy[lang];
 
