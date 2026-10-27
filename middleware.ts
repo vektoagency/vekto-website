@@ -23,24 +23,8 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  // English-only routes. /hospitality is the link we put in outreach to
-  // hotels and villa owners abroad — the reader is never Bulgarian, so the
-  // page furniture (header, cookie banner, <html lang>) has to be English
-  // too, whatever this visitor's saved preference is. A request header is
-  // the only way to tell the root layout which path it is rendering; it
-  // deliberately does NOT touch the vekto-lang3 cookie, so the visitor's own
-  // choice survives for the rest of the site.
-  const requestHeaders = new Headers(req.headers);
-  if (/^\/hospitality(\/|$)/.test(url.pathname)) {
-    requestHeaders.set("x-vekto-lang-pin", "en");
-  }
-
-  const res = NextResponse.next({ request: { headers: requestHeaders } });
-
-  // No geo language any more: the site opens in English for everyone.
-  // Bulgarian is one tap away on the header toggle, and that choice is the
-  // only thing that writes the language cookie (vekto-lang3, see
-  // LangProvider). The old geo-set "vekto-lang" cookie is ignored.
-
-  return res;
+  // Language is not decided here: pages are served from the CDN cache in
+  // English and LangProvider applies a visitor's DE/BG pick in the browser
+  // (/hospitality stays English by its path, see LangProvider).
+  return NextResponse.next();
 }

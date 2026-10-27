@@ -5,8 +5,7 @@ import "./globals.css";
 import TransitionBridge from "./components/TransitionBridge";
 import MetaPixel from "./components/MetaPixel";
 import CookieBanner from "./components/CookieBanner";
-import { LangProvider, type AnyLang } from "./i18n/LangProvider";
-import { cookies, headers } from "next/headers";
+import { LangProvider } from "./i18n/LangProvider";
 import { OG_IMAGE } from "./lib/og";
 
 const geist = Geist({
@@ -51,15 +50,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 2026-10-15, owner's call: the whole site speaks EN (default), DE and
-  // BG, picked from the header's language menu and kept in vekto-lang3.
-  // Only routes the middleware pins (/hospitality) stay English.
-  const h = await headers();
-  const saved = (await cookies()).get("vekto-lang3")?.value;
-  const pinned = h.get("x-vekto-lang-pin") === "en";
-  const lang: AnyLang = !pinned && (saved === "bg" || saved === "de") ? saved : "en";
+  // The layout reads no cookie or header, so every page can be served
+  // straight from the CDN cache. The HTML is English (the default for
+  // every visitor); a German or Bulgarian pick from the language menu
+  // lives in the vekto-lang3 session cookie and LangProvider applies it
+  // in the browser. /hospitality is locked to English by its path.
   return (
-    <html lang={lang} className={`${geist.variable} h-full antialiased`}>
+    <html lang="en" className={`${geist.variable} h-full antialiased`}>
       <head>
         {/* Meta Business Manager — domain ownership verification.
             Required for iOS 14+ conversion attribution + Aggregated
@@ -71,7 +68,7 @@ export default async function RootLayout({
         <meta name="facebook-domain-verification" content="bdtob8m89vuhtr9lk6kzwbiq9rb4t5" />
       </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f5]">
-        <LangProvider initialLang={lang} pin={pinned}>
+        <LangProvider initialLang="en">
           {children}
           <TransitionBridge />
           <CookieBanner />

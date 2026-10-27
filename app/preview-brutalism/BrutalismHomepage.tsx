@@ -1943,12 +1943,27 @@ const SHEET_COVERS: string[] = (
   bunnyData.clips as { thumbnail: string; excludeFromPortfolio?: boolean }[]
 )
   .filter((c) => !c.excludeFromPortfolio && c.thumbnail)
-  .map((c) => c.thumbnail);
+  // 200 px greyscale copies (public/videos/thumbnails/sm): the sheet shows
+  // them dimmed and small, so the full covers would be wasted bytes.
+  .map((c) => c.thumbnail.replace(/^\/videos\/thumbnails\/([^/]+)\.(webp|jpg)$/, "/videos/thumbnails/sm/$1.webp"));
 
 function ContactSheet({ p = 0 }: { p?: number }) {
   const covers = [...SHEET_COVERS, ...SHEET_COVERS, ...SHEET_COVERS].slice(0, 36);
+  // The sheet sits four screens down: its pictures load only once the
+  // stage comes within a screen of the viewport, not with the first paint.
+  const ref = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || near) return;
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { setNear(true); io.disconnect(); }
+    }, { rootMargin: "100% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [near]);
   return (
-    <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div ref={ref} aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
       <div
         className="absolute -inset-[4%] grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-9 gap-[6px] md:gap-2 content-center"
         // Drifts slowly up and across as the visitor scrolls, so the sheet
@@ -1963,9 +1978,9 @@ function ContactSheet({ p = 0 }: { p?: number }) {
             key={i}
             className="w-full aspect-[9/16] bg-center bg-cover"
             style={{
-              backgroundImage: `url(${src})`,
+              backgroundImage: near ? `url(${src})` : undefined,
               backgroundColor: "#1c1c1c",
-              filter: "grayscale(1) contrast(1.1) brightness(0.8)",
+              filter: "contrast(1.1) brightness(0.8)",
               opacity: 0.55,
             }}
           />

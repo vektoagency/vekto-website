@@ -59,7 +59,7 @@ const SOCIAL_PROOF_LOGOS = [
   { name: "CARTEL CAFFE", logo: "/images/logo-cartelcaffe.svg" },
   { name: "PHYTOLIFE", logo: "/images/logo-phytolife.webp", invert: true },
   { name: "GOURMET HOUSE", logo: "/images/logo-gourmethouse.png", invert: true },
-  { name: "CODEFASHION", logo: "/images/roster-trim/logo-codefashion.png", invert: true },
+  { name: "CODEFASHION", logo: "/images/roster-web/logo-codefashion.webp", invert: true },
 ];
 
 export default function StartClient() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 
 /** The site's languages. English is the default everywhere; German and
  *  Bulgarian are one pick away in the header's language menu. */
@@ -45,31 +46,37 @@ export function LangProvider({
 }: {
   initialLang: AnyLang;
   /**
-   * Locks the language to `initialLang` for this render tree. Used on
-   * English-only routes (/hospitality), where the middleware pins the
-   * language for a reader who will never want the Bulgarian copy. While
-   * pinned we skip the cookie sync and ignore setLang, so the visitor's own
-   * saved preference is neither read nor overwritten here.
+   * Locks the language to `initialLang` for this render tree. /hospitality
+   * is always locked by its path (below). While locked we skip the cookie
+   * sync and ignore setLang, so the visitor's own pick is neither read nor
+   * overwritten there.
    */
   pin?: boolean;
   children: ReactNode;
 }) {
+  // English-only routes: /hospitality is the outreach link for hotels
+  // abroad, so its header and cookie banner stay English whatever the
+  // visitor picked elsewhere.
+  const pathname = usePathname();
+  const locked = pin || /^\/hospitality(\/|$)/.test(pathname ?? "");
+
   const [lang, setLangState] = useState<AnyLang>(initialLang);
 
-  // After hydration, prefer the client-side cookie if it disagrees with
-  // SSR (handles cases where the cookie was set by the middleware on the
-  // same request — SSR will see the new value next time, but until then
-  // we keep state in sync without a flicker).
+  // The server always renders English (so pages can be cached); after
+  // hydration, a German or Bulgarian pick from this browser session
+  // takes over, and leaving /hospitality brings it back.
   useEffect(() => {
-    if (pin) return;
-    const c = readCookie();
-    if (c && c !== lang) setLangState(c);
+    const next = locked ? initialLang : readCookie() ?? initialLang;
+    if (next !== lang) {
+      setLangState(next);
+      document.documentElement.lang = next;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pin]);
+  }, [locked]);
 
   const setLang = useCallback(
     (l: AnyLang) => {
-      if (pin) return;
+      if (locked) return;
       writeCookie(l);
       setLangState(l);
       // Sync <html lang> for accessibility
@@ -77,11 +84,11 @@ export function LangProvider({
         document.documentElement.lang = l;
       }
     },
-    [pin]
+    [locked]
   );
 
   return (
-    <LangContext.Provider value={{ lang, fullLang: lang, setLang, pinned: pin }}>
+    <LangContext.Provider value={{ lang, fullLang: lang, setLang, pinned: locked }}>
       {children}
     </LangContext.Provider>
   );
