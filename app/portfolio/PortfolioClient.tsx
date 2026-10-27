@@ -154,7 +154,15 @@ type WorkTabId = "ai" | "real" | "sites" | "cases";
 
 // Websites the owner will add: a screenshot in /images/sites, name, type
 // of build, a few tags; `href` only for a site on its own domain.
-const SITES: { name: string; type: string; img: string; href?: string; tags: string[] }[] = [];
+const SITES: { name: string; type: string; img: string; href?: string; tags: string[] }[] = [
+  {
+    name: "MEN'S CARE",
+    type: "Shopify store",
+    img: "/images/sites/menscare.webp",
+    href: "https://menscarebulgaria.com/",
+    tags: ["Shopify", "E-commerce", "Quiz", "Blog"],
+  },
+];
 
 // Case studies shown on this page. Empty for now, by the owner's call;
 // fill with entries shaped like the case-studies page data.
@@ -247,7 +255,7 @@ function WorkTabs({ clips, onExpand }: { clips: Clip[]; onExpand: (c: Clip) => v
         )}
 
         {tab === "sites" && SITES.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:[&>*:only-child]:col-span-2 md:[&>*:only-child]:w-full md:[&>*:only-child]:max-w-[760px] md:[&>*:only-child]:mx-auto">
             {SITES.map((st) => {
               const body = (
                 <>
