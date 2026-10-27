@@ -10,6 +10,9 @@ type Clip = {
   brand: string;
   thumbnail: string;
   previewMp4: string | null;
+  /** Lighter local cut for this rotation only (videoUrl adds -480p),
+   *  for Bunny clips whose own 480p rendition is several MB. */
+  heroMp4?: string;
 };
 
 // Curated rotation — sourced from app/data/hero-featured-clips.ts so the
@@ -202,7 +205,7 @@ export default function HeroCinematicBg() {
         {clipA && (
           <video
             ref={videoARef}
-            src={videoUrl(clipA.previewMp4) ?? undefined}
+            src={videoUrl(clipA.heroMp4 ?? clipA.previewMp4) ?? undefined}
             poster={clipA.thumbnail}
             muted
             autoPlay
@@ -224,7 +227,7 @@ export default function HeroCinematicBg() {
         {clipB && layerBMounted && (
           <video
             ref={videoBRef}
-            src={videoUrl(clipB.previewMp4) ?? undefined}
+            src={videoUrl(clipB.heroMp4 ?? clipB.previewMp4) ?? undefined}
             poster={clipB.thumbnail}
             muted
             autoPlay
