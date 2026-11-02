@@ -35,13 +35,18 @@ function ChannelIcon({ kind }: { kind: string }) {
     width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
     strokeWidth: 1.8, strokeLinecap: "square" as const, strokeLinejoin: "miter" as const,
   };
-  if (kind === "call")
-    return (<svg {...common} aria-hidden><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>);
-  if (kind === "whatsapp")
+  if (kind === "book")
     return (
       <svg {...common} aria-hidden>
-        <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" />
-        <path d="M9 9.5c.4 2.3 2.2 4.1 4.5 4.5l1.2-1.2 1.8.8v1.6c-4 .4-8.4-4-8-8h1.6l.8 1.8z" strokeWidth={1.4} />
+        <rect x="3" y="5" width="18" height="16" />
+        <path d="M3 10h18M8 3v4M16 3v4" />
+      </svg>
+    );
+  if (kind === "form")
+    return (
+      <svg {...common} aria-hidden>
+        <path d="M4 20h4L19 9l-4-4L4 16z" />
+        <path d="M13 7l4 4" />
       </svg>
     );
   return (<svg {...common} aria-hidden><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>);
@@ -78,8 +83,7 @@ const COPY = {
     contactB: "TALK.",
     contactSub: "A reply within 24 hours - from a person, not a bot.",
     channels: [
-      { kind: "call", label: "CALL", value: "+359 88 225 1474", action: "Call", href: "tel:+359882251474" },
-      { kind: "whatsapp", label: "WHATSAPP", value: "Message us", action: "Open chat", href: "https://wa.me/359882251474" },
+      { kind: "book", label: "MEETING", value: "Book 30 minutes", action: "Pick a time", href: "https://cal.com/vekto/30min" },
       { kind: "email", label: "EMAIL", value: "vektoagency@gmail.com", action: "Write", href: "mailto:vektoagency@gmail.com" },
     ],
     copy: "Copy",
@@ -117,8 +121,7 @@ const COPY = {
     contactB: "กับเรา",
     contactSub: "ตอบกลับภายใน 24 ชั่วโมง โดยคนจริง ไม่ใช่บอท",
     channels: [
-      { kind: "call", label: "โทร", value: "+359 88 225 1474", action: "โทรเลย", href: "tel:+359882251474" },
-      { kind: "whatsapp", label: "WHATSAPP", value: "ส่งข้อความหาเรา", action: "เปิดแชท", href: "https://wa.me/359882251474" },
+      { kind: "book", label: "นัดประชุม", value: "จอง 30 นาที", action: "เลือกเวลา", href: "https://cal.com/vekto/30min" },
       { kind: "email", label: "อีเมล", value: "vektoagency@gmail.com", action: "เขียนถึงเรา", href: "mailto:vektoagency@gmail.com" },
     ],
     copy: "คัดลอก",
@@ -156,8 +159,7 @@ const COPY = {
     contactB: "HABLAR.",
     contactSub: "Respuesta en 24 horas - de una persona, no de un bot.",
     channels: [
-      { kind: "call", label: "LLAMAR", value: "+359 88 225 1474", action: "Llamar", href: "tel:+359882251474" },
-      { kind: "whatsapp", label: "WHATSAPP", value: "Escríbenos", action: "Abrir chat", href: "https://wa.me/359882251474" },
+      { kind: "book", label: "REUNIÓN", value: "Reserva 30 minutos", action: "Elegir hora", href: "https://cal.com/vekto/30min" },
       { kind: "email", label: "EMAIL", value: "vektoagency@gmail.com", action: "Escribir", href: "mailto:vektoagency@gmail.com" },
     ],
     copy: "Copiar",
@@ -410,7 +412,7 @@ export default function HospitalityClient() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {t.channels.map((ch) => {
               const external = ch.href.startsWith("http");
               return (

@@ -55,17 +55,18 @@ function ChannelIcon({ kind }: { kind: string }) {
     strokeLinecap: "square" as const,
     strokeLinejoin: "miter" as const,
   };
-  if (kind === "call")
+  if (kind === "book")
     return (
       <svg {...common} aria-hidden>
-        <path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" />
+        <rect x="3" y="5" width="18" height="16" />
+        <path d="M3 10h18M8 3v4M16 3v4" />
       </svg>
     );
-  if (kind === "whatsapp")
+  if (kind === "form")
     return (
       <svg {...common} aria-hidden>
-        <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" />
-        <path d="M9 9.5c.4 2.3 2.2 4.1 4.5 4.5l1.2-1.2 1.8.8v1.6c-4 .4-8.4-4-8-8h1.6l.8 1.8z" strokeWidth={1.4} />
+        <path d="M4 20h4L19 9l-4-4L4 16z" />
+        <path d="M13 7l4 4" />
       </svg>
     );
   return (
@@ -120,8 +121,8 @@ const COPY = {
     contactTitle: "ДА ГОВОРИМ.",
     contactSub: "Отговор до 24 часа — от човек, не от бот.",
     channels: [
-      { kind: "call", label: "ОБАДИ СЕ", value: "+359 88 225 1474", action: "Звънни", href: "tel:+359882251474" },
-      { kind: "whatsapp", label: "WHATSAPP", value: "Пиши ни в чата", action: "Отвори чат", href: "https://wa.me/359882251474" },
+      { kind: "book", label: "СРЕЩА", value: "Запази 30 минути", action: "Избери час", href: "https://cal.com/vekto/30min" },
+      { kind: "form", label: "АНКЕТА", value: "Опиши проекта си", action: "Попълни", href: "/start" },
       { kind: "email", label: "ИМЕЙЛ", value: "vektoagency@gmail.com", action: "Пиши", href: "mailto:vektoagency@gmail.com" },
     ],
     copy: "Копирай",
@@ -173,8 +174,8 @@ const COPY = {
     contactTitle: "LET'S TALK.",
     contactSub: "A reply within 24 hours — from a person, not a bot.",
     channels: [
-      { kind: "call", label: "CALL", value: "+359 88 225 1474", action: "Call", href: "tel:+359882251474" },
-      { kind: "whatsapp", label: "WHATSAPP", value: "Message us", action: "Open chat", href: "https://wa.me/359882251474" },
+      { kind: "book", label: "MEETING", value: "Book 30 minutes", action: "Pick a time", href: "https://cal.com/vekto/30min" },
+      { kind: "form", label: "BRIEF", value: "Describe your project", action: "Fill it in", href: "/start" },
       { kind: "email", label: "EMAIL", value: "vektoagency@gmail.com", action: "Write", href: "mailto:vektoagency@gmail.com" },
     ],
     copy: "Copy",
@@ -226,8 +227,8 @@ const COPY = {
     contactTitle: "SPRECHEN WIR.",
     contactSub: "Antwort innerhalb von 24 Stunden — von einem Menschen, nicht von einem Bot.",
     channels: [
-      { kind: "call", label: "ANRUFEN", value: "+359 88 225 1474", action: "Anrufen", href: "tel:+359882251474" },
-      { kind: "whatsapp", label: "WHATSAPP", value: "Schreiben Sie uns", action: "Chat öffnen", href: "https://wa.me/359882251474" },
+      { kind: "book", label: "TERMIN", value: "30 Minuten buchen", action: "Zeit wählen", href: "https://cal.com/vekto/30min" },
+      { kind: "form", label: "ANFRAGE", value: "Projekt beschreiben", action: "Ausfüllen", href: "/start" },
       { kind: "email", label: "E-MAIL", value: "vektoagency@gmail.com", action: "Schreiben", href: "mailto:vektoagency@gmail.com" },
     ],
     copy: "Kopieren",
