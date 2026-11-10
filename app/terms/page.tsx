@@ -20,7 +20,7 @@ const copy = {
         title: "1. Кои сме",
         body: [
           "VEKTO е независима агенция за растеж, базирана в България — криейтиви, реклами, уебсайтове и AI решения на едно място.",
-          "Имейл: vektoagency@gmail.com",
+          "Имейл: vektoagency@gmail.com · Телефон: +359 88 225 1474",
         ],
       },
       {
@@ -82,7 +82,7 @@ const copy = {
         title: "1. Who we are",
         body: [
           "VEKTO is an independent growth agency based in Bulgaria — creatives, ads, websites and AI solutions under one roof.",
-          "Email: vektoagency@gmail.com",
+          "Email: vektoagency@gmail.com · Phone: +359 88 225 1474",
         ],
       },
       {
@@ -144,7 +144,7 @@ const copy = {
         title: "1. Wer wir sind",
         body: [
           "VEKTO ist eine unabhängige Wachstumsagentur mit Sitz in Bulgarien — Creatives, Werbeanzeigen, Websites und KI-Lösungen aus einer Hand.",
-          "E-Mail: vektoagency@gmail.com",
+          "E-Mail: vektoagency@gmail.com · Telefon: +359 88 225 1474",
         ],
       },
       {

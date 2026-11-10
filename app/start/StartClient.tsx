@@ -444,8 +444,8 @@ export default function StartClient() {
                     </div>
                   </div>
 
-                  {/* The other way in: a hairline with "or", then the
-                      meeting button in the site's outline style. */}
+                  {/* Other ways in: a hairline with "or", then two equal
+                      square buttons in the site's outline style. */}
                   <div className="mt-6">
                     <div className="flex items-center gap-3 mb-4" aria-hidden>
                       <span className="h-px flex-1 bg-[#f4f4f4]/20" />
@@ -454,7 +454,7 @@ export default function StartClient() {
                       </span>
                       <span className="h-px flex-1 bg-[#f4f4f4]/20" />
                     </div>
-                    <div className="grid grid-cols-1 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       <button
                         data-cal-namespace="30min"
                         data-cal-link="vekto/30min"
@@ -464,6 +464,13 @@ export default function StartClient() {
                         <span aria-hidden>▦</span>
                         {t.cta.bookCta}
                       </button>
+                      <a
+                        href="tel:+359882251474"
+                        className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/60 whitespace-nowrap px-2 py-3 text-[10.5px] sm:text-[11px] md:text-[12px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.14em] text-[#f4f4f4] hover:bg-white hover:text-black transition-colors"
+                      >
+                        <span aria-hidden>☎</span>
+                        {t.cta.callCta}
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -569,6 +576,15 @@ export default function StartClient() {
                 >
                   {t.success.bookCta}
                 </button>
+                <a
+                  href="tel:+359882251474"
+                  className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] font-bold uppercase tracking-[0.12em] px-8 py-3.5 text-[13px] hover:bg-white hover:text-black transition-colors"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z" />
+                  </svg>
+                  {t.cta.callCta}
+                </a>
                 <Link
                   href="/"
                   className="inline-flex items-center justify-center gap-2 border-[1.5px] border-[#f4f4f4]/75 text-[#f4f4f4] px-8 py-3.5 hover:bg-white hover:text-black transition-colors font-mono text-sm uppercase tracking-[0.2em]"

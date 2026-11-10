@@ -124,6 +124,7 @@ export const flashkaCopy = {
       submitting: "Изпращаме…",
       orBook: "Или директно с екипа:",
       bookCta: "Резервирай разговор",
+      callCta: "Обади се",
     },
 
     faq: {
@@ -298,6 +299,7 @@ export const flashkaCopy = {
       submitting: "Sending…",
       orBook: "Or directly with the team:",
       bookCta: "Book a call",
+      callCta: "Call us",
     },
 
     faq: {
